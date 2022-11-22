@@ -1,106 +1,151 @@
 package de.dennisguse.opentracks.ui.customRecordingLayout;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.Callable;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.StatisticsUtils;
+import de.dennisguse.opentracks.data.models.Altitude;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.databinding.CustomStatsItemBinding;
+import de.dennisguse.opentracks.services.RecordingData;
+import de.dennisguse.opentracks.settings.UnitSystem;
+import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.viewmodels.Mapping;
+import de.dennisguse.opentracks.viewmodels.StatisticViewHolder;
 
 public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Layout layout;
+    private static final String TAG = SettingsCustomLayoutEditAdapter.class.getSimpleName();
+
+    private static final RecordingData demoData;
+
+    static {
+        TrackStatistics trackStatistics = new TrackStatistics();
+        trackStatistics.setStartTime(Instant.ofEpochMilli(0));
+        trackStatistics.setMovingTime(Duration.ofMinutes(0));
+        trackStatistics.setTotalTime(Duration.ofMinutes(0));
+
+        trackStatistics.setTotalDistance(Distance.of(0));
+
+        trackStatistics.setTotalAltitudeGain(0f);
+        trackStatistics.setTotalAltitudeLoss(0f);
+        Track track = new Track(ZoneOffset.UTC);
+        track.setTrackStatistics(trackStatistics);
+
+        TrackPoint lastTrackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(0));
+        lastTrackPoint.setLatitude(0);
+        lastTrackPoint.setLongitude(0);
+        lastTrackPoint.setAltitude(Altitude.EGM2008.of(0));
+        lastTrackPoint.setSpeed(Speed.of(0));
+
+        demoData = new RecordingData(track, lastTrackPoint, null);
+    }
+
+    private RecordingLayout recordingLayout;
     private final Context context;
     private final SettingsCustomLayoutItemClickListener itemClickListener;
+    private final Map<String, Callable<StatisticViewHolder<?>>> mapping;
 
-    public SettingsCustomLayoutEditAdapter(Context context, SettingsCustomLayoutItemClickListener itemClickListener, Layout layout) {
+
+    public SettingsCustomLayoutEditAdapter(Context context, SettingsCustomLayoutItemClickListener itemClickListener, RecordingLayout recordingLayout) {
         this.context = context;
         this.itemClickListener = itemClickListener;
-        this.layout = layout;
+        this.recordingLayout = recordingLayout;
+
+        mapping = Mapping.create(context);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.custom_stats_item, parent, false);
-        return new SettingsCustomLayoutEditAdapter.ViewHolder(view);
+        CustomStatsItemBinding binding = CustomStatsItemBinding.inflate(LayoutInflater.from(context), parent, false);
+        return new SettingsCustomLayoutEditAdapter.ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         SettingsCustomLayoutEditAdapter.ViewHolder viewHolder = (SettingsCustomLayoutEditAdapter.ViewHolder) holder;
-        DataField field = layout.getFields().get(position);
+        DataField field = recordingLayout.getFields().get(position);
         viewHolder.itemView.setTag(field.getKey());
-        viewHolder.title.setText(field.getTitle());
-        viewHolder.value.setText(StatisticsUtils.emptyValue(context, field.getKey()));
+        try {
+            StatisticViewHolder<?> m = mapping.get(field.getKey()).call();
+            m.initialize(context, LayoutInflater.from(context));
+            m.configureUI(field);
+            m.onChanged(UnitSystem.METRIC, demoData);
 
-        viewHolder.title.setTextAppearance(context, field.isVisible() ? (field.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader) : R.style.TextAppearance_OpenTracks_HiddenHeader);
-        viewHolder.value.setTextAppearance(context, field.isVisible() ? (field.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue) : R.style.TextAppearance_OpenTracks_HiddenValue);
-        viewHolder.statusIcon.setVisibility(field.isVisible() ? View.GONE : View.VISIBLE);
-        viewHolder.statusIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_baseline_visibility_off_24));
-        viewHolder.moveIcon.setVisibility(field.isVisible() ? View.VISIBLE : View.GONE);
+            viewHolder.viewBinding.statsLayout.removeAllViews(); //TODO this is not really performant
+            viewHolder.viewBinding.statsLayout.addView(m.getView());
+        } catch (Exception e) {
+            Log.e(TAG, "Couldn't to instantiate UI for DataField with key " + field.getKey() + " " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        viewHolder.viewBinding.statsIconShowStatus.setVisibility(field.isVisible() ? View.GONE : View.VISIBLE);
+        viewHolder.viewBinding.statsIconShowStatus.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_baseline_visibility_off_24));
+        viewHolder.viewBinding.statsIvDragIndicator.setVisibility(field.isVisible() ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public int getItemCount() {
-        if (layout == null) {
+        if (recordingLayout == null) {
             return 0;
         } else {
-            return layout.getFields().size();
+            return recordingLayout.getFields().size();
         }
     }
 
     public boolean isItemWide(int position) {
-        return layout.getFields().get(position).isWide();
+        return recordingLayout.getFields().get(position).isWide();
     }
 
     public DataField getItem(int position) {
-        return layout.getFields().get(position);
+        return recordingLayout.getFields().get(position);
     }
 
-    public void swapValues(Layout data) {
-        this.layout = data;
-        if (this.layout != null) {
+    public void swapValues(RecordingLayout data) {
+        this.recordingLayout = data;
+        if (this.recordingLayout != null) {
             this.notifyDataSetChanged();
         }
     }
 
-    public Layout move(int fromPosition, int toPosition) {
-        layout.moveField(fromPosition, toPosition);
+    public RecordingLayout move(int fromPosition, int toPosition) {
+        recordingLayout.moveField(fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
-        return layout;
+        return recordingLayout;
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final TextView title;
-        final TextView value;
-        final TextView unit;
-        final ImageView statusIcon;
-        final ImageView moveIcon;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            title = itemView.findViewById(R.id.stats_description_main);
-            value = itemView.findViewById(R.id.stats_value);
-            unit = itemView.findViewById(R.id.stats_unit);
-            statusIcon = itemView.findViewById(R.id.stats_icon_show_status);
-            moveIcon = itemView.findViewById(R.id.stats_iv_drag_indicator);
-            itemView.setOnClickListener(this);
+        CustomStatsItemBinding viewBinding;
+
+        public ViewHolder(@NonNull CustomStatsItemBinding viewBinding) {
+            super(viewBinding.getRoot());
+            this.viewBinding = viewBinding;
+
+            viewBinding.getRoot().setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             String statTitle = (String) view.getTag();
-            Optional<DataField> optionalField = layout.getFields().stream().filter(f -> f.getKey().equals(statTitle)).findFirst();
+            Optional<DataField> optionalField = recordingLayout.getFields().stream().filter(f -> f.getKey().equals(statTitle)).findFirst();
             optionalField.ifPresent(itemClickListener::onSettingsCustomLayoutItemClicked);
         }
     }

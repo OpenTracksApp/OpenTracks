@@ -94,6 +94,7 @@ public class TrackIconUtils {
 
     };
 
+    //TODO Use Map.of()
     private static final LinkedHashMap<String, Pair<Integer, Integer>> MAP = new LinkedHashMap<>();
 
     static {

@@ -17,7 +17,8 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayoutIO;
 
 @RunWith(AndroidJUnit4.class)
 public class PreferencesOpenHelperTest {
@@ -38,10 +39,10 @@ public class PreferencesOpenHelperTest {
         PreferencesOpenHelper.newInstance(1).check();
 
         // then there should be one layout with old custom layout that has the new CSV value.
-        List<Layout> layouts = PreferencesUtils.getAllCustomLayouts();
-        assertNotNull(layouts);
-        assertEquals(layouts.size(), 1);
-        assertEquals(layouts.get(0).toCsv(), PreferencesUtils.getCustomLayout().toCsv());
+        List<RecordingLayout> recordingLayouts = PreferencesUtils.getAllCustomLayouts();
+        assertNotNull(recordingLayouts);
+        assertEquals(recordingLayouts.size(), 1);
+        assertEquals(recordingLayouts.get(0).toCsv(), PreferencesUtils.getCustomLayout().toCsv());
     }
 
     @Test
@@ -63,10 +64,10 @@ public class PreferencesOpenHelperTest {
                 + PreferencesUtils.getLayoutColumnsByDefault() + ";distance,1,1,0;speed,1,1,0;";
 
         // then there should be one layout with old custom layout that has the new CSV value.
-        List<Layout> layouts = PreferencesUtils.getAllCustomLayouts();
-        assertNotNull(layouts);
-        assertEquals(layouts.size(), 1);
-        assertEquals(layouts.get(0).toCsv(), updatedOldCustomLayoutCsv);
+        List<RecordingLayout> recordingLayouts = PreferencesUtils.getAllCustomLayouts();
+        assertNotNull(recordingLayouts);
+        assertEquals(recordingLayouts.size(), 1);
+        assertEquals(recordingLayouts.get(0).toCsv(), updatedOldCustomLayoutCsv);
     }
 
     @Test
@@ -87,10 +88,10 @@ public class PreferencesOpenHelperTest {
         String updatedOldCustomLayoutCsv = "whatever;3;distance,1,1,0;speed,1,1,0;";
 
         // then there should be one layout with old custom layout that has the new CSV value.
-        List<Layout> layouts = PreferencesUtils.getAllCustomLayouts();
-        assertNotNull(layouts);
-        assertEquals(layouts.size(), 1);
-        assertEquals(layouts.get(0).toCsv(), updatedOldCustomLayoutCsv);
+        List<RecordingLayout> recordingLayouts = PreferencesUtils.getAllCustomLayouts();
+        assertNotNull(recordingLayouts);
+        assertEquals(recordingLayouts.size(), 1);
+        assertEquals(recordingLayouts.get(0).toCsv(), updatedOldCustomLayoutCsv);
     }
 
     @Test
@@ -109,10 +110,10 @@ public class PreferencesOpenHelperTest {
         PreferencesOpenHelper.newInstance(1).check();
 
         // then custom layout should be equals to default layout.
-        Layout defaultLayout = Layout.fromCsv(PreferencesUtils.buildDefaultLayout(), resources);
-        List<Layout> customLayout = PreferencesUtils.getAllCustomLayouts();
+        RecordingLayout defaultRecordingLayout = RecordingLayoutIO.fromCsv(PreferencesUtils.buildDefaultLayout(), resources);
+        List<RecordingLayout> customRecordingLayout = PreferencesUtils.getAllCustomLayouts();
 
-        assertEquals(customLayout.size(), 1);
-        assertEquals(defaultLayout.toCsv(), customLayout.get(0).toCsv());
+        assertEquals(customRecordingLayout.size(), 1);
+        assertEquals(defaultRecordingLayout.toCsv(), customRecordingLayout.get(0).toCsv());
     }
 }

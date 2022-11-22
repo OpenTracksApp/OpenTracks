@@ -31,11 +31,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
-import de.dennisguse.opentracks.adapters.StatisticsAdapter;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
@@ -47,8 +44,6 @@ import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.viewmodels.StatisticData;
-import de.dennisguse.opentracks.viewmodels.StatisticDataBuilder;
 
 /**
  * A fragment to display track statistics to the user for a recorded {@link Track}.
@@ -72,7 +67,6 @@ public class StatisticsRecordedFragment extends Fragment {
     }
 
     private SensorStatistics sensorStatistics;
-    private StatisticsAdapter.WithRecordedLayout sensorsAdapter;
 
     private Track.Id trackId;
     @Nullable // Lazily loaded.
@@ -113,8 +107,6 @@ public class StatisticsRecordedFragment extends Fragment {
 
         trackId = getArguments().getParcelable(TRACK_ID_KEY);
         contentProviderUtils = new ContentProviderUtils(getContext());
-
-        sensorsAdapter = new StatisticsAdapter.WithRecordedLayout(getContext());
     }
 
     @Override
@@ -123,7 +115,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         RecyclerView sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;
         sensorsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        sensorsRecyclerView.setAdapter(sensorsAdapter);
+//        sensorsRecyclerView.setAdapter(sensorsAdapter);
 
         return viewBinding.getRoot();
     }
@@ -261,10 +253,6 @@ public class StatisticsRecordedFragment extends Fragment {
         if (sensorStatistics == null) {
             return;
         }
-
-        List<StatisticData> sensorDataList = StatisticDataBuilder.fromSensorStatistics(getContext(), sensorStatistics);
-        if (sensorDataList.size() > 0) {
-            sensorsAdapter.swapData(sensorDataList);
-        }
+        //TODO
     }
 }

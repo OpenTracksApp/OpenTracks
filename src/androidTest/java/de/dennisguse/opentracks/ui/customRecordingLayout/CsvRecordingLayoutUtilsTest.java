@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
-public class CsvLayoutUtilsTest extends TestCase {
+public class CsvRecordingLayoutUtilsTest extends TestCase {
 
     @Test
     public void testGetCsvLineParts() {

@@ -28,6 +28,8 @@ limitations under the License.
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <include android:id="@+id/bottom_app_bar_layout" layout="@layout/bottomappbar" />
+    <include
+        android:id="@+id/bottom_app_bar_layout"
+        layout="@layout/bottomappbar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
