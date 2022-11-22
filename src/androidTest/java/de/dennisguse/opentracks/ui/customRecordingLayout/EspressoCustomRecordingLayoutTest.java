@@ -30,7 +30,7 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class EspressoCustomLayoutTest {
+public class EspressoCustomRecordingLayoutTest {
 
     @Rule
     public ActivityScenarioRule<TrackListActivity> mActivityTestRule = new ActivityScenarioRule<>(TrackListActivity.class);
@@ -45,9 +45,9 @@ public class EspressoCustomLayoutTest {
         trackControllerRecordButton.perform(click());
 
         // Get custom layout preferences and check all data fields are showed.
-        Layout layout = PreferencesUtils.getCustomLayout();
+        RecordingLayout recordingLayout = PreferencesUtils.getCustomLayout();
 
-        onView(withId(R.id.recycler_view)).check(new RecyclerViewItemCountAssertion((int) layout.getFields().stream().filter(DataField::isVisible).count()));
+        onView(withId(R.id.recycler_view)).check(new RecyclerViewItemCountAssertion((int) recordingLayout.getFields().stream().filter(DataField::isVisible).count()));
 
         // stop recording
         ViewInteraction trackControllerStopButton = onView(withId(R.id.track_recording_fab_action));

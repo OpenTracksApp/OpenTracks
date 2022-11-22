@@ -10,38 +10,38 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
-public class Layout implements Parcelable {
+public class RecordingLayout implements Parcelable {
 
     // User-generated layout's name.
     private final String name;
     private int columnsPerRow;
     private final List<DataField> dataFields = new ArrayList<>();
 
-    public Layout(String name) {
+    public RecordingLayout(String name) {
         this.name = name;
         this.columnsPerRow = PreferencesUtils.getLayoutColumnsByDefault();
     }
 
-    public Layout(String name, int columnsPerRow) {
+    public RecordingLayout(String name, int columnsPerRow) {
         this.name = name;
         this.columnsPerRow = columnsPerRow;
     }
 
-    protected Layout(Parcel in) {
+    protected RecordingLayout(Parcel in) {
         name = in.readString();
         columnsPerRow = in.readInt();
         in.readList(dataFields, DataField.class.getClassLoader());
     }
 
-    public static final Creator<Layout> CREATOR = new Creator<>() {
+    public static final Creator<RecordingLayout> CREATOR = new Creator<>() {
         @Override
-        public Layout createFromParcel(Parcel in) {
-            return new Layout(in);
+        public RecordingLayout createFromParcel(Parcel in) {
+            return new RecordingLayout(in);
         }
 
         @Override
-        public Layout[] newArray(int size) {
-            return new Layout[size];
+        public RecordingLayout[] newArray(int size) {
+            return new RecordingLayout[size];
         }
     };
 
@@ -83,8 +83,8 @@ public class Layout implements Parcelable {
         this.columnsPerRow = columnsPerRow;
     }
 
-    public boolean sameName(Layout layout) {
-        return this.name.equalsIgnoreCase(layout.getName());
+    public boolean sameName(RecordingLayout recordingLayout) {
+        return this.name.equalsIgnoreCase(recordingLayout.getName());
     }
 
     public boolean sameName(String name) {
@@ -98,7 +98,7 @@ public class Layout implements Parcelable {
         }
 
         return getName() + CsvLayoutUtils.ITEM_SEPARATOR + getColumnsPerRow() + CsvLayoutUtils.ITEM_SEPARATOR
-                + fields.stream().map(LayoutIO::toCsv).collect(Collectors.joining(CsvLayoutUtils.ITEM_SEPARATOR))
+                + fields.stream().map(RecordingLayoutIO::toCsv).collect(Collectors.joining(CsvLayoutUtils.ITEM_SEPARATOR))
                 + CsvLayoutUtils.ITEM_SEPARATOR;
     }
 
@@ -118,8 +118,8 @@ public class Layout implements Parcelable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Layout layout = (Layout) o;
-        return columnsPerRow == layout.columnsPerRow && Objects.equals(name, layout.name) && Objects.equals(dataFields, layout.dataFields);
+        RecordingLayout recordingLayout = (RecordingLayout) o;
+        return columnsPerRow == recordingLayout.columnsPerRow && Objects.equals(name, recordingLayout.name) && Objects.equals(dataFields, recordingLayout.dataFields);
     }
 
     @Override

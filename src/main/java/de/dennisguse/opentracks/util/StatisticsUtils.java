@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 
 public class StatisticsUtils {
 
@@ -26,9 +26,9 @@ public class StatisticsUtils {
     }
 
     @Deprecated //Add to Layout?
-    public static Layout filterVisible(Layout layout, boolean visible) {
-        Layout result = new Layout(layout.getName());
-        result.addFields(layout.getFields().stream().filter(f -> f.isVisible() == visible).collect(Collectors.toList()));
+    public static RecordingLayout filterVisible(RecordingLayout recordingLayout, boolean visible) {
+        RecordingLayout result = new RecordingLayout(recordingLayout.getName());
+        result.addFields(recordingLayout.getFields().stream().filter(f -> f.isVisible() == visible).collect(Collectors.toList()));
         return result;
     }
 }

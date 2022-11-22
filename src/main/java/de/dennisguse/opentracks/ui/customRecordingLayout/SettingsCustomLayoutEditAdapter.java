@@ -58,16 +58,16 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
         demoData = new RecordingData(track, lastTrackPoint, null);
     }
 
-    private Layout layout;
+    private RecordingLayout recordingLayout;
     private final Context context;
     private final SettingsCustomLayoutItemClickListener itemClickListener;
     private final Map<String, Callable<StatisticViewHolder<?>>> mapping;
 
 
-    public SettingsCustomLayoutEditAdapter(Context context, SettingsCustomLayoutItemClickListener itemClickListener, Layout layout) {
+    public SettingsCustomLayoutEditAdapter(Context context, SettingsCustomLayoutItemClickListener itemClickListener, RecordingLayout recordingLayout) {
         this.context = context;
         this.itemClickListener = itemClickListener;
-        this.layout = layout;
+        this.recordingLayout = recordingLayout;
 
         mapping = Mapping.create(context);
     }
@@ -82,7 +82,7 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         SettingsCustomLayoutEditAdapter.ViewHolder viewHolder = (SettingsCustomLayoutEditAdapter.ViewHolder) holder;
-        DataField field = layout.getFields().get(position);
+        DataField field = recordingLayout.getFields().get(position);
         viewHolder.itemView.setTag(field.getKey());
         try {
             StatisticViewHolder<?> m = mapping.get(field.getKey()).call();
@@ -103,32 +103,32 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemCount() {
-        if (layout == null) {
+        if (recordingLayout == null) {
             return 0;
         } else {
-            return layout.getFields().size();
+            return recordingLayout.getFields().size();
         }
     }
 
     public boolean isItemWide(int position) {
-        return layout.getFields().get(position).isWide();
+        return recordingLayout.getFields().get(position).isWide();
     }
 
     public DataField getItem(int position) {
-        return layout.getFields().get(position);
+        return recordingLayout.getFields().get(position);
     }
 
-    public void swapValues(Layout data) {
-        this.layout = data;
-        if (this.layout != null) {
+    public void swapValues(RecordingLayout data) {
+        this.recordingLayout = data;
+        if (this.recordingLayout != null) {
             this.notifyDataSetChanged();
         }
     }
 
-    public Layout move(int fromPosition, int toPosition) {
-        layout.moveField(fromPosition, toPosition);
+    public RecordingLayout move(int fromPosition, int toPosition) {
+        recordingLayout.moveField(fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
-        return layout;
+        return recordingLayout;
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -145,7 +145,7 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
         @Override
         public void onClick(View view) {
             String statTitle = (String) view.getTag();
-            Optional<DataField> optionalField = layout.getFields().stream().filter(f -> f.getKey().equals(statTitle)).findFirst();
+            Optional<DataField> optionalField = recordingLayout.getFields().stream().filter(f -> f.getKey().equals(statTitle)).findFirst();
             optionalField.ifPresent(itemClickListener::onSettingsCustomLayoutItemClicked);
         }
     }

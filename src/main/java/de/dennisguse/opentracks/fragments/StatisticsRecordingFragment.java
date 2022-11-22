@@ -26,7 +26,7 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
-import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 import de.dennisguse.opentracks.viewmodels.Mapping;
 import de.dennisguse.opentracks.viewmodels.StatisticViewHolder;
 
@@ -50,7 +50,7 @@ public class StatisticsRecordingFragment extends Fragment {
 
     private final List<StatisticViewHolder<?>> viewHolders = new LinkedList<>();
 
-    private Layout layout;
+    private RecordingLayout recordingLayout;
 
     private StatisticsRecordingBinding viewBinding;
 
@@ -116,13 +116,13 @@ public class StatisticsRecordingFragment extends Fragment {
         trackRecordingServiceConnection = null;
     }
 
-    private void onLayoutChanged(@NonNull Layout newLayout) {
-        if (newLayout.equals(layout)) {
+    private void onLayoutChanged(@NonNull RecordingLayout newRecordingLayout) {
+        if (newRecordingLayout.equals(recordingLayout)) {
             return;
         }
-        layout = newLayout;
+        recordingLayout = newRecordingLayout;
 
-        viewBinding.statsLayout.setColumnCount(layout.getColumnsPerRow());
+        viewBinding.statsLayout.setColumnCount(recordingLayout.getColumnsPerRow());
 
         viewBinding.statsLayout.removeAllViews(); //Let's start from scratch
         viewHolders.clear();
@@ -131,20 +131,20 @@ public class StatisticsRecordingFragment extends Fragment {
 
         int rowIndex = 0;
         int columnIndex = 0;
-        for (int i = 0; i < layout.getFields().size(); i++) {
-            DataField dataField = layout.getFields().get(i);
+        for (int i = 0; i < recordingLayout.getFields().size(); i++) {
+            DataField dataField = recordingLayout.getFields().get(i);
             GridLayout.LayoutParams param = new GridLayout.LayoutParams();
             param.setGravity(Gravity.FILL_HORIZONTAL);
             param.width = 0;
 
             if (dataField.isWide()) {
                 rowIndex++;
-                param.columnSpec = GridLayout.spec(0, layout.getColumnsPerRow(), 1);
+                param.columnSpec = GridLayout.spec(0, recordingLayout.getColumnsPerRow(), 1);
                 param.rowSpec = GridLayout.spec(rowIndex, 1, 1);
                 columnIndex = 0;
                 rowIndex++;
             } else {
-                if (columnIndex >= layout.getColumnsPerRow()) {
+                if (columnIndex >= recordingLayout.getColumnsPerRow()) {
                     columnIndex = 0;
                     rowIndex++;
                 }
