@@ -20,7 +20,7 @@ Usually, it takes two days before the update is published (build, signed, and pu
 The recent build activity can be found [here](https://f-droid.org/wiki/index.php?title=Special:RecentChanges&days=7&from=&hidebots=0&hideanons=1&hideliu=1&limit=500)
 
 ## Google Play Store
-Application id: de.dennisguse.opentracks.playstore
+Application id: `de.dennisguse.opentracks.playstore`
 
 Requirement: `gem install fastlane`
 
@@ -35,4 +35,6 @@ Supported languages: https://support.google.com/googleplay/android-developer/tab
 
 ## Translations (localization)
 
-Translations of the OpenTracks are handled in Weblate: [https://weblate.bubu1.eu/projects/OpenTracks/](https://weblate.bubu1.eu/projects/OpenTracks/).
+Translations of the OpenTracks are handled in
+Weblate: [https://hosted.weblate.org/projects/opentracks/](https://hosted.weblate.org/projects/opentracks)
+.

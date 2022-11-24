@@ -40,8 +40,8 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
     </tr>
 </table>
 
-<a href="https://weblate.bubu1.eu/engage/OpenTracks/">
-	<img src="https://weblate.bubu1.eu/widgets/OpenTracks/-/opentracks/horizontal-auto.svg" alt="Translation status" />
+<a href="https://hosted.weblate.org/engage/opentracks/">
+  <img src="https://hosted.weblate.org/widgets/opentracks/-/horizontal-auto.svg" alt="Translation status" />
 </a>
 
 ## Screenshots
