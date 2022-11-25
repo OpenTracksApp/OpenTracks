@@ -3,14 +3,18 @@ package de.dennisguse.opentracks.viewmodels;
 import android.util.Pair;
 import android.view.LayoutInflater;
 
+import androidx.core.content.ContextCompat;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
+import de.dennisguse.opentracks.data.models.HeartRateZones;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.StatsGenericItemBinding;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.RecordingData;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -269,10 +273,21 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
                 valueAndUnit = StringUtils.getHeartRateParts(getContext(), null);
             }
 
+            //TODO Loads preference every time
+            HeartRateZones zones = PreferencesUtils.getHeartRateZones();
+            int textColor;
+            if (sensorDataSet != null) {
+                textColor = zones.getColorForZone(sensorDataSet.getHeartRate().first);
+            } else {
+                textColor = zones.getColorForZone(null);
+            }
+
             getBinding().statsValue.setText(valueAndUnit.first);
             getBinding().statsUnit.setText(valueAndUnit.second);
             getBinding().statsDescriptionMain.setText(R.string.stats_sensors_heart_rate);
             getBinding().statsDescriptionSecondary.setText(sensorName);
+
+            getBinding().statsValue.setTextColor(ContextCompat.getColor(getContext(), textColor));
         }
     }
 

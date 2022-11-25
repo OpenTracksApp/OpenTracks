@@ -42,6 +42,8 @@ import java.util.stream.Stream;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
+import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.HeartRateZones;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
@@ -279,9 +281,10 @@ public class PreferencesUtils {
         return getBoolean(R.string.settings_sensor_bluetooth_service_filter_enabled_key, DEFAULT);
     }
 
-    public static int getMaxHeartrate() {
+    public static HeartRateZones getHeartRateZones() {
         final int DEFAULT = Integer.parseInt(resources.getString(R.string.settings_sensor_heart_rate_max_default));
-        return getInt(R.string.settings_sensor_heart_rate_max_key, DEFAULT);
+        int value = getInt(R.string.settings_sensor_heart_rate_max_key, DEFAULT);
+        return new HeartRateZones(HeartRate.of(value));
     }
 
     public static boolean shouldShowStatsOnLockscreen() {
