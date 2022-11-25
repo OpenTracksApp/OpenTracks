@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.viewmodels;
 
 import android.util.Pair;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
@@ -285,6 +286,8 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
             getBinding().statsValue.setText(valueAndUnit.first);
             getBinding().statsUnit.setText(valueAndUnit.second);
             getBinding().statsDescriptionMain.setText(R.string.stats_sensors_heart_rate);
+
+            getBinding().statsDescriptionSecondary.setVisibility(View.VISIBLE);
             getBinding().statsDescriptionSecondary.setText(sensorName);
 
             getBinding().statsValue.setTextColor(ContextCompat.getColor(getContext(), textColor));
@@ -309,6 +312,8 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
             getBinding().statsValue.setText(valueAndUnit.first);
             getBinding().statsUnit.setText(valueAndUnit.second);
             getBinding().statsDescriptionMain.setText(R.string.stats_sensors_cadence);
+
+            getBinding().statsDescriptionSecondary.setVisibility(View.VISIBLE);
             getBinding().statsDescriptionSecondary.setText(sensorName);
         }
     }
@@ -331,6 +336,8 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
             getBinding().statsValue.setText(valueAndUnit.first);
             getBinding().statsUnit.setText(valueAndUnit.second);
             getBinding().statsDescriptionMain.setText(R.string.stats_sensors_power);
+
+            getBinding().statsDescriptionSecondary.setVisibility(View.VISIBLE);
             getBinding().statsDescriptionSecondary.setText(sensorName);
         }
     }
