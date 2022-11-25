@@ -434,6 +434,8 @@ limitations under the License.
     <string name="settings_sensor_wheel_circumference">Wheel Circumference (mm)</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Only show Bluetooth devices that announce required services</string>
 
+    <string name="settings_sensor_heart_rate_max">Zones: maximum Heart rate (bpm)</string>
+
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Preferred rate</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
@@ -479,7 +481,7 @@ limitations under the License.
     <string name="stats_distance">Distance</string>
     <string name="stats_total_time">Total time</string>
     <string name="stats_split_interval">Split interval</string>
-    <string name="stats_sensors_heart_rate">Heart Rate</string>
+    <string name="stats_sensors_heart_rate">Heart rate</string>
     <string name="stats_sensors_cadence">Cadence</string>
     <string name="stats_sensors_power">Power</string>
     <string name="stats_clock">Clock</string>
