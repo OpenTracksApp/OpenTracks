@@ -388,10 +388,10 @@ limitations under the License.
     <string name="help_data_google_play_services_title">Krever/bruker OpenTracks Google Play-tjenesten\?</string>
     <string name="help_feature_title">OpenTracks har følgende funksjoner:</string>
     <string name="help_feature_content">* Opprett GPS-spor
-\n * Bruk av pulssensor (kun Bluetooth LE)
+\n * Bruk av pulssensor (kun Blåtann-LE)
 \n * Talemeldinger (etter tid eller distanse)
 \n * Opprett markører (inkl. bilder)
-\n * Fungerer uten internettforbindelse
+\n * Fungerer uten Internett-forbindelse
 \n * Vis spor på et kart (se nedenfor)</string>
     <string name="help_track_map_title">Hvordan vise et spor på et kart\?</string>
     <string name="about_description"><i>OpenTracks</i> er et sportssporingsprogram som fullt ut respekterer ditt personvern.</string>
