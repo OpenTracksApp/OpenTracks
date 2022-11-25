@@ -53,7 +53,7 @@
     <Preference
         android:icon="@drawable/ic_baseline_api_24"
         android:key="@string/settings_api_key"
-        android:summary="Remote control and statistics API for other apps"
+        android:summary="@string/settings_api_summary"
         android:title="@string/settings_api_title"/>
 
     <Preference
