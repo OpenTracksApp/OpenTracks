@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
+
+    <TextView
+        android:id="@+id/stats_value"
+        style="@style/TextAppearance.OpenTracks.PrimaryValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:value="@string/value_unknown"
+        app:layout_constraintEnd_toStartOf="@id/stats_unit"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="90" />
+
+    <TextView
+        android:id="@+id/stats_unit"
+        style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/stats_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/stats_value"
+        tools:text="@string/sensor_unit_beats_per_minute" />
+
+    <TextView
+        android:id="@+id/stats_description_main"
+        style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stats_value"
+        tools:text="@string/sensor_state_heart_rate" />
+
+    <TextView
+        android:id="@+id/stats_description_secondary"
+        style="@style/TextAppearance.OpenTracks.SecondaryHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stats_description_main"
+        tools:text="90" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

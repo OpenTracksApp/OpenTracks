@@ -2,18 +2,15 @@ package de.dennisguse.opentracks.viewmodels;
 
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
-import de.dennisguse.opentracks.data.models.HeartRateZones;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.StatsGenericItemBinding;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.RecordingData;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -254,86 +251,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
 
             getBinding().statsValue.setText(value);
             getBinding().statsDescriptionMain.setText(R.string.stats_coordinates);
-        }
-    }
-
-    public static class SensorHeartRate extends GenericStatisticsViewHolder {
-
-        @Override
-        public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SensorDataSet sensorDataSet = data.getSensorDataSet();
-            String sensorName = getContext().getString(R.string.value_unknown);
-
-            //TODO Loads preference every time
-            HeartRateZones zones = PreferencesUtils.getHeartRateZones();
-            int textColor;
-
-            Pair<String, String> valueAndUnit;
-            if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
-                valueAndUnit = StringUtils.getHeartRateParts(getContext(), sensorDataSet.getHeartRate().first);
-                sensorName = sensorDataSet.getHeartRate().second;
-                textColor = zones.getTextColorForZone(getContext(), sensorDataSet.getHeartRate().first);
-            } else {
-                valueAndUnit = StringUtils.getHeartRateParts(getContext(), null);
-                textColor = zones.getTextColorForZone(getContext(), null);
-            }
-
-            getBinding().statsValue.setText(valueAndUnit.first);
-            getBinding().statsUnit.setText(valueAndUnit.second);
-            getBinding().statsDescriptionMain.setText(R.string.stats_sensors_heart_rate);
-
-            getBinding().statsDescriptionSecondary.setVisibility(View.VISIBLE);
-            getBinding().statsDescriptionSecondary.setText(sensorName);
-
-            getBinding().statsValue.setTextColor(textColor);
-        }
-    }
-
-    public static class SensorCadence extends GenericStatisticsViewHolder {
-
-        @Override
-        public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SensorDataSet sensorDataSet = data.getSensorDataSet();
-            String sensorName = getContext().getString(R.string.value_unknown);
-
-            Pair<String, String> valueAndUnit;
-            if (sensorDataSet != null && sensorDataSet.getCadence() != null) {
-                valueAndUnit = StringUtils.getCadenceParts(getContext(), sensorDataSet.getCadence().first);
-                sensorName = sensorDataSet.getCadence().second;
-            } else {
-                valueAndUnit = StringUtils.getCadenceParts(getContext(), null);
-            }
-
-            getBinding().statsValue.setText(valueAndUnit.first);
-            getBinding().statsUnit.setText(valueAndUnit.second);
-            getBinding().statsDescriptionMain.setText(R.string.stats_sensors_cadence);
-
-            getBinding().statsDescriptionSecondary.setVisibility(View.VISIBLE);
-            getBinding().statsDescriptionSecondary.setText(sensorName);
-        }
-    }
-
-    public static class SensorPower extends GenericStatisticsViewHolder {
-
-        @Override
-        public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SensorDataSet sensorDataSet = data.getSensorDataSet();
-            String sensorName = getContext().getString(R.string.value_unknown);
-
-            Pair<String, String> valueAndUnit;
-            if (sensorDataSet != null && sensorDataSet.getCyclingPower() != null) {
-                valueAndUnit = StringUtils.getPowerParts(getContext(), sensorDataSet.getCyclingPower().getValue());
-                sensorName = sensorDataSet.getCyclingPower().getSensorNameOrAddress();
-            } else {
-                valueAndUnit = StringUtils.getCadenceParts(getContext(), null);
-            }
-
-            getBinding().statsValue.setText(valueAndUnit.first);
-            getBinding().statsUnit.setText(valueAndUnit.second);
-            getBinding().statsDescriptionMain.setText(R.string.stats_sensors_power);
-
-            getBinding().statsDescriptionSecondary.setVisibility(View.VISIBLE);
-            getBinding().statsDescriptionSecondary.setText(sensorName);
         }
     }
 }

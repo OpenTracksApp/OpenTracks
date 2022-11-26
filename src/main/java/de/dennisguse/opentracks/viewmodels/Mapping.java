@@ -31,9 +31,9 @@ public class Mapping {
         m.put(context.getString(R.string.stats_custom_layout_loss_key), GenericStatisticsViewHolder.Loss::new);
         m.put(context.getString(R.string.stats_custom_layout_coordinates_key), GenericStatisticsViewHolder.Coordinates::new);
 
-        m.put(context.getString(R.string.stats_custom_layout_heart_rate_key), GenericStatisticsViewHolder.SensorHeartRate::new);
-        m.put(context.getString(R.string.stats_custom_layout_cadence_key), GenericStatisticsViewHolder.SensorCadence::new);
-        m.put(context.getString(R.string.stats_custom_layout_power_key), GenericStatisticsViewHolder.SensorPower::new);
+        m.put(context.getString(R.string.stats_custom_layout_heart_rate_key), SensorStatisticsViewHolder.SensorHeartRate::new);
+        m.put(context.getString(R.string.stats_custom_layout_cadence_key), SensorStatisticsViewHolder.SensorCadence::new);
+        m.put(context.getString(R.string.stats_custom_layout_power_key), SensorStatisticsViewHolder.SensorPower::new);
         m.put(context.getString(R.string.stats_custom_layout_clock_key), ClockViewHolder::new);
 
         return m;
