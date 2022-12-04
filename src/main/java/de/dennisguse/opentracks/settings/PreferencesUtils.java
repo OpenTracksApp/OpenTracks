@@ -252,6 +252,10 @@ public class PreferencesUtils {
         return getString(R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothSensorAddressNone());
     }
 
+    public static String getBluetoothPressureAddress() {
+        return getString(R.string.settings_sensor_bluetooth_pressure_key, getBluetoothSensorAddressNone());
+    }
+
     public static String getBluetoothCyclingCadenceSensorAddress() {
         return getString(R.string.settings_sensor_bluetooth_cycling_cadence_key, getBluetoothSensorAddressNone());
     }

@@ -30,6 +30,7 @@
     <string name="settings_reset_key" translatable="false">settingsReset</string>
 
     <string name="settings_sensor_bluetooth_heart_rate_key" translatable="false">bluetoothSensor</string>
+    <string name="settings_sensor_bluetooth_pressure_key" translatable="false">bluetoothPressureSensor</string>
     <string name="settings_sensor_bluetooth_cycling_cadence_key" translatable="false">bluetoothCyclingCadenceSensor</string>
     <string name="settings_sensor_bluetooth_cycling_speed_key" translatable="false">bluetoothCyclingSpeedSensor</string>
     <string name="settings_sensor_bluetooth_cycling_power_key" translatable="false">bluetoothCyclingPowerSensor</string>

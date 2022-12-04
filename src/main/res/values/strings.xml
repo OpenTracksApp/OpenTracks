@@ -328,6 +328,7 @@ limitations under the License.
     <string name="sensor_state_cadence_avg">Avg Cadence</string>
     <string name="sensor_state_cadence_max">Max Cadence</string>
     <string name="sensor_state_heart_rate">Heart rate</string>
+    <string name="sensor_state_pressure">Pressure</string>
     <string name="sensor_state_heart_rate_avg">Avg Heart rate</string>
     <string name="sensor_state_heart_rate_max">Max Heart rate</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
