@@ -63,6 +63,11 @@ public class BluetoothUtils {
             ))
     );
 
+    public static final ServiceMeasurementUUID PRESSURE = new ServiceMeasurementUUID(
+            new UUID(0x181A00001000L, 0x800000805f9b34fbL),
+            new UUID(0x2A6D00001000L, 0x800000805f9b34fbL)
+    );
+
     public static final ServiceMeasurementUUID CYCLING_POWER = new ServiceMeasurementUUID(
             new UUID(0x181800001000L, 0x800000805f9b34fbL),
             new UUID(0x2A6300001000L, 0x800000805f9b34fbL)
@@ -118,6 +123,17 @@ public class BluetoothUtils {
         }
 
         return null;
+    }
+
+    public static Integer parsePressure(BluetoothGattCharacteristic characteristic) {
+        byte[] raw = characteristic.getValue();
+
+        if (raw.length < 4) {
+            return null;
+        }
+
+        Float fPressure = characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_FLOAT, 0);
+        return Math.round(fPressure);
     }
 
     public static SensorDataCyclingPower.Data parseCyclingPower(String address, String sensorName, BluetoothGattCharacteristic characteristic) {
