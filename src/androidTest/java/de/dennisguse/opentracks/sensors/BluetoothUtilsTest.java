@@ -43,6 +43,20 @@ public class BluetoothUtilsTest {
     }
 
     @Test
+    public void parsePressure_Pa() {
+        // given
+        BluetoothGattCharacteristic characteristic = new BluetoothGattCharacteristic(BluetoothUtils.PRESSURE.getServiceUUID(), 0, 0);
+        characteristic.setValue(new byte[]{(byte) 0xB2, (byte) 0x48, (byte) 0x0F, (byte) 0x00});
+
+
+        // when
+        int pressure = BluetoothUtils.parsePressure(characteristic);
+
+        // then
+        assertEquals(1001650, pressure);
+    }
+
+    @Test
     public void parseCyclingSpeedCadence_crankOnly() {
         BluetoothGattCharacteristic characteristic = new BluetoothGattCharacteristic(BluetoothUtils.CYCLING_SPEED_CADENCE.getServiceUUID(), 0, 0);
         characteristic.setValue(new byte[]{0x02, (byte) 0xC8, 0x00, 0x00, 0x00, 0x06, (byte) 0x99});
