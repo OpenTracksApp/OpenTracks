@@ -442,7 +442,6 @@ limitations under the License.
     <string name="settings_gps_summary">Časovni interval, Interval razdalje, Največja razdalja, Točnost</string>
     <string name="settings_sensors_summary">Kolesarski senzorji, Obod kolesa, Tekaški senzorji</string>
     <string name="settings_sensors_title">Bluetooth senzorji</string>
-    <string name="settings_open_tracks_title"></string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Prikaži statistiko na zaklenjenem zaslonu</string>
     <string name="about_preference_title">O OpenTracks</string>
     <string name="export_without_photos">brez fotografij</string>
