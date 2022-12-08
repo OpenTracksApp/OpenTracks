@@ -42,11 +42,14 @@ import java.util.stream.Stream;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
+import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.HeartRateZones;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
-import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayoutIO;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
@@ -280,6 +283,12 @@ public class PreferencesUtils {
     public static boolean getBluetoothFilterEnabled() {
         final boolean DEFAULT = resources.getBoolean(R.bool.settings_sensor_bluetooth_service_filter_enabled_default);
         return getBoolean(R.string.settings_sensor_bluetooth_service_filter_enabled_key, DEFAULT);
+    }
+
+    public static HeartRateZones getHeartRateZones() {
+        final int DEFAULT = Integer.parseInt(resources.getString(R.string.settings_sensor_heart_rate_max_default));
+        int value = getInt(R.string.settings_sensor_heart_rate_max_key, DEFAULT);
+        return new HeartRateZones(HeartRate.of(value));
     }
 
     public static boolean shouldShowStatsOnLockscreen() {
@@ -757,35 +766,35 @@ public class PreferencesUtils {
     /**
      * @return custom layout selected or the first one if any has been selected or the one selected is not exists anymore.
      */
-    public static Layout getCustomLayout() {
+    public static RecordingLayout getCustomLayout() {
         String csvCustomLayouts = getString(R.string.stats_custom_layouts_key, buildDefaultLayout());
         String[] csvLines = csvCustomLayouts.split(CsvLayoutUtils.LINE_SEPARATOR);
         String layoutSelected = getString(R.string.stats_custom_layout_selected_layout_key, null);
         if (layoutSelected == null) {
-            return Layout.fromCsv(csvLines[0], resources);
+            return RecordingLayoutIO.fromCsv(csvLines[0], resources);
         }
 
         for (String line : csvLines) {
-            Layout layout = Layout.fromCsv(line, resources);
-            if (layout.sameName(layoutSelected)) {
-                return layout;
+            RecordingLayout recordingLayout = RecordingLayoutIO.fromCsv(line, resources);
+            if (recordingLayout.sameName(layoutSelected)) {
+                return recordingLayout;
             }
         }
 
-        return Layout.fromCsv(csvLines[0], resources);
+        return RecordingLayoutIO.fromCsv(csvLines[0], resources);
     }
 
-    public static void updateCustomLayouts(@NonNull List<Layout> layouts) {
-        setString(R.string.stats_custom_layouts_key, layouts.stream().map(Layout::toCsv).collect(Collectors.joining(CsvLayoutUtils.LINE_SEPARATOR)));
+    public static void updateCustomLayouts(@NonNull List<RecordingLayout> recordingLayouts) {
+        setString(R.string.stats_custom_layouts_key, RecordingLayoutIO.toCSV(recordingLayouts));
     }
 
-    public static void updateCustomLayout(@NonNull Layout layout) {
-        List<Layout> preferenceLayouts = PreferencesUtils.getAllCustomLayouts();
-        Optional<Layout> layoutToBeUpdated = preferenceLayouts.stream().filter(l -> l.sameName(layout)).findFirst();
+    public static void updateCustomLayout(@NonNull RecordingLayout recordingLayout) {
+        List<RecordingLayout> preferenceRecordingLayouts = PreferencesUtils.getAllCustomLayouts();
+        Optional<RecordingLayout> layoutToBeUpdated = preferenceRecordingLayouts.stream().filter(l -> l.sameName(recordingLayout)).findFirst();
         if (layoutToBeUpdated.isPresent()) {
-            layoutToBeUpdated.get().replaceAllFields(layout.getFields());
-            layoutToBeUpdated.get().setColumnsPerRow(layout.getColumnsPerRow());
-            PreferencesUtils.updateCustomLayouts(preferenceLayouts);
+            layoutToBeUpdated.get().replaceAllFields(recordingLayout.getFields());
+            layoutToBeUpdated.get().setColumnsPerRow(recordingLayout.getColumnsPerRow());
+            PreferencesUtils.updateCustomLayouts(preferenceRecordingLayouts);
         }
     }
 
@@ -799,19 +808,19 @@ public class PreferencesUtils {
         setString(R.string.stats_custom_layout_selected_layout_key, layoutName);
     }
 
-    public static List<Layout> getAllCustomLayouts() {
-        List<Layout> layouts = new ArrayList<>();
+    public static List<RecordingLayout> getAllCustomLayouts() {
+        List<RecordingLayout> recordingLayouts = new ArrayList<>();
         String csvCustomLayout = getString(R.string.stats_custom_layouts_key, buildDefaultLayout());
         String[] csvLines = csvCustomLayout.split(CsvLayoutUtils.LINE_SEPARATOR);
         for (String line : csvLines) {
-            layouts.add(Layout.fromCsv(line, resources));
+            recordingLayouts.add(RecordingLayoutIO.fromCsv(line, resources));
         }
 
-        return layouts;
+        return recordingLayouts;
     }
 
     public static List<String> getAllCustomLayoutNames() {
-        return getAllCustomLayouts().stream().map(Layout::getName).collect(Collectors.toList());
+        return getAllCustomLayouts().stream().map(RecordingLayout::getName).collect(Collectors.toList());
     }
 
     public static void resetCustomLayoutPreferences() {

@@ -17,14 +17,14 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public class SettingsCustomLayoutListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Layout> layoutList;
+    private List<RecordingLayout> recordingLayoutList;
     private final Context context;
     private final SettingsCustomLayoutProfileClickListener itemClickListener;
 
     public SettingsCustomLayoutListAdapter(Context context, SettingsCustomLayoutProfileClickListener itemClickListener) {
         this.context = context;
         this.itemClickListener = itemClickListener;
-        layoutList = PreferencesUtils.getAllCustomLayouts();
+        recordingLayoutList = PreferencesUtils.getAllCustomLayouts();
     }
 
     @NonNull
@@ -37,37 +37,37 @@ public class SettingsCustomLayoutListAdapter extends RecyclerView.Adapter<Recycl
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         SettingsCustomLayoutListAdapter.ViewHolder viewHolder = (SettingsCustomLayoutListAdapter.ViewHolder) holder;
-        Layout layout = layoutList.get(position);
-        viewHolder.itemView.setTag(layout.getName());
-        viewHolder.title.setText(layout.getName());
+        RecordingLayout recordingLayout = recordingLayoutList.get(position);
+        viewHolder.itemView.setTag(recordingLayout.getName());
+        viewHolder.title.setText(recordingLayout.getName());
     }
 
     @Override
     public int getItemCount() {
-        if (layoutList == null) {
+        if (recordingLayoutList == null) {
             return 0;
         }
-        return layoutList.size();
+        return recordingLayoutList.size();
     }
 
-    public List<Layout> getLayouts() {
-        return layoutList;
+    public List<RecordingLayout> getLayouts() {
+        return recordingLayoutList;
     }
 
     public void reloadLayouts() {
-        layoutList = PreferencesUtils.getAllCustomLayouts();
+        recordingLayoutList = PreferencesUtils.getAllCustomLayouts();
         notifyDataSetChanged();
     }
 
     public void removeLayout(int position) {
-        layoutList.remove(position);
-        PreferencesUtils.updateCustomLayouts(layoutList);
+        recordingLayoutList.remove(position);
+        PreferencesUtils.updateCustomLayouts(recordingLayoutList);
         notifyDataSetChanged();
     }
 
-    public void restoreItem(Layout layout, int position) {
-        layoutList.add(position, layout);
-        PreferencesUtils.updateCustomLayouts(layoutList);
+    public void restoreItem(RecordingLayout recordingLayout, int position) {
+        recordingLayoutList.add(position, recordingLayout);
+        PreferencesUtils.updateCustomLayouts(recordingLayoutList);
         notifyDataSetChanged();
     }
 
@@ -83,12 +83,12 @@ public class SettingsCustomLayoutListAdapter extends RecyclerView.Adapter<Recycl
         @Override
         public void onClick(View view) {
             String profile = (String) view.getTag();
-            Optional<Layout> optionalLayout = layoutList.stream().filter(layout -> layout.sameName(new Layout(profile))).findFirst();
+            Optional<RecordingLayout> optionalLayout = recordingLayoutList.stream().filter(layout -> layout.sameName(new RecordingLayout(profile))).findFirst();
             optionalLayout.ifPresent(itemClickListener::onSettingsCustomLayoutProfileClicked);
         }
     }
 
     public interface SettingsCustomLayoutProfileClickListener {
-        void onSettingsCustomLayoutProfileClicked(@NonNull Layout layout);
+        void onSettingsCustomLayoutProfileClicked(@NonNull RecordingLayout recordingLayout);
     }
 }

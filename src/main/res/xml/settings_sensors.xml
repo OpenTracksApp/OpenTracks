@@ -9,6 +9,13 @@
             android:defaultValue="@string/sensor_type_value_none"
             android:key="@string/settings_sensor_bluetooth_heart_rate_key"
             android:title="@string/sensor_state_heart_rate" />
+        <EditTextPreference
+            android:defaultValue="@string/settings_sensor_heart_rate_max_default"
+            android:inputType="number"
+            android:key="@string/settings_sensor_heart_rate_max_key"
+            android:title="@string/settings_sensor_heart_rate_max"
+            app:useSimpleSummaryProvider="true" />
+            
         <de.dennisguse.opentracks.settings.bluetooth.BluetoothLePressurePreference
             android:defaultValue="@string/sensor_type_value_none"
             android:key="@string/settings_sensor_bluetooth_pressure_key"

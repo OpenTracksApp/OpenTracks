@@ -589,7 +589,6 @@ limitations under the License.
         <item quantity="one">1 deniz mili</item>
         <item quantity="other">%1$.1f deniz mili</item>
     </plurals>
-    <string name="image_discard"/>
     <string name="settings_public_api_package_title">Genel API için paket adı</string>
     <string name="show_on_dashboard_not_installed">OpenTracks Gösterge Paneli API\'sini destekleyen hiçbir uygulama yüklü değil.</string>
 </resources>

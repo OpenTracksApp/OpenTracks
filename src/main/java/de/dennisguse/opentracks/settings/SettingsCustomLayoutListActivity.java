@@ -23,7 +23,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.databinding.ActivitySettingsCustomLayoutListBinding;
-import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.SettingsCustomLayoutListAdapter;
 import de.dennisguse.opentracks.ui.util.RecyclerViewSwipeDeleteCallback;
 
@@ -96,7 +96,7 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 final int position = viewHolder.getAdapterPosition();
-                final Layout item = adapter.getLayouts().get(position);
+                final RecordingLayout item = adapter.getLayouts().get(position);
 
                 adapter.removeLayout(position);
 
@@ -150,9 +150,9 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
     }
 
     @Override
-    public void onSettingsCustomLayoutProfileClicked(@NonNull Layout layout) {
+    public void onSettingsCustomLayoutProfileClicked(@NonNull RecordingLayout recordingLayout) {
         Intent intent = new Intent(this, SettingsCustomLayoutEditActivity.class);
-        intent.putExtra(SettingsCustomLayoutEditActivity.EXTRA_LAYOUT, layout);
+        intent.putExtra(SettingsCustomLayoutEditActivity.EXTRA_LAYOUT, recordingLayout);
         startActivity(intent);
     }
 

@@ -7,5 +7,5 @@ Changes:
 Bugfix:
 - Speech announcements use MAY_DUCK (again)
 - ChartView shows markers (again)
-- Fixed landscape layout of TrackListActivity
+- Fixed landscape recordingLayout of TrackListActivity
 - Request legacy file API behavior (necessary for Android 10)

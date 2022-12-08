@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,16 +10,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.gridlayout.widget.GridLayout;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.adapters.StatisticsAdapter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
 import de.dennisguse.opentracks.services.RecordingData;
@@ -26,9 +25,10 @@ import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
-import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
-import de.dennisguse.opentracks.viewmodels.StatisticData;
-import de.dennisguse.opentracks.viewmodels.StatisticsDataModel;
+import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
+import de.dennisguse.opentracks.viewmodels.Mapping;
+import de.dennisguse.opentracks.viewmodels.StatisticViewHolder;
 
 /**
  * A fragment to display track statistics to the user for a currently recording {@link Track}.
@@ -48,32 +48,22 @@ public class StatisticsRecordingFragment extends Fragment {
 
     private RecordingData recordingData = TrackRecordingService.NOT_RECORDING;
 
-    private Layout layout;
+    private final List<StatisticViewHolder<?>> viewHolders = new LinkedList<>();
+
+    private RecordingLayout recordingLayout;
 
     private StatisticsRecordingBinding viewBinding;
-    private StatisticsAdapter statisticsAdapter;
-    private GridLayoutManager gridLayoutManager;
-    private StatisticsDataModel viewModel;
-    private LiveData<List<StatisticData>> statisticsLiveData;
 
     private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
-        boolean updateUInecessary = false;
-
         if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
-            updateUInecessary = true;
             unitSystem = PreferencesUtils.getUnitSystem();
+            updateDataOnUI();
         }
 
         if (PreferencesUtils.isKey(R.string.stats_custom_layouts_key, key) || PreferencesUtils.isKey(R.string.stats_custom_layout_selected_layout_key, key)) {
-            updateUInecessary = true;
-            layout = PreferencesUtils.getCustomLayout();
-            gridLayoutManager.setSpanCount(layout.getColumnsPerRow());
-        }
-
-        if (key != null && updateUInecessary && isResumed()) {
-            getActivity().runOnUiThread(this::updateUI);
+            onLayoutChanged(PreferencesUtils.getCustomLayout());
         }
     };
 
@@ -84,30 +74,11 @@ public class StatisticsRecordingFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
-
-        statisticsAdapter = new StatisticsAdapter(getContext());
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewBinding = StatisticsRecordingBinding.inflate(inflater, container, false);
-
-        RecyclerView recyclerView = viewBinding.statsRecyclerView;
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.VERTICAL));
-        layout = PreferencesUtils.getCustomLayout();
-        gridLayoutManager = new GridLayoutManager(getContext(), layout.getColumnsPerRow());
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (statisticsAdapter.isItemWide(position)) {
-                    return layout.getColumnsPerRow();
-                }
-                return 1;
-            }
-        });
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(statisticsAdapter);
-
         return viewBinding.getRoot();
     }
 
@@ -116,10 +87,6 @@ public class StatisticsRecordingFragment extends Fragment {
         super.onResume();
 
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-
-        viewModel = new ViewModelProvider(getActivity()).get(StatisticsDataModel.class);
-        statisticsLiveData = viewModel.getStatsData();
-        statisticsLiveData.observe(getActivity(), statsDataList -> statisticsAdapter.swapData(statsDataList));
 
         trackRecordingServiceConnection.startConnection(getContext());
     }
@@ -133,6 +100,7 @@ public class StatisticsRecordingFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
+        viewHolders.clear();
         trackRecordingServiceConnection.unbind(getContext());
     }
 
@@ -146,17 +114,56 @@ public class StatisticsRecordingFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         trackRecordingServiceConnection = null;
-        viewModel = null;
-
-        if (statisticsLiveData != null) {
-            statisticsLiveData.removeObservers(getActivity());
-        }
-        statisticsLiveData = null;
     }
 
-    private void updateUI() {
-        if (isResumed()) {
-            viewModel.update(recordingData, layout, unitSystem);
+    private void onLayoutChanged(@NonNull RecordingLayout newRecordingLayout) {
+        if (newRecordingLayout.equals(recordingLayout)) {
+            return;
+        }
+        recordingLayout = newRecordingLayout;
+
+        viewBinding.statsLayout.setColumnCount(recordingLayout.getColumnsPerRow());
+
+        viewBinding.statsLayout.removeAllViews(); //Let's start from scratch
+        viewHolders.clear();
+
+        Map<String, Callable<StatisticViewHolder<?>>> m = Mapping.create(getContext());
+
+        int rowIndex = 0;
+        int columnIndex = 0;
+        for (int i = 0; i < recordingLayout.getFields().size(); i++) {
+            DataField dataField = recordingLayout.getFields().get(i);
+            GridLayout.LayoutParams param = new GridLayout.LayoutParams();
+            param.setGravity(Gravity.FILL_HORIZONTAL);
+            param.width = 0;
+
+            if (dataField.isWide()) {
+                rowIndex++;
+                param.columnSpec = GridLayout.spec(0, recordingLayout.getColumnsPerRow(), 1);
+                param.rowSpec = GridLayout.spec(rowIndex, 1, 1);
+                columnIndex = 0;
+                rowIndex++;
+            } else {
+                if (columnIndex >= recordingLayout.getColumnsPerRow()) {
+                    columnIndex = 0;
+                    rowIndex++;
+                }
+                param.columnSpec = GridLayout.spec(columnIndex, 1, 1);
+                param.rowSpec = GridLayout.spec(rowIndex, 1, 1);
+
+                columnIndex++;
+            }
+
+            try {
+                StatisticViewHolder<?> viewHolder = m.get(dataField.getKey()).call();
+                viewHolder.initialize(getContext(), getLayoutInflater());
+                viewHolder.configureUI(dataField);
+                viewHolders.add(viewHolder);
+
+                viewBinding.statsLayout.addView(viewHolder.getView(), param);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -169,6 +176,12 @@ public class StatisticsRecordingFragment extends Fragment {
             sharedPreferenceChangeListener.onSharedPreferenceChanged(null, getString(R.string.stats_rate_key));
         }
 
-        updateUI();
+        updateDataOnUI();
+    }
+
+    private void updateDataOnUI() {
+        if (isResumed()) {
+            viewHolders.forEach(i -> i.onChanged(unitSystem, recordingData));
+        }
     }
 }

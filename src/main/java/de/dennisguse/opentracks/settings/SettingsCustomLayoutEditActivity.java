@@ -17,7 +17,7 @@ import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.databinding.ActivitySettingsCustomLayoutBinding;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
-import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.SettingsCustomLayoutEditAdapter;
 import de.dennisguse.opentracks.ui.util.ArrayAdapterFilterDisabled;
 import de.dennisguse.opentracks.util.StatisticsUtils;
@@ -30,8 +30,8 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
     private SettingsCustomLayoutEditAdapter adapterFieldsVisible;
     private SettingsCustomLayoutEditAdapter adapterFieldsHidden;
     private String profile;
-    private Layout layoutFieldsVisible;
-    private Layout layoutFieldsHidden;
+    private RecordingLayout recordingLayoutFieldsVisible;
+    private RecordingLayout recordingLayoutFieldsHidden;
     private int numColumns;
 
     @Override
@@ -39,12 +39,12 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
         super.onCreate(savedInstanceState);
 
         // Recycler view with visible stats.
-        Layout layout = getIntent().getParcelableExtra(EXTRA_LAYOUT);
-        profile = layout.getName();
-        layoutFieldsVisible = StatisticsUtils.filterVisible(layout, true);
-        adapterFieldsVisible = new SettingsCustomLayoutEditAdapter(this, this, layoutFieldsVisible);
+        RecordingLayout recordingLayout = getIntent().getParcelableExtra(EXTRA_LAYOUT);
+        profile = recordingLayout.getName();
+        recordingLayoutFieldsVisible = StatisticsUtils.filterVisible(recordingLayout, true);
+        adapterFieldsVisible = new SettingsCustomLayoutEditAdapter(this, this, recordingLayoutFieldsVisible);
 
-        numColumns = layout.getColumnsPerRow();
+        numColumns = recordingLayout.getColumnsPerRow();
         RecyclerView recyclerViewVisible = viewBinding.recyclerViewVisible;
         gridLayoutManager = new GridLayoutManager(this, numColumns);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -65,7 +65,7 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
-                layoutFieldsVisible = adapterFieldsVisible.move(fromPosition, toPosition);
+                recordingLayoutFieldsVisible = adapterFieldsVisible.move(fromPosition, toPosition);
                 return true;
             }
 
@@ -90,8 +90,8 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
         viewBinding.rowsOptions.setText(rowsOptionAdapter.getItem(numColumns - 1).toString(), false);
 
         // Recycler view with not visible stats.
-        layoutFieldsHidden = StatisticsUtils.filterVisible(layout, false);
-        adapterFieldsHidden = new SettingsCustomLayoutEditAdapter(this, this, layoutFieldsHidden);
+        recordingLayoutFieldsHidden = StatisticsUtils.filterVisible(recordingLayout, false);
+        adapterFieldsHidden = new SettingsCustomLayoutEditAdapter(this, this, recordingLayoutFieldsHidden);
         RecyclerView recyclerViewNotVisible = viewBinding.recyclerViewNotVisible;
         recyclerViewNotVisible.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewNotVisible.setAdapter(adapterFieldsHidden);
@@ -103,18 +103,18 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
     @Override
     protected void onPause() {
         super.onPause();
-        if (!layoutFieldsVisible.getFields().isEmpty() || !layoutFieldsHidden.getFields().isEmpty()) {
-            Layout layout = new Layout(profile, numColumns);
-            layout.addFields(layoutFieldsVisible.getFields());
-            layout.addFields(layoutFieldsHidden.getFields());
-            PreferencesUtils.updateCustomLayout(layout);
+        if (!recordingLayoutFieldsVisible.getFields().isEmpty() || !recordingLayoutFieldsHidden.getFields().isEmpty()) {
+            RecordingLayout recordingLayout = new RecordingLayout(profile, numColumns);
+            recordingLayout.addFields(recordingLayoutFieldsVisible.getFields());
+            recordingLayout.addFields(recordingLayoutFieldsHidden.getFields());
+            PreferencesUtils.updateCustomLayout(recordingLayout);
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        layoutFieldsVisible = null;
+        recordingLayoutFieldsVisible = null;
     }
 
     @Override
@@ -132,24 +132,24 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
                         if (which == 0) {
                             field.togglePrimary();
                         } else {
-                            layoutFieldsVisible.removeField(field);
+                            recordingLayoutFieldsVisible.removeField(field);
                             field.toggleVisibility();
-                            layoutFieldsHidden.addField(field);
+                            recordingLayoutFieldsHidden.addField(field);
                         }
 
-                        adapterFieldsVisible.swapValues(layoutFieldsVisible);
-                        adapterFieldsHidden.swapValues(layoutFieldsHidden);
+                        adapterFieldsVisible.swapValues(recordingLayoutFieldsVisible);
+                        adapterFieldsHidden.swapValues(recordingLayoutFieldsHidden);
                     })
                     .create()
                     .show();
         } else {
-            layoutFieldsHidden.removeField(field);
+            recordingLayoutFieldsHidden.removeField(field);
             field.toggleVisibility();
-            layoutFieldsVisible.addField(field);
+            recordingLayoutFieldsVisible.addField(field);
             viewBinding.scrollView.fullScroll(ScrollView.FOCUS_UP);
 
-            adapterFieldsVisible.swapValues(layoutFieldsVisible);
-            adapterFieldsHidden.swapValues(layoutFieldsHidden);
+            adapterFieldsVisible.swapValues(recordingLayoutFieldsVisible);
+            adapterFieldsHidden.swapValues(recordingLayoutFieldsHidden);
         }
     }
 }

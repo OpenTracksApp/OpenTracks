@@ -45,6 +45,9 @@
         true
     </bool>
 
+    <string name="settings_sensor_heart_rate_max_key" translatable="false">maxHeartRate</string>
+    <string name="settings_sensor_heart_rate_max_default" translatable="false">220</string>
+
     <string name="show_on_map_format_key" translatable="false">showOnMapFormatKey</string>
 
     <string name="total_rows_deleted_key" translatable="false">totalRowsDeletedKey</string>

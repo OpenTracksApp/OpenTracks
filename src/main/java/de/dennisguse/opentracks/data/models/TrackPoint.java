@@ -385,10 +385,6 @@ public class TrackPoint {
         return this;
     }
 
-    public boolean hasSensorData() {
-        return hasHeartRate() || hasCadence() || hasPower();
-    }
-
     public boolean hasHeartRate() {
         return heartRate != null;
     }

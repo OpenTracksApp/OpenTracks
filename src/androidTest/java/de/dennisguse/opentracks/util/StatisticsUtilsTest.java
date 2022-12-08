@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
-import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 
 @RunWith(AndroidJUnit4.class)
 public class StatisticsUtilsTest extends TestCase {
@@ -44,16 +44,16 @@ public class StatisticsUtilsTest extends TestCase {
     @Test
     public void testFilterVisible() {
         // given
-        Layout layout = new Layout("profile");
-        layout.addField(new DataField("key1", "title1", true, true, false));
-        layout.addField(new DataField("key2", "title2", false, true, false));
-        layout.addField(new DataField("key3", "title3", true, true, false));
-        layout.addField(new DataField("key4", "title4", false, true, false));
-        layout.addField(new DataField("key5", "title5", true, true, false));
+        RecordingLayout recordingLayout = new RecordingLayout("profile");
+        recordingLayout.addField(new DataField("key1", true, true, false));
+        recordingLayout.addField(new DataField("key2", false, true, false));
+        recordingLayout.addField(new DataField("key3", true, true, false));
+        recordingLayout.addField(new DataField("key4", false, true, false));
+        recordingLayout.addField(new DataField("key5", true, true, false));
 
         // when
-        Layout resultTrue = StatisticsUtils.filterVisible(layout, true);
-        Layout resultFalse = StatisticsUtils.filterVisible(layout, false);
+        RecordingLayout resultTrue = StatisticsUtils.filterVisible(recordingLayout, true);
+        RecordingLayout resultFalse = StatisticsUtils.filterVisible(recordingLayout, false);
 
         // then
         assertEquals(resultTrue.getFields().size(), 3);

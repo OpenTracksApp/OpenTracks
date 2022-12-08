@@ -22,7 +22,8 @@ import java.util.List;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
-import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayoutIO;
 
 @RunWith(AndroidJUnit4.class)
 public class PreferencesUtilsTest {
@@ -85,13 +86,13 @@ public class PreferencesUtilsTest {
         editor.commit();
 
         // when
-        List<Layout> layouts = PreferencesUtils.getAllCustomLayouts();
+        List<RecordingLayout> recordingLayouts = PreferencesUtils.getAllCustomLayouts();
 
         // then
-        assertEquals(layouts.size(), 1);
-        assertTrue(layouts.get(0).getFields().size() > 0);
-        assertEquals(layouts.get(0).getName(), context.getString(R.string.stats_custom_layout_default_layout));
-        assertTrue(layouts.get(0).getFields().stream().anyMatch(DataField::isVisible));
+        assertEquals(recordingLayouts.size(), 1);
+        assertTrue(recordingLayouts.get(0).getFields().size() > 0);
+        assertEquals(recordingLayouts.get(0).getName(), context.getString(R.string.stats_custom_layout_default_layout));
+        assertTrue(recordingLayouts.get(0).getFields().stream().anyMatch(DataField::isVisible));
     }
 
     @Test
@@ -103,12 +104,12 @@ public class PreferencesUtilsTest {
         editor.commit();
 
         // when
-        Layout layout = PreferencesUtils.getCustomLayout();
+        RecordingLayout recordingLayout = PreferencesUtils.getCustomLayout();
 
         // then
-        assertTrue(layout.getFields().size() > 0);
-        assertEquals(layout.getName(), context.getString(R.string.stats_custom_layout_default_layout));
-        assertTrue(layout.getFields().stream().anyMatch(DataField::isVisible));
+        assertTrue(recordingLayout.getFields().size() > 0);
+        assertEquals(recordingLayout.getName(), context.getString(R.string.stats_custom_layout_default_layout));
+        assertTrue(recordingLayout.getFields().stream().anyMatch(DataField::isVisible));
     }
 
     @Test
@@ -126,28 +127,28 @@ public class PreferencesUtilsTest {
         editor.apply();
 
         // when
-        Layout layout = PreferencesUtils.getCustomLayout();
+        RecordingLayout recordingLayout = PreferencesUtils.getCustomLayout();
 
         // then
-        assertEquals(layout.getFields().size(), 4);
-        assertEquals(layout.getName(), "run");
-        assertEquals(layout.getColumnsPerRow(), 2);
+        assertEquals(recordingLayout.getFields().size(), 4);
+        assertEquals(recordingLayout.getName(), "run");
+        assertEquals(recordingLayout.getColumnsPerRow(), 2);
 
-        assertEquals(layout.getFields().get(0).getKey(), context.getString(R.string.stats_custom_layout_moving_time_key));
-        assertTrue(layout.getFields().get(0).isVisible());
-        assertTrue(layout.getFields().get(0).isPrimary());
+        assertEquals(recordingLayout.getFields().get(0).getKey(), context.getString(R.string.stats_custom_layout_moving_time_key));
+        assertTrue(recordingLayout.getFields().get(0).isVisible());
+        assertTrue(recordingLayout.getFields().get(0).isPrimary());
 
-        assertEquals(layout.getFields().get(1).getKey(), context.getString(R.string.stats_custom_layout_distance_key));
-        assertTrue(layout.getFields().get(1).isVisible());
-        assertFalse(layout.getFields().get(1).isPrimary());
+        assertEquals(recordingLayout.getFields().get(1).getKey(), context.getString(R.string.stats_custom_layout_distance_key));
+        assertTrue(recordingLayout.getFields().get(1).isVisible());
+        assertFalse(recordingLayout.getFields().get(1).isPrimary());
 
-        assertEquals(layout.getFields().get(2).getKey(), context.getString(R.string.stats_custom_layout_average_moving_speed_key));
-        assertFalse(layout.getFields().get(2).isVisible());
-        assertTrue(layout.getFields().get(2).isPrimary());
+        assertEquals(recordingLayout.getFields().get(2).getKey(), context.getString(R.string.stats_custom_layout_average_moving_speed_key));
+        assertFalse(recordingLayout.getFields().get(2).isVisible());
+        assertTrue(recordingLayout.getFields().get(2).isPrimary());
 
-        assertEquals(layout.getFields().get(3).getKey(), context.getString(R.string.stats_custom_layout_speed_key));
-        assertFalse(layout.getFields().get(3).isVisible());
-        assertFalse(layout.getFields().get(3).isPrimary());
+        assertEquals(recordingLayout.getFields().get(3).getKey(), context.getString(R.string.stats_custom_layout_speed_key));
+        assertFalse(recordingLayout.getFields().get(3).isVisible());
+        assertFalse(recordingLayout.getFields().get(3).isPrimary());
     }
 
     @Test
@@ -165,44 +166,44 @@ public class PreferencesUtilsTest {
         editor.apply();
 
         // when
-        Layout layout = PreferencesUtils.getCustomLayout();
+        RecordingLayout recordingLayout = PreferencesUtils.getCustomLayout();
 
         // then
-        assertEquals(layout.getFields().size(), 4);
-        assertEquals(layout.getName(), "walking");
-        assertEquals(layout.getColumnsPerRow(), 2);
+        assertEquals(recordingLayout.getFields().size(), 4);
+        assertEquals(recordingLayout.getName(), "walking");
+        assertEquals(recordingLayout.getColumnsPerRow(), 2);
 
-        assertEquals(layout.getFields().get(0).getKey(), context.getString(R.string.stats_custom_layout_moving_time_key));
-        assertTrue(layout.getFields().get(0).isVisible());
-        assertTrue(layout.getFields().get(0).isPrimary());
+        assertEquals(recordingLayout.getFields().get(0).getKey(), context.getString(R.string.stats_custom_layout_moving_time_key));
+        assertTrue(recordingLayout.getFields().get(0).isVisible());
+        assertTrue(recordingLayout.getFields().get(0).isPrimary());
 
-        assertEquals(layout.getFields().get(1).getKey(), context.getString(R.string.stats_custom_layout_distance_key));
-        assertTrue(layout.getFields().get(1).isVisible());
-        assertFalse(layout.getFields().get(1).isPrimary());
+        assertEquals(recordingLayout.getFields().get(1).getKey(), context.getString(R.string.stats_custom_layout_distance_key));
+        assertTrue(recordingLayout.getFields().get(1).isVisible());
+        assertFalse(recordingLayout.getFields().get(1).isPrimary());
 
-        assertEquals(layout.getFields().get(2).getKey(), context.getString(R.string.stats_custom_layout_coordinates_key));
-        assertFalse(layout.getFields().get(2).isVisible());
-        assertTrue(layout.getFields().get(2).isPrimary());
-        assertTrue(layout.getFields().get(2).isWide());
+        assertEquals(recordingLayout.getFields().get(2).getKey(), context.getString(R.string.stats_custom_layout_coordinates_key));
+        assertFalse(recordingLayout.getFields().get(2).isVisible());
+        assertTrue(recordingLayout.getFields().get(2).isPrimary());
+        assertTrue(recordingLayout.getFields().get(2).isWide());
 
-        assertEquals(layout.getFields().get(3).getKey(), context.getString(R.string.stats_custom_layout_speed_key));
-        assertFalse(layout.getFields().get(3).isVisible());
-        assertFalse(layout.getFields().get(3).isPrimary());
+        assertEquals(recordingLayout.getFields().get(3).getKey(), context.getString(R.string.stats_custom_layout_speed_key));
+        assertFalse(recordingLayout.getFields().get(3).isVisible());
+        assertFalse(recordingLayout.getFields().get(3).isPrimary());
     }
 
     @Test
     public void testSetCustomLayout() {
         // given
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Layout layoutSrc = new Layout("road cycling");
-        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_moving_time_key), context.getString(R.string.stats_moving_time), true, true, false));
-        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_distance_key), context.getString(R.string.stats_distance), true, false, false));
-        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_average_moving_speed_key), context.getString(R.string.stats_average_moving_speed), false, true, false));
-        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_speed_key), context.getString(R.string.stats_speed), false, false, false));
+        RecordingLayout recordingLayoutSrc = new RecordingLayout("road cycling");
+        recordingLayoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_moving_time_key), true, true, false));
+        recordingLayoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_distance_key), true, false, false));
+        recordingLayoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_average_moving_speed_key), false, true, false));
+        recordingLayoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_speed_key), false, false, false));
 
         // when
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(context.getString(R.string.stats_custom_layouts_key), layoutSrc.toCsv());
+        editor.putString(context.getString(R.string.stats_custom_layouts_key), recordingLayoutSrc.toCsv());
         editor.commit();
 
         // then
@@ -215,13 +216,13 @@ public class PreferencesUtilsTest {
                 + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",0,1,0;"
                 + context.getString(R.string.stats_custom_layout_speed_key) + ",0,0,0;");
 
-        Layout layoutDst = PreferencesUtils.getCustomLayout();
-        assertEquals(layoutSrc.getName(), layoutDst.getName());
-        assertEquals(layoutSrc.getFields().size(), layoutDst.getFields().size());
-        for (int i = 0; i < layoutSrc.getFields().size(); i++) {
-            assertEquals(layoutSrc.getFields().get(i).getKey(), layoutDst.getFields().get(i).getKey());
-            assertEquals(layoutSrc.getFields().get(i).isVisible(), layoutDst.getFields().get(i).isVisible());
-            assertEquals(layoutSrc.getFields().get(i).isPrimary(), layoutDst.getFields().get(i).isPrimary());
+        RecordingLayout recordingLayoutDst = PreferencesUtils.getCustomLayout();
+        assertEquals(recordingLayoutSrc.getName(), recordingLayoutDst.getName());
+        assertEquals(recordingLayoutSrc.getFields().size(), recordingLayoutDst.getFields().size());
+        for (int i = 0; i < recordingLayoutSrc.getFields().size(); i++) {
+            assertEquals(recordingLayoutSrc.getFields().get(i).getKey(), recordingLayoutDst.getFields().get(i).getKey());
+            assertEquals(recordingLayoutSrc.getFields().get(i).isVisible(), recordingLayoutDst.getFields().get(i).isVisible());
+            assertEquals(recordingLayoutSrc.getFields().get(i).isPrimary(), recordingLayoutDst.getFields().get(i).isPrimary());
         }
     }
 
@@ -247,7 +248,7 @@ public class PreferencesUtilsTest {
         editor.putString(context.getString(R.string.stats_custom_layouts_key), cyclingProfile + "\n" + runningProfile);
         editor.apply();
 
-        List<Layout> layoutsBefore = PreferencesUtils.getAllCustomLayouts();
+        List<RecordingLayout> layoutsBefore = PreferencesUtils.getAllCustomLayouts();
 
         // when cyling profile is updated
         String cyclingProfileUpdated = "cycling;2;"
@@ -256,14 +257,14 @@ public class PreferencesUtilsTest {
                 + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",0,0;"
                 + context.getString(R.string.stats_custom_layout_speed_key) + ",0,0;";
 
-        List<Layout> layoutsToBeUpdated = new ArrayList<>();
-        layoutsToBeUpdated.add(Layout.fromCsv(cyclingProfileUpdated, resources));
-        layoutsToBeUpdated.add(Layout.fromCsv(runningProfile, resources));
+        List<RecordingLayout> layoutsToBeUpdated = new ArrayList<>();
+        layoutsToBeUpdated.add(RecordingLayoutIO.fromCsv(cyclingProfileUpdated, resources));
+        layoutsToBeUpdated.add(RecordingLayoutIO.fromCsv(runningProfile, resources));
 
         PreferencesUtils.updateCustomLayouts(layoutsToBeUpdated);
 
         // then only updated profile is modified in the custom layouts
-        List<Layout> layoutsAfter = PreferencesUtils.getAllCustomLayouts();
+        List<RecordingLayout> layoutsAfter = PreferencesUtils.getAllCustomLayouts();
 
         assertEquals(layoutsBefore.size(), 2);
         assertEquals(layoutsAfter.size(), 2);
@@ -294,7 +295,7 @@ public class PreferencesUtilsTest {
         editor.putString(context.getString(R.string.stats_custom_layouts_key), cyclingProfile + "\n" + runningProfile);
         editor.apply();
 
-        List<Layout> layoutsBefore = PreferencesUtils.getAllCustomLayouts();
+        List<RecordingLayout> layoutsBefore = PreferencesUtils.getAllCustomLayouts();
 
         // when cyling profile is updated
         String cyclingProfileUpdated = "cycling;2;"
@@ -302,11 +303,11 @@ public class PreferencesUtilsTest {
                 + context.getString(R.string.stats_custom_layout_distance_key) + ",0,0;"
                 + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",0,0;"
                 + context.getString(R.string.stats_custom_layout_speed_key) + ",0,0;";
-        Layout layoutToBeUpdated = Layout.fromCsv(cyclingProfileUpdated, resources);
-        PreferencesUtils.updateCustomLayout(layoutToBeUpdated);
+        RecordingLayout recordingLayoutToBeUpdated = RecordingLayoutIO.fromCsv(cyclingProfileUpdated, resources);
+        PreferencesUtils.updateCustomLayout(recordingLayoutToBeUpdated);
 
         // then only updated profile is modified in the custom layouts
-        List<Layout> layoutsAfter = PreferencesUtils.getAllCustomLayouts();
+        List<RecordingLayout> layoutsAfter = PreferencesUtils.getAllCustomLayouts();
 
         assertEquals(layoutsBefore.size(), 2);
         assertEquals(layoutsAfter.size(), 2);
@@ -337,9 +338,9 @@ public class PreferencesUtilsTest {
         editor.apply();
 
         // when it gets the custom layout
-        Layout layout = PreferencesUtils.getCustomLayout();
+        RecordingLayout recordingLayout = PreferencesUtils.getCustomLayout();
 
         // then the first one was returned
-        assertEquals(layout.getName(), "cycling");
+        assertEquals(recordingLayout.getName(), "cycling");
     }
 }
