@@ -50,7 +50,7 @@ public class GPSHandlerTest {
         Mockito.when(trackPointCreator.createNow())
                 .thenReturn(Instant.now());
 
-        locationHandler.onStart(context, new Handler());
+        locationHandler.start(context, new Handler());
     }
 
     /**

@@ -52,7 +52,7 @@ import de.dennisguse.opentracks.util.PermissionRequester;
  *
  * @author Sandor Dornbush
  */
-public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.SensorDataObserver {
+public class BluetoothRemoteSensorManager implements SensorConnector, BluetoothConnectionManager.SensorDataObserver {
 
     private static final String TAG = BluetoothRemoteSensorManager.class.getSimpleName();
 
@@ -121,14 +121,16 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         bluetoothAdapter = BluetoothUtils.getAdapter(context);
     }
 
-    public void start() {
+    @Override
+    public void start(Context context, Handler handler) {
         started = true;
 
         //Registering triggers connection startup
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
-    public synchronized void stop() {
+    @Override
+    public synchronized void stop(Context context) {
         heartRate.disconnect();
         cyclingCadence.disconnect();
         cyclingSpeed.disconnect();

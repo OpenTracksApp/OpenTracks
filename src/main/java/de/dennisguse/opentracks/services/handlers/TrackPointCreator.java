@@ -52,12 +52,12 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
     public synchronized void start(@NonNull Context context, @NonNull Handler handler) {
         this.context = context;
 
-        gpsHandler.onStart(context, handler);
+        gpsHandler.start(context, handler);
 
         remoteSensorManager = new BluetoothRemoteSensorManager(context, handler, this);
         altitudeSumManager = new AltitudeSumManager();
 
-        remoteSensorManager.start();
+        remoteSensorManager.start(context, handler);
         altitudeSumManager.start(context, handler);
 
     }
@@ -94,10 +94,10 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
     }
 
     public synchronized void stop() {
-        gpsHandler.onStop();
+        gpsHandler.stop(context);
 
         if (remoteSensorManager != null) {
-            remoteSensorManager.stop();
+            remoteSensorManager.stop(context);
             remoteSensorManager = null;
         }
 
