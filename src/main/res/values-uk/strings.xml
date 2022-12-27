@@ -356,9 +356,9 @@ limitations under the License.
     <string name="instant_export_enabled_summary">Експорт треку в сховище після завершення запису</string>
     <string name="instant_export_enabled_title">Миттєвий експорт після тренування</string>
     <string name="help_gps_troubleshooting_content"> Що ви можете зробити:
-\na) перевірте, чи ввімкнено GPS,
+\na) перевірте, чи увімкнено GPS,
 \nb) покращити прийом GPS (наприклад, вийти на вулицю),
-\nc) перевірити за допомогою додатку <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> та
+\nc) перевірити за допомогою застосунку <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> та
 \nd) вимкнути енергозбереження.
 \n
 \nЯкщо це не допомогло - будь ласка, повідомте про помилку. </string>
@@ -369,13 +369,13 @@ limitations under the License.
     <string name="about_libraries">Бібліотеки</string>
     <string name="help_feature_title">OpenTracks має такі особливості:</string>
     <string name="help_storage_pictures_title">Як OpenTracks зберігає зображення зроблені за допомогою маркувань\?</string>
-    <string name="help_storage_pictures_content">Вони зберігаються у внутрішній пам\'яті додатку (тобто, доступні тільки для OpenTracks).</string>
+    <string name="help_storage_pictures_content">Вони зберігаються у внутрішній пам\'яті застосунку (тобто, доступні тільки для OpenTracks).</string>
     <string name="help_data_google_play_services_title">Чи потребує OpenTracks використання Google Play Service\?</string>
     <string name="help_track_map_title">Як показати трек на мапі\?</string>
     <string name="help_data_storage_title">Як OpenTracks зберігає дані датчиків\?</string>
     <string name="help_recording_title">Як OpenTracks записує дані\?</string>
     <string name="help_track_export_title">Як я можу експортувати або обмінятися записаним треком\?</string>
-    <string name="settings_night_mode_title">Тема додатка</string>
+    <string name="settings_night_mode_title">Тема UI</string>
     <string name="help_gps_troubleshooting_title">OpenTracks не записує моє місцеположення\?</string>
     <string name="help_support_title">Як я можу підтримати OpenTracks\?</string>
     <string name="open_track_as_KML">Відкрити як KML</string>
@@ -412,13 +412,13 @@ limitations under the License.
     <string name="import_no_kml_file_found">Файл doc.kml не знайдено в KMZ</string>
     <string name="import_error_list_dialog_title">Файли не імпортовано</string>
     <string name="import_error_info">%1$s:%2$s</string>
-    <string name="marker_add_photo_canceled">Скасовано, фото-макркування не додано</string>
+    <string name="marker_add_photo_canceled">Скасовано, фото-маркування не додано</string>
     <string name="menu_insert_gallery_img">Додати зображення з галереї</string>
     <string name="menu_resume_track">Відновити трек</string>
     <string name="permission_gps_failed">OpenTracks вимагає дозволу на використання GPS.</string>
     <string name="settings_night_mode_option_system">Системна</string>
     <string name="about_description"><i>Open Tracks</i> це спортивний GPS трекер який поважає вашу приватність.</string>
-    <string name="about_history">Open Tracks це відгалуження додатку <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (закритого в 2016р).</string>
+    <string name="about_history">Open Tracks це відгалуження застосунку <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (закритого в 2016р).</string>
     <string name="help_feature_content">* запис GPS-шляху
 \n* використання датчика ритму серця (тільки Bluetooth LE)
 \n* голосовий путівник (за часом або дистацією)
@@ -432,9 +432,9 @@ limitations under the License.
 \nа) поширювати інформацію про OpenTracks,
 \nb) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">пропонувати функції</a>,
 \nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">повідомляти про помилки</a>,
-\nd) допомогnb в розробці програмного забезпечення,
+\nd) допомогти в розробці програмного забезпечення,
 \ne) купувати в <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
-\nf) зробити фінаносовий внесок, та
+\nf) зробити фінансовий внесок, та
 \ng) робити все, що, на вашу думку, допомагає OpenTracks. </string>
     <string name="description_default_speed_or_pace">За активністю</string>
     <string name="export_error_post_workout">Не вдалося виконати експорт після тренування, перевірте каталог експорту.</string>
@@ -451,9 +451,9 @@ limitations under the License.
     <string name="share_image_subject">Я хотів би поділитися з вами зображенням</string>
     <string name="settings_default_export_uri_title">Каталог експорту треків</string>
     <string name="help_track_map_content"> Натисніть іконку мапи.
-\na) (оновлення в реальному часі) Встановіть додаток <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Він дозволить подивитися мапу онлайн й оффлайн завдяки <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
-\nНасправді, OSMDashboard є окремим додатком який може отримати тимчасовий доступ до даних треку які будуть відобрежені на мапі.
-\nb) Через цвичайний картографічний додаток (на приклад, <a href="http://osmand.net/">OsmAnd</a> та <a href="https://maps.me/">MAPS.ME</a>). Ці додатки повинні підтримувати формати файлів треку KMZ (тільки місцеположення та мітки часу). Фактично, додаток повинен підтримувати функцію <i>ACTION_VIEW</i> із MIME <i>application/vnd.google-earth.kmz</i>. </string>
+\na) (оновлення в реальному часі) Встановіть застосунок <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Він дозволить подивитися карту онлайн й оффлайн завдяки <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\nНасправді, OSMDashboard є окремим застосунком, який може отримати тимчасовий доступ до даних треку які будуть відображені на карті.
+\nb) Через звичайний картографічний застосунок (на приклад, <a href="http://osmand.net/">OsmAnd</a> та <a href="https://maps.me/">MAPS.ME</a>). Ці застосунки повинні підтримувати формати файлів треку KMZ (тільки місцеположення та мітки часу). Фактично, застосунок повинен підтримувати функцію <i>ACTION_VIEW</i> із MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="settings_prevent_reimport_tracks_title">Заборонити повторний імпорт треків</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Завершено з %1$d однією помилкою</item>
