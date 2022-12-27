@@ -7,9 +7,9 @@ import androidx.annotation.NonNull;
 import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 
-public class BluetoothRemoteSensorManagerCyclingPower extends BluetoothConnectionManager<Power> {
+public class BluetoothConnectionManagerCyclingPower extends AbstractBluetoothConnectionManager<Power> {
 
-    BluetoothRemoteSensorManagerCyclingPower(@NonNull SensorDataObserver observer) {
+    BluetoothConnectionManagerCyclingPower(@NonNull SensorDataObserver observer) {
         super(BluetoothUtils.CYCLING_POWER, observer);
     }
 

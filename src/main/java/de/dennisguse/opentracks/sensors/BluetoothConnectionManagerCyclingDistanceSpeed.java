@@ -5,9 +5,9 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadenceAndDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
 
-public class BluetoothRemoteSensorManagerCyclingDistanceSpeed extends BluetoothConnectionManager<SensorDataCyclingDistanceSpeed.Data> {
+public class BluetoothConnectionManagerCyclingDistanceSpeed extends AbstractBluetoothConnectionManager<SensorDataCyclingDistanceSpeed.Data> {
 
-    BluetoothRemoteSensorManagerCyclingDistanceSpeed(SensorDataObserver observer) {
+    BluetoothConnectionManagerCyclingDistanceSpeed(SensorDataObserver observer) {
         super(BluetoothUtils.CYCLING_SPEED_CADENCE, observer);
     }
 

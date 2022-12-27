@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.sensors.sensorData;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import java.time.Instant;
@@ -30,16 +29,6 @@ public abstract class SensorData<T> {
         this.sensorAddress = sensorAddress;
         this.sensorName = sensorName;
         this.time = time;
-    }
-
-    @NonNull
-    public String getSensorAddress() {
-        return sensorAddress;
-    }
-
-    @Nullable
-    public String getSensorName() {
-        return sensorName;
     }
 
     public String getSensorNameOrAddress() {

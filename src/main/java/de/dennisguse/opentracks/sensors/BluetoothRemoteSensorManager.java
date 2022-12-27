@@ -52,7 +52,7 @@ import de.dennisguse.opentracks.util.PermissionRequester;
  *
  * @author Sandor Dornbush
  */
-public class BluetoothRemoteSensorManager implements SensorConnector, BluetoothConnectionManager.SensorDataObserver {
+public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBluetoothConnectionManager.SensorDataObserver {
 
     private static final String TAG = BluetoothRemoteSensorManager.class.getSimpleName();
 
@@ -65,11 +65,11 @@ public class BluetoothRemoteSensorManager implements SensorConnector, BluetoothC
 
     private Distance preferenceWheelCircumference;
 
-    private final BluetoothRemoteSensorManagerHeartRate heartRate = new BluetoothRemoteSensorManagerHeartRate(this);
-    private final BluetoothRemoteSensorManagerCyclingCadence cyclingCadence = new BluetoothRemoteSensorManagerCyclingCadence(this);
-    private final BluetoothRemoteSensorManagerCyclingDistanceSpeed cyclingSpeed = new BluetoothRemoteSensorManagerCyclingDistanceSpeed(this);
-    private final BluetoothRemoteSensorManagerCyclingPower cyclingPower = new BluetoothRemoteSensorManagerCyclingPower(this);
-    private final BluetoothRemoteSensorManagerRunningSpeedAndCadence runningSpeedAndCadence = new BluetoothRemoteSensorManagerRunningSpeedAndCadence(this);
+    private final BluetoothConnectionManagerHeartRate heartRate = new BluetoothConnectionManagerHeartRate(this);
+    private final BluetoothConnectionManagerCyclingCadence cyclingCadence = new BluetoothConnectionManagerCyclingCadence(this);
+    private final BluetoothConnectionManagerCyclingDistanceSpeed cyclingSpeed = new BluetoothConnectionManagerCyclingDistanceSpeed(this);
+    private final BluetoothConnectionManagerCyclingPower cyclingPower = new BluetoothConnectionManagerCyclingPower(this);
+    private final BluetoothConnectionRunningSpeedAndCadence runningSpeedAndCadence = new BluetoothConnectionRunningSpeedAndCadence(this);
 
     private final SensorDataSet sensorDataSet = new SensorDataSet();
 
@@ -147,7 +147,7 @@ public class BluetoothRemoteSensorManager implements SensorConnector, BluetoothC
         return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
     }
 
-    private synchronized void connect(BluetoothConnectionManager<?> connectionManager, String address) {
+    private synchronized void connect(AbstractBluetoothConnectionManager<?> connectionManager, String address) {
         if (!isEnabled()) {
             Log.w(TAG, "Bluetooth not enabled.");
             return;
