@@ -33,25 +33,25 @@ public class TrackPointCreator implements SensorManager.SensorDataSetChangeObser
     @NonNull
     private Clock clock = new MonotonicClock();
 
-    private final GPSHandler gpsHandler;
+    private final GPSManager gpsManager;
     private SensorManager sensorManager;
 
     public TrackPointCreator(Callback service, Context context, Handler handler) {
         this.service = service;
-        this.gpsHandler = new GPSHandler(this);
+        this.gpsManager = new GPSManager(this);
         this.sensorManager = new SensorManager(context, handler, this);
     }
 
     @VisibleForTesting
-    TrackPointCreator(GPSHandler gpsHandler, Callback service) {
+    TrackPointCreator(GPSManager gpsManager, Callback service) {
         this.service = service;
-        this.gpsHandler = gpsHandler;
+        this.gpsManager = gpsManager;
     }
 
     public synchronized void start(@NonNull Context context, @NonNull Handler handler) {
         this.context = context;
 
-        gpsHandler.start(context, handler);
+        gpsManager.start(context, handler);
         sensorManager.start(context, handler);
     }
 
@@ -73,7 +73,7 @@ public class TrackPointCreator implements SensorManager.SensorDataSetChangeObser
     }
 
     public synchronized void stop() {
-        gpsHandler.stop(context);
+        gpsManager.stop(context);
 
         this.context = null;
     }
@@ -94,7 +94,7 @@ public class TrackPointCreator implements SensorManager.SensorDataSetChangeObser
     public void onNewTrackPoint(@NonNull TrackPoint trackPoint) {
         addSensorData(trackPoint);
 
-        boolean stored = service.newTrackPoint(trackPoint, gpsHandler.getThresholdHorizontalAccuracy());
+        boolean stored = service.newTrackPoint(trackPoint, gpsManager.getThresholdHorizontalAccuracy());
         if (stored) {
             reset();
         }
@@ -153,8 +153,8 @@ public class TrackPointCreator implements SensorManager.SensorDataSetChangeObser
     }
 
     @VisibleForTesting
-    public GPSHandler getGpsHandler() {
-        return gpsHandler;
+    public GPSManager getGpsHandler() {
+        return gpsManager;
     }
 
     void sendGpsStatus(GpsStatusValue gpsStatusValue) {

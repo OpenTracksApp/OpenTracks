@@ -26,9 +26,9 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-public class GPSHandler implements SensorConnector, LocationListenerCompat, GpsStatus.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class GPSManager implements SensorConnector, LocationListenerCompat, GpsStatus.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final String TAG = GPSHandler.class.getSimpleName();
+    private final String TAG = GPSManager.class.getSimpleName();
 
     public static final String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
 
@@ -41,7 +41,7 @@ public class GPSHandler implements SensorConnector, LocationListenerCompat, GpsS
     private Duration gpsInterval;
     private Distance thresholdHorizontalAccuracy;
 
-    public GPSHandler(TrackPointCreator trackPointCreator) {
+    public GPSManager(TrackPointCreator trackPointCreator) {
         this.trackPointCreator = trackPointCreator;
     }
 
