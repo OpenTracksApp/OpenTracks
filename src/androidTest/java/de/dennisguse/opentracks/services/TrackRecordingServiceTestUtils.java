@@ -1,17 +1,12 @@
 package de.dennisguse.opentracks.services;
 
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 
 import androidx.test.rule.ServiceTestRule;
 
-import org.mockito.Mockito;
-
-import java.time.Clock;
 import java.util.concurrent.TimeoutException;
 
-import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
@@ -24,15 +19,6 @@ public class TrackRecordingServiceTestUtils {
     public static void resetService(ServiceTestRule mServiceRule, Context context) throws TimeoutException {
         // Let's use default values.
         PreferencesUtils.clear();
-
-        // Reset service (if some previous test failed)
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
-                .getService();
-
-        BluetoothRemoteSensorManager remoteSensorManager = Mockito.mock(BluetoothRemoteSensorManager.class);
-        service.getTrackPointCreator().setRemoteSensorManager(remoteSensorManager);
-        service.getTrackPointCreator().setClock(Clock.systemUTC());
-        service.endCurrentTrack();
     }
 
     static void sendGPSLocation(TrackPointCreator trackPointCreator, String time, double latitude, double longitude, float accuracy, long speed) {

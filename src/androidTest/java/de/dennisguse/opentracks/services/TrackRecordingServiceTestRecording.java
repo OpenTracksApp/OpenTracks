@@ -45,6 +45,8 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
  * Tests insert location.
+ * Note: on API23, the TrackRecordingService may not be stopped properly before the next test.
+ * So, if something fails, subsequent tests may be affected.
  */
 @RunWith(AndroidJUnit4.class)
 public class TrackRecordingServiceTestRecording {
@@ -112,7 +114,7 @@ public class TrackRecordingServiceTestRecording {
         String startTime = "2020-02-02T02:02:02Z";
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         // then
         assertEquals(new TrackStatistics(startTime, startTime, 0, 0, 0, 0, null, null)
@@ -149,7 +151,7 @@ public class TrackRecordingServiceTestRecording {
 
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         // when
         String pauseTime = "2020-02-02T02:02:03Z";
@@ -195,7 +197,7 @@ public class TrackRecordingServiceTestRecording {
         String starTime = "2020-02-02T02:02:02Z";
         trackPointCreator.setClock(starTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         String pauseTime = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(pauseTime);
@@ -227,7 +229,7 @@ public class TrackRecordingServiceTestRecording {
 
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         String stopTime = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(stopTime);
@@ -237,7 +239,7 @@ public class TrackRecordingServiceTestRecording {
         String resumeTime = "2020-02-02T02:02:04Z";
         trackPointCreator.setClock(resumeTime);
         service.resumeTrack(trackId);
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         // then
         new TrackPointAssert().assertEquals(List.of(
@@ -258,12 +260,13 @@ public class TrackRecordingServiceTestRecording {
 
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
-        BluetoothRemoteSensorManager remoteSensorManager = trackPointCreator.getRemoteSensorManager();
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        BluetoothRemoteSensorManager remoteSensorManager = trackPointCreator.getSensorManager().getBluetoothSensorManager();
 
         // when
         String sensor1 = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(sensor1);
+
         remoteSensorManager.onChanged(new SensorDataHeartRate("", "", HeartRate.of(5))); //Should be ignored
 
         String sensor3 = "2020-02-02T02:02:13Z";
@@ -297,7 +300,7 @@ public class TrackRecordingServiceTestRecording {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
 
         // when
@@ -371,7 +374,7 @@ public class TrackRecordingServiceTestRecording {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         // when
         String gps1 = "2020-02-02T02:02:03Z";
@@ -436,7 +439,7 @@ public class TrackRecordingServiceTestRecording {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         // when
         String gps1 = "2020-02-02T02:02:03Z";
@@ -500,7 +503,7 @@ public class TrackRecordingServiceTestRecording {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         // when
         String gps1 = "2020-02-02T02:02:03Z";
@@ -564,7 +567,7 @@ public class TrackRecordingServiceTestRecording {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         // when
         String gps1 = "2020-02-02T02:02:03Z";
@@ -652,7 +655,7 @@ public class TrackRecordingServiceTestRecording {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         // when
         String gps1 = "2020-02-02T02:02:03Z";
@@ -702,7 +705,7 @@ public class TrackRecordingServiceTestRecording {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         // when
         String gps1 = "2020-02-02T02:02:03Z";
@@ -748,7 +751,7 @@ public class TrackRecordingServiceTestRecording {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
 
         // when
         String gps1 = "2020-02-02T02:02:03Z";
@@ -812,8 +815,8 @@ public class TrackRecordingServiceTestRecording {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
-        BluetoothRemoteSensorManager remoteSensorManager = trackPointCreator.getRemoteSensorManager();
+        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        BluetoothRemoteSensorManager remoteSensorManager = trackPointCreator.getSensorManager().getBluetoothSensorManager();
 
         // when
         String sensor1 = "2020-02-02T02:02:03Z";

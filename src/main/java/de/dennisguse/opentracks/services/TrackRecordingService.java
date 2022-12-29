@@ -111,7 +111,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         egm2008CorrectionManager = new EGM2008CorrectionManager();
         trackRecordingManager = new TrackRecordingManager(this);
         trackRecordingManager.start();
-        trackPointCreator = new TrackPointCreator(this);
+        trackPointCreator = new TrackPointCreator(this, this, handler);
 
         voiceAnnouncementManager = new VoiceAnnouncementManager(this);
         notificationManager = new TrackRecordingServiceNotificationManager(this);
@@ -177,7 +177,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     }
 
     public void resumeTrack(Track.Id trackId) {
-        trackPointCreator.reset();
         if (!trackRecordingManager.resumeExistingTrack(trackId, trackPointCreator)) {
             Log.w(TAG, "Cannot resume a non-existing track.");
             return;

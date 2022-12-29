@@ -73,7 +73,7 @@ public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBl
 
     private final SensorDataSet sensorDataSet = new SensorDataSet();
 
-    private final SensorDataSetChangeObserver observer;
+    private final SensorManager.SensorDataSetChangeObserver observer;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
@@ -114,7 +114,7 @@ public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBl
         }
     };
 
-    public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull Handler handler, @NonNull SensorDataSetChangeObserver observer) {
+    public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull Handler handler, @NonNull SensorManager.SensorDataSetChangeObserver observer) {
         this.context = context;
         this.handler = handler;
         this.observer = observer;
@@ -231,9 +231,5 @@ public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBl
     @Override
     public Handler getHandler() {
         return handler;
-    }
-
-    public interface SensorDataSetChangeObserver {
-        void onChange(SensorDataSet sensorDataSet);
     }
 }

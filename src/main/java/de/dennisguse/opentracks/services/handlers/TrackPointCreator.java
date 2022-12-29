@@ -16,14 +16,13 @@ import java.time.ZoneId;
 
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.TrackPoint;
-import de.dennisguse.opentracks.sensors.AltitudeSumManager;
-import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
+import de.dennisguse.opentracks.sensors.SensorManager;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 
 /**
  * Creates TrackPoints while recording by fusing data from different sensors (e.g., GNSS, barometer, BLE sensors).
  */
-public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDataSetChangeObserver {
+public class TrackPointCreator implements SensorManager.SensorDataSetChangeObserver {
 
     private static final String TAG = TrackPointCreator.class.getSimpleName();
 
@@ -35,12 +34,12 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
     private Clock clock = new MonotonicClock();
 
     private final GPSHandler gpsHandler;
-    private BluetoothRemoteSensorManager remoteSensorManager;
-    private AltitudeSumManager altitudeSumManager;
+    private SensorManager sensorManager;
 
-    public TrackPointCreator(Callback service) {
+    public TrackPointCreator(Callback service, Context context, Handler handler) {
         this.service = service;
         this.gpsHandler = new GPSHandler(this);
+        this.sensorManager = new SensorManager(context, handler, this);
     }
 
     @VisibleForTesting
@@ -53,26 +52,15 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         this.context = context;
 
         gpsHandler.start(context, handler);
-
-        remoteSensorManager = new BluetoothRemoteSensorManager(context, handler, this);
-        altitudeSumManager = new AltitudeSumManager();
-
-        remoteSensorManager.start(context, handler);
-        altitudeSumManager.start(context, handler);
-
+        sensorManager.start(context, handler);
     }
 
     private boolean isStarted() {
         return context != null;
     }
 
-    public synchronized void reset() {
-        if (remoteSensorManager == null || altitudeSumManager == null) {
-            Log.d(TAG, "No recording running and no reset necessary.");
-            return;
-        }
-        remoteSensorManager.reset();
-        altitudeSumManager.reset();
+    private synchronized void reset() {
+        sensorManager.reset();
     }
 
     private SensorDataSet addSensorData(TrackPoint trackPoint) {
@@ -80,31 +68,12 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
             Log.w(TAG, "Not started, should not be called.");
             return null;
         }
-        SensorDataSet sensorDataSet = null;
-        BluetoothRemoteSensorManager localRemoteSensorManager = remoteSensorManager;
-        if (localRemoteSensorManager != null) {
-            sensorDataSet = localRemoteSensorManager.fill(trackPoint);
-        }
-        AltitudeSumManager localAltitudeSumManager = altitudeSumManager;
-        if (localAltitudeSumManager != null) {
-            localAltitudeSumManager.fill(trackPoint);
-        }
 
-        return sensorDataSet;
+        return sensorManager.fill(trackPoint);
     }
 
     public synchronized void stop() {
         gpsHandler.stop(context);
-
-        if (remoteSensorManager != null) {
-            remoteSensorManager.stop(context);
-            remoteSensorManager = null;
-        }
-
-        if (altitudeSumManager != null) {
-            altitudeSumManager.stop(context);
-            altitudeSumManager = null;
-        }
 
         this.context = null;
     }
@@ -169,26 +138,8 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
     }
 
     @VisibleForTesting
-    public AltitudeSumManager getAltitudeSumManager() {
-        return altitudeSumManager;
-    }
-
-    @Deprecated
-    @VisibleForTesting
-    public void setAltitudeSumManager(AltitudeSumManager altitudeSumManager) {
-        this.altitudeSumManager = altitudeSumManager;
-    }
-
-    @Deprecated
-    @VisibleForTesting
-    public BluetoothRemoteSensorManager getRemoteSensorManager() {
-        return remoteSensorManager;
-    }
-
-    @Deprecated
-    @VisibleForTesting
-    public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
-        this.remoteSensorManager = remoteSensorManager;
+    public SensorManager getSensorManager() {
+        return sensorManager;
     }
 
     @VisibleForTesting
