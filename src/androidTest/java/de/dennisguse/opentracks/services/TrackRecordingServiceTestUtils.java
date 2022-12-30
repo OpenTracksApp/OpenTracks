@@ -6,6 +6,8 @@ import android.location.Location;
 
 import androidx.test.rule.ServiceTestRule;
 
+import org.mockito.Mockito;
+
 import java.time.Clock;
 import java.util.concurrent.TimeoutException;
 
@@ -27,7 +29,8 @@ public class TrackRecordingServiceTestUtils {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
                 .getService();
 
-        service.getTrackPointCreator().setRemoteSensorManager(new BluetoothRemoteSensorManager(context, null, service.getTrackPointCreator()));
+        BluetoothRemoteSensorManager remoteSensorManager = Mockito.mock(BluetoothRemoteSensorManager.class);
+        service.getTrackPointCreator().setRemoteSensorManager(remoteSensorManager);
         service.getTrackPointCreator().setClock(Clock.systemUTC());
         service.endCurrentTrack();
     }

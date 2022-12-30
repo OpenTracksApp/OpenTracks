@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Looper;
 
-import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -166,7 +165,8 @@ public class ExportImportTest {
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
 
         trackPointCreator.setClock("2020-02-02T02:02:18Z");
-        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, null, trackPointCreator));
+        BluetoothRemoteSensorManager mockRemoteSensorManager = Mockito.mock(BluetoothRemoteSensorManager.class);
+        trackPointCreator.setRemoteSensorManager(mockRemoteSensorManager);
         service.endCurrentTrack();
 
         trackPointCreator.setClock("2020-02-02T02:03:20Z");
@@ -179,7 +179,7 @@ public class ExportImportTest {
         sendLocation(trackPointCreator, "2020-02-02T02:03:23Z", 3, 16.001, 10, 27, 15, 10, 0);
 
         trackPointCreator.setClock("2020-02-02T02:03:24Z");
-        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, null, trackPointCreator));
+        trackPointCreator.setRemoteSensorManager(mockRemoteSensorManager);
         service.endCurrentTrack();
 
         Track track = contentProviderUtils.getTrack(trackId);
@@ -495,32 +495,33 @@ public class ExportImportTest {
     }
 
     private void mockBLESensorData(TrackPointCreator trackPointCreator, Float speed, Distance distance, float heartRate, float cadence, Float power) {
-        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, null, trackPointCreator) {
-            @Override
-            public SensorDataSet fill(@NonNull TrackPoint trackPoint) {
-                SensorDataSet sensorDataSet = new SensorDataSet();
-                sensorDataSet.set(new SensorDataCyclingPower("power", "power", Power.of(power)));
-                sensorDataSet.set(new SensorDataHeartRate("heartRate", "heartRate", HeartRate.of(heartRate)));
+        BluetoothRemoteSensorManager remoteSensorManager = Mockito.mock(BluetoothRemoteSensorManager.class);
+        Mockito.when(remoteSensorManager.fill(Mockito.any())).thenAnswer(invocation -> {
+            TrackPoint trackPoint = invocation.getArgument(0);
 
-                SensorDataCyclingCadence cyclingCadence = Mockito.mock(SensorDataCyclingCadence.class);
-                Mockito.when(cyclingCadence.hasValue()).thenReturn(true);
-                Mockito.when(cyclingCadence.getValue()).thenReturn(Cadence.of(cadence));
-                sensorDataSet.set(cyclingCadence);
+            SensorDataSet sensorDataSet = new SensorDataSet();
+            sensorDataSet.set(new SensorDataCyclingPower("power", "power", Power.of(power)));
+            sensorDataSet.set(new SensorDataHeartRate("heartRate", "heartRate", HeartRate.of(heartRate)));
 
-                if (distance != null && speed != null) {
-                    SensorDataCyclingDistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCyclingDistanceSpeed.Data.class);
-                    Mockito.when(distanceSpeedData.getDistanceOverall()).thenReturn(distance);
-                    Mockito.when(distanceSpeedData.getSpeed()).thenReturn(Speed.of(speed));
-                    SensorDataCyclingDistanceSpeed distanceSpeed = Mockito.mock(SensorDataCyclingDistanceSpeed.class);
-                    Mockito.when(distanceSpeed.hasValue()).thenReturn(true);
-                    Mockito.when(distanceSpeed.getValue()).thenReturn(distanceSpeedData);
-                    sensorDataSet.set(distanceSpeed);
-                }
+            SensorDataCyclingCadence cyclingCadence = Mockito.mock(SensorDataCyclingCadence.class);
+            Mockito.when(cyclingCadence.hasValue()).thenReturn(true);
+            Mockito.when(cyclingCadence.getValue()).thenReturn(Cadence.of(cadence));
+            sensorDataSet.set(cyclingCadence);
 
-                sensorDataSet.fillTrackPoint(trackPoint);
-                return sensorDataSet;
+            if (distance != null && speed != null) {
+                SensorDataCyclingDistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCyclingDistanceSpeed.Data.class);
+                Mockito.when(distanceSpeedData.getDistanceOverall()).thenReturn(distance);
+                Mockito.when(distanceSpeedData.getSpeed()).thenReturn(Speed.of(speed));
+                SensorDataCyclingDistanceSpeed distanceSpeed = Mockito.mock(SensorDataCyclingDistanceSpeed.class);
+                Mockito.when(distanceSpeed.hasValue()).thenReturn(true);
+                Mockito.when(distanceSpeed.getValue()).thenReturn(distanceSpeedData);
+                sensorDataSet.set(distanceSpeed);
             }
+
+            sensorDataSet.fillTrackPoint(trackPoint);
+            return sensorDataSet;
         });
+        trackPointCreator.setRemoteSensorManager(remoteSensorManager);
         trackPointCreator.onChange(new SensorDataSet());
     }
 
