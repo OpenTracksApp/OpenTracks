@@ -30,6 +30,7 @@ import java.util.UUID;
 
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
@@ -101,7 +102,7 @@ public class BluetoothUtils {
         return BluetoothUtils.getAdapter(context) != null;
     }
 
-    public static Integer parseHeartRate(BluetoothGattCharacteristic characteristic) {
+    public static HeartRate parseHeartRate(BluetoothGattCharacteristic characteristic) {
         //DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.heart_rate_measurement.xml
         byte[] raw = characteristic.getValue();
         if (raw.length == 0) {
@@ -110,10 +111,10 @@ public class BluetoothUtils {
 
         boolean formatUINT16 = ((raw[0] & 0x1) == 1);
         if (formatUINT16 && raw.length >= 3) {
-            return characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 1);
+            return HeartRate.of(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 1));
         }
         if (!formatUINT16 && raw.length >= 2) {
-            return characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 1);
+            return HeartRate.of(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 1));
         }
 
         return null;

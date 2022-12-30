@@ -20,8 +20,8 @@ public class BluetoothRemoteSensorManagerHeartRate extends BluetoothConnectionMa
 
     @Override
     protected SensorDataHeartRate parsePayload(@NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-        Integer heartRate = BluetoothUtils.parseHeartRate(characteristic);
+        HeartRate heartRate = BluetoothUtils.parseHeartRate(characteristic);
 
-        return heartRate != null ? new SensorDataHeartRate(address, sensorName, HeartRate.of(heartRate)) : null;
+        return heartRate != null ? new SensorDataHeartRate(address, sensorName, heartRate) : null;
     }
 }

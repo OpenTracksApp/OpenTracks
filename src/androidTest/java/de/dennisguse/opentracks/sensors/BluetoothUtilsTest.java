@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadenceAndDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
@@ -23,10 +24,10 @@ public class BluetoothUtilsTest {
         characteristic.setValue(new byte[]{0x02, 0x3C});
 
         // when
-        int heartRate = BluetoothUtils.parseHeartRate(characteristic);
+        HeartRate heartRate = BluetoothUtils.parseHeartRate(characteristic);
 
         // then
-        assertEquals(60, heartRate);
+        assertEquals(HeartRate.of(60), heartRate);
     }
 
     @Test
@@ -36,10 +37,10 @@ public class BluetoothUtilsTest {
         characteristic.setValue(new byte[]{0x01, 0x01, 0x01});
 
         // when
-        int heartRate = BluetoothUtils.parseHeartRate(characteristic);
+        HeartRate heartRate = BluetoothUtils.parseHeartRate(characteristic);
 
         // then
-        assertEquals(257, heartRate);
+        assertEquals(HeartRate.of(257), heartRate);
     }
 
     @Test
