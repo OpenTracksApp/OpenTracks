@@ -100,13 +100,13 @@ public class StatisticsRecordingFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        viewHolders.clear();
         trackRecordingServiceConnection.unbind(getContext());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        viewHolders.clear();
         viewBinding = null;
     }
 
