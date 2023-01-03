@@ -405,8 +405,7 @@ limitations under the License.
     <string name="generic_show_errors">Mostrar erros</string>
     <string name="generic_completed">Concluído</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">Concluído com um erro</item>
-        <item quantity="many">Concluído com %1$d erros</item>
+        <item quantity="one">Concluído com %1$d erro</item>
         <item quantity="other">Concluído com %1$d erros</item>
     </plurals>
     <string name="generic_undo">Desfazer</string>
@@ -496,20 +495,17 @@ limitations under the License.
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (Recomendado)</string>
     <string name="voice_per_kilometer">por quilômetro</string>
     <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 nó</item>
-        <item quantity="many">%1$.1f nós</item>
+        <item quantity="one">%1$.1f nó</item>
         <item quantity="other">%1$.1f nós</item>
     </plurals>
     <string name="voice_per_mile">por milha</string>
     <string name="voice_per_nautical_mile">por milha náutica</string>
     <plurals name="voiceDistanceMiles">
         <item quantity="one">%1$.1f milha</item>
-        <item quantity="many">%1$.1f milhas</item>
         <item quantity="other">%1$.1f milhas</item>
     </plurals>
     <plurals name="voiceDistanceNauticalMiles">
         <item quantity="one">%1$.1f milha náutica</item>
-        <item quantity="many">%1$.1f milhas náuticas</item>
         <item quantity="other">%1$.1f milhas náuticas</item>
     </plurals>
     <string name="total_distance">Distância total</string>
