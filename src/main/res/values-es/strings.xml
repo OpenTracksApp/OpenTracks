@@ -23,7 +23,7 @@ limitations under the License.
     <string name="about_libraries">Bibliotecas</string>
     <!-- Help -->
     <string name="help_feature_title">OpenTracks tiene las siguientes características:</string>
-    <string name="help_feature_content">* crear pistas de GPS
+    <string name="help_feature_content">* crear recorridos de GPS
 \n* utilizar un sensor de frecuencia cardíaca (solo Bluetooth LE)
 \n* anuncios de voz (por tiempo o distancia)
 \n* crear marcadores (incluidas imágenes)
@@ -220,7 +220,7 @@ limitations under the License.
     <!-- OpenTracks -->
     <string name="recording_service">Servicio de grabación</string>
     <!-- Permission -->
-    <string name="permission_gps_failed">OpenTracks necesita permiso para usar el GPS.</string>
+    <string name="permission_gps_failed">OpenTracks requiere permiso para usar el GPS.</string>
     <!-- Search -->
     <!-- Sensor State -->
     <string name="sensor_state_heart_rate">Frecuencia cardíaca</string>
@@ -325,22 +325,27 @@ limitations under the License.
     <!-- Voice -->
     <plurals name="voiceHours">
         <item quantity="one">1 hora</item>
+        <item quantity="many">%1$d horas</item>
         <item quantity="other">%1$d horas</item>
     </plurals>
     <plurals name="voiceMinutes">
         <item quantity="one">1 minuto</item>
+        <item quantity="many">%1$d minutos</item>
         <item quantity="other">%1$d minutos</item>
     </plurals>
     <plurals name="voiceSeconds">
         <item quantity="one">1 segundo</item>
+        <item quantity="many">%1$d segundos</item>
         <item quantity="other">%1$d segundos</item>
     </plurals>
     <plurals name="voiceSpeedKilometersPerHour">
         <item quantity="one">1 kilómetro por hora</item>
+        <item quantity="many">%1$.1f kilómetros por hora</item>
         <item quantity="other">%1$.1f kilómetros por hora</item>
     </plurals>
     <plurals name="voiceSpeedMilesPerHour">
         <item quantity="one">1 milla por hora</item>
+        <item quantity="many">%1$.1f millas por hora</item>
         <item quantity="other">%1$.1f millas por hora</item>
     </plurals>
     <!-- Waypoint Type -->
@@ -409,6 +414,7 @@ limitations under the License.
     <string name="generic_show_errors">Mostrar errores</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Completado con un error</item>
+        <item quantity="many">Completado con %1$d errores</item>
         <item quantity="other">Completado con %1$d errores</item>
     </plurals>
     <string name="generic_completed">Completado</string>
@@ -476,7 +482,7 @@ limitations under the License.
     <string name="stats_sensors_power">Poder</string>
     <string name="field_set_primary">Primario</string>
     <string name="description_speed_source_gps">GPS</string>
-    <string name="settings_recording_customize_layout_title">Personalice su pantalla de grabación</string>
+    <string name="settings_recording_customize_layout_title">Personalizar pantalla de grabación</string>
     <string name="settings_recording_customize_layout_select_columns">Datos por columna</string>
     <string name="settings_layout_reset_confirm_message">Todos los ajustes de diseño se revertirán a los valores predeterminados. Esto no eliminará ningún recorrido en el dispositivo.</string>
     <string name="settings_layout_reset_confirm_title">¿Restablecer todos los diseños\?</string>
@@ -562,13 +568,53 @@ limitations under the License.
     <string name="total_distance">Distancia total</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="one">1 kilómetro</item>
+        <item quantity="many">%1$.1f kilómetros</item>
         <item quantity="other">%1$.1f kilómetros</item>
     </plurals>
     <plurals name="voiceDistanceMiles">
         <item quantity="one">1 milla</item>
+        <item quantity="many">%1$.1f millas</item>
         <item quantity="other">%1$.1f millas</item>
     </plurals>
     <string name="average_heart_rate">Ritmo cardíaco promedio</string>
     <string name="current_heart_rate">Ritmo cardíaco actual</string>
     <string name="settings_export_filename_title">Formato del nombre del archivo</string>
+    <string name="help_data_google_play_services_content">No</string>
+    <string name="description_pace_nautical">Ritmo (min/NM)</string>
+    <string name="description_speed_nautical">Velocidad (Nudos)</string>
+    <string name="image_discard">Descartar</string>
+    <string name="settings_announcements_average_heart_rate">Frecuencia cardíaca media</string>
+    <string name="settings_announcements_average_speed_pace">Velocidad/Ritmo medio</string>
+    <string name="settings_announcements_lap_speed_pace">Velocidad/Ritmo por vuelta</string>
+    <string name="settings_stats_units_nautical">Náutico (NM, pie)</string>
+    <string name="track_delete_number_of_tracks">%1$d recorridos</string>
+    <string name="track_discarding">Descartando recorrido</string>
+    <string name="unit_nautical_mile">NM</string>
+    <string name="unit_minute_per_nautical_mile">min/NM</string>
+    <string name="value_integer_knots">%1$d nudos</string>
+    <string name="value_float_knots">%1$.1f nudos</string>
+    <string name="value_float_knots_recommended">%1$.1f nudos (recomendado)</string>
+    <string name="voice_per_nautical_mile">por milla náutica</string>
+    <string name="error_crash_title">%1$s falló</string>
+    <string name="report_bug">Reportar error</string>
+    <string name="show_on_map_format_ask">Preguntar</string>
+    <string name="show_on_dashboard">Panel de control del API de OpenTracks</string>
+    <string name="show_on_dashboard_not_installed">No se ha instalado ninguna aplicación compatible con el panel de control del API de OpenTracks.</string>
+    <string name="always">Siempre</string>
+    <string name="settings_announcements_lap_heart_rate">Frecuencia cardiaca por vuelta</string>
+    <string name="settings_public_api_package_title">Nombre del paquete para el API público</string>
+    <string name="unit_knots">Nudo</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="one">%1$.1f nudo</item>
+        <item quantity="many">%1$.1f nudos</item>
+        <item quantity="other">%1$.1f nudos</item>
+    </plurals>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="one">%1$.1f milla náutica</item>
+        <item quantity="many">%1$.1f millas náuticas</item>
+        <item quantity="other">%1$.1f millas náuticas</item>
+    </plurals>
+    <string name="select_show_on_map_behavior">Seleccionar el comportamiento de \"mostrar en el mapa\"</string>
+    <string name="introduction_osm_dashboard">OpenTracks en sí no proporciona un mapa. Por favor, instale OSMDashboard para ver sus grabaciones en un mapa.</string>
+    <string name="share_crash_report">Compartir informe de fallo</string>
 </resources>
