@@ -215,27 +215,22 @@
     <string name="value_smallest_recommended">Menor (recomendado)</string>
     <plurals name="voiceHours">
         <item quantity="one">%1$d hora</item>
-        <item quantity="many">%1$d horas</item>
         <item quantity="other">%1$d horas</item>
     </plurals>
     <plurals name="voiceMinutes">
         <item quantity="one">%1$d minuto</item>
-        <item quantity="many">%1$d minutos</item>
         <item quantity="other">%1$d minutos</item>
     </plurals>
     <plurals name="voiceSeconds">
         <item quantity="one">%1$d segundo</item>
-        <item quantity="many">%1$d segundos</item>
         <item quantity="other">%1$d segundos</item>
     </plurals>
     <plurals name="voiceSpeedKilometersPerHour">
         <item quantity="one">%1$.1f quilómetro por hora</item>
-        <item quantity="many">%1$.1f quilómetros por hora</item>
         <item quantity="other">%1$.1f quilómetros por hora</item>
     </plurals>
     <plurals name="voiceSpeedMilesPerHour">
         <item quantity="one">%1$.1f milha por hora</item>
-        <item quantity="many">%1$.1f milhas por hora</item>
         <item quantity="other">%1$.1f milhas por hora</item>
     </plurals>
     <string name="waypoint_type_atm">caixa eletrônico</string>
@@ -400,8 +395,7 @@
     <string name="generic_separator_done_total">/</string>
     <string name="generic_show_errors">Mostrar erros</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">Concluído com um erro</item>
-        <item quantity="many">Concluído com %1$d erros</item>
+        <item quantity="one">Concluído com %1$d erro</item>
         <item quantity="other">Concluído com %1$d erros</item>
     </plurals>
     <string name="generic_completed">Concluído</string>
@@ -521,8 +515,7 @@
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (Recomendado)</string>
     <string name="value_float_knots_recommended">%1$.1f nós (recomendado)</string>
     <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 nó</item>
-        <item quantity="many">%1$.1f nós</item>
+        <item quantity="one">%1$.1f nó</item>
         <item quantity="other">%1$.1f nós</item>
     </plurals>
     <string name="voice_per_kilometer">por quilômetro</string>
@@ -535,17 +528,14 @@
     <string name="total_distance">Distância total</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="one">%1$.1f quilómetro</item>
-        <item quantity="many">%1$.1f quilómetros</item>
         <item quantity="other">%1$.1f quilómetros</item>
     </plurals>
     <plurals name="voiceDistanceMiles">
         <item quantity="one">%1$.1f milha</item>
-        <item quantity="many">%1$.1f milhas</item>
         <item quantity="other">%1$.1f milhas</item>
     </plurals>
     <plurals name="voiceDistanceNauticalMiles">
         <item quantity="one">%1$.1f milha náutica</item>
-        <item quantity="many">%1$.1f milhas náuticas</item>
         <item quantity="other">%1$.1f milhas náuticas</item>
     </plurals>
     <string name="share_image_body">Acho que pode estar interessado nesta imagem.</string>
