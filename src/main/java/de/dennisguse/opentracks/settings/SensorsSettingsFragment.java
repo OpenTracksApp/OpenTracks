@@ -45,7 +45,7 @@ public class SensorsSettingsFragment extends PreferenceFragmentCompat {
             if (newValue instanceof String) {
                 try {
                     int newValueInt = Integer.parseInt((String) newValue);
-                    return newValueInt > 500 && newValueInt < 4000;
+                    return newValueInt >= 100 && newValueInt < 4000;
                 } catch (NumberFormatException e) {
                     Log.w(TAG, "Entered string is no number.");
                 }
