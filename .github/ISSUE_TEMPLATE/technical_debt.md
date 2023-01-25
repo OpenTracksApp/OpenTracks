@@ -18,11 +18,8 @@ A clear and concise description of the technical debt.
 1. Provide file name where the technical debt is found
 
 **To Reproduce**
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-5. Copy paste the code fragment which contains the technical debt. !!
+
+1. Copy paste the code fragment which contains the technical debt.
 
 If applicable:
 * add screenshots
@@ -30,5 +27,4 @@ If applicable:
 
 **Expected Solution**
  - OpenTracks version: [e.g. v3.2.4]
- - Resolution : [e.g. Remove clone, describe briefly the expected solution]
-
+ - Expected Resolution : [e.g. Remove clone, describe briefly the expected solution] 
