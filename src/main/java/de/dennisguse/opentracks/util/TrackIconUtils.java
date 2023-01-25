@@ -74,7 +74,8 @@ public class TrackIconUtils {
     private static final int[] SKATE_BOARDING_LIST = new int[]{R.string.activity_type_skate_boarding};
     private static final int[] KAYAKING_LIST = new int[]{R.string.activity_type_kayaking};
     private static final int[] WALK_LIST = new int[]{R.string.activity_type_hiking, R.string.activity_type_off_trail_hiking, R.string.activity_type_speed_walking, R.string.activity_type_trail_hiking, R.string.activity_type_walking};
-    private static final int[] SWIM_LIST = new int[]{R.string.activity_type_swimming, R.string.activity_type_swimming_open};
+    private static final int[] SWIM_LIST = new int[]{R.string.activity_type_swimming};
+    private static final int[] SWIM_OPEN_LIST = new int[]{R.string.activity_type_swimming_open};
     private static final int[] WORKOUT_LIST = new int[]{R.string.activity_type_workout};
 
     // List of icons whose sports associated use speed (in km/h or mi/h).
@@ -219,6 +220,9 @@ public class TrackIconUtils {
         }
         if (inList(resources, activityType, SWIM_LIST)) {
             return SWIMMING;
+        }
+        if (inList(resources, activityType, SWIM_OPEN_LIST)) {
+            return SWIMMING_OPEN;
         }
         if (inList(resources, activityType, WORKOUT_LIST)) {
             return WORKOUT;
