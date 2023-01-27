@@ -274,10 +274,10 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
             if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
                 valueAndUnit = StringUtils.getHeartRateParts(getContext(), sensorDataSet.getHeartRate().first);
                 sensorName = sensorDataSet.getHeartRate().second;
-                textColor = zones.getColorForZone(sensorDataSet.getHeartRate().first);
+                textColor = zones.getColorForZone(getContext(), sensorDataSet.getHeartRate().first);
             } else {
                 valueAndUnit = StringUtils.getHeartRateParts(getContext(), null);
-                textColor = zones.getColorForZone(null);
+                textColor = zones.getColorForZone(getContext(), null);
             }
 
             getBinding().statsValue.setText(valueAndUnit.first);

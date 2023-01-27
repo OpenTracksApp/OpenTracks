@@ -1,8 +1,11 @@
 package de.dennisguse.opentracks.data.models;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.ui.util.ThemeUtils;
 
 public class HeartRateZones {
 
@@ -12,7 +15,7 @@ public class HeartRateZones {
         this.max = max;
     }
 
-    public int getColorForZone(HeartRate current) {
+    public int getColorForZone(Context context, HeartRate current) {
         if (current != null) {
             if (current.getBPM() >= max.getBPM() * 0.9) {
                 return R.color.heart_rate_zone_textcolor_5;
@@ -28,6 +31,7 @@ public class HeartRateZones {
             }
         }
 
-        return R.color.heart_rate_zone_textcolor_1;
+        // Zone 1
+        return ThemeUtils.getTextColorPrimary(context);
     }
 }
