@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 
 /**
@@ -35,49 +34,6 @@ import de.dennisguse.opentracks.data.models.ActivityType;
  * @author Jimmy Shih
  */
 public class TrackIconUtils {
-
-    // List of icons whose sports associated use speed (in km/h or mi/h).
-    private static final int[] SPEED_ICON = {
-            // Unknown.
-            R.string.activity_type_unknown,
-            // All airplane categories.
-            R.string.activity_type_airplane, R.string.activity_type_commercial_airplane, R.string.activity_type_rc_airplane,
-            // All bike categories.
-            R.string.activity_type_biking, R.string.activity_type_cycling, R.string.activity_type_dirt_bike, R.string.activity_type_motor_bike, R.string.activity_type_mountain_biking, R.string.activity_type_road_biking, R.string.activity_type_track_cycling, R.string.activity_type_inline_skating,
-            // All boat categories.
-            R.string.activity_type_boat, R.string.activity_type_ferry, R.string.activity_type_motor_boating, R.string.activity_type_rc_boat, R.string.activity_type_sailing, R.string.activity_type_kayaking,
-            // All drive categories.
-            R.string.activity_type_atv, R.string.activity_type_driving, R.string.activity_type_driving_bus, R.string.activity_type_driving_car, R.string.activity_type_escooter, R.string.activity_type_skate_boarding,
-            // All wintersport categories
-            R.string.activity_type_skiing, R.string.activity_type_snow_boarding
-    };
-
-    private static final List<ActivityType> MAP = List.of(
-            //Reflects order in ChooseActivityTypeDialogFragmentActivity
-            ActivityType.UNKNOWN,
-            ActivityType.RUN,
-            ActivityType.WALK,
-            ActivityType.CLIMBING,
-            ActivityType.SKATE_BOARDING,
-            ActivityType.INLINE_SKATING,
-            ActivityType.SNOW_BOARDING,
-            ActivityType.SKI,
-            ActivityType.ESCOOTER,
-            ActivityType.BIKE,
-            ActivityType.MOUNTAIN_BIKE,
-            ActivityType.MOTOR_BIKE,
-            ActivityType.DRIVE,
-            ActivityType.AIRPLANE,
-            ActivityType.KAYAK,
-            ActivityType.BOAT,
-            ActivityType.SAILING,
-            ActivityType.SWIMMING,
-            ActivityType.SWIMMING_OPEN,
-            ActivityType.WORKOUT
-    );
-
-    private TrackIconUtils() {
-    }
 
     public static int getIconDrawable(String activityTypeId) {
         Optional<ActivityType> found = Arrays.stream(ActivityType.values()).filter(
@@ -132,28 +88,18 @@ public class TrackIconUtils {
         return selected.get().getId();
     }
 
-    /**
-     * Returns true if the activity type is in the list.
-     *
-     * @param context      the context
-     * @param activityType the activity type
-     * @param list         the list
-     */
-    private static boolean inList(Resources context, String activityType, int[] list) {
-        for (int i : list) {
-            if (context.getString(i).equals(activityType)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    public static boolean isSpeedIcon(Resources resources, String activityTypeId) {
+        Optional<ActivityType> selected = Arrays.stream(ActivityType.values())
+                .filter(
+                        it -> Arrays.stream(it.getLocalizedStringIds())
+                                .anyMatch(id -> resources.getString(id).equals(activityTypeId))
+                )
+                .findFirst();
 
-    /**
-     * Returns true if category is in the SPEED_ICON array. Otherwise returns false.
-     *
-     * @param category the name of the category, activity type.
-     */
-    public static boolean isSpeedIcon(Resources resources, String category) {
-        return inList(resources, category, SPEED_ICON);
+        if (selected.isEmpty()) {
+            return false;
+        }
+
+        return selected.get().isShowSpeedPreferred();
     }
 }
