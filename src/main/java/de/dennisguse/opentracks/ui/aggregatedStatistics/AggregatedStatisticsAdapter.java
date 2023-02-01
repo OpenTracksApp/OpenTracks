@@ -157,7 +157,6 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
             }
         }
 
-        //TODO Check preference handling.
         private void setCommonValues(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             String category = aggregatedStatistic.getCategory();
 
