@@ -60,20 +60,20 @@ public class TrackPoint {
 
         SEGMENT_END_MANUAL(1); //End of a segment
 
-        public final int type_db;
+        public final int typeDb;
 
-        Type(int type_db) {
-            this.type_db = type_db;
+        Type(int typeDb) {
+            this.typeDb = typeDb;
         }
 
         @Override
         public String toString() {
-            return name() + "(" + type_db + ")";
+            return name() + "(" + typeDb + ")";
         }
 
         public static Type getById(int id) {
             for (Type e : values()) {
-                if (e.type_db == id) return e;
+                if (e.typeDb == id) return e;
             }
 
             throw new RuntimeException("unknown id: " + id);
