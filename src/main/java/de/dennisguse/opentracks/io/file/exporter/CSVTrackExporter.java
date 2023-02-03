@@ -25,6 +25,7 @@ import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
@@ -49,35 +50,6 @@ public class CSVTrackExporter implements TrackExporter {
 
     private static final String TAG = CSVTrackExporter.class.getSimpleName();
 
-    private static final NumberFormat ALTITUDE_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat SPEED_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat DISTANCE_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat HEARTRATE_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat CADENCE_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat POWER_FORMAT = NumberFormat.getInstance(Locale.US);
-
-    static {
-        ALTITUDE_FORMAT.setMaximumFractionDigits(1);
-        ALTITUDE_FORMAT.setGroupingUsed(false);
-
-        COORDINATE_FORMAT.setMaximumFractionDigits(6);
-        COORDINATE_FORMAT.setMaximumIntegerDigits(3);
-        COORDINATE_FORMAT.setGroupingUsed(false);
-
-        SPEED_FORMAT.setMaximumFractionDigits(2);
-        SPEED_FORMAT.setGroupingUsed(false);
-
-        HEARTRATE_FORMAT.setMaximumFractionDigits(0);
-        HEARTRATE_FORMAT.setGroupingUsed(false);
-
-        CADENCE_FORMAT.setMaximumFractionDigits(0);
-        CADENCE_FORMAT.setGroupingUsed(false);
-
-        POWER_FORMAT.setMaximumFractionDigits(0);
-        POWER_FORMAT.setGroupingUsed(false);
-    }
-
     private final ContentProviderUtils contentProviderUtils;
 
     private PrintWriter printWriter;
@@ -93,6 +65,7 @@ public class CSVTrackExporter implements TrackExporter {
 
     @Override
     public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
+
         List<Column> columns = Collections.unmodifiableList(Arrays.asList(
                 new Column("time", null),
                 new Column("trackpoint_type", t -> quote(t.getType().name())),
@@ -132,6 +105,7 @@ public class CSVTrackExporter implements TrackExporter {
             return true;
         } catch (InterruptedException e) {
             Log.e(TAG, "Thread interrupted", e);
+            Thread.currentThread().interrupt();
             return false;
         }
     }
@@ -152,7 +126,7 @@ public class CSVTrackExporter implements TrackExporter {
                         writeTrackPoint(columns, trackPoint);
                         break;
                     default:
-                        throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
+                        throw new InputMismatchException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
                 }
             }
         }
