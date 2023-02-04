@@ -3,6 +3,7 @@ package de.dennisguse.opentracks.viewmodels;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.os.Build;
 
 import androidx.core.content.ContextCompat;
 
