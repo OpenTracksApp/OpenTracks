@@ -54,8 +54,8 @@ public class SensorDataCyclingDistanceSpeed extends SensorData<SensorDataCycling
 
     public void compute(SensorDataCyclingDistanceSpeed previous, Distance wheelCircumference) {
         if (hasData() && previous != null && previous.hasData()) {
-            float timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * 1000;
-            Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
+            float timeDiffMs = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * 1000;
+            Duration timeDiff = Duration.ofMillis((long) timeDiffMs);
             if (timeDiff.isZero() || timeDiff.isNegative()) {
                 Log.e(TAG, "Timestamps difference is invalid: cannot compute speed.");
                 value = null;
