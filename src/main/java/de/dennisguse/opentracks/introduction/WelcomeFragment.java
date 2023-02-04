@@ -19,11 +19,6 @@ public class WelcomeFragment extends Fragment {
     private WelcomeBinding viewBinding;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewBinding = WelcomeBinding.inflate(inflater, container, false);
         return viewBinding.getRoot();
