@@ -86,7 +86,7 @@ public class TrackPoint {
     private HeartRate heartRate = null;
     private Cadence cadence = null;
     private Power power = null;
-    private Float altitudeGain_m = null;
+    private Float altitudeGain = null;
     private Float altitudeLoss_m = null;
 
     public TrackPoint(@NonNull Type type, @NonNull Instant time) {
@@ -216,15 +216,15 @@ public class TrackPoint {
     }
 
     public boolean hasAltitudeGain() {
-        return altitudeGain_m != null;
+        return altitudeGain != null;
     }
 
     public float getAltitudeGain() {
-        return altitudeGain_m;
+        return altitudeGain;
     }
 
     public TrackPoint setAltitudeGain(Float altitudeGain_m) {
-        this.altitudeGain_m = altitudeGain_m;
+        this.altitudeGain = altitudeGain_m;
         return this;
     }
 
@@ -377,7 +377,7 @@ public class TrackPoint {
             sensorDistance = sensorDistance.minus(lastTrackPoint.getSensorDistance());
         }
         if (hasAltitudeGain() && lastTrackPoint.hasAltitudeGain()) {
-            altitudeGain_m -= lastTrackPoint.altitudeGain_m;
+            altitudeGain -= lastTrackPoint.altitudeGain;
         }
         if (hasAltitudeLoss() && lastTrackPoint.hasAltitudeLoss()) {
             altitudeLoss_m -= lastTrackPoint.altitudeLoss_m;
@@ -453,7 +453,7 @@ public class TrackPoint {
                 ", heartRate_bpm=" + heartRate +
                 ", cadence_rpm=" + cadence +
                 ", power=" + power +
-                ", altitudeGain_m=" + altitudeGain_m +
+                ", altitudeGain_m=" + altitudeGain +
                 ", altitudeLoss_m=" + altitudeLoss_m +
                 '}';
     }
