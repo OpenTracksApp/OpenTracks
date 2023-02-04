@@ -172,7 +172,7 @@ public class PreferencesUtils {
         editor.putString(getKey(keyId), value);
         editor.apply();
     }
-    
+
     public static void setString(int keyId, int valueId) {
         setString(keyId, resources.getString(valueId));
     }
