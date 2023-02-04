@@ -26,8 +26,8 @@ public class Speed {
         return of(Float.parseFloat(speedMps));
     }
 
-    public static Speed ofKMH(double speed_kmh) {
-        return of(Distance.ofKilometer(speed_kmh), Duration.ofHours(1));
+    public static Speed ofKMH(double speedKMH) {
+        return of(Distance.ofKilometer(speedKMH), Duration.ofHours(1));
     }
 
     public static Speed zero() {
