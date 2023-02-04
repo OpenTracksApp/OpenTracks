@@ -53,7 +53,7 @@ public class FilterDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        ArrayList<FilterItem> filterItems = new ArrayList<>();
+        ArrayList<FilterItem> filterItems;
         filterItems = getArguments().getParcelableArrayList(KEY_FILTER_ITEMS);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
