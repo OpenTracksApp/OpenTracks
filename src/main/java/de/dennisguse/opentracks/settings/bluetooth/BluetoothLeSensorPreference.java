@@ -43,15 +43,15 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
 
     private static final int DEVICE_NONE_RESOURCEID = R.string.value_none;
 
-    public BluetoothLeSensorPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    protected BluetoothLeSensorPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public BluetoothLeSensorPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    protected BluetoothLeSensorPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public BluetoothLeSensorPreference(Context context, AttributeSet attrs) {
+    protected BluetoothLeSensorPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
