@@ -68,4 +68,5 @@ public abstract class Altitude {
         return "Altitude{" +
                 "altitudeM=" + altitudeM + this.getClass().getSimpleName() +
                 '}';
-    }}
+    }
+}
