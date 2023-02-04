@@ -193,7 +193,6 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsDistanceUnit.setText(parts.second);
         }
 
-        // Set activity type
         SetImageDrawable(track)
 
         // Set time and start datetime
