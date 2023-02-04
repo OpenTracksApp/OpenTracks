@@ -149,7 +149,7 @@ public class IntervalStatistics {
             return loss_m != null;
         }
 
-        public Float getLoss_m() {
+        public Float getLossM() {
             return loss_m;
         }
 
