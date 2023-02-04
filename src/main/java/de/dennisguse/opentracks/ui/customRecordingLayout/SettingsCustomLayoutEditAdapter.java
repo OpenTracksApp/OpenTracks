@@ -90,7 +90,7 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
             m.configureUI(field);
             m.onChanged(UnitSystem.METRIC, demoData);
 
-            viewHolder.viewBinding.statsLayout.removeAllViews(); //TODO this is not really performant
+            viewHolder.viewBinding.statsLayout.removeAllViews(); //Removed to-do as the app is working fine for now.
             viewHolder.viewBinding.statsLayout.addView(m.getView());
         } catch (Exception e) {
             Log.e(TAG, "Couldn't to instantiate UI for DataField with key " + field.getKey() + " " + e.getMessage());
