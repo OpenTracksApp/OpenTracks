@@ -23,7 +23,7 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
     private List<IntervalStatistics.Interval> intervalList;
     private final Context context;
     private final StackMode stackMode;
-    private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
+    private UnitSystem unitSystem;
     private boolean isReportSpeed;
 
     public IntervalStatisticsAdapter(Context context, StackMode stackMode, UnitSystem unitSystem, boolean isReportSpeed) {
