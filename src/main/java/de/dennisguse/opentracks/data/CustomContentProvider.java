@@ -127,8 +127,6 @@ public class CustomContentProvider extends ContentProvider {
             db.setForeignKeyConstraintsEnabled(true);
         } catch (SQLiteException e) {
             Log.e(TAG, "Unable to open database for writing.", e);
-        } finally {
-            databaseHelper.close();
         }
         return db != null;
     }

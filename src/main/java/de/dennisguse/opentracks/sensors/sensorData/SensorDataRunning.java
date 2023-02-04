@@ -13,6 +13,8 @@ import de.dennisguse.opentracks.data.models.Speed;
  */
 public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> {
 
+    private static final String TAG = SensorDataRunning.class.getSimpleName();
+
     private final Speed speed;
 
     private final Cadence cadence;

@@ -145,19 +145,19 @@ public class Track {
 
     public static class Id implements Parcelable {
 
-        private final long identity;
+        private final long id;
 
         public Id(long id) {
-            this.identity = id;
+            this.id = id;
         }
 
         protected Id(Parcel in) {
-            identity = in.readLong();
+            id = in.readLong();
         }
 
         //TOOD Limit visibility to TrackRecordingService / ContentProvider
         public long getId() {
-            return identity;
+            return id;
         }
 
         @Override
@@ -165,12 +165,12 @@ public class Track {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Id id1 = (Id) o;
-            return identity == id1.identity;
+            return id == id1.id;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(identity);
+            return Objects.hash(id);
         }
 
         @Override
@@ -181,12 +181,12 @@ public class Track {
         @NonNull
         @Override
         public String toString() {
-            return String.valueOf(identity);
+            return String.valueOf(id);
         }
 
         @Override
         public void writeToParcel(Parcel parcel, int i) {
-            parcel.writeLong(identity);
+            parcel.writeLong(id);
         }
 
         public static final Parcelable.Creator<Track.Id> CREATOR = new Parcelable.Creator<>() {

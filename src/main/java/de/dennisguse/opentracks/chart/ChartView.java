@@ -636,7 +636,7 @@ public class ChartView extends View {
                 canvas.save();
                 float x = getX(getMarkerXValue(marker));
                 canvas.drawLine(x, topBorder + spacer + (float)markerHeight / 2, x, topBorder + (float)effectiveHeight, markerPaint);
-                canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + (float)spacer);
+                canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
 
                 markerPin.draw(canvas);
                 canvas.restore();
@@ -654,7 +654,7 @@ public class ChartView extends View {
         List<Double> xAxisMarkerPositions = getXAxisMarkerPositions(getXAxisInterval());
         for (double position : xAxisMarkerPositions) {
             int x = getX(position);
-            canvas.drawLine(x, topBorder, x, topBorder + (float)effectiveHeight, gridPaint);
+            canvas.drawLine(x, topBorder, x, topBorder + effectiveHeight, gridPaint);
         }
         // Y axis grid
         float rightEdge = getX(maxX);
@@ -716,11 +716,11 @@ public class ChartView extends View {
     private void drawXAxis(Canvas canvas) {
         int x = getScrollX() + leftBorder;
         int y = topBorder + effectiveHeight;
-        canvas.drawLine(x, y, x + (float)effectiveWidth, y, axisPaint);
+        canvas.drawLine(x, y, x + effectiveWidth, y, axisPaint);
         String label = getXAxisLabel();
         Rect rect = getRect(axisPaint, label);
         int yOffset = rect.height() / 2;
-        canvas.drawText(label, x + effectiveWidth + (float)spacer, y + (float)yOffset, axisPaint);
+        canvas.drawText(label, x + effectiveWidth + spacer, y + yOffset, axisPaint);
 
         double interval = getXAxisInterval();
         NumberFormat numberFormat = interval < 1 ? X_FRACTION_FORMAT : X_NUMBER_FORMAT;
@@ -759,7 +759,7 @@ public class ChartView extends View {
     private void drawXAxisMarker(Canvas canvas, double value, NumberFormat numberFormat, int spacing) {
         String marker = chartByDistance ? numberFormat.format(value) : StringUtils.formatElapsedTime((Duration.ofMillis((long) value)));
         Rect rect = getRect(xAxisMarkerPaint, marker);
-        canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacing + (float)rect.height(), xAxisMarkerPaint);
+        canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacing + rect.height(), xAxisMarkerPaint);
     }
 
     private double getXAxisInterval() {
@@ -797,7 +797,7 @@ public class ChartView extends View {
     private void drawYAxis(Canvas canvas) {
         int x = getScrollX() + leftBorder;
         int y = topBorder;
-        canvas.drawLine(x, y, x, y + (float)effectiveHeight, axisPaint);
+        canvas.drawLine(x, y, x, y + effectiveHeight, axisPaint);
 
         //TODO
         int markerXPosition = x - spacer;

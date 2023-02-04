@@ -15,10 +15,10 @@ public class UintUtils {
      */
     public static long diff(long a, long b, final long UINT_MAX) {
         if (a < 0 || b < 0) {
-            throw new DataOutOfRangeException("a or b cannot be less than zero.");
+            throw new RuntimeException("a or b cannot be less than zero.");
         }
         if (a > UINT_MAX || b > UINT_MAX) {
-            throw new DataOutOfRangeException("a or b are outside of the allowed range.");
+            throw new RuntimeException("a or b are outside of the allowed range.");
         }
 
         if (a >= b) {
@@ -26,10 +26,5 @@ public class UintUtils {
         }
 
         return (UINT_MAX - b) + a;
-    }
-    static class DataOutOfRangeException extends RuntimeException{
-        public DataOutOfRangeException(String errorMessage){
-            super(errorMessage);
-        }
     }
 }
