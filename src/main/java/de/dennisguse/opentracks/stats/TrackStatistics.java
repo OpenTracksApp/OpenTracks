@@ -287,8 +287,8 @@ public class TrackStatistics {
         return altitudeExtremities.getMin();
     }
 
-    public void setMinAltitude(double altitude_m) {
-        altitudeExtremities.setMin(altitude_m);
+    public void setMinAltitude(double altitudeM) {
+        altitudeExtremities.setMin(altitudeM);
     }
 
     public boolean hasAltitudeMax() {
