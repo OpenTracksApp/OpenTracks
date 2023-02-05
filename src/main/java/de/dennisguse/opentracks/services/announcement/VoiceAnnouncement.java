@@ -77,6 +77,8 @@ public class VoiceAnnouncement {
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
                     stop = true;
                     break;
+                default:
+                    throw new IllegalArgumentException("Invalid focusChange Value" + focusChange);
             }
 
             if (stop && tts != null && tts.isSpeaking()) {
