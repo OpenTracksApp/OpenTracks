@@ -54,7 +54,6 @@ public class GPXTrackExporter implements TrackExporter {
 
     private static final String TAG = GPXTrackExporter.class.getSimpleName();
 
-
     private final ContentProviderUtils contentProviderUtils;
 
     private final String creator;

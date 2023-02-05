@@ -11,3 +11,5 @@ v
 Fsrc/main/java/de/dennisguse/opentracks/data/CustomContentProvider.java,2\b\2bbf2aa69bff2ef77c5a4ca89847cbad459304b5
 A
 gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
+}
+Msrc/main/java/de/dennisguse/opentracks/io/file/exporter/KmzTrackExporter.java,4\9\49d1c39b07fbec21b83042ee57b9e5107de4ad4f
