@@ -1,6 +1,6 @@
-projectKey=Horizon_group_14
+projectKey=OpenTracks-Main
 serverUrl=http://localhost:9000
-serverVersion=8.9.10.61524
-dashboardUrl=http://localhost:9000/dashboard?id=Horizon_group_14
-ceTaskId=AYYdrf-SmmuXLW5-kNQJ
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYYdrf-SmmuXLW5-kNQJ
+serverVersion=9.8.0.63668
+dashboardUrl=http://localhost:9000/dashboard?id=OpenTracks-Main
+ceTaskId=AYYfX9Umngqx2rQ0f9ku
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYYfX9Umngqx2rQ0f9ku
