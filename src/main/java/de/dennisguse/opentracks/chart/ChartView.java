@@ -741,7 +741,7 @@ public class ChartView extends View {
                 case NAUTICAL_IMPERIAL:
                     return context.getString(R.string.unit_nautical_mile);
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new IllegalArgumentException("Not implemented");
             }
         } else {
             return context.getString(R.string.description_time);
