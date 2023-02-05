@@ -40,6 +40,7 @@ public class ExportService extends JobIntentService {
     protected void onHandleWork(@NonNull Intent intent) {
         // Get all data.
         ResultReceiver resultReceiver = intent.getParcelableExtra(EXTRA_RECEIVER);
+
         Track.Id trackId = intent.getParcelableExtra(EXTRA_TRACK_ID);
         TrackFileFormat trackFileFormat = (TrackFileFormat) intent.getSerializableExtra(EXTRA_TRACK_FILE_FORMAT);
         Uri directoryUri = intent.getParcelableExtra(EXTRA_DIRECTORY_URI);
