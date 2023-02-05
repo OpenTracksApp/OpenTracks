@@ -284,10 +284,11 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         return trackRecordingManager.insertMarker(name, category, description, photoUrl);
     }
 
-    @Deprecated
+    @Deprecated(forRemoval=true) 
     @VisibleForTesting
     public TrackPointCreator getTrackPointCreator() {
         return trackPointCreator;
+        @Deprecated(forRemoval=true)
     }
 
     @Deprecated
@@ -348,7 +349,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         recordingStatusObservable.postValue(recordingStatus);
     }
 
-    @Deprecated //TODO Should be @VisibleForTesting
+    @Deprecated 
+    @VisibleForTesting //TODO Should be @VisibleForTesting
     public boolean isRecording() {
         return recordingStatus.isRecording();
     }
