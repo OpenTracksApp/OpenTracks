@@ -1,0 +1,9 @@
+v4.2.2: OpenTracks
+
+Bugfix:
+- Track icon wrongly shown in dialog
+- Textcolor for heartrate zone 1 was ignoring theme
+- Not all activityTypes were shown in dropdownlist
+- Crash due to color not found
+
+
