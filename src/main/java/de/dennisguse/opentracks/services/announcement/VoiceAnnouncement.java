@@ -48,7 +48,7 @@ import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
  */
 public class VoiceAnnouncement {
 
-    public final static int AUDIO_STREAM = TextToSpeech.Engine.DEFAULT_STREAM;
+    public static final int AUDIO_STREAM = TextToSpeech.Engine.DEFAULT_STREAM;
 
     private static final String TAG = VoiceAnnouncement.class.getSimpleName();
 
