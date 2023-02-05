@@ -96,7 +96,7 @@ public class TrackFilenameGenerator {
         track.setUuid(UUID.fromString("fefefefefe-0000-1000-8000-00805f9b34fb"));
         track.getTrackStatistics().setStartTime(Instant.ofEpochMilli(0));
 
-        return format(track, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES);
+        return format(track, TrackFileFormat.GPX);
     }
 
     public static class TemplateInvalidException extends RuntimeException {

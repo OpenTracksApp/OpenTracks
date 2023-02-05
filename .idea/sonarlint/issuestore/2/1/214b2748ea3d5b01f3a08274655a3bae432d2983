@@ -1,0 +1,13 @@
+
+I
+java:S2755."3Disable access to external entities in XML parsing.(öÿÇ 
+H
+java:S1874."2Remove this use of "getHandler"; it is deprecated.(öÿÇ 
+Y
+java:S11552">Use isEmpty() to check whether the collection is empty or not.(³Ü¤›ûÿÿÿÿ
+^
+java:S6355="HAdd 'since' and/or 'forRemoval' arguments to the @Deprecated annotation.(õˆúš
+P
+java:S1133>"5Do not forget to remove this deprecated code someday.(ãÑ¼’øÿÿÿÿ
+C
+java:S1123>"(Add the missing @deprecated Javadoc tag.(ãÑ¼’øÿÿÿÿ

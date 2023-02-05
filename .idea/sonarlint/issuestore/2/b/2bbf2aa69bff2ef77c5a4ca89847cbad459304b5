@@ -1,0 +1,62 @@
+
+i
+java:S1192”"MDefine a constant instead of duplicating this literal "Unknown URL " 3 times.(ÅÓÀúÿÿÿÿ
+^
+java:S1192»"GDefine a constant instead of duplicating this literal " AND (" 3 times.(ÿı˜š
+j
+java:S1192M"TDefine a constant instead of duplicating this literal "SUM(COALESCE(MAX(t." 3 times.(ğ£‘•
+]
+java:S1192K"GDefine a constant instead of duplicating this literal "SUM(t." 3 times.(òŸ’‘
+j
+java:S1192K"TDefine a constant instead of duplicating this literal " * (COALESCE(MAX(t." 3 times.(òŸ’‘
+b
+java:S1192ˆ"FDefine a constant instead of duplicating this literal " IN (" 3 times.(©–Ó†şÿÿÿÿ
+]
+java:S1192K"GDefine a constant instead of duplicating this literal ") - t." 6 times.(òŸ’‘
+i
+java:S1192¦"MDefine a constant instead of duplicating this literal "Unknown url " 3 times.(ºé¿‡øÿÿÿÿ
+‚
+java:S1192K"lDefine a constant instead of duplicating this literal ", (SELECT time_value FROM time_select)), t." 6 times.(òŸ’‘
+j
+java:S2095{"TUse try-with-resources or close this "CustomSQLiteOpenHelper" in a "finally" clause.(ı¼¦ó
+w	java:S116D"]Rename this field "SENSOR_STATS_QUERY" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òí°äùÿÿÿÿ
+<
+java:S1170D"!Make this final field static too.(òí°äùÿÿÿÿ
+[
+java:S3252H"@Use static access with "android.provider.BaseColumns" for "_ID".(±¯Àúÿÿÿÿ
+[
+java:S3252H"@Use static access with "android.provider.BaseColumns" for "_ID".(±¯Àúÿÿÿÿ
+™
+java:S5803a"‚Remove this usage of "AUTHORITY_PACKAGE", it is annotated with @VisibleForTesting and should not be accessed from production code.(ûÿ§
+
+java:S5803{"‡Remove this usage of "CustomSQLiteOpenHelper", it is annotated with @VisibleForTesting and should not be accessed from production code.(ı¼¦ó
+P
+java:S1874¢"4Remove this use of "notifyChange"; it is deprecated.(ÒıË›ùÿÿÿÿ
+P
+java:S1874Ş"4Remove this use of "notifyChange"; it is deprecated.(ÒıË›ùÿÿÿÿ
+P
+java:S1874õ"4Remove this use of "notifyChange"; it is deprecated.(ÒıË›ùÿÿÿÿ
+W
+java:S3252„"@Use static access with "android.provider.BaseColumns" for "_ID".(ÏæîÓ
+\
+java:S3252Œ"@Use static access with "android.provider.BaseColumns" for "_ID".(¸´ìŞûÿÿÿÿ
+W
+java:S3252”"@Use static access with "android.provider.BaseColumns" for "_ID".(„ò›º
+\
+java:S3252Ÿ"@Use static access with "android.provider.BaseColumns" for "_ID".(İµÀÉüÿÿÿÿ
+N
+java:S1135¯"2Complete the task associated to this TODO comment.(ßã­êıÿÿÿÿ
+\
+java:S3252¹"@Use static access with "android.provider.BaseColumns" for "_ID".(à‹Áêùÿÿÿÿ
+W
+java:S3252Ä"@Use static access with "android.provider.BaseColumns" for "_ID".(ÖÅ±œ
+\
+java:S3252Ï"@Use static access with "android.provider.BaseColumns" for "_ID".(ÑºñÛùÿÿÿÿ
+P
+java:S1874ß"4Remove this use of "notifyChange"; it is deprecated.(ÒıË›ùÿÿÿÿ
+\
+java:S3252‡"@Use static access with "android.provider.BaseColumns" for "_ID".(Í£ô×üÿÿÿÿ
+\
+java:S3252"@Use static access with "android.provider.BaseColumns" for "_ID".(ÈËÃåıÿÿÿÿ
+W
+java:S3252—"@Use static access with "android.provider.BaseColumns" for "_ID".(§äö£

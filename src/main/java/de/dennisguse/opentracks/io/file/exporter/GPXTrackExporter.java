@@ -23,11 +23,11 @@ import androidx.annotation.NonNull;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.text.NumberFormat;
+
 import java.time.ZoneOffset;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
+
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -53,39 +53,6 @@ import de.dennisguse.opentracks.util.StringUtils;
 public class GPXTrackExporter implements TrackExporter {
 
     private static final String TAG = GPXTrackExporter.class.getSimpleName();
-
-    private static final NumberFormat ALTITUDE_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat SPEED_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat DISTANCE_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat HEARTRATE_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat CADENCE_FORMAT = NumberFormat.getInstance(Locale.US);
-    private static final NumberFormat POWER_FORMAT = NumberFormat.getInstance(Locale.US);
-
-    static {
-        /*
-         * GPX readers expect to see fractional numbers with US-style punctuation.
-         * That is, they want periods for decimal points, rather than commas.
-         */
-        ALTITUDE_FORMAT.setMaximumFractionDigits(1);
-        ALTITUDE_FORMAT.setGroupingUsed(false);
-
-        COORDINATE_FORMAT.setMaximumFractionDigits(6);
-        COORDINATE_FORMAT.setMaximumIntegerDigits(3);
-        COORDINATE_FORMAT.setGroupingUsed(false);
-
-        SPEED_FORMAT.setMaximumFractionDigits(2);
-        SPEED_FORMAT.setGroupingUsed(false);
-
-        HEARTRATE_FORMAT.setMaximumFractionDigits(0);
-        HEARTRATE_FORMAT.setGroupingUsed(false);
-
-        CADENCE_FORMAT.setMaximumFractionDigits(0);
-        CADENCE_FORMAT.setGroupingUsed(false);
-
-        POWER_FORMAT.setMaximumFractionDigits(0);
-        POWER_FORMAT.setGroupingUsed(false);
-    }
 
     private final ContentProviderUtils contentProviderUtils;
 
@@ -122,6 +89,7 @@ public class GPXTrackExporter implements TrackExporter {
             return true;
         } catch (InterruptedException e) {
             Log.e(TAG, "Thread interrupted", e);
+            Thread.currentThread().interrupt();
             return false;
         }
     }
@@ -175,12 +143,12 @@ public class GPXTrackExporter implements TrackExporter {
                         sensorPoints.clear();
                         break;
                     default:
-                        throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
+                        throw new InterruptedException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
                 }
             }
 
             if (!sensorPoints.isEmpty()) {
-                //TODO We might miss to export data; this happens if there are SENSORPOINTs after the final TRACKPOINT of a track.
+
                 //For segments the data is added to the next segment.
                 Log.d(TAG, "SENSORPOINTs after final TRACKPOINT; this data is not exported.");
             }
@@ -316,6 +284,8 @@ public class GPXTrackExporter implements TrackExporter {
     public Distance writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint, List<TrackPoint> sensorPoints, Distance trackDistance) {
         Distance cumulativeDistance = null;
 
+
+
         if (printWriter != null) {
 
             printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");
@@ -345,12 +315,12 @@ public class GPXTrackExporter implements TrackExporter {
                     trackPointExtensionContent += "<pwr:PowerInWatts>" + POWER_FORMAT.format(trackPoint.getPower().getW()) + "</pwr:PowerInWatts>\n";
                 }
 
-                Double cumulativeGain = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasAltitudeGain() ? (double) tp.getAltitudeGain() : null);
+                Double cumulativeGain = cumulateSensorData(trackPoint, sensorPoints, tp -> tp.hasAltitudeGain() ? (double) tp.getAltitudeGain() : null);
                 if (cumulativeGain != null) {
                     trackPointExtensionContent += ("<opentracks:gain>" + ALTITUDE_FORMAT.format(cumulativeGain) + "</opentracks:gain>\n");
                 }
 
-                Double cumulativeLoss = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasAltitudeLoss() ? (double) tp.getAltitudeLoss() : null);
+                Double cumulativeLoss = cumulateSensorData(trackPoint, sensorPoints, tp -> tp.hasAltitudeLoss() ? (double) tp.getAltitudeLoss() : null);
                 if (cumulativeLoss != null) {
                     trackPointExtensionContent += ("<opentracks:loss>" + ALTITUDE_FORMAT.format(cumulativeLoss) + "</opentracks:loss>\n");
                 }
@@ -362,7 +332,7 @@ public class GPXTrackExporter implements TrackExporter {
                     trackPointExtensionContent += ("<opentracks:accuracy_vertical>" + DISTANCE_FORMAT.format(trackPoint.getVerticalAccuracy().toM()) + "</opentracks:accuracy_vertical>");
                 }
 
-                cumulativeDistance = Distance.ofOrNull(cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasSensorDistance() ? tp.getSensorDistance().toM() : null));
+                cumulativeDistance = Distance.ofOrNull(cumulateSensorData(trackPoint, sensorPoints, tp -> tp.hasSensorDistance() ? tp.getSensorDistance().toM() : null));
                 if (cumulativeDistance != null) {
                     trackPointExtensionContent += ("<opentracks:distance>" + DISTANCE_FORMAT.format(cumulativeDistance.toM()) + "</opentracks:distance>\n");
                     trackPointExtensionContent += ("<cluetrust:distance>" + DISTANCE_FORMAT.format(trackDistance.plus(cumulativeDistance).toM()) + "</cluetrust:distance>\n");
