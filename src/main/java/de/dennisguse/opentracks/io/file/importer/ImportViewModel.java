@@ -13,7 +13,6 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -70,7 +69,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         if (resultData == null) {
-            throw new RuntimeException(TAG + ": onReceiveResult resultData NULL");
+            throw new NullPointerException(TAG + ": onReceiveResult resultData NULL");
         }
 
         ArrayList<Track.Id> trackIds = resultData.getParcelableArrayList(ImportServiceResultReceiver.RESULT_EXTRA_LIST_TRACK_ID);
@@ -90,7 +89,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
                 summary.existsCount++;
                 break;
             default:
-                throw new RuntimeException(TAG + ": import service result code invalid: " + resultCode);
+                throw new InvalidResultCodeException(TAG + ": import service result code invalid: " + resultCode);
         }
 
         importData.postValue(summary);
@@ -121,12 +120,19 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
             return errorCount;
         }
 
-        public ArrayList<Track.Id> getImportedTrackIds() {
+        public List<Track.Id> getImportedTrackIds() {
             return importedTrackIds;
         }
 
-        public ArrayList<String> getFileErrors() {
+        public List<String> getFileErrors() {
             return fileErrors;
         }
     }
+
+    public static class InvalidResultCodeException extends RuntimeException {
+        public InvalidResultCodeException(String errorMessage) {
+            super(errorMessage);
+        }
+    }
+
 }
