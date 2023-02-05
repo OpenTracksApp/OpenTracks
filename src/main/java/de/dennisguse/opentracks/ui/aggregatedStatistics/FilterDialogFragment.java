@@ -35,6 +35,7 @@ public class FilterDialogFragment extends DialogFragment {
     public static final String KEY_FILTER_ITEMS = "filterItems";
 
     private FilterDialogListener filterDialogListener;
+    private ArrayList<FilterItem> filterItems = new ArrayList<>();
 
     public static void showDialog(FragmentManager fragmentManager) {
         FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
@@ -53,7 +54,6 @@ public class FilterDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        ArrayList<FilterItem> filterItems;
         filterItems = getArguments().getParcelableArrayList(KEY_FILTER_ITEMS);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -111,9 +111,8 @@ public class FilterDialogFragment extends DialogFragment {
             datePickerTo.setVisibility(View.VISIBLE);
         });
 
-        ArrayList<FilterItem> finalFilterItems = filterItems;
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> filterDialogListener.onFilterDone(
-                finalFilterItems,
+                filterItems,
                 LocalDateTime.of(datePickerFrom.getYear(), datePickerFrom.getMonth() + 1, datePickerFrom.getDayOfMonth(), 0, 0, 0),
                 LocalDateTime.of(datePickerTo.getYear(), datePickerTo.getMonth() + 1, datePickerTo.getDayOfMonth(), 23, 59, 59)
         ));
@@ -140,7 +139,7 @@ public class FilterDialogFragment extends DialogFragment {
     public static class FilterItem implements Parcelable {
         public final String id;
         public final String value;
-        public boolean isChecked;
+        protected boolean isChecked;
 
         public FilterItem(String id, String value) {
             this.id = id;
