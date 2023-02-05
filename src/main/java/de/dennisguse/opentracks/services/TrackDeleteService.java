@@ -33,7 +33,6 @@ public class TrackDeleteService extends Service {
     private final Binder binder = new Binder();
     private ExecutorService serviceExecutor;
     private MutableLiveData<DeletionFinishedStatus> deleteResultObservable;
-
     private NotificationCompat.Builder notificationBuilder;
 
     @Override
