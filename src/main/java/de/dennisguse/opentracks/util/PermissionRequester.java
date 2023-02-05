@@ -89,11 +89,11 @@ public class PermissionRequester {
         ALL_PERMISSIONS = Collections.unmodifiableList(all);
     }
 
-    public static final  PermissionRequester GPS = new PermissionRequester(GPS_PERMISSION);
-    public static final  PermissionRequester BLUETOOTH = new PermissionRequester(BLUETOOTH_PERMISSIONS);
-    public static final  PermissionRequester NOTIFICATION = new PermissionRequester(NOTIFICATION_PERMISSIONS);
+    public final static PermissionRequester GPS = new PermissionRequester(GPS_PERMISSION);
+    public final static PermissionRequester BLUETOOTH = new PermissionRequester(BLUETOOTH_PERMISSIONS);
+    public final static PermissionRequester NOTIFICATION = new PermissionRequester(NOTIFICATION_PERMISSIONS);
 
-    public static final  PermissionRequester ALL = new PermissionRequester(ALL_PERMISSIONS);
+    public final static PermissionRequester ALL = new PermissionRequester(ALL_PERMISSIONS);
 
     public interface RejectedCallback {
         void rejected(PermissionRequester permissionRequester);

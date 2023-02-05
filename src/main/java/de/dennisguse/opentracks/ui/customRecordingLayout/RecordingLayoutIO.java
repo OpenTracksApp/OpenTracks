@@ -18,10 +18,6 @@ public class RecordingLayoutIO {
     private static final String YES_VALUE = "1";
     private static final String NOT_VALUE = "0";
 
-    private RecordingLayoutIO() {
-
-    }
-
     public static RecordingLayout fromCsv(@NonNull String csvLine, @NonNull Resources resources) {
         List<String> csvParts = CsvLayoutUtils.getCsvLineParts(csvLine);
         if (csvParts == null) {
@@ -36,16 +32,16 @@ public class RecordingLayoutIO {
                 Log.e(TAG, "Invalid CSV layout. It shouldn't happen: " + csvLine);
                 return recordingLayout;
             }
-            recordingLayout.addField(fromCsv(fieldParts, resources));
+            recordingLayout.addField(fromCSV(fieldParts, resources));
         }
         return recordingLayout;
     }
 
-    public static String toCsv(List<RecordingLayout> recordingLayouts) {
+    public static String toCSV(List<RecordingLayout> recordingLayouts) {
         return recordingLayouts.stream().map(RecordingLayout::toCsv).collect(Collectors.joining(CsvLayoutUtils.LINE_SEPARATOR));
     }
 
-    private static DataField fromCsv(String[] fieldParts, @NonNull Resources resources) {
+    private static DataField fromCSV(String[] fieldParts, @NonNull Resources resources) {
         return new DataField(
                 fieldParts[0],
                 fieldParts[1].equals(YES_VALUE),

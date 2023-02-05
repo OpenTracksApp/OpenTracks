@@ -44,8 +44,7 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
 
         areFiltersApplied = savedInstanceState != null && savedInstanceState.getBoolean(STATE_ARE_FILTERS_APPLIED);
 
-        List<Track.Id> trackIds = getIntent().getParcelableArrayListExtra(EXTRA_TRACK_IDS, Track.Id.class);
-
+        List<Track.Id> trackIds = getIntent().getParcelableArrayListExtra(EXTRA_TRACK_IDS);
         if (trackIds != null && !trackIds.isEmpty()) {
             trackIds.stream().forEach(selection::addTrackId);
         }

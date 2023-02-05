@@ -26,7 +26,7 @@ class CachedTrackPointsIndexes {
     final int altitudeLossIndex;
 
     CachedTrackPointsIndexes(Cursor cursor) {
-        idIndex = cursor.getColumnIndex(TrackPointsColumns.DEFAULT_SORT_ORDER);
+        idIndex = cursor.getColumnIndex(TrackPointsColumns._ID);
         typeIndex = cursor.getColumnIndex(TrackPointsColumns.TYPE);
         longitudeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE);
         latitudeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);

@@ -16,6 +16,7 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
  */
 public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
 
+    private static final String TAG = TrackPointIterator.class.getSimpleName();
 
     private final ContentProviderUtils contentProviderUtils;
     private final Track.Id trackId;

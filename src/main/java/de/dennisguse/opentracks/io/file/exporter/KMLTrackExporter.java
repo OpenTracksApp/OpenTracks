@@ -30,10 +30,8 @@ import java.text.NumberFormat;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
@@ -60,7 +58,6 @@ public class KMLTrackExporter implements TrackExporter {
     public static final String MARKER_STYLE = "waypoint";
     private static final String TRACK_STYLE = "track";
     private static final String SCHEMA_ID = "schema";
-    String const1 = "<open>1</open>";
 
     public static final String EXTENDED_DATA_TYPE_CATEGORY = "type";
 
@@ -129,7 +126,6 @@ public class KMLTrackExporter implements TrackExporter {
             return true;
         } catch (InterruptedException e) {
             Log.e(TAG, "Thread interrupted", e);
-            Thread.currentThread().interrupt();
             return false;
         }
     }
@@ -196,7 +192,7 @@ public class KMLTrackExporter implements TrackExporter {
                         writeTrackPoint(track.getZoneOffset(), trackPoint);
                         break;
                     default:
-                        throw new InterruptedException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
+                        throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
                 }
             }
 
@@ -215,9 +211,6 @@ public class KMLTrackExporter implements TrackExporter {
         }
     }
 
-
-
-
     @VisibleForTesting
     void prepare(OutputStream outputStream) {
         this.printWriter = new PrintWriter(outputStream);
@@ -232,19 +225,18 @@ public class KMLTrackExporter implements TrackExporter {
     }
 
     private void writeHeader(Track[] tracks) {
-
         if (printWriter != null) {
             printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             printWriter.println("<kml xmlns=\"http://www.opengis.net/kml/2.3\"");
             printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\"");
             printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\">");
-
+            //TODO ADD xsi:schemaLocation for atom
             printWriter.println("xsi:schemaLocation=" +
                     "\"http://www.opengis.net/kml/2.3 http://schemas.opengis.net/kml/2.3/ogckml23.xsd"
                     + " http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd\">");
 
             printWriter.println("<Document>");
-            printWriter.println(const1);
+            printWriter.println("<open>1</open>");
             printWriter.println("<visibility>1</visibility>");
 
             Track track = tracks[0];
@@ -275,7 +267,7 @@ public class KMLTrackExporter implements TrackExporter {
         if (printWriter != null) {
             printWriter.println("<Folder>");
             printWriter.println("<name>" + StringUtils.formatCData(context.getString(R.string.track_markers, track.getName())) + "</name>");
-            printWriter.println(const1);
+            printWriter.println("<open>1</open>");
         }
     }
 
@@ -301,7 +293,7 @@ public class KMLTrackExporter implements TrackExporter {
         if (printWriter != null) {
             printWriter.println("<Folder id=tour>");
             printWriter.println("<name>" + context.getString(R.string.generic_tracks) + "</name>");
-            printWriter.println(const1);
+            printWriter.println("<open>1</open>");
         }
     }
 
@@ -354,21 +346,24 @@ public class KMLTrackExporter implements TrackExporter {
 
     @VisibleForTesting
     void writeCloseSegment() {
-
-        Map<Boolean,Runnable> methods = new LinkedHashMap<>();
-        methods.put(speedList.stream().anyMatch(Objects::nonNull),() -> writeSimpleArrayData(speedList, EXTENDED_DATA_TYPE_SPEED));
-        methods.put(distanceList.stream().anyMatch(Objects::nonNull),()->writeSimpleArrayData(distanceList, EXTENDED_DATA_TYPE_DISTANCE));
-        methods.put(powerList.stream().anyMatch(Objects::nonNull),() -> writeSimpleArrayData(powerList, EXTENDED_DATA_TYPE_POWER));
-        methods.put(cadenceList.stream().anyMatch(Objects::nonNull),() -> writeSimpleArrayData(cadenceList, EXTENDED_DATA_TYPE_CADENCE));
-        methods.put(heartRateList.stream().anyMatch(Objects::nonNull),() -> writeSimpleArrayData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE));
-
         if (printWriter != null) {
             printWriter.println("<ExtendedData>");
             printWriter.println("<SchemaData schemaUrl=\"#" + SCHEMA_ID + "\">");
-            for (Map.Entry<Boolean, Runnable> entry : methods.entrySet()){
-                if (entry.getKey())  entry.getValue().run();
+            if (speedList.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(speedList, EXTENDED_DATA_TYPE_SPEED);
             }
-
+            if (distanceList.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(distanceList, EXTENDED_DATA_TYPE_DISTANCE);
+            }
+            if (powerList.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(powerList, EXTENDED_DATA_TYPE_POWER);
+            }
+            if (cadenceList.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(cadenceList, EXTENDED_DATA_TYPE_CADENCE);
+            }
+            if (heartRateList.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
+            }
             if (altitudeGainList.stream().anyMatch(Objects::nonNull)) {
                 writeSimpleArrayData(altitudeGainList, EXTENDED_DATA_TYPE_ALTITUDE_GAIN);
             }
@@ -389,22 +384,27 @@ public class KMLTrackExporter implements TrackExporter {
 
     @VisibleForTesting
     void writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint) {
-        if (printWriter == null) return;
+        if (printWriter != null) {
+            printWriter.println("<when>" + getTime(zoneOffset, trackPoint.getLocation()) + "</when>");
 
-        printWriter.println("<when>" + getTime(zoneOffset, trackPoint.getLocation()) + "</when>");
-        printWriter.println("<coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</coord>");
+            if (trackPoint.hasLocation()) {
+                printWriter.println("<coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</coord>");
+            } else {
+                printWriter.println("<coord/>");
+            }
+            speedList.add(trackPoint.hasSpeed() ? (float) trackPoint.getSpeed().toMPS() : null);
 
-        speedList.add(trackPoint.hasSpeed() ? (float) trackPoint.getSpeed().toMPS() : null);
-        distanceList.add(trackPoint.hasSensorDistance() ? (float) trackPoint.getSensorDistance().toM() : null);
-        heartRateList.add(trackPoint.hasHeartRate() ? trackPoint.getHeartRate().getBPM() : null);
-        cadenceList.add(trackPoint.hasCadence() ? trackPoint.getCadence().getRPM() : null);
-        powerList.add(trackPoint.hasPower() ? trackPoint.getPower().getW() : null);
-        altitudeGainList.add(trackPoint.hasAltitudeGain() ? trackPoint.getAltitudeGain() : null);
-        altitudeLossList.add(trackPoint.hasAltitudeLoss() ? trackPoint.getAltitudeLoss() : null);
-        accuracyHorizontal.add(trackPoint.hasHorizontalAccuracy() ? (float) trackPoint.getHorizontalAccuracy().toM() : null);
-        accuracyVertical.add(trackPoint.hasVerticalAccuracy() ? (float) trackPoint.getVerticalAccuracy().toM() : null);
+            distanceList.add(trackPoint.hasSensorDistance() ? (float) trackPoint.getSensorDistance().toM() : null);
+            heartRateList.add(trackPoint.hasHeartRate() ? trackPoint.getHeartRate().getBPM() : null);
+            cadenceList.add(trackPoint.hasCadence() ? trackPoint.getCadence().getRPM() : null);
+            powerList.add(trackPoint.hasPower() ? trackPoint.getPower().getW() : null);
+
+            altitudeGainList.add(trackPoint.hasAltitudeGain() ? trackPoint.getAltitudeGain() : null);
+            altitudeLossList.add(trackPoint.hasAltitudeLoss() ? trackPoint.getAltitudeLoss() : null);
+            accuracyHorizontal.add(trackPoint.hasHorizontalAccuracy() ? (float) trackPoint.getHorizontalAccuracy().toM() : null);
+            accuracyVertical.add(trackPoint.hasVerticalAccuracy() ? (float) trackPoint.getVerticalAccuracy().toM() : null);
+        }
     }
-
 
     /**
      * Writes the simple array data.

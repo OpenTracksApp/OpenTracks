@@ -123,48 +123,41 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
             setCommonValues(aggregatedStatistic);
 
             SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
-            setAvgMovingSpeedStats(aggregatedStatistic, formatter);
+            {
+                Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
+                avgSpeed.setText(parts.first);
+                avgSpeedUnit.setText(parts.second);
+                avgSpeedLabel.setText(context.getString(R.string.stats_average_moving_speed));
+            }
 
-            setMaxSpeedStats(aggregatedStatistic, formatter);
-        }
-
-        private void setAvgMovingSpeedStats(AggregatedStatistics.AggregatedStatistic aggregatedStatistic, SpeedFormatter formatter) {
-            Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
-            avgSpeed.setText(parts.first);
-            avgSpeedUnit.setText(parts.second);
-            avgSpeedLabel.setText(context.getString(R.string.stats_average_moving_speed));
-        }
-
-        private void setMaxSpeedStats(AggregatedStatistics.AggregatedStatistic aggregatedStatistic, SpeedFormatter formatter) {
-            Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getMaxSpeed());
-            maxSpeed.setText(parts.first);
-            maxSpeedUnit.setText(parts.second);
-            maxSpeedLabel.setText(context.getString(R.string.stats_max_speed));
+            {
+                Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getMaxSpeed());
+                maxSpeed.setText(parts.first);
+                maxSpeedUnit.setText(parts.second);
+                maxSpeedLabel.setText(context.getString(R.string.stats_max_speed));
+            }
         }
 
         public void setPace(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
 
             setCommonValues(aggregatedStatistic);
-            setAvgMovingPace(aggregatedStatistic, formatter);
+            {
+                Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
+                avgSpeed.setText(parts.first);
+                avgSpeedUnit.setText(parts.second);
+                avgSpeedLabel.setText(context.getString(R.string.stats_average_moving_pace));
+            }
 
-            setFastestPaceStats(aggregatedStatistic, formatter);
+            {
+                Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getMaxSpeed());
+                maxSpeed.setText(parts.first);
+                maxSpeedUnit.setText(parts.second);
+                maxSpeedLabel.setText(R.string.stats_fastest_pace);
+            }
         }
 
-        private void setAvgMovingPace(AggregatedStatistics.AggregatedStatistic aggregatedStatistic, SpeedFormatter formatter) {
-            Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
-            avgSpeed.setText(parts.first);
-            avgSpeedUnit.setText(parts.second);
-            avgSpeedLabel.setText(context.getString(R.string.stats_average_moving_pace));
-        }
-
-        private void setFastestPaceStats(AggregatedStatistics.AggregatedStatistic aggregatedStatistic, SpeedFormatter formatter) {
-            Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getMaxSpeed());
-            maxSpeed.setText(parts.first);
-            maxSpeedUnit.setText(parts.second);
-            maxSpeedLabel.setText(R.string.stats_fastest_pace);
-        }
-
+        //TODO Check preference handling.
         private void setCommonValues(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             String category = aggregatedStatistic.getCategory();
 

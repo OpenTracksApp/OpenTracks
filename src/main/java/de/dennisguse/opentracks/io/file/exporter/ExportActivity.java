@@ -50,7 +50,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  */
 public class ExportActivity extends FragmentActivity implements ExportServiceResultReceiver.Receiver {
 
-
+    private static final String TAG = ExportActivity.class.getSimpleName();
 
     public static final String EXTRA_DIRECTORY_URI_KEY = "directory_uri";
     public static final String EXTRA_TRACKFILEFORMAT_KEY = "trackfileformat";
@@ -95,36 +95,35 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private final ArrayList<Track> tracks = new ArrayList<>();
 
     private final LinkedBlockingQueue<PendingConflict> conflictsQueue = new LinkedBlockingQueue<>();
-
     private final Handler conflictsHandler = new Handler();
 
     private final Runnable conflictsRunnable = new Runnable() {
         @Override
         public void run() {
-
-            if (!conflictsQueue.isEmpty()) {
+            if (conflictsQueue.size() > 0) {
                 PendingConflict conflict = conflictsQueue.peek();
                 if (conflict.resolve()) {
-                    if (conflictsQueue.remove(conflict) && !conflictsQueue.isEmpty()) {
+                    conflictsQueue.remove(conflict);
+                    if (!conflictsQueue.isEmpty()) {
                         conflictsHandler.post(conflictsRunnable);
                     }
-
                     return;
                 }
 
-                viewBinding.exportProgressLeftButton.setOnClickListener(view -> {
+                viewBinding.exportProgressLeftButton.setOnClickListener((view) -> {
                     setConflictVisibility(View.GONE);
                     conflict.skip();
-                    if (conflictsQueue.remove(conflict) && !conflictsQueue.isEmpty()) {
-                            conflictsHandler.post(conflictsRunnable);
+                    conflictsQueue.remove(conflict);
+                    if (!conflictsQueue.isEmpty()) {
+                        conflictsHandler.post(conflictsRunnable);
                     }
-
                 });
 
-                viewBinding.exportProgressRightButton.setOnClickListener(view -> {
+                viewBinding.exportProgressRightButton.setOnClickListener((view) -> {
                     setConflictVisibility(View.GONE);
                     conflict.overwrite();
-                    if (conflictsQueue.remove(conflict) && !conflictsQueue.isEmpty()) {
+                    conflictsQueue.remove(conflict);
+                    if (!conflictsQueue.isEmpty()) {
                         conflictsHandler.post(conflictsRunnable);
                     }
                 });
@@ -193,11 +192,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         tracks.clear();
     }
 
-    /**
-     * @deprecated use instead.
-     */
     @Override
-    @Deprecated
     public void onBackPressed() {
         if (doubleBackToCancel || getTotalDone() == trackExportTotalCount) {
             super.onBackPressed();
@@ -304,14 +299,14 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private void onExportEnded() {
         viewBinding.exportProgressRightButton.setVisibility(View.VISIBLE);
         viewBinding.exportProgressRightButton.setText(getString(android.R.string.ok));
-        viewBinding.exportProgressRightButton.setOnClickListener(view -> finish());
+        viewBinding.exportProgressRightButton.setOnClickListener((view) -> finish());
 
         viewBinding.exportProgressAlertIcon.setVisibility(View.VISIBLE);
         viewBinding.exportProgressAlertMsg.setVisibility(View.VISIBLE);
         if (trackExportErrorCount > 0) {
             viewBinding.exportProgressLeftButton.setVisibility(View.VISIBLE);
             viewBinding.exportProgressLeftButton.setText(getString(R.string.generic_show_errors));
-            viewBinding.exportProgressLeftButton.setOnClickListener(view -> ErrorListDialog.showDialog(getSupportFragmentManager(), getString(R.string.export_track_errors), trackErrors));
+            viewBinding.exportProgressLeftButton.setOnClickListener((view) -> ErrorListDialog.showDialog(getSupportFragmentManager(), getString(R.string.export_track_errors), trackErrors));
             viewBinding.exportProgressAlertIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_report_problem_24));
             String msg = getResources().getQuantityString(R.plurals.generic_completed_with_errors, trackExportErrorCount, trackExportErrorCount);
             viewBinding.exportProgressAlertMsg.setText(msg);

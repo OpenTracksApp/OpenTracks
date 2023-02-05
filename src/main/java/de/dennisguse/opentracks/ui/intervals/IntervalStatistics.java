@@ -18,8 +18,7 @@ public class IntervalStatistics {
     private TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
     private final List<Interval> intervalList;
     private final Distance distanceInterval;
-    private Interval interval;
-    private Interval lastInterval;
+    private Interval interval, lastInterval;
 
     /**
      * @param distanceInterval distance of every interval.
@@ -149,7 +148,7 @@ public class IntervalStatistics {
             return loss_m != null;
         }
 
-        public Float getLossM() {
+        public Float getLoss_m() {
             return loss_m;
         }
 

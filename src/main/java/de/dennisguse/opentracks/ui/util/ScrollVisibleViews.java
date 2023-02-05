@@ -20,13 +20,12 @@ public class ScrollVisibleViews implements AbsListView.OnScrollListener {
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE || scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING
-                || scrollState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL && from >= 0 && to >= 0) {
+        if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE || scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING || scrollState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL && from >= 0 && to >= 0) {
                 for (int i = from; i < to; i++) {
                     View viewChild = view.getChildAt(i - from);
                     visibleViewsListener.onViewVisible(viewChild, i);
-                }
 
+            }
         }
     }
 
