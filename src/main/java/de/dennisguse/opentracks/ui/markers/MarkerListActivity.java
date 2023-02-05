@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.loader.app.LoaderManager;
@@ -55,8 +56,6 @@ import de.dennisguse.opentracks.util.IntentUtils;
 public class MarkerListActivity extends AbstractActivity implements DeleteMarkerCaller {
 
     public static final String EXTRA_TRACK_ID = "track_id";
-
-    private static final String TAG = MarkerListActivity.class.getSimpleName();
 
     private ContentProviderUtils contentProviderUtils;
 
@@ -130,6 +129,22 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindCallback);
 
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                SearchView searchView = (SearchView) searchMenuItem.getActionView();
+                if (!searchView.isIconified()) {
+                    searchView.setIconified(true);
+                }
+
+                if (loaderCallbacks.getSearchQuery() != null) {
+                    loaderCallbacks.setSearch(null);
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -256,21 +271,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             return true;
         }
         return super.onKeyUp(keyCode, event);
-    }
-
-    @Override
-    public void onBackPressed() {
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-        }
-
-        if (loaderCallbacks.getSearchQuery() != null) {
-            loaderCallbacks.setSearch(null);
-            return;
-        }
-
-        super.onBackPressed();
     }
 
     @Override
