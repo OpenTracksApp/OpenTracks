@@ -14,7 +14,7 @@ public class Cadence {
 
         return new Cadence(value / (duration.toMillis() / (float) Duration.ofMinutes(1).toMillis()));
     }
-
+// changed name of value_rpm to valueRpm
     public static Cadence of(float valueRpm) {
         return new Cadence(valueRpm);
     }

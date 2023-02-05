@@ -17,9 +17,11 @@ package de.dennisguse.opentracks.util;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
@@ -27,8 +29,18 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.data.models.Track;
@@ -40,15 +52,21 @@ import de.dennisguse.opentracks.data.models.Track;
  */
 public class FileUtils {
 
-    private static final String TAG = FileUtils.class.getSimpleName();
-
     public static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
-
     /**
      * The maximum FAT32 path length. See the FAT32 spec at
      * http://msdn.microsoft.com/en-us/windows/hardware/gg463080
      */
     static final int MAX_FAT32_PATH_LENGTH = 260;
+    private static final Logger LOGGER = Logger.getLogger(FileUtils.class.getName());
+    private static final String TAG = FileUtils.class.getSimpleName();
+    /**
+     * Returns true if it is a special FAT32 character.
+     *
+     * @param character the character
+     */
+    private static final Set<Character> specialFat32 = new HashSet<>(Arrays.asList(
+            '$', '%', '\'', '-', '_', '@', '~', '`', '!', '(', ')', '{', '}', '^', '#', '&', '+', ',', ';', '=', '[', ']', ' '));
 
     private FileUtils() {
     }
@@ -58,11 +76,12 @@ public class FileUtils {
     }
 
     public static File getPhotoDir(Context context, Track.Id trackId) {
-        File photoDirectory = new File(getPhotoDir(context), "" + trackId.getId());
-        photoDirectory.mkdirs();
+        File photoDirectory = new File(getPhotoDir(context), String.valueOf(trackId.getId()));
+        if (!photoDirectory.exists()) {
+            photoDirectory.mkdirs();
+        }
         return photoDirectory;
     }
-
 
     public static String getPath(DocumentFile file) {
         if (file == null) {
@@ -71,7 +90,11 @@ public class FileUtils {
         if (file.getParentFile() == null) {
             return file.getName();
         }
-        return getPath(file.getParentFile()) + File.pathSeparatorChar + file.getName();
+        StringBuilder builder = new StringBuilder();
+        builder.append(getPath(file.getParentFile()));
+        builder.append(File.pathSeparatorChar);
+        builder.append(file.getName());
+        return builder.toString();
     }
 
     /**
@@ -93,15 +116,10 @@ public class FileUtils {
      * @return null if there is no extension or fileName is null.
      */
     public static String getExtension(String fileName) {
-        if (fileName == null) {
+        if (fileName == null || fileName.lastIndexOf('.') == -1) {
             return null;
         }
-
-        int index = fileName.lastIndexOf('.');
-        if (index == -1) {
-            return null;
-        }
-        return fileName.substring(index + 1);
+        return fileName.substring(fileName.lastIndexOf('.') + 1);
     }
 
     public static String getExtension(DocumentFile file) {
@@ -118,20 +136,10 @@ public class FileUtils {
      * @return the complete filename, without the directory
      */
     private static String buildUniqueFileName(File directory, String base, String extension, int suffix) {
-        String suffixName = "";
-        if (suffix > 0) {
-            suffixName += "(" + suffix + ")";
-        }
-        suffixName += "." + extension;
-
-        String baseName = sanitizeFileName(base);
-        baseName = truncateFileName(directory, baseName, suffixName);
+        String suffixName = suffix > 0 ? "(" + suffix + ")." + extension : "." + extension;
+        String baseName = truncateFileName(directory, sanitizeFileName(base), suffixName);
         String fullName = baseName + suffixName;
-
-        if (!new File(directory, fullName).exists()) {
-            return fullName;
-        }
-        return buildUniqueFileName(directory, base, extension, suffix + 1);
+        return new File(directory, fullName).exists() ? buildUniqueFileName(directory, base, extension, suffix + 1) : fullName;
     }
 
     /**
@@ -152,45 +160,13 @@ public class FileUtils {
                 builder.append("_");
             }
         }
-        String result = builder.toString();
-        return result.replaceAll("_+", "_");
+        return builder.toString().replaceAll("_+", "_");
     }
 
-    /**
-     * Returns true if it is a special FAT32 character.
-     *
-     * @param character the character
-     */
     private static boolean isSpecialFat32(char character) {
-        switch (character) {
-            case '$':
-            case '%':
-            case '\'':
-            case '-':
-            case '_':
-            case '@':
-            case '~':
-            case '`':
-            case '!':
-            case '(':
-            case ')':
-            case '{':
-            case '}':
-            case '^':
-            case '#':
-            case '&':
-            case '+':
-            case ',':
-            case ';':
-            case '=':
-            case '[':
-            case ']':
-            case ' ':
-                return true;
-            default:
-                return false;
-        }
+        return specialFat32.contains(character);
     }
+
 
     /**
      * Truncates the name if necessary so the filename path length (directory + name + suffix) meets the Fat32 path limit.
@@ -200,15 +176,11 @@ public class FileUtils {
      * @param suffix    suffix
      */
     static String truncateFileName(File directory, String name, String suffix) {
-        // 1 at the end accounts for the FAT32 filename trailing NUL character
         int requiredLength = directory.getPath().length() + suffix.length() + 1;
-        if (name.length() + requiredLength > MAX_FAT32_PATH_LENGTH) {
-            int limit = MAX_FAT32_PATH_LENGTH - requiredLength;
-            return name.substring(0, limit);
-        }
-
-        return name;
+        int limit = MAX_FAT32_PATH_LENGTH - requiredLength;
+        return name.length() + requiredLength > MAX_FAT32_PATH_LENGTH ? name.substring(0, limit) : name;
     }
+
 
     /**
      * Copy a File (src) to a File (dst).
@@ -219,12 +191,16 @@ public class FileUtils {
     public static void copy(FileDescriptor src, File dst) {
         try (FileChannel in = new FileInputStream(src).getChannel();
              FileChannel out = new FileOutputStream(dst).getChannel()) {
-            in.transferTo(0, in.size(), out);
+            long size = in.size();
+            long position = 0;
+            while (position < size) {
+                position += in.transferTo(position, size - position, out);
+            }
         } catch (Exception e) {
-            // post to log
             Log.e(TAG, e.getMessage());
         }
     }
+
 
     /**
      * Returns a Uri for the file.
@@ -241,19 +217,40 @@ public class FileUtils {
      *
      * @param file the directory
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static void deleteDirectoryRecurse(File file) {
-        if (file != null && file.exists() && file.isDirectory()) {
-            for (File child : file.listFiles()) {
-                deleteDirectoryRecurse(child);
+        Path path = file.toPath();
+        if (!Files.exists(path)) {
+            return;
+        }
+
+        if (Files.isDirectory(path)) {
+            Stream<Path> stream = null;
+            try {
+                stream = Files.list(path);
+                stream.forEach(child -> deleteDirectoryRecurse(child.toFile()));
+            } catch (IOException e) {
+                LOGGER.severe("Error reading directory: " + path);
+            } finally {
+                if (stream != null) {
+                    stream.close();
+                }
             }
-            file.delete();
-        } else if (file != null && file.isFile()) {
-            file.delete();
+        }
+
+
+        try {
+            Files.delete(path);
+        } catch (NoSuchFileException e) {
+            LOGGER.severe("File already deleted: " + path);
+        } catch (IOException e) {
+            LOGGER.severe("Error deleting file: " + path);
         }
     }
 
-    public static ArrayList<DocumentFile> getFiles(DocumentFile file) {
-        ArrayList<DocumentFile> files = new ArrayList<>();
+
+    public static List<DocumentFile> getFiles(DocumentFile file) {
+        LinkedList<DocumentFile> files = new LinkedList<>();
 
         if (!file.isDirectory()) {
             files.add(file);
@@ -263,11 +260,12 @@ public class FileUtils {
         for (DocumentFile candidate : file.listFiles()) {
             if (!candidate.isDirectory()) {
                 files.add(candidate);
-            } else {
+            } else if (candidate.listFiles().length > 0) {
                 files.addAll(getFiles(candidate));
             }
         }
 
         return files;
     }
+
 }
