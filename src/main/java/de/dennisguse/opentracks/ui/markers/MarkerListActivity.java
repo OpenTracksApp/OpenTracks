@@ -20,6 +20,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,6 +76,61 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     // Callback when an item is selected in the contextual action mode
     private final ActivityUtils.ContextualActionModeCallback contextualActionModeCallback = new ActivityUtils.ContextualActionModeCallback() {
+
+        /**`
+         * Handles a context item selection.
+         *
+         * @param itemId        the menu item id
+         * @param longMarkerIds the marker ids
+         * @return true if handled.
+         */
+        private boolean handleContextItem(int itemId, long... longMarkerIds) {
+            Marker.Id[] markerIds = new Marker.Id[longMarkerIds.length];
+            for (int i = 0; i < longMarkerIds.length; i++) {
+                markerIds[i] = new Marker.Id(longMarkerIds[i]);
+            }
+
+            if (itemId == R.id.list_context_menu_show_on_map) {
+                if (markerIds.length == 1) {
+                    IntentUtils.showCoordinateOnMap(MarkerListActivity.this, contentProviderUtils.getMarker(markerIds[0]));
+                }
+                return true;
+            }
+
+            if (itemId == R.id.list_context_menu_share) {
+                Intent intent = ShareUtils.newShareFileIntent(MarkerListActivity.this, markerIds);
+                if (intent != null) {
+                    intent = Intent.createChooser(intent, null);
+                    startActivity(intent);
+                }
+                return true;
+            }
+
+            if (itemId == R.id.list_context_menu_edit) {
+                if (markerIds.length == 1) {
+                    resourceCursorAdapter.markerInvalid(markerIds[0].getId());
+                    Intent intent = IntentUtils.newIntent(MarkerListActivity.this, MarkerEditActivity.class)
+                            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerIds[0]);
+                    startActivity(intent);
+                }
+                return true;
+            }
+
+            if (itemId == R.id.list_context_menu_delete) {
+                DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), markerIds);
+                return true;
+            }
+
+            if (itemId == R.id.list_context_menu_select_all) {
+                for (int i = 0; i < viewBinding.markerList.getCount(); i++) {
+                    viewBinding.markerList.setItemChecked(i, true);
+                }
+                return false;
+            }
+
+            return false;
+        }
+
         @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
             boolean isSingleSelection = ids.length == 1;
@@ -103,10 +159,18 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     private MenuItem searchMenuItem;
 
     @Override
+    @SuppressWarnings("all")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-        Track.Id trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
+        Track.Id trackId = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID, Track.Id.class);
+        }
+        else{
+            trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
+        }
+
 
         contentProviderUtils = new ContentProviderUtils(this);
 
@@ -211,59 +275,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Handles a context item selection.
-     *
-     * @param itemId        the menu item id
-     * @param longMarkerIds the marker ids
-     * @return true if handled.
-     */
-    private boolean handleContextItem(int itemId, long... longMarkerIds) {
-        Marker.Id[] markerIds = new Marker.Id[longMarkerIds.length];
-        for (int i = 0; i < longMarkerIds.length; i++) {
-            markerIds[i] = new Marker.Id(longMarkerIds[i]);
-        }
 
-        if (itemId == R.id.list_context_menu_show_on_map) {
-            if (markerIds.length == 1) {
-                IntentUtils.showCoordinateOnMap(this, contentProviderUtils.getMarker(markerIds[0]));
-            }
-            return true;
-        }
 
-        if (itemId == R.id.list_context_menu_share) {
-            Intent intent = ShareUtils.newShareFileIntent(this, markerIds);
-            if (intent != null) {
-                intent = Intent.createChooser(intent, null);
-                startActivity(intent);
-            }
-            return true;
-        }
-
-        if (itemId == R.id.list_context_menu_edit) {
-            if (markerIds.length == 1) {
-                resourceCursorAdapter.markerInvalid(markerIds[0].getId());
-                Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-                        .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerIds[0]);
-                startActivity(intent);
-            }
-            return true;
-        }
-
-        if (itemId == R.id.list_context_menu_delete) {
-            DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), markerIds);
-            return true;
-        }
-
-        if (itemId == R.id.list_context_menu_select_all) {
-            for (int i = 0; i < viewBinding.markerList.getCount(); i++) {
-                viewBinding.markerList.setItemChecked(i, true);
-            }
-            return false;
-        }
-
-        return false;
-    }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
@@ -323,22 +336,22 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         @NonNull
         @Override
         public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-            final String[] PROJECTION = new String[]{MarkerColumns._ID,
+            final String[] projection = new String[]{BaseColumns._ID,
                     MarkerColumns.NAME, MarkerColumns.DESCRIPTION, MarkerColumns.CATEGORY,
                     MarkerColumns.TIME, MarkerColumns.PHOTOURL, MarkerColumns.TRACKID};
 
             if (searchQuery == null) {
                 if (track != null) {
-                    return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, MarkerColumns.TRACKID + "=?", new String[]{String.valueOf(track.getId().getId())}, null);
+                    return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, projection, MarkerColumns.TRACKID + "=?", new String[]{String.valueOf(track.getId().getId())}, null);
                 } else {
-                    return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, null, null, null);
+                    return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, projection, null, null, null);
                 }
             } else {
                 final String SEARCH_QUERY = MarkerColumns.NAME + " LIKE ? OR " +
                         MarkerColumns.DESCRIPTION + " LIKE ? OR " +
                         MarkerColumns.CATEGORY + " LIKE ?";
                 final String[] selectionArgs = new String[]{"%" + searchQuery + "%", "%" + searchQuery + "%", "%" + searchQuery + "%"};
-                return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, SEARCH_QUERY, selectionArgs, MarkerColumns.DEFAULT_SORT_ORDER + " DESC");
+                return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, projection, SEARCH_QUERY, selectionArgs, MarkerColumns.DEFAULT_SORT_ORDER + " DESC");
             }
         }
 
