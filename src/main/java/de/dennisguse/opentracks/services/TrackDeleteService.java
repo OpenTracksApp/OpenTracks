@@ -33,7 +33,7 @@ public class TrackDeleteService extends Service {
     private final Binder binder = new Binder();
     private ExecutorService serviceExecutor;
     private MutableLiveData<DeletionFinishedStatus> deleteResultObservable;
-    private NotificationManager notificationManager;
+
     private NotificationCompat.Builder notificationBuilder;
 
     @Override
@@ -90,6 +90,9 @@ public class TrackDeleteService extends Service {
      * @param tracksToDelete number of tracks to be deleted.
      */
     private void createAndShowNotification(int tracksToDelete) {
+
+        NotificationManager notificationManager;
+
         notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, this.getString(R.string.app_name), NotificationManager.IMPORTANCE_LOW);
