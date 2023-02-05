@@ -63,7 +63,7 @@ public class AltitudeSumManager implements SensorEventListener {
     }
 
     public void fill(@NonNull TrackPoint trackPoint) {
-        trackPoint.setAltitudeGain_m(altitudeGain_m);
+        trackPoint.setAltitudeGain(altitudeGain_m);
         trackPoint.setAltitudeLoss(altitudeLoss_m);
     }
 
