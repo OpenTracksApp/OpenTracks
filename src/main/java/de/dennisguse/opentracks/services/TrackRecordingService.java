@@ -348,7 +348,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         recordingStatusObservable.postValue(recordingStatus);
     }
 
-    @Deprecated //TODO Should be @VisibleForTesting
+    @Deprecated(forRemoval = true) //TODO Should be @VisibleForTesting
     public boolean isRecording() {
         return recordingStatus.isRecording();
     }
