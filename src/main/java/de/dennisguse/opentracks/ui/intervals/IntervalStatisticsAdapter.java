@@ -23,7 +23,7 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
     private List<IntervalStatistics.Interval> intervalList;
     private final Context context;
     private final StackMode stackMode;
-    private UnitSystem unitSystem;
+    private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
     private boolean isReportSpeed;
 
     public IntervalStatisticsAdapter(Context context, StackMode stackMode, UnitSystem unitSystem, boolean isReportSpeed) {
@@ -65,7 +65,7 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
         viewHolder.rate.setText(formatter.formatSpeed(interval.getSpeed()));
 
         viewHolder.gain.setText(StringUtils.formatAltitude(context, interval.getGain_m(), unitSystem));
-        viewHolder.loss.setText(StringUtils.formatAltitude(context, interval.getLossM(), unitSystem));
+        viewHolder.loss.setText(StringUtils.formatAltitude(context, interval.getLoss_m(), unitSystem));
 
     }
 

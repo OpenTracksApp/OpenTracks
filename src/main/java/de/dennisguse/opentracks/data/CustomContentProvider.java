@@ -67,7 +67,7 @@ public class CustomContentProvider extends ContentProvider {
      */
     private final String SENSOR_STATS_QUERY =
             "WITH time_select as " +
-                "(SELECT t1." + TrackPointsColumns.TIME + " * (t1." + TrackPointsColumns.TYPE + " NOT IN (" + TrackPoint.Type.SEGMENT_START_MANUAL.typeDb + ")) time_value " +
+                "(SELECT t1." + TrackPointsColumns.TIME + " * (t1." + TrackPointsColumns.TYPE + " NOT IN (" + TrackPoint.Type.SEGMENT_START_MANUAL.type_db + ")) time_value " +
                 "FROM " + TrackPointsColumns.TABLE_NAME + " t1 " +
                 "WHERE t1." + TrackPointsColumns._ID + " > t." + TrackPointsColumns._ID + " AND t1." + TrackPointsColumns.TRACKID + " = ? ORDER BY _id LIMIT 1) " +
 
@@ -90,7 +90,7 @@ public class CustomContentProvider extends ContentProvider {
 
             "FROM " + TrackPointsColumns.TABLE_NAME + " t " +
             "WHERE t." + TrackPointsColumns.TRACKID + " = ? " +
-            "AND t." + TrackPointsColumns.TYPE + " NOT IN (" + TrackPoint.Type.SEGMENT_START_MANUAL.typeDb + ")";
+            "AND t." + TrackPointsColumns.TYPE + " NOT IN (" + TrackPoint.Type.SEGMENT_START_MANUAL.type_db + ")";
 
     public CustomContentProvider() {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);

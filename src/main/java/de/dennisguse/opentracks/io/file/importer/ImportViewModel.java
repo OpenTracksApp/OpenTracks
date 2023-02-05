@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -46,8 +47,9 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
     }
 
     private void loadData(List<DocumentFile> documentFiles) {
-        List<List<DocumentFile>> nestedFileList = documentFiles.stream()
+        List<ArrayList<DocumentFile>> nestedFileList = documentFiles.stream()
                 .map(FileUtils::getFiles)
+                // TODO flatMap(Collection::stream) fails with ClassCastException; try in the future again
                 .collect(Collectors.toList());
 
         List<DocumentFile> fileList = new ArrayList<>();
@@ -69,7 +71,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         if (resultData == null) {
-            throw new NullPointerException(TAG + ": onReceiveResult resultData NULL");
+            throw new RuntimeException(TAG + ": onReceiveResult resultData NULL");
         }
 
         ArrayList<Track.Id> trackIds = resultData.getParcelableArrayList(ImportServiceResultReceiver.RESULT_EXTRA_LIST_TRACK_ID);
@@ -89,7 +91,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
                 summary.existsCount++;
                 break;
             default:
-                throw new InvalidResultCodeException(TAG + ": import service result code invalid: " + resultCode);
+                throw new RuntimeException(TAG + ": import service result code invalid: " + resultCode);
         }
 
         importData.postValue(summary);
@@ -120,19 +122,12 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
             return errorCount;
         }
 
-        public List<Track.Id> getImportedTrackIds() {
+        public ArrayList<Track.Id> getImportedTrackIds() {
             return importedTrackIds;
         }
 
-        public List<String> getFileErrors() {
+        public ArrayList<String> getFileErrors() {
             return fileErrors;
         }
     }
-
-    public static class InvalidResultCodeException extends RuntimeException {
-        public InvalidResultCodeException(String errorMessage) {
-            super(errorMessage);
-        }
-    }
-
 }

@@ -49,7 +49,7 @@ public class TrackSelection implements ContentProviderUtils.ContentProviderSelec
 
         // Builds selection.
         if (!trackIds.isEmpty()) {
-            selection = String.format(TracksColumns.DEFAULT_SORT_ORDER + " IN (%s)", TextUtils.join(",", Collections.nCopies(trackIds.size(), "?")));
+            selection = String.format(TracksColumns._ID + " IN (%s)", TextUtils.join(",", Collections.nCopies(trackIds.size(), "?")));
         }
         if (!categories.isEmpty()) {
             selection += selection.isEmpty() ? "" : " AND ";

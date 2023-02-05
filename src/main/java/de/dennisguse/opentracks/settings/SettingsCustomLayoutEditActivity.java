@@ -70,11 +70,7 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) throws UnsupportedOperationException {
-                /**
-                 * No Functionality needed as of now.
-                 * Ready to implement additional functionality in future.
-                 */
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             }
         };
 

@@ -139,7 +139,7 @@ public class FilterDialogFragment extends DialogFragment {
     public static class FilterItem implements Parcelable {
         public final String id;
         public final String value;
-        protected boolean isChecked;
+        public boolean isChecked;
 
         public FilterItem(String id, String value) {
             this.id = id;

@@ -10,7 +10,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ErrorListDialog extends DialogFragment {
 
@@ -22,10 +21,10 @@ public class ErrorListDialog extends DialogFragment {
     private ArrayList<String> errorList;
     private String title;
 
-    public static void showDialog(FragmentManager fragmentManager, String title, List<String> errorList) {
+    public static void showDialog(FragmentManager fragmentManager, String title, ArrayList<String> errorList) {
         Bundle bundle = new Bundle();
         bundle.putString(EXTRA_TITLE, title);
-        bundle.putStringArrayList(EXTRA_ERROR_LIST, (ArrayList<String>) errorList);
+        bundle.putStringArrayList(EXTRA_ERROR_LIST, errorList);
 
         ErrorListDialog errorListDialog = new ErrorListDialog();
         errorListDialog.setArguments(bundle);

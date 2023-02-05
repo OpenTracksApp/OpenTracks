@@ -171,9 +171,9 @@ public class IntervalStatisticsTest {
             }
 
             if (totalLoss == null) {
-                totalLoss = i.getLossM();
-            } else if (i.getLossM() != null) {
-                totalLoss += i.getLossM();
+                totalLoss = i.getLoss_m();
+            } else if (i.getLoss_m() != null) {
+                totalLoss += i.getLoss_m();
             }
         }
 

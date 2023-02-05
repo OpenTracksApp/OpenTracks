@@ -635,7 +635,7 @@ public class ChartView extends View {
                 }
                 canvas.save();
                 float x = getX(getMarkerXValue(marker));
-                canvas.drawLine(x, topBorder + spacer + (float)markerHeight / 2, x, topBorder + (float)effectiveHeight, markerPaint);
+                canvas.drawLine(x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
                 canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
 
                 markerPin.draw(canvas);
@@ -741,7 +741,7 @@ public class ChartView extends View {
                 case NAUTICAL_IMPERIAL:
                     return context.getString(R.string.unit_nautical_mile);
                 default:
-                    throw new IllegalArgumentException("Not implemented");
+                    throw new RuntimeException("Not implemented");
             }
         } else {
             return context.getString(R.string.description_time);

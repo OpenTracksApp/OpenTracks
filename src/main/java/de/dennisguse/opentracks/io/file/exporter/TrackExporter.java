@@ -19,10 +19,7 @@ package de.dennisguse.opentracks.io.file.exporter;
 import androidx.annotation.NonNull;
 
 import java.io.OutputStream;
-import java.text.NumberFormat;
-import java.util.Locale;
 
-import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
 
 /**
@@ -31,19 +28,6 @@ import de.dennisguse.opentracks.data.models.Track;
  * @author Jimmy Shih
  */
 public interface TrackExporter {
-    static final NumberFormat ALTITUDE_FORMAT = NumberFormat.getInstance(Locale.US);
-    static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
-    static final NumberFormat SPEED_FORMAT = NumberFormat.getInstance(Locale.US);
-    static final NumberFormat DISTANCE_FORMAT = NumberFormat.getInstance(Locale.US);
-    static final NumberFormat HEARTRATE_FORMAT = NumberFormat.getInstance(Locale.US);
-    static final NumberFormat CADENCE_FORMAT = NumberFormat.getInstance(Locale.US);
-    static final NumberFormat POWER_FORMAT = NumberFormat.getInstance(Locale.US);
-
-    /*
-     * GPX readers expect to see fractional numbers with US-style punctuation.
-     * That is, they want periods for decimal points, rather than commas.
-     */
-
 
     boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream);
 
