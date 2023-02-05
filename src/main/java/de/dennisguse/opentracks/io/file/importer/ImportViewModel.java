@@ -11,9 +11,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-
+import java.util.stream.Collectors;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -47,10 +46,9 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
     }
 
     private void loadData(List<DocumentFile> documentFiles) {
-        List<ArrayList<DocumentFile>> nestedFileList = (List<ArrayList<DocumentFile>>) documentFiles.stream()
+        List<List<DocumentFile>> nestedFileList = documentFiles.stream()
                 .map(FileUtils::getFiles)
-                .flatMap(Collection::stream);
-
+                .collect(Collectors.toList());
 
         List<DocumentFile> fileList = new ArrayList<>();
         nestedFileList.forEach(fileList::addAll);
