@@ -15,8 +15,6 @@
  */
 package de.dennisguse.opentracks.util;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-
 import android.content.Context;
 import android.location.Location;
 import android.text.TextUtils;
@@ -33,11 +31,12 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAccessor;
 
 import de.dennisguse.opentracks.R;
@@ -69,11 +68,12 @@ public class StringUtils {
     }
 
     public static String formatDateTimeWithOffsetIfDifferent(OffsetDateTime odt) {
-        if (!odt.getOffset().equals(OffsetDateTime.now().getOffset())) {
-            return odt.toZonedDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL));
-        }
-        return odt.toZonedDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+        ZonedDateTime zdt = ZonedDateTime.now().withZoneSameInstant(odt.getOffset());
+        return (odt.getOffset().equals(zdt.getOffset()))
+                ? zdt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))
+                : zdt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL));
     }
+
 
     public static String formatLocalDateTime(LocalDateTime localDateTime) {
         return localDateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
@@ -83,27 +83,23 @@ public class StringUtils {
      * Formats the date relative to today date.
      */
     public static String formatDateTodayRelative(Context context, OffsetDateTime odt) {
-        LocalDate today = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).toLocalDate();
+        LocalDate today = LocalDate.now();
         LocalDate ld = odt.toLocalDate();
-        long daysBetween = DAYS.between(ld, today);
+        long daysBetween = ChronoUnit.DAYS.between(ld, today);
 
         if (daysBetween == 0) {
-            // Today
             return context.getString(R.string.generic_today);
         } else if (daysBetween == 1) {
-            // Yesterday
             return context.getString(R.string.generic_yesterday);
         } else if (daysBetween < 7) {
-            // Name of the week day
             return ld.format(DateTimeFormatter.ofPattern("EEEE"));
         } else if (today.getYear() == ld.getYear()) {
-            // Short date without year
             return ld.format(DateTimeFormatter.ofPattern("d MMM"));
         } else {
-            // Short date with year
             return ld.format(DateTimeFormatter.ofPattern("d MMM y"));
         }
     }
+
 
     /**
      * Formats the time using the ISO 8601 date time format with fractional seconds.
@@ -163,31 +159,22 @@ public class StringUtils {
     }
 
     public static Pair<String, String> getHeartRateParts(Context context, HeartRate heartrate) {
-        String value = context.getString(R.string.value_unknown);
-        if (heartrate != null) {
-            value = StringUtils.formatDecimal(heartrate.getBPM(), 0);
-        }
-
+        String value = (heartrate != null) ? StringUtils.formatDecimal(heartrate.getBPM(), 0) : context.getString(R.string.value_unknown);
         return new Pair<>(value, context.getString(R.string.sensor_unit_beats_per_minute));
     }
 
-    public static Pair<String, String> getCadenceParts(Context context, Cadence cadence) {
-        String value = context.getString(R.string.value_unknown);
-        if (cadence != null) {
-            value = StringUtils.formatDecimal(cadence.getRPM(), 0);
-        }
 
+    public static Pair<String, String> getCadenceParts(Context context, Cadence cadence) {
+        String value = (cadence != null) ? StringUtils.formatDecimal(cadence.getRPM(), 0) : context.getString(R.string.value_unknown);
         return new Pair<>(value, context.getString(R.string.sensor_unit_rounds_per_minute));
     }
 
-    public static Pair<String, String> getPowerParts(Context context, Power power) {
-        String value = context.getString(R.string.value_unknown);
-        if (power != null) {
-            value = StringUtils.formatDecimal(power.getW(), 0);
-        }
 
+    public static Pair<String, String> getPowerParts(Context context, Power power) {
+        String value = (power != null) ? StringUtils.formatDecimal(power.getW(), 0) : context.getString(R.string.value_unknown);
         return new Pair<>(value, context.getString(R.string.sensor_unit_power));
     }
+
 
     /**
      * Gets a string for category.
@@ -195,11 +182,9 @@ public class StringUtils {
      * @param category the category
      */
     public static String getCategory(String category) {
-        if (category == null || category.length() == 0) {
-            return null;
-        }
-        return "[" + category + "]";
+        return (category == null || category.isEmpty()) ? null : "[" + category + "]";
     }
+
 
     /**
      * Gets a string for category and description.
@@ -208,17 +193,20 @@ public class StringUtils {
      * @param description the description
      */
     public static String getCategoryDescription(String category, String description) {
-        if (category == null || category.length() == 0) {
-            return description;
+        String result;
+        if (category == null || category.isEmpty()) {
+            result = description;
+        } else {
+            String categoryResult = getCategory(category);
+            if (description == null || description.isEmpty()) {
+                result = categoryResult;
+            } else {
+                result = categoryResult + " " + description;
+            }
         }
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(getCategory(category));
-        if (description != null && description.length() != 0) {
-            builder.append(" ").append(description);
-        }
-        return builder.toString();
+        return result;
     }
+
 
     /**
      * Formats the given text as a XML CDATA element.
@@ -228,7 +216,7 @@ public class StringUtils {
      * @param text the given text
      */
     public static String formatCData(String text) {
-        return "<![CDATA[" + text.replaceAll("]]>", "]]]]><![CDATA[>") + "]]>";
+        return "<![CDATA[" + text.replace("]]>", "]]]]><![CDATA[>") + "]]>";
     }
 
     /**
@@ -245,29 +233,30 @@ public class StringUtils {
                 t = ((LocalDateTime) t).atZone(ZoneOffset.UTC);
             }
             return OffsetDateTime.from(t);
-        } catch (Exception e) {
+        } catch (DateTimeParseException e) {
             Log.e(TAG, "Invalid XML dateTime value");
             throw e;
         }
     }
 
+
     /**
-     * @return the formatted altitude_m (or null) and it's unit as {@link Pair}
+     * @return the formatted altitudeM (or null) and it's unit as {@link Pair}
      */
     //TODO altitude_m should be double or a value object
-    public static Pair<String, String> getAltitudeParts(Context context, Float altitude_m, UnitSystem unitSystem) {
+    public static Pair<String, String> getAltitudeParts(Context context, Float altitudeM, UnitSystem unitSystem) {
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
                 .setThreshold(Double.MAX_VALUE)
                 .setUnit(unitSystem)
                 .build(context);
 
-        Distance distance = altitude_m != null ? Distance.of(altitude_m) : Distance.of((Double) null);
+        Distance distance = altitudeM != null ? Distance.of(altitudeM) : Distance.of((Double) null);
         return formatter.getDistanceParts(distance);
     }
 
-    public static String formatAltitude(Context context, Float altitude_m, UnitSystem unitSystem) {
-        Pair<String, String> altitudeParts = getAltitudeParts(context, altitude_m, unitSystem);
+    public static String formatAltitude(Context context, Float altitudeM, UnitSystem unitSystem) {
+        Pair<String, String> altitudeParts = getAltitudeParts(context, altitudeM, unitSystem);
 
         return context.getString(R.string.altitude_with_unit, altitudeParts.first, altitudeParts.second);
     }
