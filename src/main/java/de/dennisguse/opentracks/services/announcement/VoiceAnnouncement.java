@@ -70,7 +70,7 @@ public class VoiceAnnouncement {
             boolean stop = false;
             switch (focusChange) {
                 case AudioManager.AUDIOFOCUS_GAIN:
-                    stop = false;
+
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS:
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
