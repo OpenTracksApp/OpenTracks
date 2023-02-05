@@ -1,0 +1,14 @@
+apply plugin: 'org.sonarqube'
+sonarqube {
+    properties {
+        property "sonar.projectName", "Opentracks"
+        property "sonar.projectKey", "Opentracks"
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.language", "java"
+        property "sonar.sources", "src/main/java/de/dennisguse/opentracks/share"
+        property "sonar.java.sources", "src/main/java/de/dennisguse/opentracks/share"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.login", "sqp_807b3461d4bb7d7c39c630bc9458cc004f962716"
+        property "sonar.android.lint.report", "build/outputs/lint-results-debug.xml"
+    }
+}
