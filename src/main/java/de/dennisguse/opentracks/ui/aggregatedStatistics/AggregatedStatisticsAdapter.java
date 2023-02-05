@@ -122,13 +122,18 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             setCommonValues(aggregatedStatistic);
 
-            SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
-            {
-                Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
-                avgSpeed.setText(parts.first);
-                avgSpeedUnit.setText(parts.second);
-                avgSpeedLabel.setText(context.getString(R.string.stats_average_moving_speed));
-            }
+            SpeedFormatter formatter = SpeedFormatter.getBuilderRef().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
+            setAvgMovingSpeedStats(aggregatedStatistic, formatter);
+
+            setMaxSpeedStats(aggregatedStatistic, formatter);
+        }
+
+        private void setAvgMovingSpeedStats(AggregatedStatistics.AggregatedStatistic aggregatedStatistic, SpeedFormatter formatter) {
+            Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
+            avgSpeed.setText(parts.first);
+            avgSpeedUnit.setText(parts.second);
+            avgSpeedLabel.setText(context.getString(R.string.stats_average_moving_speed));
+        }
 
             {
                 Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getMaxSpeed());
@@ -139,7 +144,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         }
 
         public void setPace(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
-            SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
+            SpeedFormatter formatter = SpeedFormatter.getBuilderRef().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
 
             setCommonValues(aggregatedStatistic);
             {
