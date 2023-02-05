@@ -51,7 +51,11 @@ public class EGM2008Utils {
     private static int getUndulationRaw(DataInputStream dataInputStream, int undulationIndex) throws IOException {
         dataInputStream.reset();
         int index = HEADER_LENGTH + undulationIndex * 2;  //byte size is 2
-        long ignored = dataInputStream.skip(index);
+//        long skippedByte = dataInputStream.skip(index);
+        long skippedBytes = 0; //byte size is 2
+        while (skippedBytes < index) {
+            skippedBytes += dataInputStream.skip(index - skippedBytes);
+        }
 
         return dataInputStream.readUnsignedShort();
     }

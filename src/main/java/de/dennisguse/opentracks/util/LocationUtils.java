@@ -25,8 +25,7 @@ import de.dennisguse.opentracks.data.models.Distance;
  * @author Leif Hendrik Wilden
  */
 public class LocationUtils {
-
-    private static final String TAG = LocationUtils.class.getSimpleName();
+    
 
     private LocationUtils() {
     }

@@ -55,8 +55,8 @@ public class TrackStatistics {
     private Duration movingTime;
     // The maximum speed (meters/second) that we believe is valid.
     private Speed maxSpeed;
-    private Float totalAltitudeGain_m = null;
-    private Float totalAltitudeLoss_m = null;
+    private Float totalAltitudeGainM = null;
+    private Float totalAltitudeLossM = null;
     // The average heart rate seen on this track
     private HeartRate avgHeartRate = null;
 
@@ -77,21 +77,21 @@ public class TrackStatistics {
         movingTime = other.movingTime;
         maxSpeed = other.maxSpeed;
         altitudeExtremities.set(other.altitudeExtremities.getMin(), other.altitudeExtremities.getMax());
-        totalAltitudeGain_m = other.totalAltitudeGain_m;
-        totalAltitudeLoss_m = other.totalAltitudeLoss_m;
+        totalAltitudeGainM = other.totalAltitudeGainM;
+        totalAltitudeLossM = other.totalAltitudeLossM;
         avgHeartRate = other.avgHeartRate;
     }
 
     @VisibleForTesting
-    public TrackStatistics(String startTime, String stopTime, double totalDistance_m, int totalTime_s, int movingTime_s, float maxSpeed_mps, Float totalAltitudeGain_m, Float totalAltitudeLoss_m) {
+    public TrackStatistics(String startTime, String stopTime, double totalDistance_m, int totalTime_s, int movingTime_s, float maxSpeed_mps, Float totalAltitudeGainM, Float totalAltitudeLossM) {
         this.startTime = Instant.parse(startTime);
         this.stopTime = Instant.parse(stopTime);
         this.totalDistance = Distance.of(totalDistance_m);
         this.totalTime = Duration.ofSeconds(totalTime_s);
         this.movingTime = Duration.ofSeconds(movingTime_s);
         this.maxSpeed = Speed.of(maxSpeed_mps);
-        this.totalAltitudeGain_m = totalAltitudeGain_m;
-        this.totalAltitudeLoss_m = totalAltitudeLoss_m;
+        this.totalAltitudeGainM = totalAltitudeGainM;
+        this.totalAltitudeLossM = totalAltitudeLossM;
     }
 
     /**
@@ -133,22 +133,22 @@ public class TrackStatistics {
             altitudeExtremities.update(other.altitudeExtremities.getMin());
             altitudeExtremities.update(other.altitudeExtremities.getMax());
         }
-        if (totalAltitudeGain_m == null) {
-            if (other.totalAltitudeGain_m != null) {
-                totalAltitudeGain_m = other.totalAltitudeGain_m;
+        if (totalAltitudeGainM == null) {
+            if (other.totalAltitudeGainM != null) {
+                totalAltitudeGainM = other.totalAltitudeGainM;
             }
         } else {
-            if (other.totalAltitudeGain_m != null) {
-                totalAltitudeGain_m += other.totalAltitudeGain_m;
+            if (other.totalAltitudeGainM != null) {
+                totalAltitudeGainM += other.totalAltitudeGainM;
             }
         }
-        if (totalAltitudeLoss_m == null) {
-            if (other.totalAltitudeLoss_m != null) {
-                totalAltitudeLoss_m = other.totalAltitudeLoss_m;
+        if (totalAltitudeLossM == null) {
+            if (other.totalAltitudeLossM != null) {
+                totalAltitudeLossM = other.totalAltitudeLossM;
             }
         } else {
-            if (other.totalAltitudeLoss_m != null) {
-                totalAltitudeLoss_m += other.totalAltitudeLoss_m;
+            if (other.totalAltitudeLossM != null) {
+                totalAltitudeLossM += other.totalAltitudeLossM;
             }
         }
     }
@@ -261,7 +261,7 @@ public class TrackStatistics {
      * This calculation only takes into account the displacement until the last point that was accounted for in statistics.
      */
     public Speed getAverageSpeed() {
-        if (totalDistance.isZero() && totalDistance.isZero()) {
+        if (totalDistance.isZero()) {
             return Speed.of(0);
         }
         return Speed.of(totalDistance.toM() / totalTime.getSeconds());
@@ -287,8 +287,8 @@ public class TrackStatistics {
         return altitudeExtremities.getMin();
     }
 
-    public void setMinAltitude(double altitude_m) {
-        altitudeExtremities.setMin(altitude_m);
+    public void setMinAltitude(double altitudeM) {
+        altitudeExtremities.setMin(altitudeM);
     }
 
     public boolean hasAltitudeMax() {
@@ -320,45 +320,45 @@ public class TrackStatistics {
     }
 
     public boolean hasTotalAltitudeGain() {
-        return totalAltitudeGain_m != null;
+        return totalAltitudeGainM != null;
     }
 
     @Nullable
     public Float getTotalAltitudeGain() {
-        return totalAltitudeGain_m;
+        return totalAltitudeGainM;
     }
 
     public void setTotalAltitudeGain(Float totalAltitudeGain_m) {
-        this.totalAltitudeGain_m = totalAltitudeGain_m;
+        this.totalAltitudeGainM = totalAltitudeGain_m;
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addTotalAltitudeGain(float gain_m) {
-        if (totalAltitudeGain_m == null) {
-            totalAltitudeGain_m = 0f;
+        if (totalAltitudeGainM == null) {
+            totalAltitudeGainM = 0f;
         }
-        totalAltitudeGain_m += gain_m;
+        totalAltitudeGainM += gain_m;
     }
 
     public boolean hasTotalAltitudeLoss() {
-        return totalAltitudeLoss_m != null;
+        return totalAltitudeLossM != null;
     }
 
     @Nullable
     public Float getTotalAltitudeLoss() {
-        return totalAltitudeLoss_m;
+        return totalAltitudeLossM;
     }
 
     public void setTotalAltitudeLoss(Float totalAltitudeLoss_m) {
-        this.totalAltitudeLoss_m = totalAltitudeLoss_m;
+        this.totalAltitudeLossM = totalAltitudeLoss_m;
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addTotalAltitudeLoss(float loss_m) {
-        if (totalAltitudeLoss_m == null) {
-            totalAltitudeLoss_m = 0f;
+        if (totalAltitudeLossM == null) {
+            totalAltitudeLossM = 0f;
         }
-        totalAltitudeLoss_m += loss_m;
+        totalAltitudeLossM += loss_m;
     }
 
     @Override

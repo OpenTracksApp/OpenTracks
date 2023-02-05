@@ -37,7 +37,7 @@ public class ExportServiceResultReceiver extends ResultReceiver {
                 receiver.onExportError(trackId);
                 break;
             default:
-                throw new RuntimeException("Unknown resultCode.");
+                throw new IllegalArgumentException("Unknown resultCode.");
         }
     }
 

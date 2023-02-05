@@ -115,7 +115,6 @@ public class StatisticsRecordedFragment extends Fragment {
 
         RecyclerView sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;
         sensorsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-//        sensorsRecyclerView.setAdapter(sensorsAdapter);
 
         return viewBinding.getRoot();
     }
@@ -177,6 +176,11 @@ public class StatisticsRecordedFragment extends Fragment {
         viewBinding.statsStartDatetimeValue.setText(StringUtils.formatDateTimeWithOffsetIfDifferent(track.getStartTime()));
     }
 
+    private void SetImageDrawable(Track track){
+        String trackIconValue = TrackIconUtils.getIconValue(getContext(), track.getCategory());
+        viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), TrackIconUtils.getIconDrawable(trackIconValue)));
+    }
+
     private void updateUI() {
         TrackStatistics trackStatistics = track.getTrackStatistics();
         // Set total distance
@@ -189,11 +193,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsDistanceUnit.setText(parts.second);
         }
 
-        // Set activity type
-        {
-            String trackIconValue = TrackIconUtils.getIconValue(getContext(), track.getCategory());
-            viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), TrackIconUtils.getIconDrawable(trackIconValue)));
-        }
+        SetImageDrawable(track);
 
         // Set time and start datetime
         {

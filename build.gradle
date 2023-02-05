@@ -1,19 +1,24 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.sonarqube'
+
+
+
+repositories {
+    google()
+    jcenter()
+    maven { url "https://plugins.gradle.org/m2/"}
+}
 
 buildscript {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.0'
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7'
+        classpath 'com.android.tools.build:gradle:7.4.1'
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.1.1"
     }
 }
+apply plugin: "org.sonarqube"
 
 allprojects {
     repositories {
@@ -45,15 +50,6 @@ def getVersionCode = { ->
         return Integer.valueOf(stdout.toString().trim())
     } catch (ignored) {
         return null
-    }
-}
-
-sonarqube {
-    properties {
-        property "sonar.projectName", "OpenTrack-Concordia"
-        property "sonar.projectKey", "OpenTrack-Concordia"
-        property "sonar.host.url", "http://localhost:9000"
-property "sonar.login", "sqa_55eedc5757b2a560fd8b26f46409ac79adcd4b7b"
     }
 }
 
@@ -94,6 +90,7 @@ android {
             }
         }
     }
+
     namespace 'de.dennisguse.opentracks'
 
     buildTypes {

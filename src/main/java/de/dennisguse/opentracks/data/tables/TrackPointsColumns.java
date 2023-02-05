@@ -63,24 +63,28 @@ public interface TrackPointsColumns extends BaseColumns {
     String ALIAS_MAX_CADENCE = "max_cadence";
     String ALIAS_AVG_POWER = "avg_power";
 
+    String INTEGER = " INTEGER, ";
+
+    String FLOAT = " FLOAT, ";
+
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + TRACKID + " INTEGER NOT NULL, "
-            + LONGITUDE + " INTEGER, "
-            + LATITUDE + " INTEGER, "
-            + TIME + " INTEGER, "
-            + ALTITUDE + " FLOAT, "
-            + HORIZONTAL_ACCURACY + " FLOAT, "
-            + SPEED + " FLOAT, "
-            + BEARING + " FLOAT, "
-            + SENSOR_HEARTRATE + " FLOAT, "
-            + SENSOR_CADENCE + " FLOAT, "
-            + SENSOR_POWER + " FLOAT, "
-            + ALTITUDE_GAIN + " FLOAT, "
-            + ALTITUDE_LOSS + " FLOAT, "
+            + LONGITUDE + INTEGER
+            + LATITUDE + INTEGER
+            + TIME + INTEGER
+            + ALTITUDE + FLOAT
+            + HORIZONTAL_ACCURACY + FLOAT
+            + SPEED + FLOAT
+            + BEARING + FLOAT
+            + SENSOR_HEARTRATE + FLOAT
+            + SENSOR_CADENCE + FLOAT
+            + SENSOR_POWER + FLOAT
+            + ALTITUDE_GAIN + FLOAT
+            + ALTITUDE_LOSS + FLOAT
             + TYPE + " TEXT CHECK(type IN (-2, -1, 0, 1, 2)), "
-            + SENSOR_DISTANCE + " FLOAT, "
-            + VERTICAL_ACCURACY + " FLOAT, "
+            + SENSOR_DISTANCE + FLOAT
+            + VERTICAL_ACCURACY + FLOAT
             + "FOREIGN KEY (" + TRACKID + ") REFERENCES " + TracksColumns.TABLE_NAME + "(" + TracksColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
             + ")";
 
