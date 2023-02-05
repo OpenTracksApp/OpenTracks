@@ -122,7 +122,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             setCommonValues(aggregatedStatistic);
 
-            SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
+            SpeedFormatter formatter = SpeedFormatter.getBuilderRef().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
             setAvgMovingSpeedStats(aggregatedStatistic, formatter);
 
             setMaxSpeedStats(aggregatedStatistic, formatter);
@@ -143,7 +143,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         }
 
         public void setPace(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
-            SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
+            SpeedFormatter formatter = SpeedFormatter.getBuilderRef().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
 
             setCommonValues(aggregatedStatistic);
             setAvgMovingPace(aggregatedStatistic, formatter);
