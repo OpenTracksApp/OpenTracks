@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
 import de.dennisguse.opentracks.R;
 
 public class Mapping {
-
+private Mapping () {}
     public static Map<String, Callable<StatisticViewHolder<?>>> create(Context context) {
         HashMap<String, Callable<StatisticViewHolder<?>>> m = new HashMap<>();
         m.put(context.getString(R.string.stats_custom_layout_total_time_key), GenericStatisticsViewHolder.TotalTime::new);
