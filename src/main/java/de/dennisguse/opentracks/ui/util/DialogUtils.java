@@ -42,14 +42,20 @@ public class DialogUtils {
      * @param message    the message
      * @param okListener the listener when OK is clicked
      */
+    /**
+     * Creates a general purpose error display dialog.
+     *
+     * @param context the context
+     * @param titleId the title
+     * @param message the message
+     */
+    public static Dialog createErrorDialog(final Context context, int titleId, String message) {
+        return new AlertDialog.Builder(context).setCancelable(true).setIcon(R.drawable.ic_delete_forever_24dp).setMessage(message).setNegativeButton(android.R.string.cancel, null).setTitle(titleId).create();
+    }
+
     public static Dialog createConfirmationDialog(final Context context, int titleId, String message, DialogInterface.OnClickListener okListener) {
-        return new AlertDialog.Builder(context)
-                .setCancelable(true)
-                .setIcon(R.drawable.ic_delete_forever_24dp)
-                .setMessage(message)
-                .setNegativeButton(android.R.string.cancel, null)
-                .setPositiveButton(android.R.string.ok, okListener)
-                .setTitle(titleId).create();
+        return new AlertDialog.Builder(context).setCancelable(true).setIcon(R.drawable.ic_delete_forever_24dp).setMessage(message).setNegativeButton(android.R.string.cancel, null).setPositiveButton(android.R.string.ok, okListener).setTitle(titleId).create();
+
     }
 
 }

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.sonarqube'
 
 buildscript {
     repositories {
@@ -11,9 +10,11 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.0'
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7'
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.5.0.2730"
     }
 }
+
+apply plugin: "org.sonarqube"
 
 allprojects {
     repositories {
@@ -48,15 +49,6 @@ def getVersionCode = { ->
     }
 }
 
-sonarqube {
-    properties {
-        property "sonar.projectName", "OpenTrack-Concordia"
-        property "sonar.projectKey", "OpenTrack-Concordia"
-        property "sonar.host.url", "http://localhost:9000"
-property "sonar.login", "sqa_55eedc5757b2a560fd8b26f46409ac79adcd4b7b"
-    }
-}
-
 android {
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -78,7 +70,7 @@ android {
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
-        minSdk 21
+        minSdk 33
         targetSdk 33
 
         testInstrumentationRunner "de.dennisguse.opentracks.TestRunner"
@@ -94,6 +86,7 @@ android {
             }
         }
     }
+
     namespace 'de.dennisguse.opentracks'
 
     buildTypes {
