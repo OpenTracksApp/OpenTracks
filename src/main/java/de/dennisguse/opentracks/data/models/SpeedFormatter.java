@@ -51,7 +51,7 @@ public class SpeedFormatter {
                 unitId = reportSpeedOrPace ? R.string.unit_knots : R.string.unit_minute_per_nautical_mile;
                 break;
             default:
-                throw new RuntimeException("Not implemented");
+                throw new IllegalArgumentException("This unit system has not been implemented.");
         }
 
         String unitString = resources.getString(unitId);
@@ -71,7 +71,7 @@ public class SpeedFormatter {
         return new Pair<>(resources.getString(R.string.time, minutes, seconds), unitString);
     }
 
-    public static Builder Builder() {
+    public static Builder getBuilderRef() {
         return new Builder();
     }
 

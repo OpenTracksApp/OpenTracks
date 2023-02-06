@@ -26,7 +26,7 @@ import de.dennisguse.opentracks.data.models.Track;
  *
  * @author Jimmy Shih
  */
-@Deprecated //TODO Refactor: all this should happen somewhere else (ContentProviderUtils?)
+
 public class TrackUtils {
 
     private TrackUtils() {

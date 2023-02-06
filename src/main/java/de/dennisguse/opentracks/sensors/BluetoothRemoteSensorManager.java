@@ -62,7 +62,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     private final Context context;
     private final Handler handler;
     private boolean started = false;
-
+    private static final String PREVIOUS = "Previous: ";
     private Distance preferenceWheelCircumference;
 
     private final BluetoothRemoteSensorManagerHeartRate heartRate = new BluetoothRemoteSensorManagerHeartRate(this);
@@ -189,7 +189,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     public synchronized void onChanged(SensorData<?> sensorData) {
         if (sensorData instanceof SensorDataCyclingCadence) {
             SensorDataCyclingCadence previous = sensorDataSet.getCyclingCadence();
-            Log.d(TAG, "Previous: " + previous + "; current: " + sensorData);
+            Log.d(TAG, PREVIOUS + previous + "; current: " + sensorData);
 
             if (sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: cadence data repeated.");
@@ -199,7 +199,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         }
         if (sensorData instanceof SensorDataCyclingDistanceSpeed) {
             SensorDataCyclingDistanceSpeed previous = sensorDataSet.getCyclingDistanceSpeed();
-            Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
+            Log.d(TAG, PREVIOUS + previous + "; Current" + sensorData);
             if (sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: cycling speed data repeated.");
                 return;
@@ -208,7 +208,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         }
         if (sensorData instanceof SensorDataRunning) {
             SensorDataRunning previous = sensorDataSet.getRunningDistanceSpeedCadence();
-            Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
+            Log.d(TAG, PREVIOUS + previous + "; Current" + sensorData);
             if (sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: running speed data repeated.");
                 return;

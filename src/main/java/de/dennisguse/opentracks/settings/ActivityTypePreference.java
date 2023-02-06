@@ -28,6 +28,7 @@ import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
@@ -79,7 +80,7 @@ public class ActivityTypePreference extends DialogPreference {
             textView = view.findViewById(R.id.activity_type_preference_text_view);
             String category = PreferencesUtils.getDefaultActivity();
             textView.setText(category);
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(context));
             textView.setAdapter(adapter);
             textView.setOnItemClickListener((parent, v, position, id) -> {
                 String iconValue = TrackIconUtils.getIconValue(context, (String) textView.getAdapter().getItem(position));

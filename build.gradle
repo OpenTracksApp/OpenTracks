@@ -1,14 +1,21 @@
-apply plugin: 'com.android.application'
 
 buildscript {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.0'
+        classpath 'com.android.tools.build:gradle:7.4.1'
     }
 }
+plugins {
+    id "org.sonarqube" version "3.5.0.2730"
+}
+apply from: 'sonar.gradle'
+apply plugin: 'com.android.application'
 
 allprojects {
     repositories {
@@ -43,6 +50,15 @@ def getVersionCode = { ->
     }
 }
 
+sonarqube {
+    properties {
+        property "sonar.projectName", "OpenTracks-Concordia"
+        property "sonar.projectKey", "OpenTracks-Concordia"
+        property "sonar.host.url", "http://localhost:9000"
+        property "sonar.login", "<token>"
+    }
+}
+
 android {
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -59,8 +75,8 @@ android {
 
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
-        versionCode 5132
-        versionName "v4.2.1"
+        versionCode 5141
+        versionName "v4.2.2"
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
@@ -69,6 +85,8 @@ android {
 
         testInstrumentationRunner "de.dennisguse.opentracks.TestRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
+
+        resConfigs "ar", "bg", "ca", "cs", "da", "de", "el", "en", "es", "et", "eu", "fa", "fi", "fr", "ga", "gl", "hi", "hr", "hu", "in", "it", "iw", "ja", "ko", "lt", "lv", "mo", "ms", "nb", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sr", "sv", "th", "tl", "tr", "uk", "vi", "zh"
     }
     signingConfigs {
         nightly {
@@ -80,7 +98,6 @@ android {
             }
         }
     }
-
     namespace 'de.dennisguse.opentracks'
 
     buildTypes {
@@ -120,7 +137,7 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.2'
 
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'androidx.preference:preference:1.2.0'

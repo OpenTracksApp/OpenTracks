@@ -31,7 +31,7 @@ import de.dennisguse.opentracks.settings.UnitSystem;
  */
 public class IntervalsFragment extends Fragment {
 
-    private static final String TAG = IntervalsFragment.class.getSimpleName();
+  //  private static final String TAG = IntervalsFragment.class.getSimpleName();
 
     private static final String FROM_TOP_TO_BOTTOM_KEY = "fromTopToBottom";
     private static final String TRACK_ID_KEY = "trackId";
@@ -97,14 +97,14 @@ public class IntervalsFragment extends Fragment {
         return viewBinding.getRoot();
     }
 
-    @Deprecated //TODO This method must be re-implemented.
+    //TODO This method must be re-implemented.
     @Override
+    @Deprecated
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         adapter = new IntervalStatisticsAdapter(getContext(), stackModeListView, unitSystem, isReportSpeed);
         viewBinding.intervalList.setLayoutManager(new LinearLayoutManager(getContext()));
-        // TODO handle empty view: before we did viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
         viewBinding.intervalList.setAdapter(adapter);
 
         intervalsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
