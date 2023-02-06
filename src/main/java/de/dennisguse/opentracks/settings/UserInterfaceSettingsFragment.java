@@ -28,7 +28,7 @@ public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
         addPreferencesFromResource(R.xml.settings_user_interface);
 
         Preference customLayoutPreference = findPreference(getString(R.string.stats_custom_layout_key));
-        customLayoutPreference.setOnPreferenceClickListener((preference) -> {
+        customLayoutPreference.setOnPreferenceClickListener(preference -> {
             Intent intent = new Intent(getContext(), SettingsCustomLayoutListActivity.class);
             startActivity(intent);
             return true;
@@ -64,7 +64,6 @@ public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
         }
 
         if (dialogFragment != null) {
-            dialogFragment.setTargetFragment(this, 0);
             dialogFragment.show(getParentFragmentManager(), getClass().getSimpleName());
             return;
         }
