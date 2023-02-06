@@ -65,7 +65,7 @@ class VoiceAnnouncementUtils {
                 unitSpeedTTS = "knots";
                 break;
             default:
-                throw new RuntimeException("Not implemented");
+                throw new UnsupportedOperationException("Not implemented");
         }
 
         double distanceInUnit = totalDistance.toKM_Miles(unitSystem);
