@@ -144,6 +144,7 @@ public class ChartView extends View {
                     return true;
                 }
 
+//                Done by Tanzia Ahmed - 40166924
                 private void fling(int velocityX) {
                     int maxWidth = effectiveWidth * (zoomLevel - 1);
                     scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
