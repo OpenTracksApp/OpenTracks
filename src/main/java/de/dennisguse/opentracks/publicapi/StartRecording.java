@@ -21,6 +21,7 @@ public class StartRecording extends AbstractAPIActivity {
     public static final String EXTRA_STATS_TARGET_PACKAGE = "STATS_TARGET_PACKAGE";
     public static final String EXTRA_STATS_TARGET_CLASS = "STATS_TARGET_CLASS";
 
+    private static final String TAG = StartRecording.class.getSimpleName();
 
     protected void execute(TrackRecordingService service) {
         Track.Id trackId = service.startNewTrack();

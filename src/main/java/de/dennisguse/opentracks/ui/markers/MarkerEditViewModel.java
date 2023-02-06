@@ -124,7 +124,7 @@ public class MarkerEditViewModel extends AndroidViewModel {
 
         try (ParcelFileDescriptor parcelFd = getApplication().getContentResolver().openFileDescriptor(srcUri, "r")) {
             FileDescriptor srcFd = parcelFd.getFileDescriptor();
-            File dstFile = new File(MarkerUtils.getImageUrl(getApplication(), marker.getTrackId()));
+            File dstFile = MarkerUtils.getPhotoFileIfExists(getApplication(), marker.getTrackId(), srcUri);
             FileUtils.copy(srcFd, dstFile);
 
             Uri photoUri = FileUtils.getUriForFile(getApplication(), dstFile);

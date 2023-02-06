@@ -25,7 +25,7 @@ abstract public class RecyclerViewSwipeDeleteCallback extends ItemTouchHelper.Ca
     private final int intrinsicWidth;
     private final int intrinsicHeight;
 
-    public RecyclerViewSwipeDeleteCallback(Context context) {
+    protected RecyclerViewSwipeDeleteCallback(Context context) {
         background = new ColorDrawable();
         backgroundColor = ContextCompat.getColor(context, R.color.colorBackgroundDelete);
         clearPaint = new Paint();

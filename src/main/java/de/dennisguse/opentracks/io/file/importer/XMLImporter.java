@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import javax.xml.parsers.SAXParserFactory;
 
 import de.dennisguse.opentracks.data.models.Track;
@@ -42,12 +44,18 @@ public class XMLImporter {
     }
 
     public List<Track.Id> importFile(InputStream inputStream) throws ImportParserException, ImportAlreadyExistsException, IOException {
+
         try {
-            SAXParserFactory.newInstance().newSAXParser().parse(inputStream, parser.getHandler());
+            SAXParserFactory spf = SAXParserFactory.newInstance();
+            spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            spf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+
+            spf.newSAXParser().parse(inputStream,parser.getHandler());
             return parser.getImportTrackIds();
         } catch (SAXException | ParserConfigurationException | ParsingException e) {
             Log.e(TAG, "Unable to import file", e);
-            if (parser.getImportTrackIds().size() > 0) {
+            if (!parser.getImportTrackIds().isEmpty()) {
                 parser.cleanImport();
             }
             throw new ImportParserException(e);
@@ -58,7 +66,7 @@ public class XMLImporter {
     }
 
     interface TrackParser {
-        @Deprecated
+
         DefaultHandler getHandler();
 
         List<Track.Id> getImportTrackIds();

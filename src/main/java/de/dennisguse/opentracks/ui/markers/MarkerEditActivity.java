@@ -36,6 +36,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.io.FileDescriptor;
@@ -57,7 +58,7 @@ public class MarkerEditActivity extends AbstractActivity {
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";
 
-    private static final String CAMERA_PHOTO_URI_KEY = "camera_photo_uri_key";
+    private static final String CAMERA_PHOTO_URI_KEY = "camera_photo_guri_key";
 
     private static final String TAG = MarkerEditActivity.class.getSimpleName();
     private Track.Id trackId;
@@ -84,11 +85,23 @@ public class MarkerEditActivity extends AbstractActivity {
     }
 
     @Override
+    @SuppressWarnings("all")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
-        Marker.Id markerId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID, Track.Id.class);
+        }
+        else{
+            trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
+        }
+        Marker.Id markerId = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            markerId = getIntent().getParcelableExtra(EXTRA_MARKER_ID, Marker.Id.class);
+        }
+        else{
+            markerId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
+        }
 
         if (savedInstanceState != null) {
             cameraPhotoUri = Uri.parse(savedInstanceState.getString(CAMERA_PHOTO_URI_KEY, ""));

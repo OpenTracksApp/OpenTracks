@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.provider.BaseColumns;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import java.time.OffsetDateTime;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Marker.Id;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.ui.util.ExecutorListViewService;
@@ -65,7 +68,7 @@ public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implement
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        int idIndex = cursor.getColumnIndex(MarkerColumns._ID);
+        int idIndex = cursor.getColumnIndex(BaseColumns._ID);
         int nameIndex = cursor.getColumnIndex(MarkerColumns.NAME);
         int timeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.TIME);
         int categoryIndex = cursor.getColumnIndex(MarkerColumns.CATEGORY);
@@ -122,7 +125,7 @@ public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implement
             return;
         }
 
-        long id = cursor.getLong(cursor.getColumnIndexOrThrow(MarkerColumns._ID));
+        long id = cursor.getLong(cursor.getColumnIndexOrThrow(BaseColumns._ID));
         String photoUrl = cursor.getString(cursor.getColumnIndexOrThrow(MarkerColumns.PHOTOURL));
 
         boolean hasPhoto = photoUrl != null && !photoUrl.equals("");

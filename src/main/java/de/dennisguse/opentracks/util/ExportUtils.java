@@ -29,6 +29,9 @@ import de.dennisguse.opentracks.settings.SettingsActivity;
 
 public class ExportUtils {
 
+    private ExportUtils(){
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
     private static final String TAG = ExportUtils.class.getSimpleName();
 
     public static void postWorkoutExport(Context context, Track.Id trackId) {
