@@ -59,7 +59,7 @@ public class IntroductionActivity extends AbstractActivity {
         viewBinding = null;
     }
 
-    private static class CustomFragmentPagerAdapter extends FragmentStateAdapter {
+    private class CustomFragmentPagerAdapter extends FragmentStateAdapter {
 
         private static final List<FragmentCreator> fragmentCreators = List.of(
                 WelcomeFragment::newInstance,
@@ -78,7 +78,8 @@ public class IntroductionActivity extends AbstractActivity {
                 return fc.newInstance();
             }
 
-            throw new RuntimeException("There isn't Fragment associated with the position: " + position);
+            //throw new RuntimeException("There isn't Fragment associated with the position: " + position);
+            throw new MyCustomException("There isn't Fragment associated with the position: "+ position);
         }
 
         @Override
@@ -89,5 +90,10 @@ public class IntroductionActivity extends AbstractActivity {
 
     private interface FragmentCreator {
         Fragment newInstance();
+    }
+    public class MyCustomException extends Exception{
+        public MyCustomException(String message){
+            super(message);
+        }
     }
 }
