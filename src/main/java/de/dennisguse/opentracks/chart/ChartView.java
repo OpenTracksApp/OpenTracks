@@ -188,6 +188,14 @@ public class ChartView extends View {
     private final ScaleGestureDetector detectorZoom = new ScaleGestureDetector(getContext(),
             new ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
+                private void zoomIn() {
+                    if (canZoomIn()) {
+                        zoomLevel++;
+                        updateSeries();
+                        invalidate();
+                    }
+                }
+
                 private void zoomOut() {
                     if (canZoomOut()) {
                         zoomLevel--;
@@ -499,14 +507,6 @@ public class ChartView extends View {
 
     private boolean canZoomOut() {
         return zoomLevel > MIN_ZOOM_LEVEL;
-    }
-
-    private void zoomIn() {
-        if (canZoomIn()) {
-            zoomLevel++;
-            updateSeries();
-            invalidate();
-        }
     }
 
     /**
