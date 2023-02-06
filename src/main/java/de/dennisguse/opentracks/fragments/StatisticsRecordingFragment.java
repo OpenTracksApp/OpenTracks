@@ -38,8 +38,6 @@ import de.dennisguse.opentracks.viewmodels.StatisticViewHolder;
  */
 public class StatisticsRecordingFragment extends Fragment {
 
-    private static final String TAG = StatisticsRecordingFragment.class.getSimpleName();
-
     public static Fragment newInstance() {
         return new StatisticsRecordingFragment();
     }
