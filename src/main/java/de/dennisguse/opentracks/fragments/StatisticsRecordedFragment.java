@@ -76,7 +76,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
     private StatisticsRecordedBinding viewBinding;
 
-    private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
+    private UnitSystem unitSystem = PreferencesUtils.getUnitSystem();
     private boolean preferenceReportSpeed;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
