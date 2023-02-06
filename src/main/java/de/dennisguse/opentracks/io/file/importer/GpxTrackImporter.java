@@ -145,6 +145,9 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
             case TAG_TRACK_POINT:
                 onTrackPointStart(attributes);
                 break;
+            default:
+                //Nothing to do here. Might throw an error.
+                break;
         }
     }
 
@@ -252,6 +255,9 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 if (content != null) {
                     accuracyVertical = content.trim();
                 }
+                break;
+            default:
+                //Nothing to do here. Might throw an error.
                 break;
         }
 

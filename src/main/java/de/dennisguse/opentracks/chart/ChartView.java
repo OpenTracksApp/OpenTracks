@@ -56,7 +56,8 @@ import de.dennisguse.opentracks.util.StringUtils;
 
 /**
  * Visualization of the chart.
- * Provides support for zooming (via pinch), scrolling, flinging, and selecting shown markers (single touch).
+ * Provides support for zooming (via pinch), scrolling, flinging, and selecting
+ * shown markers (single touch).
  *
  * @author Sandor Dornbush
  * @author Leif Hendrik Wilden
@@ -76,7 +77,7 @@ public class ChartView extends View {
     private static final int SPACER = 4;
     private static final int Y_AXIS_OFFSET = 16;
 
-    //TODO Determine from actual size of the used drawable
+    // TODO Determine from actual size of the used drawable
     private static final float MARKER_X_ANCHOR = 13f / 48f;
 
     static {
@@ -121,75 +122,100 @@ public class ChartView extends View {
     private boolean reportSpeed = true;
     private boolean showPointer = false;
 
-    private final GestureDetectorCompat detectorScrollFlingTab = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener() {
+    private final GestureDetectorCompat detectorScrollFlingTab = new GestureDetectorCompat(getContext(),
+            new GestureDetector.SimpleOnGestureListener() {
 
-        @Override
-        public boolean onDown(MotionEvent e) {
-            if (!scroller.isFinished()) {
-                scroller.abortAnimation();
-            }
-            return true;
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if (Math.abs(distanceX) > 0) {
-                int availableToScroll = effectiveWidth * (zoomLevel - 1) - getScrollX();
-                if (availableToScroll > 0) {
-                    scrollBy(Math.min(availableToScroll, (int) distanceX));
-                }
-            }
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            fling((int) -velocityX);
-            return true;
-        }
-
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent event) {
-            // Check if the y event is within markerHeight of the marker center
-            if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2f) < markerHeight) {
-                int minDistance = Integer.MAX_VALUE;
-                Marker nearestMarker = null;
-                synchronized (markers) {
-                    for (Marker marker : markers) {
-                        int distance = Math.abs(getX(getMarkerXValue(marker)) - (int) event.getX() - getScrollX());
-                        if (distance < minDistance) {
-                            minDistance = distance;
-                            nearestMarker = marker;
-                        }
+                @Override
+                public boolean onDown(MotionEvent e) {
+                    if (!scroller.isFinished()) {
+                        scroller.abortAnimation();
                     }
-                }
-                if (nearestMarker != null && minDistance < markerWidth) {
-                    Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
-                            .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestMarker.getId());
-                    getContext().startActivity(intent);
                     return true;
                 }
-            }
 
-            return false;
-        }
-    });
+                @Override
+                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                    if (Math.abs(distanceX) > 0) {
+                        int availableToScroll = effectiveWidth * (zoomLevel - 1) - getScrollX();
+                        if (availableToScroll > 0) {
+                            scrollBy(Math.min(availableToScroll, (int) distanceX));
+                        }
+                    }
+                    return true;
+                }
 
-    private final ScaleGestureDetector detectorZoom = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
+//                Done by Tanzia Ahmed - 40166924
+                private void fling(int velocityX) {
+                    int maxWidth = effectiveWidth * (zoomLevel - 1);
+                    scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
+                    invalidate();
+                }
 
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            float scaleFactor = detector.getScaleFactor();
-            if (scaleFactor >= 1.1f) {
-                zoomIn();
-                return true;
-            } else if (scaleFactor <= 0.9) {
-                zoomOut();
-                return true;
-            }
-            return false;
-        }
-    });
+                @Override
+                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                    fling((int) -velocityX);
+                    return true;
+                }
+
+                @Override
+                public boolean onSingleTapConfirmed(MotionEvent event) {
+                    // Check if the y event is within markerHeight of the marker center
+                    if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2f) < markerHeight) {
+                        int minDistance = Integer.MAX_VALUE;
+                        Marker nearestMarker = null;
+                        synchronized (markers) {
+                            for (Marker marker : markers) {
+                                int distance = Math
+                                        .abs(getX(getMarkerXValue(marker)) - (int) event.getX() - getScrollX());
+                                if (distance < minDistance) {
+                                    minDistance = distance;
+                                    nearestMarker = marker;
+                                }
+                            }
+                        }
+                        if (nearestMarker != null && minDistance < markerWidth) {
+                            Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
+                                    .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestMarker.getId());
+                            getContext().startActivity(intent);
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+            });
+
+    private final ScaleGestureDetector detectorZoom = new ScaleGestureDetector(getContext(),
+            new ScaleGestureDetector.SimpleOnScaleGestureListener() {
+
+                private void zoomOut() {
+                    if (canZoomOut()) {
+                        zoomLevel--;
+                        scroller.abortAnimation();
+                        int scrollX = getScrollX();
+                        int maxWidth = effectiveWidth * (zoomLevel - 1);
+                        if (scrollX > maxWidth) {
+                            scrollX = maxWidth;
+                            scrollTo(scrollX, 0);
+                        }
+                        updateSeries();
+                        invalidate();
+                    }
+                }
+
+                @Override
+                public boolean onScale(ScaleGestureDetector detector) {
+                    float scaleFactor = detector.getScaleFactor();
+                    if (scaleFactor >= 1.1f) {
+                        zoomIn();
+                        return true;
+                    } else if (scaleFactor <= 0.9) {
+                        zoomOut();
+                        return true;
+                    }
+                    return false;
+                }
+            });
 
     public ChartView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -200,7 +226,7 @@ public class ChartView extends View {
         seriesList.add(new ChartValueSeries(context,
                 Integer.MIN_VALUE,
                 Integer.MAX_VALUE,
-                new int[]{5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000},
+                new int[] { 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000 },
                 R.string.description_altitude_metric,
                 R.string.description_altitude_imperial,
                 R.string.description_altitude_imperial,
@@ -222,7 +248,7 @@ public class ChartView extends View {
         speedSeries = new ChartValueSeries(context,
                 0,
                 Integer.MAX_VALUE,
-                new int[]{1, 5, 10, 20, 50, 100},
+                new int[] { 1, 5, 10, 20, 50, 100 },
                 R.string.description_speed_metric,
                 R.string.description_speed_imperial,
                 R.string.description_speed_nautical,
@@ -245,7 +271,7 @@ public class ChartView extends View {
         paceSeries = new ChartValueSeries(context,
                 0,
                 Integer.MAX_VALUE,
-                new int[]{1, 2, 5, 10, 15, 20, 30, 60, 120},
+                new int[] { 1, 2, 5, 10, 15, 20, 30, 60, 120 },
                 R.string.description_pace_metric,
                 R.string.description_pace_imperial,
                 R.string.description_pace_nautical,
@@ -268,7 +294,7 @@ public class ChartView extends View {
         seriesList.add(new ChartValueSeries(context,
                 0,
                 Integer.MAX_VALUE,
-                new int[]{25, 50},
+                new int[] { 25, 50 },
                 R.string.description_sensor_heart_rate,
                 R.string.description_sensor_heart_rate,
                 R.string.description_sensor_heart_rate,
@@ -290,7 +316,7 @@ public class ChartView extends View {
         seriesList.add(new ChartValueSeries(context,
                 0,
                 Integer.MAX_VALUE,
-                new int[]{5, 10, 25, 50},
+                new int[] { 5, 10, 25, 50 },
                 R.string.description_sensor_cadence,
                 R.string.description_sensor_cadence,
                 R.string.description_sensor_cadence,
@@ -311,7 +337,7 @@ public class ChartView extends View {
         seriesList.add(new ChartValueSeries(context,
                 0,
                 1000,
-                new int[]{5, 50, 100, 200},
+                new int[] { 5, 50, 100, 200 },
                 R.string.description_sensor_power,
                 R.string.description_sensor_power,
                 R.string.description_sensor_power,
@@ -345,7 +371,7 @@ public class ChartView extends View {
         gridPaint.setStyle(Style.STROKE);
         gridPaint.setColor(ThemeUtils.getTextColorSecondary(context));
         gridPaint.setAntiAlias(false);
-        gridPaint.setPathEffect(new DashPathEffect(new float[]{3, 2}, 0));
+        gridPaint.setPathEffect(new DashPathEffect(new float[] { 3, 2 }, 0));
 
         markerPaint = new Paint();
         markerPaint.setStyle(Style.STROKE);
@@ -483,31 +509,11 @@ public class ChartView extends View {
         }
     }
 
-    private void zoomOut() {
-        if (canZoomOut()) {
-            zoomLevel--;
-            scroller.abortAnimation();
-            int scrollX = getScrollX();
-            int maxWidth = effectiveWidth * (zoomLevel - 1);
-            if (scrollX > maxWidth) {
-                scrollX = maxWidth;
-                scrollTo(scrollX, 0);
-            }
-            updateSeries();
-            invalidate();
-        }
-    }
-
     /**
      * Initiates flinging.
      *
      * @param velocityX velocity of fling in pixels per second
      */
-    private void fling(int velocityX) {
-        int maxWidth = effectiveWidth * (zoomLevel - 1);
-        scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
-        invalidate();
-    }
 
     /**
      * Handle parent's view disallow touch event.
@@ -562,7 +568,8 @@ public class ChartView extends View {
         boolean isZoom = detectorZoom.onTouchEvent(event);
         boolean isScrollTab = detectorScrollFlingTab.onTouchEvent(event);
 
-        // ChartView handles zoom gestures (more than one pointer) and all gestures when zoomed itself
+        // ChartView handles zoom gestures (more than one pointer) and all gestures when
+        // zoomed itself
         requestDisallowInterceptTouchEventInParent(event.getPointerCount() != 1 || zoomLevel != MIN_ZOOM_LEVEL);
 
         return isZoom || isScrollTab;
@@ -570,7 +577,8 @@ public class ChartView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        updateEffectiveDimensionsIfChanged(View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
+        updateEffectiveDimensionsIfChanged(View.MeasureSpec.getSize(widthMeasureSpec),
+                View.MeasureSpec.getSize(heightMeasureSpec));
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -690,7 +698,8 @@ public class ChartView extends View {
 
     /**
      * Gets the title dimensions.
-     * Returns an array of 2 integers, first element is the number of lines and the second element is the line height.
+     * Returns an array of 2 integers, first element is the number of lines and the
+     * second element is the line height.
      */
     private int[] getTitleDimensions() {
         int lines = 0;
@@ -705,7 +714,7 @@ public class ChartView extends View {
                 }
             }
         }
-        return new int[]{lines, lineHeight};
+        return new int[] { lines, lineHeight };
     }
 
     /**
@@ -741,7 +750,7 @@ public class ChartView extends View {
                 case NAUTICAL_IMPERIAL:
                     return context.getString(R.string.unit_nautical_mile);
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new IllegalArgumentException("Not implemented");
             }
         } else {
             return context.getString(R.string.description_time);
@@ -757,7 +766,8 @@ public class ChartView extends View {
      * @param spacing      the spacing between x axis and marker
      */
     private void drawXAxisMarker(Canvas canvas, double value, NumberFormat numberFormat, int spacing) {
-        String marker = chartByDistance ? numberFormat.format(value) : StringUtils.formatElapsedTime((Duration.ofMillis((long) value)));
+        String marker = chartByDistance ? numberFormat.format(value)
+                : StringUtils.formatElapsedTime((Duration.ofMillis((long) value)));
         Rect rect = getRect(xAxisMarkerPaint, marker);
         canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacing + rect.height(), xAxisMarkerPaint);
     }
@@ -777,16 +787,16 @@ public class ChartView extends View {
     }
 
     private List<Double> getXAxisMarkerPositions(double interval) {
-        List<Double> markers = new ArrayList<>();
-        markers.add(0d);
+        List<Double> Markers = new ArrayList<>();
+        Markers.add(0d);
         for (int i = 1; i * interval < maxX; i++) {
-            markers.add(i * interval);
+            Markers.add(i * interval);
         }
 
-        if (markers.size() < 2) {
-            markers.add(maxX);
+        if (Markers.size() < 2) {
+            Markers.add(maxX);
         }
-        return markers;
+        return Markers;
     }
 
     /**
@@ -799,7 +809,7 @@ public class ChartView extends View {
         int y = topBorder;
         canvas.drawLine(x, y, x, y + effectiveHeight, axisPaint);
 
-        //TODO
+        // TODO
         int markerXPosition = x - spacer;
         for (int i = 0; i < seriesList.size(); i++) {
             int index = seriesList.size() - 1 - i;
@@ -854,7 +864,8 @@ public class ChartView extends View {
 
         ChartValueSeries firstChartValueSeries = null;
         for (ChartValueSeries chartValueSeries : seriesList) {
-            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() && chartValueSeries.isChartPointValid(last)) {
+            if (chartValueSeries.isEnabled() && chartValueSeries.hasData()
+                    && chartValueSeries.isChartPointValid(last)) {
                 firstChartValueSeries = chartValueSeries;
                 break;
             }
@@ -869,7 +880,8 @@ public class ChartView extends View {
     }
 
     /**
-     * The path needs to be updated any time after the data or the dimensions change.
+     * The path needs to be updated any time after the data or the dimensions
+     * change.
      */
     private void updateSeries() {
         synchronized (chartPoints) {
@@ -941,7 +953,8 @@ public class ChartView extends View {
         topBorder = (int) (density * BORDER + titleDimensions[0] * (titleDimensions[1] + spacer));
         Rect xAxisLabelRect = getRect(axisPaint, getXAxisLabel());
         // border + x axis marker + spacer + .5 x axis label
-        bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer + (xAxisLabelRect.height() / 2));
+        bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer
+                + (xAxisLabelRect.height() / 2));
         rightBorder = (int) (density * BORDER + xAxisLabelRect.width() + spacer);
         updateEffectiveDimensions();
     }

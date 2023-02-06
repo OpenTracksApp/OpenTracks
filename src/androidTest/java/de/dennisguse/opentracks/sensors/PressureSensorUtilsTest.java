@@ -35,9 +35,9 @@ public class PressureSensorUtilsTest {
         for (float v : sensorValues_hPa) {
             PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChanges(lastUsedPressureValue_hPa, v);
             if (altitudeChange != null) {
-                altitudeGain_m += altitudeChange.getAltitudeGain_m();
-                altitudeLoss += altitudeChange.getAltitudeLoss_m();
-                lastUsedPressureValue_hPa = altitudeChange.getCurrentSensorValue_hPa();
+                altitudeGain_m += altitudeChange.getAltitudeGain();
+                altitudeLoss += altitudeChange.getAltitudeLoss();
+                lastUsedPressureValue_hPa = altitudeChange.getCurrentSensorValueHPa();
             }
         }
 

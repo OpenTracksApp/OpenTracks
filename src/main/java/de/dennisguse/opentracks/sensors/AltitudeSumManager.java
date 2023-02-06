@@ -25,12 +25,12 @@ public class AltitudeSumManager implements SensorEventListener {
 
     private boolean isConnected = false;
 
-    private float lastAcceptedPressureValue_hPa;
+    private float lastAcceptedPressureValueHPa;
 
-    private float lastSeenSensorValue_hPa;
+    private float lastSeenSensorValueHPa;
 
-    private Float altitudeGain_m;
-    private Float altitudeLoss_m;
+    private Float altitudeGainM;
+    private Float altitudeLossM;
 
     public void start(Context context, Handler handler) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -43,7 +43,7 @@ public class AltitudeSumManager implements SensorEventListener {
             isConnected = sensorManager.registerListener(this, pressureSensor, (int) TimeUnit.SECONDS.toMicros(5), handler);
         }
 
-        lastAcceptedPressureValue_hPa = Float.NaN;
+        lastAcceptedPressureValueHPa = Float.NaN;
         reset();
     }
 
@@ -63,46 +63,46 @@ public class AltitudeSumManager implements SensorEventListener {
     }
 
     public void fill(@NonNull TrackPoint trackPoint) {
-        trackPoint.setAltitudeGain(altitudeGain_m);
-        trackPoint.setAltitudeLoss(altitudeLoss_m);
+        trackPoint.setAltitudeGain(altitudeGainM);
+        trackPoint.setAltitudeLoss(altitudeLossM);
     }
 
     @Nullable
     public Float getAltitudeGain_m() {
-        return isConnected ? altitudeGain_m : null;
+        return isConnected ? altitudeGainM : null;
     }
 
     @VisibleForTesting
     public void setAltitudeGain_m(float altitudeGain_m) {
-        this.altitudeGain_m = altitudeGain_m;
+        this.altitudeGainM = altitudeGain_m;
     }
 
     @VisibleForTesting
     public void addAltitudeGain_m(float altitudeGain_m) {
-        this.altitudeGain_m = this.altitudeGain_m == null ? 0f : this.altitudeGain_m;
-        this.altitudeGain_m += altitudeGain_m;
+        this.altitudeGainM = this.altitudeGainM == null ? 0f : this.altitudeGainM;
+        this.altitudeGainM += altitudeGain_m;
     }
 
     @VisibleForTesting
     public void addAltitudeLoss_m(Float altitudeLoss_m) {
-        this.altitudeLoss_m = this.altitudeLoss_m == null ? 0f : this.altitudeLoss_m;
-        this.altitudeLoss_m += altitudeLoss_m;
+        this.altitudeLossM = this.altitudeLossM == null ? 0f : this.altitudeLossM;
+        this.altitudeLossM += altitudeLoss_m;
     }
 
     @Nullable
     public Float getAltitudeLoss_m() {
-        return isConnected ? altitudeLoss_m : null;
+        return isConnected ? altitudeLossM : null;
     }
 
     @VisibleForTesting
     public void setAltitudeLoss_m(float altitudeLoss_m) {
-        this.altitudeLoss_m = altitudeLoss_m;
+        this.altitudeLossM = altitudeLoss_m;
     }
 
     public void reset() {
         Log.d(TAG, "Reset");
-        altitudeGain_m = null;
-        altitudeLoss_m = null;
+        altitudeGainM = null;
+        altitudeLossM = null;
     }
 
     @Override
@@ -121,26 +121,26 @@ public class AltitudeSumManager implements SensorEventListener {
 
     @VisibleForTesting
     void onSensorValueChanged(float value_hPa) {
-        if (Float.isNaN(lastAcceptedPressureValue_hPa)) {
-            lastAcceptedPressureValue_hPa = value_hPa;
-            lastSeenSensorValue_hPa = value_hPa;
+        if (Float.isNaN(lastAcceptedPressureValueHPa)) {
+            lastAcceptedPressureValueHPa = value_hPa;
+            lastSeenSensorValueHPa = value_hPa;
             return;
         }
 
-        altitudeGain_m = altitudeGain_m != null ? altitudeGain_m : 0;
-        altitudeLoss_m = altitudeLoss_m != null ? altitudeLoss_m : 0;
+        altitudeGainM = altitudeGainM != null ? altitudeGainM : 0;
+        altitudeLossM = altitudeLossM != null ? altitudeLossM : 0;
 
-        PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChangesWithSmoothing_m(lastAcceptedPressureValue_hPa, lastSeenSensorValue_hPa, value_hPa);
+        PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChangesWithSmoothing(lastAcceptedPressureValueHPa, lastSeenSensorValueHPa, value_hPa);
         if (altitudeChange != null) {
-            altitudeGain_m += altitudeChange.getAltitudeGain_m();
+            altitudeGainM += altitudeChange.getAltitudeGain();
 
-            altitudeLoss_m += altitudeChange.getAltitudeLoss_m();
+            altitudeLossM += altitudeChange.getAltitudeLoss();
 
-            lastAcceptedPressureValue_hPa = altitudeChange.getCurrentSensorValue_hPa();
+            lastAcceptedPressureValueHPa = altitudeChange.getCurrentSensorValueHPa();
         }
 
-        lastSeenSensorValue_hPa = value_hPa;
+        lastSeenSensorValueHPa = value_hPa;
 
-        Log.v(TAG, "altitude gain: " + altitudeGain_m + ", altitude loss: " + altitudeLoss_m);
+        Log.v(TAG, "altitude gain: " + altitudeGainM + ", altitude loss: " + altitudeLossM);
     }
 }
