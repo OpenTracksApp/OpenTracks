@@ -71,6 +71,8 @@ public class PreferencesUtils {
 
     private static Resources resources;
 
+    private static String illegalArgument = "Not implemented";
+
     /**
      * Must be called during application startup.
      */
@@ -459,7 +461,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new IllegalArgumentException(illegalArgument);
             }
         }
 
@@ -505,7 +507,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new IllegalArgumentException(illegalArgument);
             }
         }
 
@@ -586,7 +588,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new IllegalArgumentException("Not implemented");
             }
         }
 
@@ -637,7 +639,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new IllegalArgumentException(illegalArgument);
             }
         }
 
@@ -832,7 +834,10 @@ public class PreferencesUtils {
     }
 
     //TODO Check if resetPreferences can be used instead.
-    @Deprecated
+    /**
+     * @deprecated
+     */
+    @Deprecated(forRemoval = false)
     @VisibleForTesting
     public static void clear() {
         sharedPreferences.edit().clear().commit();

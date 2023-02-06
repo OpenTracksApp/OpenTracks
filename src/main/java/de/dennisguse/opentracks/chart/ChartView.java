@@ -109,7 +109,7 @@ public class ChartView extends View {
     private int topBorder = BORDER;
     private int bottomBorder = BORDER;
     private int rightBorder = BORDER;
-    private int spacer = SPACER;
+    private int spaceGap = SPACER;
     private int yAxisOffset = Y_AXIS_OFFSET;
 
     private int width = 0;
@@ -144,6 +144,13 @@ public class ChartView extends View {
                     return true;
                 }
 
+//                Done by Tanzia Ahmed - 40166924
+                private void fling(int velocityX) {
+                    int maxWidth = effectiveWidth * (zoomLevel - 1);
+                    scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
+                    invalidate();
+                }
+
                 @Override
                 public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                     fling((int) -velocityX);
@@ -153,7 +160,7 @@ public class ChartView extends View {
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent event) {
                     // Check if the y event is within markerHeight of the marker center
-                    if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2f) < markerHeight) {
+                    if (Math.abs(event.getY() - topBorder - spaceGap - markerHeight / 2f) < markerHeight) {
                         int minDistance = Integer.MAX_VALUE;
                         Marker nearestMarker = null;
                         synchronized (markers) {
@@ -180,6 +187,14 @@ public class ChartView extends View {
 
     private final ScaleGestureDetector detectorZoom = new ScaleGestureDetector(getContext(),
             new ScaleGestureDetector.SimpleOnScaleGestureListener() {
+
+                private void zoomIn() {
+                    if (canZoomIn()) {
+                        zoomLevel++;
+                        updateSeries();
+                        invalidate();
+                    }
+                }
 
                 private void zoomOut() {
                     if (canZoomOut()) {
@@ -494,24 +509,11 @@ public class ChartView extends View {
         return zoomLevel > MIN_ZOOM_LEVEL;
     }
 
-    private void zoomIn() {
-        if (canZoomIn()) {
-            zoomLevel++;
-            updateSeries();
-            invalidate();
-        }
-    }
-
     /**
      * Initiates flinging.
      *
      * @param velocityX velocity of fling in pixels per second
      */
-    private void fling(int velocityX) {
-        int maxWidth = effectiveWidth * (zoomLevel - 1);
-        scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
-        invalidate();
-    }
 
     /**
      * Handle parent's view disallow touch event.
@@ -641,8 +643,8 @@ public class ChartView extends View {
                 }
                 canvas.save();
                 float x = getX(getMarkerXValue(marker));
-                canvas.drawLine(x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
-                canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
+                canvas.drawLine(x, topBorder + spaceGap + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
+                canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + spaceGap);
 
                 markerPin.draw(canvas);
                 canvas.restore();
@@ -688,7 +690,7 @@ public class ChartView extends View {
                 String title = getContext().getString(chartValueSeries.getTitleId(unitSystem));
                 Paint paint = chartValueSeries.getTitlePaint();
                 int x = (int) (0.5 * width) + getScrollX();
-                int y = topBorder - spacer - (lines - count) * (lineHeight + spacer);
+                int y = topBorder - spaceGap - (lines - count) * (lineHeight + spaceGap);
                 canvas.drawText(title, x, y, paint);
             }
         }
@@ -727,13 +729,13 @@ public class ChartView extends View {
         String label = getXAxisLabel();
         Rect rect = getRect(axisPaint, label);
         int yOffset = rect.height() / 2;
-        canvas.drawText(label, x + effectiveWidth + spacer, y + yOffset, axisPaint);
+        canvas.drawText(label, x + effectiveWidth + spaceGap, y + yOffset, axisPaint);
 
         double interval = getXAxisInterval();
         NumberFormat numberFormat = interval < 1 ? X_FRACTION_FORMAT : X_NUMBER_FORMAT;
 
         for (double markerPosition : getXAxisMarkerPositions(interval)) {
-            drawXAxisMarker(canvas, markerPosition, numberFormat, spacer + yOffset);
+            drawXAxisMarker(canvas, markerPosition, numberFormat, spaceGap + yOffset);
         }
     }
 
@@ -785,16 +787,16 @@ public class ChartView extends View {
     }
 
     private List<Double> getXAxisMarkerPositions(double interval) {
-        List<Double> markers = new ArrayList<>();
-        markers.add(0d);
+        List<Double> Markers = new ArrayList<>();
+        Markers.add(0d);
         for (int i = 1; i * interval < maxX; i++) {
-            markers.add(i * interval);
+            Markers.add(i * interval);
         }
 
-        if (markers.size() < 2) {
-            markers.add(maxX);
+        if (Markers.size() < 2) {
+            Markers.add(maxX);
         }
-        return markers;
+        return Markers;
     }
 
     /**
@@ -808,12 +810,12 @@ public class ChartView extends View {
         canvas.drawLine(x, y, x, y + effectiveHeight, axisPaint);
 
         // TODO
-        int markerXPosition = x - spacer;
+        int markerXPosition = x - spaceGap;
         for (int i = 0; i < seriesList.size(); i++) {
             int index = seriesList.size() - 1 - i;
             ChartValueSeries chartValueSeries = seriesList.get(index);
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
-                markerXPosition -= drawYAxisMarkers(chartValueSeries, canvas, markerXPosition) + spacer;
+                markerXPosition -= drawYAxisMarkers(chartValueSeries, canvas, markerXPosition) + spaceGap;
             }
         }
     }
@@ -935,25 +937,25 @@ public class ChartView extends View {
             chartValueSeries.updateDimension();
         }
         float density = getResources().getDisplayMetrics().density;
-        spacer = (int) (density * SPACER);
+        spaceGap = (int) (density * SPACER);
         yAxisOffset = (int) (density * Y_AXIS_OFFSET);
 
         int markerLength = 0;
         for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
                 Rect rect = getRect(chartValueSeries.getMarkerPaint(), chartValueSeries.getLargestMarker());
-                markerLength += rect.width() + spacer;
+                markerLength += rect.width() + spaceGap;
             }
         }
 
         leftBorder = (int) (density * BORDER + markerLength);
         int[] titleDimensions = getTitleDimensions();
-        topBorder = (int) (density * BORDER + titleDimensions[0] * (titleDimensions[1] + spacer));
+        topBorder = (int) (density * BORDER + titleDimensions[0] * (titleDimensions[1] + spaceGap));
         Rect xAxisLabelRect = getRect(axisPaint, getXAxisLabel());
-        // border + x axis marker + spacer + .5 x axis label
-        bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer
+        // border + x axis marker + spaceGap + .5 x axis label
+        bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spaceGap
                 + (xAxisLabelRect.height() / 2));
-        rightBorder = (int) (density * BORDER + xAxisLabelRect.width() + spacer);
+        rightBorder = (int) (density * BORDER + xAxisLabelRect.width() + spaceGap);
         updateEffectiveDimensions();
     }
 

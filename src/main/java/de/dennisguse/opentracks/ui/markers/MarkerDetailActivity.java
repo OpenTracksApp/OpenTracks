@@ -59,7 +59,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        Object bundleMarkerId = getIntent().getExtras().get(EXTRA_MARKER_ID);
+        Object bundleMarkerId = getIntent().getExtras().getBundle(EXTRA_MARKER_ID);
         Marker.Id markerId = null;
         if (bundleMarkerId instanceof Marker.Id) {
             markerId = (Marker.Id) bundleMarkerId;
@@ -101,6 +101,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //Overriding onPageScrolled
             }
 
             @Override
@@ -110,6 +111,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                //Overriding onPageScrollStateChanged
             }
         });
         viewBinding.makerDetailActivityViewPager.setCurrentItem(markerIndex == -1 ? 0 : markerIndex);

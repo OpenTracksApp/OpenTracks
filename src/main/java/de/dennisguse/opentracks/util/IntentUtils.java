@@ -35,8 +35,6 @@ public class IntentUtils {
 
     private static final String TAG = IntentUtils.class.getSimpleName();
 
-    private static final String JPEG_EXTENSION = "jpeg";
-
     private IntentUtils() {
     }
 

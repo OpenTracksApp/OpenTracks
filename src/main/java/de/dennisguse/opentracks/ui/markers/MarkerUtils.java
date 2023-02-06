@@ -98,7 +98,7 @@ public class MarkerUtils {
     }
 
     @Nullable
-    public static File buildInternalPhotoFile(Context context, Track.Id trackId, @NonNull Uri fileNameUri) {
+    public static File buildInternalPhotoFile(Context context, Track.Id trackId, Uri fileNameUri) {
         if (fileNameUri == null) {
             Log.w(TAG, "URI object is null.");
             return null;

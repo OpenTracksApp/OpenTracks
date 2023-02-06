@@ -61,7 +61,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            String value = StringUtils.formatElapsedTime(data.getTrackStatistics().getMovingTime());
+            var value = StringUtils.formatElapsedTime(data.getTrackStatistics().getMovingTime());
 
             getBinding().statsValue.setText(value);
             getBinding().statsDescriptionMain.setText(getContext().getString(R.string.stats_moving_time));

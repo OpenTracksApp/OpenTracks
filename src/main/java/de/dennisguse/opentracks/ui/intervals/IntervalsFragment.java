@@ -42,7 +42,7 @@ public class IntervalsFragment extends Fragment {
     private IntervalStatisticsModel.IntervalOption selectedInterval;
 
     private Track.Id trackId;
-    private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
+    private UnitSystem unitSystem;
     private IntervalStatisticsAdapter adapter;
     private ArrayAdapter<IntervalStatisticsModel.IntervalOption> intervalsAdapter;
 
@@ -97,14 +97,14 @@ public class IntervalsFragment extends Fragment {
         return viewBinding.getRoot();
     }
 
-    @Deprecated //TODO This method must be re-implemented.
+    //TODO This method must be re-implemented.
     @Override
+    @Deprecated
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         adapter = new IntervalStatisticsAdapter(getContext(), stackModeListView, unitSystem, isReportSpeed);
         viewBinding.intervalList.setLayoutManager(new LinearLayoutManager(getContext()));
-        // TODO handle empty view: before we did viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
         viewBinding.intervalList.setAdapter(adapter);
 
         intervalsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {

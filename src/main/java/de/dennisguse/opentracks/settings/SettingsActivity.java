@@ -77,27 +77,27 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
     }
 
     private PreferenceFragmentCompat getPreferenceScreen(String key) {
-        PreferenceFragmentCompat fragment = null;
+        PreferenceFragmentCompat fragment_local = null;
 
         if (key.equals(getString(R.string.settings_defaults_key))) {
-            fragment = new DefaultsSettingsFragment();
+            fragment_local = new DefaultsSettingsFragment();
         } else if (key.equals(getString(R.string.settings_ui_key))) {
-            fragment = new UserInterfaceSettingsFragment();
+            fragment_local = new UserInterfaceSettingsFragment();
         } else if (key.equals(getString(R.string.settings_gps_key))) {
-            fragment = new GpsSettingsFragment();
+            fragment_local = new GpsSettingsFragment();
         } else if (key.equals(getString(R.string.settings_sensors_key))) {
-            fragment = new SensorsSettingsFragment();
+            fragment_local = new SensorsSettingsFragment();
         } else if (key.equals(getString(R.string.settings_announcements_key))) {
-            fragment = new AnnouncementsSettingsFragment();
+            fragment_local = new AnnouncementsSettingsFragment();
         } else if (key.equals(getString(R.string.settings_import_export_key))) {
-            fragment = new ImportExportSettingsFragment();
+            fragment_local = new ImportExportSettingsFragment();
         } else if (key.equals(getString(R.string.settings_api_key))) {
-            fragment = new PublicAPISettingsFragment();
+            fragment_local = new PublicAPISettingsFragment();
         } else if (key.equals(getString(R.string.settings_open_tracks_key))) {
-            fragment = new OpenTracksSettingsFragment();
+            fragment_local = new OpenTracksSettingsFragment();
         }
 
-        return fragment;
+        return fragment_local;
     }
 
     public PreferenceFragmentCompat openScreen(String key) {
