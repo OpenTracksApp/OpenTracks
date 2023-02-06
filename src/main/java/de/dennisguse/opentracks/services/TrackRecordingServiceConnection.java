@@ -196,7 +196,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     }
 
     public void stopRecording(@NonNull Context context) {
-        TrackRecordingService trackRecordingService = getServiceIfBound();
+        TrackRecordingService TrackRecordingServiceCon = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.e(TAG, "TrackRecordingService not connected.");
         } else {
