@@ -201,6 +201,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsTotalTimeValue.setText(StringUtils.formatElapsedTime(trackStatistics.getTotalTime()));
         }
 
+
         SpeedFormatter formatter = SpeedFormatter.getBuilderRef().setUnit(unitSystem).setReportSpeedOrPace(preferenceReportSpeed).build(getContext());
         // Set average speed/pace
         setAverageSpeed(trackStatistics);
