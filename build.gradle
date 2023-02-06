@@ -14,7 +14,7 @@ buildscript {
 plugins {
     id "org.sonarqube" version "3.5.0.2730"
 }
-apply from: 'sonar.gradle'
+//apply from: 'sonar.gradle'
 apply plugin: 'com.android.application'
 
 allprojects {

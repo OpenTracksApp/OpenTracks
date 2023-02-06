@@ -203,13 +203,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         SpeedFormatter formatter = SpeedFormatter.getBuilderRef().setUnit(unitSystem).setReportSpeedOrPace(preferenceReportSpeed).build(getContext());
         // Set average speed/pace
-        {
-            viewBinding.statsAverageSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
-
-            Pair<String, String> parts = formatter.getSpeedParts(trackStatistics.getAverageSpeed());
-            viewBinding.statsAverageSpeedValue.setText(parts.first);
-            viewBinding.statsAverageSpeedUnit.setText(parts.second);
-        }
+        setAverageSpeed(trackStatistics);
 
         // Set max speed/pace
         {
@@ -230,6 +224,20 @@ public class StatisticsRecordedFragment extends Fragment {
         }
 
         // Set altitude gain and loss
+        setAverageSpeed(trackStatistics);
+
+    }
+    private void setAverageSpeed(TrackStatistics trackStatistics) {
+        {
+            viewBinding.statsAverageSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
+
+            Pair<String, String> parts = formatter.getSpeedParts(trackStatistics.getAverageSpeed());
+            viewBinding.statsAverageSpeedValue.setText(parts.first);
+            viewBinding.statsAverageSpeedUnit.setText(parts.second);
+        }
+    }
+
+    private void setAltitudeGainLoss(TrackStatistics trackStatistics) {
         {
             Float altitudeGain_m = trackStatistics.getTotalAltitudeGain();
             Float altitudeLoss_m = trackStatistics.getTotalAltitudeLoss();
@@ -248,6 +256,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsAltitudeGroup.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
+
 
     private void updateSensorUI() {
         if (sensorStatistics == null) {
