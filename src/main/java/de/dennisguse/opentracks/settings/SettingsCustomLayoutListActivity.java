@@ -86,7 +86,11 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s) throws UnsupportedOperationException  {
+                /**
+                 * No Functionality needed as of now.
+                 * Ready to implement additional functionality in future.
+                 */
             }
         });
 
