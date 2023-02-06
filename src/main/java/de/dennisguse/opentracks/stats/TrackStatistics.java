@@ -262,7 +262,7 @@ public class TrackStatistics {
      * This calculation only takes into account the displacement until the last point that was accounted for in statistics.
      */
     public Speed getAverageSpeed() {
-        if (totalDistance.isZero()) {
+        if (totalDistance.isZero() && totalDistance.isZero()) {
             return Speed.of(0);
         }
         return Speed.of(totalDistance.toM() / totalTime.getSeconds());
@@ -288,8 +288,8 @@ public class TrackStatistics {
         return altitudeExtremities.getMin();
     }
 
-    public void setMinAltitude(double altitudeM) {
-        altitudeExtremities.setMin(altitudeM);
+    public void setMinAltitude(double altitude_m) {
+        altitudeExtremities.setMin(altitude_m);
     }
 
     public boolean hasAltitudeMax() {

@@ -34,7 +34,7 @@ public class FilterDialogFragment extends DialogFragment {
     private static final String TAG = FilterDialogFragment.class.getSimpleName();
     public static final String KEY_FILTER_ITEMS = "filterItems";
 
-    private FilterDialogListener filterDialogListener;
+
 
     public static void showDialog(FragmentManager fragmentManager) {
         FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
@@ -112,6 +112,7 @@ public class FilterDialogFragment extends DialogFragment {
         });
 
         ArrayList<FilterItem> finalFilterItems = filterItems;
+        FilterDialogListener filterDialogListener = null;
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> filterDialogListener.onFilterDone(
                 finalFilterItems,
                 LocalDateTime.of(datePickerFrom.getYear(), datePickerFrom.getMonth() + 1, datePickerFrom.getDayOfMonth(), 0, 0, 0),
@@ -127,7 +128,7 @@ public class FilterDialogFragment extends DialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            filterDialogListener = (FilterDialogListener) context;
+            FilterDialogListener filterDialogListener = (FilterDialogListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context + " must implement " + FilterDialogListener.class.getSimpleName());
         }
@@ -140,7 +141,7 @@ public class FilterDialogFragment extends DialogFragment {
     public static class FilterItem implements Parcelable {
         public final String id;
         public final String value;
-        public boolean isChecked;
+        protected boolean isChecked;
 
         public FilterItem(String id, String value) {
             this.id = id;

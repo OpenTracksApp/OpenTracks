@@ -31,7 +31,7 @@ import de.dennisguse.opentracks.settings.UnitSystem;
  */
 public class IntervalsFragment extends Fragment {
 
-    private static final String TAG = IntervalsFragment.class.getSimpleName();
+  //  private static final String TAG = IntervalsFragment.class.getSimpleName();
 
     private static final String FROM_TOP_TO_BOTTOM_KEY = "fromTopToBottom";
     private static final String TRACK_ID_KEY = "trackId";
@@ -97,7 +97,7 @@ public class IntervalsFragment extends Fragment {
         return viewBinding.getRoot();
     }
 
-    @Deprecated(since = "",forRemoval = false) //TODO This method must be re-implemented.
+    @Deprecated //TODO This method must be re-implemented.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

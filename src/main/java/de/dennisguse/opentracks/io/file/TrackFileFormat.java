@@ -42,12 +42,12 @@ public enum TrackFileFormat {
     @Deprecated //TODO Check if we really need this
     KMZ_WITH_TRACKDETAIL_AND_SENSORDATA("KMZ_WITH_TRACKDETAIL_AND_SENSORDATA") {
 
-        private static final boolean EXPORT_PHOTOS = false;
+        private static final boolean exportPhotos = false;
 
         @Override
         public TrackExporter createTrackExporter(Context context) {
-            KMLTrackExporter exporter = new KMLTrackExporter(context, EXPORT_PHOTOS);
-            return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, EXPORT_PHOTOS);
+            KMLTrackExporter exporter = new KMLTrackExporter(context, exportPhotos);
+            return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, exportPhotos);
         }
 
         @Override
@@ -61,18 +61,18 @@ public enum TrackFileFormat {
 
         @Override
         public boolean includesPhotos() {
-            return EXPORT_PHOTOS;
+            return exportPhotos;
         }
     },
 
     KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES("KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES") {
 
-        private static final boolean EXPORT_PHOTOS = true;
+        private static final boolean exportPhotos = true;
 
         @Override
         public TrackExporter createTrackExporter(Context context) {
-            KMLTrackExporter exporter = new KMLTrackExporter(context, EXPORT_PHOTOS);
-            return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, EXPORT_PHOTOS);
+            KMLTrackExporter exporter = new KMLTrackExporter(context, exportPhotos);
+            return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, exportPhotos);
         }
 
         @Override
@@ -86,7 +86,7 @@ public enum TrackFileFormat {
 
         @Override
         public boolean includesPhotos() {
-            return EXPORT_PHOTOS;
+            return exportPhotos;
         }
 
     },

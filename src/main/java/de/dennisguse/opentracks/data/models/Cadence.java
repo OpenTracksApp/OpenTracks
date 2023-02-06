@@ -14,23 +14,23 @@ public class Cadence {
 
         return new Cadence(value / (duration.toMillis() / (float) Duration.ofMinutes(1).toMillis()));
     }
-// changed name of value_rpm to valueRpm
-    public static Cadence of(float valueRpm) {
-        return new Cadence(valueRpm);
+
+    public static Cadence of(float value_rpm) {
+        return new Cadence(value_rpm);
     }
 
     public static Cadence zero() {
         return of(0.0f);
     }
 
-    private final float valueRpm;
+    private final float value_rpm;
 
     private Cadence(float value) {
-        this.valueRpm = value;
+        this.value_rpm = value;
     }
 
     public float getRPM() {
-        return valueRpm;
+        return value_rpm;
     }
 
     @Override
@@ -38,19 +38,19 @@ public class Cadence {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cadence cadence = (Cadence) o;
-        return Float.compare(cadence.valueRpm, valueRpm) == 0;
+        return Float.compare(cadence.value_rpm, value_rpm) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(valueRpm);
+        return Objects.hash(value_rpm);
     }
 
     @NonNull
     @Override
     public String toString() {
         return "Cadence{" +
-                "value=" + valueRpm + " rpm" +
+                "value=" + value_rpm + " rpm" +
                 '}';
     }
 }
