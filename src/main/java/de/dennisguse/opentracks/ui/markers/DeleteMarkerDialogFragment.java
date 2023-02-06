@@ -64,7 +64,12 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Marker.Id[] markerIds = (Marker.Id[]) getArguments().getParcelableArray(KEY_MARKER_IDS);
+        final Marker.Id[] markerIds;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            markerIds = getArguments().getParcelableArray(KEY_MARKER_IDS, Marker.Id.class);
+        } else {
+            markerIds = (Marker.Id[]) getArguments().getParcelableArray(KEY_MARKER_IDS);
+        }
         final Context context = getContext();
 
         final FragmentActivity fragmentActivity = getActivity();
