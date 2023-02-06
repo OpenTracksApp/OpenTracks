@@ -144,6 +144,13 @@ public class ChartView extends View {
                     return true;
                 }
 
+//                Done by Tanzia Ahmed - 40166924
+                private void fling(int velocityX) {
+                    int maxWidth = effectiveWidth * (zoomLevel - 1);
+                    scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
+                    invalidate();
+                }
+
                 @Override
                 public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                     fling((int) -velocityX);
@@ -507,11 +514,6 @@ public class ChartView extends View {
      *
      * @param velocityX velocity of fling in pixels per second
      */
-    private void fling(int velocityX) {
-        int maxWidth = effectiveWidth * (zoomLevel - 1);
-        scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
-        invalidate();
-    }
 
     /**
      * Handle parent's view disallow touch event.
