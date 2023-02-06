@@ -17,7 +17,7 @@ Application id: de.dennisguse.opentracks
 It if it properly tagged F-Droid takes care of building the app and publishing.
 Usually, it takes two days before the update is published (build, signed, and published). 
 
-The recent build activity can be found [here](https://f-droid.org/wiki/index.php?title=Special:RecentChanges&days=7&from=&hidebots=0&hideanons=1&hideliu=1&limit=500)
+The recent build activity can be found [here](https://monitor.f-droid.org/builds/build)
 
 ## Google Play Store
 Application id: `de.dennisguse.opentracks.playstore`

@@ -202,12 +202,12 @@ public class TrackStatistics {
         return totalDistance;
     }
 
-    public void setTotalDistance(Distance totalDistance_m) {
-        this.totalDistance = totalDistance_m;
+    public void setTotalDistance(Distance totalDistancem) {
+        this.totalDistance = totalDistancem;
     }
 
-    public void addTotalDistance(Distance distance_m) {
-        totalDistance = totalDistance.plus(distance_m);
+    public void addTotalDistance(Distance distancem) {
+        totalDistance = totalDistance.plus(distancem);
     }
 
     /**
@@ -238,7 +238,7 @@ public class TrackStatistics {
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addMovingTime(Duration time) {
         if (time.isNegative()) {
-            throw new RuntimeException("Moving time cannot be negative");
+            throw new IllegalArgumentException("Moving time cannot be negative");
         }
         movingTime = movingTime.plus(time);
     }

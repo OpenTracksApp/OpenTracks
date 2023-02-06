@@ -31,7 +31,7 @@ import de.dennisguse.opentracks.settings.UnitSystem;
  */
 public class IntervalsFragment extends Fragment {
 
-    private static final String TAG = IntervalsFragment.class.getSimpleName();
+  //  private static final String TAG = IntervalsFragment.class.getSimpleName();
 
     private static final String FROM_TOP_TO_BOTTOM_KEY = "fromTopToBottom";
     private static final String TRACK_ID_KEY = "trackId";
