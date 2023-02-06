@@ -99,7 +99,7 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
         }
 
         notificationBuilder.setContentTitle(context.getString(R.string.track_distance_notification, formatter.formatDistance(trackStatistics.getTotalDistance())));
-        String formattedSpeed = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(true).build(context).formatSpeed(trackPoint.getSpeed());
+        String formattedSpeed = SpeedFormatter.getBuilderRef().setUnit(unitSystem).setReportSpeedOrPace(true).build(context).formatSpeed(trackPoint.getSpeed());
         notificationBuilder.setContentText(context.getString(R.string.track_speed_notification, formattedSpeed));
         notificationBuilder.setSubText(context.getString(R.string.track_recording_notification_accuracy, formattedAccuracy));
         updateNotification();
