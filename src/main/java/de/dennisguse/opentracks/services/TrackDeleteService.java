@@ -92,6 +92,7 @@ public class TrackDeleteService extends Service {
    * @param tracksToDelete number of tracks to be deleted.
    */
   private void createAndShowNotification(int tracksToDelete) {
+    NotificationCompat.Builder notificationBuilder;
     NotificationManager notificationManager;
     notificationManager =
       (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
