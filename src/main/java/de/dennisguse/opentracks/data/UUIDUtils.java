@@ -6,6 +6,10 @@ import java.nio.ByteBuffer;
 import java.util.UUID;
 
 public class UUIDUtils {
+    
+    private UUIDUtils() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
 
     public static UUID fromBytes(byte[] bytes) {
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
