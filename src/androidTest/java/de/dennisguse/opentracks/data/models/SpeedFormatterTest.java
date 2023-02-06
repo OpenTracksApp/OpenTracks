@@ -20,7 +20,7 @@ public class SpeedFormatterTest {
 
     @Test
     public void testGetSpeedParts_pace_metric() {
-        SpeedFormatter formatter = SpeedFormatter.Builder()
+        SpeedFormatter formatter = SpeedFormatter.getBuilderRef()
                 .setDecimalCount(2)
                 .setUnit(UnitSystem.METRIC)
                 .setReportSpeedOrPace(false)
@@ -34,7 +34,7 @@ public class SpeedFormatterTest {
 
     @Test
     public void testGetSpeedParts_pace_imperial() {
-        SpeedFormatter formatter = SpeedFormatter.Builder()
+        SpeedFormatter formatter = SpeedFormatter.getBuilderRef()
                 .setDecimalCount(2)
                 .setUnit(UnitSystem.IMPERIAL)
                 .setReportSpeedOrPace(false)
@@ -46,7 +46,7 @@ public class SpeedFormatterTest {
 
     @Test
     public void testGetSpeedParts_pace_nautical() {
-        SpeedFormatter formatter = SpeedFormatter.Builder()
+        SpeedFormatter formatter = SpeedFormatter.getBuilderRef()
                 .setDecimalCount(2)
                 .setUnit(UnitSystem.NAUTICAL_IMPERIAL)
                 .setReportSpeedOrPace(false)
@@ -58,7 +58,7 @@ public class SpeedFormatterTest {
 
     @Test
     public void testGetSpeedParts_speed_metric() {
-        SpeedFormatter formatter = SpeedFormatter.Builder()
+        SpeedFormatter formatter = SpeedFormatter.getBuilderRef()
                 .setDecimalCount(2)
                 .setUnit(UnitSystem.METRIC)
                 .setReportSpeedOrPace(true)
@@ -70,7 +70,7 @@ public class SpeedFormatterTest {
 
     @Test
     public void testGetSpeedParts_speed_imperial() {
-        SpeedFormatter formatter = SpeedFormatter.Builder()
+        SpeedFormatter formatter = SpeedFormatter.getBuilderRef()
                 .setDecimalCount(2)
                 .setUnit(UnitSystem.IMPERIAL)
                 .setReportSpeedOrPace(true)
@@ -82,7 +82,7 @@ public class SpeedFormatterTest {
 
     @Test
     public void testGetSpeedParts_speed_nautical() {
-        SpeedFormatter formatter = SpeedFormatter.Builder()
+        SpeedFormatter formatter = SpeedFormatter.getBuilderRef()
                 .setDecimalCount(2)
                 .setUnit(UnitSystem.NAUTICAL_IMPERIAL)
                 .setReportSpeedOrPace(true)
@@ -94,7 +94,7 @@ public class SpeedFormatterTest {
 
     @Test
     public void testFormatSpeed() {
-        SpeedFormatter formatter = SpeedFormatter.Builder()
+        SpeedFormatter formatter = SpeedFormatter.getBuilderRef()
                 .setDecimalCount(2)
                 .setUnit(UnitSystem.METRIC)
                 .setReportSpeedOrPace(false)

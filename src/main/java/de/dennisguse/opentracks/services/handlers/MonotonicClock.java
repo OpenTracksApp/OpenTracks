@@ -23,18 +23,35 @@ public class MonotonicClock extends Clock {
     }
 
     @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this){
+            return true;
+        }
+        if(!(obj instanceof MonotonicClock)){
+            return false;
+        }
+        MonotonicClock monotonicClock = (MonotonicClock) obj;
+        return this.instant().compareTo(monotonicClock.instant()) >=0 && this.getZone().equals(monotonicClock.getZone());
+    }
+
+    @Override
     public Instant instant() {
         long current = (SystemClock.elapsedRealtime() - elapsedRealtimeAtCreation);
         return Instant.ofEpochMilli(epochAtCreation + current);
     }
 
     @Override
-    public ZoneId getZone() {
-        throw new RuntimeException("Not implemented");
+    public ZoneId getZone(){
+        return Clock.systemDefaultZone().getZone();
     }
 
     @Override
     public Clock withZone(ZoneId zone) {
-        throw new RuntimeException("Not implemented");
+        return Clock.systemDefaultZone().withZone(zone);
     }
 }

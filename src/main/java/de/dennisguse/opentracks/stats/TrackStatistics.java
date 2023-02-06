@@ -83,15 +83,16 @@ public class TrackStatistics {
     }
 
     @VisibleForTesting
-    public TrackStatistics(String startTime, String stopTime, double totalDistance_m, int totalTime_s, int movingTime_s, float maxSpeed_mps, Float totalAltitudeGain_m, Float totalAltitudeLoss_m) {
+    public TrackStatistics(String startTime, String stopTime, double totalDistancem, int totalTimes, int movingTimes, float maxSpeedmps,
+                           Float totalAltitudeGainm, Float totalAltitudeLossm) {
         this.startTime = Instant.parse(startTime);
         this.stopTime = Instant.parse(stopTime);
-        this.totalDistance = Distance.of(totalDistance_m);
-        this.totalTime = Duration.ofSeconds(totalTime_s);
-        this.movingTime = Duration.ofSeconds(movingTime_s);
-        this.maxSpeed = Speed.of(maxSpeed_mps);
-        this.totalAltitudeGain_m = totalAltitudeGain_m;
-        this.totalAltitudeLoss_m = totalAltitudeLoss_m;
+        this.totalDistance = Distance.of(totalDistancem);
+        this.totalTime = Duration.ofSeconds(totalTimes);
+        this.movingTime = Duration.ofSeconds(movingTimes);
+        this.maxSpeed = Speed.of(maxSpeedmps);
+        this.totalAltitudeGain_m = totalAltitudeGainm;
+        this.totalAltitudeLoss_m = totalAltitudeLossm;
     }
 
     /**
@@ -202,12 +203,12 @@ public class TrackStatistics {
         return totalDistance;
     }
 
-    public void setTotalDistance(Distance totalDistance_m) {
-        this.totalDistance = totalDistance_m;
+    public void setTotalDistance(Distance totalDistancem) {
+        this.totalDistance = totalDistancem;
     }
 
-    public void addTotalDistance(Distance distance_m) {
-        totalDistance = totalDistance.plus(distance_m);
+    public void addTotalDistance(Distance distancem) {
+        totalDistance = totalDistance.plus(distancem);
     }
 
     /**
