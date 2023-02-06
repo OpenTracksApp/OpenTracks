@@ -68,7 +68,8 @@ limitations under the License.
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/ThemeCustom">
+        android:theme="@style/ThemeCustom"
+        android:localeConfig="@xml/locales_config">
 
         <activity
             android:name=".publicapi.StartRecording"
