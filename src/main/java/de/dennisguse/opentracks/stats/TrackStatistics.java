@@ -202,12 +202,12 @@ public class TrackStatistics {
         return totalDistance;
     }
 
-    public void setTotalDistance(Distance totalDistance_m) {
-        this.totalDistance = totalDistance_m;
+    public void setTotalDistance(Distance totalDistancem) {
+        this.totalDistance = totalDistancem;
     }
 
-    public void addTotalDistance(Distance distance_m) {
-        totalDistance = totalDistance.plus(distance_m);
+    public void addTotalDistance(Distance distancem) {
+        totalDistance = totalDistance.plus(distancem);
     }
 
     /**
