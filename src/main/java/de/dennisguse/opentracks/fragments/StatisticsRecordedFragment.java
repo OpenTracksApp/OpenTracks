@@ -225,7 +225,7 @@ public class StatisticsRecordedFragment extends Fragment {
         }
 
         // Set altitude gain and loss
-        setAverageSpeed(trackStatistics);
+        setAltitudeGainLoss(trackStatistics);
 
     }
     private void setAverageSpeed(TrackStatistics trackStatistics) {
