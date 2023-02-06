@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import java.io.File;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -48,7 +47,7 @@ public class MarkerUtils {
     static Pair<Intent, Uri> createTakePictureIntent(Context context, Track.Id trackId) {
         File dir = FileUtils.getPhotoDir(context, trackId);
 
-        String fileName = DateFormat.getDateTimeInstance().format(new Date());
+        String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
         File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
 
         Uri photoUri = FileProvider.getUriForFile(context, FileUtils.FILEPROVIDER, file);
@@ -62,7 +61,7 @@ public class MarkerUtils {
     public static String getImageUrl(Context context, Track.Id trackId) {
         File dir = FileUtils.getPhotoDir(context, trackId);
 
-        String fileName = DateFormat.getDateTimeInstance().format(new Date());
+        String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
         File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
 
         return file.getAbsolutePath();
