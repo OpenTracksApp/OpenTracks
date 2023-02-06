@@ -35,6 +35,10 @@ import de.dennisguse.opentracks.data.models.ActivityType;
  */
 public class TrackIconUtils {
 
+    private TrackIconUtils(){
+
+    }
+
     public static int getIconDrawable(String activityTypeId) {
         Optional<ActivityType> found = Arrays.stream(ActivityType.values()).filter(
                 it -> it.getId().equals(activityTypeId)
