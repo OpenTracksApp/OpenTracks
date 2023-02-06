@@ -42,7 +42,7 @@ public class IntervalsFragment extends Fragment {
     private IntervalStatisticsModel.IntervalOption selectedInterval;
 
     private Track.Id trackId;
-    private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
+    private UnitSystem unitSystem;
     private IntervalStatisticsAdapter adapter;
     private ArrayAdapter<IntervalStatisticsModel.IntervalOption> intervalsAdapter;
 
