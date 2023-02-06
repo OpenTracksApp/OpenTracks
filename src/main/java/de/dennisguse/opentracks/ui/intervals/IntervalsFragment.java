@@ -105,7 +105,6 @@ public class IntervalsFragment extends Fragment {
 
         adapter = new IntervalStatisticsAdapter(getContext(), stackModeListView, unitSystem, isReportSpeed);
         viewBinding.intervalList.setLayoutManager(new LinearLayoutManager(getContext()));
-        // TODO handle empty view: before we did viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
         viewBinding.intervalList.setAdapter(adapter);
 
         intervalsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
