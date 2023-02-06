@@ -8,7 +8,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * distributed under the License is distributed on an "ASD IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
@@ -17,8 +17,10 @@
 package de.dennisguse.opentracks.ui.markers;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -67,29 +69,32 @@ public class MarkerDetailFragment extends Fragment {
 
     private MarkerDetailFragmentBinding viewBinding;
 
-    private final Runnable hideText = new Runnable() {
-        @Override
-        public void run() {
-            Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fadeout);
-            animation.setAnimationListener(new AnimationListener() {
+    private final Runnable hideText =()-> {
 
-                @Override
-                public void onAnimationStart(Animation anim) {
-                }
+        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fadeout);
+        animation.setAnimationListener(new AnimationListener() {
 
-                @Override
-                public void onAnimationRepeat(Animation anim) {
-                }
+            @Override
+            public void onAnimationStart(Animation anim) {
+                //Overriding onAnimationStart
+                throw new UnsupportedOperationException();
+            }
 
-                @Override
-                public void onAnimationEnd(Animation anim) {
-                    viewBinding.markerDetailMarkerTextGradient.setVisibility(View.GONE);
-                    viewBinding.markerDetailMarkerInfo.setVisibility(View.GONE);
-                }
-            });
-            viewBinding.markerDetailMarkerTextGradient.startAnimation(animation);
-            viewBinding.markerDetailMarkerInfo.startAnimation(animation);
-        }
+            @Override
+            public void onAnimationRepeat(Animation anim) {
+                //Overriding onAnimationRepeat
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public void onAnimationEnd(Animation anim) {
+                viewBinding.markerDetailMarkerTextGradient.setVisibility(View.GONE);
+                viewBinding.markerDetailMarkerInfo.setVisibility(View.GONE);
+            }
+        });
+        viewBinding.markerDetailMarkerTextGradient.startAnimation(animation);
+        viewBinding.markerDetailMarkerInfo.startAnimation(animation);
+
     };
 
     public static MarkerDetailFragment newInstance(Marker.Id markerId) {
@@ -102,17 +107,25 @@ public class MarkerDetailFragment extends Fragment {
     }
 
     @Override
+    @SuppressWarnings("all")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        markerId = getArguments().getParcelable(KEY_MARKER_ID);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            markerId = getArguments().getParcelable(KEY_MARKER_ID,Marker.Id.class);
+        }
+        else {
+            markerId = getArguments().getParcelable(KEY_MARKER_ID);
+        }
         if (markerId == null) {
             Log.d(TAG, "invalid marker id");
             getParentFragmentManager().popBackStack();
             return;
         }
         contentProviderUtils = new ContentProviderUtils(getActivity());
-        handler = new Handler();
+
+        handler= new Handler(Looper.myLooper());
         setHasOptionsMenu(true);
     }
 
