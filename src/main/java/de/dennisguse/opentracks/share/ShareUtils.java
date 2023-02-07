@@ -34,7 +34,7 @@ public class ShareUtils {
      */
     public static Intent newShareFileIntent(Context context, Track.Id... trackIds) {
         if (trackIds.length == 0) {
-            throw new RuntimeException("Need to share at least one track.");
+            throw new ArithmeticException("Need to share at least one track.");
         }
 
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
