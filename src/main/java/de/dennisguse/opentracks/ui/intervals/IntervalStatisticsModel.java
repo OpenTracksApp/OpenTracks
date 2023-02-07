@@ -37,7 +37,6 @@ public class IntervalStatisticsModel extends AndroidViewModel {
     private Distance distanceInterval;
     private final ContentResolver contentResolver;
     private ContentObserver trackPointsTableObserver;
-    private TrackPoint.Id lastTrackPointId;
 
     private final Executor executor = Executors.newSingleThreadExecutor();
     private HandlerThread handlerThread;
@@ -92,6 +91,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
     private void loadIntervalStatistics(Track.Id trackId) {
         executor.execute(() -> {
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(getApplication());
+            TrackPoint.Id lastTrackPointId;
             try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, lastTrackPointId)) {
                 lastTrackPointId = intervalStatistics.addTrackPoints(trackPointIterator);
                 intervalsLiveData.postValue(intervalStatistics.getIntervalList());
@@ -110,6 +110,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
             interval = IntervalOption.DEFAULT;
         }
 
+        TrackPoint.Id lastTrackPointId
         lastTrackPointId = null;
         distanceInterval = interval.getDistance(unitSystem);
         intervalStatistics = new IntervalStatistics(distanceInterval);
