@@ -32,6 +32,7 @@ public class    ClockViewHolder extends StatisticViewHolder<StatsClockItemBindin
         /*
         Yet to implement functionality for this method.
         Added as to-do task.
+	Added exception handling for the same
          */
     }
 }
