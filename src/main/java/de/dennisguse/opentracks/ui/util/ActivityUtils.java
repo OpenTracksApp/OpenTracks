@@ -94,11 +94,26 @@ public class ActivityUtils {
     }
 
     public static void vibrate(@NonNull Context context, int milliseconds) {
-        final Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            VibratorManager vibratorManager = (VibratorManager) getSystemService(Context.VIBRATOR_MANAGER_SERVICE);
+            vibrator = vibratorManager.getDefaultVibrator();
         } else {
-            vibrator.vibrate(milliseconds);
+            // backward compatibility for Android API < 31,
+            // VibratorManager was only added on API level 31 release.
+            // noinspection deprecation
+            vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        }
+        //final Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
+        final int DELAY = 0, VIBRATE = 1000, SLEEP = 1000, START = 0;
+        long[] vibratePattern = {DELAY, VIBRATE, SLEEP};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createWaveform(vibratePattern, START));
+           // vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            // backward compatibility for Android API < 26
+            // noinspection deprecation
+            vibrator.vibrate(vibratePattern, START);
+            //vibrator.vibrate(milliseconds);
         }
     }
 
