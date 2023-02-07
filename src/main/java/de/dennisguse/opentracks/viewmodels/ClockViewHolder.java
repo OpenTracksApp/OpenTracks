@@ -9,7 +9,7 @@ import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
 import android.os.Build;
 
-public class ClockViewHolder extends StatisticViewHolder<StatsClockItemBinding> {
+public class    ClockViewHolder extends StatisticViewHolder<StatsClockItemBinding> {
 
     @Override
     protected StatsClockItemBinding createViewBinding(LayoutInflater inflater) {
@@ -28,6 +28,10 @@ public class ClockViewHolder extends StatisticViewHolder<StatsClockItemBinding> 
     }
 
     @Override
-    public void onChanged(UnitSystem unitSystem, RecordingData data) {
+    public void onChanged(UnitSystem unitSystem, RecordingData data) throws UnsupportedOperationException {
+        /*
+        Yet to implement functionality for this method.
+        Added as to-do task.
+         */
     }
 }
