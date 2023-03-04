@@ -61,5 +61,4 @@ limitations under the License.
     <color name="heart_rate_zone_textcolor_4">#FFBD04</color>
     <color name="heart_rate_zone_textcolor_3">#6ACC2B</color>
     <color name="heart_rate_zone_textcolor_2">#64D1FD</color>
-    <color name="heart_rate_zone_textcolor_1">@color/opentracks_on_primary_color</color>
 </resources>

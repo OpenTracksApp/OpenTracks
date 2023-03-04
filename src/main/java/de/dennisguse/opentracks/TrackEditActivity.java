@@ -24,6 +24,7 @@ import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackEditBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
@@ -75,7 +76,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
         viewBinding.fields.trackEditActivityType.setText(track.getCategory());
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(this));
         viewBinding.fields.trackEditActivityType.setAdapter(adapter);
         viewBinding.fields.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> setActivityTypeIcon(TrackIconUtils.getIconValue(this, (String) viewBinding.fields.trackEditActivityType.getAdapter().getItem(position))));
         viewBinding.fields.trackEditActivityType.setOnFocusChangeListener((v, hasFocus) -> {
