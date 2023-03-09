@@ -1,0 +1,5 @@
+v4.3.0: OpenTracks
+
+Changes:
+- Allow backups (incl. encrypted to the Google)
+- Android 13: allow app-specific language settings
