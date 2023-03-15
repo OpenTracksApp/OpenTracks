@@ -179,6 +179,15 @@ public class StatisticsRecordedFragment extends Fragment {
 
     private void updateUI() {
         TrackStatistics trackStatistics = track.getTrackStatistics();
+
+        boolean showFastestAvgSpeed = PreferencesUtils.shouldShouldFastestAndAvgSpeed();
+        if (showFastestAvgSpeed) {
+            //TODO set the corresponding view
+//            viewBinding.statsAltitudeLossUnit.setVisibility(View.VISIBLE);
+        } else {
+//            viewBinding.statsAltitudeLossUnit.setVisibility(View.GONE);
+        }
+
         // Set total distance
         {
             Pair<String, String> parts = DistanceFormatter.Builder()

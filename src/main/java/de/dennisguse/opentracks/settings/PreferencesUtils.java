@@ -302,6 +302,16 @@ public class PreferencesUtils {
         return getBoolean(R.string.stats_fullscreen_while_recording_key, DEFAULT);
     }
 
+    /**
+     * Obtain the state of showing fastest and average speed setting option
+     * in User Interface setting.
+     * @return True if the option is open
+     */
+    public static boolean shouldShouldFastestAndAvgSpeed() {
+        final boolean DEFAULT = resources.getBoolean(R.bool.stats_show_fastest_avg_default);
+        return getBoolean(R.string.stats_show_fastest_avg_key, DEFAULT);
+    }
+
     public static Duration getVoiceAnnouncementFrequency() {
         final int DEFAULT = Integer.parseInt(resources.getString(R.string.voice_announcement_frequency_default));
         int value = getInt(R.string.voice_announcement_frequency_key, DEFAULT);
