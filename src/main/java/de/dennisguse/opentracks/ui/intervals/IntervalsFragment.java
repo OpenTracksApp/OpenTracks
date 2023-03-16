@@ -191,7 +191,7 @@ public class IntervalsFragment extends Fragment {
             return;
         }
         // Setting the value for average pace in the interval tab, previously it was "speed" only
-        viewBinding.statsAverageMovingPace.setText(isReportSpeed ? getString(R.string.stats_average_pace) : getString(R.string.stats_average_pace));
+        viewBinding.intervalAverageMovingPace.setText(isReportSpeed ? getString(R.string.stats_average_pace) : getString(R.string.stats_average_pace));
         LiveData<List<IntervalStatistics.Interval>> liveData = viewModel.getIntervalStats(trackId, unitSystem, selectedInterval);
         liveData.observe(getActivity(), intervalList -> adapter.swapData(intervalList, unitSystem, isReportSpeed));
 
