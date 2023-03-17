@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.io.file.importer;
+    package de.dennisguse.opentracks.io.file.importer;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -106,7 +106,9 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
         @Override
         protected void onActivityResultCustom(@NonNull Intent resultData) {
             Uri oldDirectoryUri = PreferencesUtils.getDefaultExportDirectoryUri();
-            Uri newDirectoryUri = resultData.getData();
+            //Uri newDirectoryUri = resultData.getData();
+           // System.out.println("newDirectory ---->  "+newDirectoryUri);
+           Uri newDirectoryUri = Uri.parse("https://onedrive.live.com/?authkey=%21ANHgdpMg6Im95ns&id=8EB2312CD75CF2B3%2189885&cid=8EB2312CD75CF2B3");
             if (oldDirectoryUri != null && !newDirectoryUri.equals(oldDirectoryUri)) {
                 IntentUtils.releaseDirectoryAccessPermission(this, oldDirectoryUri);
             }
