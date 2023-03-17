@@ -62,7 +62,9 @@ limitations under the License.
 
     <application
         android:name=".Startup"
-        android:allowBackup="false"
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules_30_lower"
+        android:dataExtractionRules="@xml/backup_rules_31_higher"
         android:hardwareAccelerated="true"
         android:hasFragileUserData="false"
         android:icon="@drawable/ic_launcher"

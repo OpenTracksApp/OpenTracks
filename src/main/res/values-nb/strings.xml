@@ -603,4 +603,6 @@ limitations under the License.
     <string name="settings_public_api_package_title">Pakkenavn for offentlig API</string>
     <string name="introduction_osm_dashboard">OpenTracks sørger ikke selv for kart. Installer OSMDashboard for å vise opptakene dine på et kart.</string>
     <string name="help_data_google_play_services_content">Nei</string>
+    <string name="settings_sensor_heart_rate_max">Soner: Makspuls (bpm)</string>
+    <string name="settings_api_summary">Fjernkontroll- og statistikk-API for andre programmer</string>
 </resources>
