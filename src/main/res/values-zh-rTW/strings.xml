@@ -76,7 +76,7 @@ limitations under the License.
 
     <string name="help_gps_troubleshooting_title">OpenTracks 沒有紀錄位置？</string>
     <string name="help_gps_troubleshooting_content">
-        你能做什麼：\n
+        您能做什麼：\n
         a) 檢查 GPS 是否啟用，\n
         b) 改善 GPS 收訊 (例如，前往戶外)，\n
         c) 使用 <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app 檢查，以及\n
@@ -273,7 +273,7 @@ limitations under the License.
     <string name="import_error_info">%1$s：%2$s</string>
     <string name="import_error_list_dialog_title">檔案未匯入</string>
     <string name="import_file_imported">檔案 %1$s 已匯入</string>
-    <string name="import_prevent_reimport">你已設定防止重新匯入蹤跡</string>
+    <string name="import_prevent_reimport">您已設定防止重新匯入蹤跡</string>
     <string name="import_progress_message">正在從 %1$s 匯入檔案…</string>
     <string name="import_progress_summary_ok_msg">檔案已匯入</string>
     <string name="import_progress_summary_exists_msg">已經存在</string>
@@ -372,7 +372,7 @@ limitations under the License.
     <string name="settings_chart_by_time">依時間</string>
     <!-- Settings Recording -->
     <string name="settings_recording_customize_layout_title">自訂您的紀錄布局</string>
-    <string name="settings_recording_customize_layout_select_columns">Data fields per row</string>
+    <string name="settings_recording_customize_layout_select_columns">每列資料欄位</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">在鎖定畫面顯示統計資料</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">當紀錄時，在不解鎖裝置的情況下顯示統計資料。</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">維持螢幕開啟</string>
@@ -461,7 +461,7 @@ limitations under the License.
 
     <string name="settings_prevent_reimport_tracks_title">防止重新匯入蹤跡</string>
     <!-- Share Track -->
-    <string name="share_track_share_file_body">你應該會喜歡這個蹤跡。\n\n請使用 Google 地球或其他地圖繪製軟體查看蹤跡 。\n\n%1$s</string>
+    <string name="share_track_share_file_body">你應該會喜歡這個蹤跡。\n\n請使用 Google 地球或其他地圖繪製軟體查看蹤跡。\n\n%1$s</string>
     <string name="share_track_subject">我想跟你分享蹤跡資訊。</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">平均移動步速</string>
@@ -485,7 +485,7 @@ limitations under the License.
     <string name="stats_sensors_heart_rate">心率</string>
     <string name="stats_sensors_cadence">踏頻</string>
     <string name="stats_sensors_power">功率</string>
-    <string name="stats_clock">Clock</string>
+    <string name="stats_clock">時鐘</string>
     <!-- Track -->
     <string name="track_name_format">%1$d 號蹤跡</string>
     <string name="track_recording_notification_accuracy">定位精度：%1$s</string>
@@ -499,7 +499,7 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">系統將永久刪除您在裝置上所選的蹤跡與其中的標記。</string>
     <string name="track_delete_progress_message">刪除中…</string>
     <string name="track_delete_number_of_tracks">%1$d 蹤跡</string>
-    <string name="track_delete_not_recording">無法被刪除此蹤跡，因為它目前正在錄製。</string>
+    <string name="track_delete_not_recording">此蹤跡無法被刪除，因為它目前正在錄製。</string>
     <string name="track_discarding">廢棄蹤跡</string>
     <!-- Track Detail -->
     <string name="track_detail_stats_tab">統計資料</string>
@@ -660,8 +660,8 @@ limitations under the License.
 
     <string name="settings_default_export_uri_title">蹤跡匯出目錄</string>
     <!-- Fields -->
-    <string name="field_set_primary">Primary</string>
-    <string name="field_set_secondary">Secondary</string>
+    <string name="field_set_primary">主要的</string>
+    <string name="field_set_secondary">次要的</string>
     <string name="field_remove_from_layout">移除</string>
     <string name="no_compatible_file_manager_installed">沒有安裝相容的檔案管理器</string>
     <string name="error_crash_title">%1$s 已崩潰</string>
