@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.os.Build;
 
-import androidx.core.content.ContextCompat;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.HeartRateZones;
@@ -280,10 +278,10 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
             if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
                 valueAndUnit = StringUtils.getHeartRateParts(getContext(), sensorDataSet.getHeartRate().first);
                 sensorName = sensorDataSet.getHeartRate().second;
-                textColor = zones.getColorForZone(sensorDataSet.getHeartRate().first);
+                textColor = zones.getTextColorForZone(getContext(), sensorDataSet.getHeartRate().first);
             } else {
                 valueAndUnit = StringUtils.getHeartRateParts(getContext(), null);
-                textColor = zones.getColorForZone(null);
+                textColor = zones.getTextColorForZone(getContext(), null);
             }
 
             getBinding().statsValue.setText(valueAndUnit.first);
@@ -293,7 +291,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
             getBinding().statsDescriptionSecondary.setVisibility(View.VISIBLE);
             getBinding().statsDescriptionSecondary.setText(sensorName);
 
-            getBinding().statsValue.setTextColor(ContextCompat.getColor(getContext(), textColor));
+            getBinding().statsValue.setTextColor(textColor);
         }
     }
 

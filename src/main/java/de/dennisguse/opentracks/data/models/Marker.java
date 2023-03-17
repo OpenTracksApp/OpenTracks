@@ -57,6 +57,10 @@ public final class Marker {
     //TODO It is the distance from the track starting point; rename to something more meaningful
     private Distance length;
     private Duration duration;
+    
+    private String temperatureCelsius;
+    private String temperatureFahrenheit;
+    private String weatherCondition;
 
     @Deprecated //TODO Make an URI instead of String
     private String photoUrl = "";
@@ -261,6 +265,30 @@ public final class Marker {
 
     public Uri getPhotoURI() {
         return Uri.parse(photoUrl);
+    }
+    
+    public String getTemperatureCelsius() {
+        return temperatureCelsius;
+    }
+    
+    public void setTemperatureCelsius(String temperatureCelsius) {
+        this.temperatureCelsius = temperatureCelsius;
+    }
+    
+    public String getTemperatureFahrenheit() {
+        return temperatureFahrenheit;
+    }
+    
+    public void setTemperatureFahrenheit(String temperatureFahrenheit) {
+        this.temperatureFahrenheit = temperatureFahrenheit;
+    }
+    
+    public String getWeatherCondition() {
+        return weatherCondition;
+    }
+    
+    public void setWeatherCondition(String weatherCondition) {
+        this.weatherCondition = weatherCondition;
     }
 
     public boolean hasPhoto() {
