@@ -16,8 +16,8 @@
             android:key="@string/settings_import_oneDrive"
             android:title="Import from Onedrive">
 <!--            <intent-->
-<!--                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ImportDirectoryChooserActivity"-->
-<!--                android:targetPackage="@string/applicationId" />-->
+<!--                android:targetClass=""-->
+<!--                android:targetPackage="" />-->
         </Preference>
         <SwitchPreferenceCompat
             android:layout_width="wrap_content"
@@ -38,8 +38,8 @@
             android:key="@string/settings_export_oneDrive"
             android:title="Export to Onedrive">
 <!--            <intent-->
-<!--                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity"-->
-<!--                android:targetPackage="@string/applicationId" />-->
+<!--                android:targetClass=""-->
+<!--                android:targetPackage="" />-->
         </Preference>
         <Preference
             android:key="@string/settings_default_export_directory_key"
