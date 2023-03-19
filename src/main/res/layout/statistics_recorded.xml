@@ -327,113 +327,78 @@
             stats_pace_barrier, stats_end_horizontal_line2" />
 
         <TextView
-            android:id="@+id/stats_max_pace_label"
+            android:id="@+id/stats_altitude_gain_label"
             style="@style/TextAppearance.OpenTracks.PrimaryHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/stats_gain"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/stats_altitude_horizontal_line"
-            tools:text="Max. Pace" />
+            app:layout_constraintTop_toBottomOf="@id/stats_altitude_horizontal_line" />
 
         <TextView
-            android:id="@+id/stats_max_pace_value"
+            android:id="@+id/stats_altitude_gain_value"
             style="@style/TextAppearance.OpenTracks.PrimaryValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintEnd_toStartOf="@id/stats_max_pace_unit"
-            app:layout_constraintTop_toBottomOf="@id/stats_max_pace_label"
-            tools:text="30.00" />
+            app:layout_constraintEnd_toStartOf="@id/stats_altitude_gain_unit"
+            app:layout_constraintTop_toBottomOf="@id/stats_altitude_gain_label"
+            tools:text="100" />
 
         <TextView
-            android:id="@+id/stats_max_pace_unit"
+            android:id="@+id/stats_altitude_gain_unit"
             style="@style/TextAppearance.OpenTracks.PrimaryUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/stats_max_pace_value"
-            app:layout_constraintStart_toEndOf="@id/stats_max_pace_value"
+            app:layout_constraintBottom_toBottomOf="@id/stats_altitude_gain_value"
+            app:layout_constraintStart_toEndOf="@id/stats_altitude_gain_value"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
-            tools:text="km/h" />
+            tools:text="m" />
 
-        <!-- Avg. moving speed/pace -->
         <TextView
-            android:id="@+id/stats_moving_pace_label"
+            android:id="@+id/stats_altitude_loss_label"
             style="@style/TextAppearance.OpenTracks.PrimaryHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/stats_loss"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@id/guideline2"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintTop_toBottomOf="@id/stats_altitude_horizontal_line"
-            tools:text="Avg. Moving Pace" />
+            app:layout_constraintTop_toBottomOf="@id/stats_altitude_horizontal_line" />
 
         <TextView
-            android:id="@+id/stats_moving_pace_value"
+            android:id="@+id/stats_altitude_loss_value"
             style="@style/TextAppearance.OpenTracks.PrimaryValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintEnd_toStartOf="@id/stats_moving_pace_unit"
-            app:layout_constraintTop_toBottomOf="@id/stats_moving_pace_label"
-            tools:text="30.00" />
+            app:layout_constraintEnd_toStartOf="@id/stats_altitude_loss_unit"
+            app:layout_constraintTop_toBottomOf="@id/stats_altitude_loss_label"
+            tools:text="100" />
 
         <TextView
-            android:id="@+id/stats_moving_pace_unit"
+            android:id="@+id/stats_altitude_loss_unit"
             style="@style/TextAppearance.OpenTracks.PrimaryUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/stats_moving_pace_value"
-            app:layout_constraintStart_toEndOf="@id/stats_moving_pace_value"
+            app:layout_constraintBottom_toBottomOf="@id/stats_altitude_loss_value"
+            app:layout_constraintStart_toEndOf="@id/stats_altitude_loss_value"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
-            tools:text="km/h" />
-
-        <!-- Average speed/pace -->
-        <TextView
-            android:id="@+id/stats_average_pace_label"
-            style="@style/TextAppearance.OpenTracks.SecondaryHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintTop_toBottomOf="@id/stats_moving_pace_value"
-            tools:text="Avg. Pace" />
-
-        <TextView
-            android:id="@+id/stats_average_pace_value"
-            style="@style/TextAppearance.OpenTracks.SecondaryValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:value="@string/value_unknown"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintEnd_toStartOf="@id/stats_average_pace_unit"
-            app:layout_constraintTop_toBottomOf="@id/stats_average_pace_label"
-            tools:text="30.00" />
-
-        <TextView
-            android:id="@+id/stats_average_pace_unit"
-            style="@style/TextAppearance.OpenTracks.PrimaryUnit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/stats_average_pace_value"
-            app:layout_constraintStart_toEndOf="@id/stats_average_pace_value"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            tools:text="km/h" />
+            tools:text="m" />
 
         <!-- Barrier -->
         <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/stats_pace_barrier"
+            android:id="@+id/stats_altitude_barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="stats_max_pace_value,stats_moving_pace_value,stats_average_pace_value" />
+            app:constraint_referenced_ids="stats_altitude_gain_value,stats_altitude_loss_value" />
 
         <!-- Horizontal line -->
         <View
@@ -569,7 +534,7 @@
             android:layout_margin="8dp"
             app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintTop_toBottomOf="@id/stats_pace_barrier" />
+            app:layout_constraintTop_toBottomOf="@id/stats_altitude_barrier" />
 
         <!-- Sensors data -->
         <androidx.recyclerview.widget.RecyclerView
@@ -578,7 +543,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/stats_pace_horizontal_line" />
+            app:layout_constraintTop_toBottomOf="@id/stats_end_horizontal_line" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
