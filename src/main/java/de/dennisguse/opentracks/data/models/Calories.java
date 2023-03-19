@@ -21,7 +21,7 @@ public class Calories implements Comparable<Calories> {
      *
      * @return the calorie value.
      */
-    public double getValue() {
+    public double getCalories() {
         return value;
     }
 
@@ -55,6 +55,11 @@ public class Calories implements Comparable<Calories> {
         return Double.compare(calories.value, value) == 0;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
     /**
      * Returns the string representation of the calorie value.
      *
@@ -62,7 +67,9 @@ public class Calories implements Comparable<Calories> {
      */
     @Override
     public String toString() {
-        return String.format("%.1f", value);
+        return "Calories{" +
+                "value=" + value + " Kcal" +
+                '}';
     }
 
 
