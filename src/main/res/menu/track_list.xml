@@ -42,4 +42,8 @@ limitations under the License.
         android:id="@+id/track_list_settings"
         android:icon="@drawable/ic_settings_24dp"
         android:title="@string/menu_settings" />
+    <item
+        android:id="@+id/track_list_profile"
+        android:icon="@drawable/ic_settings_24dp"
+        android:title="@string/menu_profile" />
 </menu>

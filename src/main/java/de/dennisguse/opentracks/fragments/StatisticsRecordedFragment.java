@@ -230,6 +230,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsMovingSpeedUnit.setText(parts.second);
         }
 
+
         // Set altitude gain and loss
         {
             Float altitudeGain_m = trackStatistics.getTotalAltitudeGain();
@@ -284,6 +285,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsMovingPaceValue.setText(parts.first);
             viewBinding.statsMovingPaceUnit.setText(parts.second);
         }
+
     }
 
     private void updateSensorUI() {
