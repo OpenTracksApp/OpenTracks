@@ -20,6 +20,8 @@ public class ChartPoint {
     private Double heartRate;
     private Double cadence;
     private Double power;
+    private Double avgMovingPace; // new variable
+    private Double avgMovingSpeed; // new variable
 
     @Deprecated
     @VisibleForTesting
@@ -51,6 +53,22 @@ public class ChartPoint {
         if (trackPoint.hasPower()) {
             power = (double) trackPoint.getPower().getW();
         }
+        try{
+            Speed ams = trackStatistics.getAverageMovingSpeed();
+
+            avgMovingSpeed = ams.to(unitSystem); // getting value from trackstatistics and converting to unit system
+
+        }catch (NullPointerException ne){
+            avgMovingSpeed = 0.0;
+        }
+        try{
+            Speed amp = trackStatistics.getAverageMovingPace();
+
+            avgMovingPace = amp.toPace(unitSystem).toSeconds() / 60d; // getting value from trackstatistics and converting to unit system
+
+        }catch (NullPointerException ne){
+            avgMovingPace = 0.0;
+        }
     }
 
     public double getTimeOrDistance() {
@@ -80,6 +98,9 @@ public class ChartPoint {
     public Double getPower() {
         return power;
     }
+
+    public Double getAvgMovingSpeed(){return avgMovingSpeed;} // to get average moving speed
+    public Double getAvgMovingPace(){return avgMovingPace;} // to get average moving pace
 
     @NonNull
     @Override
