@@ -4,7 +4,6 @@ import android.content.res.Resources;
 import de.dennisguse.opentracks.settings.UnitSystem;
 
 public class CaloriesFormatter {
-
     private final Resources resources;
 
     private final int decimalCount;
