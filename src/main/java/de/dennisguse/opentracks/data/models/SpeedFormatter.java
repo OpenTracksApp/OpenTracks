@@ -12,7 +12,7 @@ import de.dennisguse.opentracks.util.StringUtils;
 
 public class SpeedFormatter {
 
-    private final Resources resources;
+    private static Resources resources;
 
     private final int decimalCount;
 
@@ -71,11 +71,11 @@ public class SpeedFormatter {
         return new Pair<>(resources.getString(R.string.time, minutes, seconds), unitString);
     }
 
-    public Builder Builder() {
+    public static Builder Builder() {
         return new Builder();
     }
 
-    public class Builder {
+    public static class Builder {
 
         private int decimalCount;
 
