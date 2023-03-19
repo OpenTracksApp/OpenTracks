@@ -91,6 +91,23 @@
             app:layout_constraintVertical_bias="0.498"
             android:entries="@array/GenderSelection"/>
         <TextView
+            android:id="@+id/textViewBirthDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="BirthDate"
+            android:textColor="#000000"
+            android:textSize="18dp" />
+        <TextView
+            android:id="@+id/settextViewBirthDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#000000"
+            android:textSize="18dp" />
+        <TextView
             android:id="@+id/textViewHeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
