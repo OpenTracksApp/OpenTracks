@@ -698,6 +698,7 @@ public class PreferencesUtils {
         }
         try {
             Log.d(TAG, "DefaultExportDirectoryUri: " + singleExportDirectory);
+            System.out.println("Jigar prints" + singleExportDirectory);
             return Uri.parse(singleExportDirectory);
         } catch (Exception e) {
             Log.w(TAG, "Could not parse default export directory Uri: " + e.getMessage());
