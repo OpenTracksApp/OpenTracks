@@ -43,6 +43,12 @@
         android:summary="@string/settings_recording_fullscreen_on_while_recording_summary"
         android:title="@string/settings_recording_fullscreen_on_while_recording_title" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/stats_show_fastest_avg_default"
+        android:key="@string/stats_show_fastest_avg_key"
+        android:summary="@string/settings_recorded_show_fastest_avg_summary"
+        android:title="@string/settings_recorded_show_fastest_avg_title" />
+
     <ListPreference
         android:defaultValue="@string/show_on_map_format_ask"
         android:key="@string/show_on_map_format_key"
