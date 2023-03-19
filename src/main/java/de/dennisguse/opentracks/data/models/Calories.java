@@ -37,4 +37,33 @@ public class Calories implements Comparable<Calories> {
         return Double.compare(this.value, other.value);
     }
 
+    /**
+     * Checks if this calorie value is equal to another object.
+     *
+     * @param obj the other object to check for equality.
+     * @return true if the other object is a calorie value and has the same value, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Calories calories = (Calories) obj;
+        return Double.compare(calories.value, value) == 0;
+    }
+
+    /**
+     * Returns the string representation of the calorie value.
+     *
+     * @return the string representation of the calorie value.
+     */
+    @Override
+    public String toString() {
+        return String.format("%.1f", value);
+    }
+
+
 }
