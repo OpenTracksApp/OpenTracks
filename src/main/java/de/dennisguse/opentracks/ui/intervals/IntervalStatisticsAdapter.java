@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.ui.intervals;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,9 +65,26 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
         SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(isReportSpeed).build(context);
         viewHolder.rate.setText(formatter.formatSpeed(interval.getSpeed()));
 
-        viewHolder.gain.setText(StringUtils.formatAltitude(context, interval.getGain_m(), unitSystem));
-        viewHolder.loss.setText(StringUtils.formatAltitude(context, interval.getLoss_m(), unitSystem));
-
+        //Calculate the difference between gain_m and loss_m to get the elevation per interval.
+        float elevationPerInterval = 0;
+        if (interval.getLoss_m() != null && interval.getLoss_m() != null) {
+                elevationPerInterval = interval.getGain_m().floatValue() - interval.getLoss_m().floatValue();
+        } else if (interval.getLoss_m() != null) {
+            elevationPerInterval = interval.getLoss_m().floatValue();
+        } else if (interval.getGain_m() != null) {
+            elevationPerInterval = interval.getGain_m().floatValue();
+        }
+        //If elevation is negative value we would show down arrow and its positive value we would show up arrow.
+        if (elevationPerInterval < 0) {
+            Drawable icon = context.getDrawable(R.drawable.ic_arrow_drop_down_24);
+            viewHolder.gain.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, null, null, null);
+        } else if (elevationPerInterval > 0) {
+            Drawable icon = context.getDrawable(R.drawable.ic_arrow_drop_up_24);
+            viewHolder.gain.setCompoundDrawablesRelativeWithIntrinsicBounds(icon, null, null, null);
+        } else {
+            viewHolder.gain.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null);
+        }
+        viewHolder.gain.setText(StringUtils.formatAltitude(context, Math.abs(elevationPerInterval), unitSystem));
     }
 
     @Override
