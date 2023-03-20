@@ -4,26 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
+    android:orientation="horizontal"
     android:paddingTop="4dp"
-    android:paddingBottom="4dp"
-    android:orientation="horizontal">
+    android:paddingBottom="4dp">
 
     <TextView
         android:id="@+id/interval_item_distance"
+        style="?attr/textAppearanceBody1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center_vertical"
-        style="?attr/textAppearanceBody1"
+        android:layout_weight="1"
         tools:text="1 km" />
 
     <TextView
         android:id="@+id/interval_item_rate"
+        style="?attr/textAppearanceBody1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_gravity="center_vertical"
-        style="?attr/textAppearanceBody1"
+        android:layout_weight="1"
         tools:text="15 km/h" />
 
     <LinearLayout
@@ -34,19 +34,21 @@
 
         <TextView
             android:id="@+id/interval_item_gain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="?attr/textAppearanceBody2"
-            tools:text="100 m"
-            app:drawableStartCompat="@drawable/ic_arrow_drop_up_24" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            tools:text="100 m" />
 
         <TextView
             android:id="@+id/interval_item_loss"
+            style="?attr/textAppearanceBody2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?attr/textAppearanceBody2"
-            tools:text="100 m"
-            app:drawableStartCompat="@drawable/ic_arrow_drop_down_24" />
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_arrow_drop_down_24"
+            tools:text="100 m" />
 
     </LinearLayout>
 
