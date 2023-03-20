@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.ui.util;
 
 public class SpeedConversionUtil {
+    // These Function converts KM to Miles and vice-versa.
     public static double convertKmToMiles(double kilometers) {
         double miles = kilometers / 1.60934;
         return miles;
