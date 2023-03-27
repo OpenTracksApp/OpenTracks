@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.sonarqube'
 
 buildscript {
     repositories {
@@ -44,15 +43,6 @@ def getVersionCode = { ->
         return Integer.valueOf(stdout.toString().trim())
     } catch (ignored) {
         return null
-    }
-}
-
-sonarqube {
-    properties {
-        property "sonar.projectName", "OpenTrack-Concordia"
-        property "sonar.projectKey", "OpenTrack-Concordia"
-        property "sonar.host.url", "http://localhost:9000"
-property "sonar.login", "sqa_55eedc5757b2a560fd8b26f46409ac79adcd4b7b"
     }
 }
 
