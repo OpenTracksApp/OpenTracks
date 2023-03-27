@@ -119,7 +119,7 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         TrackStatisticsUpdater tmpTrackStatisticsUpdater = new TrackStatisticsUpdater(trackStatisticsUpdater);
         Pair<TrackPoint, SensorDataSet> current = trackPointCreator.createCurrentTrackPoint(lastTrackPointUIWithSpeed, lastTrackPointUIWithAltitude, lastStoredTrackPointWithLocation);
 
-        tmpTrackStatisticsUpdater.addTrackPoint(current.first);
+        tmpTrackStatisticsUpdater.addTrackPoint(current.first, 0);
 
         Track track = contentProviderUtils.getTrack(trackId); //Get copy
         if (track == null) {
@@ -234,20 +234,20 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
                 // Do not insert if inserted already
                 Log.w(TAG, "Ignore insertTrackPoint. trackPoint time same as last valid trackId point time.");
             } else {
-                insertTrackPointHelper(lastTrackPoint);
+                insertTrackPointHelper(lastTrackPoint, 0);
                 // Remove the sensorDistance from trackPoint that is already going  be stored with lastTrackPoint.
                 trackPoint.minusCumulativeSensorData(lastTrackPoint);
             }
         }
         lastTrackPoint = null;
 
-        insertTrackPointHelper(trackPoint);
+        insertTrackPointHelper(trackPoint, lastTrackPoint.getAltitude().toM());
     }
 
-    private void insertTrackPointHelper(@NonNull TrackPoint trackPoint) {
+    private void insertTrackPointHelper(@NonNull TrackPoint trackPoint, double prevPointElevation) {
         try {
             contentProviderUtils.insertTrackPoint(trackPoint, trackId);
-            trackStatisticsUpdater.addTrackPoint(trackPoint);
+            trackStatisticsUpdater.addTrackPoint(trackPoint, prevPointElevation);
 
             contentProviderUtils.updateTrackStatistics(trackId, trackStatisticsUpdater.getTrackStatistics());
             lastStoredTrackPoint = trackPoint;

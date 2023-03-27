@@ -332,6 +332,7 @@ public class TrackDataHub {
         TrackPoint trackPoint = null;
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, next)) {
 
+            double prevPointElevation = 0;
             while (trackPointIterator.hasNext()) {
                 //Prevents a NPE if stop() is happening while notifyTrackPointsTableUpdate()
                 TrackStatisticsUpdater currentUpdater = trackStatisticsUpdater;
@@ -359,8 +360,8 @@ public class TrackDataHub {
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
-                currentUpdater.addTrackPoint(trackPoint);
-
+                currentUpdater.addTrackPoint(trackPoint, prevPointElevation);
+                prevPointElevation = trackPoint.getAltitude().toM();
                 // Also include the last point if the selected track is not recording.
                 if ((localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
                     for (Listener trackDataListener : listeners) {

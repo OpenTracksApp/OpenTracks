@@ -41,10 +41,11 @@ public class IntervalStatistics {
         boolean newIntervalAdded = false;
         TrackPoint trackPoint = null;
 
+        double prevPointElevation = 0;
         while (trackPointIterator.hasNext()) {
             trackPoint = trackPointIterator.next();
-            trackStatisticsUpdater.addTrackPoint(trackPoint);
-
+            trackStatisticsUpdater.addTrackPoint(trackPoint, prevPointElevation);
+            prevPointElevation = trackPoint.getAltitude().toM();
             if (trackStatisticsUpdater.getTrackStatistics().getTotalDistance().plus(interval.distance).greaterOrEqualThan(distanceInterval)) {
                 interval.add(trackStatisticsUpdater.getTrackStatistics(), trackPoint);
 
@@ -55,8 +56,8 @@ public class IntervalStatistics {
 
                 interval = new Interval(interval.distance.minus(adjustedInterval.distance), interval.time.minus(adjustedInterval.time));
                 trackStatisticsUpdater = new TrackStatisticsUpdater();
-                trackStatisticsUpdater.addTrackPoint(trackPoint);
-
+                trackStatisticsUpdater.addTrackPoint(trackPoint, prevPointElevation);
+                prevPointElevation = trackPoint.getAltitude().toM();
                 lastInterval = new Interval(interval);
                 intervalList.add(lastInterval);
 

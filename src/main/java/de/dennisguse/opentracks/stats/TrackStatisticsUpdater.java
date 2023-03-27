@@ -55,6 +55,7 @@ public class TrackStatisticsUpdater {
     private final TrackStatistics currentSegment;
     // Current segment's last trackPoint
     private TrackPoint lastTrackPoint;
+    private double prevPointElevation = 0;
 
     public TrackStatisticsUpdater() {
         this(new TrackStatistics());
@@ -88,13 +89,19 @@ public class TrackStatisticsUpdater {
     }
 
     public void addTrackPoints(List<TrackPoint> trackPoints) {
-        trackPoints.stream().forEachOrdered(this::addTrackPoint);
+        prevPointElevation = 0;
+        trackPoints.stream().forEachOrdered(this::addTrackPointHelper);
+    }
+
+    private void addTrackPointHelper(TrackPoint trackPoint) {
+        this.addTrackPoint(trackPoint, prevPointElevation);
+        prevPointElevation = trackPoint.getAltitude().toM();
     }
 
     /**
      *
      */
-    public void addTrackPoint(TrackPoint trackPoint) {
+    public void addTrackPoint(TrackPoint trackPoint, double prevPointElevation) {
         if (trackPoint.isSegmentStart()) {
             reset(trackPoint);
         }
@@ -108,17 +115,25 @@ public class TrackStatisticsUpdater {
         currentSegment.setTotalTime(Duration.between(currentSegment.getStartTime(), trackPoint.getTime()));
 
         // Process sensor data: barometer
-        if (trackPoint.hasAltitudeGain()) {
-            currentSegment.addTotalAltitudeGain(trackPoint.getAltitudeGain());
+        /* if (trackPoint.hasAltitudeGain()) {
+           currentSegment.addTotalAltitudeGain(trackPoint.getAltitudeGain());
         }
 
         if (trackPoint.hasAltitudeLoss()) {
-            currentSegment.addTotalAltitudeLoss(trackPoint.getAltitudeLoss());
-        }
+           currentSegment.addTotalAltitudeLoss(trackPoint.getAltitudeLoss());
+        } */
 
         //Update absolute (GPS-based) altitude
         if (trackPoint.hasAltitude()) {
             currentSegment.updateAltitudeExtremities(trackPoint.getAltitude());
+            if (prevPointElevation != 0) {
+                double diff = trackPoint.getAltitude().toM() - prevPointElevation;
+                if (diff > 0) {
+                    currentSegment.addTotalAltitudeGain((float)diff);
+                } else {
+                    currentSegment.addTotalAltitudeLoss((float)diff);
+                }
+            }
         }
 
         // Update heart rate

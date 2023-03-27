@@ -226,14 +226,15 @@ public class TrackImporter {
         List<Marker> todoMarkers = new LinkedList<>(markers);
         List<Marker> doneMarkers = new LinkedList<>();
 
+        double prevPointElevation = 0;
         for (final TrackPoint trackPoint : trackPointsWithLocation) {
             if (todoMarkers.isEmpty()) {
                 break;
             }
 
             TrackStatisticsUpdater updater = new TrackStatisticsUpdater();
-            updater.addTrackPoint(trackPoint);
-
+            updater.addTrackPoint(trackPoint, prevPointElevation);
+            prevPointElevation = trackPoint.getAltitude().toM();
             List<Marker> matchedMarkers = todoMarkers.stream()
                     .filter(it -> trackPoint.getLatitude() == it.getLatitude()
                             && trackPoint.getLongitude() == it.getLongitude()
