@@ -60,6 +60,8 @@
 
     <string name="settings_import" translatable="false">settingsImport</string>
     <string name="settings_export" translatable="false">settingsExport</string>
+    <string name="settings_export_oneDrive" translatable="false">settingsExportOneDrive</string>
+    <string name="settings_import_oneDrive" translatable="false">settingsImportOneDrive</string>
 
     <!-- Stats layout customization default layout -->
     <string name="default_activity_key" translatable="false">defaultActivity</string>

@@ -673,6 +673,7 @@ limitations under the License.
     <string name="show_on_dashboard">OpenTracks Dashboard API</string>
     <string name="show_on_dashboard_not_installed">No application supporting OpenTracks Dashboard API installed.</string>
     <string name="always">Always</string>
+    <string name="menu_profile">Profile</string>
 
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
 </resources>

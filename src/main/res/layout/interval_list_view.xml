@@ -36,12 +36,13 @@
             android:text="@string/stats_distance" />
 
         <TextView
-            android:id="@+id/interval_rate"
+            android:id="@+id/interval_average_moving_pace"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.OpenTracks.PrimaryHeader"
-            tools:text="Speed" />
+            android:text="@string/stats_average_moving_pace"
+            />
 
         <TextView
             android:id="@+id/interval_altitude"

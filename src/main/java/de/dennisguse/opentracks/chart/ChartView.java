@@ -367,6 +367,31 @@ public class ChartView extends View {
         // either speedSeries or paceSeries should be enabled.
         speedSeries.setEnabled(reportSpeed);
         paceSeries.setEnabled(!reportSpeed);
+
+        // adding average moving pace in chart
+        seriesList.add(new ChartValueSeries(context,
+                0,
+                Integer.MAX_VALUE,
+                new int[]{1, 2, 5, 10, 15, 20, 30, 60, 120},
+                R.string.stats_average_moving_pace,
+                R.string.stats_average_moving_pace,
+                R.string.stats_average_moving_pace,
+                R.color.chart_heart_rate_fill,
+                R.color.chart_heart_rate_border,
+                fontSizeSmall,
+                fontSizeMedium) {
+            @Override
+            protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
+                if (reportSpeed)
+                    return chartPoint.getAvgMovingSpeed();
+                else return chartPoint.getAvgMovingPace();
+            }
+
+            @Override
+            protected boolean drawIfChartPointHasNoData() {
+                return true;
+            }
+        });
     }
 
     @Override
