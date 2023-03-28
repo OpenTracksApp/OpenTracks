@@ -7,9 +7,9 @@ import androidx.annotation.NonNull;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
 
-public class BluetoothRemoteSensorManagerHeartRate extends BluetoothConnectionManager<HeartRate> {
+public class BluetoothConnectionManagerHeartRate extends AbstractBluetoothConnectionManager<HeartRate> {
 
-    BluetoothRemoteSensorManagerHeartRate(@NonNull SensorDataObserver observer) {
+    BluetoothConnectionManagerHeartRate(@NonNull SensorDataObserver observer) {
         super(BluetoothUtils.HEARTRATE, observer);
     }
 

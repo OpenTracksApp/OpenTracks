@@ -40,9 +40,9 @@ import de.dennisguse.opentracks.sensors.sensorData.SensorData;
  * Manages connection to a Bluetooth LE sensor and subscribes for onChange-notifications.
  * Also parses the transferred data into {@link SensorDataObserver}.
  */
-public abstract class BluetoothConnectionManager<DataType> {
+public abstract class AbstractBluetoothConnectionManager<DataType> {
 
-    private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
+    private static final String TAG = AbstractBluetoothConnectionManager.class.getSimpleName();
 
     private final SensorDataObserver observer;
 
@@ -136,12 +136,12 @@ public abstract class BluetoothConnectionManager<DataType> {
         }
     };
 
-    BluetoothConnectionManager(ServiceMeasurementUUID serviceUUUID, SensorDataObserver observer) {
+    AbstractBluetoothConnectionManager(ServiceMeasurementUUID serviceUUUID, SensorDataObserver observer) {
         this.serviceMeasurementUUIDs = List.of(serviceUUUID);
         this.observer = observer;
     }
 
-    BluetoothConnectionManager(List<ServiceMeasurementUUID> serviceUUUID, SensorDataObserver observer) {
+    AbstractBluetoothConnectionManager(List<ServiceMeasurementUUID> serviceUUUID, SensorDataObserver observer) {
         this.serviceMeasurementUUIDs = serviceUUUID;
         this.observer = observer;
     }

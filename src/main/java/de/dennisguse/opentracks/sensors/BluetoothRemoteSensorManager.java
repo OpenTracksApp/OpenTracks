@@ -52,7 +52,7 @@ import de.dennisguse.opentracks.util.PermissionRequester;
  *
  * @author Sandor Dornbush
  */
-public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.SensorDataObserver {
+public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBluetoothConnectionManager.SensorDataObserver {
 
     private static final String TAG = BluetoothRemoteSensorManager.class.getSimpleName();
 
@@ -65,15 +65,15 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     private Distance preferenceWheelCircumference;
 
-    private final BluetoothRemoteSensorManagerHeartRate heartRate = new BluetoothRemoteSensorManagerHeartRate(this);
-    private final BluetoothRemoteSensorManagerCyclingCadence cyclingCadence = new BluetoothRemoteSensorManagerCyclingCadence(this);
-    private final BluetoothRemoteSensorManagerCyclingDistanceSpeed cyclingSpeed = new BluetoothRemoteSensorManagerCyclingDistanceSpeed(this);
-    private final BluetoothRemoteSensorManagerCyclingPower cyclingPower = new BluetoothRemoteSensorManagerCyclingPower(this);
-    private final BluetoothRemoteSensorManagerRunningSpeedAndCadence runningSpeedAndCadence = new BluetoothRemoteSensorManagerRunningSpeedAndCadence(this);
+    private final BluetoothConnectionManagerHeartRate heartRate = new BluetoothConnectionManagerHeartRate(this);
+    private final BluetoothConnectionManagerCyclingCadence cyclingCadence = new BluetoothConnectionManagerCyclingCadence(this);
+    private final BluetoothConnectionManagerCyclingDistanceSpeed cyclingSpeed = new BluetoothConnectionManagerCyclingDistanceSpeed(this);
+    private final BluetoothConnectionManagerCyclingPower cyclingPower = new BluetoothConnectionManagerCyclingPower(this);
+    private final BluetoothConnectionRunningSpeedAndCadence runningSpeedAndCadence = new BluetoothConnectionRunningSpeedAndCadence(this);
 
     private final SensorDataSet sensorDataSet = new SensorDataSet();
 
-    private final SensorDataSetChangeObserver observer;
+    private final SensorManager.SensorDataSetChangeObserver observer;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
@@ -114,21 +114,23 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         }
     };
 
-    public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull Handler handler, @NonNull SensorDataSetChangeObserver observer) {
+    public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull Handler handler, @NonNull SensorManager.SensorDataSetChangeObserver observer) {
         this.context = context;
         this.handler = handler;
         this.observer = observer;
         bluetoothAdapter = BluetoothUtils.getAdapter(context);
     }
 
-    public void start() {
+    @Override
+    public void start(Context context, Handler handler) {
         started = true;
 
         //Registering triggers connection startup
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
-    public synchronized void stop() {
+    @Override
+    public synchronized void stop(Context context) {
         heartRate.disconnect();
         cyclingCadence.disconnect();
         cyclingSpeed.disconnect();
@@ -145,7 +147,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
     }
 
-    private synchronized void connect(BluetoothConnectionManager<?> connectionManager, String address) {
+    private synchronized void connect(AbstractBluetoothConnectionManager<?> connectionManager, String address) {
         if (!isEnabled()) {
             Log.w(TAG, "Bluetooth not enabled.");
             return;
@@ -229,9 +231,5 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     @Override
     public Handler getHandler() {
         return handler;
-    }
-
-    public interface SensorDataSetChangeObserver {
-        void onChange(SensorDataSet sensorDataSet);
     }
 }

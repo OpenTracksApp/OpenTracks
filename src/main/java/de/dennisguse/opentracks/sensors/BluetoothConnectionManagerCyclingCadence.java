@@ -8,11 +8,11 @@ import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadenceAndDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 
-public class BluetoothRemoteSensorManagerCyclingCadence extends BluetoothConnectionManager<Cadence> {
+public class BluetoothConnectionManagerCyclingCadence extends AbstractBluetoothConnectionManager<Cadence> {
 
-    private static final String TAG = BluetoothRemoteSensorManagerCyclingCadence.class.getSimpleName();
+    private static final String TAG = BluetoothConnectionManagerCyclingCadence.class.getSimpleName();
 
-    BluetoothRemoteSensorManagerCyclingCadence(SensorDataObserver observer) {
+    BluetoothConnectionManagerCyclingCadence(SensorDataObserver observer) {
         super(BluetoothUtils.CYCLING_CADENCE, observer);
     }
 

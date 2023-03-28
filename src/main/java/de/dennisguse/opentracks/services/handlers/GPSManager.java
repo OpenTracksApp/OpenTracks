@@ -20,14 +20,15 @@ import java.time.Instant;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.sensors.SensorConnector;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-public class GPSHandler implements LocationListenerCompat, GpsStatus.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class GPSManager implements SensorConnector, LocationListenerCompat, GpsStatus.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final String TAG = GPSHandler.class.getSimpleName();
+    private final String TAG = GPSManager.class.getSimpleName();
 
     public static final String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
 
@@ -40,11 +41,11 @@ public class GPSHandler implements LocationListenerCompat, GpsStatus.GpsStatusLi
     private Duration gpsInterval;
     private Distance thresholdHorizontalAccuracy;
 
-    public GPSHandler(TrackPointCreator trackPointCreator) {
+    public GPSManager(TrackPointCreator trackPointCreator) {
         this.trackPointCreator = trackPointCreator;
     }
 
-    public void onStart(@NonNull Context context, @NonNull Handler handler) {
+    public void start(@NonNull Context context, @NonNull Handler handler) {
         this.context = context;
         this.handler = handler;
 
@@ -61,7 +62,7 @@ public class GPSHandler implements LocationListenerCompat, GpsStatus.GpsStatusLi
 
     @SuppressWarnings({"MissingPermission"})
     //TODO upgrade to AGP7.0.0/API31 started complaining about removeUpdates.
-    public void onStop() {
+    public void stop(Context context) {
         if (locationManager != null && context != null) {
             if (PermissionRequester.GPS.hasPermission(context)) {
                 LocationManagerCompat.removeUpdates(locationManager, this);

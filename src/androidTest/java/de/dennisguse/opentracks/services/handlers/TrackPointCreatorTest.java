@@ -25,7 +25,7 @@ public class TrackPointCreatorTest {
     private TrackPointCreator.Callback server;
 
     @Mock
-    private GPSHandler locationHandler;
+    private GPSManager locationHandler;
 
     private TrackPointCreator subject;
 

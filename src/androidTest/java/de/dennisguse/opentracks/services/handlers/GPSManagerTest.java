@@ -26,7 +26,7 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 @RunWith(MockitoJUnitRunner.class)
-public class GPSHandlerTest {
+public class GPSManagerTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
 
@@ -34,7 +34,7 @@ public class GPSHandlerTest {
     private TrackPointCreator trackPointCreator;
 
     @InjectMocks
-    private GPSHandler locationHandler;
+    private GPSManager locationHandler;
 
     @BeforeClass
     public static void preSetUp() {
@@ -50,7 +50,7 @@ public class GPSHandlerTest {
         Mockito.when(trackPointCreator.createNow())
                 .thenReturn(Instant.now());
 
-        locationHandler.onStart(context, new Handler());
+        locationHandler.start(context, new Handler());
     }
 
     /**

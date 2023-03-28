@@ -19,7 +19,7 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 /**
  * Estimates the altitude gain and altitude loss using the device's pressure sensor (i.e., barometer).
  */
-public class AltitudeSumManager implements SensorEventListener {
+public class AltitudeSumManager implements SensorConnector, SensorEventListener {
 
     private static final String TAG = AltitudeSumManager.class.getSimpleName();
 

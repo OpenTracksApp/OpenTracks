@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 
-public class BluetoothRemoteSensorManagerRunningSpeedAndCadence extends BluetoothConnectionManager<SensorDataRunning.Data> {
+public class BluetoothConnectionRunningSpeedAndCadence extends AbstractBluetoothConnectionManager<SensorDataRunning.Data> {
 
-    BluetoothRemoteSensorManagerRunningSpeedAndCadence(@NonNull SensorDataObserver observer) {
+    BluetoothConnectionRunningSpeedAndCadence(@NonNull SensorDataObserver observer) {
         super(BluetoothUtils.RUNNING_SPEED_CADENCE, observer);
     }
 

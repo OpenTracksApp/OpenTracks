@@ -166,7 +166,7 @@ public class ExportImportTest {
 
         trackPointCreator.setClock("2020-02-02T02:02:18Z");
         BluetoothRemoteSensorManager mockRemoteSensorManager = Mockito.mock(BluetoothRemoteSensorManager.class);
-        trackPointCreator.setRemoteSensorManager(mockRemoteSensorManager);
+        trackPointCreator.getSensorManager().setBluetoothSensorManager(mockRemoteSensorManager);
         service.endCurrentTrack();
 
         trackPointCreator.setClock("2020-02-02T02:03:20Z");
@@ -179,7 +179,7 @@ public class ExportImportTest {
         sendLocation(trackPointCreator, "2020-02-02T02:03:23Z", 3, 16.001, 10, 27, 15, 10, 0);
 
         trackPointCreator.setClock("2020-02-02T02:03:24Z");
-        trackPointCreator.setRemoteSensorManager(mockRemoteSensorManager);
+        trackPointCreator.getSensorManager().setBluetoothSensorManager(mockRemoteSensorManager);
         service.endCurrentTrack();
 
         Track track = contentProviderUtils.getTrack(trackId);
@@ -521,12 +521,12 @@ public class ExportImportTest {
             sensorDataSet.fillTrackPoint(trackPoint);
             return sensorDataSet;
         });
-        trackPointCreator.setRemoteSensorManager(remoteSensorManager);
+        trackPointCreator.getSensorManager().setBluetoothSensorManager(remoteSensorManager);
         trackPointCreator.onChange(new SensorDataSet());
     }
 
     private void mockAltitudeChange(TrackPointCreator trackPointCreator, float altitudeGain) {
-        AltitudeSumManager altitudeSumManager = trackPointCreator.getAltitudeSumManager();
+        AltitudeSumManager altitudeSumManager = trackPointCreator.getSensorManager().getAltitudeSumManager();
         altitudeSumManager.setAltitudeGain_m(altitudeGain);
         altitudeSumManager.setAltitudeLoss_m(altitudeGain);
     }
