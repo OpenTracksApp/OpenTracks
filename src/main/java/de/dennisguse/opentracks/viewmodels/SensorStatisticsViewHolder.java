@@ -3,8 +3,6 @@ package de.dennisguse.opentracks.viewmodels;
 import android.util.Pair;
 import android.view.LayoutInflater;
 
-import androidx.core.content.ContextCompat;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.HeartRateZones;
 import de.dennisguse.opentracks.databinding.StatsSensorItemBinding;
@@ -19,12 +17,13 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
 
     @Override
     protected StatsSensorItemBinding createViewBinding(LayoutInflater inflater) {
-        return null;
+        return StatsSensorItemBinding.inflate(inflater);
     }
 
     @Override
     public void configureUI(DataField dataField) {
-
+        getBinding().statsValue.setTextAppearance(getContext(), dataField.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue);
+        getBinding().statsDescriptionMain.setTextAppearance(getContext(), dataField.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader);
     }
 
     public static class SensorHeartRate extends SensorStatisticsViewHolder {
@@ -45,7 +44,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
             //TODO Loads preference every time
             HeartRateZones zones = PreferencesUtils.getHeartRateZones();
             int textColor;
-            if (sensorDataSet != null) {
+            if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
                 textColor = zones.getTextColorForZone(getContext(), sensorDataSet.getHeartRate().first);
             } else {
                 textColor = zones.getTextColorForZone(getContext(), null);
@@ -57,7 +56,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
 
             getBinding().statsDescriptionSecondary.setText(sensorName);
 
-            getBinding().statsValue.setTextColor(ContextCompat.getColor(getContext(), textColor));
+            getBinding().statsValue.setTextColor(textColor);
         }
     }
 

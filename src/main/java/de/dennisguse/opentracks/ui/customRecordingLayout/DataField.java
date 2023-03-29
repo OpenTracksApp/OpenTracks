@@ -87,4 +87,14 @@ public class DataField implements Parcelable {
     public int hashCode() {
         return Objects.hash(key, isVisible, isPrimary, isWide);
     }
+
+    @Override
+    public String toString() {
+        return "DataField{" +
+                "key='" + key + '\'' +
+                ", isVisible=" + isVisible +
+                ", isPrimary=" + isPrimary +
+                ", isWide=" + isWide +
+                '}';
+    }
 }
