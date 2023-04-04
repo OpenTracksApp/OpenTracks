@@ -26,6 +26,10 @@
         android:title="@string/menu_voice_rate"
         app:useSimpleSummaryProvider="true" />
 
+    <CheckBoxPreference
+        android:defaultValue="@bool/voice_on_device_speaker_default"
+        android:key="@string/voice_on_device_speaker_key"
+        android:title="@string/voice_on_device_speaker_title" />
     <PreferenceCategory android:title="@string/settings_announcements_title">
 
         <SwitchPreference

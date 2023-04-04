@@ -302,6 +302,11 @@ public class PreferencesUtils {
         return getBoolean(R.string.stats_fullscreen_while_recording_key, DEFAULT);
     }
 
+    public static boolean shouldVoiceAnnouncementOnDeviceSpeaker() {
+        final boolean DEFAULT = resources.getBoolean(R.bool.voice_on_device_speaker_default);
+        return getBoolean(R.string.voice_on_device_speaker_key, DEFAULT);
+    }
+
     public static Duration getVoiceAnnouncementFrequency() {
         final int DEFAULT = Integer.parseInt(resources.getString(R.string.voice_announcement_frequency_default));
         int value = getInt(R.string.voice_announcement_frequency_key, DEFAULT);

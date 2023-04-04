@@ -575,6 +575,7 @@ limitations under the License.
         <item quantity="one">1 knot</item>
         <item quantity="other">%1$.1f knots</item>
     </plurals>
+    <string name="voice_on_device_speaker_title">Use the device\'s speaker</string>
     <string name="voice_per_kilometer">per kilometer</string>
     <string name="voice_per_mile">per mile</string>
     <string name="voice_per_nautical_mile">per nautical mile</string>

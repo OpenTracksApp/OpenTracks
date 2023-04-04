@@ -327,7 +327,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         TrackPoint trackPoint = data.second.first;
         egm2008CorrectionManager.correctAltitude(this, trackPoint);
 
-        localVoiceAnnouncementManager.update(data.first);
+        localVoiceAnnouncementManager.update(this, data.first);
 
         recordingDataObservable.postValue(new RecordingData(data.first, trackPoint, data.second.second));
     }
