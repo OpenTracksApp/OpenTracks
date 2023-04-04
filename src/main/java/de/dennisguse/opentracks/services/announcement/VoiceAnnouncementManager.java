@@ -15,12 +15,14 @@
  */
 package de.dennisguse.opentracks.services.announcement;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.mediarouter.media.MediaRouter;
 
 import java.time.Duration;
 
@@ -73,9 +75,17 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         updateNextTaskDistance();
     }
 
-    public void update(@NonNull Track track) {
+    public void update(@NonNull Context context, @NonNull Track track) {
         if (voiceAnnouncement == null) {
             Log.e(TAG, "Cannot update when in status shutdown.");
+            return;
+        }
+
+        if (!PreferencesUtils.shouldVoiceAnnouncementOnDeviceSpeaker()
+                && MediaRouter.getInstance(context)
+                .getSelectedRoute()
+                .isDeviceSpeaker()) {
+            Log.i(TAG, "No voice announcement on device speaker.");
             return;
         }
 
