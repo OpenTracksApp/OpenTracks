@@ -381,13 +381,18 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     private void onGpsStatusChanged(GpsStatusValue gpsStatusValue) {
-        if (gpsStatusValue.isGpsStarted() && snackbar != null && snackbar.isShown()) {
-            snackbar.dismiss();
+        boolean snackbarShowing = snackbar != null && snackbar.isShown();
+        if (gpsStatusValue.isGpsStarted()) {
+            if (snackbarShowing) {
+                snackbar.dismiss();
+            }
             return;
         }
-        if (gpsStatusValue != GpsStatusValue.GPS_DISABLED) {
+
+        if (snackbarShowing) {
             return;
         }
+
         snackbar = Snackbar
                 .make(viewBinding.trackRecordingCoordinatorLayout,
                         getString(R.string.gps_recording_status, getString(gpsStatusValue.message), getString(R.string.gps_recording_without_signal)),
