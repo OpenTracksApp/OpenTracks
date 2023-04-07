@@ -1,0 +1,8 @@
+v4.3.1: OpenTracks
+
+Changes:
+- Setting to skip voice announcements on device speaker
+
+Bugfix:
+- GPS disabled warning was falsely shown
+
