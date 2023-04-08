@@ -34,12 +34,22 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
         summary = new Summary();
     }
 
-    LiveData<Summary> getImportData(List<DocumentFile> documentFiles) {
+    LiveData<Summary> getImportData(List<DocumentFile> documentFiles, String typeOfClick) {
         if (importData == null) {
             importData = new MutableLiveData<>();
-            loadData(documentFiles);
+            if (typeOfClick != null && typeOfClick.equals("cloud")) getCloudData(documentFiles);
+            else loadData(documentFiles);
         }
         return importData;
+    }
+
+    private void getCloudData(List<DocumentFile> documentFiles) {
+        List<DocumentFile> fileList = new ArrayList<>();
+        fileList.addAll(documentFiles);
+        while (fileList.size() != 0) {
+            ImportService.enqueue(getApplication(), resultReceiver, fileList.get(0).getUri(), fileList.get(0).getName(), "cloud");
+            fileList.remove(0);
+        }
     }
 
     void cancel() {
@@ -64,7 +74,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
         if (cancel || filesToImport.isEmpty()) {
             return;
         }
-        ImportService.enqueue(getApplication(), resultReceiver, filesToImport.get(0).getUri());
+        ImportService.enqueue(getApplication(), resultReceiver, filesToImport.get(0).getUri(), filesToImport.get(0).getName(), "local");
         filesToImport.remove(0);
     }
 

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 import androidx.documentfile.provider.DocumentFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -31,13 +32,16 @@ public class ImportService extends JobIntentService {
 
     private static final String EXTRA_RECEIVER = "extra_receiver";
     private static final String EXTRA_URI = "extra_uri";
-
+    private static final String FILE_NAME = "file_name";
+    private static final String TYPE_OF_CLICK = "local";
     private ResultReceiver resultReceiver;
 
-    public static void enqueue(Context context, ImportServiceResultReceiver receiver, Uri uri) {
+    public static void enqueue(Context context, ImportServiceResultReceiver receiver, Uri uri, String name, String typeOfClick) {
         Intent intent = new Intent(context, JobService.class);
         intent.putExtra(EXTRA_RECEIVER, receiver);
         intent.putExtra(EXTRA_URI, uri);
+        intent.putExtra(FILE_NAME, name);
+        intent.putExtra(TYPE_OF_CLICK, typeOfClick);
         enqueueWork(context, ImportService.class, JOB_ID, intent);
     }
 
@@ -45,7 +49,16 @@ public class ImportService extends JobIntentService {
     protected void onHandleWork(@NonNull Intent intent) {
         resultReceiver = intent.getParcelableExtra(EXTRA_RECEIVER);
         Uri uri = intent.getParcelableExtra(EXTRA_URI);
-        importFile(DocumentFile.fromSingleUri(this, uri));
+        String typeOfClick = intent.getStringExtra(TYPE_OF_CLICK);
+        if (typeOfClick.equals("cloud")) {
+            String fileName = intent.getStringExtra(FILE_NAME); // the name of the file you want to access
+            File cacheDir = this.getCacheDir(); // get the cache directory
+            File file = new File(cacheDir, fileName);
+            importFile(DocumentFile.fromFile(file));
+        } else {
+            importFile(DocumentFile.fromSingleUri(this, uri));
+        }
+
     }
 
     private void importFile(DocumentFile file) {
