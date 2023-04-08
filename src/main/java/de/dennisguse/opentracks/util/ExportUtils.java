@@ -107,9 +107,6 @@ public class ExportUtils {
         } catch (FileNotFoundException e) {
             Log.e(TAG, "Unable to open exportDocumentFile " + exportDocumentFileUri, e);
             return false;
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to close exportDocumentFile output stream", e);
-            return false;
         }
     }
 

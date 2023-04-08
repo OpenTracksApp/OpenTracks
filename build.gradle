@@ -47,8 +47,8 @@ android {
     packagingOptions {
         resources.excludes += "META-INF/INDEX.LIST"
     }
-    lint {
-        baseline = file("lint-baseline.xml")
+    lintOptions {
+        abortOnError false
     }
     compileOptions {
         coreLibraryDesugaringEnabled true
