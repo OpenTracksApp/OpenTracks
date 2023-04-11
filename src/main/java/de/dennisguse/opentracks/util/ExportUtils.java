@@ -15,6 +15,8 @@ import androidx.documentfile.provider.DocumentFile;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.BucketInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
@@ -38,7 +40,7 @@ import de.dennisguse.opentracks.settings.SettingsActivity;
 public class ExportUtils {
 
     private static final String TAG = ExportUtils.class.getSimpleName();
-
+    public static String username = "User2";
     public static void postWorkoutExport(Context context, Track.Id trackId) {
         if (PreferencesUtils.shouldInstantExportAfterWorkout()) {
             TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat();
@@ -87,8 +89,11 @@ public class ExportUtils {
                         .setProjectId("SOEN")
                         .build()
                         .getService();
-                BlobId blobId = BlobId.of("soen_data1", track.getName() + ".kmz");
-                BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+
+                BlobInfo blobInfo = BlobInfo.newBuilder("soen_data1", username + "/").build();
+                storage.create(blobInfo);
+                BlobId blobId = BlobId.of("soen_data1", username + "/" + track.getName() + ".kmz");
+                blobInfo = BlobInfo.newBuilder(blobId).build();
                 Blob blob = storage.create(blobInfo);
                 outputStream = Channels.newOutputStream(blob.writer());
                 System.out.println("Track name: " + track.getName());

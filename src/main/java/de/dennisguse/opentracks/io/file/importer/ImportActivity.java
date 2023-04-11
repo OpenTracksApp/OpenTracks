@@ -31,6 +31,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
@@ -49,6 +50,7 @@ import de.dennisguse.opentracks.TrackRecordedActivity;
 import de.dennisguse.opentracks.databinding.ImportActivityBinding;
 import de.dennisguse.opentracks.introduction.IntroductionActivity;
 import de.dennisguse.opentracks.io.file.ErrorListDialog;
+import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 
 /**
@@ -118,19 +120,20 @@ public class ImportActivity extends FragmentActivity {
                     .build()
                     .getService();
             Bucket bucket = storage.get("soen_data1");
-
-            for (Blob blob : bucket.list().iterateAll()) {
-
-                File localFile = new File(this.getCacheDir(), blob.getName());
-                try (OutputStream outputStream = new FileOutputStream(localFile)) {
-                    blob.downloadTo(outputStream);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+            Iterable<Blob> blobs = bucket.list(Storage.BlobListOption.prefix(ExportUtils.username)).getValues();
+            for (Blob blob : blobs) {
+                if (blob.getName().split("/").length == 2) {
+                    File localFile = new File(this.getCacheDir(), blob.getName().split("/")[1]);
+                    try (OutputStream outputStream = new FileOutputStream(localFile)) {
+                        blob.downloadTo(outputStream);
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    DocumentFile documentFile = DocumentFile.fromFile(localFile);
+                    documentFiles.add(documentFile);
                 }
-                DocumentFile documentFile = DocumentFile.fromFile(localFile);
-                documentFiles.add(documentFile);
             }
         } else {
             if (isDirectory) {
