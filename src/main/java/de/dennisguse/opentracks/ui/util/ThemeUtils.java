@@ -7,8 +7,6 @@ import android.util.TypedValue;
 
 import androidx.core.content.ContextCompat;
 
-import de.dennisguse.opentracks.R;
-
 public class ThemeUtils {
 
     private ThemeUtils() {
@@ -42,14 +40,14 @@ public class ThemeUtils {
     }
 
     public static int getFontSizeSmallInPx(Context context) {
-        TypedArray typedArray = context.obtainStyledAttributes(R.style.TextAppearance_MaterialComponents_Body2, new int[]{android.R.attr.textSize});
+        TypedArray typedArray = context.obtainStyledAttributes(com.google.android.material.R.style.TextAppearance_MaterialComponents_Body2, new int[]{android.R.attr.textSize});
         int fontSize = typedArray.getDimensionPixelSize(0, 12);
         typedArray.recycle();
         return fontSize;
     }
 
     public static int getFontSizeMediumInPx(Context context) {
-        TypedArray typedArray = context.obtainStyledAttributes(R.style.TextAppearance_MaterialComponents_Body1, new int[]{android.R.attr.textSize});
+        TypedArray typedArray = context.obtainStyledAttributes(com.google.android.material.R.style.TextAppearance_MaterialComponents_Body1, new int[]{android.R.attr.textSize});
         int fontSize = typedArray.getDimensionPixelSize(0, 15);
         typedArray.recycle();
         return fontSize;

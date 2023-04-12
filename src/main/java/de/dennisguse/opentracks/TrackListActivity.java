@@ -311,9 +311,9 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         searchMenuItem = menu.findItem(R.id.track_list_search);
         SearchView searchView = ActivityUtils.configureSearchWidget(this, searchMenuItem);
 
-        searchView.findViewById(R.id.search_edit_frame).setPadding(0, 0, 48, 0);
+        searchView.findViewById(androidx.appcompat.R.id.search_edit_frame).setPadding(0, 0, 48, 0);
 
-        SearchView.SearchAutoComplete searchAutoComplete = searchView.findViewById(R.id.search_src_text);
+        SearchView.SearchAutoComplete searchAutoComplete = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
         searchAutoComplete.setHintTextColor(ContextCompat.getColor(this, android.R.color.white));
         searchAutoComplete.setTextColor(ContextCompat.getColor(this, android.R.color.white));
 
