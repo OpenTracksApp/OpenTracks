@@ -43,7 +43,7 @@ public class KmlTrackExporterTest {
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0));
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        KMLTrackExporter kmlTrackWriter = (KMLTrackExporter) TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context);
+        KMLTrackExporter kmlTrackWriter = (KMLTrackExporter) TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context, null);
         kmlTrackWriter.prepare(outputStream);
 
         kmlTrackWriter.writeTrackPoint(ZoneOffset.UTC, trackPoint);

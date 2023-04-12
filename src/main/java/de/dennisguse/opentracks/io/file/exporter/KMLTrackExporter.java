@@ -93,10 +93,10 @@ public class KMLTrackExporter implements TrackExporter {
     private final List<Float> accuracyHorizontal = new ArrayList<>();
     private final List<Float> accuracyVertical = new ArrayList<>();
 
-    public KMLTrackExporter(Context context, boolean exportPhotos) {
+    public KMLTrackExporter(Context context, ContentProviderUtils contentProviderUtils, boolean exportPhotos) {
         this.context = context;
         this.exportPhotos = exportPhotos;
-        this.contentProviderUtils = new ContentProviderUtils(context);
+        this.contentProviderUtils = contentProviderUtils;
     }
 
     public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {

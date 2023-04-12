@@ -214,7 +214,7 @@ public class ShareContentProvider extends CustomContentProvider {
             }
         }
 
-        final TrackExporter trackExporter = getTrackFileFormat(uri).createTrackExporter(getContext());
+        final TrackExporter trackExporter = getTrackFileFormat(uri).createTrackExporter(getContext(), new ContentProviderUtils(getContext()));
 
         PipeDataWriter<String> pipeDataWriter = (output, uri1, mimeType, opts, args) -> {
             try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
