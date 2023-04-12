@@ -378,6 +378,11 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             return true;
         }
 
+        if (item.getItemId() == R.id.track_list_profile) {
+            startActivity(IntentUtils.newIntent(this, UserProfileActivity.class));
+            return true;
+        }
+
         if (item.getItemId() == R.id.track_list_search) {
             SearchView searchView = (SearchView) searchMenuItem.getActionView();
             searchView.setIconified(false);
