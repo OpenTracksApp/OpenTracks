@@ -27,15 +27,17 @@ public class KmlTrackExporterTest {
      */
     @Test
     public void writeCloseSegment_only_write_sensordata_if_present() {
-        String expected = "<when>1970-01-01T00:00:00Z</when>\n" +
-                "<coord/>\n" +
-                "<when>1970-01-01T01:00:00+01:00</when>\n" +
-                "<coord/>\n" +
-                "<ExtendedData>\n" +
-                "<SchemaData schemaUrl=\"#schema\">\n" +
-                "</SchemaData>\n" +
-                "</ExtendedData>\n" +
-                "</Track>\n";
+        String expected = """
+                <when>1970-01-01T00:00:00Z</when>
+                <coord/>
+                <when>1970-01-01T01:00:00+01:00</when>
+                <coord/>
+                <ExtendedData>
+                <SchemaData schemaUrl="#schema">
+                </SchemaData>
+                </ExtendedData>
+                </Track>
+                """;
 
         // given
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0));

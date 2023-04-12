@@ -34,23 +34,24 @@ public class EGM2008UtilsTest {
         int expectedLength = 18671444;
         int expectedHeaderLength = 404;
 
-        String expectedHeader = "P5\n" +
-                "# Geoid file in PGM format for the GeographicLib::Geoid class\n" +
-                "# Description WGS84 EGM2008, 5-minute grid\n" +
-                "# URL http://earth-info.nga.mil/GandG/wgs84/gravitymod/egm2008\n" +
-                "# DateTime 2009-08-29 18:45:00\n" +
-                "# MaxBilinearError 0.478\n" +
-                "# RMSBilinearError 0.012\n" +
-                "# MaxCubicError 0.294\n" +
-                "# RMSCubicError 0.005\n" +
-                "# Offset -108\n" +
-                "# Scale 0.003\n" +
-                "# Origin 90N 0E\n" +
-                "# AREA_OR_POINT Point\n" +
-                "# Vertical_Datum WGS84\n" +
-                "4320    2161\n" +
-                "65535" +
-                "\n";
+        String expectedHeader = """
+                P5
+                # Geoid file in PGM format for the GeographicLib::Geoid class
+                # Description WGS84 EGM2008, 5-minute grid
+                # URL http://earth-info.nga.mil/GandG/wgs84/gravitymod/egm2008
+                # DateTime 2009-08-29 18:45:00
+                # MaxBilinearError 0.478
+                # RMSBilinearError 0.012
+                # MaxCubicError 0.294
+                # RMSCubicError 0.005
+                # Offset -108
+                # Scale 0.003
+                # Origin 90N 0E
+                # AREA_OR_POINT Point
+                # Vertical_Datum WGS84
+                4320    2161
+                65535
+                """;
 
         // when
         try (InputStream inputStream = context.getResources().openRawResource(EGM2008Utils.EGM2008_5_DATA)) {
