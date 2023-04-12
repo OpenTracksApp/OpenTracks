@@ -64,7 +64,7 @@ public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
             DocumentFile directory = IntentUtils.toDocumentFile(getContext(), directoryUri);
             //Use same value for not set as Androidx ListPreference and EditTextPreference
             if (directory == null) {
-                return getString(R.string.not_set);
+                return getString(androidx.preference.R.string.not_set);
             }
 
             return directoryUri + (directory.canWrite() ? "" : getString(R.string.export_dir_not_writable));
