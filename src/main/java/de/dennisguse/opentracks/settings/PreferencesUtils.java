@@ -64,6 +64,8 @@ public class PreferencesUtils {
 
     private static final int PREFERENCES_VERSION = 2;
 
+    private static String illegalArgument = "Not implemented";
+
     private PreferencesUtils() {
     }
 
@@ -167,14 +169,12 @@ public class PreferencesUtils {
         return sharedPreferences.getString(getKey(keyId), defaultValue);
     }
 
-    @VisibleForTesting
     public static void setString(int keyId, String value) {
         Editor editor = sharedPreferences.edit();
         editor.putString(getKey(keyId), value);
         editor.apply();
     }
 
-    @VisibleForTesting
     public static void setString(int keyId, int valueId) {
         setString(keyId, resources.getString(valueId));
     }
@@ -474,7 +474,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
@@ -520,7 +520,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
@@ -601,7 +601,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
@@ -652,7 +652,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
