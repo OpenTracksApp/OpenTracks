@@ -292,10 +292,13 @@ public class FileUtils {
             }
             if (file.isDirectory()) {
                 deleteDirectoryRecurse(file);
-            } else if (file.delete()) {
-                System.out.println("File deleted Successfully" + " " + file.getName());
             } else {
-                System.out.println("File failure of deletion " + file.getName());
+                boolean del = file.delete();
+                if (del) {
+                    Log.println(Log.INFO, "Success 1", "File deleted Successfully" + " " + file.getName());
+                } else {
+                    Log.println(Log.ERROR, "Failure 1", "File failure of deletion " + file.getName());
+                }
             }
         }
     }
@@ -310,7 +313,12 @@ public class FileUtils {
             return;
         }
         if (!directory.isDirectory()) {
-            directory.delete();
+            boolean del = directory.delete();
+            if (del) {
+                Log.println(Log.INFO, "Success 2", "Directory deleted Successfully" + " " + directory.getName());
+            } else {
+                Log.println(Log.ERROR, "Failure 2", "Directory failure of deletion " + directory.getName());
+            }
             return;
         }
         File[] files = directory.listFiles();
@@ -320,7 +328,12 @@ public class FileUtils {
         for (File file : files) {
             deleteDirectoryRecurse(file);
         }
-        directory.delete();
+        boolean del = directory.delete();
+        if (del) {
+            Log.println(Log.INFO, "Success 3", "Directory deleted Successfully" + " " + directory.getName());
+        } else {
+            Log.println(Log.ERROR, "Failure 3", "Directory failure of deletion " + directory.getName());
+        }
     }
 
     /**
