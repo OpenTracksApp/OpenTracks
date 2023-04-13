@@ -167,14 +167,12 @@ public class PreferencesUtils {
         return sharedPreferences.getString(getKey(keyId), defaultValue);
     }
 
-    @VisibleForTesting
     public static void setString(int keyId, String value) {
         Editor editor = sharedPreferences.edit();
         editor.putString(getKey(keyId), value);
         editor.apply();
     }
 
-    @VisibleForTesting
     public static void setString(int keyId, int valueId) {
         setString(keyId, resources.getString(valueId));
     }
