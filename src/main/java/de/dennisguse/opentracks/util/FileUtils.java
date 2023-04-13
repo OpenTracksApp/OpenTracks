@@ -292,8 +292,10 @@ public class FileUtils {
             }
             if (file.isDirectory()) {
                 deleteDirectoryRecurse(file);
+            } else if (file.delete()) {
+                System.out.println("File deleted Successfully" + " " + file.getName());
             } else {
-                file.delete();
+                System.out.println("File failure of deletion " + file.getName());
             }
         }
     }
