@@ -56,6 +56,7 @@ import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.markers.MarkerUtils;
 import de.dennisguse.opentracks.util.FileUtils;
+import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * {@link ContentProviderUtils} implementation.
@@ -851,5 +852,33 @@ public class ContentProviderUtils {
 
         }
         return sensorStatistics;
+    }
+
+    public static void updateTrack(Context context, Track track, String name, String category, String description, ContentProviderUtils contentProviderUtils) {
+        updateTrack(context, track, name, category, TrackIconUtils.getIconValue(context, category), description, contentProviderUtils);
+    }
+
+    public static void updateTrack(Context context, Track track, String name, String category, String iconValue, String description, ContentProviderUtils contentProviderUtils) {
+        boolean update = false;
+        if (name != null) {
+            track.setName(name);
+            update = true;
+        }
+        if (category != null) {
+            track.setCategory(category);
+            update = true;
+        }
+        if (iconValue != null) {
+            track.setIcon(iconValue);
+        } else if (category != null){
+            track.setIcon(TrackIconUtils.getIconValue(context, category));
+        }
+        if (description != null) {
+            track.setDescription(description);
+            update = true;
+        }
+        if (update) {
+            contentProviderUtils.updateTrack(track);
+        }
     }
 }
