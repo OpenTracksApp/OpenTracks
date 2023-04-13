@@ -173,7 +173,6 @@ public class PreferencesUtils {
         editor.apply();
     }
 
-    @VisibleForTesting
     public static void setString(int keyId, int valueId) {
         setString(keyId, resources.getString(valueId));
     }
