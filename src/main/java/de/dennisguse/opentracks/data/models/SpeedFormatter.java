@@ -39,20 +39,14 @@ public class SpeedFormatter {
      * @return the formatted speed (or null) and it's unit as {@link Pair}
      */
     public Pair<String, String> getSpeedParts(Speed speed) {
-        int unitId;
-        switch (unitSystem) {
-            case METRIC:
-                unitId = reportSpeedOrPace ? R.string.unit_kilometer_per_hour : R.string.unit_minute_per_kilometer;
-                break;
-            case IMPERIAL:
-                unitId = reportSpeedOrPace ? R.string.unit_mile_per_hour : R.string.unit_minute_per_mile;
-                break;
-            case NAUTICAL_IMPERIAL:
-                unitId = reportSpeedOrPace ? R.string.unit_knots : R.string.unit_minute_per_nautical_mile;
-                break;
-            default:
-                throw new RuntimeException("Not implemented");
-        }
+        int unitId = switch (unitSystem) {
+            case METRIC ->
+                    reportSpeedOrPace ? R.string.unit_kilometer_per_hour : R.string.unit_minute_per_kilometer;
+            case IMPERIAL ->
+                    reportSpeedOrPace ? R.string.unit_mile_per_hour : R.string.unit_minute_per_mile;
+            case NAUTICAL_IMPERIAL ->
+                    reportSpeedOrPace ? R.string.unit_knots : R.string.unit_minute_per_nautical_mile;
+        };
 
         String unitString = resources.getString(unitId);
 

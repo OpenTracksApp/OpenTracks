@@ -28,6 +28,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
@@ -67,17 +68,8 @@ public class VoiceAnnouncement {
         public void onAudioFocusChange(int focusChange) {
             Log.d(TAG, "Audio focus changed to " + focusChange);
 
-            boolean stop = false;
-            switch (focusChange) {
-                case AudioManager.AUDIOFOCUS_GAIN:
-                    stop = false;
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS:
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                    stop = true;
-                    break;
-            }
+            boolean stop = List.of(AudioManager.AUDIOFOCUS_LOSS, AudioManager.AUDIOFOCUS_LOSS_TRANSIENT, AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK)
+                    .contains(focusChange);
 
             if (stop && tts != null && tts.isSpeaking()) {
                 tts.stop();

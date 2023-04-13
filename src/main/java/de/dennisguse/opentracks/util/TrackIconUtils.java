@@ -40,11 +40,9 @@ public class TrackIconUtils {
                 it -> it.getId().equals(activityTypeId)
         ).findFirst();
 
-        if (found.isEmpty()) {
-            return ActivityType.UNKNOWN.getIconId();
-        }
+        return found.map(ActivityType::getIconId)
+                .orElseGet(ActivityType.UNKNOWN::getIconId);
 
-        return found.get().getIconId();
     }
 
     public static int getIconActivityType(String activityTypeId) {
@@ -52,11 +50,9 @@ public class TrackIconUtils {
                 it -> it.getId().equals(activityTypeId)
         ).findFirst();
 
-        if (found.isEmpty()) {
-            return ActivityType.UNKNOWN.getFirstLocalizedStringId();
-        }
+        return found.map(ActivityType::getFirstLocalizedStringId)
+                .orElseGet(ActivityType.UNKNOWN::getFirstLocalizedStringId);
 
-        return found.get().getFirstLocalizedStringId();
     }
 
     /**
@@ -96,10 +92,8 @@ public class TrackIconUtils {
                 )
                 .findFirst();
 
-        if (selected.isEmpty()) {
-            return false;
-        }
+        return selected.map(ActivityType::isShowSpeedPreferred)
+                .orElse(false);
 
-        return selected.get().isShowSpeedPreferred();
     }
 }

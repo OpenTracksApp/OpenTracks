@@ -96,8 +96,7 @@ public class BluetoothLeAdapter extends BaseAdapter {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof Device)) return false;
-            Device device = (Device) o;
+            if (!(o instanceof Device device)) return false;
             return address.equals(device.address);
         }
 

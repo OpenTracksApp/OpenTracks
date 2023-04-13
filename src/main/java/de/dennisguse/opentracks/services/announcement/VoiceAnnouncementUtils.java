@@ -43,29 +43,28 @@ class VoiceAnnouncementUtils {
         String unitDistanceTTS;
         String unitSpeedTTS;
         switch (unitSystem) {
-            case METRIC:
+            case METRIC -> {
                 perUnitStringId = R.string.voice_per_kilometer;
                 distanceId = R.plurals.voiceDistanceKilometers;
                 speedId = R.plurals.voiceSpeedKilometersPerHour;
                 unitDistanceTTS = "kilometer";
                 unitSpeedTTS = "kilometer per hour";
-                break;
-            case IMPERIAL:
+            }
+            case IMPERIAL -> {
                 perUnitStringId = R.string.voice_per_mile;
                 distanceId = R.plurals.voiceDistanceMiles;
                 speedId = R.plurals.voiceSpeedMilesPerHour;
                 unitDistanceTTS = "mile";
                 unitSpeedTTS = "mile per hour";
-                break;
-            case NAUTICAL_IMPERIAL:
+            }
+            case NAUTICAL_IMPERIAL -> {
                 perUnitStringId = R.string.voice_per_nautical_mile;
                 distanceId = R.plurals.voiceDistanceNauticalMiles;
                 speedId = R.plurals.voiceSpeedMKnots;
                 unitDistanceTTS = "nautical mile";
                 unitSpeedTTS = "knots";
-                break;
-            default:
-                throw new RuntimeException("Not implemented");
+            }
+            default -> throw new RuntimeException("Not implemented");
         }
 
         double distanceInUnit = totalDistance.toKM_Miles(unitSystem);

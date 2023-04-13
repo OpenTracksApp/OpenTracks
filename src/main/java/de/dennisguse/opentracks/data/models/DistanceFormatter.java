@@ -46,38 +46,36 @@ public class DistanceFormatter {
     public Pair<String, String> getDistanceParts(Distance distance) {
         if (distance.isInvalid()) {
             String valueUnknown = resources.getString(R.string.value_unknown);
-            switch (unitSystem) {
-                case METRIC:
-                    return new Pair<>(valueUnknown, resources.getString(R.string.unit_meter));
-                case IMPERIAL:
-                case NAUTICAL_IMPERIAL:
-                    return new Pair<>(valueUnknown, resources.getString(R.string.unit_feet));
-                default:
-                    throw new RuntimeException("Not implemented");
-            }
+            return switch (unitSystem) {
+                case METRIC -> new Pair<>(valueUnknown, resources.getString(R.string.unit_meter));
+                case IMPERIAL, NAUTICAL_IMPERIAL ->
+                        new Pair<>(valueUnknown, resources.getString(R.string.unit_feet));
+            };
         }
 
         switch (unitSystem) {
-            case METRIC:
+            case METRIC -> {
                 if (distance.greaterThan(Distance.ofKilometer(threshold))) {
                     return new Pair<>(StringUtils.formatDecimal(distance.toKM(), decimalCount), resources.getString(R.string.unit_kilometer));
                 } else {
                     return new Pair<>(StringUtils.formatDecimal(distance.toM(), decimalCount), resources.getString(R.string.unit_meter));
                 }
-            case IMPERIAL:
+            }
+            case IMPERIAL -> {
                 if (distance.greaterThan(Distance.ofMile(threshold))) {
                     return new Pair<>(StringUtils.formatDecimal(distance.toMI(), decimalCount), resources.getString(R.string.unit_mile));
                 } else {
                     return new Pair<>(StringUtils.formatDecimal(distance.toFT(), decimalCount), resources.getString(R.string.unit_feet));
                 }
-            case NAUTICAL_IMPERIAL:
+            }
+            case NAUTICAL_IMPERIAL -> {
                 if (distance.greaterThan(Distance.ofNauticalMile(threshold))) {
                     return new Pair<>(StringUtils.formatDecimal(distance.toNauticalMiles(), decimalCount), resources.getString(R.string.unit_nautical_mile));
                 } else {
                     return new Pair<>(StringUtils.formatDecimal(distance.toFT(), decimalCount), resources.getString(R.string.unit_feet));
                 }
-            default:
-                throw new RuntimeException("Not implemented");
+            }
+            default -> throw new RuntimeException("Not implemented");
         }
     }
 

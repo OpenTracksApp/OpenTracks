@@ -31,6 +31,8 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import java.util.Objects;
+
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -309,11 +311,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         public void setSearch(String searchQuery) {
             this.searchQuery = searchQuery;
             restart();
-            if (searchQuery != null) {
-                viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(searchQuery);
-            } else {
-                viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.menu_markers));
-            }
+            viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.menu_markers)));
         }
 
         public void restart() {

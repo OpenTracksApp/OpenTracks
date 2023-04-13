@@ -53,26 +53,22 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             switch (newState) {
-                case BluetoothProfile.STATE_CONNECTING:
-                    Log.i(TAG, "Connecting to sensor: " + gatt.getDevice());
-                    break;
-                case BluetoothProfile.STATE_CONNECTED:
+                case BluetoothProfile.STATE_CONNECTING ->
+                        Log.i(TAG, "Connecting to sensor: " + gatt.getDevice());
+                case BluetoothProfile.STATE_CONNECTED -> {
                     Log.i(TAG, "Connected to sensor: " + gatt.getDevice() + "; discovering services.");
-
                     gatt.discoverServices();
-                    break;
-                case BluetoothProfile.STATE_DISCONNECTING:
-                    Log.i(TAG, "Disconnecting from sensor: " + gatt.getDevice());
-                    break;
-
-                case BluetoothProfile.STATE_DISCONNECTED:
+                }
+                case BluetoothProfile.STATE_DISCONNECTING ->
+                        Log.i(TAG, "Disconnecting from sensor: " + gatt.getDevice());
+                case BluetoothProfile.STATE_DISCONNECTED -> {
                     //This is also triggered, if no connection was established (ca. 30s)
                     Log.i(TAG, "Disconnected from sensor: " + gatt.getDevice() + "; trying to reconnect");
                     if (gatt.connect()) {
                         Log.e(TAG, "Could not trigger reconnect for sensor: " + gatt.getDevice());
                     }
                     clearData();
-                    break;
+                }
             }
         }
 

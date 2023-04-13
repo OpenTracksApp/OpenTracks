@@ -79,19 +79,17 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
         String message = resultData.getString(ImportServiceResultReceiver.RESULT_EXTRA_MESSAGE);
 
         switch (resultCode) {
-            case ImportServiceResultReceiver.RESULT_CODE_ERROR:
+            case ImportServiceResultReceiver.RESULT_CODE_ERROR -> {
                 summary.errorCount++;
                 summary.fileErrors.add(getApplication().getString(R.string.import_error_info, fileName, message));
-                break;
-            case ImportServiceResultReceiver.RESULT_CODE_IMPORTED:
+            }
+            case ImportServiceResultReceiver.RESULT_CODE_IMPORTED -> {
                 summary.importedTrackIds.addAll(trackIds);
                 summary.successCount++;
-                break;
-            case ImportServiceResultReceiver.RESULT_CODE_ALREADY_EXISTS:
-                summary.existsCount++;
-                break;
-            default:
-                throw new RuntimeException(TAG + ": import service result code invalid: " + resultCode);
+            }
+            case ImportServiceResultReceiver.RESULT_CODE_ALREADY_EXISTS -> summary.existsCount++;
+            default ->
+                    throw new RuntimeException(TAG + ": import service result code invalid: " + resultCode);
         }
 
         importData.postValue(summary);

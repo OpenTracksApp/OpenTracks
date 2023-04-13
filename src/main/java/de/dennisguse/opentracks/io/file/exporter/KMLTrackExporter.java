@@ -169,30 +169,28 @@ public class KMLTrackExporter implements TrackExporter {
                 }
 
                 switch (trackPoint.getType()) {
-                    case SEGMENT_START_MANUAL:
-                    case SEGMENT_START_AUTOMATIC:
+                    case SEGMENT_START_MANUAL, SEGMENT_START_AUTOMATIC -> {
                         if (wroteSegment) writeCloseSegment();
                         writeOpenSegment();
                         writeTrackPoint(track.getZoneOffset(), trackPoint);
                         wroteSegment = true;
-                        break;
-                    case SEGMENT_END_MANUAL:
+                    }
+                    case SEGMENT_END_MANUAL -> {
                         if (!wroteSegment) writeOpenSegment();
                         writeTrackPoint(track.getZoneOffset(), trackPoint);
                         writeCloseSegment();
                         wroteSegment = false;
-                        break;
-                    case SENSORPOINT:
-                    case TRACKPOINT:
+                    }
+                    case SENSORPOINT, TRACKPOINT -> {
                         if (!wroteSegment) {
                             // Might happen for older data (pre v3.15.0)
                             writeOpenSegment();
                             wroteSegment = true;
                         }
                         writeTrackPoint(track.getZoneOffset(), trackPoint);
-                        break;
-                    default:
-                        throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
+                    }
+                    default ->
+                            throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
                 }
             }
 

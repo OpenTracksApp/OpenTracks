@@ -156,103 +156,94 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     @Override
     public void endElement(String uri, String localName, String tag) {
         switch (tag) {
-            case TAG_GPX:
-                onFileEnd();
-                break;
-            case TAG_MARKER:
-                onMarkerEnd();
-                break;
-            case TAG_TRACK:
+            case TAG_GPX -> onFileEnd();
+            case TAG_MARKER -> onMarkerEnd();
+            case TAG_TRACK -> {
                 trackImporter.setTrack(context, name, uuid, description, category, null, zoneOffset);
                 zoneOffset = null;
-                break;
-            case TAG_TRACK_SEGMENT:
-                onTrackSegmentEnd();
-                break;
-            case TAG_TRACK_POINT:
-                currentSegment.add(createTrackPoint());
-                break;
-            case TAG_NAME:
+            }
+            case TAG_TRACK_SEGMENT -> onTrackSegmentEnd();
+            case TAG_TRACK_POINT -> currentSegment.add(createTrackPoint());
+            case TAG_NAME -> {
                 if (content != null) {
                     name = content.trim();
                 }
-                break;
-            case TAG_DESCRIPTION:
+            }
+            case TAG_DESCRIPTION -> {
                 if (content != null) {
                     description = content.trim();
                 }
-                break;
-            case TAG_TYPE:
+            }
+            case TAG_TYPE -> {
                 if (content != null) {
                     category = content.trim();
                 }
-                break;
-            case TAG_TIME:
+            }
+            case TAG_TIME -> {
                 if (content != null) {
                     time = content.trim();
                 }
-                break;
-            case TAG_ALTITUDE:
+            }
+            case TAG_ALTITUDE -> {
                 if (content != null) {
                     altitude = content.trim();
                 }
-                break;
-            case TAG_COMMENT:
+            }
+            case TAG_COMMENT -> {
                 if (content != null) {
                     markerType = content.trim();
                 }
-                break;
-            case TAG_EXTENSION_SPEED:
-            case TAG_EXTENSION_SPEED_COMPAT:
+            }
+            case TAG_EXTENSION_SPEED, TAG_EXTENSION_SPEED_COMPAT -> {
                 if (content != null) {
                     speed = content.trim();
                 }
-                break;
-            case TAG_EXTENSION_HEARTRATE:
+            }
+            case TAG_EXTENSION_HEARTRATE -> {
                 if (content != null) {
                     heartrate = content.trim();
                 }
-                break;
-            case TAG_EXTENSION_CADENCE:
+            }
+            case TAG_EXTENSION_CADENCE -> {
                 if (content != null) {
                     cadence = content.trim();
                 }
-                break;
-            case TAG_EXTENSION_POWER:
+            }
+            case TAG_EXTENSION_POWER -> {
                 if (content != null) {
                     power = content.trim();
                 }
-                break;
-            case TAG_ID:
+            }
+            case TAG_ID -> {
                 if (content != null) {
                     uuid = content.trim();
                 }
-                break;
-            case TAG_EXTENSION_GAIN:
+            }
+            case TAG_EXTENSION_GAIN -> {
                 if (content != null) {
                     gain = content.trim();
                 }
-                break;
-            case TAG_EXTENSION_LOSS:
+            }
+            case TAG_EXTENSION_LOSS -> {
                 if (content != null) {
                     loss = content.trim();
                 }
-                break;
-            case TAG_EXTENSION_DISTANCE:
+            }
+            case TAG_EXTENSION_DISTANCE -> {
                 if (content != null) {
                     sensorDistance = content.trim();
                 }
-                break;
-            case TAG_EXTENSION_ACCURACY_HORIZONTAL:
+            }
+            case TAG_EXTENSION_ACCURACY_HORIZONTAL -> {
                 if (content != null) {
                     accuracyHorizontal = content.trim();
                 }
-                break;
-            case TAG_EXTENSION_ACCURACY_VERTICAL:
+            }
+            case TAG_EXTENSION_ACCURACY_VERTICAL -> {
                 if (content != null) {
                     accuracyVertical = content.trim();
                 }
-                break;
+            }
         }
 
         content = "";
