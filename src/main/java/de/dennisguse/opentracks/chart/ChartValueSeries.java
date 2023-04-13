@@ -210,16 +210,11 @@ abstract class ChartValueSeries {
     }
 
     int getTitleId(UnitSystem unitSystem) {
-        switch (unitSystem) {
-            case METRIC:
-                return metricTitleId;
-            case IMPERIAL:
-                return imperialTitleId;
-            case NAUTICAL_IMPERIAL:
-                return nauticalTitleId;
-            default:
-                throw new RuntimeException("Not implemented");
-        }
+        return switch (unitSystem) {
+            case METRIC -> metricTitleId;
+            case IMPERIAL -> imperialTitleId;
+            case NAUTICAL_IMPERIAL -> nauticalTitleId;
+        };
     }
 
     Paint getTitlePaint() {

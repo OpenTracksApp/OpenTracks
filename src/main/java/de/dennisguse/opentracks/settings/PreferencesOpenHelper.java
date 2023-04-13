@@ -32,14 +32,9 @@ class PreferencesOpenHelper {
         PreferencesUtils.setInt(R.string.prefs_last_version_key, version);
         for (int i = 1; i <= version; i++) {
             switch (i) {
-                case 1:
-                    upgradeFrom0to1();
-                    break;
-                case 2:
-                    upgradeFrom1to2();
-                    break;
-                default:
-                    throw new RuntimeException("Not implemented: upgrade to " + version);
+                case 1 -> upgradeFrom0to1();
+                case 2 -> upgradeFrom1to2();
+                default -> throw new RuntimeException("Not implemented: upgrade to " + version);
             }
         }
     }

@@ -58,16 +58,11 @@ public class Distance {
     }
 
     public static Distance one(UnitSystem unitSystem) {
-        switch (unitSystem) {
-            case METRIC:
-                return Distance.ofKilometer(1);
-            case IMPERIAL:
-                return Distance.ofMile(1);
-            case NAUTICAL_IMPERIAL:
-                return Distance.ofNauticalMile(1);
-            default:
-                throw new RuntimeException("Not implemented");
-        }
+        return switch (unitSystem) {
+            case METRIC -> Distance.ofKilometer(1);
+            case IMPERIAL -> Distance.ofMile(1);
+            case NAUTICAL_IMPERIAL -> Distance.ofNauticalMile(1);
+        };
     }
 
     private final double distance_m;
@@ -133,28 +128,18 @@ public class Distance {
     }
 
     public double toKM_Miles(UnitSystem unitSystem) {
-        switch (unitSystem) {
-            case METRIC:
-                return toKM();
-            case IMPERIAL:
-                return toMI();
-            case NAUTICAL_IMPERIAL:
-                return toNauticalMiles();
-            default:
-                throw new RuntimeException("Not implemented");
-        }
+        return switch (unitSystem) {
+            case METRIC -> toKM();
+            case IMPERIAL -> toMI();
+            case NAUTICAL_IMPERIAL -> toNauticalMiles();
+        };
     }
 
     public double toM_FT(UnitSystem unitSystem) {
-        switch (unitSystem) {
-            case METRIC:
-                return toM();
-            case NAUTICAL_IMPERIAL:
-            case IMPERIAL:
-                return toFT();
-            default:
-                throw new RuntimeException("Not implemented");
-        }
+        return switch (unitSystem) {
+            case METRIC -> toM();
+            case NAUTICAL_IMPERIAL, IMPERIAL -> toFT();
+        };
     }
 
     @Override

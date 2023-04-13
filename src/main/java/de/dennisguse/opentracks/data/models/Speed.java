@@ -115,16 +115,11 @@ public class Speed {
     }
 
     public double to(UnitSystem unitSystem) {
-        switch (unitSystem) {
-            case METRIC:
-                return toKMH();
-            case IMPERIAL:
-                return toMPH();
-            case NAUTICAL_IMPERIAL:
-                return toKnots();
-            default:
-                throw new RuntimeException("Not implemented");
-        }
+        return switch (unitSystem) {
+            case METRIC -> toKMH();
+            case IMPERIAL -> toMPH();
+            case NAUTICAL_IMPERIAL -> toKnots();
+        };
     }
 
     @Override

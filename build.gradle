@@ -113,11 +113,11 @@ android {
         }
     }
 
-    applicationVariants.all { variant ->
+    applicationVariants.configureEach { variant ->
         variant.resValue "string", "applicationId", variant.applicationId
 
         if (variant.buildType.name == 'nightly') {
-            variant.outputs.all {
+            variant.outputs.configureEach {
                 setVersionCodeOverride(getVersionCode())
                 setVersionNameOverride(getVersionName())
                 outputFileName = "${applicationId}_${variant.versionCode}.apk"

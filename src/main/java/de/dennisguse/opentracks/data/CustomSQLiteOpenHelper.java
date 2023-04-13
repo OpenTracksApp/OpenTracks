@@ -61,42 +61,18 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         for (int toVersion = oldVersion + 1; toVersion <= newVersion; toVersion++) {
             Log.i(TAG, "Upgrade from " + oldVersion + " to " + toVersion);
             switch (toVersion) {
-                case 24:
-                    upgradeFrom23to24(db);
-                    break;
-                case 25:
-                    upgradeFrom24to25(db);
-                    break;
-                case 26:
-                    upgradeFrom25to26(db);
-                    break;
-                case 27:
-                    upgradeFrom26to27(db);
-                    break;
-                case 28:
-                    upgradeFrom27to28(db);
-                    break;
-                case 29:
-                    upgradeFrom28to29(db);
-                    break;
-                case 30:
-                    upgradeFrom29to30(db);
-                    break;
-                case 31:
-                    upgradeFrom30to31(db);
-                    break;
-                case 32:
-                    upgradeFrom31to32(db);
-                    break;
-                case 33:
-                    upgradeFrom32to33(db);
-                    break;
-                case 34:
-                    upgradeFrom33to34(db);
-                    break;
-
-                default:
-                    throw new RuntimeException("Not implemented: upgrade to " + toVersion);
+                case 24 -> upgradeFrom23to24(db);
+                case 25 -> upgradeFrom24to25(db);
+                case 26 -> upgradeFrom25to26(db);
+                case 27 -> upgradeFrom26to27(db);
+                case 28 -> upgradeFrom27to28(db);
+                case 29 -> upgradeFrom28to29(db);
+                case 30 -> upgradeFrom29to30(db);
+                case 31 -> upgradeFrom30to31(db);
+                case 32 -> upgradeFrom31to32(db);
+                case 33 -> upgradeFrom32to33(db);
+                case 34 -> upgradeFrom33to34(db);
+                default -> throw new RuntimeException("Not implemented: upgrade to " + toVersion);
             }
         }
     }
@@ -106,41 +82,18 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         for (int toVersion = oldVersion - 1; toVersion >= newVersion; toVersion--) {
             Log.i(TAG, "Downgrade from " + oldVersion + " to " + toVersion);
             switch (toVersion) {
-                case 23:
-                    downgradeFrom24to23(db);
-                    break;
-                case 24:
-                    downgradeFrom25to24(db);
-                    break;
-                case 25:
-                    downgradeFrom26to25(db);
-                    break;
-                case 26:
-                    downgradeFrom27to26(db);
-                    break;
-                case 27:
-                    downgradeFrom28to27(db);
-                    break;
-                case 28:
-                    downgradeFrom29to28(db);
-                    break;
-                case 29:
-                    downgradeFrom30to29(db);
-                    break;
-                case 30:
-                    downgradeFrom31to30(db);
-                    break;
-                case 31:
-                    downgradeFrom32to31(db);
-                    break;
-                case 32:
-                    downgradeFrom33to32(db);
-                    break;
-                case 33:
-                    downgradeFrom34to33(db);
-                    break;
-                default:
-                    throw new RuntimeException("Not implemented: downgrade to " + toVersion);
+                case 23 -> downgradeFrom24to23(db);
+                case 24 -> downgradeFrom25to24(db);
+                case 25 -> downgradeFrom26to25(db);
+                case 26 -> downgradeFrom27to26(db);
+                case 27 -> downgradeFrom28to27(db);
+                case 28 -> downgradeFrom29to28(db);
+                case 29 -> downgradeFrom30to29(db);
+                case 30 -> downgradeFrom31to30(db);
+                case 31 -> downgradeFrom32to31(db);
+                case 32 -> downgradeFrom33to32(db);
+                case 33 -> downgradeFrom34to33(db);
+                default -> throw new RuntimeException("Not implemented: downgrade to " + toVersion);
             }
         }
     }

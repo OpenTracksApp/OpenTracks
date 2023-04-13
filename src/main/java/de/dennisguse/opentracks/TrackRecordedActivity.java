@@ -274,18 +274,14 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            switch (position) {
-                case 0:
-                    return StatisticsRecordedFragment.newInstance(trackId);
-                case 1:
-                    return IntervalsFragment.newInstance(trackId, true);
-                case 2:
-                    return ChartFragment.newInstance(false);
-                case 3:
-                    return ChartFragment.newInstance(true);
-                default:
-                    throw new RuntimeException("There isn't Fragment associated with the position: " + position);
-            }
+            return switch (position) {
+                case 0 -> StatisticsRecordedFragment.newInstance(trackId);
+                case 1 -> IntervalsFragment.newInstance(trackId, true);
+                case 2 -> ChartFragment.newInstance(false);
+                case 3 -> ChartFragment.newInstance(true);
+                default ->
+                        throw new RuntimeException("There isn't Fragment associated with the position: " + position);
+            };
         }
 
         @Override
@@ -294,18 +290,14 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
         }
 
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return getString(R.string.track_detail_stats_tab);
-                case 1:
-                    return getString(R.string.track_detail_intervals_tab);
-                case 2:
-                    return getString(R.string.settings_chart_by_time);
-                case 3:
-                    return getString(R.string.settings_chart_by_distance);
-                default:
-                    throw new RuntimeException("There isn't Fragment associated with the position: " + position);
-            }
+            return switch (position) {
+                case 0 -> getString(R.string.track_detail_stats_tab);
+                case 1 -> getString(R.string.track_detail_intervals_tab);
+                case 2 -> getString(R.string.settings_chart_by_time);
+                case 3 -> getString(R.string.settings_chart_by_distance);
+                default ->
+                        throw new RuntimeException("There isn't Fragment associated with the position: " + position);
+            };
         }
     }
 

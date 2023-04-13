@@ -29,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.data.models.Track;
@@ -162,34 +163,8 @@ public class FileUtils {
      * @param character the character
      */
     private static boolean isSpecialFat32(char character) {
-        switch (character) {
-            case '$':
-            case '%':
-            case '\'':
-            case '-':
-            case '_':
-            case '@':
-            case '~':
-            case '`':
-            case '!':
-            case '(':
-            case ')':
-            case '{':
-            case '}':
-            case '^':
-            case '#':
-            case '&':
-            case '+':
-            case ',':
-            case ';':
-            case '=':
-            case '[':
-            case ']':
-            case ' ':
-                return true;
-            default:
-                return false;
-        }
+        return List.of('$', '%', '\'', '-', '_', '@', '~', '`', '!', '(', ')', '{', '}', '^', '#', '&', '+', ',', ';', '=', '[', ']', ' ')
+                .contains(character);
     }
 
     /**

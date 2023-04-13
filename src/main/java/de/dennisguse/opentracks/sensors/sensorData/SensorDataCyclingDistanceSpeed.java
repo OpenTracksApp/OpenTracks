@@ -93,9 +93,8 @@ public class SensorDataCyclingDistanceSpeed extends SensorData<SensorDataCycling
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        if (!(obj instanceof SensorDataCyclingDistanceSpeed)) return false;
+        if (!(obj instanceof SensorDataCyclingDistanceSpeed comp)) return false;
 
-        SensorDataCyclingDistanceSpeed comp = (SensorDataCyclingDistanceSpeed) obj;
         if (!(hasData() && comp.hasData())) {
             return false;
         }

@@ -76,9 +76,8 @@ public class SensorDataCyclingCadence extends SensorData<Cadence> {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        if (!(obj instanceof SensorDataCyclingCadence)) return false;
+        if (!(obj instanceof SensorDataCyclingCadence comp)) return false;
 
-        SensorDataCyclingCadence comp = (SensorDataCyclingCadence) obj;
         if (hasData() && comp.hasData() == hasData()) {
             return getCrankRevolutionsCount() == comp.getCrankRevolutionsCount() && getCrankRevolutionsTime() == comp.getCrankRevolutionsTime();
         } else {

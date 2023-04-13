@@ -93,23 +93,9 @@ public class CSVTrackExporter implements TrackExporter {
 
     @Override
     public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
-        List<Column> columns = Collections.unmodifiableList(Arrays.asList(
-                new Column("time", null),
-                new Column("trackpoint_type", t -> quote(t.getType().name())),
-                new Column("latitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getLatitude()) : ""),
-                new Column("longitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getLongitude()) : ""),
-                new Column("altitude", t -> t.hasAltitude() ? COORDINATE_FORMAT.format(t.getAltitude().toM()) : ""),
-                new Column("accuracy_horizontal", t -> t.hasHorizontalAccuracy() ? DISTANCE_FORMAT.format(t.getHorizontalAccuracy().toM()) : ""),
-                new Column("accuracy_vertical", t -> t.hasVerticalAccuracy() ? DISTANCE_FORMAT.format(t.getVerticalAccuracy().toM()) : ""),
+        List<Column> columns = Collections.unmodifiableList(Arrays.asList(new Column("time", null), new Column("trackpoint_type", t -> quote(t.getType().name())), new Column("latitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getLatitude()) : ""), new Column("longitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getLongitude()) : ""), new Column("altitude", t -> t.hasAltitude() ? COORDINATE_FORMAT.format(t.getAltitude().toM()) : ""), new Column("accuracy_horizontal", t -> t.hasHorizontalAccuracy() ? DISTANCE_FORMAT.format(t.getHorizontalAccuracy().toM()) : ""), new Column("accuracy_vertical", t -> t.hasVerticalAccuracy() ? DISTANCE_FORMAT.format(t.getVerticalAccuracy().toM()) : ""),
 
-                new Column("speed", t -> t.hasSpeed() ? SPEED_FORMAT.format(t.getSpeed().toKMH()) : ""),
-                new Column("altitude_gain", t -> t.hasAltitudeGain() ? DISTANCE_FORMAT.format(t.getAltitudeGain()) : ""),
-                new Column("altitude_loss", t -> t.hasAltitudeLoss() ? DISTANCE_FORMAT.format(t.getAltitudeLoss()) : ""),
-                new Column("sensor_distance", t -> t.hasSensorDistance() ? DISTANCE_FORMAT.format(t.getSensorDistance().toM()) : ""),
-                new Column("heartrate", t -> t.hasHeartRate() ? HEARTRATE_FORMAT.format(t.getHeartRate().getBPM()) : ""),
-                new Column("cadence", t -> t.hasCadence() ? CADENCE_FORMAT.format(t.getCadence().getRPM()) : ""),
-                new Column("power", t -> t.hasPower() ? ALTITUDE_FORMAT.format(t.getPower().getW()) : "")
-        ));
+                new Column("speed", t -> t.hasSpeed() ? SPEED_FORMAT.format(t.getSpeed().toKMH()) : ""), new Column("altitude_gain", t -> t.hasAltitudeGain() ? DISTANCE_FORMAT.format(t.getAltitudeGain()) : ""), new Column("altitude_loss", t -> t.hasAltitudeLoss() ? DISTANCE_FORMAT.format(t.getAltitudeLoss()) : ""), new Column("sensor_distance", t -> t.hasSensorDistance() ? DISTANCE_FORMAT.format(t.getSensorDistance().toM()) : ""), new Column("heartrate", t -> t.hasHeartRate() ? HEARTRATE_FORMAT.format(t.getHeartRate().getBPM()) : ""), new Column("cadence", t -> t.hasCadence() ? CADENCE_FORMAT.format(t.getCadence().getRPM()) : ""), new Column("power", t -> t.hasPower() ? ALTITUDE_FORMAT.format(t.getPower().getW()) : "")));
 
         try {
             prepare(outputStream);
@@ -144,15 +130,10 @@ public class CSVTrackExporter implements TrackExporter {
                 TrackPoint trackPoint = trackPointIterator.next();
 
                 switch (trackPoint.getType()) {
-                    case SEGMENT_START_MANUAL:
-                    case SEGMENT_END_MANUAL:
-                    case SEGMENT_START_AUTOMATIC:
-                    case SENSORPOINT:
-                    case TRACKPOINT:
-                        writeTrackPoint(columns, trackPoint);
-                        break;
-                    default:
-                        throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
+                    case SEGMENT_START_MANUAL, SEGMENT_END_MANUAL, SEGMENT_START_AUTOMATIC, SENSORPOINT, TRACKPOINT ->
+                            writeTrackPoint(columns, trackPoint);
+                    default ->
+                            throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
                 }
             }
         }
@@ -171,18 +152,14 @@ public class CSVTrackExporter implements TrackExporter {
 
     public void writeHeader(List<Column> columns) {
         if (printWriter != null) {
-            String columnNames = columns.stream().map(c -> c.columnName)
-                    .reduce((s, s2) -> s + "," + s2)
-                    .orElseThrow(() -> new RuntimeException("No columns defined"));
+            String columnNames = columns.stream().map(c -> c.columnName).reduce((s, s2) -> s + "," + s2).orElseThrow(() -> new RuntimeException("No columns defined"));
             printWriter.println("#" + columnNames);
         }
     }
 
     public void writeTrackPoint(List<Column> columns, TrackPoint trackPoint) {
         if (printWriter != null) {
-            String columnNames = columns.stream().map(c -> c.extractor.apply(trackPoint))
-                    .reduce((s, s2) -> s + "," + s2)
-                    .orElseThrow(() -> new RuntimeException("No columns defined"));
+            String columnNames = columns.stream().map(c -> c.extractor.apply(trackPoint)).reduce((s, s2) -> s + "," + s2).orElseThrow(() -> new RuntimeException("No columns defined"));
             printWriter.println(columnNames);
         }
     }

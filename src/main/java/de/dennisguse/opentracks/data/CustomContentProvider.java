@@ -133,20 +133,12 @@ public class CustomContentProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri url, String where, String[] selectionArgs) {
-        String table;
-        switch (getUrlType(url)) {
-            case TRACKPOINTS:
-                table = TrackPointsColumns.TABLE_NAME;
-                break;
-            case TRACKS:
-                table = TracksColumns.TABLE_NAME;
-                break;
-            case MARKERS:
-                table = MarkerColumns.TABLE_NAME;
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown URL " + url);
-        }
+        String table = switch (getUrlType(url)) {
+            case TRACKPOINTS -> TrackPointsColumns.TABLE_NAME;
+            case TRACKS -> TracksColumns.TABLE_NAME;
+            case MARKERS -> MarkerColumns.TABLE_NAME;
+            default -> throw new IllegalArgumentException("Unknown URL " + url);
+        };
 
         Log.w(TAG, "Deleting from table " + table);
         int totalChangesBefore = getTotalChanges();
@@ -186,24 +178,15 @@ public class CustomContentProvider extends ContentProvider {
 
     @Override
     public String getType(@NonNull Uri url) {
-        switch (getUrlType(url)) {
-            case TRACKPOINTS:
-                return TrackPointsColumns.CONTENT_TYPE;
-            case TRACKPOINTS_BY_ID:
-            case TRACKPOINTS_BY_TRACKID:
-                return TrackPointsColumns.CONTENT_ITEMTYPE;
-            case TRACKS:
-                return TracksColumns.CONTENT_TYPE;
-            case TRACKS_BY_ID:
-                return TracksColumns.CONTENT_ITEMTYPE;
-            case MARKERS:
-                return MarkerColumns.CONTENT_TYPE;
-            case MARKERS_BY_ID:
-            case MARKERS_BY_TRACKID:
-                return MarkerColumns.CONTENT_ITEMTYPE;
-            default:
-                throw new IllegalArgumentException("Unknown URL " + url);
-        }
+        return switch (getUrlType(url)) {
+            case TRACKPOINTS -> TrackPointsColumns.CONTENT_TYPE;
+            case TRACKPOINTS_BY_ID, TRACKPOINTS_BY_TRACKID -> TrackPointsColumns.CONTENT_ITEMTYPE;
+            case TRACKS -> TracksColumns.CONTENT_TYPE;
+            case TRACKS_BY_ID -> TracksColumns.CONTENT_ITEMTYPE;
+            case MARKERS -> MarkerColumns.CONTENT_TYPE;
+            case MARKERS_BY_ID, MARKERS_BY_TRACKID -> MarkerColumns.CONTENT_ITEMTYPE;
+            default -> throw new IllegalArgumentException("Unknown URL " + url);
+        };
     }
 
     @Override
@@ -251,47 +234,47 @@ public class CustomContentProvider extends ContentProvider {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         String sortOrder = null;
         switch (getUrlType(url)) {
-            case TRACKPOINTS:
+            case TRACKPOINTS -> {
                 queryBuilder.setTables(TrackPointsColumns.TABLE_NAME);
                 sortOrder = sort != null ? sort : TrackPointsColumns.DEFAULT_SORT_ORDER;
-                break;
-            case TRACKPOINTS_BY_ID:
+            }
+            case TRACKPOINTS_BY_ID -> {
                 queryBuilder.setTables(TrackPointsColumns.TABLE_NAME);
                 queryBuilder.appendWhere(TrackPointsColumns._ID + "=" + ContentUris.parseId(url));
-                break;
-            case TRACKPOINTS_BY_TRACKID:
+            }
+            case TRACKPOINTS_BY_TRACKID -> {
                 queryBuilder.setTables(TrackPointsColumns.TABLE_NAME);
                 queryBuilder.appendWhere(TrackPointsColumns.TRACKID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
-                break;
-            case TRACKS:
+            }
+            case TRACKS -> {
                 if (projection != null && Arrays.asList(projection).contains(TracksColumns.MARKER_COUNT)) {
                     queryBuilder.setTables(TracksColumns.TABLE_NAME + " LEFT OUTER JOIN (SELECT " + MarkerColumns.TRACKID + " AS markerTrackId, COUNT(*) AS " + TracksColumns.MARKER_COUNT + " FROM " + MarkerColumns.TABLE_NAME + " GROUP BY " + MarkerColumns.TRACKID + ") ON (" + TracksColumns.TABLE_NAME + "." + TracksColumns._ID + "= markerTrackId)");
                 } else {
                     queryBuilder.setTables(TracksColumns.TABLE_NAME);
                 }
                 sortOrder = sort != null ? sort : TracksColumns.DEFAULT_SORT_ORDER;
-                break;
-            case TRACKS_BY_ID:
+            }
+            case TRACKS_BY_ID -> {
                 queryBuilder.setTables(TracksColumns.TABLE_NAME);
                 queryBuilder.appendWhere(TracksColumns._ID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
-                break;
-            case TRACKS_SENSOR_STATS:
+            }
+            case TRACKS_SENSOR_STATS -> {
                 long trackId = ContentUris.parseId(url);
                 return db.rawQuery(SENSOR_STATS_QUERY, new String[]{String.valueOf(trackId), String.valueOf(trackId)});
-            case MARKERS:
+            }
+            case MARKERS -> {
                 queryBuilder.setTables(MarkerColumns.TABLE_NAME);
                 sortOrder = sort != null ? sort : MarkerColumns.DEFAULT_SORT_ORDER;
-                break;
-            case MARKERS_BY_ID:
+            }
+            case MARKERS_BY_ID -> {
                 queryBuilder.setTables(MarkerColumns.TABLE_NAME);
                 queryBuilder.appendWhere(MarkerColumns._ID + "=" + ContentUris.parseId(url));
-                break;
-            case MARKERS_BY_TRACKID:
+            }
+            case MARKERS_BY_TRACKID -> {
                 queryBuilder.setTables(MarkerColumns.TABLE_NAME);
                 queryBuilder.appendWhere(MarkerColumns.TRACKID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown url " + url);
+            }
+            default -> throw new IllegalArgumentException("Unknown url " + url);
         }
         Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), url);
@@ -304,41 +287,40 @@ public class CustomContentProvider extends ContentProvider {
         String table;
         String whereClause;
         switch (getUrlType(url)) {
-            case TRACKPOINTS:
+            case TRACKPOINTS -> {
                 table = TrackPointsColumns.TABLE_NAME;
                 whereClause = where;
-                break;
-            case TRACKPOINTS_BY_ID:
+            }
+            case TRACKPOINTS_BY_ID -> {
                 table = TrackPointsColumns.TABLE_NAME;
                 whereClause = TrackPointsColumns._ID + "=" + ContentUris.parseId(url);
                 if (!TextUtils.isEmpty(where)) {
                     whereClause += " AND (" + where + ")";
                 }
-                break;
-            case TRACKS:
+            }
+            case TRACKS -> {
                 table = TracksColumns.TABLE_NAME;
                 whereClause = where;
-                break;
-            case TRACKS_BY_ID:
+            }
+            case TRACKS_BY_ID -> {
                 table = TracksColumns.TABLE_NAME;
                 whereClause = TracksColumns._ID + "=" + ContentUris.parseId(url);
                 if (!TextUtils.isEmpty(where)) {
                     whereClause += " AND (" + where + ")";
                 }
-                break;
-            case MARKERS:
+            }
+            case MARKERS -> {
                 table = MarkerColumns.TABLE_NAME;
                 whereClause = where;
-                break;
-            case MARKERS_BY_ID:
+            }
+            case MARKERS_BY_ID -> {
                 table = MarkerColumns.TABLE_NAME;
                 whereClause = MarkerColumns._ID + "=" + ContentUris.parseId(url);
                 if (!TextUtils.isEmpty(where)) {
                     whereClause += " AND (" + where + ")";
                 }
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown url " + url);
+            }
+            default -> throw new IllegalArgumentException("Unknown url " + url);
         }
         int count;
         try {
@@ -371,16 +353,12 @@ public class CustomContentProvider extends ContentProvider {
      * @param contentValues the content values
      */
     private Uri insertContentValues(Uri url, UrlType urlType, ContentValues contentValues) {
-        switch (urlType) {
-            case TRACKPOINTS:
-                return insertTrackPoint(url, contentValues);
-            case TRACKS:
-                return insertTrack(url, contentValues);
-            case MARKERS:
-                return insertMarker(url, contentValues);
-            default:
-                throw new IllegalArgumentException("Unknown url " + url);
-        }
+        return switch (urlType) {
+            case TRACKPOINTS -> insertTrackPoint(url, contentValues);
+            case TRACKS -> insertTrack(url, contentValues);
+            case MARKERS -> insertMarker(url, contentValues);
+            default -> throw new IllegalArgumentException("Unknown url " + url);
+        };
     }
 
     private Uri insertTrackPoint(Uri url, ContentValues values) {

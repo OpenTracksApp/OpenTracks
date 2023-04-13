@@ -30,14 +30,9 @@ public class ExportServiceResultReceiver extends ResultReceiver {
     protected void onReceiveResult(int resultCode, Bundle resultData) {
         Track.Id trackId = resultData.getParcelable(ExportServiceResultReceiver.RESULT_EXTRA_TRACK_ID);
         switch (resultCode) {
-            case RESULT_CODE_SUCCESS:
-                receiver.onExportSuccess(trackId);
-                break;
-            case RESULT_CODE_ERROR:
-                receiver.onExportError(trackId);
-                break;
-            default:
-                throw new RuntimeException("Unknown resultCode.");
+            case RESULT_CODE_SUCCESS -> receiver.onExportSuccess(trackId);
+            case RESULT_CODE_ERROR -> receiver.onExportError(trackId);
+            default -> throw new RuntimeException("Unknown resultCode.");
         }
     }
 

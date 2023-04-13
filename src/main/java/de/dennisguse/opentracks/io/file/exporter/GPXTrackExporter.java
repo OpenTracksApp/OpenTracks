@@ -145,37 +145,32 @@ public class GPXTrackExporter implements TrackExporter {
                 }
 
                 switch (trackPoint.getType()) {
-                    case SEGMENT_START_MANUAL:
-                        Log.i(TAG, "Exporting " + TrackPoint.Type.SEGMENT_START_MANUAL.name() + " is not supported.");
-                        break;
-                    case SEGMENT_END_MANUAL:
+                    case SEGMENT_START_MANUAL ->
+                            Log.i(TAG, "Exporting " + TrackPoint.Type.SEGMENT_START_MANUAL.name() + " is not supported.");
+                    case SEGMENT_END_MANUAL -> {
                         if (wroteSegment) writeCloseSegment();
                         wroteSegment = false;
                         Log.i(TAG, "Exporting " + TrackPoint.Type.SEGMENT_END_MANUAL.name() + " is not supported.");
-                        break;
-                    case SEGMENT_START_AUTOMATIC:
+                    }
+                    case SEGMENT_START_AUTOMATIC -> {
                         if (wroteSegment) writeCloseSegment();
                         writeOpenSegment();
                         wroteSegment = true;
-
                         trackDistance = trackDistance.plus(writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints, trackDistance));
                         sensorPoints.clear();
-                        break;
-                    case SENSORPOINT:
-                        sensorPoints.add(trackPoint);
-                        break;
-                    case TRACKPOINT:
+                    }
+                    case SENSORPOINT -> sensorPoints.add(trackPoint);
+                    case TRACKPOINT -> {
                         if (!wroteSegment) {
                             // Might happen for older data (pre v3.15.0)
                             writeOpenSegment();
                             wroteSegment = true;
                         }
-
                         trackDistance = trackDistance.plus(writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints, trackDistance));
                         sensorPoints.clear();
-                        break;
-                    default:
-                        throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
+                    }
+                    default ->
+                            throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
                 }
             }
 

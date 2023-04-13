@@ -68,18 +68,10 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
 
         ListPreference statsRatePreferences = findPreference(getString(R.string.stats_rate_key));
 
-        int entriesId;
-        switch (unitSystem) {
-            case METRIC:
-                entriesId = R.array.stats_rate_metric_options;
-                break;
-            case IMPERIAL:
-            case NAUTICAL_IMPERIAL:
-                entriesId = R.array.stats_rate_imperial_options;
-                break;
-            default:
-                throw new RuntimeException("Not implemented");
-        }
+        int entriesId = switch (unitSystem) {
+            case METRIC -> R.array.stats_rate_metric_options;
+            case IMPERIAL, NAUTICAL_IMPERIAL -> R.array.stats_rate_imperial_options;
+        };
 
         String[] entries = getResources().getStringArray(entriesId);
         statsRatePreferences.setEntries(entries);

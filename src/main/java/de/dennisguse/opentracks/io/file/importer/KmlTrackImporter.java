@@ -136,27 +136,18 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     @Override
     public void startElement(String uri, String localName, String tag, Attributes attributes) throws SAXException {
         switch (tag) {
-            case TAG_PLACEMARK:
-            case TAG_PHOTO_OVERLAY:
+            case TAG_PLACEMARK, TAG_PHOTO_OVERLAY ->
                 // Note that a track is contained in a Placemark, calling onMarkerStart will clear various track variables like name, category, and description.
-                onMarkerStart();
-                break;
-            case TAG_MULTI_TRACK:
-            case TAG_KML22_MULTI_TRACK:
-                trackImporter.newTrack();
-                break;
-            case TAG_TRACK:
-            case TAG_KML22_TRACK:
+                    onMarkerStart();
+            case TAG_MULTI_TRACK, TAG_KML22_MULTI_TRACK -> trackImporter.newTrack();
+            case TAG_TRACK, TAG_KML22_TRACK -> {
                 if (trackImporter == null) {
                     throw new SAXException("Missing " + TAG_MULTI_TRACK);
                 }
                 onTrackSegmentStart();
-                break;
-            case TAG_DATA_CATEGORY:
-            case TAG_SIMPLE_ARRAY_DATA:
-            case TAG_KML22_SIMPLE_ARRAY_DATA:
-                dataType = attributes.getValue(ATTRIBUTE_NAME);
-                break;
+            }
+            case TAG_DATA_CATEGORY, TAG_SIMPLE_ARRAY_DATA, TAG_KML22_SIMPLE_ARRAY_DATA ->
+                    dataType = attributes.getValue(ATTRIBUTE_NAME);
         }
     }
 
@@ -168,32 +159,18 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     @Override
     public void endElement(String uri, String localName, String tag) throws SAXException {
         switch (tag) {
-            case TAG_KML:
-                onFileEnd();
-                break;
-            case TAG_PLACEMARK:
-            case TAG_PHOTO_OVERLAY:
+            case TAG_KML -> onFileEnd();
+            case TAG_PLACEMARK, TAG_PHOTO_OVERLAY ->
                 // Note that a track is contained in a Placemark, calling onMarkerEnd is save since markerType is not set for a track.
-                onMarkerEnd();
-                break;
-            case TAG_COORDINATES:
-                onMarkerLocationEnd();
-                break;
-            case TAG_MULTI_TRACK:
-            case TAG_KML22_MULTI_TRACK:
+                    onMarkerEnd();
+            case TAG_COORDINATES -> onMarkerLocationEnd();
+            case TAG_MULTI_TRACK, TAG_KML22_MULTI_TRACK -> {
                 trackImporter.setTrack(context, name, uuid, description, category, icon, zoneOffset);
                 zoneOffset = null;
-                break;
-            case TAG_TRACK:
-            case TAG_KML22_TRACK:
-                onTrackSegmentEnd();
-                break;
-            case TAG_COORD:
-            case TAG_KML22_COORD:
-                onCoordEnded();
-                break;
-            case TAG_VALUE:
-            case TAG_KML22_VALUE:
+            }
+            case TAG_TRACK, TAG_KML22_TRACK -> onTrackSegmentEnd();
+            case TAG_COORD, TAG_KML22_COORD -> onCoordEnded();
+            case TAG_VALUE, TAG_KML22_VALUE -> {
                 if (KMLTrackExporter.EXTENDED_DATA_TYPE_CATEGORY.equals(dataType)) {
                     if (content != null) {
                         category = content.trim();
@@ -201,28 +178,28 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 } else {
                     onExtendedDataValueEnd();
                 }
-                break;
-            case TAG_NAME:
+            }
+            case TAG_NAME -> {
                 if (content != null) {
                     name = content.trim();
                 }
-                break;
-            case TAG_UUID:
+            }
+            case TAG_UUID -> {
                 if (content != null) {
                     uuid = content.trim();
                 }
-                break;
-            case TAG_DESCRIPTION:
+            }
+            case TAG_DESCRIPTION -> {
                 if (content != null) {
                     description = content.trim();
                 }
-                break;
-            case TAG_ICON:
+            }
+            case TAG_ICON -> {
                 if (content != null) {
                     icon = content.trim();
                 }
-                break;
-            case TAG_WHEN:
+            }
+            case TAG_WHEN -> {
                 if (content != null) {
                     try {
                         OffsetDateTime time = StringUtils.parseTime(content.trim());
@@ -234,18 +211,17 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                         throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", content.trim())), e);
                     }
                 }
-
-                break;
-            case TAG_STYLE_URL:
+            }
+            case TAG_STYLE_URL -> {
                 if (content != null) {
                     markerType = content.trim();
                 }
-                break;
-            case TAG_HREF:
+            }
+            case TAG_HREF -> {
                 if (content != null) {
                     photoUrl = content.trim();
                 }
-                break;
+            }
         }
 
         // Reset element content
@@ -436,35 +412,19 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             }
         }
         switch (dataType) {
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_SPEED:
-                sensorSpeedList.add(value);
-                break;
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_DISTANCE:
-                sensorDistanceList.add(value);
-                break;
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_POWER:
-                sensorPowerList.add(value);
-                break;
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_HEART_RATE:
-                sensorHeartRateList.add(value);
-                break;
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_CADENCE:
-                sensorCadenceList.add(value);
-                break;
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_ALTITUDE_GAIN:
-                altitudeGainList.add(value);
-                break;
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_ALTITUDE_LOSS:
-                altitudeLossList.add(value);
-                break;
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_ACCURACY_HORIZONTAL:
-                accuracyHorizontal.add(value);
-                break;
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_ACCURACY_VERTICAL:
-                accuracyVertical.add(value);
-                break;
-            default:
-                Log.w(TAG, "Data from extended data " + dataType + " is not (yet) supported.");
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_SPEED -> sensorSpeedList.add(value);
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_DISTANCE -> sensorDistanceList.add(value);
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_POWER -> sensorPowerList.add(value);
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_HEART_RATE -> sensorHeartRateList.add(value);
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_CADENCE -> sensorCadenceList.add(value);
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_ALTITUDE_GAIN -> altitudeGainList.add(value);
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_ALTITUDE_LOSS -> altitudeLossList.add(value);
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_ACCURACY_HORIZONTAL ->
+                    accuracyHorizontal.add(value);
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_ACCURACY_VERTICAL ->
+                    accuracyVertical.add(value);
+            default ->
+                    Log.w(TAG, "Data from extended data " + dataType + " is not (yet) supported.");
         }
     }
 

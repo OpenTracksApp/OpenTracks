@@ -448,23 +448,21 @@ public class PreferencesUtils {
 
             String displayValue = formatter.formatDistance(distance);
             switch (unitSystem) {
-                case METRIC:
+                case METRIC -> {
                     if (value == recordingDistanceIntervalDefault) {
                         entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
                     } else {
                         entries[i] = displayValue;
                     }
-                    break;
-                case IMPERIAL:
-                case NAUTICAL_IMPERIAL:
+                }
+                case IMPERIAL, NAUTICAL_IMPERIAL -> {
                     if (value == recordingDistanceIntervalDefault) {
                         entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                     } else {
                         entries[i] = displayValue;
                     }
-                    break;
-                default:
-                    throw new RuntimeException("Not implemented");
+                }
+                default -> throw new RuntimeException("Not implemented");
             }
         }
 
@@ -494,23 +492,21 @@ public class PreferencesUtils {
 
             String displayValue = formatter.formatDistance(distance);
             switch (unitSystem) {
-                case METRIC:
+                case METRIC -> {
                     if (value == maxRecordingDistanceDefault) {
                         entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
                     } else {
                         entries[i] = displayValue;
                     }
-                    break;
-                case IMPERIAL:
-                case NAUTICAL_IMPERIAL:
+                }
+                case IMPERIAL, NAUTICAL_IMPERIAL -> {
                     if (value == maxRecordingDistanceDefault) {
                         entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                     } else {
                         entries[i] = displayValue;
                     }
-                    break;
-                default:
-                    throw new RuntimeException("Not implemented");
+                }
+                default -> throw new RuntimeException("Not implemented");
             }
         }
 
@@ -569,7 +565,7 @@ public class PreferencesUtils {
 
             String displayValue = formatter.formatDistance(distance);
             switch (unitSystem) {
-                case METRIC:
+                case METRIC -> {
                     if (value == recordingGPSAccuracyDefault) {
                         entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
                     } else if (value == recordingGPSAccuracyExcellent) {
@@ -579,9 +575,8 @@ public class PreferencesUtils {
                     } else {
                         entries[i] = displayValue;
                     }
-                    break;
-                case IMPERIAL:
-                case NAUTICAL_IMPERIAL:
+                }
+                case IMPERIAL, NAUTICAL_IMPERIAL -> {
                     if (value == recordingGPSAccuracyDefault) {
                         entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                     } else if (value == recordingGPSAccuracyExcellent) {
@@ -589,9 +584,8 @@ public class PreferencesUtils {
                     } else {
                         entries[i] = displayValue;
                     }
-                    break;
-                default:
-                    throw new RuntimeException("Not implemented");
+                }
+                default -> throw new RuntimeException("Not implemented");
             }
         }
 
@@ -617,32 +611,30 @@ public class PreferencesUtils {
             float value = Float.parseFloat(entryValues[i]);
 
             switch (unitSystem) {
-                case METRIC:
+                case METRIC -> {
                     if (value == idleSpeedDefault) {
                         entries[i] = resources.getString(R.string.value_float_kilometer_hour_recommended, value);
                     } else {
                         entries[i] = resources.getString(R.string.value_float_kilometer_hour, value);
                     }
-                    break;
-                case IMPERIAL:
+                }
+                case IMPERIAL -> {
                     double valueMPH = Speed.ofKMH(value).toMPH();
-
                     if (value == idleSpeedDefault) {
                         entries[i] = resources.getString(R.string.value_float_mile_hour_recommended, valueMPH);
                     } else {
                         entries[i] = resources.getString(R.string.value_float_mile_hour, valueMPH);
                     }
-                    break;
-                case NAUTICAL_IMPERIAL:
+                }
+                case NAUTICAL_IMPERIAL -> {
                     double valueKnots = Speed.ofKMH(value).toKnots();
                     if (value == idleSpeedDefault) {
                         entries[i] = resources.getString(R.string.value_float_knots_recommended, valueKnots);
                     } else {
                         entries[i] = resources.getString(R.string.value_float_knots, valueKnots);
                     }
-                    break;
-                default:
-                    throw new RuntimeException("Not implemented");
+                }
+                default -> throw new RuntimeException("Not implemented");
             }
         }
 

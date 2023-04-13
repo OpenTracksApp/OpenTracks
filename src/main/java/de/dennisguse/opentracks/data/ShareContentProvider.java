@@ -129,24 +129,18 @@ public class ShareContentProvider extends CustomContentProvider {
     }
 
     private static TrackFileFormat getTrackFileFormat(@NonNull Uri uri) {
-        switch (uriMatcher.match(uri)) {
-            case URI_GPX:
-                return TrackFileFormat.GPX;
-
-            case URI_KML_WITH_TRACKDETAIL_SENSORDATA:
-                return TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA;
-
-            case URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA:
-                return TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA;
-            case URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES:
-                return TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES;
-
-            case URI_CSV:
-                return TrackFileFormat.CSV;
-
-            default:
-                throw new RuntimeException("Could not derive TrackFileFormat from Uri " + uri);
-        }
+        return switch (uriMatcher.match(uri)) {
+            case URI_GPX -> TrackFileFormat.GPX;
+            case URI_KML_WITH_TRACKDETAIL_SENSORDATA ->
+                    TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA;
+            case URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA ->
+                    TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA;
+            case URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES ->
+                    TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES;
+            case URI_CSV -> TrackFileFormat.CSV;
+            default ->
+                    throw new RuntimeException("Could not derive TrackFileFormat from Uri " + uri);
+        };
     }
 
     @Nullable
@@ -170,14 +164,14 @@ public class ShareContentProvider extends CustomContentProvider {
         int i = 0;
         for (String col : projection) {
             switch (col) {
-                case OpenableColumns.DISPLAY_NAME:
+                case OpenableColumns.DISPLAY_NAME -> {
                     cols[i] = OpenableColumns.DISPLAY_NAME;
                     values[i++] = uri.getLastPathSegment();
-                    break;
-                case OpenableColumns.SIZE:
+                }
+                case OpenableColumns.SIZE -> {
                     cols[i] = OpenableColumns.SIZE;
                     values[i++] = -1; //Report unknown size; if applications need to know, one need to generate the file here also (count bytes that are written to OutputStream.
-                    break;
+                }
             }
         }
 

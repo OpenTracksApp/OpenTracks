@@ -733,16 +733,11 @@ public class ChartView extends View {
     private String getXAxisLabel() {
         Context context = getContext();
         if (chartByDistance) {
-            switch (unitSystem) {
-                case METRIC:
-                    return context.getString(R.string.unit_kilometer);
-                case IMPERIAL:
-                    return context.getString(R.string.unit_mile);
-                case NAUTICAL_IMPERIAL:
-                    return context.getString(R.string.unit_nautical_mile);
-                default:
-                    throw new RuntimeException("Not implemented");
-            }
+            return switch (unitSystem) {
+                case METRIC -> context.getString(R.string.unit_kilometer);
+                case IMPERIAL -> context.getString(R.string.unit_mile);
+                case NAUTICAL_IMPERIAL -> context.getString(R.string.unit_nautical_mile);
+            };
         } else {
             return context.getString(R.string.description_time);
         }
