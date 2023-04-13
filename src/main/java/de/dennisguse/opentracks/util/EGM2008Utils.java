@@ -219,7 +219,10 @@ public class EGM2008Utils {
         /**
          * The geoid undulation data in integer format.
          */
-        private final int v00, v10, v01, v11;
+        private final int v00;
+        private final int v10;
+        private final int v01;
+        private final int v11;
 
         /**
          * The indices of the geoid undulation data.
