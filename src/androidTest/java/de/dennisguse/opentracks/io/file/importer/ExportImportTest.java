@@ -204,7 +204,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context);
+        TrackExporter trackExporter = TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context, contentProviderUtils);
 
         // when
         // 1. export
@@ -287,7 +287,7 @@ public class ExportImportTest {
         editor.commit();
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context);
+        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context, contentProviderUtils);
 
         // when
         trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
@@ -310,7 +310,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.GPX.createTrackExporter(context);
+        TrackExporter trackExporter = TrackFileFormat.GPX.createTrackExporter(context, contentProviderUtils);
 
         // when
         // 1. export
@@ -428,7 +428,7 @@ public class ExportImportTest {
         editor.commit();
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.GPX.createTrackExporter(context);
+        TrackExporter trackExporter = TrackFileFormat.GPX.createTrackExporter(context, contentProviderUtils);
 
         // when
         // 1. export
@@ -453,7 +453,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.CSV.createTrackExporter(context);
+        TrackExporter trackExporter = TrackFileFormat.CSV.createTrackExporter(context, contentProviderUtils);
 
         // when
         // 1. export

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.ExportService;
@@ -56,7 +57,7 @@ public class ExportUtils {
     }
 
     public static boolean exportTrack(Context context, TrackFileFormat trackFileFormat, DocumentFile directory, Track track) {
-        TrackExporter trackExporter = trackFileFormat.createTrackExporter(context);
+        TrackExporter trackExporter = trackFileFormat.createTrackExporter(context, new ContentProviderUtils(context));
 
         Uri exportDocumentFileUri = getExportDocumentFileUri(context, track, trackFileFormat, directory);
         if (exportDocumentFileUri == null) {

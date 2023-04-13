@@ -93,10 +93,10 @@ public class KMLTrackExporter implements TrackExporter {
     private final List<Float> accuracyHorizontal = new ArrayList<>();
     private final List<Float> accuracyVertical = new ArrayList<>();
 
-    public KMLTrackExporter(Context context, boolean exportPhotos) {
+    public KMLTrackExporter(Context context, ContentProviderUtils contentProviderUtils, boolean exportPhotos) {
         this.context = context;
         this.exportPhotos = exportPhotos;
-        this.contentProviderUtils = new ContentProviderUtils(context);
+        this.contentProviderUtils = contentProviderUtils;
     }
 
     public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {
@@ -226,15 +226,19 @@ public class KMLTrackExporter implements TrackExporter {
 
     private void writeHeader(Track[] tracks) {
         if (printWriter != null) {
-            printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            printWriter.println("<kml xmlns=\"http://www.opengis.net/kml/2.3\"");
-            printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\"");
-            printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\">");
-            //TODO ADD xsi:schemaLocation for atom
-            printWriter.println("xsi:schemaLocation=" +
-                    "\"http://www.opengis.net/kml/2.3 http://schemas.opengis.net/kml/2.3/ogckml23.xsd"
-                    + " http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd\">");
-
+            printWriter.println(
+                    """
+                            <?xml version="1.0" encoding="UTF-8"?>
+                            """);
+            printWriter.println(
+                    """
+                            <kml xmlns="http://www.opengis.net/kml/2.3"
+                                xmlns:atom="http://www.w3.org/2005/Atom"
+                                xmlns:opentracks="http://opentracksapp.com/xmlschemas/v1"
+                                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                xsi:schemaLocation="http://www.opengis.net/kml/2.3 http://schemas.opengis.net/kml/2.3/ogckml23.xsd
+                                                    http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd">
+                            """); //TODO ADD xsi:schemaLocation for atom
             printWriter.println("<Document>");
             printWriter.println("<open>1</open>");
             printWriter.println("<visibility>1</visibility>");

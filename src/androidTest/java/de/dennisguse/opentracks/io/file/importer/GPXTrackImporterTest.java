@@ -231,7 +231,7 @@ public class GPXTrackImporterTest {
         importTrackId = importer.importFile(inputStream).get(0);
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
 
-        TrackExporter trackExporter = TrackFileFormat.GPX.createTrackExporter(context);
+        TrackExporter trackExporter = TrackFileFormat.GPX.createTrackExporter(context, contentProviderUtils);
         trackExporter.writeTrack(importedTrack, outputStream);
 
         // then
