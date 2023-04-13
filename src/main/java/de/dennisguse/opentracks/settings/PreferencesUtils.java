@@ -64,6 +64,8 @@ public class PreferencesUtils {
 
     private static final int PREFERENCES_VERSION = 2;
 
+    private static String illegalArgument = "Not implemented";
+
     private PreferencesUtils() {
     }
 
@@ -457,7 +459,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
@@ -503,7 +505,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
@@ -584,7 +586,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
@@ -635,7 +637,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
