@@ -105,6 +105,11 @@ public class IntervalStatistics {
         private HeartRate avgHeartRate;
 
         public Interval() {
+            distance = null;
+            time = null;
+            gain_m = 0.0;
+            loss_m = 0.0;
+            avgHeartRate = null;
         }
 
         public Interval(Distance distance, Duration time) {
