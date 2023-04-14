@@ -216,10 +216,6 @@ public class VoiceAnnouncement {
         if (languageAvailability == TextToSpeech.LANG_MISSING_DATA || languageAvailability == TextToSpeech.LANG_NOT_SUPPORTED) {
             Log.w(TAG, "Default locale not available, use English.");
             locale = Locale.ENGLISH;
-            /*
-             * TODO: instead of using english, load the language if missing and show a toast if not supported.
-             *  Not able to change the resource strings to English.
-             */
         }
         tts.setLanguage(locale);
         tts.setSpeechRate(PreferencesUtils.getVoiceSpeedRate());
