@@ -140,6 +140,17 @@
             android:textColor="#000001"
             android:textSize="18dp" />
 
+        <EditText
+            android:id="@+id/editTextNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#55CEFF"
+            android:ems="10"
+            android:hint="Enter Weight (in kg)"
+            android:inputType="number"/>
+
     </LinearLayout>
 
 
