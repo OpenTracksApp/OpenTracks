@@ -294,20 +294,26 @@ public class EGM2008Utils {
             return indices.getAbsoluteIndex() == getIndices(location).getAbsoluteIndex();
         }
 
+        class UndulationDataNotLoadedException extends RuntimeException {
+            public UndulationDataNotLoadedException(String message) {
+                super(message);
+            }
+        }
+
         /**
          * Corrects the altitude of a location using the EGM2008 geoid model.
          *
          * @param location the location to be corrected
          * @return the corrected altitude
-         * @throws RuntimeException if the altitude of the location is not available or the geoid undulation data is not loaded for this location
+         * @throws UndulationDataNotLoadedException if the altitude of the location is not available or the geoid undulation data is not loaded for this location
          */
         public double correctAltitude(final Location location) {
             if (!location.hasAltitude()) {
-                throw new RuntimeException("Location has no altitude");
+                throw new UndulationDataNotLoadedException("Location has no altitude");
             }
 
             if (!canCorrect(location)) {
-                throw new RuntimeException("Undulation data not loaded for this location.");
+                throw new UndulationDataNotLoadedException("Undulation data not loaded for this location.");
             }
 
             double undulationRaw = v00;
@@ -320,6 +326,7 @@ public class EGM2008Utils {
             }
             return location.getAltitude() - (0.003 * undulationRaw - 108);
         }
+
 
         /**
          * Returns a value indicating whether this instance is for the South Pole.
