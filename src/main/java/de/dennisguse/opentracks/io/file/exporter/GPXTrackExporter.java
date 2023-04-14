@@ -175,7 +175,7 @@ public class GPXTrackExporter implements TrackExporter {
                         sensorPoints.clear();
                         break;
                     default:
-                        throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
+                        throw new ExportNotImplementedException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
                 }
             }
 
@@ -327,15 +327,7 @@ public class GPXTrackExporter implements TrackExporter {
             printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime(), zoneOffset) + "</time>");
 
             {
-                String trackPointExtensionContent = "";
-
-                if (trackPoint.hasSpeed()) {
-                    trackPointExtensionContent += "<gpxtpx:speed>" + SPEED_FORMAT.format(trackPoint.getSpeed().toMPS()) + "</gpxtpx:speed>\n";
-                }
-
-                if (trackPoint.hasHeartRate()) {
-                    trackPointExtensionContent += "<gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate().getBPM()) + "</gpxtpx:hr>\n";
-                }
+                String trackPointExtensionContent = getTrackPointExtensionContent(trackPoint);
 
                 if (trackPoint.hasCadence()) {
                     trackPointExtensionContent += "<gpxtpx:cad>" + CADENCE_FORMAT.format(trackPoint.getCadence().getRPM()) + "</gpxtpx:cad>\n";
@@ -345,12 +337,12 @@ public class GPXTrackExporter implements TrackExporter {
                     trackPointExtensionContent += "<pwr:PowerInWatts>" + POWER_FORMAT.format(trackPoint.getPower().getW()) + "</pwr:PowerInWatts>\n";
                 }
 
-                Double cumulativeGain = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasAltitudeGain() ? (double) tp.getAltitudeGain() : null);
+                Double cumulativeGain = cumulateSensorData(trackPoint, sensorPoints, tp -> tp.hasAltitudeGain() ? (double) tp.getAltitudeGain() : null);
                 if (cumulativeGain != null) {
                     trackPointExtensionContent += ("<opentracks:gain>" + ALTITUDE_FORMAT.format(cumulativeGain) + "</opentracks:gain>\n");
                 }
 
-                Double cumulativeLoss = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasAltitudeLoss() ? (double) tp.getAltitudeLoss() : null);
+                Double cumulativeLoss = cumulateSensorData(trackPoint, sensorPoints, tp -> tp.hasAltitudeLoss() ? (double) tp.getAltitudeLoss() : null);
                 if (cumulativeLoss != null) {
                     trackPointExtensionContent += ("<opentracks:loss>" + ALTITUDE_FORMAT.format(cumulativeLoss) + "</opentracks:loss>\n");
                 }
@@ -362,7 +354,7 @@ public class GPXTrackExporter implements TrackExporter {
                     trackPointExtensionContent += ("<opentracks:accuracy_vertical>" + DISTANCE_FORMAT.format(trackPoint.getVerticalAccuracy().toM()) + "</opentracks:accuracy_vertical>");
                 }
 
-                cumulativeDistance = Distance.ofOrNull(cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasSensorDistance() ? tp.getSensorDistance().toM() : null));
+                cumulativeDistance = Distance.ofOrNull(cumulateSensorData(trackPoint, sensorPoints, tp -> tp.hasSensorDistance() ? tp.getSensorDistance().toM() : null));
                 if (cumulativeDistance != null) {
                     trackPointExtensionContent += ("<opentracks:distance>" + DISTANCE_FORMAT.format(cumulativeDistance.toM()) + "</opentracks:distance>\n");
                     trackPointExtensionContent += ("<cluetrust:distance>" + DISTANCE_FORMAT.format(trackDistance.plus(cumulativeDistance).toM()) + "</cluetrust:distance>\n");
@@ -383,6 +375,20 @@ public class GPXTrackExporter implements TrackExporter {
         return Distance.of(0);
     }
 
+    @NonNull
+    private String getTrackPointExtensionContent(TrackPoint trackPoint) {
+        String trackPointExtensionContent = "";
+
+        if (trackPoint.hasSpeed()) {
+            trackPointExtensionContent += "<gpxtpx:speed>" + SPEED_FORMAT.format(trackPoint.getSpeed().toMPS()) + "</gpxtpx:speed>\n";
+        }
+
+        if (trackPoint.hasHeartRate()) {
+            trackPointExtensionContent += "<gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate().getBPM()) + "</gpxtpx:hr>\n";
+        }
+        return trackPointExtensionContent;
+    }
+
     private Double cumulateSensorData(TrackPoint trackPoint, List<TrackPoint> sensorPoints, Function<TrackPoint, Double> map) {
         return Stream.concat(sensorPoints.stream(), Stream.of(trackPoint))
                 .map(map)
@@ -393,5 +399,10 @@ public class GPXTrackExporter implements TrackExporter {
 
     private String formatLocation(double latitude, double longitude) {
         return "lat=\"" + COORDINATE_FORMAT.format(latitude) + "\" lon=\"" + COORDINATE_FORMAT.format(longitude) + "\"";
+    }
+}
+class ExportNotImplementedException extends RuntimeException {
+    public ExportNotImplementedException(String errorMessage) {
+        super(errorMessage);
     }
 }
