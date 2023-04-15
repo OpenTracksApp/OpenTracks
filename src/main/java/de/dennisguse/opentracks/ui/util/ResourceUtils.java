@@ -7,6 +7,9 @@ import android.content.Context;
  */
 public class ResourceUtils {
 
+    private ResourceUtils() {
+    }
+
     /**
      * Convert display density to physical pixel.
      */

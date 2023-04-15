@@ -12,7 +12,7 @@ import de.dennisguse.opentracks.util.StringUtils;
 
 public class SpeedFormatter {
 
-    private final Resources resources;
+    private static Resources resources;
 
     private final int decimalCount;
 
@@ -101,6 +101,22 @@ public class SpeedFormatter {
         public Builder setReportSpeedOrPace(boolean reportSpeedOrPace) {
             this.reportSpeedOrPace = reportSpeedOrPace;
             return this;
+        }
+
+        public Pair<String, String> getSpeedPartsKM(Speed speed) {
+            int unitId = R.string.unit_minute_per_kilometer;
+
+            String unitString = resources.getString(unitId);
+
+            if (speed == null) {
+                speed = Speed.zero();
+            }
+
+            int pace = (int) speed.toPace(unitSystem).getSeconds();
+
+            int minutes = pace / 60;
+            int seconds = pace % 60;
+            return new Pair<>(resources.getString(R.string.time, minutes, seconds), unitString);
         }
 
         public SpeedFormatter build(Resources resource) {

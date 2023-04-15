@@ -78,7 +78,11 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
             }
 
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) throws UnsupportedOperationException {
+                /**
+                 * No Functionality needed as of now.
+                 * Ready to implement additional functionality in future.
+                 */
             }
 
             @Override

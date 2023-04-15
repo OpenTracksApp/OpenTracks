@@ -179,6 +179,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
     private void updateUI() {
         TrackStatistics trackStatistics = track.getTrackStatistics();
+
         // Set total distance
         {
             Pair<String, String> parts = DistanceFormatter.Builder()
@@ -246,6 +247,42 @@ public class StatisticsRecordedFragment extends Fragment {
 
             boolean show = altitudeGain_m != null && altitudeLoss_m != null;
             viewBinding.statsAltitudeGroup.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+
+        // Decide whether to show an additional view for pace/speed
+        boolean showFastestAvgSpeed = PreferencesUtils.shouldShouldFastestAndAvgSpeed();
+        if (showFastestAvgSpeed) {
+            viewBinding.statsSpeedGroup2.setVisibility(View.VISIBLE);
+        } else {
+            viewBinding.statsSpeedGroup2.setVisibility(View.GONE);
+        }
+
+        SpeedFormatter formatter2 = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(!preferenceReportSpeed).build(getContext());
+        // Set average pace/speed
+        {
+            viewBinding.statsAveragePaceLabel.setText(preferenceReportSpeed ? R.string.stats_average_pace : R.string.stats_average_speed);
+
+            Pair<String, String> parts = formatter2.getSpeedParts(trackStatistics.getAverageSpeed());
+            viewBinding.statsAveragePaceValue.setText(parts.first);
+            viewBinding.statsAveragePaceUnit.setText(parts.second);
+        }
+
+        // Set max pace/speed
+        {
+            viewBinding.statsMaxPaceLabel.setText(preferenceReportSpeed ? R.string.stats_fastest_pace : R.string.stats_max_speed);
+
+            Pair<String, String> parts = formatter2.getSpeedParts(trackStatistics.getMaxSpeed());
+            viewBinding.statsMaxPaceValue.setText(parts.first);
+            viewBinding.statsMaxPaceUnit.setText(parts.second);
+        }
+
+        // Set moving pace/speed
+        {
+            viewBinding.statsMovingPaceLabel.setText(preferenceReportSpeed ? R.string.stats_average_moving_pace : R.string.stats_average_moving_speed);
+
+            Pair<String, String> parts = formatter2.getSpeedParts(trackStatistics.getAverageMovingSpeed());
+            viewBinding.statsMovingPaceValue.setText(parts.first);
+            viewBinding.statsMovingPaceUnit.setText(parts.second);
         }
     }
 

@@ -40,7 +40,9 @@ import de.dennisguse.opentracks.settings.SettingsActivity;
 public class ExportUtils {
 
     private static final String TAG = ExportUtils.class.getSimpleName();
-    public static String username = "User2";
+    private ExportUtils() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
     public static void postWorkoutExport(Context context, Track.Id trackId) {
         if (PreferencesUtils.shouldInstantExportAfterWorkout()) {
             TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat();

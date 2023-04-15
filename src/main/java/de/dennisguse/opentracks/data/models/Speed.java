@@ -18,12 +18,12 @@ public class Speed {
         return new Speed(distance.toM() / (duration.toMillis() / (double) Duration.ofSeconds(1).toMillis()));
     }
 
-    public static Speed of(double speed_mps) {
-        return new Speed(speed_mps);
+    public static Speed of(double speedMps) {
+        return new Speed(speedMps);
     }
 
-    public static Speed of(String speed_mps) {
-        return of(Float.parseFloat(speed_mps));
+    public static Speed of(String speedMps) {
+        return of(Float.parseFloat(speedMps));
     }
 
     public static Speed ofKMH(double speed_kmh) {
