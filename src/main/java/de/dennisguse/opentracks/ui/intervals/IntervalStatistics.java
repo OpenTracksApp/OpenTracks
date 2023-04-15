@@ -107,8 +107,8 @@ public class IntervalStatistics {
         public Interval() {
             distance = null;
             time = null;
-            gain_m = 0.0;
-            loss_m = 0.0;
+            gain_m = 0.0f;
+            loss_m = 0.0f;
             avgHeartRate = null;
         }
 
