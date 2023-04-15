@@ -104,13 +104,13 @@ public class IntervalStatistics {
         private Float loss_m;
         private HeartRate avgHeartRate;
 
-        public Interval() {
-            distance = null;
-            time = null;
-            gain_m = 0.0f;
-            loss_m = 0.0f;
-            avgHeartRate = null;
-        }
+//         public Interval() {
+//             distance = null;
+//             time = null;
+//             gain_m = 0.0f;
+//             loss_m = 0.0f;
+//             avgHeartRate = null;
+//         }
 
         public Interval(Distance distance, Duration time) {
             this.distance = distance;
