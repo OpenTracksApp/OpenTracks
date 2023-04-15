@@ -121,6 +121,17 @@
             android:textColor="#000000"
             android:textSize="18dp" />
 
+        <EditText
+            android:id="@+id/editTextHeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#55CEFF"
+            android:ems="10"
+            android:hint="Enter Height (in cm)"
+            android:inputType="number" />
+
         <TextView
             android:id="@+id/textViewWeight"
             android:layout_width="match_parent"
