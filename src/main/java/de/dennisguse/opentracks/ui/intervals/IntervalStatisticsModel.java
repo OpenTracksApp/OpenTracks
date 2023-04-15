@@ -28,7 +28,7 @@ import de.dennisguse.opentracks.settings.UnitSystem;
  * This model is used to load intervals for a track.
  * It uses a default interval but it can be set from outside to manage the interval length.
  */
-public class IntervalStatisticsModel extends AndroidViewModel {
+public class    IntervalStatisticsModel extends AndroidViewModel {
 
     private static final String TAG = IntervalStatisticsModel.class.getSimpleName();
 
