@@ -129,7 +129,7 @@
             android:layout_marginRight="10dp"
             android:backgroundTint="#55CEFF"
             android:ems="10"
-            android:hint="Enter Height (in cm)"
+            android:hint="Enter Height (cm)"
             android:inputType="number" />
 
         <TextView
