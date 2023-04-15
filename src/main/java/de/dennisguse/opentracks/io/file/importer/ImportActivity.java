@@ -30,6 +30,17 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,7 +48,9 @@ import java.util.stream.Collectors;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
 import de.dennisguse.opentracks.databinding.ImportActivityBinding;
+import de.dennisguse.opentracks.introduction.IntroductionActivity;
 import de.dennisguse.opentracks.io.file.ErrorListDialog;
+import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 
 /**
@@ -50,6 +63,8 @@ public class ImportActivity extends FragmentActivity {
     private static final String TAG = ImportActivity.class.getSimpleName();
 
     public static final String EXTRA_DIRECTORY_URI_KEY = "directory_uri";
+
+    public static final String VALIDATE_CLOUD_OR_NOT = "local";
 
     private static final String BUNDLE_DOCUMENT_URIS = "document_uris";
     private static final String BUNDLE_IS_DIRECTORY = "is_directory";
@@ -95,18 +110,46 @@ public class ImportActivity extends FragmentActivity {
             isDirectory = savedInstanceState.getBoolean(BUNDLE_IS_DIRECTORY);
         }
 
-        final List<DocumentFile> documentFiles;
-        if (isDirectory) {
-            documentFiles = new ArrayList<>();
-            documentFiles.add(DocumentFile.fromTreeUri(this, documentUris.get(0)));
+
+        List<DocumentFile> documentFiles = new ArrayList<>();
+        String typeOfClick = intent.getStringExtra(VALIDATE_CLOUD_OR_NOT);
+
+        if (typeOfClick != null && typeOfClick.equals("cloud")) {
+            Storage storage = StorageOptions.newBuilder()
+                    .setProjectId("SOEN")
+                    .build()
+                    .getService();
+            Bucket bucket = storage.get("soen_data1");
+            Iterable<Blob> blobs = bucket.list(Storage.BlobListOption.prefix(ExportUtils.username)).getValues();
+            for (Blob blob : blobs) {
+                if (blob.getName().split("/").length == 2) {
+                    File localFile = new File(this.getCacheDir(), blob.getName().split("/")[1]);
+                    try (OutputStream outputStream = new FileOutputStream(localFile)) {
+                        blob.downloadTo(outputStream);
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    DocumentFile documentFile = DocumentFile.fromFile(localFile);
+                    documentFiles.add(documentFile);
+                }
+            }
         } else {
-            documentFiles = documentUris.stream().map(it -> DocumentFile.fromSingleUri(this, it)).collect(Collectors.toList());
+            if (isDirectory) {
+                documentFiles = new ArrayList<>();
+                documentFiles.add(DocumentFile.fromTreeUri(this, documentUris.get(0)));
+            } else {
+                documentFiles = documentUris.stream().map(it -> DocumentFile.fromSingleUri(this, it)).collect(Collectors.toList());
+            }
+
         }
+
 
         initViews();
 
         viewModel = new ViewModelProvider(this).get(ImportViewModel.class);
-        viewModel.getImportData(documentFiles).observe(this, data -> {
+        viewModel.getImportData(documentFiles, typeOfClick).observe(this, data -> {
             summary = data;
             setProgress();
         });
@@ -114,6 +157,9 @@ public class ImportActivity extends FragmentActivity {
         //Works for a directory, but we might have received multiple files via SEND_MULTIPLE.
         viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.import_progress_message, documentFiles.get(0).getName()));
         viewBinding.bottomAppBarLayout.bottomAppBar.setNavigationIcon(R.drawable.ic_logo_color_24dp);
+        Intent intent1 = new Intent(this, IntroductionActivity.class);
+        startActivity(intent1);
+        finish();
     }
 
     @Override

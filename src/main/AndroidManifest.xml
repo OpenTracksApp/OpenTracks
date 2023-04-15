@@ -355,6 +355,8 @@ limitations under the License.
         <activity android:name=".io.file.importer.DirectoryChooserActivity$DefaultTrackExportDirectoryChooserActivity" />
 
         <activity android:name=".io.file.exporter.ExportActivity" />
+        <activity android:name="de.dennisguse.opentracks.io.file.importer.DriveImporter" />
+        <activity android:name="de.dennisguse.opentracks.io.file.importer.DriveExporter" />
 
         <activity android:name=".settings.SettingsActivity" />
         <activity android:name=".settings.SettingsCustomLayoutListActivity" />

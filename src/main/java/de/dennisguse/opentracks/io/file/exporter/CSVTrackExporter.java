@@ -132,6 +132,7 @@ public class CSVTrackExporter implements TrackExporter {
             return true;
         } catch (InterruptedException e) {
             Log.e(TAG, "Thread interrupted", e);
+            Thread.currentThread().interrupt();
             return false;
         }
     }

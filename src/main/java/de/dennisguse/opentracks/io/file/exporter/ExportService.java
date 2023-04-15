@@ -23,16 +23,19 @@ public class ExportService extends JobIntentService {
 
     private static final String EXTRA_RECEIVER = "extra_receiver";
     private static final String EXTRA_TRACK_ID = "extra_track_id";
+    private static final String TYPE_OF_CLICK = "local";
     private static final String EXTRA_TRACK_FILE_FORMAT = "extra_track_file_format";
     private static final String EXTRA_DIRECTORY_URI = "extra_directory_uri";
     private static final String TAG = ExportService.class.getSimpleName();
 
-    public static void enqueue(Context context, ExportServiceResultReceiver receiver, Track.Id trackId, TrackFileFormat trackFileFormat, Uri directoryUri) {
+    public static void enqueue(Context context, ExportServiceResultReceiver receiver, Track.Id trackId, TrackFileFormat trackFileFormat, Uri directoryUri, String typeOfClick) {
         Intent intent = new Intent(context, JobService.class);
+
         intent.putExtra(EXTRA_RECEIVER, receiver);
         intent.putExtra(EXTRA_TRACK_ID, trackId);
         intent.putExtra(EXTRA_TRACK_FILE_FORMAT, trackFileFormat);
         intent.putExtra(EXTRA_DIRECTORY_URI, directoryUri);
+        intent.putExtra(TYPE_OF_CLICK, typeOfClick);
         enqueueWork(context, ExportService.class, JOB_ID, intent);
     }
 
@@ -40,6 +43,7 @@ public class ExportService extends JobIntentService {
     protected void onHandleWork(@NonNull Intent intent) {
         // Get all data.
         ResultReceiver resultReceiver = intent.getParcelableExtra(EXTRA_RECEIVER);
+
         Track.Id trackId = intent.getParcelableExtra(EXTRA_TRACK_ID);
         TrackFileFormat trackFileFormat = (TrackFileFormat) intent.getSerializableExtra(EXTRA_TRACK_FILE_FORMAT);
         Uri directoryUri = intent.getParcelableExtra(EXTRA_DIRECTORY_URI);
@@ -47,22 +51,30 @@ public class ExportService extends JobIntentService {
         // Prepare resultCode and bundle to send to the receiver.
         Bundle bundle = new Bundle();
         bundle.putParcelable(ExportServiceResultReceiver.RESULT_EXTRA_TRACK_ID, trackId);
+        String typeOfClick = intent.getStringExtra(TYPE_OF_CLICK);
+        boolean success = false;
+        if (typeOfClick.equals("cloud")) {
+            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
+            Track track = contentProviderUtils.getTrack(trackId);
+            success = ExportUtils.exportTrack(this, trackFileFormat, null, track, typeOfClick);
 
-        // Build directory file.
-        DocumentFile directoryFile = DocumentFile.fromTreeUri(this, directoryUri);
-        if (directoryFile == null || !directoryFile.canWrite()) {
-            Log.e(TAG, "Can't write to directory: " + directoryFile);
-            resultReceiver.send(ExportServiceResultReceiver.RESULT_CODE_ERROR, bundle);
-            return;
+        } else {
+            // Build directory file.
+            DocumentFile directoryFile = DocumentFile.fromTreeUri(this, directoryUri);
+            if (directoryFile == null || !directoryFile.canWrite()) {
+                Log.e(TAG, "Can't write to directory: " + directoryFile);
+                resultReceiver.send(ExportServiceResultReceiver.RESULT_CODE_ERROR, bundle);
+                return;
+            }
+            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
+            Track track = contentProviderUtils.getTrack(trackId);
+
+            success = ExportUtils.exportTrack(this, trackFileFormat, directoryFile, track, typeOfClick);
+
         }
-
-        // Export.
-        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
-        Track track = contentProviderUtils.getTrack(trackId);
-        boolean success = ExportUtils.exportTrack(this, trackFileFormat, directoryFile, track);
-
         // Send result to the receiver.
         int resultCode = success ? ExportServiceResultReceiver.RESULT_CODE_SUCCESS : ExportServiceResultReceiver.RESULT_CODE_ERROR;
+
         resultReceiver.send(resultCode, bundle);
     }
 }
