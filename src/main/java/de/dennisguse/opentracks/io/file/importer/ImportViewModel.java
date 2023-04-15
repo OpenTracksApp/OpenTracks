@@ -136,7 +136,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
             return importedTrackIds;
         }
 
-        public List<String> getFileErrors() {
+        public ArrayList<String> getFileErrors() {
             return fileErrors;
         }
     }
