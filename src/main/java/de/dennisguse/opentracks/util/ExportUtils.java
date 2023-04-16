@@ -15,15 +15,11 @@ import androidx.documentfile.provider.DocumentFile;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Bucket;
-import com.google.cloud.storage.BucketInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URI;
 import java.nio.channels.Channels;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,40 +76,45 @@ public class ExportUtils {
                 return false;
             }
         }
-        try {
-            OutputStream outputStream = null;
+        if (exportDocumentFileUri != null) {
+            try(OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFileUri)) {
 
-            if (exportDocumentFileUri != null) {
-                outputStream = context.getContentResolver().openOutputStream(exportDocumentFileUri);
-            }
-            System.out.println("click :" + typeOfClick);
-            if (typeOfClick != null && typeOfClick.equals("cloud")) {
-                Storage storage = StorageOptions.newBuilder()
-                        .setProjectId("SOEN")
-                        .build()
-                        .getService();
+                System.out.println("click :" + typeOfClick);
+                if (typeOfClick != null && typeOfClick.equals("cloud")) {
+                    Storage storage = StorageOptions.newBuilder()
+                            .setProjectId("SOEN")
+                            .build()
+                            .getService();
 
-                BlobInfo blobInfo = BlobInfo.newBuilder("soen_data1", username + "/").build();
-                storage.create(blobInfo);
-                BlobId blobId = BlobId.of("soen_data1", username + "/" + track.getName() + ".kmz");
-                blobInfo = BlobInfo.newBuilder(blobId).build();
-                Blob blob = storage.create(blobInfo);
-                outputStream = Channels.newOutputStream(blob.writer());
-                System.out.println("Track name: " + track.getName());
-
-            }
-            if (trackExporter.writeTrack(track, outputStream)) {
-                System.out.println("Writing into cloud");
-                return true;
-            } else {
-                if (!DocumentFile.fromSingleUri(context, exportDocumentFileUri).delete()) {
-                    Log.e(TAG, "Unable to delete exportDocumentFile");
+                    BlobInfo blobInfo = BlobInfo.newBuilder("soen_data1", username + "/").build();
+                    storage.create(blobInfo);
+                    BlobId blobId = BlobId.of("soen_data1", username + "/" + track.getName() + ".kmz");
+                    blobInfo = BlobInfo.newBuilder(blobId).build();
+                    Blob blob = storage.create(blobInfo);
+                    Channels.newOutputStream(blob.writer());
+                    System.out.println("Track name: " + track.getName());
                 }
-                Log.e(TAG, "Unable to export track");
+                if (trackExporter.writeTrack(track, outputStream)) {
+                    System.out.println("Writing into cloud");
+                    return true;
+                } else {
+                    DocumentFile documentFile = DocumentFile.fromSingleUri(context, exportDocumentFileUri);
+                    if (documentFile != null && !documentFile.delete()) {
+                        Log.e(TAG, "Unable to delete exportDocumentFile");
+                    }
+                    Log.e(TAG, "Unable to export track");
+                    return false;
+                }
+            } catch (FileNotFoundException e) {
+                Log.e(TAG, "Unable to open exportDocumentFile " + exportDocumentFileUri, e);
                 return false;
             }
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "Unable to open exportDocumentFile " + exportDocumentFileUri, e);
+            catch(Exception e) {
+                Log.e(TAG, "Unknown exception occurred: " + exportDocumentFileUri, e);
+                return false;
+            }
+        } else {
+            Log.e(TAG, "Couldn't create document file for export");
             return false;
         }
     }
