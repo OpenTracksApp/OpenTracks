@@ -34,12 +34,22 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
         summary = new Summary();
     }
 
-    LiveData<Summary> getImportData(List<DocumentFile> documentFiles) {
+    LiveData<Summary> getImportData(List<DocumentFile> documentFiles, String typeOfClick) {
         if (importData == null) {
             importData = new MutableLiveData<>();
-            loadData(documentFiles);
+            if (typeOfClick != null && typeOfClick.equals("cloud")) getCloudData(documentFiles);
+            else loadData(documentFiles);
         }
         return importData;
+    }
+
+    private void getCloudData(List<DocumentFile> documentFiles) {
+        List<DocumentFile> fileList = new ArrayList<>();
+        fileList.addAll(documentFiles);
+        while (fileList.size() != 0) {
+            ImportService.enqueue(getApplication(), resultReceiver, fileList.get(0).getUri(), fileList.get(0).getName(), "cloud");
+            fileList.remove(0);
+        }
     }
 
     void cancel() {
@@ -64,14 +74,14 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
         if (cancel || filesToImport.isEmpty()) {
             return;
         }
-        ImportService.enqueue(getApplication(), resultReceiver, filesToImport.get(0).getUri());
+        ImportService.enqueue(getApplication(), resultReceiver, filesToImport.get(0).getUri(), filesToImport.get(0).getName(), "local");
         filesToImport.remove(0);
     }
 
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         if (resultData == null) {
-            throw new RuntimeException(TAG + ": onReceiveResult resultData NULL");
+            throw new NullPointerException(TAG + ": onReceiveResult resultData NULL");
         }
 
         ArrayList<Track.Id> trackIds = resultData.getParcelableArrayList(ImportServiceResultReceiver.RESULT_EXTRA_LIST_TRACK_ID);
@@ -91,7 +101,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
                 summary.existsCount++;
                 break;
             default:
-                throw new RuntimeException(TAG + ": import service result code invalid: " + resultCode);
+                throw new NullPointerException(TAG + ": import service result code invalid: " + resultCode);
         }
 
         importData.postValue(summary);
@@ -122,7 +132,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
             return errorCount;
         }
 
-        public ArrayList<Track.Id> getImportedTrackIds() {
+        public List<Track.Id> getImportedTrackIds() {
             return importedTrackIds;
         }
 

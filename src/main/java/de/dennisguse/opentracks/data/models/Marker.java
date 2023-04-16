@@ -58,8 +58,8 @@ public final class Marker {
     private Distance length;
     private Duration duration;
     
-    private String temperatureCelsius;
-    private String temperatureFahrenheit;
+    private Double temperatureCelsius;
+    private Double temperatureFahrenheit;
     private String weatherCondition;
 
     @Deprecated //TODO Make an URI instead of String
@@ -267,19 +267,19 @@ public final class Marker {
         return Uri.parse(photoUrl);
     }
     
-    public String getTemperatureCelsius() {
+    public Double getTemperatureCelsius() {
         return temperatureCelsius;
     }
     
-    public void setTemperatureCelsius(String temperatureCelsius) {
+    public void setTemperatureCelsius(Double temperatureCelsius) {
         this.temperatureCelsius = temperatureCelsius;
     }
     
-    public String getTemperatureFahrenheit() {
+    public Double getTemperatureFahrenheit() {
         return temperatureFahrenheit;
     }
     
-    public void setTemperatureFahrenheit(String temperatureFahrenheit) {
+    public void setTemperatureFahrenheit(Double temperatureFahrenheit) {
         this.temperatureFahrenheit = temperatureFahrenheit;
     }
     

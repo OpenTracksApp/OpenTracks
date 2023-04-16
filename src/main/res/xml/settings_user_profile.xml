@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+            android:title="My Custom Layout"
+            android:layout="@layout/user_profile_setting"
+            android:key="my_custom_layout_key"/>
+
+</PreferenceScreen>

@@ -55,7 +55,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
         super(context, attrs);
     }
 
-    public BluetoothLeSensorPreference(Context context) {
+    protected BluetoothLeSensorPreference(Context context) {
         super(context);
     }
 

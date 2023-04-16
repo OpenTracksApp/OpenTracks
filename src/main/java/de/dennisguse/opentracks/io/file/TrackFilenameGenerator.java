@@ -30,9 +30,16 @@ public class TrackFilenameGenerator {
     }
 
     private final String template;
+    private final String profileName;
 
     public TrackFilenameGenerator(@NonNull String template) {
         this.template = template;
+        this.profileName = "";
+    }
+
+    public TrackFilenameGenerator(@NonNull String template, @NonNull String profileName) {
+        this.template = template;
+        this.profileName = FileUtils.sanitizeFileName(profileName);
     }
 
     public String format(@NonNull Track track, @NonNull TrackFileFormat trackFileFormat) {
@@ -75,6 +82,21 @@ public class TrackFilenameGenerator {
         }
 
         return String.format(templateCompiled, valueList.toArray());
+    }
+
+    public String format(@NonNull Track track, @NonNull TrackFileFormat trackFileFormat, @NonNull String profileName) {
+        Map<String, String> values = new HashMap<>();
+
+        values.put(UUID_KEY, track.getUuid().toString().substring(0, 8));
+        values.put(TRACKNAME_KEY, track.getName());
+        values.put(CATEGORY_KEY, track.getCategory());
+        values.put(STARTTIME_TIME_KEY, track.getStartTime().toLocalTime().toString());
+        values.put(STARTTIME_DATE_KEY, track.getStartTime().toLocalDate().toString());
+
+        String folderName = profileName + "/";
+        String fileName = FileUtils.sanitizeFileName(format(template, values)) + "." + trackFileFormat.getExtension();
+
+        return folderName + fileName;
     }
 
     public String getTemplate() {

@@ -53,7 +53,7 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  */
 public class StatisticsRecordedFragment extends Fragment {
 
-    private static final String TAG = StatisticsRecordedFragment.class.getSimpleName();
+    //private static final String TAG = StatisticsRecordedFragment.class.getSimpleName();
 
     private static final String TRACK_ID_KEY = "trackId";
 
@@ -148,7 +148,7 @@ public class StatisticsRecordedFragment extends Fragment {
                 if (isResumed()) {
                     Track track = contentProviderUtils.getTrack(trackId);
                     if (track == null) {
-                        Log.e(TAG, "track cannot be null");
+                        Log.e(StatisticsRecordedFragment.class.getSimpleName(), "track cannot be null");
                         getActivity().finish();
                         return;
                     }
@@ -179,6 +179,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
     private void updateUI() {
         TrackStatistics trackStatistics = track.getTrackStatistics();
+
         // Set total distance
         {
             Pair<String, String> parts = DistanceFormatter.Builder()
@@ -211,6 +212,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsAverageSpeedUnit.setText(parts.second);
         }
 
+
         // Set max speed/pace
         {
             viewBinding.statsMaxSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
@@ -231,27 +233,62 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set altitude gain and loss
         {
-            Float altitudeGain_m = trackStatistics.getTotalAltitudeGain();
-            Float altitudeLoss_m = trackStatistics.getTotalAltitudeLoss();
+            Float altitudeGain = trackStatistics.getTotalAltitudeGain();
+            Float altitudeLoss = trackStatistics.getTotalAltitudeLoss();
 
             Pair<String, String> parts;
 
-            parts = StringUtils.getAltitudeParts(getContext(), altitudeGain_m, unitSystem);
+            parts = StringUtils.getAltitudeParts(getContext(), altitudeGain, unitSystem);
             viewBinding.statsAltitudeGainValue.setText(parts.first);
             viewBinding.statsAltitudeGainUnit.setText(parts.second);
 
-            parts = StringUtils.getAltitudeParts(getContext(), altitudeLoss_m, unitSystem);
+            parts = StringUtils.getAltitudeParts(getContext(), altitudeLoss, unitSystem);
             viewBinding.statsAltitudeLossValue.setText(parts.first);
             viewBinding.statsAltitudeLossUnit.setText(parts.second);
 
-            boolean show = altitudeGain_m != null && altitudeLoss_m != null;
+            boolean show = altitudeGain != null && altitudeLoss != null;
             viewBinding.statsAltitudeGroup.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+
+        // Decide whether to show an additional view for pace/speed
+        boolean showFastestAvgSpeed = PreferencesUtils.shouldShouldFastestAndAvgSpeed();
+        if (showFastestAvgSpeed) {
+            viewBinding.statsSpeedGroup2.setVisibility(View.VISIBLE);
+        } else {
+            viewBinding.statsSpeedGroup2.setVisibility(View.GONE);
+        }
+
+        SpeedFormatter formatter2 = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(!preferenceReportSpeed).build(getContext());
+        // Set average pace/speed
+        {
+            viewBinding.statsAveragePaceLabel.setText(preferenceReportSpeed ? R.string.stats_average_pace : R.string.stats_average_speed);
+
+            Pair<String, String> parts = formatter2.getSpeedParts(trackStatistics.getAverageSpeed());
+            viewBinding.statsAveragePaceValue.setText(parts.first);
+            viewBinding.statsAveragePaceUnit.setText(parts.second);
+        }
+
+        // Set max pace/speed
+        {
+            viewBinding.statsMaxPaceLabel.setText(preferenceReportSpeed ? R.string.stats_fastest_pace : R.string.stats_max_speed);
+
+            Pair<String, String> parts = formatter2.getSpeedParts(trackStatistics.getMaxSpeed());
+            viewBinding.statsMaxPaceValue.setText(parts.first);
+            viewBinding.statsMaxPaceUnit.setText(parts.second);
+        }
+
+        // Set moving pace/speed
+        {
+            viewBinding.statsMovingPaceLabel.setText(preferenceReportSpeed ? R.string.stats_average_moving_pace : R.string.stats_average_moving_speed);
+
+            Pair<String, String> parts = formatter2.getSpeedParts(trackStatistics.getAverageMovingSpeed());
+            viewBinding.statsMovingPaceValue.setText(parts.first);
+            viewBinding.statsMovingPaceUnit.setText(parts.second);
         }
     }
 
     private void updateSensorUI() {
         if (sensorStatistics == null) {
-            return;
         }
         //TODO
     }

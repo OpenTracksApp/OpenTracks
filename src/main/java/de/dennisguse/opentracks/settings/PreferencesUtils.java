@@ -64,6 +64,8 @@ public class PreferencesUtils {
 
     private static final int PREFERENCES_VERSION = 2;
 
+    private static String illegalArgument = "Not implemented";
+
     private PreferencesUtils() {
     }
 
@@ -289,6 +291,11 @@ public class PreferencesUtils {
         return getBoolean(R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);
     }
 
+    public static boolean shouldShowAvgSpeedOnTrackRecordedScreen() {
+        final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = resources.getBoolean(R.bool.stats_show_fastest_avg_default);
+        return getBoolean(R.string.stats_show_fastest_avg_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);
+    }
+
     public static boolean shouldKeepScreenOn() {
         final boolean DEFAULT = resources.getBoolean(R.bool.stats_keep_screen_on_while_recording_default);
         return getBoolean(R.string.stats_keep_screen_on_while_recording_key, DEFAULT);
@@ -297,6 +304,16 @@ public class PreferencesUtils {
     public static boolean shouldUseFullscreen() {
         final boolean DEFAULT = resources.getBoolean(R.bool.stats_fullscreen_while_recording_default);
         return getBoolean(R.string.stats_fullscreen_while_recording_key, DEFAULT);
+    }
+
+    /**
+     * Obtain the state of showing fastest and average speed setting option
+     * in User Interface setting.
+     * @return True if the option is open
+     */
+    public static boolean shouldShouldFastestAndAvgSpeed() {
+        final boolean DEFAULT = resources.getBoolean(R.bool.stats_show_fastest_avg_default);
+        return getBoolean(R.string.stats_show_fastest_avg_key, DEFAULT);
     }
 
     public static Duration getVoiceAnnouncementFrequency() {
@@ -456,7 +473,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
@@ -502,7 +519,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
@@ -583,7 +600,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
@@ -634,7 +651,7 @@ public class PreferencesUtils {
                     }
                     break;
                 default:
-                    throw new RuntimeException("Not implemented");
+                    throw new RuntimeException(illegalArgument);
             }
         }
 
