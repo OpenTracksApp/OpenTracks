@@ -22,12 +22,12 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
 /**
  * A DialogFragment to choose an activity type.
  */
-public class ChooseActivityTypeDialogFragment extends DialogFragment implements AdapterView.OnItemClickListener {
+public final class ChooseActivityTypeDialogFragment extends DialogFragment implements AdapterView.OnItemClickListener {
 
     private static final String CHOOSE_ACTIVITY_TYPE_DIALOG_TAG = "chooseActivityType";
 
     public static void showDialog(FragmentManager fragmentManager, String preselectedCategory) {
-        new ChooseActivityTypeDialogFragment(preselectedCategory).show(fragmentManager, ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+        new ChooseActivityTypeDialogFragment(preselectedCategory).show(fragmentManager, CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
     }
 
     private static int getPosition(Context context, String category) {
