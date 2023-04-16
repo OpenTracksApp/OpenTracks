@@ -26,8 +26,6 @@ import de.dennisguse.opentracks.data.models.Distance;
  */
 public class LocationUtils {
 
-    private static final String TAG = LocationUtils.class.getSimpleName();
-
     private LocationUtils() {
     }
 
