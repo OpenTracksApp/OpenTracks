@@ -61,7 +61,7 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
                 .setUnit(unitSystem)
                 .build(context).formatDistance(sumDistance));
 
-        SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(isReportSpeed).build(context);
+        SpeedFormatter formatter = SpeedFormatter.getBuilder().setUnit(unitSystem).setReportSpeedOrPace(isReportSpeed).build(context);
         viewHolder.rate.setText(formatter.formatSpeed(interval.getSpeed()));
 
         viewHolder.gain.setText(StringUtils.formatAltitude(context, interval.getGain_m(), unitSystem));

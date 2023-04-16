@@ -210,8 +210,8 @@ public class DescriptionGenerator {
      */
     @VisibleForTesting
     void writePace(Speed speed, StringBuilder builder, int resId, String lineBreak) {
-        Pair<String, String> paceInMetrics = SpeedFormatter.Builder().setUnit(UnitSystem.METRIC).setReportSpeedOrPace(false).build(context).getSpeedParts(speed);
-        Pair<String, String> paceInImperial = SpeedFormatter.Builder().setUnit(UnitSystem.IMPERIAL).setReportSpeedOrPace(false).build(context).getSpeedParts(speed);
+        Pair<String, String> paceInMetrics = SpeedFormatter.getBuilder().setUnit(UnitSystem.METRIC).setReportSpeedOrPace(false).build(context).getSpeedParts(speed);
+        Pair<String, String> paceInImperial = SpeedFormatter.getBuilder().setUnit(UnitSystem.IMPERIAL).setReportSpeedOrPace(false).build(context).getSpeedParts(speed);
 
         String formattedPaceMetrics = paceInMetrics.first != null ? paceInMetrics.first : context.getString(R.string.value_unknown);
         String formattedPaceImperial = paceInImperial.first != null ? paceInImperial.first : context.getString(R.string.value_unknown);

@@ -202,7 +202,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsTotalTimeValue.setText(StringUtils.formatElapsedTime(trackStatistics.getTotalTime()));
         }
 
-        SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(preferenceReportSpeed).build(getContext());
+        SpeedFormatter formatter = SpeedFormatter.getBuilder().setUnit(unitSystem).setReportSpeedOrPace(preferenceReportSpeed).build(getContext());
         // Set average speed/pace
         {
             viewBinding.statsAverageSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
@@ -258,7 +258,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsSpeedGroup2.setVisibility(View.GONE);
         }
 
-        SpeedFormatter formatter2 = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(!preferenceReportSpeed).build(getContext());
+        SpeedFormatter formatter2 = SpeedFormatter.getBuilder().setUnit(unitSystem).setReportSpeedOrPace(!preferenceReportSpeed).build(getContext());
         // Set average pace/speed
         {
             viewBinding.statsAveragePaceLabel.setText(preferenceReportSpeed ? R.string.stats_average_pace : R.string.stats_average_speed);

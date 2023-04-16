@@ -80,7 +80,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
             // TODO Pace wont work for now
             boolean reportSpeed = true;
-            SpeedFormatter localSpeedFormatter = SpeedFormatter.Builder()
+            SpeedFormatter localSpeedFormatter = SpeedFormatter.getBuilder()
                     .setUnit(unitSystem)
                     .setReportSpeedOrPace(reportSpeed).build(getContext());
 
@@ -106,7 +106,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SpeedFormatter speedFormatterSpeed = SpeedFormatter.Builder()
+            SpeedFormatter speedFormatterSpeed = SpeedFormatter.getBuilder()
                     .setUnit(unitSystem)
                     .setReportSpeedOrPace(true)
                     .build(getContext());
@@ -123,7 +123,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SpeedFormatter speedFormatterSpeed = SpeedFormatter.Builder()
+            SpeedFormatter speedFormatterSpeed = SpeedFormatter.getBuilder()
                     .setUnit(unitSystem)
                     .setReportSpeedOrPace(true)
                     .build(getContext());
@@ -140,7 +140,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SpeedFormatter speedFormatterSpeed = SpeedFormatter.Builder()
+            SpeedFormatter speedFormatterSpeed = SpeedFormatter.getBuilder()
                     .setUnit(unitSystem)
                     .setReportSpeedOrPace(true)
                     .build(getContext());
@@ -157,7 +157,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SpeedFormatter speedFormatterSpeed = SpeedFormatter.Builder()
+            SpeedFormatter speedFormatterSpeed = SpeedFormatter.getBuilder()
                     .setUnit(unitSystem)
                     .setReportSpeedOrPace(false)
                     .build(getContext());
@@ -174,7 +174,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SpeedFormatter speedFormatterSpeed = SpeedFormatter.Builder()
+            SpeedFormatter speedFormatterSpeed = SpeedFormatter.getBuilder()
                     .setUnit(unitSystem)
                     .setReportSpeedOrPace(false)
                     .build(getContext());
@@ -191,7 +191,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SpeedFormatter speedFormatterSpeed = SpeedFormatter.Builder()
+            SpeedFormatter speedFormatterSpeed = SpeedFormatter.getBuilder()
                     .setUnit(unitSystem)
                     .setReportSpeedOrPace(false)
                     .build(getContext());
