@@ -1043,11 +1043,9 @@ public class ChartView extends View {
     /**
      * Returns true if the index is allowed when the chartData is empty.
      */
+   
     private boolean allowIfEmpty(ChartValueSeries chartValueSeries) {
-        if (!chartPoints.isEmpty()) {
-            return false;
-        }
-
-        return chartValueSeries.drawIfChartPointHasNoData();
+    return chartPoints.isEmpty() ? chartValueSeries.drawIfChartPointHasNoData() : false;
     }
+
 }
