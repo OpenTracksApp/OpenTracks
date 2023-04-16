@@ -55,6 +55,9 @@ public class TrackStatistics {
     private Duration movingTime;
     // The maximum speed (meters/second) that we believe is valid.
     private Speed maxSpeed;
+    // the average moving pace (meters/second) of user which traveling.
+    private Speed averageMovingPace;
+
     private Float totalAltitudeGain_m = null;
     private Float totalAltitudeLoss_m = null;
     // The average heart rate seen on this track
@@ -75,6 +78,7 @@ public class TrackStatistics {
         totalDistance = other.totalDistance;
         totalTime = other.totalTime;
         movingTime = other.movingTime;
+        averageMovingPace = other.averageMovingPace;
         maxSpeed = other.maxSpeed;
         altitudeExtremities.set(other.altitudeExtremities.getMin(), other.altitudeExtremities.getMax());
         totalAltitudeGain_m = other.totalAltitudeGain_m;
@@ -88,6 +92,7 @@ public class TrackStatistics {
         this.stopTime = Instant.parse(stopTime);
         this.totalDistance = Distance.of(totalDistance_m);
         this.totalTime = Duration.ofSeconds(totalTime_s);
+        this.averageMovingPace = generateAverageMovingPace();
         this.movingTime = Duration.ofSeconds(movingTime_s);
         this.maxSpeed = Speed.of(maxSpeed_mps);
         this.totalAltitudeGain_m = totalAltitudeGain_m;
@@ -227,6 +232,20 @@ public class TrackStatistics {
         return movingTime;
     }
 
+    public Speed generateAverageMovingPace() {
+        double averagePace = totalDistance.toM() / totalTime.getSeconds();
+        double movingPace = totalDistance.toM()/movingTime.getSeconds();
+        double averageMovingPace = (averagePace + movingPace)/2.0;
+        return Speed.of(averageMovingPace);
+    }
+    public Speed getAverageMovingPace() {
+        return averageMovingPace;
+    }
+
+    public void setAverageMovingPace(Speed averageMovingPace) {
+        this.averageMovingPace = averageMovingPace;
+    }
+
     public void setMovingTime(Duration movingTime) {
         this.movingTime = movingTime;
     }
@@ -261,7 +280,7 @@ public class TrackStatistics {
      * This calculation only takes into account the displacement until the last point that was accounted for in statistics.
      */
     public Speed getAverageSpeed() {
-        if (totalDistance.isZero() && totalDistance.isZero()) {
+        if (totalDistance.isZero()) {
             return Speed.of(0);
         }
         return Speed.of(totalDistance.toM() / totalTime.getSeconds());
@@ -287,8 +306,8 @@ public class TrackStatistics {
         return altitudeExtremities.getMin();
     }
 
-    public void setMinAltitude(double altitude_m) {
-        altitudeExtremities.setMin(altitude_m);
+    public void setMinAltitude(double altitudeM) {
+        altitudeExtremities.setMin(altitudeM);
     }
 
     public boolean hasAltitudeMax() {
@@ -374,6 +393,7 @@ public class TrackStatistics {
     public String toString() {
         return "TrackStatistics { Start Time: " + getStartTime() + "; Stop Time: " + getStopTime()
                 + "; Total Distance: " + getTotalDistance() + "; Total Time: " + getTotalTime()
+                + "; Average Moving Pace: " + getAverageMovingPace()
                 + "; Moving Time: " + getMovingTime() + "; Max Speed: " + getMaxSpeed()
                 + "; Min Altitude: " + getMinAltitude() + "; Max Altitude: " + getMaxAltitude()
                 + "; Altitude Gain: " + getTotalAltitudeGain()

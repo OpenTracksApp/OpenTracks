@@ -219,11 +219,11 @@ public class TrackPoint {
         return altitudeGain_m != null;
     }
 
-    public float getAltitudeGain() {
+    public float getAltitudeGain_m() {
         return altitudeGain_m;
     }
 
-    public TrackPoint setAltitudeGain(Float altitudeGain_m) {
+    public TrackPoint setAltitudeGain_m(Float altitudeGain_m) {
         this.altitudeGain_m = altitudeGain_m;
         return this;
     }

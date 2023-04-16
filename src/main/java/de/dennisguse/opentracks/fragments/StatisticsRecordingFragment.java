@@ -67,8 +67,8 @@ public class StatisticsRecordingFragment extends Fragment {
         }
     };
 
-    private final TrackRecordingServiceConnection.Callback bindChangedCallback = (service, unused) -> service.getRecordingDataObservable()
-            .observe(StatisticsRecordingFragment.this, this::onRecordingDataChanged);
+    private final TrackRecordingServiceConnection.Callback bindChangedCallback = (service, unused) -> service.getRecordingDataObservable();
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -167,17 +167,7 @@ public class StatisticsRecordingFragment extends Fragment {
         }
     }
 
-    private void onRecordingDataChanged(RecordingData recordingData) {
-        String oldCategory = this.recordingData.getTrackCategory();
-        String newCategory = recordingData.getTrackCategory();
-        this.recordingData = recordingData;
 
-        if (!oldCategory.equals(newCategory)) {
-            sharedPreferenceChangeListener.onSharedPreferenceChanged(null, getString(R.string.stats_rate_key));
-        }
-
-        updateDataOnUI();
-    }
 
     private void updateDataOnUI() {
         if (isResumed()) {

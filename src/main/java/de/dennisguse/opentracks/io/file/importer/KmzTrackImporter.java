@@ -200,11 +200,19 @@ public class KmzTrackImporter {
         if (dir.exists() && dir.isDirectory()) {
             for (File file : dir.listFiles()) {
                 if (!photosName.contains(file.getName())) {
-                    file.delete();
+                    if(!file.delete()){
+                        Log.d(TAG, "Unable to delete file.");
+                    }
+                    else
+                        Log.d(TAG, "File deleted successfully");
                 }
             }
             if (dir.listFiles().length == 0) {
-                dir.delete();
+                if(!dir.delete()){
+                    Log.d(TAG, "Unable to delete directory.");
+                }
+                else
+                    Log.d(TAG, "Directory deleted successfully");
             }
         }
     }

@@ -18,6 +18,9 @@ public enum UnitSystem {
     }
 
     @Deprecated //TODO used to initialize before loading from preferences; should be loaded first
+    /**
+     * @deprecated
+     */
     public static UnitSystem defaultUnitSystem() {
         return METRIC;
     }

@@ -392,6 +392,8 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Number</string>
     <string name="settings_recording_track_name_title">Default track name</string>
     <string name="settings_recording_idle_speed_title">Idle speed threshold</string>
+    <string name="settings_recorded_show_fastest_avg_summary">Show fastest speed and average speed</string>
+    <string name="settings_recorded_show_fastest_avg_title">Show Fastest and Avg Speed</string>
     <string name="settings_night_mode_title">UI Theme</string>
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Day</string>
@@ -676,4 +678,9 @@ limitations under the License.
     <string name="menu_profile">Profile</string>
 
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
+
+    <string-array name="GenderSelection">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>

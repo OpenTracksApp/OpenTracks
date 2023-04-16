@@ -9,7 +9,6 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
-import de.dennisguse.opentracks.util.TrackUtils;
 
 public class StartRecording extends AbstractAPIActivity {
 
@@ -21,7 +20,6 @@ public class StartRecording extends AbstractAPIActivity {
     public static final String EXTRA_STATS_TARGET_PACKAGE = "STATS_TARGET_PACKAGE";
     public static final String EXTRA_STATS_TARGET_CLASS = "STATS_TARGET_CLASS";
 
-    private static final String TAG = StartRecording.class.getSimpleName();
 
     protected void execute(TrackRecordingService service) {
         Track.Id trackId = service.startNewTrack();
@@ -41,12 +39,7 @@ public class StartRecording extends AbstractAPIActivity {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackUtils.updateTrack(this, track,
-                bundle.getString(EXTRA_TRACK_NAME, null),
-                bundle.getString(EXTRA_TRACK_CATEGORY, null),
-                bundle.getString(EXTRA_TRACK_ICON, null),
-                bundle.getString(EXTRA_TRACK_DESCRIPTION, null),
-                contentProviderUtils);
+        contentProviderUtils.updateTrack(track);
     }
 
     private void startDashboardAPI(@NonNull Track.Id trackId, @NonNull Bundle bundle) {

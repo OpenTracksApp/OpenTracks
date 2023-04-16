@@ -367,6 +367,31 @@ public class ChartView extends View {
         // either speedSeries or paceSeries should be enabled.
         speedSeries.setEnabled(reportSpeed);
         paceSeries.setEnabled(!reportSpeed);
+
+        // adding average moving pace in chart
+        seriesList.add(new ChartValueSeries(context,
+                0,
+                Integer.MAX_VALUE,
+                new int[]{1, 2, 5, 10, 15, 20, 30, 60, 120},
+                R.string.stats_average_moving_pace,
+                R.string.stats_average_moving_pace,
+                R.string.stats_average_moving_pace,
+                R.color.chart_heart_rate_fill,
+                R.color.chart_heart_rate_border,
+                fontSizeSmall,
+                fontSizeMedium) {
+            @Override
+            protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
+                if (reportSpeed)
+                    return chartPoint.getAvgMovingSpeed();
+                else return chartPoint.getAvgMovingPace();
+            }
+
+            @Override
+            protected boolean drawIfChartPointHasNoData() {
+                return true;
+            }
+        });
     }
 
     @Override
@@ -635,7 +660,7 @@ public class ChartView extends View {
                 }
                 canvas.save();
                 float x = getX(getMarkerXValue(marker));
-                canvas.drawLine(x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
+                canvas.drawLine(x, topBorder + spacer + (float)markerHeight / 2, x, topBorder + (float)effectiveHeight, markerPaint);
                 canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
 
                 markerPin.draw(canvas);
@@ -757,7 +782,7 @@ public class ChartView extends View {
      * @param spacing      the spacing between x axis and marker
      */
     private void drawXAxisMarker(Canvas canvas, double value, NumberFormat numberFormat, int spacing) {
-        String marker = chartByDistance ? numberFormat.format(value) : StringUtils.formatElapsedTime((Duration.ofMillis((long) value)));
+        String marker = chartByDistance ? numberFormat.format(value) : StringUtils.formatElapsedTime(Duration.ofMillis((long) value));
         Rect rect = getRect(xAxisMarkerPaint, marker);
         canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacing + rect.height(), xAxisMarkerPaint);
     }
@@ -771,7 +796,7 @@ public class ChartView extends View {
         } else if (interval < 10) {
             interval = 5;
         } else {
-            interval = (interval / 10) * 10;
+            interval = interval / 10 * 10;
         }
         return interval;
     }
@@ -859,7 +884,7 @@ public class ChartView extends View {
                 break;
             }
         }
-        if (firstChartValueSeries != null && chartPoints.size() > 0) {
+        if (firstChartValueSeries != null && !chartPoints.isEmpty()) {
             int dx = getX(maxX) - pointer.getIntrinsicWidth() / 2;
             double value = firstChartValueSeries.extractDataFromChartPoint(last);
             int dy = getY(firstChartValueSeries, value) - pointer.getIntrinsicHeight();
@@ -1018,11 +1043,9 @@ public class ChartView extends View {
     /**
      * Returns true if the index is allowed when the chartData is empty.
      */
+   
     private boolean allowIfEmpty(ChartValueSeries chartValueSeries) {
-        if (!chartPoints.isEmpty()) {
-            return false;
-        }
-
-        return chartValueSeries.drawIfChartPointHasNoData();
+    return chartPoints.isEmpty() ? chartValueSeries.drawIfChartPointHasNoData() : false;
     }
+
 }

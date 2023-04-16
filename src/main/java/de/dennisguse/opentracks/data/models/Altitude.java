@@ -6,24 +6,24 @@ import de.dennisguse.opentracks.R;
 
 public abstract class Altitude {
 
-    private final double altitude_m;
+    private final double altitudeM;
 
-    private Altitude(double altitude_m) {
-        this.altitude_m = altitude_m;
+    private Altitude(double altitudeM) {
+        this.altitudeM = altitudeM;
     }
 
     public double toM() {
-        return altitude_m;
+        return altitudeM;
     }
 
-    public abstract Altitude replace(double altitude_m);
+    public abstract Altitude replace(double altitudeM);
 
     public abstract int getLabelId();
 
     public static class WGS84 extends Altitude {
 
-        private WGS84(double altitude_m) {
-            super(altitude_m);
+        private WGS84(double altitudeM) {
+            super(altitudeM);
         }
 
         @Override
@@ -31,20 +31,20 @@ public abstract class Altitude {
             return R.string.wgs84;
         }
 
-        public static Altitude of(double altitude_m) {
-            return new WGS84(altitude_m);
+        public static Altitude of(double altitudeM) {
+            return new WGS84(altitudeM);
         }
 
         @Override
-        public Altitude replace(double altitude_m) {
-            return new WGS84(altitude_m);
+        public Altitude replace(double altitudeM) {
+            return new WGS84(altitudeM);
         }
     }
 
     public static class EGM2008 extends Altitude {
 
-        private EGM2008(double altitude_m) {
-            super(altitude_m);
+        private EGM2008(double altitudeM) {
+            super(altitudeM);
         }
 
         @Override
@@ -52,13 +52,13 @@ public abstract class Altitude {
             return R.string.egm2008;
         }
 
-        public static Altitude of(double altitude_m) {
-            return new EGM2008(altitude_m);
+        public static Altitude of(double altitudeM) {
+            return new EGM2008(altitudeM);
         }
 
         @Override
-        public Altitude replace(double altitude_m) {
-            return new EGM2008(altitude_m);
+        public Altitude replace(double altitudeM) {
+            return new EGM2008(altitudeM);
         }
     }
 
@@ -66,8 +66,7 @@ public abstract class Altitude {
     @Override
     public String toString() {
         return "Altitude{" +
-                "altitude_m=" + altitude_m + this.getClass().getSimpleName() +
+                "altitudeM=" + altitudeM + this.getClass().getSimpleName() +
                 '}';
     }
 }
-

@@ -27,8 +27,13 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.data.models.Track;
@@ -40,30 +45,48 @@ import de.dennisguse.opentracks.data.models.Track;
  */
 public class FileUtils {
 
-    private static final String TAG = FileUtils.class.getSimpleName();
-
     public static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
-
     /**
      * The maximum FAT32 path length. See the FAT32 spec at
-     * http://msdn.microsoft.com/en-us/windows/hardware/gg463080
+     * <a href="http://msdn.microsoft.com/en-us/windows/hardware/gg463080">...</a>
      */
     static final int MAX_FAT32_PATH_LENGTH = 260;
+    private static final String TAG = FileUtils.class.getSimpleName();
+
+    private static final Set<Character> FAT32_SPECIAL_CHARS = new HashSet<>(Arrays.asList('$', '%', '\'', '-', '_', '@', '~', '`', '!', '(', ')', '{', '}', '^', '#', '&', '+', ',', ';', '=', '[', ']', ' '));
 
     private FileUtils() {
     }
 
+    /**
+     * Returns the external pictures directory for the app.
+     *
+     * @param context the context of the app
+     * @return the external pictures directory
+     */
     public static File getPhotoDir(Context context) {
         return context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
     }
 
+    /**
+     * Returns the directory for photos associated with the given track.
+     *
+     * @param context the context of the app
+     * @param trackId the id of the track
+     * @return the directory for photos associated with the given track
+     */
     public static File getPhotoDir(Context context, Track.Id trackId) {
-        File photoDirectory = new File(getPhotoDir(context), "" + trackId.getId());
+        File photoDirectory = new File(getPhotoDir(context), String.valueOf(trackId.getId()));
         photoDirectory.mkdirs();
         return photoDirectory;
     }
 
-
+    /**
+     * Returns the full path of a DocumentFile.
+     *
+     * @param file the DocumentFile
+     * @return the full path of the DocumentFile
+     */
     public static String getPath(DocumentFile file) {
         if (file == null) {
             return "";
@@ -71,7 +94,36 @@ public class FileUtils {
         if (file.getParentFile() == null) {
             return file.getName();
         }
-        return getPath(file.getParentFile()) + File.pathSeparatorChar + file.getName();
+        return getPath(file.getParentFile()) + File.separator + file.getName();
+    }
+
+    /**
+     * Copies a directory and its contents recursively to a new location.
+     *
+     * @param srcDir the source directory to copy
+     * @param dstDir the destination directory to copy to
+     * @throws IOException if an I/O error occurs during the copy operation
+     */
+    public static void copyDirectory(File srcDir, File dstDir) throws IOException {
+        if (!srcDir.isDirectory()) {
+            throw new IllegalArgumentException("Source is not a directory.");
+        }
+
+        if (!dstDir.exists()) {
+            dstDir.mkdirs();
+        }
+
+        File[] files = srcDir.listFiles();
+        for (File file : files) {
+            if (file.isDirectory()) {
+                File newDir = new File(dstDir, file.getName());
+                copyDirectory(file, newDir);
+            } else {
+                String fileName = file.getName();
+                String newFileName = FileUtils.buildUniqueFileName(dstDir, fileName.substring(0, fileName.lastIndexOf(".")), fileName.substring(fileName.lastIndexOf(".") + 1));
+                File newFile = new File(dstDir, newFileName);
+            }
+        }
     }
 
     /**
@@ -87,25 +139,46 @@ public class FileUtils {
     }
 
     /**
+     * Generates a unique filename by appending a numeric suffix to the base filename.
+     *
+     * @param directory the directory in which to create the file
+     * @param baseName  the base filename to use
+     * @param extension the file extension to use
+     * @return a File object representing a unique filename
+     */
+    public static File generateUniqueFileName(File directory, String baseName, String extension) {
+        File file = new File(directory, baseName + "." + extension);
+        int count = 1;
+        while (file.exists()) {
+            file = new File(directory, baseName + "-" + count + "." + extension);
+            count++;
+        }
+        return file;
+    }
+
+
+    /**
      * Gets the extension from a file name.
      *
      * @param fileName the file name
-     * @return null if there is no extension or fileName is null.
+     * @return the extension of the file, or null if there is no extension or fileName is null
      */
     public static String getExtension(String fileName) {
         if (fileName == null) {
             return null;
         }
-
         int index = fileName.lastIndexOf('.');
-        if (index == -1) {
-            return null;
-        }
-        return fileName.substring(index + 1);
+        return (index == -1) ? null : fileName.substring(index + 1);
     }
 
+    /**
+     * Gets the extension of a {@link DocumentFile} object.
+     *
+     * @param file the DocumentFile object
+     * @return the extension of the file, or null if there is no extension or file is null
+     */
     public static String getExtension(DocumentFile file) {
-        return getExtension(file.getName());
+        return (file == null) ? null : getExtension(file.getName());
     }
 
     /**
@@ -118,89 +191,49 @@ public class FileUtils {
      * @return the complete filename, without the directory
      */
     private static String buildUniqueFileName(File directory, String base, String extension, int suffix) {
-        String suffixName = "";
-        if (suffix > 0) {
-            suffixName += "(" + suffix + ")";
-        }
-        suffixName += "." + extension;
-
-        String baseName = sanitizeFileName(base);
-        baseName = truncateFileName(directory, baseName, suffixName);
+        String suffixName = (suffix > 0) ? "(" + suffix + ")" + "." + extension : "." + extension;
+        String baseName = truncateFileName(directory, sanitizeFileName(base), suffixName);
         String fullName = baseName + suffixName;
-
-        if (!new File(directory, fullName).exists()) {
-            return fullName;
-        }
-        return buildUniqueFileName(directory, base, extension, suffix + 1);
+        return new File(directory, fullName).exists() ? buildUniqueFileName(directory, base, extension, suffix + 1) : fullName;
     }
 
     /**
-     * Sanitizes the name as a valid fat32 filename.
-     * For simplicity, fat32 filename characters may be any combination of letters, digits, or characters with code point values greater than 127.
+     * Sanitizes the name as a valid FAT32 filename.
+     * For simplicity, FAT32 filename characters may be any combination of letters, digits, or characters with code point values greater than 127.
      * Replaces the invalid characters with "_" and collapses multiple "_" together.
      *
-     * @param name name
+     * @param name the filename to sanitize
+     * @return the sanitized filename
      */
     public static String sanitizeFileName(String name) {
-        StringBuilder builder = new StringBuilder(name.length());
+        StringBuilder builder = new StringBuilder();
         for (int i = 0; i < name.length(); i++) {
-            int codePoint = name.codePointAt(i);
-            char character = name.charAt(i);
-            if (Character.isLetterOrDigit(character) || isSpecialFat32(character) || character == '.') {
-                builder.appendCodePoint(codePoint);
-            } else {
-                builder.append("_");
-            }
+            char c = name.charAt(i);
+            builder.append((Character.isLetterOrDigit(c) || isSpecialFat32(c) || c == '.') ? c : '_');
         }
-        String result = builder.toString();
-        return result.replaceAll("_+", "_");
+        return builder.toString().replaceAll("_+", "_");
     }
 
     /**
-     * Returns true if it is a special FAT32 character.
+     * Determines if the character is a special FAT32 character.
      *
-     * @param character the character
+     * @param character the character to check
+     * @return true if the character is a special FAT32 character, false otherwise
      */
     private static boolean isSpecialFat32(char character) {
-        switch (character) {
-            case '$':
-            case '%':
-            case '\'':
-            case '-':
-            case '_':
-            case '@':
-            case '~':
-            case '`':
-            case '!':
-            case '(':
-            case ')':
-            case '{':
-            case '}':
-            case '^':
-            case '#':
-            case '&':
-            case '+':
-            case ',':
-            case ';':
-            case '=':
-            case '[':
-            case ']':
-            case ' ':
-                return true;
-            default:
-                return false;
-        }
+        return FAT32_SPECIAL_CHARS.contains(character);
     }
 
+
     /**
-     * Truncates the name if necessary so the filename path length (directory + name + suffix) meets the Fat32 path limit.
+     * Truncates the name if necessary so the filename path length (directory + name + suffix) meets the FAT32 path limit.
      *
-     * @param directory directory
-     * @param name      name
-     * @param suffix    suffix
+     * @param directory the directory
+     * @param name      the name
+     * @param suffix    the suffix
+     * @return the truncated filename
      */
-    static String truncateFileName(File directory, String name, String suffix) {
-        // 1 at the end accounts for the FAT32 filename trailing NUL character
+    public static String truncateFileName(File directory, String name, String suffix) {
         int requiredLength = directory.getPath().length() + suffix.length() + 1;
         if (name.length() + requiredLength > MAX_FAT32_PATH_LENGTH) {
             int limit = MAX_FAT32_PATH_LENGTH - requiredLength;
@@ -211,47 +244,95 @@ public class FileUtils {
     }
 
     /**
-     * Copy a File (src) to a File (dst).
+     * Copies a file from the source to the destination.
      *
-     * @param src source file.
-     * @param dst destination file.
+     * @param src the source file descriptor
+     * @param dst the destination file
+     * @throws IOException if an I/O error occurs during the copy operation
      */
-    public static void copy(FileDescriptor src, File dst) {
+    public static void copy(FileDescriptor src, File dst) throws IOException {
         try (FileChannel in = new FileInputStream(src).getChannel();
              FileChannel out = new FileOutputStream(dst).getChannel()) {
             in.transferTo(0, in.size(), out);
-        } catch (Exception e) {
+        } catch (IOException e) {
             // post to log
-            Log.e(TAG, e.getMessage());
+            Log.e(TAG, e.getMessage(), e);
+            throw e;
         }
     }
 
     /**
-     * Returns a Uri for the file.
+     * Returns a content URI for a file.
      *
      * @param context the context.
      * @param file    the file.
+     * @return a content URI for the file.
      */
     public static Uri getUriForFile(Context context, File file) {
         return FileProvider.getUriForFile(context, FileUtils.FILEPROVIDER, file);
     }
 
     /**
-     * Delete the directory recursively.
+     * Deletes all files in a directory except for a specified list of files.
      *
-     * @param file the directory
+     * @param directory  the directory to delete files from.
+     * @param exclusions a list of files to exclude from deletion.
      */
-    public static void deleteDirectoryRecurse(File file) {
-        if (file != null && file.exists() && file.isDirectory()) {
-            for (File child : file.listFiles()) {
-                deleteDirectoryRecurse(child);
+    public static void deleteFilesExcept(File directory, List<File> exclusions) {
+        if (directory == null || !directory.isDirectory()) {
+            return;
+        }
+        File[] files = directory.listFiles();
+        if (files == null) {
+            return;
+        }
+        for (File file : files) {
+            if (exclusions.contains(file)) {
+                continue;
             }
-            file.delete();
-        } else if (file != null && file.isFile()) {
-            file.delete();
+            if (file.isDirectory()) {
+                deleteDirectoryRecurse(file);
+            } else {
+                if (!file.delete()) {
+                    Log.println(Log.ERROR, "Failure 1", "File failure of deletion " + file.getName());
+                }
+            }
         }
     }
 
+    /**
+     * Recursively deletes a directory and its contents.
+     *
+     * @param directory the directory to delete.
+     */
+    public static void deleteDirectoryRecurse(File directory) {
+        if (directory == null || !directory.exists()) {
+            return;
+        }
+        if (!directory.isDirectory()) {
+            if (!directory.delete()) {
+                Log.println(Log.ERROR, "Failure 2", "Directory failure of deletion " + directory.getName());
+            }
+            return;
+        }
+        File[] files = directory.listFiles();
+        if (files == null) {
+            return;
+        }
+        for (File file : files) {
+            deleteDirectoryRecurse(file);
+        }
+        if (!directory.delete()) {
+            Log.println(Log.ERROR, "Failure 3", "Directory failure of deletion " + directory.getName());
+        }
+    }
+
+    /**
+     * Recursively gets a list of all files in a directory, including files in subdirectories.
+     *
+     * @param file the file to search.
+     * @return a list of all files in the directory.
+     */
     public static ArrayList<DocumentFile> getFiles(DocumentFile file) {
         ArrayList<DocumentFile> files = new ArrayList<>();
 
