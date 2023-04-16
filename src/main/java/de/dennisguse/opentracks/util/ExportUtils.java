@@ -98,7 +98,8 @@ public class ExportUtils {
                     System.out.println("Writing into cloud");
                     return true;
                 } else {
-                    if (!DocumentFile.fromSingleUri(context, exportDocumentFileUri).delete()) {
+                    DocumentFile documentFile = DocumentFile.fromSingleUri(context, exportDocumentFileUri);
+                    if (documentFile != null && !documentFile.delete()) {
                         Log.e(TAG, "Unable to delete exportDocumentFile");
                     }
                     Log.e(TAG, "Unable to export track");
