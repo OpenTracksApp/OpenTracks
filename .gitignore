@@ -84,3 +84,6 @@ Gemfile.lock
 
 # Sonarscanner
 .sonnerwork
+
+# hprof files
+.hprof
