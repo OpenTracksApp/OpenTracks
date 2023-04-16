@@ -796,7 +796,7 @@ public class ChartView extends View {
         } else if (interval < 10) {
             interval = 5;
         } else {
-            interval = (interval / 10) * 10;
+            interval = interval / 10 * 10;
         }
         return interval;
     }
