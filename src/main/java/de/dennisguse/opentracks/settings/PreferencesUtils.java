@@ -178,7 +178,6 @@ public class PreferencesUtils {
     public static void setString(int keyId, int valueId) {
         setString(keyId, resources.getString(valueId));
     }
-
     @VisibleForTesting
     public static void setBoolean(int keyId, Boolean value) {
         Editor editor = sharedPreferences.edit();
@@ -797,7 +796,7 @@ public class PreferencesUtils {
     }
 
     public static void updateCustomLayouts(@NonNull List<RecordingLayout> recordingLayouts) {
-        setString(R.string.stats_custom_layouts_key, RecordingLayoutIO.toCSV(recordingLayouts));
+        setString(R.string.stats_custom_layouts_key, RecordingLayoutIO.toCsv(recordingLayouts));
     }
 
     public static void updateCustomLayout(@NonNull RecordingLayout recordingLayout) {

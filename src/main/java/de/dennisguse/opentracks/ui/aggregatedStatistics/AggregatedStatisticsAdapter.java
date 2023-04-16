@@ -122,7 +122,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             setCommonValues(aggregatedStatistic);
 
-            SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
+            SpeedFormatter formatter = SpeedFormatter.getBuilder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
             {
                 Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
                 avgSpeed.setText(parts.first);
@@ -139,7 +139,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         }
 
         public void setPace(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
-            SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
+            SpeedFormatter formatter = SpeedFormatter.getBuilder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
 
             setCommonValues(aggregatedStatistic);
             {

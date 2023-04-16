@@ -1,6 +1,6 @@
-projectKey=Group_14
+projectKey=Horizon_group_14
 serverUrl=http://localhost:9000
 serverVersion=8.9.10.61524
-dashboardUrl=http://localhost:9000/dashboard?id=Group_14
-ceTaskId=AYeLVQ0oSWkmoU8C0mty
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYeLVQ0oSWkmoU8C0mty
+dashboardUrl=http://localhost:9000/dashboard?id=Horizon_group_14
+ceTaskId=AYYdrf-SmmuXLW5-kNQJ
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYYdrf-SmmuXLW5-kNQJ
