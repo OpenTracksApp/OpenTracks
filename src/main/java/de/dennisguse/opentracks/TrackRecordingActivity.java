@@ -48,7 +48,6 @@ import de.dennisguse.opentracks.ui.markers.MarkerListActivity;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
  * An activity to show the track detail, record a new track or resumes an existing one.
@@ -321,7 +320,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     public void onChooseActivityTypeDone(String iconValue) {
         Track track = contentProviderUtils.getTrack(trackId);
         String category = getString(TrackIconUtils.getIconActivityType(iconValue));
-        TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
+        ContentProviderUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
     }
 
     private class CustomFragmentPagerAdapter extends FragmentStateAdapter {

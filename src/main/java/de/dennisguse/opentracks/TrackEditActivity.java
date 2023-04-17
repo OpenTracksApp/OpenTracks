@@ -30,7 +30,6 @@ import de.dennisguse.opentracks.databinding.TrackEditBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
  * An activity that let's the user see and edit the user editable track meta data such as track name, activity type, and track description.
@@ -100,7 +99,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         viewBinding.fields.trackEditDescription.setText(track.getDescription());
 
         viewBinding.trackEditSave.setOnClickListener(v -> {
-            TrackUtils.updateTrack(TrackEditActivity.this, track, viewBinding.fields.trackEditName.getText().toString(),
+            ContentProviderUtils.updateTrack(TrackEditActivity.this, track, viewBinding.fields.trackEditName.getText().toString(),
                     viewBinding.fields.trackEditActivityType.getText().toString(), viewBinding.fields.trackEditDescription.getText().toString(),
                     contentProviderUtils);
             finish();
