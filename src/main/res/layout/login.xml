@@ -53,6 +53,7 @@
         android:text="Login"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
+        android:onClick="verifyUser"
         />
 
     <TextView

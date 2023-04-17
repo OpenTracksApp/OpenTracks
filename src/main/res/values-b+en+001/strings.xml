@@ -131,6 +131,9 @@
     <string name="menu_insert_photo">Insert photo</string>
     <string name="menu_markers">Markers</string>
     <string name="menu_search">Search</string>
+    <string name="menu_signup">Sign Up</string>
+    <string name="menu_login">Log In</string>
+    <string name="menu_quit">Quit</string>
     <string name="menu_select_all">Select all</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_share">Share</string>

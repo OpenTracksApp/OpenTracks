@@ -316,6 +316,9 @@ limitations under the License.
     <string name="menu_resume_track">Resume track</string>
     <string name="menu_add_custom_layout">New Layout</string>
     <string name="menu_filter">Filter</string>
+    <string name="menu_signup">Sign Up</string>
+    <string name="menu_login">Log In</string>
+    <string name="menu_quit">Quit</string>
     <!-- OpenTracks -->
     <string name="recording_service">Recording service</string>
     <string name="delete_service">Deletion service</string>

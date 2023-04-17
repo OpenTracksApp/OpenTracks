@@ -383,6 +383,21 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             return true;
         }
 
+        if (item.getItemId() == R.id.track_list_signup) {
+            startActivity(IntentUtils.newIntent(this, SignupActivity.class));
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_list_login) {
+            startActivity(IntentUtils.newIntent(this, LoginActivity.class));
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_list_quit) {
+            startActivity(IntentUtils.newIntent(this, QuitActivity.class));
+            return true;
+        }
+
         if (item.getItemId() == R.id.track_list_search) {
             SearchView searchView = (SearchView) searchMenuItem.getActionView();
             searchView.setIconified(false);

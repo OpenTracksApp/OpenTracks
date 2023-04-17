@@ -82,6 +82,7 @@
         android:text="signup"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
+        android:onClick="registerUser"
         />
 
     <TextView
