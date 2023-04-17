@@ -80,7 +80,7 @@ public class ShareUtils {
     @Nullable
     public static Intent newShareFileIntent(Context context, Marker.Id... markerIds) {
         if (markerIds.length == 0) {
-            throw new RuntimeException("Need to share at least one marker.");
+            throw new ArithmeticException("Need to share at least one marker.");
         }
 
         String mime = null;
