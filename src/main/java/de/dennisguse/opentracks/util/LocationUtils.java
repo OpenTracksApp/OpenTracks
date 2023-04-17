@@ -26,7 +26,6 @@ import de.dennisguse.opentracks.data.models.Distance;
  */
 public class LocationUtils {
     
-
     private LocationUtils() {
     }
 
