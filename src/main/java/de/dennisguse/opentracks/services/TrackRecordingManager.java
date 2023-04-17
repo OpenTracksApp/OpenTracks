@@ -132,7 +132,7 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         return new Pair<>(track, current);
     }
 
-    public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
+    public Marker.Id insertMarker(String name, String category, String description, String photoUrl, Double temperatureCelsius, Double temperatureFahrenheit, String weatherCondition) {
         if (name == null) {
             Integer nextMarkerNumber = contentProviderUtils.getNextMarkerNumber(trackId);
             if (nextMarkerNumber == null) {
@@ -150,9 +150,12 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         description = description != null ? description : "";
         String icon = context.getString(R.string.marker_icon_url);
         photoUrl = photoUrl != null ? photoUrl : "";
+        temperatureCelsius = temperatureCelsius!=null ? temperatureCelsius: 0.0;
+        temperatureFahrenheit = temperatureFahrenheit!=null ? temperatureFahrenheit:0.0;
+        weatherCondition = weatherCondition!=null ? weatherCondition:" ";
 
         // Insert marker
-        Marker marker = new Marker(name, description, category, icon, trackId, getTrackStatistics(), lastStoredTrackPointWithLocation, photoUrl);
+        Marker marker = new Marker(name, description, category, icon, trackId, getTrackStatistics(), lastStoredTrackPointWithLocation, photoUrl, temperatureCelsius,temperatureFahrenheit,weatherCondition );
         Uri uri = contentProviderUtils.insertMarker(marker);
         return new Marker.Id(ContentUris.parseId(uri));
     }

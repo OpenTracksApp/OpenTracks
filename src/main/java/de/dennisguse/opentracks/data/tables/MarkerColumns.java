@@ -48,32 +48,37 @@ public interface MarkerColumns extends BaseColumns {
     String LONGITUDE = "longitude"; // longitude
     String LATITUDE = "latitude"; // latitude
     String TIME = "time"; // time
-    String ALTITUDE = "altitude"; // altitude
+    String ALTITUDE = "elevation"; // altitude //TODO RENAME column
     String ACCURACY = "accuracy"; // accuracy
     String BEARING = "bearing"; // bearing
 
     String PHOTOURL = "photoUrl"; // url for the photo
 
-    String TEXT = " TEXT, ";
-    String INTEGER = " INTEGER, ";
-    String FLOAT = " FLOAT, ";
+    String TEMPERATURECELSIUS="temperaturecelsius"; //temperature in celsius
+
+    String TEMPERATUREFAHRENHEIT="temperaturefahrenheit"; //temperature in fahrenheit
+
+    String WEATHERCONDITION ="weathercondition"; //weather condition
 
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + NAME + TEXT
-            + DESCRIPTION + TEXT
-            + CATEGORY + TEXT
-            + ICON + TEXT
+            + NAME + " TEXT, "
+            + DESCRIPTION + " TEXT, "
+            + CATEGORY + " TEXT, "
+            + ICON + " TEXT, "
             + TRACKID + " INTEGER NOT NULL, "
-            + LENGTH + FLOAT
-            + DURATION + INTEGER
-            + LONGITUDE + INTEGER
-            + LATITUDE + INTEGER
-            + TIME + INTEGER
-            + ALTITUDE + FLOAT
-            + ACCURACY + FLOAT
-            + BEARING + FLOAT
-            + PHOTOURL + TEXT
+            + LENGTH + " FLOAT, "
+            + DURATION + " INTEGER, "
+            + LONGITUDE + " INTEGER, "
+            + LATITUDE + " INTEGER, "
+            + TIME + " INTEGER, "
+            + ALTITUDE + " FLOAT, "
+            + ACCURACY + " FLOAT, "
+            + BEARING + " FLOAT, "
+            + PHOTOURL + " TEXT, "
+            + TEMPERATURECELSIUS + " FLOAT, "
+            + TEMPERATUREFAHRENHEIT + " FLOAT, "
+            + WEATHERCONDITION + "TEXT, "
             + "FOREIGN KEY (" + TRACKID + ") REFERENCES " + TracksColumns.TABLE_NAME + "(" + TracksColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
             + ")";
 

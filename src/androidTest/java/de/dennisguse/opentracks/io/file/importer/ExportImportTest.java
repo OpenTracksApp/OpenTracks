@@ -146,7 +146,7 @@ public class ExportImportTest {
         Distance sensorDistance = Distance.of(10); // recording distance interval
 
         sendLocation(trackPointCreator, "2020-02-02T02:02:03Z", 3, 14, 10, 13, 15, 10, 1);
-        service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
+        service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null,null,null,null);
 
         // A sensor-only TrackPoint
         trackPointCreator.setClock("2020-02-02T02:02:04Z");
@@ -162,7 +162,7 @@ public class ExportImportTest {
         mockBLESensorData(trackPointCreator, 5f, Distance.of(2), 69f, 3f, 50f); // Distance will be added to next TrackPoint
 
         sendLocation(trackPointCreator, "2020-02-02T02:02:17Z", 3, 14.001, 10, 13, 15, 10, 0);
-        service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
+        service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null,null,null,null);
 
         trackPointCreator.setClock("2020-02-02T02:02:18Z");
         BluetoothRemoteSensorManager mockRemoteSensorManager = Mockito.mock(BluetoothRemoteSensorManager.class);

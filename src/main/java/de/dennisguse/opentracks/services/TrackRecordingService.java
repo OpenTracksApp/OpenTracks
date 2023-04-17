@@ -276,12 +276,12 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
     }
 
-    public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
+    public Marker.Id insertMarker(String name, String category, String description, String photoUrl,Double temperatureCelsius, Double temperatureFahrenheit, String weatherCondition) {
         if (!isRecording()) {
             return null;
         }
 
-        return trackRecordingManager.insertMarker(name, category, description, photoUrl);
+        return trackRecordingManager.insertMarker(name, category, description, photoUrl, temperatureCelsius, temperatureFahrenheit,weatherCondition);
     }
 
     @Deprecated
