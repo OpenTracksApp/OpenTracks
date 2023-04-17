@@ -93,7 +93,7 @@ public class ActivityUtils {
         return searchView;
     }
 
-    public static void vibrate(@NonNull Context context, int milliseconds) {
+    public static void vibrate(@NonNull Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             VibratorManager vibratorManager = (VibratorManager) getSystemService(Context.VIBRATOR_MANAGER_SERVICE);
             vibrator = vibratorManager.getDefaultVibrator();
