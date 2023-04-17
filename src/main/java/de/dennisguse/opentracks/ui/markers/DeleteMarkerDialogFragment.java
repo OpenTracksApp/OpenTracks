@@ -54,36 +54,37 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        try {
+        if (context instanceof DeleteMarkerCaller) {
             caller = (DeleteMarkerCaller) context;
-        } catch (ClassCastException e) {
+        } else {
             throw new ClassCastException(context + " must implement " + DeleteMarkerCaller.class.getSimpleName());
         }
     }
 
-    @Override
     @NonNull
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Marker.Id[] markerIds = (Marker.Id[]) getArguments().getParcelableArray(KEY_MARKER_IDS);
-        final Context context = getContext();
 
-        final FragmentActivity fragmentActivity = getActivity();
+        final FragmentActivity fragmentActivity = requireActivity();
         int titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.marker_delete_one_confirm_title;
         int messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message : R.string.marker_delete_one_confirm_message;
         return DialogUtils.createConfirmationDialog(
-                fragmentActivity, titleId, getString(messageId), (dialog, which) -> new Thread(() -> {
+                fragmentActivity,
+                titleId,
+                getString(messageId),
+                (dialog, which) -> {
                     ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
                     for (Marker.Id markerId : markerIds) {
-                        contentProviderUtils.deleteMarker(context, markerId);
+                        contentProviderUtils.deleteMarker(requireContext(), markerId);
                     }
                     caller.onMarkerDeleted();
-                }).start());
+                }
+        );
     }
 
     /**
      * Interface for caller of this dialog fragment.
-     *
-     * @author Jimmy Shih
      */
     public interface DeleteMarkerCaller {
 
