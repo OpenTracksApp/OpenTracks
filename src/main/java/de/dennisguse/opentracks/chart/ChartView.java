@@ -369,13 +369,17 @@ public class ChartView extends View {
         paceSeries.setEnabled(!reportSpeed);
 
         // adding average moving pace in chart
+        int unitsystem_code = 0;
+        if(reportSpeed)
+            unitsystem_code = R.string.stats_average_moving_speed;
+        else unitsystem_code =  R.string.stats_average_moving_pace;
         seriesList.add(new ChartValueSeries(context,
                 0,
                 Integer.MAX_VALUE,
                 new int[]{1, 2, 5, 10, 15, 20, 30, 60, 120},
-                R.string.stats_average_moving_speed,
-                R.string.stats_average_moving_speed,
-                R.string.stats_average_moving_speed,
+                unitsystem_code,
+                unitsystem_code,
+                unitsystem_code,
                 R.color.chart_avg_moving_speed_fill,
                 R.color.red_dark,
                 fontSizeSmall,
