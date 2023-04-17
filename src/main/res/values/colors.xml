@@ -48,6 +48,8 @@ limitations under the License.
 
     <color name="light_gray">#aaaaaa</color>
 
+    <color name="white">#ffffff</color>
+
     <color name="colorBackgroundDelete">#F44336</color>
     <color name="colorForegroundDelete">#FEFEFE</color>
 

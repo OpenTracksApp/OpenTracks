@@ -362,6 +362,10 @@ limitations under the License.
         <activity android:name=".settings.SettingsCustomLayoutListActivity" />
         <activity android:name=".settings.SettingsCustomLayoutEditActivity" />
 
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".QuitActivity" />
+
         <activity
             android:name=".ShowErrorActivity"
             android:excludeFromRecents="true"
