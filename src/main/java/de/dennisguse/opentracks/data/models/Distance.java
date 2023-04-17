@@ -9,52 +9,52 @@ import de.dennisguse.opentracks.settings.UnitSystem;
 
 public class Distance {
 
-    public static Distance of(double distance_m) {
-        return new Distance(distance_m);
+    public static Distance of(double distanceM) {
+        return new Distance(distanceM);
     }
 
-    public static Distance of(Double distance_m) {
-        if (distance_m == null) {
+    public static Distance of(Double distanceM) {
+        if (distanceM == null) {
             return Distance.of(Double.NaN);
         } else {
-            return Distance.of((double) distance_m);
+            return Distance.of((double) distanceM);
         }
     }
 
-    public static Distance of(String distance_m) {
-        return of(Float.parseFloat(distance_m));
+    public static Distance of(String distanceM) {
+        return of(Float.parseFloat(distanceM));
     }
 
     @Nullable
-    public static Distance ofOrNull(Double distance_m) {
-        if (distance_m == null) {
+    public static Distance ofOrNull(Double distanceM) {
+        if (distanceM == null) {
             return null;
         }
-        return of(distance_m);
+        return of(distanceM);
     }
 
-    public static Distance ofMile(double distance_mile) {
-        return of(distance_mile * MI_TO_M);
+    public static Distance ofMile(double distanceMile) {
+        return of(distanceMile * MI_TO_M);
     }
 
-    public static Distance ofNauticalMile(double distance_mile) {
-        return of(distance_mile * NAUTICAL_MILE_TO_M);
+    public static Distance ofNauticalMile(double distanceMile) {
+        return of(distanceMile * NAUTICAL_MILE_TO_M);
     }
 
-    public static Distance ofKilometer(double distance_km) {
-        return of(distance_km * KM_TO_M);
+    public static Distance ofKilometer(double distanceKM) {
+        return of(distanceKM * KM_TO_M);
     }
 
-    public static Distance ofMM(double distance_mm) {
-        return of(0.001 * distance_mm);
+    public static Distance ofMM(double distanceMM) {
+        return of(0.001 * distanceMM);
     }
 
-    public static Distance ofCM(double distance_cm) {
-        return of(0.01 * distance_cm);
+    public static Distance ofCM(double distanceCM) {
+        return of(0.01 * distanceCM);
     }
 
-    public static Distance ofDM(double distance_dm) {
-        return of(0.1 * distance_dm);
+    public static Distance ofDM(double distanceDM) {
+        return of(0.1 * distanceDM);
     }
 
     public static Distance one(UnitSystem unitSystem) {
@@ -66,38 +66,38 @@ public class Distance {
             case NAUTICAL_IMPERIAL:
                 return Distance.ofNauticalMile(1);
             default:
-                throw new RuntimeException("Not implemented");
+                throw new RuntimeException(NOT_IMPLEMENTED_MSG);
         }
     }
 
-    private final double distance_m;
+    private final double distanceM;
 
-    private Distance(double distance_m) {
-        this.distance_m = distance_m;
+    private Distance(double distanceM) {
+        this.distanceM = distanceM;
     }
 
     public Distance plus(@NonNull Distance distance) {
-        return new Distance(distance_m + distance.distance_m);
+        return new Distance(distanceM + distance.distanceM);
     }
 
     public Distance minus(@NonNull Distance distance) {
-        return new Distance(distance_m - distance.distance_m);
+        return new Distance(distanceM - distance.distanceM);
     }
 
     public Distance multipliedBy(double factor) {
-        return new Distance(factor * distance_m);
+        return new Distance(factor * distanceM);
     }
 
     public double dividedBy(@NonNull Distance divisor) {
-        return distance_m / divisor.distance_m;
+        return distanceM / divisor.distanceM;
     }
 
     public boolean isZero() {
-        return distance_m == 0;
+        return distanceM == 0;
     }
 
     public boolean isInvalid() {
-        return Double.isNaN(distance_m) || Double.isInfinite(distance_m);
+        return Double.isNaN(distanceM) || Double.isInfinite(distanceM);
     }
 
     public boolean lessThan(@NonNull Distance distance) {
@@ -105,31 +105,31 @@ public class Distance {
     }
 
     public boolean greaterThan(@NonNull Distance distance) {
-        return distance_m > distance.distance_m;
+        return distanceM > distance.distanceM;
     }
 
     public boolean greaterOrEqualThan(@NonNull Distance distance) {
-        return distance_m >= distance.distance_m;
+        return distanceM >= distance.distanceM;
     }
 
     public double toM() {
-        return distance_m;
+        return distanceM;
     }
 
     public double toKM() {
-        return distance_m * M_TO_KM;
+        return distanceM * M_TO_KM;
     }
 
     public double toFT() {
-        return distance_m * M_TO_FT;
+        return distanceM * M_TO_FT;
     }
 
     public double toMI() {
-        return distance_m * M_TO_MI;
+        return distanceM * M_TO_MI;
     }
 
     public double toNauticalMiles() {
-        return distance_m * M_TO_NAUTICAL_MILE;
+        return distanceM * M_TO_NAUTICAL_MILE;
     }
 
     public double toKM_Miles(UnitSystem unitSystem) {
@@ -141,7 +141,7 @@ public class Distance {
             case NAUTICAL_IMPERIAL:
                 return toNauticalMiles();
             default:
-                throw new RuntimeException("Not implemented");
+                throw new RuntimeException(NOT_IMPLEMENTED_MSG);
         }
     }
 
@@ -153,7 +153,7 @@ public class Distance {
             case IMPERIAL:
                 return toFT();
             default:
-                throw new RuntimeException("Not implemented");
+                throw new RuntimeException(NOT_IMPLEMENTED_MSG);
         }
     }
 
@@ -162,19 +162,19 @@ public class Distance {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Distance distance = (Distance) o;
-        return Double.compare(distance.distance_m, distance_m) == 0;
+        return Double.compare(distance.distanceM, distanceM) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(distance_m);
+        return Objects.hash(distanceM);
     }
 
     @NonNull
     @Override
     public String toString() {
         return "Distance{" +
-                "distance_m=" + distance_m +
+                "distance_m=" + distanceM +
                 '}';
     }
 
@@ -190,4 +190,6 @@ public class Distance {
 
     private static final double NAUTICAL_MILE_TO_M = 1852.0;
     private static final double M_TO_NAUTICAL_MILE = 1 / NAUTICAL_MILE_TO_M;
+
+    private static final String NOT_IMPLEMENTED_MSG = "Not Implemented";
 }
