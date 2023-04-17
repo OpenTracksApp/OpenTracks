@@ -322,8 +322,8 @@ public class TrackStatistics {
         return altitudeExtremities.getMax();
     }
 
-    public void setMaxAltitude(double altitude_m) {
-        altitudeExtremities.setMax(altitude_m);
+    public void setMaxAltitude(double altitudeM) {
+        altitudeExtremities.setMax(altitudeM);
     }
 
     public void updateAltitudeExtremities(Altitude altitude) {
