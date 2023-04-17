@@ -114,7 +114,8 @@ public class MarkerEditActivity extends AbstractActivity {
         viewBinding.markerEditDone.setOnClickListener(v -> {
             viewModel.onDone(viewBinding.markerEditName.getText().toString(),
                     viewBinding.markerEditMarkerType.getText().toString(),
-                    viewBinding.markerEditDescription.getText().toString());
+                    viewBinding.markerEditDescription.getText().toString(),
+                    null, null, null);
             finish();
         });
 

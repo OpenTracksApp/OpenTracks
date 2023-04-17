@@ -56,7 +56,6 @@ import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.markers.MarkerUtils;
 import de.dennisguse.opentracks.util.FileUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * {@link ContentProviderUtils} implementation.
@@ -355,13 +354,15 @@ public class ContentProviderUtils {
         int accuracyIndex = cursor.getColumnIndexOrThrow(MarkerColumns.ACCURACY);
         int bearingIndex = cursor.getColumnIndexOrThrow(MarkerColumns.BEARING);
         int photoUrlIndex = cursor.getColumnIndexOrThrow(MarkerColumns.PHOTOURL);
-
+        int temperatureCelsiusIndex=cursor.getColumnIndexOrThrow(MarkerColumns.TEMPERATURECELSIUS);
+        int temperatureFahrenheitIndex=cursor.getColumnIndexOrThrow(MarkerColumns.TEMPERATUREFAHRENHEIT);
+        int weatherIndex=cursor.getColumnIndexOrThrow(MarkerColumns.WEATHERCONDITION);
         Track.Id trackId = new Track.Id(cursor.getLong(trackIdIndex));
         Marker marker = new Marker(trackId, Instant.ofEpochMilli(cursor.getLong(timeIndex)));
 
         if (!cursor.isNull(longitudeIndex) && !cursor.isNull(latitudeIndex)) {
-            marker.setLongitude((cursor.getInt(longitudeIndex)) / 1E6);
-            marker.setLatitude((cursor.getInt(latitudeIndex)) / 1E6);
+            marker.setLongitude(((double) cursor.getInt(longitudeIndex)) / 1E6);
+            marker.setLatitude(((double) cursor.getInt(latitudeIndex)) / 1E6);
         }
         if (!cursor.isNull(altitudeIndex)) {
             marker.setAltitude(Altitude.WGS84.of(cursor.getFloat(altitudeIndex)));
@@ -397,6 +398,16 @@ public class ContentProviderUtils {
 
         if (!cursor.isNull(photoUrlIndex)) {
             marker.setPhotoUrl(cursor.getString(photoUrlIndex));
+        }
+
+        if (!cursor.isNull(temperatureCelsiusIndex)) {
+            marker.setTemperatureCelsius(cursor.getDouble(temperatureCelsiusIndex));
+        }
+        if (!cursor.isNull(temperatureFahrenheitIndex)) {
+            marker.setTemperatureFahrenheit(cursor.getDouble(temperatureFahrenheitIndex));
+        }
+        if (!cursor.isNull(weatherIndex)) {
+            marker.setWeatherCondition(cursor.getString(weatherIndex));
         }
         return marker;
     }
@@ -528,6 +539,9 @@ public class ContentProviderUtils {
         }
 
         values.put(MarkerColumns.PHOTOURL, marker.getPhotoUrl());
+        values.put(MarkerColumns.TEMPERATURECELSIUS, marker.getTemperatureCelsius());
+        values.put(MarkerColumns.TEMPERATUREFAHRENHEIT, marker.getTemperatureFahrenheit());
+        values.put(MarkerColumns.WEATHERCONDITION, marker.getWeatherCondition());
         return values;
     }
 
@@ -852,33 +866,5 @@ public class ContentProviderUtils {
 
         }
         return sensorStatistics;
-    }
-
-    public static void updateTrack(Context context, Track track, String name, String category, String description, ContentProviderUtils contentProviderUtils) {
-        updateTrack(context, track, name, category, TrackIconUtils.getIconValue(context, category), description, contentProviderUtils);
-    }
-
-    public static void updateTrack(Context context, Track track, String name, String category, String iconValue, String description, ContentProviderUtils contentProviderUtils) {
-        boolean update = false;
-        if (name != null) {
-            track.setName(name);
-            update = true;
-        }
-        if (category != null) {
-            track.setCategory(category);
-            update = true;
-        }
-        if (iconValue != null) {
-            track.setIcon(iconValue);
-        } else if (category != null){
-            track.setIcon(TrackIconUtils.getIconValue(context, category));
-        }
-        if (description != null) {
-            track.setDescription(description);
-            update = true;
-        }
-        if (update) {
-            contentProviderUtils.updateTrack(track);
-        }
     }
 }

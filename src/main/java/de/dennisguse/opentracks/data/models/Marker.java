@@ -57,7 +57,7 @@ public final class Marker {
     //TODO It is the distance from the track starting point; rename to something more meaningful
     private Distance length;
     private Duration duration;
-    
+
     private Double temperatureCelsius;
     private Double temperatureFahrenheit;
     private String weatherCondition;
@@ -86,7 +86,7 @@ public final class Marker {
     }
 
     @Deprecated
-    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, @NonNull TrackStatistics statistics, @NonNull TrackPoint trackPoint, String photoUrl) {
+    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, @NonNull TrackStatistics statistics, @NonNull TrackPoint trackPoint, String photoUrl, Double temperatureCelsius,Double temperatureFahrenheit,String weatherCondition ) {
         this(trackId, trackPoint);
         this.name = name;
         this.description = description;
@@ -95,6 +95,9 @@ public final class Marker {
         this.length = statistics.getTotalDistance();
         this.duration = statistics.getTotalTime();
         this.photoUrl = photoUrl;
+        this.temperatureCelsius=temperatureCelsius;
+        this.temperatureFahrenheit=temperatureFahrenheit;
+        this.weatherCondition=weatherCondition;
     }
 
     //TODO Is somehow part of the initialization process. Can we at least limit visibility?
