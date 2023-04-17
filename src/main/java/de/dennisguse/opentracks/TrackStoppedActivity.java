@@ -71,7 +71,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
         viewBinding.time.setText(StringUtils.formatElapsedTime(track.getTrackStatistics().getMovingTime()));
 
         {
-            Pair<String, String> parts = SpeedFormatter.Builder()
+            Pair<String, String> parts = SpeedFormatter.getBuilder()
                     .setUnit(PreferencesUtils.getUnitSystem())
                     .setReportSpeedOrPace(PreferencesUtils.isReportSpeed(track.getCategory()))
                     .build(this)

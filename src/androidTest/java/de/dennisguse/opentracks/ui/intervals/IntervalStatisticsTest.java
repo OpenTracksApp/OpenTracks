@@ -165,15 +165,15 @@ public class IntervalStatisticsTest {
             totalTime += i.getDistance().toM() / i.getSpeed().toMPS();
 
             if (totalGain == null) {
-                totalGain = i.getGain_m();
-            } else if (i.getGain_m() != null) {
-                totalGain += i.getGain_m();
+                totalGain = i.getGainM();
+            } else if (i.getGainM() != null) {
+                totalGain += i.getGainM();
             }
 
             if (totalLoss == null) {
-                totalLoss = i.getLoss_m();
-            } else if (i.getLoss_m() != null) {
-                totalLoss += i.getLoss_m();
+                totalLoss = i.getLossM();
+            } else if (i.getLossM() != null) {
+                totalLoss += i.getLossM();
             }
         }
 

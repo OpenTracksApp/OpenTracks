@@ -316,6 +316,9 @@ limitations under the License.
     <string name="menu_resume_track">Resume track</string>
     <string name="menu_add_custom_layout">New Layout</string>
     <string name="menu_filter">Filter</string>
+    <string name="menu_signup">Sign Up</string>
+    <string name="menu_login">Log In</string>
+    <string name="menu_quit">Quit</string>
     <!-- OpenTracks -->
     <string name="recording_service">Recording service</string>
     <string name="delete_service">Deletion service</string>
@@ -466,8 +469,8 @@ limitations under the License.
     <string name="share_track_share_file_body">I think you might be interested in this track.\n\n%1$s</string>
     <string name="share_track_subject">I would like to share a track with you</string>
     <!-- Stats -->
-    <string name="stats_average_moving_pace">Avg moving pace</string>
-    <string name="stats_average_moving_speed">Avg moving speed</string>
+    <string name="stats_average_moving_pace">Avg moving pace (mi/hr)</string>
+    <string name="stats_average_moving_speed">Avg moving speed (mi/hr)</string>
     <string name="stats_average_pace">Avg pace</string>
     <string name="stats_average_speed">Avg speed</string>
     <string name="stats_altitude">Elevation</string>

@@ -293,7 +293,9 @@ public class FileUtils {
             if (file.isDirectory()) {
                 deleteDirectoryRecurse(file);
             } else {
-                file.delete();
+                if (!file.delete()) {
+                    Log.println(Log.ERROR, "Failure 1", "File failure of deletion " + file.getName());
+                }
             }
         }
     }
@@ -308,7 +310,9 @@ public class FileUtils {
             return;
         }
         if (!directory.isDirectory()) {
-            directory.delete();
+            if (!directory.delete()) {
+                Log.println(Log.ERROR, "Failure 2", "Directory failure of deletion " + directory.getName());
+            }
             return;
         }
         File[] files = directory.listFiles();
@@ -318,7 +322,9 @@ public class FileUtils {
         for (File file : files) {
             deleteDirectoryRecurse(file);
         }
-        directory.delete();
+        if (!directory.delete()) {
+            Log.println(Log.ERROR, "Failure 3", "Directory failure of deletion " + directory.getName());
+        }
     }
 
     /**

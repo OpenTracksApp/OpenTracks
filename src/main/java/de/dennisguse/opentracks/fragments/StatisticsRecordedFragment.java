@@ -53,7 +53,7 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  */
 public class StatisticsRecordedFragment extends Fragment {
 
-    private static final String TAG = StatisticsRecordedFragment.class.getSimpleName();
+    //private static final String TAG = StatisticsRecordedFragment.class.getSimpleName();
 
     private static final String TRACK_ID_KEY = "trackId";
 
@@ -148,7 +148,7 @@ public class StatisticsRecordedFragment extends Fragment {
                 if (isResumed()) {
                     Track track = contentProviderUtils.getTrack(trackId);
                     if (track == null) {
-                        Log.e(TAG, "track cannot be null");
+                        Log.e(StatisticsRecordedFragment.class.getSimpleName(), "track cannot be null");
                         getActivity().finish();
                         return;
                     }
@@ -202,7 +202,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsTotalTimeValue.setText(StringUtils.formatElapsedTime(trackStatistics.getTotalTime()));
         }
 
-        SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(preferenceReportSpeed).build(getContext());
+        SpeedFormatter formatter = SpeedFormatter.getBuilder().setUnit(unitSystem).setReportSpeedOrPace(preferenceReportSpeed).build(getContext());
         // Set average speed/pace
         {
             viewBinding.statsAverageSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
@@ -211,6 +211,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsAverageSpeedValue.setText(parts.first);
             viewBinding.statsAverageSpeedUnit.setText(parts.second);
         }
+
 
         // Set max speed/pace
         {
@@ -232,20 +233,20 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set altitude gain and loss
         {
-            Float altitudeGain_m = trackStatistics.getTotalAltitudeGain();
-            Float altitudeLoss_m = trackStatistics.getTotalAltitudeLoss();
+            Float altitudeGain = trackStatistics.getTotalAltitudeGain();
+            Float altitudeLoss = trackStatistics.getTotalAltitudeLoss();
 
             Pair<String, String> parts;
 
-            parts = StringUtils.getAltitudeParts(getContext(), altitudeGain_m, unitSystem);
+            parts = StringUtils.getAltitudeParts(getContext(), altitudeGain, unitSystem);
             viewBinding.statsAltitudeGainValue.setText(parts.first);
             viewBinding.statsAltitudeGainUnit.setText(parts.second);
 
-            parts = StringUtils.getAltitudeParts(getContext(), altitudeLoss_m, unitSystem);
+            parts = StringUtils.getAltitudeParts(getContext(), altitudeLoss, unitSystem);
             viewBinding.statsAltitudeLossValue.setText(parts.first);
             viewBinding.statsAltitudeLossUnit.setText(parts.second);
 
-            boolean show = altitudeGain_m != null && altitudeLoss_m != null;
+            boolean show = altitudeGain != null && altitudeLoss != null;
             viewBinding.statsAltitudeGroup.setVisibility(show ? View.VISIBLE : View.GONE);
         }
 
@@ -257,7 +258,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsSpeedGroup2.setVisibility(View.GONE);
         }
 
-        SpeedFormatter formatter2 = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(!preferenceReportSpeed).build(getContext());
+        SpeedFormatter formatter2 = SpeedFormatter.getBuilder().setUnit(unitSystem).setReportSpeedOrPace(!preferenceReportSpeed).build(getContext());
         // Set average pace/speed
         {
             viewBinding.statsAveragePaceLabel.setText(preferenceReportSpeed ? R.string.stats_average_pace : R.string.stats_average_speed);
@@ -288,7 +289,6 @@ public class StatisticsRecordedFragment extends Fragment {
 
     private void updateSensorUI() {
         if (sensorStatistics == null) {
-            return;
         }
         //TODO
     }

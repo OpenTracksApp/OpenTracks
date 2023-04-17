@@ -65,6 +65,7 @@
             android:textColor="#000000"
             android:textSize="18dp" />
 
+
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
@@ -99,31 +100,38 @@
             android:text="BirthDate"
             android:textColor="#000000"
             android:textSize="18dp" />
-        <TextView
-            android:id="@+id/settextViewBirthDate"
-            android:layout_width="match_parent"
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#000000"
-            android:textSize="18dp" />
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#55CEFF"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:spinnersShown="true" />
+
         <TextView
             android:id="@+id/textViewHeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
             android:text="Height"
             android:textColor="#000000"
             android:textSize="18dp" />
-        <TextView
-            android:id="@+id/setTextViewHeight"
+
+        <EditText
+            android:id="@+id/editTextHeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#000000"
-            android:textSize="18dp" />
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#55CEFF"
+            android:ems="10"
+            android:hint="Enter Height (cm)"
+            android:inputType="number" />
+
         <TextView
             android:id="@+id/textViewWeight"
             android:layout_width="match_parent"
@@ -142,6 +150,17 @@
             android:layout_marginTop="10dp"
             android:textColor="#000001"
             android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/editTextNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="#55CEFF"
+            android:ems="10"
+            android:hint="Enter Weight (in kg)"
+            android:inputType="number"/>
 
     </LinearLayout>
 

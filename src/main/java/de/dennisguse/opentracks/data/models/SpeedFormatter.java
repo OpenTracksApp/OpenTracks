@@ -71,7 +71,7 @@ public class SpeedFormatter {
         return new Pair<>(resources.getString(R.string.time, minutes, seconds), unitString);
     }
 
-    public static Builder Builder() {
+    public static Builder getBuilder() {
         return new Builder();
     }
 

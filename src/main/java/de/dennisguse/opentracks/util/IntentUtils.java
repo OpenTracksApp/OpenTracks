@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * the Licenses at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -34,8 +34,6 @@ import de.dennisguse.opentracks.data.models.Marker;
 public class IntentUtils {
 
     private static final String TAG = IntentUtils.class.getSimpleName();
-
-    private static final String JPEG_EXTENSION = "jpeg";
 
     private IntentUtils() {
     }

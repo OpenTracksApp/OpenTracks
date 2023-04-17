@@ -239,7 +239,7 @@ public class TrackStatistics {
         return Speed.of(averageMovingPace);
     }
     public Speed getAverageMovingPace() {
-        return averageMovingPace;
+        return this.averageMovingPace;
     }
 
     public void setAverageMovingPace(Speed averageMovingPace) {
@@ -257,7 +257,7 @@ public class TrackStatistics {
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addMovingTime(Duration time) {
         if (time.isNegative()) {
-            throw new RuntimeException("Moving time cannot be negative");
+            throw new ArithmeticException("Moving time cannot be negative");
         }
         movingTime = movingTime.plus(time);
     }
@@ -280,7 +280,7 @@ public class TrackStatistics {
      * This calculation only takes into account the displacement until the last point that was accounted for in statistics.
      */
     public Speed getAverageSpeed() {
-        if (totalDistance.isZero() && totalDistance.isZero()) {
+        if (totalDistance.isZero()) {
             return Speed.of(0);
         }
         return Speed.of(totalDistance.toM() / totalTime.getSeconds());
@@ -306,8 +306,8 @@ public class TrackStatistics {
         return altitudeExtremities.getMin();
     }
 
-    public void setMinAltitude(double altitude_m) {
-        altitudeExtremities.setMin(altitude_m);
+    public void setMinAltitude(double altitudeM) {
+        altitudeExtremities.setMin(altitudeM);
     }
 
     public boolean hasAltitudeMax() {

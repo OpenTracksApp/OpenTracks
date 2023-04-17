@@ -12,9 +12,15 @@ import android.widget.Toast;
 
 import androidx.documentfile.provider.DocumentFile;
 
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
+
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.channels.Channels;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +36,10 @@ import de.dennisguse.opentracks.settings.SettingsActivity;
 public class ExportUtils {
 
     private static final String TAG = ExportUtils.class.getSimpleName();
-
+    public static String username = "User1";
+    private ExportUtils() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
     public static void postWorkoutExport(Context context, Track.Id trackId) {
         if (PreferencesUtils.shouldInstantExportAfterWorkout()) {
             TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat();
@@ -51,34 +60,61 @@ public class ExportUtils {
                 }
             });
 
-            ExportService.enqueue(context, resultReceiver, trackId, trackFileFormat, directory.getUri());
+            ExportService.enqueue(context, resultReceiver, trackId, trackFileFormat, directory.getUri(), "local");
         }
     }
 
-    public static boolean exportTrack(Context context, TrackFileFormat trackFileFormat, DocumentFile directory, Track track) {
+    public static boolean exportTrack(Context context, TrackFileFormat trackFileFormat, DocumentFile directory, Track track, String typeOfClick) {
+
         TrackExporter trackExporter = trackFileFormat.createTrackExporter(context);
 
-        Uri exportDocumentFileUri = getExportDocumentFileUri(context, track, trackFileFormat, directory);
-        if (exportDocumentFileUri == null) {
-            Log.e(TAG, "Couldn't create document file for export");
-            return false;
-        }
-
-        try (OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFileUri)) {
-            if (trackExporter.writeTrack(track, outputStream)) {
-                return true;
-            } else {
-                if (!DocumentFile.fromSingleUri(context, exportDocumentFileUri).delete()) {
-                    Log.e(TAG, "Unable to delete exportDocumentFile");
-                }
-                Log.e(TAG, "Unable to export track");
+        Uri exportDocumentFileUri = null;
+        if (directory != null) {
+            exportDocumentFileUri = getExportDocumentFileUri(context, track, trackFileFormat, directory);
+            if (exportDocumentFileUri == null) {
+                Log.e(TAG, "Couldn't create document file for export");
                 return false;
             }
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "Unable to open exportDocumentFile " + exportDocumentFileUri, e);
-            return false;
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to close exportDocumentFile output stream", e);
+        }
+        if (exportDocumentFileUri != null) {
+            try(OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFileUri)) {
+
+                System.out.println("click :" + typeOfClick);
+                if (typeOfClick != null && typeOfClick.equals("cloud")) {
+                    Storage storage = StorageOptions.newBuilder()
+                            .setProjectId("SOEN")
+                            .build()
+                            .getService();
+
+                    BlobInfo blobInfo = BlobInfo.newBuilder("soen_data1", username + "/").build();
+                    storage.create(blobInfo);
+                    BlobId blobId = BlobId.of("soen_data1", username + "/" + track.getName() + ".kmz");
+                    blobInfo = BlobInfo.newBuilder(blobId).build();
+                    Blob blob = storage.create(blobInfo);
+                    Channels.newOutputStream(blob.writer());
+                    System.out.println("Track name: " + track.getName());
+                }
+                if (trackExporter.writeTrack(track, outputStream)) {
+                    System.out.println("Writing into cloud");
+                    return true;
+                } else {
+                    DocumentFile documentFile = DocumentFile.fromSingleUri(context, exportDocumentFileUri);
+                    if (documentFile != null && !documentFile.delete()) {
+                        Log.e(TAG, "Unable to delete exportDocumentFile");
+                    }
+                    Log.e(TAG, "Unable to export track");
+                    return false;
+                }
+            } catch (FileNotFoundException e) {
+                Log.e(TAG, "Unable to open exportDocumentFile " + exportDocumentFileUri, e);
+                return false;
+            }
+            catch(Exception e) {
+                Log.e(TAG, "Unknown exception occurred: " + exportDocumentFileUri, e);
+                return false;
+            }
+        } else {
+            Log.e(TAG, "Couldn't create document file for export");
             return false;
         }
     }

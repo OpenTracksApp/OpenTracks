@@ -27,7 +27,7 @@ public class RecordingStatus {
         return new RecordingStatus(null);
     }
 
-    static RecordingStatus record(@NonNull Track.Id trackId) {
+    static RecordingStatus Record(@NonNull Track.Id trackId) {
         return new RecordingStatus(trackId);
     }
 

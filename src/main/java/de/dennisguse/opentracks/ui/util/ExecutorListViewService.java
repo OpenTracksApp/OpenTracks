@@ -41,9 +41,11 @@ public class ExecutorListViewService<T> {
             Future<?> future = executorService.submit(runnable);
             try {
                 future.get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
+            } catch (InterruptedException e) {
+   			Thread.currentThread().interrupt();
+		} catch (ExecutionException e) {
+    			 e.printStackTrace();
+		}
             postExecute(object);
         }).start();
     }

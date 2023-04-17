@@ -81,3 +81,9 @@ captures/
 Appfile
 releasePlayStore/*
 Gemfile.lock
+
+# Sonarscanner
+.sonnerwork
+
+# hprof files
+.hprof

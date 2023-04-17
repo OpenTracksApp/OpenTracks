@@ -360,8 +360,8 @@ public class ContentProviderUtils {
         Marker marker = new Marker(trackId, Instant.ofEpochMilli(cursor.getLong(timeIndex)));
 
         if (!cursor.isNull(longitudeIndex) && !cursor.isNull(latitudeIndex)) {
-            marker.setLongitude(((double) cursor.getInt(longitudeIndex)) / 1E6);
-            marker.setLatitude(((double) cursor.getInt(latitudeIndex)) / 1E6);
+            marker.setLongitude((cursor.getInt(longitudeIndex)) / 1E6);
+            marker.setLatitude((cursor.getInt(latitudeIndex)) / 1E6);
         }
         if (!cursor.isNull(altitudeIndex)) {
             marker.setAltitude(Altitude.WGS84.of(cursor.getFloat(altitudeIndex)));
