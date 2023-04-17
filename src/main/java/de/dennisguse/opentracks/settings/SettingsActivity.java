@@ -3,10 +3,16 @@ package de.dennisguse.opentracks.settings;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceFragmentCompat;
+import de.dennisguse.opentracks.ui.markers.MarkerEditActivity;
+import de.dennisguse.opentracks.ui.util.ActivityUtils;
+import de.dennisguse.opentracks.util.IntentUtils;
+
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
@@ -23,6 +29,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
     private PreferenceFragmentCompat fragment = null;
 
     private SettingsBinding viewBinding;
+
+    private MenuItem insertMarkerMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,29 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, fragment).commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.setting_list, menu);
+        insertMarkerMenuItem = menu.findItem(R.id.exit);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.exit) {
+            finishAffinity();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
