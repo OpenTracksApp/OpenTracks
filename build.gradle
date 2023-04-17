@@ -43,15 +43,6 @@ def getVersionCode = { ->
     }
 }
 
-sonarqube {
-    properties {
-        property "sonar.projectName", "OpenTrack-Concordia"
-        property "sonar.projectKey", "OpenTrack-Concordia"
-        property "sonar.host.url", "http://localhost:9000"
-        property "sonar.login", "squ_11cb5eddb93a32b141758811213193fa99ad7ca8"
-    }
-}
-
 android {
     compileOptions {
         coreLibraryDesugaringEnabled true
