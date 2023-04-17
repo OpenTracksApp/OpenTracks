@@ -170,7 +170,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         // Set recording status
         Track.Id trackId = trackRecordingManager.startNewTrack(trackPointCreator);
-        updateRecordingStatus(RecordingStatus.record(trackId));
+        updateRecordingStatus(RecordingStatus.Record(trackId));
 
         startRecording();
         return trackId;
@@ -183,7 +183,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             return;
         }
 
-        updateRecordingStatus(RecordingStatus.record(trackId));
+        updateRecordingStatus(RecordingStatus.Record(trackId));
 
         startRecording();
     }
