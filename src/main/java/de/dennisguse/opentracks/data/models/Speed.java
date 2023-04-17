@@ -44,25 +44,25 @@ public class Speed {
 
     public static Speed absDiff(Speed speed1, Speed speed2) {
         //TODO Why Math.abs? Seems to be a leftover.
-        return Speed.of(Math.abs(speed1.speed_mps - speed2.speed_mps));
+        return Speed.of(Math.abs(speed1.speedMps - speed2.speedMps));
     }
 
-    private final double speed_mps;
+    private final double speedMps;
 
-    private Speed(double speed_mps) {
-        this.speed_mps = speed_mps;
+    private Speed(double speedMps) {
+        this.speedMps = speedMps;
     }
 
     public Speed mul(double factor) {
-        return new Speed(factor * speed_mps);
+        return new Speed(factor * speedMps);
     }
 
     public boolean isZero() {
-        return speed_mps == 0;
+        return speedMps == 0;
     }
 
     public boolean isInvalid() {
-        return Double.isNaN(speed_mps) || Double.isInfinite(speed_mps);
+        return Double.isNaN(speedMps) || Double.isInfinite(speedMps);
     }
 
     public boolean isMoving() {
@@ -74,22 +74,22 @@ public class Speed {
     }
 
     public boolean greaterThan(Speed speed) {
-        return speed_mps > speed.speed_mps;
+        return speedMps > speed.speedMps;
     }
 
     public boolean greaterOrEqualThan(Speed speed) {
-        return speed_mps >= speed.speed_mps;
+        return speedMps >= speed.speedMps;
     }
 
     public double toMPS() {
-        return speed_mps;
+        return speedMps;
     }
 
     /**
      * We interpret {@link Speed} here as a {@link Distance} over 1h.
      */
     private Distance toH() {
-        return Distance.of(speed_mps * Duration.ofHours(1).toSeconds());
+        return Distance.of(speedMps * Duration.ofHours(1).toSeconds());
     }
 
     public double toKMH() {
@@ -109,7 +109,7 @@ public class Speed {
             return Duration.ofSeconds(0);
         }
 
-        double distance = Distance.of(speed_mps).toKM_Miles(unitSystem);
+        double distance = Distance.of(speedMps).toKM_Miles(unitSystem);
 
         return Duration.ofSeconds(Math.round(1 / distance));
     }
@@ -132,19 +132,19 @@ public class Speed {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Speed speed = (Speed) o;
-        return Double.compare(speed.speed_mps, speed_mps) == 0;
+        return Double.compare(speed.speedMps, speedMps) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(speed_mps);
+        return Objects.hash(speedMps);
     }
 
     @NonNull
     @Override
     public String toString() {
         return "Speed{" +
-                "speed_mps=" + speed_mps +
+                "speed_mps=" + speedMps +
                 '}';
     }
 }
