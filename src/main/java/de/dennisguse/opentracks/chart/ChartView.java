@@ -141,6 +141,16 @@ public class ChartView extends View {
             }
             return true;
         }
+        /**
+         * Initiates flinging.
+         *
+         * @param velocityX velocity of fling in pixels per second
+         */
+        private void fling(int velocityX) {
+            int maxWidth = effectiveWidth * (zoomLevel - 1);
+            scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
+            invalidate();
+        }
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -525,17 +535,6 @@ public class ChartView extends View {
             updateSeries();
             invalidate();
         }
-    }
-
-    /**
-     * Initiates flinging.
-     *
-     * @param velocityX velocity of fling in pixels per second
-     */
-    private void fling(int velocityX) {
-        int maxWidth = effectiveWidth * (zoomLevel - 1);
-        scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
-        invalidate();
     }
 
     /**
