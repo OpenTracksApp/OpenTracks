@@ -191,17 +191,18 @@ public class MarkerDetailFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         FragmentActivity fragmentActivity = getActivity();
+        boolean output = false;
 
         if (item.getItemId() == R.id.marker_detail_show_on_map) {
             IntentUtils.showCoordinateOnMap(getContext(), marker);
-            return true;
+            output = true;
         }
 
         if (item.getItemId() == R.id.marker_detail_edit) {
             Intent intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
                     .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
             startActivity(intent);
-            return true;
+            output = true;
         }
 
         if (item.getItemId() == R.id.marker_detail_share) {
@@ -210,15 +211,19 @@ public class MarkerDetailFragment extends Fragment {
                 intent = Intent.createChooser(intent, null);
                 startActivity(intent);
             }
-            return true;
+            output = true;
         }
 
         if (item.getItemId() == R.id.marker_detail_delete) {
             DeleteMarkerDialogFragment.showDialog(getChildFragmentManager(), markerId);
-            return true;
+            output = true;
         }
 
-        return super.onOptionsItemSelected(item);
+        if(output) {
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private void updateMarker(boolean refresh) {

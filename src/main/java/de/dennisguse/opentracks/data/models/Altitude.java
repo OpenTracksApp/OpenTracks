@@ -66,7 +66,7 @@ public abstract class Altitude {
     @Override
     public String toString() {
         return "Altitude{" +
-                "altitudeM=" + altitudeM + this.getClass().getSimpleName() +
+                "altitude_m=" + altitudeM + this.getClass().getSimpleName() +
                 '}';
     }
 }

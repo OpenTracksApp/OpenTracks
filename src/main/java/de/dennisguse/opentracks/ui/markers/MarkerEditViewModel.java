@@ -139,14 +139,19 @@ public class MarkerEditViewModel extends AndroidViewModel {
         }
     }
 
-    private void onAddDone(@NonNull Marker marker, String name, String category, String description) {
-        trackRecordingServiceConnection.addMarker(getApplication(), name, category, description, marker.hasPhoto() ? marker.getPhotoURI().toString() : null);
+    private void onAddDone(@NonNull Marker marker, String name, String category, String description, Double temperatureCelsius,Double temperatureFahrenheit,String weatherCondition) {
+        //trackRecordingServiceConnection.addMarker(getApplication(), name, category, description, marker.hasPhoto() ? marker.getPhotoURI().toString() : null, marker.getTemperatureCelsius(), marker.getTemperatureFahrenheit(), marker.getWeatherCondition());
+        trackRecordingServiceConnection.addMarker(getApplication(), name, category, description, marker.hasPhoto() ? marker.getPhotoURI().toString() : null, temperatureCelsius, temperatureFahrenheit, weatherCondition);
+
     }
 
-    private void onSaveDone(@NonNull Marker marker, String name, String category, String description) {
+    private void onSaveDone(@NonNull Marker marker, String name, String category, String description, Double temperatureCelsius,Double temperatureFahrenheit,String weatherCondition) {
         marker.setName(name);
         marker.setCategory(category);
         marker.setDescription(description);
+        marker.setTemperatureFahrenheit(temperatureFahrenheit);
+        marker.setTemperatureCelsius(temperatureCelsius);
+        marker.setWeatherCondition(weatherCondition);
         new ContentProviderUtils(getApplication()).updateMarker(getApplication(), marker);
 
         if (photoOriginalUri != null && (!marker.hasPhoto() || !photoOriginalUri.equals(marker.getPhotoURI()))) {
@@ -154,12 +159,12 @@ public class MarkerEditViewModel extends AndroidViewModel {
         }
     }
 
-    public void onDone(String name, String category, String description) {
+    public void onDone(String name, String category, String description,Double temperatureCelsius,Double temperatureFahrenheit,String weatherCondition) {
         Marker marker = getMarker();
         if (isNewMarker) {
-            onAddDone(marker, name, category, description);
+            onAddDone(marker, name, category, description,temperatureCelsius,temperatureFahrenheit,weatherCondition);
         } else {
-            onSaveDone(marker, name, category, description);
+            onSaveDone(marker, name, category, description,temperatureCelsius,temperatureFahrenheit,weatherCondition);
         }
     }
 

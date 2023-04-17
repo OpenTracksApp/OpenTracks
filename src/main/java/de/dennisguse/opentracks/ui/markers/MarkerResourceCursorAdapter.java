@@ -41,7 +41,7 @@ public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implement
     //TODO Should be Marker.Id
     private final ExecutorListViewService<Long> executorService = new ExecutorListViewService<>(LIST_PREFERRED_ITEM_HEIGHT_DEFAULT);
 
-    private boolean scroll = false;
+    private boolean scroll;
 
     // Cache size is in bytes.
     private final LruCache<String, Bitmap> memoryCache;

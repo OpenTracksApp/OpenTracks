@@ -175,13 +175,13 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     }
 
     @Nullable
-    public Marker.Id addMarker(Context context, String name, String category, String description, String photoUrl) {
+    public Marker.Id addMarker(Context context, String name, String category, String description, String photoUrl, Double temperatureCelsius, Double temperatureFahrenheit, String weatherCondition) {
         TrackRecordingService trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.d(TAG, "Unable to add marker, no track recording service");
         } else {
             try {
-                Marker.Id marker = trackRecordingService.insertMarker(name, category, description, photoUrl);
+                Marker.Id marker = trackRecordingService.insertMarker(name, category, description, photoUrl,temperatureCelsius, temperatureFahrenheit,weatherCondition);
                 if (marker != null) {
                     Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
                     return marker;

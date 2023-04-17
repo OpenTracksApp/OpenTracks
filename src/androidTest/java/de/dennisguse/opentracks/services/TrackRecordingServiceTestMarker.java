@@ -100,7 +100,7 @@ public class TrackRecordingServiceTestMarker {
         assertFalse(service.isRecording());
 
         // when
-        Marker.Id markerId = service.insertMarker(null, null, null, null);
+        Marker.Id markerId = service.insertMarker(null, null, null, null,null,null,null);
 
         // then
         assertNull(markerId);
@@ -113,7 +113,7 @@ public class TrackRecordingServiceTestMarker {
         service.startNewTrack();
 
         // when
-        Marker.Id markerId = service.insertMarker(null, null, null, null);
+        Marker.Id markerId = service.insertMarker(null, null, null, null,null,null,null);
 
         // then
         assertNull(markerId);
@@ -137,7 +137,7 @@ public class TrackRecordingServiceTestMarker {
         );
 
         // when
-        Marker.Id markerId = service.insertMarker(null, null, null, null);
+        Marker.Id markerId = service.insertMarker(null, null, null, null,null,null,null);
 
         // then
         assertNotEquals(new Marker.Id(-1L), markerId);
