@@ -26,6 +26,7 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.provider.BaseColumns;
 import android.provider.Settings;
 import android.util.Pair;
 import android.view.KeyEvent;
@@ -187,7 +188,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
-                int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
+                int idIndex = cursor.getColumnIndexOrThrow(BaseColumns._ID);
                 int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
                 int nameIndex = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
                 int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
@@ -380,6 +381,21 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
         if (item.getItemId() == R.id.track_list_profile) {
             startActivity(IntentUtils.newIntent(this, UserProfileActivity.class));
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_list_signup) {
+            startActivity(IntentUtils.newIntent(this, SignupActivity.class));
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_list_login) {
+            startActivity(IntentUtils.newIntent(this, LoginActivity.class));
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_list_quit) {
+            startActivity(IntentUtils.newIntent(this, QuitActivity.class));
             return true;
         }
 

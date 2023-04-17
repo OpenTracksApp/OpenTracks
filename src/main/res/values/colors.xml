@@ -41,11 +41,14 @@ limitations under the License.
     <color name="chart_speed_fill">#40C8E0FF</color> <!-- transparent blue -->
     <color name="chart_power_border">#FF7A26C0</color> <!-- purple -->
     <color name="chart_power_fill">#407A26C0</color> <!-- transparent purple -->
+    <color name="chart_avg_moving_speed_fill">#00FFFFFF</color>
 
     <!-- Generic colors -->
     <color name="red_dark">#ffbe161b</color>
 
     <color name="light_gray">#aaaaaa</color>
+
+    <color name="white">#ffffff</color>
 
     <color name="colorBackgroundDelete">#F44336</color>
     <color name="colorForegroundDelete">#FEFEFE</color>
