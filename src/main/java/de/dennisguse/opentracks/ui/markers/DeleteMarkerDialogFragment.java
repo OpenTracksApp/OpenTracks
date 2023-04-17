@@ -42,11 +42,11 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
 
     private DeleteMarkerCaller caller;
 
-    public static void showDialog(FragmentManager fragmentManager, Marker.Id... markerIds) {
-        Bundle bundle = new Bundle();
+    public static void showDialog(final FragmentManager fragmentManager, final Marker.Id... markerIds) {
+        final Bundle bundle = new Bundle();
         bundle.putParcelableArray(KEY_MARKER_IDS, markerIds);
 
-        DeleteMarkerDialogFragment deleteMarkerDialogFragment = new DeleteMarkerDialogFragment();
+        final DeleteMarkerDialogFragment deleteMarkerDialogFragment = new DeleteMarkerDialogFragment();
         deleteMarkerDialogFragment.setArguments(bundle);
         deleteMarkerDialogFragment.show(fragmentManager, DELETE_MARKER_DIALOG_TAG);
     }
@@ -63,17 +63,17 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
 
     @Override
     @NonNull
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
         final Marker.Id[] markerIds = (Marker.Id[]) getArguments().getParcelableArray(KEY_MARKER_IDS);
         final Context context = getContext();
 
         final FragmentActivity fragmentActivity = getActivity();
-        int titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.marker_delete_one_confirm_title;
-        int messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message : R.string.marker_delete_one_confirm_message;
+        final int titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.marker_delete_one_confirm_title;
+        final int messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message : R.string.marker_delete_one_confirm_message;
         return DialogUtils.createConfirmationDialog(
                 fragmentActivity, titleId, getString(messageId), (dialog, which) -> new Thread(() -> {
-                    ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
-                    for (Marker.Id markerId : markerIds) {
+                    final ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
+                    for (final Marker.Id markerId : markerIds) {
                         contentProviderUtils.deleteMarker(context, markerId);
                     }
                     caller.onMarkerDeleted();
