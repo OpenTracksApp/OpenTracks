@@ -169,8 +169,8 @@ public class IntervalStatistics {
         private void add(TrackStatistics trackStatistics, @Nullable TrackPoint lastTrackPoint) {
             distance = distance.plus(trackStatistics.getTotalDistance());
             time = time.plus(trackStatistics.getTotalTime());
-            gainM = trackStatistics.hasTotalAltitudeGain() ? trackStatistics.getTotalAltitudeGain() : gainM;
-            lossM = trackStatistics.hasTotalAltitudeLoss() ? trackStatistics.getTotalAltitudeLoss() : lossM;
+            gainM = trackStatistics.hasTotalAltitudeGain() ? (float)trackStatistics.getMaxAltitude() : gainM;
+            lossM = trackStatistics.hasTotalAltitudeLoss() ? (float)trackStatistics.getMinAltitude() : lossM;
             avgHeartRate = trackStatistics.getAverageHeartRate();
             if (lastTrackPoint == null) {
                 return;
@@ -186,8 +186,8 @@ public class IntervalStatistics {
         private void set(TrackStatistics trackStatistics) {
             distance = trackStatistics.getTotalDistance();
             time = trackStatistics.getTotalTime();
-            gainM = trackStatistics.hasTotalAltitudeGain() ? trackStatistics.getTotalAltitudeGain() : gainM;
-            lossM = trackStatistics.hasTotalAltitudeLoss() ? trackStatistics.getTotalAltitudeLoss() : lossM;
+            gainM = trackStatistics.hasTotalAltitudeGain() ? (float)trackStatistics.getMaxAltitude() : gainM;
+            lossM = trackStatistics.hasTotalAltitudeLoss() ? (float)trackStatistics.getMinAltitude() : lossM;
             avgHeartRate = trackStatistics.getAverageHeartRate();
         }
     }
