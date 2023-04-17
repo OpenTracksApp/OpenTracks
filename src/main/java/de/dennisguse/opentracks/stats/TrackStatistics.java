@@ -257,7 +257,7 @@ public class TrackStatistics {
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addMovingTime(Duration time) {
         if (time.isNegative()) {
-            throw new RuntimeException("Moving time cannot be negative");
+            throw new ArithmeticException("Moving time cannot be negative");
         }
         movingTime = movingTime.plus(time);
     }
