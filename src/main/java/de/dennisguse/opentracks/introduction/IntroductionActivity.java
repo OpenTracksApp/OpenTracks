@@ -78,7 +78,7 @@ public class IntroductionActivity extends AbstractActivity {
                 return fc.newInstance();
             }
 
-            throw new RuntimeException("There isn't Fragment associated with the position: " + position);
+            throw new MyCustomException("There isn't Fragment associated with the position: " + position);
         }
 
         @Override
@@ -89,5 +89,11 @@ public class IntroductionActivity extends AbstractActivity {
 
     private interface FragmentCreator {
         Fragment newInstance();
+    }
+    
+    class MyCustomException extends Exception{
+        public MyCustomException(String message){
+            super(message);
+        }
     }
 }
