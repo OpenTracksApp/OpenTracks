@@ -196,6 +196,11 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         return super.onOptionsItemSelected(item);
     }
 
+    if (item.getItemId() == R.id.exit) {
+        finishAffinity();
+        return true;
+    }
+
     /**
      * Handles a context item selection.
      *

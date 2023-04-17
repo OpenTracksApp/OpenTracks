@@ -5,13 +5,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
+import de.dennisguse.opentracks.TrackListActivity;
+import de.dennisguse.opentracks.TrackRecordedActivity;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import de.dennisguse.opentracks.util.IntentUtils;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
@@ -98,6 +106,11 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
         if (item.getItemId() == R.id.aggregated_statistics_clear_filter) {
             setMenuVisibility(false);
             viewModel.clearSelection();
+            return true;
+        }
+
+        if (item.getItemId() == R.id.exit) {
+            finishAffinity();
             return true;
         }
 

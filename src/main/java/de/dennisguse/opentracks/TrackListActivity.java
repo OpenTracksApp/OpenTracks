@@ -368,6 +368,11 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             return true;
         }
 
+        if (item.getItemId() == R.id.exit) {
+            finishAffinity();
+            return true;
+        }
+
         if (item.getItemId() == R.id.track_list_markers) {
             startActivity(IntentUtils.newIntent(this, MarkerListActivity.class));
             return true;
