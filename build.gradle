@@ -1,17 +1,12 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.sonarqube'
 
 buildscript {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.0'
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3'
     }
 }
 
@@ -51,21 +46,13 @@ def getVersionCode = { ->
 sonarqube {
     properties {
         property "sonar.projectName", "OpenTrack-Concordia"
-        property "sonar.sources","src/main/java/de/dennisguse/opentracks/data/models"
         property "sonar.projectKey", "OpenTrack-Concordia"
         property "sonar.host.url", "http://localhost:9000"
-        property "sonar.exclusions","src/androidTest/java/de/dennisguse/opentracks/**"
         property "sonar.login", "squ_11cb5eddb93a32b141758811213193fa99ad7ca8"
     }
 }
 
 android {
-    packagingOptions {
-        resources.excludes += "META-INF/INDEX.LIST"
-    }
-    lintOptions {
-        abortOnError false
-    }
     compileOptions {
         coreLibraryDesugaringEnabled true
 
@@ -81,8 +68,8 @@ android {
 
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
-        versionCode 5151
-        versionName "v4.3.0"
+        versionCode 5132
+        versionName "v4.2.1"
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
@@ -91,8 +78,6 @@ android {
 
         testInstrumentationRunner "de.dennisguse.opentracks.TestRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
-
-        resConfigs "ar", "bg", "ca", "cs", "da", "de", "el", "en", "es", "et", "eu", "fa", "fi", "fr", "ga", "gl", "hi", "hr", "hu", "in", "it", "iw", "ja", "ko", "lt", "lv", "mo", "ms", "nb", "nl", "pl", "pt", "ro", "ru", "sk", "sl", "sr", "sv", "th", "tl", "tr", "uk", "vi", "zh"
     }
     signingConfigs {
         nightly {
@@ -104,6 +89,7 @@ android {
             }
         }
     }
+
     namespace 'de.dennisguse.opentracks'
 
     buildTypes {
@@ -143,22 +129,22 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.2'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.0'
+
+    implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'androidx.documentfile:documentfile:1.0.1'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.cloud:google-cloud-storage:2.19.0'
     implementation 'androidx.core:core-splashscreen:1.0.0'
+
     androidTestImplementation 'androidx.test:core:1.5.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test:rules:1.5.0'
     androidTestImplementation 'androidx.test:runner:1.5.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'org.mockito:mockito-android:5.2.0'
+    androidTestImplementation 'org.mockito:mockito-android:4.11.0'
 
     androidTestUtil 'androidx.test:orchestrator:1.4.2'
-
 }
