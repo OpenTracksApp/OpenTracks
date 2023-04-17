@@ -15,6 +15,14 @@ limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/exit"
+        android:icon="@drawable/ic_exit"
+        android:title="@string/exit"
+        android:visible="true"
+        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/marker_list_insert_marker"
         android:icon="@drawable/ic_marker_show_24dp"
