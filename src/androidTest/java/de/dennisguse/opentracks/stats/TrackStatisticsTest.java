@@ -125,4 +125,16 @@ public class TrackStatisticsTest {
         statistics.setMovingTime(Duration.ofMillis(20000));
         assertEquals(50.0, statistics.getAverageMovingSpeed().toMPS(), 0.001);
     }
+
+    @Test
+    public void testGetAverageMovingPace() {
+        TrackStatistics statistics2 = new TrackStatistics();
+        statistics2.setTotalDistance(Distance.of(1000.0));
+        statistics2.setMovingTime(Duration.ofMillis(20000));
+        statistics2.setTotalTime(Duration.ofMillis(25000));
+        statistics2.setAverageMovingPace(statistics2.generateAverageMovingPace());
+        assertEquals(45.0, statistics2.getAverageMovingPace().toMPS(), 0.01);
+    }
+
+
 }

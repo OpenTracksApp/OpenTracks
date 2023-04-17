@@ -239,7 +239,7 @@ public class TrackStatistics {
         return Speed.of(averageMovingPace);
     }
     public Speed getAverageMovingPace() {
-        return averageMovingPace;
+        return this.averageMovingPace;
     }
 
     public void setAverageMovingPace(Speed averageMovingPace) {
