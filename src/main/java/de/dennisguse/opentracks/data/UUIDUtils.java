@@ -8,6 +8,7 @@ import java.util.UUID;
 public class UUIDUtils {
 
   //issue 552
+  //Add a private constructor to hide the implicit public one.
     private void fromBytes(){
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
