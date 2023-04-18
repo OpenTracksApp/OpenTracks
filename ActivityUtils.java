@@ -104,7 +104,8 @@ public class ActivityUtils {
             vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         }
         //final Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
-        final int DELAY = 0, VIBRATE = 1000, SLEEP = 1000, START = 0;
+        final int DELAY = 0; 
+        final int VIBRATE = 1000, SLEEP = 1000, START = 0;
         long[] vibratePattern = {DELAY, VIBRATE, SLEEP};
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(VibrationEffect.createWaveform(vibratePattern, START));
