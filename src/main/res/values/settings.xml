@@ -62,6 +62,8 @@
     <string name="settings_export" translatable="false">settingsExport</string>
 
     <!-- Stats layout customization default layout -->
+    <string name="settings_layout_reset_key" translatable="false">settingsLayoutReset</string>
+
     <string name="default_activity_key" translatable="false">defaultActivity</string>
     <string name="default_activity_default" translatable="false">@string/activity_type_unknown</string>
 

@@ -361,7 +361,6 @@ limitations under the License.
     <string name="settings_activity_defaults_category">活動的預設值</string>
 
     <string name="settings_reset_summary">重置設定為預設值</string>
-    <string name="settings_layout_reset_key" translatable="false">設定布局重置</string>
 
     <!-- Settings Advanced -->
     <string name="settings_advanced">進階</string>

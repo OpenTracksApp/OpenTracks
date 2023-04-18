@@ -361,7 +361,6 @@ limitations under the License.
     <string name="settings_activity_defaults_category">Activity\'s Defaults</string>
 
     <string name="settings_reset_summary">Reset Settings to Default Values</string>
-    <string name="settings_layout_reset_key" translatable="false">settingsLayoutReset</string>
 
     <!-- Settings Advanced -->
     <string name="settings_advanced">Advanced</string>
