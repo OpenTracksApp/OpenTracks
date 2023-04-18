@@ -7,13 +7,20 @@ import java.util.UUID;
 
 public class UUIDUtils {
 
+  //issue 552
+    private void fromBytes(){
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
+
     public static UUID fromBytes(byte[] bytes) {
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
         long mostSignificant = byteBuffer.getLong();
         long lestSignificant = byteBuffer.getLong();
         return new UUID(mostSignificant, lestSignificant);
     }
-
+    private void toBytes(){
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
     public static byte[] toBytes(@NonNull UUID uuid) {
         ByteBuffer byteBuffer = ByteBuffer.allocate(16);
         byteBuffer.putLong(uuid.getMostSignificantBits());
@@ -22,7 +29,9 @@ public class UUIDUtils {
     }
 
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
-
+    private void toHex(){
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
+    }
     public static String toHex(@NonNull UUID uuid) {
         byte[] bytes = toBytes(uuid);
 
