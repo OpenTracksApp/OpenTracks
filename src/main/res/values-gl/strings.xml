@@ -612,4 +612,5 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="help_data_google_play_services_content">Non</string>
     <string name="settings_sensor_heart_rate_max">Zonas: Pulso máximo (lpm)</string>
     <string name="settings_api_summary">Control remoto e API de estatísticas para outras apps</string>
+    <string name="voice_on_device_speaker_title">Usar o altofalante do dispositivo</string>
 </resources>

@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <string name="about_preference_title">關於 OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> 是一個完全尊重您的隱私的運動蹤跡應用程式。</string>
     <string name="about_url">專案網頁：<a href="%1$s">%1$s</a></string>
@@ -23,16 +23,13 @@ limitations under the License.
     <string name="about_third_party_data">第三方資料</string>
     <string name="about_libraries">函式庫</string>
     <!-- Help -->
-    <string name="help_feature_title">OpenTracks 擁有以下特點：</string>
-    <string name="help_feature_content">
-        * 建立 GPS 蹤跡\n
-        * 使用一個心率感測器 (僅限藍牙 LE)\n
-        * 語音通知 (依時間或距離)\n
-        * 建立標記 (包含圖片)\n
-        * 完全離線工作\n
-        * 在地圖上顯示蹤跡 (見下文)
-    </string>
-
+    <string name="help_feature_title">OpenTracks 擁有以下功能：</string>
+    <string name="help_feature_content">* 建立 GPS 蹤跡
+\n * 使用一個心率感測器 (僅限藍牙 LE)
+\n * 語音播報 (依時間或距離)
+\n * 建立標記 (包含圖片)
+\n * 完全離線工作
+\n * 在地圖上顯示蹤跡 (見下文)</string>
     <string name="help_track_map_title">如何在地圖顯示一個蹤跡？</string>
     <string name="help_track_map_content">
         使用小的地圖圖示。\n
@@ -47,33 +44,27 @@ limitations under the License.
         這些 APP 需要支援 KMZ 檔案格式 (只有位置與時間戳記)。
         事實上，APP 需要支援 <i>ACTION_VIEW</i> 與 MIME <i>application/vnd.google-earth.kmz</i>。
     </string>
-
     <string name="help_storage_pictures_title">OpenTracks 如何存儲作為標記拍攝的照片？</string>
     <string name="help_storage_pictures_content">這些儲存在應用程序內部儲存區中 (即，只能在 OpenTracks 中存取)。</string>
-
     <string name="help_track_export_title">如何匯出/分享 紀錄的蹤跡？</string>
     <string name="help_track_export_content">
         可以從設定匯出蹤跡為 KMZ、KML 或 GPX。
         KMZ/KML 全部資料；GPX 只有位置。
         通過<i>分享圖示</i>以分享蹤跡為 KMZ。
     </string>
-
     <string name="help_data_google_play_services_title">OpenTracks 是否需要/使用 Google Play 服務？</string>
     <string name="help_data_google_play_services_content">否</string>
-
     <string name="help_recording_title">OpenTracks 是如何記錄資料的？</string>
     <string name="help_recording_content">
         OpenTracks 使用裝置的 GPS 感測器以連續紀錄位置。
         如果 GPS 裝置回報的資料不准確 (例如，位置、速度、海拔)，OpenTracks 對此無能為力。
     </string>
-
     <string name="help_data_storage_title">OpenTracks 如何儲存感測器資料？</string>
     <string name="help_data_storage_content">
         感測器資料儲存在每個記錄的位置。
         就心率感測器而言，這意味著只有<i>一個</i>心率測量值被依照位置儲存。
         如果您是站著不動或在室內，沒有感測器資料會被記錄 (但它會被顯示)。
     </string>
-
     <string name="help_gps_troubleshooting_title">OpenTracks 沒有紀錄位置？</string>
     <string name="help_gps_troubleshooting_content">
         您能做什麼：\n
@@ -84,7 +75,6 @@ limitations under the License.
         \n
         如果一切都沒有幫助，請回報 bug。
     </string>
-
     <string name="help_support_title">我如何支持 OpenTracks？</string>
     <string name="help_support_content">
         您可以：\n
@@ -96,11 +86,9 @@ limitations under the License.
         f) 贊助，以及\n
         g) 做任何您認為對 OpenTracks 有幫助的事情。
     </string>
-
     <string name="open_track_as_KML">開啟為 KML</string>
     <string name="open_track_as_GPX">開啟為 GPX</string>
     <string name="open_track_as_trackfileformat">開啟為 %1$s</string>
-
     <!-- Activity Type -->
     <string name="activity_type_airplane">飛機</string>
     <string name="activity_type_atv">越野車</string>
@@ -335,33 +323,23 @@ limitations under the License.
     <string name="sensor_state_power_avg">平均功率</string>
     <string name="sensor_could_not_scan">無法掃描藍牙裝置 (錯誤 %1$i).</string>
     <string name="bluetooth_disabled">請啟用藍芽。</string>
-
     <string name="settings_open_tracks_title">開啟蹤跡</string>
     <string name="settings_open_tracks_summary">所有關於 OpenTracks 專案</string>
-
     <string name="settings_defaults_title">預設單位與活動</string>
     <string name="settings_defaults_summary">首選單位、預設活動、蹤跡預設名稱</string>
-
     <string name="settings_ui_title">使用者介面</string>
     <string name="settings_ui_summary">外觀、紀錄布局、主題</string>
-
     <string name="settings_gps_title">GPS</string>
     <string name="settings_gps_summary">時間間隔、距離間隔、最大距離、精度</string>
-
     <string name="settings_sensors_title">藍芽感測器</string>
     <string name="settings_sensors_summary">自行車感測器、輪周、跑步感測器</string>
-
-    <string name="settings_announcements_title">語音通知</string>
+    <string name="settings_announcements_title">語音播報</string>
     <string name="settings_announcements_summary">時間、距離、語速</string>
-
     <string name="settings_import_export_title">匯入/匯出</string>
     <string name="settings_import_export_summary">匯入、匯出、自動匯出</string>
-
     <string name="settings_units_category">單位</string>
     <string name="settings_activity_defaults_category">活動的預設值</string>
-
     <string name="settings_reset_summary">重置設定為預設值</string>
-
     <!-- Settings Advanced -->
     <string name="settings_advanced">進階</string>
     <string name="settings_default_trackfileformat">匯出/分享檔案格式</string>
@@ -395,14 +373,12 @@ limitations under the License.
     <string name="settings_night_mode_option_system">系統</string>
     <string name="settings_night_mode_option_day">日</string>
     <string name="settings_night_mode_option_night">夜</string>
-
     <string name="settings_announcements_totaltime_frequency">時間間隔</string>
     <string name="settings_announcements_distance_frequency">距離間隔</string>
     <string name="settings_announcements_average_heart_rate">平均心率</string>
     <string name="settings_announcements_lap_heart_rate">單圈心率</string>
     <string name="settings_announcements_average_speed_pace">平均速度/步速</string>
     <string name="settings_announcements_lap_speed_pace">單圈速度/步速</string>
-
     <!-- Custom Layout -->
     <string name="custom_layout_list_title">布局</string>
     <string name="custom_layout_list_edit_name">輸入要新增的佈局名稱</string>
@@ -424,24 +400,19 @@ limitations under the License.
     <string name="settings_generic_sensor">通用</string>
     <string name="settings_cycling_sensor">騎自行車</string>
     <string name="settings_running_sensor">跑步</string>
-
     <string name="settings_sensor_bluetooth">藍牙</string>
-
     <string name="settings_sensor_cycling_distance_speed">距離與速度</string>
     <string name="settings_sensor_cycling_cadence">踏頻</string>
     <string name="settings_sensor_running_speed_and_cadence">距離、速度與踏頻</string>
     <string name="settings_sensor_wheel_circumference">輪周 (公釐)</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">僅顯示宣告所需服務的藍芽裝置</string>
-
     <string name="settings_sensor_heart_rate_max">區間：最大心率 (bpm)</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">偏好速率</string>
     <string name="settings_stats_units_imperial">英制 (英里、英尺)</string>
     <string name="settings_stats_units_metric">公制 (公里、公尺)</string>
     <string name="settings_stats_units_nautical">航海 (海里、英尺)</string>
     <string name="settings_stats_units_title">慣用單位</string>
-
     <!-- Settings public api -->
     <string name="settings_api_title">公開 API</string>
     <string name="settings_api_summary">其他 APP 的遠端控制與統計資料 API</string>
@@ -453,11 +424,9 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_title">自動資料傳輸</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">開始紀錄的應用程式也可以存取紀錄的資料。</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">記錄的資料將不會自動與其他應用程式共用。</string>
-
     <!-- Settings import/export -->
     <string name="settings_import_section">匯入</string>
     <string name="settings_export_section">匯出</string>
-
     <string name="settings_prevent_reimport_tracks_title">防止重新匯入蹤跡</string>
     <!-- Share Track -->
     <string name="share_track_share_file_body">你應該會喜歡這個蹤跡。\n\n請使用 Google 地球或其他地圖繪製軟體查看蹤跡。\n\n%1$s</string>
@@ -512,7 +481,7 @@ limitations under the License.
     <string name="aggregated_stats_empty_message">紀錄您的第一個蹤跡以檢視綜合統計資料</string>
     <string name="aggregated_stats_filter_no_results">沒有指定篩選的活動</string>
     <!-- Interval List -->
-    <string name="interval_list_empty_message">還有有任何間格</string>
+    <string name="interval_list_empty_message">還沒有任何間格</string>
     <!-- Unit -->
     <string name="unit_feet">英尺</string>
     <string name="unit_kilometer">公里</string>
@@ -529,7 +498,6 @@ limitations under the License.
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <!-- Value -->
-
     <string name="value_integer_feet_excellent_gps">%1$d 英尺 (GPS 訊號佳)</string>
     <string name="value_integer_feet_recommended">%1$d 英尺 (建議值)</string>
     <string name="value_integer_kilometer_hour">%1$d 公里/小時</string>
@@ -651,12 +619,9 @@ limitations under the License.
     <!-- Share image -->
     <string name="share_image_subject">我想與你分享一張圖片</string>
     <string name="share_image_body">我認為你可能會對這張圖片感興趣。</string>
-
     <string name="hold_to_stop">按住以停止</string>
-
     <string name="instant_export_enabled_summary">在紀錄完成後匯出蹤跡至儲存區</string>
     <string name="instant_export_enabled_title">即時運動後匯出</string>
-
     <string name="settings_default_export_uri_title">蹤跡匯出目錄</string>
     <!-- Fields -->
     <string name="field_set_primary">主要的</string>
@@ -666,12 +631,11 @@ limitations under the License.
     <string name="error_crash_title">%1$s 已崩潰</string>
     <string name="share_crash_report">分享</string>
     <string name="report_bug">回報 bug</string>
-
     <string name="select_show_on_map_behavior">選擇 \"在地圖上顯示\" 行為</string>
     <string name="show_on_map_format_ask">詢問</string>
     <string name="show_on_dashboard">OpenTracks 儀表板 API</string>
     <string name="show_on_dashboard_not_installed">沒有安裝支援 OpenTracks 儀表板 API 的應用程式。</string>
     <string name="always">總是</string>
-
     <string name="introduction_osm_dashboard">OpenTracks 本身不提供地圖。請安裝 OSMDashboard 以在地圖上檢視您的紀錄。</string>
+    <string name="voice_on_device_speaker_title">使用裝置的揚聲器</string>
 </resources>
