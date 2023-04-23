@@ -2,7 +2,7 @@
 
 _OpenTracks_ is a sport tracking application that completely respects your privacy.
 
-[![Awesome Humane Tech](https://raw.githubusercontent.com/humanetech-community/awesome-humane-tech/main/humane-tech-badge.svg?sanitize=true)](https://github.com/humanetech-community/awesome-humane-tech)
+[![Awesome Humane Tech](https://codeberg.org/teaserbot-labs/delightful-humane-design/raw/branch/main/humane-tech-badge.svg)](https://delightful.club/delightful-humane-design/#health)
 
 <table>
     <tr>
