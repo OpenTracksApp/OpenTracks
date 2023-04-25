@@ -66,6 +66,12 @@ public class RecordingLayout implements Parcelable {
         return new ArrayList<>(dataFields);
     }
 
+    public RecordingLayout toRecordingLayout(boolean visibility) {
+        RecordingLayout result = new RecordingLayout(this.getName());
+        result.addFields(dataFields.stream().filter(f -> f.isVisible() == visibility).collect(Collectors.toList()));
+        return result;
+    }
+
     public void moveField(int from, int to) {
         DataField dataFieldToMove = dataFields.remove(from);
         dataFields.add(to, dataFieldToMove);

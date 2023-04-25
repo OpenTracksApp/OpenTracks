@@ -20,7 +20,6 @@ import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
 import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.SettingsCustomLayoutEditAdapter;
 import de.dennisguse.opentracks.ui.util.ArrayAdapterFilterDisabled;
-import de.dennisguse.opentracks.util.StatisticsUtils;
 
 public class SettingsCustomLayoutEditActivity extends AbstractActivity implements SettingsCustomLayoutEditAdapter.SettingsCustomLayoutItemClickListener {
 
@@ -41,7 +40,7 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
         // Recycler view with visible stats.
         RecordingLayout recordingLayout = getIntent().getParcelableExtra(EXTRA_LAYOUT);
         profile = recordingLayout.getName();
-        recordingLayoutFieldsVisible = StatisticsUtils.filterVisible(recordingLayout, true);
+        recordingLayoutFieldsVisible = recordingLayout.toRecordingLayout(true);
         adapterFieldsVisible = new SettingsCustomLayoutEditAdapter(this, this, recordingLayoutFieldsVisible);
 
         numColumns = recordingLayout.getColumnsPerRow();
@@ -90,7 +89,7 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
         viewBinding.rowsOptions.setText(rowsOptionAdapter.getItem(numColumns - 1).toString(), false);
 
         // Recycler view with not visible stats.
-        recordingLayoutFieldsHidden = StatisticsUtils.filterVisible(recordingLayout, false);
+        recordingLayoutFieldsHidden = recordingLayout.toRecordingLayout(false);
         adapterFieldsHidden = new SettingsCustomLayoutEditAdapter(this, this, recordingLayoutFieldsHidden);
         RecyclerView recyclerViewNotVisible = viewBinding.recyclerViewNotVisible;
         recyclerViewNotVisible.setLayoutManager(new LinearLayoutManager(this));

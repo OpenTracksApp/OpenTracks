@@ -52,8 +52,8 @@ public class StatisticsUtilsTest extends TestCase {
         recordingLayout.addField(new DataField("key5", true, true, false));
 
         // when
-        RecordingLayout resultTrue = StatisticsUtils.filterVisible(recordingLayout, true);
-        RecordingLayout resultFalse = StatisticsUtils.filterVisible(recordingLayout, false);
+        RecordingLayout resultTrue = recordingLayout.toRecordingLayout(true);
+        RecordingLayout resultFalse = recordingLayout.toRecordingLayout(false);
 
         // then
         assertEquals(resultTrue.getFields().size(), 3);

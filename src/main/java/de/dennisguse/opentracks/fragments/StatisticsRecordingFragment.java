@@ -131,8 +131,7 @@ public class StatisticsRecordingFragment extends Fragment {
 
         int rowIndex = 0;
         int columnIndex = 0;
-        for (int i = 0; i < recordingLayout.getFields().size(); i++) {
-            DataField dataField = recordingLayout.getFields().get(i);
+        for (DataField dataField : recordingLayout.toRecordingLayout(true).getFields()) {
             GridLayout.LayoutParams param = new GridLayout.LayoutParams();
             param.setGravity(Gravity.FILL_HORIZONTAL);
             param.width = 0;

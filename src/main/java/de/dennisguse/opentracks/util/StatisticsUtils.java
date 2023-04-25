@@ -4,11 +4,8 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import java.util.stream.Collectors;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 
 public class StatisticsUtils {
 
@@ -23,12 +20,5 @@ public class StatisticsUtils {
         } else {
             return context.getString(R.string.stats_empty_value_integer);
         }
-    }
-
-    @Deprecated //Add to Layout?
-    public static RecordingLayout filterVisible(RecordingLayout recordingLayout, boolean visible) {
-        RecordingLayout result = new RecordingLayout(recordingLayout.getName());
-        result.addFields(recordingLayout.getFields().stream().filter(f -> f.isVisible() == visible).collect(Collectors.toList()));
-        return result;
     }
 }
