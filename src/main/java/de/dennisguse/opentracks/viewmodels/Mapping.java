@@ -17,8 +17,8 @@ public class Mapping {
 
         m.put(context.getString(R.string.stats_custom_layout_distance_key), GenericStatisticsViewHolder.Distance::new);
 
-        m.put(context.getString(R.string.stats_custom_layout_speed_key), GenericStatisticsViewHolder.SpeedOrPace::new);
-        m.put(context.getString(R.string.stats_custom_layout_pace_key), GenericStatisticsViewHolder.SpeedOrPace::new);
+        m.put(context.getString(R.string.stats_custom_layout_speed_key), GenericStatisticsViewHolder.SpeedVH::new);
+        m.put(context.getString(R.string.stats_custom_layout_pace_key), GenericStatisticsViewHolder.PaceVH::new);
         m.put(context.getString(R.string.stats_custom_layout_average_moving_speed_key), GenericStatisticsViewHolder.AverageMovingSpeed::new);
         m.put(context.getString(R.string.stats_custom_layout_average_speed_key), GenericStatisticsViewHolder.AverageSpeed::new);
         m.put(context.getString(R.string.stats_custom_layout_max_speed_key), GenericStatisticsViewHolder.MaxSpeed::new);

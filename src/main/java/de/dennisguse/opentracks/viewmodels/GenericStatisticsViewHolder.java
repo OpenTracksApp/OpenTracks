@@ -65,15 +65,20 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
         }
     }
 
-    public static class SpeedOrPace extends GenericStatisticsViewHolder {
+    public abstract static class SpeedOrPace extends GenericStatisticsViewHolder {
+
+        private final boolean reportSpeed;
+
+        public SpeedOrPace(boolean reportSpeed) {
+            this.reportSpeed = reportSpeed;
+        }
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            // TODO Pace wont work for now
-            boolean reportSpeed = true;
             SpeedFormatter localSpeedFormatter = SpeedFormatter.Builder()
                     .setUnit(unitSystem)
-                    .setReportSpeedOrPace(reportSpeed).build(getContext());
+                    .setReportSpeedOrPace(reportSpeed)
+                    .build(getContext());
 
             Pair<String, String> valueAndUnit;
 
@@ -85,11 +90,27 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
             } else {
                 Speed speed = latestTrackPoint != null && latestTrackPoint.hasSpeed() ? latestTrackPoint.getSpeed() : null;
                 valueAndUnit = localSpeedFormatter.getSpeedParts(speed);
-                getBinding().statsDescriptionMain.setText(getContext().getString(R.string.description_speed_source_gps));
+
+                String title = reportSpeed ? getContext().getString(R.string.stats_speed) : getContext().getString(R.string.stats_pace);
+                getBinding().statsDescriptionMain.setText(title);
             }
 
             getBinding().statsValue.setText(valueAndUnit.first);
             getBinding().statsUnit.setText(valueAndUnit.second);
+        }
+    }
+
+    public static class SpeedVH extends SpeedOrPace {
+
+        public SpeedVH() {
+            super(true);
+        }
+    }
+
+    public static class PaceVH extends SpeedOrPace {
+
+        public PaceVH() {
+            super(false);
         }
     }
 
