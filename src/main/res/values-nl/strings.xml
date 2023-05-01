@@ -589,4 +589,15 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="show_on_dashboard_not_installed">Er is geen app geïnstalleerd die OpenTracks Dashboard API ondersteunt.</string>
     <string name="help_data_google_play_services_content">Nee</string>
     <string name="introduction_osm_dashboard">OpenTracks zelf biedt geen kaart. Installeer OSMDashboard om uw opnames op een kaart te bekijken.</string>
+    <string name="unit_nautical_mile">NM</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="one">1 knoop</item>
+        <item quantity="other">%1$.1f knopen</item>
+    </plurals>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="one">1 zeemijl</item>
+        <item quantity="other">%1$.1f zeemijlen</item>
+    </plurals>
+    <string name="value_integer_knots">%1$d knopen</string>
+    <string name="voice_per_nautical_mile">per zeemijl</string>
 </resources>
