@@ -569,4 +569,54 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_summary_off">Zaznamenaná data nebudou automaticky sdílena s jinými aplikacemi.</string>
     <string name="pace">Tempo</string>
     <string name="track_discarding">Mazání trasy</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="one">1 uzel</item>
+        <item quantity="few">%1$.1f uzly</item>
+        <item quantity="other">%1$.1f uzlů</item>
+    </plurals>
+    <string name="error_crash_title">%1$s selhal</string>
+    <string name="share_crash_report">Sdílet hlášení o selhání</string>
+    <string name="voice_on_device_speaker_title">Použít reproduktor zařízení</string>
+    <string name="description_pace_nautical">Tempo (min/NM)</string>
+    <string name="voice_per_nautical_mile">za námořní míli</string>
+    <string name="settings_announcements_average_speed_pace">Průměrná rychlost/tempo</string>
+    <string name="settings_announcements_average_heart_rate">Průměrný srdeční tep</string>
+    <string name="value_float_knots">%1$.1f uzlů</string>
+    <string name="track_delete_number_of_tracks">%1$d stop</string>
+    <string name="image_discard">Vyřadit</string>
+    <string name="show_on_map_format_ask">Zeptat se</string>
+    <string name="settings_stats_units_nautical">Námořní (NM, ft)</string>
+    <string name="report_bug">Nahlásit chybu</string>
+    <string name="settings_announcements_lap_heart_rate">Srdeční tep kola</string>
+    <string name="introduction_osm_dashboard">OpenTracks sám o sobě mapu neposkytuje. Pro zobrazení záznamů na mapě si nainstalujte OSMDashboard.</string>
+    <string name="select_show_on_map_behavior">Zvolte chování \"zobrazit na mapě\"</string>
+    <plurals name="voiceDistanceMiles">
+        <item quantity="one">1 míle</item>
+        <item quantity="few">%1$.1f míle</item>
+        <item quantity="other">%1$.1f mil</item>
+    </plurals>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="one">1 kilometr</item>
+        <item quantity="few">%1$.1f kilometry</item>
+        <item quantity="other">%1$.1f kilometrů</item>
+    </plurals>
+    <string name="always">Vždy</string>
+    <string name="help_data_google_play_services_content">Ne</string>
+    <string name="description_speed_nautical">Rychlost (uzly)</string>
+    <string name="settings_export_filename_title">Formát názvu souboru</string>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="one">1 námořní míle</item>
+        <item quantity="few">%1$.1f námořní míle</item>
+        <item quantity="other">%1$.1f námořních mil</item>
+    </plurals>
+    <string name="show_on_dashboard_not_installed">Není nainstalována žádná aplikace podporující OpenTracks Dashboard API.</string>
+    <string name="settings_announcements_lap_speed_pace">Rychlost/tempo kola</string>
+    <string name="settings_sensor_heart_rate_max">Zóny: maximální srdeční tep (bpm)</string>
+    <string name="settings_api_summary">Vzdálené ovládání a rozhraní API pro statistiky pro jiné aplikace</string>
+    <string name="settings_public_api_package_title">Název balíčku pro veřejné rozhraní API</string>
+    <string name="unit_nautical_mile">NM</string>
+    <string name="unit_knots">kn</string>
+    <string name="unit_minute_per_nautical_mile">min/NM</string>
+    <string name="value_integer_knots">%1$d uzlů</string>
+    <string name="value_float_knots_recommended">%1$.1f uzlů (doporučeno)</string>
 </resources>
