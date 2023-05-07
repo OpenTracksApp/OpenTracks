@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_statistics_24dp"
+        android:shortcutId="stats"
+        android:shortcutLongLabel="@string/menu_aggregated_statistics"
+        android:shortcutShortLabel="@string/menu_aggregated_statistics">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="de.dennisguse.opentracks.ui.aggregatedStatistics.AggregatedStatisticsActivity"
+            android:targetPackage="de.dennisguse.opentracks.debug" />
+    </shortcut>
+</shortcuts>
