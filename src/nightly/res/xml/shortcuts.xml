@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="record"
+        android:enabled="true"
+        android:icon="@drawable/ic_track_recording"
+        android:shortcutShortLabel="@string/image_record"
+        android:shortcutLongLabel="@string/image_record">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="de.dennisguse.opentracks.nightly"
+            android:targetClass="de.dennisguse.opentracks.publicapi.StartRecording">
+
+            <extra android:name="OPEN_CURRENT_TRACK_SCREEN" android:value="true" />
+        </intent>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="stats"
+        android:enabled="true"
+        android:icon="@drawable/ic_statistics_24dp"
+        android:shortcutShortLabel="@string/menu_aggregated_statistics"
+        android:shortcutLongLabel="@string/menu_aggregated_statistics">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="de.dennisguse.opentracks.nightly"
+            android:targetClass="de.dennisguse.opentracks.ui.aggregatedStatistics.AggregatedStatisticsActivity">
+
+            <extra android:name="OPEN_CURRENT_TRACK_SCREEN" android:value="true" />
+        </intent>
+    </shortcut>
+</shortcuts>

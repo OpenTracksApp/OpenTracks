@@ -1,14 +1,19 @@
 package de.dennisguse.opentracks.publicapi;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
+import de.dennisguse.opentracks.TrackListActivity;
+import de.dennisguse.opentracks.TrackRecordedActivity;
+import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
+import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
 public class StartRecording extends AbstractAPIActivity {
@@ -21,6 +26,8 @@ public class StartRecording extends AbstractAPIActivity {
     public static final String EXTRA_STATS_TARGET_PACKAGE = "STATS_TARGET_PACKAGE";
     public static final String EXTRA_STATS_TARGET_CLASS = "STATS_TARGET_CLASS";
 
+    public static final String EXTRA_OPEN_CURRENT_TRACK_SCREEN = "OPEN_CURRENT_TRACK_SCREEN";
+
     private static final String TAG = StartRecording.class.getSimpleName();
 
     protected void execute(TrackRecordingService service) {
@@ -32,6 +39,12 @@ public class StartRecording extends AbstractAPIActivity {
 
                 if (PreferencesUtils.isPublicAPIDashboardEnabled()) {
                     startDashboardAPI(trackId, bundle);
+                }
+
+                if (bundle.getBoolean(EXTRA_OPEN_CURRENT_TRACK_SCREEN, false)) {
+                    Intent newIntent = IntentUtils.newIntent(StartRecording.this, TrackRecordingActivity.class)
+                            .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
+                    startActivity(newIntent);
                 }
             }
         }
