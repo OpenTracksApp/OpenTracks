@@ -122,9 +122,8 @@ public class StatisticsRecordingFragment extends Fragment {
         }
         recordingLayout = newRecordingLayout;
 
-        viewBinding.statsLayout.setColumnCount(recordingLayout.getColumnsPerRow());
-
         viewBinding.statsLayout.removeAllViews(); //Let's start from scratch
+        viewBinding.statsLayout.setColumnCount(recordingLayout.getColumnsPerRow());
         viewHolders.clear();
 
         Map<String, Callable<StatisticViewHolder<?>>> m = Mapping.create(getContext());
