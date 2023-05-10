@@ -600,4 +600,13 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     </plurals>
     <string name="value_integer_knots">%1$d knopen</string>
     <string name="voice_per_nautical_mile">per zeemijl</string>
+    <string name="track_delete_number_of_tracks">%1$d routes</string>
+    <string name="voice_on_device_speaker_title">Gebruik toestelspeaker</string>
+    <string name="settings_public_api_package_title">Pakketnaam voor openbare API</string>
+    <string name="settings_stats_units_nautical">Nautisch (NM, ft)</string>
+    <string name="settings_api_summary">Afstandsbediening en statistieken API voor andere apps</string>
+    <string name="settings_sensor_heart_rate_max">Zones: maximum Hartslag (bpm)</string>
+    <string name="value_float_knots_recommended">%1$.1f knopen (aanbevolen)</string>
+    <string name="value_float_knots">%1$.1f knopen</string>
+    <string name="description_speed_nautical">Snelheid (knopen)</string>
 </resources>
