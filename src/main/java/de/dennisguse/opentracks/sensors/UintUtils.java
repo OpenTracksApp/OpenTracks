@@ -14,6 +14,7 @@ public class UintUtils {
      * @return diff
      */
     public static long diff(long a, long b, final long UINT_MAX) {
+
         if (a < 0 || b < 0) {
             throw new RuntimeException("a or b cannot be less than zero.");
         }
@@ -25,6 +26,6 @@ public class UintUtils {
             return a - b;
         }
 
-        return (UINT_MAX - b) + a;
+        return (UINT_MAX + 1 - b) + a;
     }
 }
