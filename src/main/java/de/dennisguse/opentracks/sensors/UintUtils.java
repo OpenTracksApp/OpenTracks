@@ -14,17 +14,20 @@ public class UintUtils {
      * @return diff
      */
     public static long diff(long a, long b, final long UINT_MAX) {
-        if (a < 0 || b < 0) {
-            throw new RuntimeException("a or b cannot be less than zero.");
+        
+        a %= (UINT_MAX + 1);
+        if (a < 0) {
+            a += (UINT_MAX + 1);
         }
-        if (a > UINT_MAX || b > UINT_MAX) {
-            throw new RuntimeException("a or b are outside of the allowed range.");
+        b %= (UINT_MAX + 1);
+        if (b < 0){
+            b += (UINT_MAX + 1);
         }
 
         if (a >= b) {
             return a - b;
         }
 
-        return (UINT_MAX - b) + a;
+        return (UINT_MAX + 1 - b) + a;
     }
 }
