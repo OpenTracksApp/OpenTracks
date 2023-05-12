@@ -16,14 +16,16 @@ public class UintUtilsTest {
         
         /*   Test modulo arithmetic for arguments that are out of range */
         
-        assertEquals(0, UintUtils.diff(65537, 1, UintUtils.UINT16_MAX));
-        assertEquals(0, UintUtils.diff(1, 65537, UintUtils.UINT16_MAX)); 
-        assertEquals(0, UintUtils.diff(65537, 65537, UintUtils.UINT16_MAX)); 
-        assertEquals(0, UintUtils.diff(-65535, 1, UintUtils.UINT16_MAX));
-        assertEquals(0, UintUtils.diff(1, -65535, UintUtils.UINT16_MAX)); 
-        assertEquals(0, UintUtils.diff(-65535, -65535, UintUtils.UINT16_MAX)); 
-        assertEquals(0, UintUtils.diff(-65535, 65537, UintUtils.UINT16_MAX));
-        assertEquals(0, UintUtils.diff(65537, -65535, UintUtils.UINT16_MAX)); 
+        if (false) {   /*  false means UintUtils.diff() throws if arguments out of range */
+            assertEquals(0, UintUtils.diff(65537, 1, UintUtils.UINT16_MAX));
+            assertEquals(0, UintUtils.diff(1, 65537, UintUtils.UINT16_MAX)); 
+            assertEquals(0, UintUtils.diff(65537, 65537, UintUtils.UINT16_MAX)); 
+            assertEquals(0, UintUtils.diff(-65535, 1, UintUtils.UINT16_MAX));
+            assertEquals(0, UintUtils.diff(1, -65535, UintUtils.UINT16_MAX)); 
+            assertEquals(0, UintUtils.diff(-65535, -65535, UintUtils.UINT16_MAX)); 
+            assertEquals(0, UintUtils.diff(-65535, 65537, UintUtils.UINT16_MAX));
+            assertEquals(0, UintUtils.diff(65537, -65535, UintUtils.UINT16_MAX)); 
+        }
         
         /*  The following tests are the above, but for 32-bit unsigned. */
         
@@ -33,14 +35,16 @@ public class UintUtilsTest {
         assertEquals(4294967295, UintUtils.diff(1, 2, UintUtils.UINT32_MAX));
         assertEquals(4294967290, UintUtils.diff(UintUtils.UINT32_MAX, 5, UintUtils.UINT32_MAX));
        
-        assertEquals(0, UintUtils.diff(4294967297, 1, UintUtils.UINT32_MAX));
-        assertEquals(0, UintUtils.diff(1, 4294967297, UintUtils.UINT32_MAX)); 
-        assertEquals(0, UintUtils.diff(4294967297, 4294967297, UintUtils.UINT32_MAX)); 
-        assertEquals(0, UintUtils.diff(-4294967295, 1, UintUtils.UINT32_MAX));
-        assertEquals(0, UintUtils.diff(1, -4294967295, UintUtils.UINT32_MAX)); 
-        assertEquals(0, UintUtils.diff(-4294967295, -4294967295, UintUtils.UINT32_MAX)); 
-        assertEquals(0, UintUtils.diff(-4294967295, 4294967297, UintUtils.UINT32_MAX));
-        assertEquals(0, UintUtils.diff(65537, -4294967297, UintUtils.UINT32_MAX));
+        if (false) { /*  false means UintUtils.diff() throws if arguments out of range */
+            assertEquals(0, UintUtils.diff(4294967297, 1, UintUtils.UINT32_MAX));
+            assertEquals(0, UintUtils.diff(1, 4294967297, UintUtils.UINT32_MAX)); 
+            assertEquals(0, UintUtils.diff(4294967297, 4294967297, UintUtils.UINT32_MAX)); 
+            assertEquals(0, UintUtils.diff(-4294967295, 1, UintUtils.UINT32_MAX));
+            assertEquals(0, UintUtils.diff(1, -4294967295, UintUtils.UINT32_MAX)); 
+            assertEquals(0, UintUtils.diff(-4294967295, -4294967295, UintUtils.UINT32_MAX)); 
+            assertEquals(0, UintUtils.diff(-4294967295, 4294967297, UintUtils.UINT32_MAX));
+            assertEquals(0, UintUtils.diff(65537, -4294967297, UintUtils.UINT32_MAX));
+        }
     }
 
     @Test
