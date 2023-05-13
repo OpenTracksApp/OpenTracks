@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.ui.markers;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -244,7 +245,12 @@ public class MarkerEditActivity extends AbstractActivity {
     private void createMarkerWithPicture() {
         Pair<Intent, Uri> intentAndPhotoUri = MarkerUtils.createTakePictureIntent(this, getTrackId());
         cameraPhotoUri = intentAndPhotoUri.second;
-        takePictureFromCamera.launch(intentAndPhotoUri.first);
+
+        try {
+            takePictureFromCamera.launch(intentAndPhotoUri.first);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.no_compatible_camera_installed, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void createMarkerWithGalleryImage() {
@@ -256,6 +262,10 @@ public class MarkerEditActivity extends AbstractActivity {
             intent = new Intent(Intent.ACTION_GET_CONTENT);
         }
         intent.setType("image/*");
-        takePictureFromGallery.launch(intent);
+        try {
+            takePictureFromGallery.launch(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, R.string.no_compatible_gallery_installed, Toast.LENGTH_LONG).show();
+        }
     }
 }
