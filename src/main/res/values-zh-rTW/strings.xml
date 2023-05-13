@@ -323,7 +323,7 @@ limitations under the License.
     <string name="sensor_state_power_avg">平均功率</string>
     <string name="sensor_could_not_scan">無法掃描藍牙裝置 (錯誤 %1$i).</string>
     <string name="bluetooth_disabled">請啟用藍芽。</string>
-    <string name="settings_open_tracks_title">開啟蹤跡</string>
+    <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="settings_open_tracks_summary">所有關於 OpenTracks 專案</string>
     <string name="settings_defaults_title">預設單位與活動</string>
     <string name="settings_defaults_summary">首選單位、預設活動、蹤跡預設名稱</string>
@@ -351,11 +351,11 @@ limitations under the License.
     <string name="settings_recording_customize_layout_title">自訂您的紀錄布局</string>
     <string name="settings_recording_customize_layout_select_columns">每列資料欄位</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">在鎖定畫面顯示統計資料</string>
-    <string name="settings_recording_show_on_lockscreen_while_recording_summary">當紀錄時，在不解鎖裝置的情況下顯示統計資料。</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">當記錄時，在不解鎖裝置的情況下顯示統計資料。</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">維持螢幕開啟</string>
-    <string name="settings_recording_keep_screen_on_while_recording_summary">記錄中，維持螢幕開啟。</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">當記錄時，維持螢幕開啟。</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">全螢幕</string>
-    <string name="settings_recording_fullscreen_on_while_recording_summary">記錄中，在全螢幕中呈現。</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">當記錄時，在全螢幕中呈現。</string>
     <string name="settings_recording_default_activity_title">預設活動類型</string>
     <string name="settings_recording_location_frequency_summary">每 %1$s記錄一次位置資訊</string>
     <string name="settings_recording_max_recording_distance_summary">系統會在兩個地點之間的距離大於 %1$s時建立新的區段</string>

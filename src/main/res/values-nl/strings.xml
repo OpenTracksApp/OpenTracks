@@ -38,7 +38,7 @@ limitations under the License.
     <string name="help_storage_pictures_content">Deze worden opgeslagen in de interne opslag van de app (d.w.z. alleen toegankelijk binnen OpenTracks).</string>
     <string name="help_track_export_title">Hoe kan ik opgenomen tracks exporteren/delen?</string>
     <string name="help_track_export_content"> Tracks kunnen worden geëxporteerd vanuit de instellingen als KMZ, KML of GPX. KMZ/KML alle gegevens; GPX alleen locaties. Tracks die worden gedeeld via het <i>share-icoontje</i> worden gedeeld als KMZ </string>
-    <string name="help_data_google_play_services_title">Heeft OpenTracks Google Play Service nodig/gebruikt?</string>
+    <string name="help_data_google_play_services_title">Gebruikt/vereist OpenTracks Google Play Service\?</string>
     <string name="help_recording_title">Hoe legt OpenTracks gegevens vast?</string>
     <string name="help_recording_content">
 OpenTracks gebruikt de GPS-sensor van het apparaat om de locatie continu te registreren.
@@ -264,18 +264,18 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>
     <string name="settings_stats_units_title">Voorkeurseenheden</string>
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Ik denk dat u misschien wel geïnteresseerd bent in deze route.
+    <string name="share_track_share_file_body">Misschien ben je geïnteresseerd in deze route.
 \n
 \n%1$s</string>
     <string name="share_track_subject">Ik wil graag een route met u delen</string>
     <!-- Stats -->
-    <string name="stats_average_moving_pace">Gem. verplaatsingstempo</string>
-    <string name="stats_average_moving_speed">Gem. verplaatsingssnelheid</string>
+    <string name="stats_average_moving_pace">Gem. bewegingstempo</string>
+    <string name="stats_average_moving_speed">Gem. bewegingssnelheid</string>
     <string name="stats_average_pace">Gem. tempo</string>
     <string name="stats_average_speed">Gem. snelheid</string>
     <string name="stats_altitude">Hoogte</string>
     <string name="stats_fastest_pace">Snelste tempo</string>
-    <string name="stats_gain">Stijging</string>
+    <string name="stats_gain">Gestegen</string>
     <string name="stats_latitude">Breedtegraad</string>
     <string name="stats_longitude">Lengtegraad</string>
     <string name="stats_max_speed">Maximum snelheid</string>
@@ -287,7 +287,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <!-- Track -->
     <string name="track_name_format">Route %1$d</string>
     <string name="track_recording_notification_accuracy">Locatie nauwkeurigheid: %1$s</string>
-    <string name="track_markers">Markeringen voor %1$s</string>
+    <string name="track_markers">%1$s Markeringen</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">De route en de bijbehorende markeringen worden definitief verwijderd van het apparaat.</string>
     <string name="track_delete_one_confirm_title">Route verwijderen?</string>
@@ -361,7 +361,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="waypoint_type_drinking_water">drinkwater</string>
     <string name="waypoint_type_falling_rocks">vallende stenen</string>
     <string name="waypoint_type_ferry">veerboot</string>
-    <string name="waypoint_type_fire_place">open haard</string>
+    <string name="waypoint_type_fire_place">vuurplaats</string>
     <string name="waypoint_type_fire_station">brandweerkazerne</string>
     <string name="waypoint_type_fishing">vissen</string>
     <string name="waypoint_type_gas_station">tankstation</string>
@@ -369,7 +369,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="waypoint_type_grocery_store">kruidenier</string>
     <string name="waypoint_type_hair_dresser">kapper</string>
     <string name="waypoint_type_harbor">haven</string>
-    <string name="waypoint_type_hiking_path">trektochtpad</string>
+    <string name="waypoint_type_hiking_path">wandelroute</string>
     <string name="waypoint_type_hotel">hotel</string>
     <string name="waypoint_type_house">huis</string>
     <string name="waypoint_type_information">informatie</string>
@@ -390,10 +390,10 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="waypoint_type_swimming_pool">zwembad</string>
     <string name="waypoint_type_telephone">telefoon</string>
     <string name="waypoint_type_theater">schouwburg</string>
-    <string name="waypoint_type_toilet">restroom</string>
+    <string name="waypoint_type_toilet">toilet</string>
     <string name="waypoint_type_tourist_information">toeristische informatie</string>
     <string name="waypoint_type_tree">boom</string>
-    <string name="waypoint_type_tunnel">schacht</string>
+    <string name="waypoint_type_tunnel">tunnel</string>
     <string name="waypoint_type_waterfall">waterval</string>
     <string name="waypoint_type_water_fountain">waterfontein</string>
     <string name="waypoint_type_waypoint">routepunt</string>
@@ -416,7 +416,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="import_no_kml_file_found">Geen doc.kml bestand gevonden in KMZ</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Volledig scherm</string>
     <string name="gps_fixed_and_ready">GPS vast en klaar</string>
-    <string name="aggregated_stats_empty_message">Neem uw eerste track op om geaggregeerde statistieken te zien</string>
+    <string name="aggregated_stats_empty_message">Neem uw eerste route op om geaggregeerde statistieken te zien</string>
     <string name="track_detail_intervals_tab">Intervallen</string>
     <string name="settings_sensor_wheel_circumference">Wielomtrek (mm)</string>
     <string name="settings_prevent_reimport_tracks_title">Voorkom herinvoer van tracks</string>
@@ -435,7 +435,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_night_mode_option_day">Dag</string>
     <string name="settings_night_mode_option_system">Systeem</string>
     <string name="settings_night_mode_title">UI Thema</string>
-    <string name="stats_loss">Verlies</string>
+    <string name="stats_loss">Gedaald</string>
     <string name="interval_list_empty_message">Er zijn nog geen intervallen</string>
     <string name="stats_split_interval">Gesplitst interval</string>
     <string name="instant_export_enabled_title">Directe uitvoer na de training</string>
@@ -460,7 +460,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="import_unable_to_import_file">Kan bestand niet importeren: %1$s</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_file_imported">Bestand %1$s geimporteerd</string>
-    <string name="hold_to_stop">Hou vast om te stoppen</string>
+    <string name="hold_to_stop">Indrukken om te stoppen</string>
     <string name="track_speed_notification">Snelheid: %1$s</string>
     <string name="track_distance_notification">Afstand: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
@@ -478,7 +478,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_announcements_summary">Tijd, afstand, spraaksnelheid</string>
     <string name="generic_yesterday">Gisteren</string>
     <string name="settings_ui_title">User Interface</string>
-    <string name="stats_coordinates">Breedte- /Lengtegraad</string>
+    <string name="stats_coordinates">Coördinaten</string>
     <string name="settings_announcements_distance_frequency">Afstandsinterval</string>
     <string name="settings_recording_idle_speed_title">Drempelwaarde stationair</string>
     <string name="value_float_kilometer_hour">%1$.1f km/u</string>
@@ -494,9 +494,9 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_announcements_totaltime_frequency">Tijdsinterval</string>
     <string name="field_set_secondary">Secondair</string>
     <string name="field_remove_from_layout">Verwijderen</string>
-    <string name="settings_public_api_dashboard_enabled_title">Automatische overdracht van gegevens</string>
+    <string name="settings_public_api_dashboard_enabled_title">Automatische data overdracht</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Een app die een opname start, heeft ook toegang tot de opgenomen gegevens.</string>
-    <string name="stats_sensors_cadence">Cadans</string>
+    <string name="stats_sensors_cadence">Ritme</string>
     <string name="stats_sensors_heart_rate">Hartslag</string>
     <string name="settings_layout_reset">Aangepaste lay-out terugzetten</string>
     <string name="settings_layout_reset_confirm_message">Alle lay-out instellingen worden teruggezet naar de standaardwaarden. Tracks worden niet gewist.</string>
@@ -538,7 +538,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_public_api_disabled_toast">OpenTracks Publieke API is uitgeschakeld: inschakelen kan onder instellingen.</string>
     <string name="stats_clock">Klok</string>
     <string name="aggregated_stats_filter_no_results">Er zijn geen activiteiten voor het aangegeven filter</string>
-    <string name="no_compatible_file_manager_installed">Geen ondersteunde bestandsbeheerder geïnstalleerd</string>
+    <string name="no_compatible_file_manager_installed">Geen geschikte bestandsbeheerder geïnstalleerd</string>
     <string name="generic_undo">Terugzetten</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Alleen Bluetooth-apparaten tonen die gevraagde diensten melden</string>
     <string name="settings_activity_defaults_category">Standaardinstellingen van een activiteit</string>
@@ -586,4 +586,27 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="always">Altijd</string>
     <string name="show_on_map_format_ask">Vragen</string>
     <string name="select_show_on_map_behavior">Selecteer \"toon op kaart\"-gedrag</string>
+    <string name="show_on_dashboard_not_installed">Er is geen app geïnstalleerd die OpenTracks Dashboard API ondersteunt.</string>
+    <string name="help_data_google_play_services_content">Nee</string>
+    <string name="introduction_osm_dashboard">OpenTracks zelf biedt geen kaart. Installeer OSMDashboard om uw opnames op een kaart te bekijken.</string>
+    <string name="unit_nautical_mile">NM</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="one">1 knoop</item>
+        <item quantity="other">%1$.1f knopen</item>
+    </plurals>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="one">1 zeemijl</item>
+        <item quantity="other">%1$.1f zeemijlen</item>
+    </plurals>
+    <string name="value_integer_knots">%1$d knopen</string>
+    <string name="voice_per_nautical_mile">per zeemijl</string>
+    <string name="track_delete_number_of_tracks">%1$d routes</string>
+    <string name="voice_on_device_speaker_title">Gebruik toestelspeaker</string>
+    <string name="settings_public_api_package_title">Pakketnaam voor openbare API</string>
+    <string name="settings_stats_units_nautical">Nautisch (NM, ft)</string>
+    <string name="settings_api_summary">Afstandsbediening en statistieken API voor andere apps</string>
+    <string name="settings_sensor_heart_rate_max">Zones: maximum Hartslag (bpm)</string>
+    <string name="value_float_knots_recommended">%1$.1f knopen (aanbevolen)</string>
+    <string name="value_float_knots">%1$.1f knopen</string>
+    <string name="description_speed_nautical">Snelheid (knopen)</string>
 </resources>

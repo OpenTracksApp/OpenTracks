@@ -5,4 +5,4 @@ Wijzigingen:
 - Gesproken meldingen van hartslag
 
 Bugfix:
-- Crash due to race condition
+- Vastloper door race condities

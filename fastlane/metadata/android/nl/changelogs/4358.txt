@@ -2,13 +2,13 @@ v3.19.0: OpenTracks
 
 Wijzigingen:
 - Ondersteuning voor Running Speed en Cadence (RCS) sensoren
-- Bij het delen van een track wordt een afbeelding gemaakt
+- Bij delen van een track: maakt een deel-afbeelding
 - Niet trillen bij starten van opnemen
-- Bij opnemen: UI toont recentst ontvangen hoogte, snelheid en richting (ook al is deze niet opgeslagen)
+- Bij opnemen: UI toont meest recente hoogte, snelheid en richting (zelfs als niet opgeslagen)
 
 Bugfix:
-- Berekening van totale tijd mag geen pauze-tijd bevatten (vereist opnieuw importeren)
-- (opnieuw) Gebruik aangepaste overzichten indien aanwezig
+- Berekening totale tijd mag geen pauze-tijd bevatten (vereist opnieuw importeren)
+- (opnieuw) Gebruik aanwezige aangepaste overzichten
 
 Ontwikkelaar:
 - Upgrade naar SDK31 en AGP7.0.0 (vereist JDK11)
