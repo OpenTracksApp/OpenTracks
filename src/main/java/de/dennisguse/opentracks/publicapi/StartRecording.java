@@ -25,9 +25,6 @@ public class StartRecording extends AbstractAPIActivity {
 
     public static final String EXTRA_STATS_TARGET_PACKAGE = "STATS_TARGET_PACKAGE";
     public static final String EXTRA_STATS_TARGET_CLASS = "STATS_TARGET_CLASS";
-
-    public static final String EXTRA_OPEN_CURRENT_TRACK_SCREEN = "OPEN_CURRENT_TRACK_SCREEN";
-
     private static final String TAG = StartRecording.class.getSimpleName();
 
     protected void execute(TrackRecordingService service) {
@@ -39,12 +36,6 @@ public class StartRecording extends AbstractAPIActivity {
 
                 if (PreferencesUtils.isPublicAPIDashboardEnabled()) {
                     startDashboardAPI(trackId, bundle);
-                }
-
-                if (bundle.getBoolean(EXTRA_OPEN_CURRENT_TRACK_SCREEN, false)) {
-                    Intent newIntent = IntentUtils.newIntent(StartRecording.this, TrackRecordingActivity.class)
-                            .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
-                    startActivity(newIntent);
                 }
             }
         }

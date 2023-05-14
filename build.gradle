@@ -1,12 +1,15 @@
 apply plugin: 'com.android.application'
 
 buildscript {
+    ext {
+        agp_version = '8.1.0-beta02'
+    }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.0.1'
+        classpath "com.android.tools.build:gradle:$agp_version"
     }
 }
 
@@ -58,9 +61,9 @@ android {
         buildConfig true
     }
 
-//    androidResources {
-//        generateLocaleConfig true
-//    }
+    androidResources {
+        generateLocaleConfig true
+    }
 
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
