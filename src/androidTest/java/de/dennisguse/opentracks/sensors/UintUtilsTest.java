@@ -11,7 +11,9 @@ public class UintUtilsTest {
         assertEquals(0, UintUtils.diff(1, 1, UintUtils.UINT16_MAX));  
         assertEquals(1, UintUtils.diff(2, 1, UintUtils.UINT16_MAX));
         assertEquals(3, UintUtils.diff(5, 2, UintUtils.UINT16_MAX));
+
         assertEquals(65535, UintUtils.diff(1, 2, UintUtils.UINT16_MAX));     /* unsigned 16 arithmetic is modulo UINT16_MAX + 1, not modulo UINT16_MAX */
+
         assertEquals(65530, UintUtils.diff(UintUtils.UINT16_MAX, 5, UintUtils.UINT16_MAX));
         
         /*   Test modulo arithmetic for arguments that are out of range */
