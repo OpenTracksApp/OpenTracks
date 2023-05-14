@@ -1,13 +1,17 @@
 package de.dennisguse.opentracks.publicapi;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
 import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.TrackStoppedActivity;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.RecordingData;
+import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
@@ -20,6 +24,11 @@ public class StopRecording extends AbstractAPIActivity {
         Track.Id trackId = null;
         if (recordingData != null && recordingData.getTrack() != null) {
             trackId = recordingData.getTrack().getId();
+        } else {
+            Intent newIntent = IntentUtils.newIntent(StopRecording.this, StartRecording.class)
+                    .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
+            startActivity(newIntent);
+            return;
         }
 
         service.endCurrentTrack();

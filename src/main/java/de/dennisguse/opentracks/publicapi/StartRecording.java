@@ -30,13 +30,17 @@ public class StartRecording extends AbstractAPIActivity {
     protected void execute(TrackRecordingService service) {
         Track.Id trackId = service.startNewTrack();
         if (trackId != null) {
-            Bundle bundle = getIntent().getExtras();
-            if (bundle != null) {
-                updateTrackMetadata(trackId, bundle);
+            try {
+                Bundle bundle = getIntent().getExtras();
+                if (bundle != null) {
+                    updateTrackMetadata(trackId, bundle);
 
-                if (PreferencesUtils.isPublicAPIDashboardEnabled()) {
-                    startDashboardAPI(trackId, bundle);
+                    if (PreferencesUtils.isPublicAPIDashboardEnabled()) {
+                        startDashboardAPI(trackId, bundle);
+                    }
                 }
+            } catch (NullPointerException e) {
+                // ¯\_(ツ)_/¯
             }
         }
     }
