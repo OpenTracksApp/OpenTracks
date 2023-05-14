@@ -21,15 +21,6 @@ public class UintUtils {
         if (a > UINT_MAX || b > UINT_MAX) {
             throw new RuntimeException("a or b are outside of the allowed range.");
         }
-        
-        a %= (UINT_MAX + 1);
-        if (a < 0) {
-            a += (UINT_MAX + 1);
-        }
-        b %= (UINT_MAX + 1);
-        if (b < 0){
-            b += (UINT_MAX + 1);
-        }
 
         if (a >= b) {
             return a - b;
