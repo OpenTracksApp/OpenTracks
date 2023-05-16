@@ -2,34 +2,20 @@
 
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
-        android:shortcutId="startStopRecording"
-        android:enabled="true"
-        android:icon="@drawable/ic_track_recording"
-        android:shortcutShortLabel="@string/image_record"
-        android:shortcutLongLabel="@string/image_record">
-
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetPackage="de.dennisguse.opentracks.debug"
-            android:targetClass="de.dennisguse.opentracks.publicapi.StopRecording">
-
-            <extra android:name="OPEN_CURRENT_TRACK_SCREEN" android:value="true" />
-        </intent>
-    </shortcut>
-
-    <shortcut
-        android:shortcutId="stats"
         android:enabled="true"
         android:icon="@drawable/ic_statistics_24dp"
-        android:shortcutShortLabel="@string/menu_aggregated_statistics"
-        android:shortcutLongLabel="@string/menu_aggregated_statistics">
+        android:shortcutId="stats"
+        android:shortcutLongLabel="@string/menu_aggregated_statistics"
+        android:shortcutShortLabel="@string/menu_aggregated_statistics">
 
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="de.dennisguse.opentracks.debug"
-            android:targetClass="de.dennisguse.opentracks.ui.aggregatedStatistics.AggregatedStatisticsActivity">
+            android:targetClass="de.dennisguse.opentracks.ui.aggregatedStatistics.AggregatedStatisticsActivity"
+            android:targetPackage="de.dennisguse.opentracks.debug">
 
-            <extra android:name="OPEN_CURRENT_TRACK_SCREEN" android:value="true" />
+            <extra
+                android:name="OPEN_CURRENT_TRACK_SCREEN"
+                android:value="true" />
         </intent>
     </shortcut>
 </shortcuts>

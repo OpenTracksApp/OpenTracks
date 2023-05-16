@@ -1,15 +1,12 @@
 apply plugin: 'com.android.application'
 
 buildscript {
-    ext {
-        agp_version = '8.1.0-beta02'
-    }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:$agp_version"
+        classpath 'com.android.tools.build:gradle:8.1.0-beta02'
     }
 }
 
@@ -62,7 +59,7 @@ android {
     }
 
     androidResources {
-        generateLocaleConfig true
+        generateLocaleConfig = true
     }
 
     defaultConfig {
