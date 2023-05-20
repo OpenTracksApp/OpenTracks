@@ -13,6 +13,8 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static de.dennisguse.opentracks.util.EspressoUtils.waitFor;
 
+import android.Manifest;
+
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -30,7 +32,11 @@ public class EspressoDeleteTrackTest {
     public ActivityScenarioRule<TrackListActivity> mActivityTestRule = new ActivityScenarioRule<>(TrackListActivity.class);
 
     @Rule
-    public GrantPermissionRule mGrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
+    public GrantPermissionRule mGrantPermissionRuleLocation = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
+    @Rule
+    public GrantPermissionRule mGrantPermissionRuleBluetooth = GrantPermissionRule.grant(Manifest.permission.BLUETOOTH_CONNECT);
+    @Rule
+    public GrantPermissionRule mGrantPermissionRuleNotifications = GrantPermissionRule.grant(Manifest.permission.POST_NOTIFICATIONS);
 
     @Test
     public void espressoDeleteTrackTest() {
