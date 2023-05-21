@@ -74,9 +74,11 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
 
     private static final String BUNDLE_EXPORT_TASKS = "export_tasks";
 
-    private static final int CONFLICT_NONE = 0;
-    private static final int CONFLICT_OVERWRITE = 1;
-    private static final int CONFLICT_SKIP = 2;
+    private enum ConflictResolutionStrategy {
+        CONFLICT_NONE,
+        CONFLICT_OVERWRITE,
+        CONFLICT_SKIP;
+    }
 
     private TrackFileFormat trackFileFormat;
     private Uri directoryUri;
@@ -97,8 +99,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
 
     private ArrayList<String> trackErrors = new ArrayList<>();
 
-    // TODO Make this an enum
-    private int autoConflict;
+    private ConflictResolutionStrategy autoConflict;
 
     private ContentProviderUtils contentProviderUtils;
 
@@ -162,7 +163,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         resultReceiver = new ExportServiceResultReceiver(new Handler(), this);
 
         if (savedInstanceState == null) {
-            autoConflict = CONFLICT_NONE;
+            autoConflict = ConflictResolutionStrategy.CONFLICT_NONE;
             setProgress();
             new Thread(() -> {
                 directoryFiles = ExportUtils.getAllFiles(ExportActivity.this, documentFile.getUri());
@@ -172,7 +173,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
                 });
             }).start();
         } else {
-            autoConflict = savedInstanceState.getInt(BUNDLE_AUTO_CONFLICT);
+            autoConflict = ConflictResolutionStrategy.valueOf(savedInstanceState.getString(BUNDLE_AUTO_CONFLICT));
             trackExportSuccessCount = savedInstanceState.getInt(BUNDLE_SUCCESS_COUNT);
             trackExportErrorCount = savedInstanceState.getInt(BUNDLE_ERROR_COUNT);
             trackExportOverwrittenCount = savedInstanceState.getInt(BUNDLE_OVERWRITTEN_COUNT);
@@ -192,7 +193,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(BUNDLE_AUTO_CONFLICT, autoConflict);
+        outState.putString(BUNDLE_AUTO_CONFLICT, autoConflict.name());
         outState.putInt(BUNDLE_SUCCESS_COUNT, trackExportSuccessCount);
         outState.putInt(BUNDLE_ERROR_COUNT, trackExportErrorCount);
         outState.putInt(BUNDLE_OVERWRITTEN_COUNT, trackExportOverwrittenCount);
@@ -238,12 +239,12 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     /**
      * Enqueue track identified by UUID to be exported if not exported already or there is a conflict resolution.
      */
-    private void export(ExportTask exportTask, int conflictResolution) {
+    private void export(ExportTask exportTask, ConflictResolutionStrategy conflictResolution) {
         boolean fileExists = exportFileExists(exportTask);
 
-        if (fileExists && conflictResolution == CONFLICT_NONE) {
+        if (fileExists && conflictResolution == ConflictResolutionStrategy.CONFLICT_NONE) {
             conflict(exportTask);
-        } else if (fileExists && conflictResolution == CONFLICT_SKIP) {
+        } else if (fileExists && conflictResolution == ConflictResolutionStrategy.CONFLICT_SKIP) {
             trackExportSkippedCount++;
             nextExport(exportTask);
         } else {
@@ -377,7 +378,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
          * @return true if it could resolve the conflict or false otherwise.
          */
         public boolean resolve() {
-            if (autoConflict == CONFLICT_NONE) {
+            if (autoConflict == ConflictResolutionStrategy.CONFLICT_NONE) {
                 viewBinding.exportProgressAlertIcon.setImageDrawable(ContextCompat.getDrawable(ExportActivity.this, R.drawable.ic_report_problem_24));
                 String name;
                 if (exportTask.isMultiExport()) {
@@ -398,10 +399,10 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
          * Overwrite the export file and set the autoConflict if user set the "do it for all" switch button.
          */
         public void overwrite() {
-            export(exportTask, CONFLICT_OVERWRITE);
+            export(exportTask, ConflictResolutionStrategy.CONFLICT_OVERWRITE);
 
             if (viewBinding.exportProgressApplyToAll.isChecked()) {
-                autoConflict = CONFLICT_OVERWRITE;
+                autoConflict = ConflictResolutionStrategy.CONFLICT_OVERWRITE;
             }
         }
 
@@ -409,10 +410,10 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
          * Skip the export file and set the autoConflict if user set the "do it for all" switch button.
          */
         public void skip() {
-            export(exportTask, CONFLICT_SKIP);
+            export(exportTask, ConflictResolutionStrategy.CONFLICT_SKIP);
 
             if (viewBinding.exportProgressApplyToAll.isChecked()) {
-                autoConflict = CONFLICT_SKIP;
+                autoConflict = ConflictResolutionStrategy.CONFLICT_SKIP;
             }
         }
     }
