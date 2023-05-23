@@ -1,0 +1,147 @@
+apply plugin: 'com.android.application'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0-beta02'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+def getVersionName = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'describe', '--tags'
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    } catch (ignored) {
+        return null
+    }
+}
+
+def getVersionCode = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'rev-list', 'HEAD', '--count'
+            standardOutput = stdout
+        }
+        return Integer.valueOf(stdout.toString().trim())
+    } catch (ignored) {
+        return null
+    }
+}
+
+android {
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    compileSdk 33
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+
+    androidResources {
+        generateLocaleConfig = true
+    }
+
+    defaultConfig {
+        applicationId "de.dennisguse.opentracks"
+        versionCode 5196
+        versionName "v4.3.4"
+
+        buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
+
+        minSdk 21
+        targetSdk 33
+
+        testInstrumentationRunner "de.dennisguse.opentracks.TestRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+    }
+    signingConfigs {
+        nightly {
+            if (System.getProperty("nightly_store_file") != null) {
+                storeFile file(System.getProperty("nightly_store_file"))
+                storePassword System.getProperty("nightly_store_password")
+                keyAlias System.getProperty("nightly_key_alias")
+                keyPassword System.getProperty("nightly_key_password")
+            }
+        }
+    }
+
+    namespace 'de.dennisguse.opentracks'
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+
+        nightly {
+            signingConfig signingConfigs.nightly
+            applicationIdSuffix ".nightly"
+        }
+
+        release {
+            crunchPngs false
+            minifyEnabled false
+        }
+
+        releasePlayStore {
+            applicationIdSuffix ".playstore"
+            versionNameSuffix "-PlayStore"
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    applicationVariants.configureEach { variant ->
+        variant.resValue "string", "applicationId", variant.applicationId
+
+        if (variant.buildType.name == 'nightly') {
+            variant.outputs.configureEach {
+                setVersionCodeOverride(getVersionCode())
+                setVersionNameOverride(getVersionName())
+                outputFileName = "${applicationId}_${variant.versionCode}.apk"
+            }
+        }
+    }
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.documentfile:documentfile:1.0.1'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation 'androidx.mediarouter:mediarouter:1.4.0'
+
+    androidTestImplementation 'androidx.test:core:1.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'org.mockito:mockito-android:5.3.1'
+
+    androidTestUtil 'androidx.test:orchestrator:1.4.2'
+}
