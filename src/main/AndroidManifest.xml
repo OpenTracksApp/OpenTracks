@@ -89,6 +89,7 @@ limitations under the License.
             </intent-filter>
         </activity>
 
+        <!-- NOTE: the name of the MAIN/LAUNCHER is used by icon packs; if this is changed, icon packs break.-->
         <activity
             android:name=".introduction.IntroductionActivity"
             android:exported="true"
