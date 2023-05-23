@@ -17,11 +17,14 @@ package de.dennisguse.opentracks.util;
 
 import static org.junit.Assert.assertEquals;
 
+import androidx.test.core.app.ApplicationProvider;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -37,7 +40,7 @@ public class FileUtilsTest {
      */
     @Test
     public void testBuildUniqueFileName_new() {
-        String filename = FileUtils.buildUniqueFileName(new File("/dir"), "Filename", "ext");
+        String filename = FileUtils.buildUniqueFileName(FileUtils.getPhotoDir(ApplicationProvider.getApplicationContext()), "Filename", "ext");
         assertEquals("Filename.ext", filename);
     }
 
@@ -45,9 +48,14 @@ public class FileUtilsTest {
      * Tests {@link FileUtils#buildUniqueFileName(File, String, String)} when the file exists already.
      */
     @Test
-    public void testBuildUniqueFileName_exist() {
-        // Expect "/default.prop" to exist on the phone/emulator
-        String filename = FileUtils.buildUniqueFileName(new File("/"), "default", "prop");
+    public void testBuildUniqueFileName_exist() throws IOException {
+        // given
+        new File(FileUtils.getPhotoDir(ApplicationProvider.getApplicationContext()), "default.prop").createNewFile();
+
+        //when
+        String filename = FileUtils.buildUniqueFileName(FileUtils.getPhotoDir(ApplicationProvider.getApplicationContext()), "default", "prop");
+
+        // then
         assertEquals("default(1).prop", filename);
     }
 
