@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import de.dennisguse.opentracks.data.models.AtmosphericPressure;
 import de.dennisguse.opentracks.data.models.BatteryLevel;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
@@ -69,8 +70,9 @@ public class BluetoothUtils {
             ))
     );
 
-    public static final ServiceMeasurementUUID PRESSURE = new ServiceMeasurementUUID(
-            new UUID(0x181A00001000L, 0x800000805f9b34fbL),
+    private static final UUID ENVIRONMENTAL_SENSING_SERVICE = new UUID(0x181A00001000L, 0x800000805f9b34fbL);
+    public static final ServiceMeasurementUUID BAROMETRIC_PRESSURE = new ServiceMeasurementUUID(
+            ENVIRONMENTAL_SENSING_SERVICE,
             new UUID(0x2A6D00001000L, 0x800000805f9b34fbL)
     );
 
@@ -142,15 +144,15 @@ public class BluetoothUtils {
         return null;
     }
 
-    public static Integer parsePressure(BluetoothGattCharacteristic characteristic) {
+    public static AtmosphericPressure parseEnvironmentalSensing(BluetoothGattCharacteristic characteristic) {
         byte[] raw = characteristic.getValue();
 
         if (raw.length < 4) {
             return null;
         }
 
-        Float fPressure = characteristic.getFloatValue(BluetoothGattCharacteristic.FORMAT_FLOAT, 0);
-        return Math.round(fPressure);
+        Integer pressure = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 0);
+        return AtmosphericPressure.ofPA(pressure / 10f);
     }
 
     public static SensorDataCyclingPower.Data parseCyclingPower(String address, String sensorName, BluetoothGattCharacteristic characteristic) {

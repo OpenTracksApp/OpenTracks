@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 import org.junit.Test;
 
+import de.dennisguse.opentracks.data.models.AtmosphericPressure;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
@@ -44,17 +45,16 @@ public class BluetoothUtilsTest {
     }
 
     @Test
-    public void parsePressure_Pa() {
+    public void parseEnvironmentalSensing_Pa() {
         // given
-        BluetoothGattCharacteristic characteristic = new BluetoothGattCharacteristic(BluetoothUtils.PRESSURE.getServiceUUID(), 0, 0);
+        BluetoothGattCharacteristic characteristic = new BluetoothGattCharacteristic(BluetoothUtils.BAROMETRIC_PRESSURE.getServiceUUID(), 0, 0);
         characteristic.setValue(new byte[]{(byte) 0xB2, (byte) 0x48, (byte) 0x0F, (byte) 0x00});
 
-
         // when
-        int pressure = BluetoothUtils.parsePressure(characteristic);
+        AtmosphericPressure pressure = BluetoothUtils.parseEnvironmentalSensing(characteristic);
 
         // then
-        assertEquals(1001650, pressure);
+        assertEquals(AtmosphericPressure.ofPA(100165), pressure);
     }
 
     @Test

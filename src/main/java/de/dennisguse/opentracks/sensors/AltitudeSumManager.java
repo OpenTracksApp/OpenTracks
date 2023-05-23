@@ -14,6 +14,7 @@ import androidx.annotation.VisibleForTesting;
 
 import java.util.concurrent.TimeUnit;
 
+import de.dennisguse.opentracks.data.models.AtmosphericPressure;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 
 /**
@@ -25,9 +26,9 @@ public class AltitudeSumManager implements SensorConnector, SensorEventListener 
 
     private boolean isConnected = false;
 
-    private float lastAcceptedPressureValue_hPa;
+    private AtmosphericPressure lastAcceptedSensorValue;
 
-    private float lastSeenSensorValue_hPa;
+    private AtmosphericPressure lastSeenSensorValue;
 
     private Float altitudeGain_m;
     private Float altitudeLoss_m;
@@ -43,7 +44,7 @@ public class AltitudeSumManager implements SensorConnector, SensorEventListener 
             isConnected = sensorManager.registerListener(this, pressureSensor, (int) TimeUnit.SECONDS.toMicros(5), handler);
         }
 
-        lastAcceptedPressureValue_hPa = Float.NaN;
+        lastAcceptedSensorValue = null;
         reset();
     }
 
@@ -116,30 +117,30 @@ public class AltitudeSumManager implements SensorConnector, SensorEventListener 
             Log.w(TAG, "Not connected to sensor, cannot process data.");
             return;
         }
-        onSensorValueChanged(event.values[0]);
+        onSensorValueChanged(AtmosphericPressure.ofHPA(event.values[0]));
     }
 
     @VisibleForTesting
-    void onSensorValueChanged(float value_hPa) {
-        if (Float.isNaN(lastAcceptedPressureValue_hPa)) {
-            lastAcceptedPressureValue_hPa = value_hPa;
-            lastSeenSensorValue_hPa = value_hPa;
+    void onSensorValueChanged(AtmosphericPressure currentSensorValue) {
+        if (lastAcceptedSensorValue == null) {
+            lastAcceptedSensorValue = currentSensorValue;
+            lastSeenSensorValue = currentSensorValue;
             return;
         }
 
         altitudeGain_m = altitudeGain_m != null ? altitudeGain_m : 0;
         altitudeLoss_m = altitudeLoss_m != null ? altitudeLoss_m : 0;
 
-        PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChangesWithSmoothing_m(lastAcceptedPressureValue_hPa, lastSeenSensorValue_hPa, value_hPa);
+        PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChangesWithSmoothing_m(lastAcceptedSensorValue, lastSeenSensorValue, currentSensorValue);
         if (altitudeChange != null) {
             altitudeGain_m += altitudeChange.getAltitudeGain_m();
 
             altitudeLoss_m += altitudeChange.getAltitudeLoss_m();
 
-            lastAcceptedPressureValue_hPa = altitudeChange.getCurrentSensorValue_hPa();
+            lastAcceptedSensorValue = altitudeChange.getCurrentSensorValue();
         }
 
-        lastSeenSensorValue_hPa = value_hPa;
+        lastSeenSensorValue = currentSensorValue;
 
         Log.v(TAG, "altitude gain: " + altitudeGain_m + ", altitude loss: " + altitudeLoss_m);
     }

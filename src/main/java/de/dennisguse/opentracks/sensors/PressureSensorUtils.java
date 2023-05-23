@@ -4,6 +4,8 @@ import android.hardware.SensorManager;
 
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.data.models.AtmosphericPressure;
+
 public class PressureSensorUtils {
 
     //Everything above is considered a meaningful change in altitude.
@@ -18,17 +20,17 @@ public class PressureSensorUtils {
 
     public static class AltitudeChange {
 
-        private final float currentSensorValue_hPa;
+        private final AtmosphericPressure currentSensorValue;
 
         private final float altitudeChange_m;
 
-        public AltitudeChange(float currentSensorValue_hPa, float altitudeChange_m) {
-            this.currentSensorValue_hPa = currentSensorValue_hPa;
+        public AltitudeChange(AtmosphericPressure currentSensorValue, float altitudeChange_m) {
+            this.currentSensorValue = currentSensorValue;
             this.altitudeChange_m = altitudeChange_m;
         }
 
-        public float getCurrentSensorValue_hPa() {
-            return currentSensorValue_hPa;
+        public AtmosphericPressure getCurrentSensorValue() {
+            return currentSensorValue;
         }
 
         public float getAltitudeChange_m() {
@@ -47,16 +49,16 @@ public class PressureSensorUtils {
     /**
      * Applies exponential smoothing to sensor value before computation.
      */
-    public static AltitudeChange computeChangesWithSmoothing_m(float lastAcceptedSensorValue_hPa, float lastSeenSensorValue_hPa, float currentSensorValue_hPa) {
-        float nextSensorValue_hPa = EXPONENTIAL_SMOOTHING * currentSensorValue_hPa + (1 - EXPONENTIAL_SMOOTHING) * lastSeenSensorValue_hPa;
+    public static AltitudeChange computeChangesWithSmoothing_m(AtmosphericPressure lastAcceptedSensorValue, AtmosphericPressure lastSeenSensorValue, AtmosphericPressure currentSensorValue) {
+        AtmosphericPressure nextSensorValue = AtmosphericPressure.ofHPA(EXPONENTIAL_SMOOTHING * currentSensorValue.getHPA() + (1 - EXPONENTIAL_SMOOTHING) * lastSeenSensorValue.getHPA());
 
-        return computeChanges(lastAcceptedSensorValue_hPa, nextSensorValue_hPa);
+        return computeChanges(lastAcceptedSensorValue, nextSensorValue);
     }
 
     @VisibleForTesting
-    public static AltitudeChange computeChanges(float lastAcceptedSensorValue_hPa, float currentSensorValue_hPa) {
-        float lastSensorValue_m = SensorManager.getAltitude(p0, lastAcceptedSensorValue_hPa);
-        float currentSensorValue_m = SensorManager.getAltitude(p0, currentSensorValue_hPa);
+    public static AltitudeChange computeChanges(AtmosphericPressure lastAcceptedSensorValue, AtmosphericPressure currentSensorValue) {
+        float lastSensorValue_m = SensorManager.getAltitude(p0, lastAcceptedSensorValue.getHPA());
+        float currentSensorValue_m = SensorManager.getAltitude(p0, currentSensorValue.getHPA());
 
         float altitudeChange_m = currentSensorValue_m - lastSensorValue_m;
         if (Math.abs(altitudeChange_m) < ALTITUDE_CHANGE_DIFF_M) {
@@ -64,7 +66,7 @@ public class PressureSensorUtils {
         }
 
         // Limit altitudeC change by ALTITUDE_CHANGE_DIFF and computes pressure value accordingly.
-        AltitudeChange altitudeChange = new AltitudeChange(currentSensorValue_hPa, altitudeChange_m);
+        AltitudeChange altitudeChange = new AltitudeChange(currentSensorValue, altitudeChange_m);
         if (altitudeChange.getAltitudeChange_m() > 0) {
             return new AltitudeChange(getBarometricPressure(lastSensorValue_m + ALTITUDE_CHANGE_DIFF_M), ALTITUDE_CHANGE_DIFF_M);
         } else {
@@ -78,7 +80,7 @@ public class PressureSensorUtils {
      * {\color{White} p(h)} = p_0 \cdot \left( 1 - \frac{0{,}0065 \frac{\mathrm K}{\mathrm m} \cdot h}{T_0\ } \right)^{5{,}255}
      */
     @VisibleForTesting
-    public static float getBarometricPressure(float altitude_m) {
-        return (float) (p0 * Math.pow(1.0 - 0.0065 * altitude_m / 288.15, 5.255f));
+    public static AtmosphericPressure getBarometricPressure(float altitude_m) {
+        return AtmosphericPressure.ofHPA((float) (p0 * Math.pow(1.0 - 0.0065 * altitude_m / 288.15, 5.255f)));
     }
 }
