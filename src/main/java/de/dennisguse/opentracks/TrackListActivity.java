@@ -25,7 +25,6 @@ import android.database.Cursor;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Pair;
 import android.view.KeyEvent;
@@ -246,7 +245,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             }
 
             // Recording -> Stop
-            ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).vibrate(1000);
+            ActivityUtils.vibrate(this, 1000);
             updateGpsMenuItem(false, false);
             trackRecordingServiceConnection.stopRecording(TrackListActivity.this);
             viewBinding.trackListFabAction.setImageResource(R.drawable.ic_baseline_record_24);
