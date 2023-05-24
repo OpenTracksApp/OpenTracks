@@ -65,11 +65,6 @@ public class KmzTrackExporter implements TrackExporter {
     }
 
     @Override
-    public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {
-        return writeTrack(List.of(track), outputStream);
-    }
-
-    @Override
     public boolean writeTrack(List<Track> tracks, @NonNull OutputStream outputStream) {
         try (ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream)) {
             // Add kml file

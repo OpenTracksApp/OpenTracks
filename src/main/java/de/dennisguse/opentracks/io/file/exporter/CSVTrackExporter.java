@@ -23,8 +23,6 @@ import androidx.annotation.NonNull;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
@@ -84,11 +82,6 @@ public class CSVTrackExporter implements TrackExporter {
 
     public CSVTrackExporter(ContentProviderUtils contentProviderUtils) {
         this.contentProviderUtils = contentProviderUtils;
-    }
-
-    @Override
-    public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {
-        return writeTrack(List.of(track), outputStream);
     }
 
     @Override

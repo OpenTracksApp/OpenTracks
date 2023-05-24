@@ -232,7 +232,7 @@ public class GPXTrackImporterTest {
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
 
         TrackExporter trackExporter = TrackFileFormat.GPX.createTrackExporter(context, contentProviderUtils);
-        trackExporter.writeTrack(importedTrack, outputStream);
+        trackExporter.writeTrack(List.of(importedTrack), outputStream);
 
         // then
         String expected = new BufferedReader(

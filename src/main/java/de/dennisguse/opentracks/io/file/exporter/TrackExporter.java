@@ -31,7 +31,4 @@ import de.dennisguse.opentracks.data.models.Track;
 public interface TrackExporter {
 
     boolean writeTrack(List<Track> tracks, @NonNull OutputStream outputStream);
-
-    @Deprecated // Only used for tests
-    boolean writeTrack(Track track, @NonNull OutputStream outputStream);
 }

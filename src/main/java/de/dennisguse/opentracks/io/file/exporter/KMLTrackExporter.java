@@ -99,10 +99,6 @@ public class KMLTrackExporter implements TrackExporter {
         this.contentProviderUtils = contentProviderUtils;
     }
 
-    public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {
-        return writeTrack(List.of(track), outputStream);
-    }
-
     public boolean writeTrack(List<Track> tracks, @NonNull OutputStream outputStream) {
         try {
             prepare(outputStream);
