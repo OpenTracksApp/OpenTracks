@@ -492,7 +492,6 @@ limitations under the License.
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (khuyến khích)</string>
     <string name="stats_clock">Cái đồng hồ</string>
-    <string name="settings_open_tracks_title">Mở Bài Hát</string>
     <string name="settings_reset_summary">Thiết lập lại các thiết Lập để mặc Định giá Trị</string>
     <string name="settings_activity_defaults_category">Hoạt động của Mặc định</string>
     <string name="settings_units_category">Đơn vị</string>

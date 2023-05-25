@@ -458,7 +458,6 @@
     <string name="settings_ui_title">Interface do usuário</string>
     <string name="settings_defaults_title">Unidades e Atividade Default</string>
     <string name="settings_defaults_summary">Unidades Preferidas, Atividade Padrão, Nome Padrão da Pista</string>
-    <string name="settings_open_tracks_title">Trilhas abertas</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_reset_summary">Redefinir configurações para valores padrão</string>
     <string name="settings_activity_defaults_category">Defaults da atividade</string>

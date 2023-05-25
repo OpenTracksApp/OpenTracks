@@ -505,7 +505,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="value_float_mile_hour_recommended">%1$.1f km/h (recomendado)</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (recomendado)</string>
     <string name="stats_clock">Reloxo</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="settings_defaults_summary">Unidades preferidas, Actividade por defecto, Nome da ruta</string>
     <string name="settings_announcements_summary">A Distancia, Tempo, Voz Velocidade</string>
     <string name="settings_open_tracks_summary">Todo Sobre OpenTracks Proxecto</string>

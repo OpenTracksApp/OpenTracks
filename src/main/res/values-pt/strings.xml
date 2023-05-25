@@ -444,7 +444,6 @@ limitations under the License.
     <string name="sensor_state_power_avg">Energia Avg</string>
     <string name="sensor_could_not_scan">Não foi possível procurar aparelhos Bluetooth (erro %1$i).</string>
     <string name="bluetooth_disabled">Ative o Bluetooth.</string>
-    <string name="settings_open_tracks_title">Trilhas abertas</string>
     <string name="settings_open_tracks_summary">Tudo sobre o Projeto OpenTracks</string>
     <string name="settings_defaults_title">Unidades e Atividade Default</string>
     <string name="settings_gps_summary">Intervalo de tempo, Intervalo de distância, Distância máxima, Precisão</string>

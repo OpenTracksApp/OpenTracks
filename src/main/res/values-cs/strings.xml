@@ -520,7 +520,6 @@ limitations under the License.
     <string name="settings_sensors_title">Bluetooth senzory</string>
     <string name="settings_gps_summary">Časový interval, Interval vzdálenosti, Maximální vzdálenost, Přesnost</string>
     <string name="settings_ui_summary">Vzhled, Rozložení záznamu, Téma</string>
-    <string name="settings_open_tracks_title">O programu</string>
     <string name="settings_open_tracks_summary">Vše o projektu OpenTracks</string>
     <string name="settings_defaults_title">Výchozí jednotky a aktivity</string>
     <string name="settings_ui_title">Uživatelské rozhraní</string>

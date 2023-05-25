@@ -323,7 +323,6 @@ limitations under the License.
     <string name="sensor_state_power_avg">平均功率</string>
     <string name="sensor_could_not_scan">無法掃描藍牙裝置 (錯誤 %1$i).</string>
     <string name="bluetooth_disabled">請啟用藍芽。</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="settings_open_tracks_summary">所有關於 OpenTracks 專案</string>
     <string name="settings_defaults_title">預設單位與活動</string>
     <string name="settings_defaults_summary">首選單位、預設活動、蹤跡預設名稱</string>

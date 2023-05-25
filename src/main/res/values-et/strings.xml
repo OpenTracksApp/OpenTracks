@@ -498,7 +498,6 @@ limitations under the License.
     <string name="settings_import_export_title">Import/Eksport</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_open_tracks_summary">Kõik OpenTracks Projekti Kohta</string>
-    <string name="settings_open_tracks_title">OpenTracks</string>
     <string name="settings_reset_summary">Lähtestage Seaded vaikeväärtustele</string>
     <string name="settings_recording_customize_layout_title">Kohandage oma salvestuspaigutust</string>
     <string name="settings_recording_customize_layout_select_columns">Andmeväljad rea kohta</string>

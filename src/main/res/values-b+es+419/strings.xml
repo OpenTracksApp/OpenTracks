@@ -491,7 +491,6 @@
     <string name="settings_import_section">Importar</string>
     <string name="aggregated_stats_filter_no_results">No hay actividades para el filtro especificado</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (recomendado)</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (recomendado)</string>
     <string name="generic_undo">Deshacer</string>

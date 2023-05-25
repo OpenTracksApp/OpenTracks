@@ -528,7 +528,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="settings_defaults_summary">Unitate Hobetsia, Jarduera Lehenetsia, Pistaren Izen Lehenetsia</string>
     <string name="settings_ui_title">Interfazea</string>
     <string name="settings_ui_summary">Itxura, Grabazioaren Diseinua, Gaia</string>
-    <string name="settings_open_tracks_title">Ireki Pistak</string>
     <string name="settings_cycling_sensor">Txirrindularitza</string>
     <string name="generic_filter">Iragazkia</string>
     <string name="generic_from">Nondik</string>

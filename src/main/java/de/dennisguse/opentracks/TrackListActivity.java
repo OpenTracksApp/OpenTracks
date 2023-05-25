@@ -381,6 +381,12 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             SearchView searchView = (SearchView) searchMenuItem.getActionView();
             searchView.setIconified(false);
             searchMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_list_help) {
+            startActivity(IntentUtils.newIntent(this, HelpActivity.class));
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
