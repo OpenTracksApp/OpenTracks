@@ -549,7 +549,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_customize_layout_select_columns">Gegevensvelden per rij</string>
     <string name="value_float_mile_hour">%1$.1f mi/u</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/u (aanbevolen)</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="settings_open_tracks_summary">Alles over het OpenTracks Project</string>
     <string name="activity_type_workout">training</string>
     <string name="settings_layout_reset_confirm_title">Lay-outs terugzetten\?</string>

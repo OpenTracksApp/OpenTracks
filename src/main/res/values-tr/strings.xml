@@ -427,7 +427,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate_max">Maks. Kalp atış hızı</string>
     <string name="sensor_could_not_scan">Bluetooth cihazları taranamadı (%1$i hatası).</string>
     <string name="bluetooth_disabled">Lütfen Bluetooth\'u etkinleştirin.</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="settings_open_tracks_summary">OpenTracks Projesi hakkında her şey</string>
     <string name="help_support_title">OpenTracks\'i nasıl destekleyebilirim\?</string>
     <string name="export_track_already_exists_msg">%1$s parçası hedef dizinde zaten var.</string>

@@ -537,7 +537,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="settings_ui_summary">Udseende, Optagelse af layout, Tema</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="generic_filter">Filter</string>
-    <string name="settings_open_tracks_title">Åbne spor</string>
     <string name="custom_layout_list_edit_name">Skriv navnet på det layout, der skal tilføjes</string>
     <string name="settings_layout_reset_confirm_message">Alle layoutindstillinger vil blive tilbageført til standardværdierne. Dette vil ikke slette spor på enheden.</string>
     <string name="settings_all_reset">Nulstil</string>

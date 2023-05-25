@@ -498,7 +498,6 @@ limitations under the License.
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (anbefales)</string>
     <string name="stats_clock">Klokke</string>
-    <string name="settings_open_tracks_title">OpenTracks</string>
     <string name="settings_defaults_summary">Foretrukne enheter, forvalgsaktivitet, forvalgt spornavn</string>
     <string name="settings_sensors_summary">Sykkelsensorer, hjulomkrets, løpesensorer</string>
     <string name="settings_open_tracks_summary">Alt om OpenTracks-prosjektet</string>

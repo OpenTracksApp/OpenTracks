@@ -516,7 +516,6 @@ limitations under the License.
     <string name="stats_sensors_cadence">Каденція</string>
     <string name="stats_sensors_heart_rate">частота серцебиття</string>
     <string name="settings_defaults_summary">Переважні одиниці виміру, активність за замовчуванням, Ім\'я треку за замовчуванням</string>
-    <string name="settings_open_tracks_title">Відкриті доріжки</string>
     <string name="settings_open_tracks_summary">Все про проект OpenTracks</string>
     <string name="settings_defaults_title">Одиниці виміру і дії за замовчуванням</string>
     <string name="settings_ui_title">Інтерфейс користувача</string>

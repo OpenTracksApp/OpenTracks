@@ -54,12 +54,15 @@
         android:icon="@drawable/ic_baseline_api_24"
         android:key="@string/settings_api_key"
         android:summary="@string/settings_api_summary"
-        android:title="@string/settings_api_title"/>
+        android:title="@string/settings_api_title" />
 
     <Preference
         android:icon="@drawable/ic_baseline_info_24"
-        android:key="@string/settings_open_tracks_key"
         android:summary="@string/settings_open_tracks_summary"
-        android:title="@string/settings_open_tracks_title" />
+        android:title="@string/about_preference_title">
+        <intent
+            android:targetClass="de.dennisguse.opentracks.AboutActivity"
+            android:targetPackage="@string/applicationId" />
+    </Preference>
 
 </PreferenceScreen>

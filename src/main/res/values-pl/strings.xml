@@ -536,7 +536,6 @@ limitations under the License.
     <string name="field_remove_from_layout">Usuń</string>
     <string name="field_set_primary">Główny</string>
     <string name="field_set_secondary">Poboczny</string>
-    <string name="settings_open_tracks_title">Otwarte tory</string>
     <string name="settings_open_tracks_summary">Wszystko o projekcie OpenTacks</string>
     <string name="settings_defaults_title">Domyślne Jednostki i Aktywności</string>
     <string name="settings_defaults_summary">Preferowane Jednostki, Domyślne Aktywności, Nazwy Treningów</string>

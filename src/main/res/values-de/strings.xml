@@ -574,6 +574,5 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_ui_summary">Erscheinungsbild, Aufzeichnungslayout, Theme</string>
     <string name="settings_gps_summary">Zeitintervall, Entfernungsintervall, Max Entfernung, Genauigkeit</string>
     <string name="description_speed_nautical">Geschwindigkeit (Knoten)</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="gps_recording_status">%1$s: %2$s</string>
 </resources>

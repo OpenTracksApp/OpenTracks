@@ -506,7 +506,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_layout_reset_done">Tutte le impostazioni del layout sono state reimpostate ai valori predefiniti</string>
     <string name="settings_generic_sensor">Generico</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
-    <string name="settings_open_tracks_title">Binari aperti</string>
     <string name="settings_open_tracks_summary">Tutto a proposito del progetto OpenTracks</string>
     <string name="settings_ui_title">Interfaccia Utente</string>
     <string name="settings_ui_summary">Aspetto, Layout durante la registrazione, Tema</string>

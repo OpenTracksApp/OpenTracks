@@ -542,7 +542,6 @@ limitations under the License.
     <string name="settings_open_tracks_summary">Todo sobre el proyecto OpenTracks</string>
     <string name="settings_defaults_title">Unidades y Actividad predeterminadas</string>
     <string name="settings_defaults_summary">Unidades preferidas, Actividad predeterminada, Nombre predeterminado del recorrido</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="generic_undo">Deshacer</string>
     <string name="no_compatible_file_manager_installed">No hay un gestor de archivos compatible instalado</string>
     <string name="settings_public_api_disabled_toast">La API pública de OpenTracks está deshabilitada: esta se puede activar en los ajustes.</string>

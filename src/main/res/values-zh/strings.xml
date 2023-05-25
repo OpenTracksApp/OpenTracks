@@ -579,7 +579,6 @@ limitations under the License.
     <string name="marker_add_photo_canceled">已取消，照片标记没有被添加</string>
     <string name="sensor_state_cadence_avg">平均步频</string>
     <string name="sensor_could_not_scan">无法扫描蓝牙设备（错误：%1$i）。</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="settings_units_category">单位</string>
     <string name="settings_recording_customize_layout_select_columns">每行数据字段数</string>
     <string name="settings_announcements_average_heart_rate">平均心率</string>
