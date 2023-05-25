@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import de.dennisguse.opentracks.data.models.BatteryLevel;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
@@ -47,6 +48,11 @@ import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 public class BluetoothUtils {
 
     public static final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = new UUID(0x290200001000L, 0x800000805f9b34fbL);
+
+    public static final ServiceMeasurementUUID BATTERY = new ServiceMeasurementUUID(
+            new UUID(0x180F00001000L, 0x800000805f9b34fbL),
+            new UUID(0x2A1900001000L, 0x800000805f9b34fbL)
+    );
 
     public static final ServiceMeasurementUUID HEARTRATE = new ServiceMeasurementUUID(
             new UUID(0x180D00001000L, 0x800000805f9b34fbL),
@@ -100,6 +106,17 @@ public class BluetoothUtils {
 
     public static boolean hasBluetooth(Context context) {
         return BluetoothUtils.getAdapter(context) != null;
+    }
+
+    public static BatteryLevel parseBatteryLevel(BluetoothGattCharacteristic characteristic) {
+        // DOCUMENTATION org.bluetooth.characteristic.battery_level.xml
+        byte[] raw = characteristic.getValue();
+        if (raw.length == 0) {
+            return null;
+        }
+
+        final int batteryLevel = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+        return BatteryLevel.of(batteryLevel);
     }
 
     public static HeartRate parseHeartRate(BluetoothGattCharacteristic characteristic) {
