@@ -11,11 +11,6 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetClass="de.dennisguse.opentracks.ui.aggregatedStatistics.AggregatedStatisticsActivity"
-            android:targetPackage="de.dennisguse.opentracks.debug">
-
-            <extra
-                android:name="OPEN_CURRENT_TRACK_SCREEN"
-                android:value="true" />
-        </intent>
+            android:targetPackage="de.dennisguse.opentracks.debug" />
     </shortcut>
 </shortcuts>

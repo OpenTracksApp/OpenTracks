@@ -6,7 +6,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.0-beta02'
+        classpath 'com.android.tools.build:gradle:8.1.0-beta03'
     }
 }
 
@@ -64,8 +64,8 @@ android {
 
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
-        versionCode 5196
-        versionName "v4.3.4"
+        versionCode 5211
+        versionName "v4.3.5"
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
