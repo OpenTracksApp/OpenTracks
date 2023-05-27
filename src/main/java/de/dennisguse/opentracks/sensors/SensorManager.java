@@ -9,6 +9,7 @@ import androidx.annotation.VisibleForTesting;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
+import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 
 public class SensorManager {
 
@@ -18,7 +19,7 @@ public class SensorManager {
     @VisibleForTesting
     public SensorDataSet sensorDataSet = new SensorDataSet();
 
-    private final SensorManager.SensorDataSetChangeObserver observer;
+    private final TrackPointCreator observer;
 
     private final SensorDataChangedObserver listener = new SensorDataChangedObserver() {
 
@@ -39,7 +40,7 @@ public class SensorManager {
 
     private AltitudeSumManager altitudeSumManager;
 
-    public SensorManager(Context context, Handler handler, SensorDataSetChangeObserver observer) {
+    public SensorManager(Context context, Handler handler, TrackPointCreator observer) {
         this.observer = observer;
         bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
         altitudeSumManager = new AltitudeSumManager();
@@ -101,10 +102,5 @@ public class SensorManager {
         void onChange(SensorData<?> sensorData);
 
         void onDisconnect(SensorData<?> sensorData);
-    }
-
-    @Deprecated
-    public interface SensorDataSetChangeObserver {
-        void onChange(SensorDataSet sensorDataSet);
     }
 }

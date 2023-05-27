@@ -22,7 +22,7 @@ import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 /**
  * Creates TrackPoints while recording by fusing data from different sensors (e.g., GNSS, barometer, BLE sensors).
  */
-public class TrackPointCreator implements SensorManager.SensorDataSetChangeObserver {
+public class TrackPointCreator {
 
     private static final String TAG = TrackPointCreator.class.getSimpleName();
 
@@ -85,7 +85,6 @@ public class TrackPointCreator implements SensorManager.SensorDataSetChangeObser
     /**
      * Got a new TrackPoint from Bluetooth only; contains no GPS location.
      */
-    @Override
     public synchronized void onChange(@NonNull SensorDataSet unused) {
         onNewTrackPoint(new TrackPoint(TrackPoint.Type.SENSORPOINT, createNow()));
     }
