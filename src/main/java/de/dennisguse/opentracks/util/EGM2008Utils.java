@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.Altitude;
 
 /**
  * Converts WGS84 altitude to EGM2008 (should be close to height above sea level).
@@ -103,7 +104,7 @@ public class EGM2008Utils {
             return indices.getAbsoluteIndex() == getIndices(location).getAbsoluteIndex();
         }
 
-        public double correctAltitude(@NonNull Location location) {
+        public Altitude.EGM2008 correctAltitude(@NonNull Location location) {
             if (!canCorrect(location))
                 throw new RuntimeException("Undulation data not loaded for this location.");
             if (!location.hasAltitude())
@@ -134,7 +135,7 @@ public class EGM2008Utils {
 
             double h = 0.003 * undulationRaw - 108;
 
-            return location.getAltitude() - h;
+            return Altitude.EGM2008.of(location.getAltitude() - h);
         }
 
         private boolean isSouthPole() {

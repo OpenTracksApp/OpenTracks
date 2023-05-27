@@ -15,9 +15,7 @@ public abstract class Altitude {
     public double toM() {
         return altitude_m;
     }
-
-    public abstract Altitude replace(double altitude_m);
-
+    
     public abstract int getLabelId();
 
     public static class WGS84 extends Altitude {
@@ -31,12 +29,7 @@ public abstract class Altitude {
             return R.string.wgs84;
         }
 
-        public static Altitude of(double altitude_m) {
-            return new WGS84(altitude_m);
-        }
-
-        @Override
-        public Altitude replace(double altitude_m) {
+        public static WGS84 of(double altitude_m) {
             return new WGS84(altitude_m);
         }
     }
@@ -52,12 +45,7 @@ public abstract class Altitude {
             return R.string.egm2008;
         }
 
-        public static Altitude of(double altitude_m) {
-            return new EGM2008(altitude_m);
-        }
-
-        @Override
-        public Altitude replace(double altitude_m) {
+        public static EGM2008 of(double altitude_m) {
             return new EGM2008(altitude_m);
         }
     }

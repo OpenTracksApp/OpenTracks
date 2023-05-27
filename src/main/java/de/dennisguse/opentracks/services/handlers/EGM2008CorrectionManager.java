@@ -5,7 +5,6 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.util.EGM2008Utils;
 
@@ -30,6 +29,6 @@ public class EGM2008CorrectionManager {
             }
         }
 
-        trackPoint.setAltitude(Altitude.EGM2008.of(egm2008Correction.correctAltitude(trackPoint.getLocation())));
+        trackPoint.setAltitude(egm2008Correction.correctAltitude(trackPoint.getLocation()));
     }
 }

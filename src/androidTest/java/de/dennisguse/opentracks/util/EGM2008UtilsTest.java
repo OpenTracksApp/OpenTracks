@@ -79,7 +79,7 @@ public class EGM2008UtilsTest {
         EGM2008Utils.EGM2008Correction altitude_egm2008 = EGM2008Utils.createCorrection(context, trackPoint.getLocation());
 
         // then
-        assertEquals(-14.8980, altitude_egm2008.correctAltitude(trackPoint.getLocation()), MAX_BILINEAR_ERROR);
+        assertEquals(-14.8980, altitude_egm2008.correctAltitude(trackPoint.getLocation()).toM(), MAX_BILINEAR_ERROR);
     }
 
     @Test
@@ -94,7 +94,7 @@ public class EGM2008UtilsTest {
         EGM2008Utils.EGM2008Correction altitude_egm2008 = EGM2008Utils.createCorrection(context, trackPoint.getLocation());
 
         // then
-        assertEquals(30.15, altitude_egm2008.correctAltitude(trackPoint.getLocation()), MAX_BILINEAR_ERROR);
+        assertEquals(30.15, altitude_egm2008.correctAltitude(trackPoint.getLocation()).toM(), MAX_BILINEAR_ERROR);
     }
 
     @Test
@@ -109,7 +109,7 @@ public class EGM2008UtilsTest {
         EGM2008Utils.EGM2008Correction altitude_egm2008 = EGM2008Utils.createCorrection(context, trackPoint.getLocation());
 
         // then
-        assertEquals(30.15, altitude_egm2008.correctAltitude(trackPoint.getLocation()), MAX_BILINEAR_ERROR);
+        assertEquals(30.15, altitude_egm2008.correctAltitude(trackPoint.getLocation()).toM(), MAX_BILINEAR_ERROR);
     }
 
     @Test
@@ -124,7 +124,7 @@ public class EGM2008UtilsTest {
         EGM2008Utils.EGM2008Correction altitude_egm2008 = EGM2008Utils.createCorrection(context, trackPoint.getLocation());
 
         // then
-        assertEquals(30.15, altitude_egm2008.correctAltitude(trackPoint.getLocation()), MAX_BILINEAR_ERROR);
+        assertEquals(30.15, altitude_egm2008.correctAltitude(trackPoint.getLocation()).toM(), MAX_BILINEAR_ERROR);
     }
 
     @Test
@@ -139,7 +139,7 @@ public class EGM2008UtilsTest {
         EGM2008Utils.EGM2008Correction altitude_egm2008 = EGM2008Utils.createCorrection(context, trackPoint.getLocation());
 
         // then
-        assertEquals(-17.2260, altitude_egm2008.correctAltitude(trackPoint.getLocation()), MAX_BILINEAR_ERROR);
+        assertEquals(-17.2260, altitude_egm2008.correctAltitude(trackPoint.getLocation()).toM(), MAX_BILINEAR_ERROR);
     }
 
     @Test
@@ -154,7 +154,7 @@ public class EGM2008UtilsTest {
         EGM2008Utils.EGM2008Correction altitude_egm2008 = EGM2008Utils.createCorrection(context, trackPoint.getLocation());
 
         // then
-        assertEquals(-39.4865, altitude_egm2008.correctAltitude(trackPoint.getLocation()), MAX_BILINEAR_ERROR);
+        assertEquals(-39.4865, altitude_egm2008.correctAltitude(trackPoint.getLocation()).toM(), MAX_BILINEAR_ERROR);
     }
 
     @Test
@@ -174,7 +174,7 @@ public class EGM2008UtilsTest {
         EGM2008Utils.EGM2008Correction altitude_egm2008 = EGM2008Utils.createCorrection(context, trackPoint1.getLocation());
 
         // then
-        assertNotEquals(altitude_egm2008.correctAltitude(trackPoint1.getLocation()), altitude_egm2008.correctAltitude(trackPoint2.getLocation()), 0.0001);
+        assertNotEquals(altitude_egm2008.correctAltitude(trackPoint1.getLocation()).toM(), altitude_egm2008.correctAltitude(trackPoint2.getLocation()).toM(), 0.0001);
     }
 
     @Test
@@ -190,7 +190,7 @@ public class EGM2008UtilsTest {
         EGM2008Utils.EGM2008Correction altitude_egm2008 = EGM2008Utils.createCorrection(context, trackPoint.getLocation());
 
         // then
-        assertEquals(22.99, altitude_egm2008.correctAltitude(trackPoint.getLocation()), MAX_BILINEAR_ERROR);
+        assertEquals(22.99, altitude_egm2008.correctAltitude(trackPoint.getLocation()).toM(), MAX_BILINEAR_ERROR);
     }
 
     @Test
@@ -205,7 +205,7 @@ public class EGM2008UtilsTest {
         EGM2008Utils.EGM2008Correction altitude_egm2008 = EGM2008Utils.createCorrection(context, trackPoint.getLocation());
 
         // then
-        assertEquals(-85.824, altitude_egm2008.correctAltitude(trackPoint.getLocation()), MAX_BILINEAR_ERROR);
+        assertEquals(-85.824, altitude_egm2008.correctAltitude(trackPoint.getLocation()).toM(), MAX_BILINEAR_ERROR);
     }
 
 
