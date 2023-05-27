@@ -9,6 +9,7 @@ import androidx.annotation.VisibleForTesting;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
+import de.dennisguse.opentracks.services.handlers.GPSManager;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 
 public class SensorManager {
@@ -40,14 +41,20 @@ public class SensorManager {
 
     private AltitudeSumManager altitudeSumManager;
 
-    public SensorManager(Context context, Handler handler, TrackPointCreator observer) {
+    private GPSManager gpsManager;
+
+    public SensorManager(TrackPointCreator observer) {
         this.observer = observer;
-        bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
-        altitudeSumManager = new AltitudeSumManager();
     }
 
     public void start(Context context, Handler handler) {
+        gpsManager = new GPSManager(observer); //TODO Pass listener
+        gpsManager.start(context, handler);
+
+        bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
         bluetoothSensorManager.start(context, handler);
+
+        altitudeSumManager = new AltitudeSumManager();
         altitudeSumManager.start(context, handler);
     }
 
@@ -60,6 +67,11 @@ public class SensorManager {
         if (altitudeSumManager != null) {
             altitudeSumManager.stop(context);
             altitudeSumManager = null;
+        }
+
+        if (gpsManager != null) {
+            gpsManager.stop(context);
+            gpsManager = null;
         }
 
         sensorDataSet.clear();
@@ -84,6 +96,10 @@ public class SensorManager {
     @VisibleForTesting
     public BluetoothRemoteSensorManager getBluetoothSensorManager() {
         return bluetoothSensorManager;
+    }
+
+    public GPSManager getGpsManager() {
+        return gpsManager;
     }
 
     @Deprecated

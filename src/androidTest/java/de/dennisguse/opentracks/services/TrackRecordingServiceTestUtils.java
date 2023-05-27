@@ -30,6 +30,6 @@ public class TrackRecordingServiceTestUtils {
         location.setSpeed(speed);
 
         trackPointCreator.setClock(time);
-        trackPointCreator.getGpsHandler().onLocationChanged(location);
+        trackPointCreator.getSensorManager().getGpsManager().onLocationChanged(location);
     }
 }
