@@ -143,6 +143,11 @@ public class TrackPointCreator implements SensorManager.SensorDataSetChangeObser
     }
 
     @VisibleForTesting
+    public void setSensorManager(SensorManager sensorManager) {
+        this.sensorManager = sensorManager;
+    }
+
+    @VisibleForTesting
     public void setClock(@NonNull String time) {
         this.clock = Clock.fixed(Instant.parse(time), ZoneId.of("CET"));
     }

@@ -24,17 +24,12 @@ import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.data.models.Distance;
-import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
 
@@ -61,19 +56,14 @@ public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBl
     private final BluetoothAdapter bluetoothAdapter;
     private final Context context;
     private final Handler handler;
+    private final SensorManager.SensorDataChangedObserver observer;
     private boolean started = false;
-
-    private Distance preferenceWheelCircumference;
 
     private final BluetoothConnectionManagerHeartRate heartRate = new BluetoothConnectionManagerHeartRate(this);
     private final BluetoothConnectionManagerCyclingCadence cyclingCadence = new BluetoothConnectionManagerCyclingCadence(this);
     private final BluetoothConnectionManagerCyclingDistanceSpeed cyclingSpeed = new BluetoothConnectionManagerCyclingDistanceSpeed(this);
     private final BluetoothConnectionManagerCyclingPower cyclingPower = new BluetoothConnectionManagerCyclingPower(this);
     private final BluetoothConnectionRunningSpeedAndCadence runningSpeedAndCadence = new BluetoothConnectionRunningSpeedAndCadence(this);
-
-    private final SensorDataSet sensorDataSet = new SensorDataSet();
-
-    private final SensorManager.SensorDataSetChangeObserver observer;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
@@ -95,9 +85,6 @@ public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBl
 
                 connect(cyclingSpeed, address);
             }
-            if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, key)) {
-                preferenceWheelCircumference = PreferencesUtils.getWheelCircumference();
-            }
 
             if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_cycling_power_key, key)) {
                 String address = PreferencesUtils.getBluetoothCyclingPowerSensorAddress();
@@ -114,7 +101,7 @@ public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBl
         }
     };
 
-    public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull Handler handler, @NonNull SensorManager.SensorDataSetChangeObserver observer) {
+    public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull Handler handler, @Nullable SensorManager.SensorDataChangedObserver observer) {
         this.context = context;
         this.handler = handler;
         this.observer = observer;
@@ -136,8 +123,6 @@ public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBl
         cyclingSpeed.disconnect();
         cyclingPower.disconnect();
         runningSpeedAndCadence.disconnect();
-
-        sensorDataSet.clear();
 
         PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         started = false;
@@ -178,53 +163,14 @@ public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBl
         }
     }
 
-    public SensorDataSet fill(@NonNull TrackPoint trackPoint) {
-        sensorDataSet.fillTrackPoint(trackPoint);
-        return new SensorDataSet(sensorDataSet);
-    }
-
-    public void reset() {
-        sensorDataSet.reset();
-    }
-
     @Override
     public synchronized void onChanged(SensorData<?> sensorData) {
-        if (sensorData instanceof SensorDataCyclingCadence) {
-            SensorDataCyclingCadence previous = sensorDataSet.getCyclingCadence();
-            Log.d(TAG, "Previous: " + previous + "; current: " + sensorData);
-
-            if (sensorData.equals(previous)) {
-                Log.d(TAG, "onChanged: cadence data repeated.");
-                return;
-            }
-            ((SensorDataCyclingCadence) sensorData).compute(previous);
-        }
-        if (sensorData instanceof SensorDataCyclingDistanceSpeed) {
-            SensorDataCyclingDistanceSpeed previous = sensorDataSet.getCyclingDistanceSpeed();
-            Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
-            if (sensorData.equals(previous)) {
-                Log.d(TAG, "onChanged: cycling speed data repeated.");
-                return;
-            }
-            ((SensorDataCyclingDistanceSpeed) sensorData).compute(previous, preferenceWheelCircumference);
-        }
-        if (sensorData instanceof SensorDataRunning) {
-            SensorDataRunning previous = sensorDataSet.getRunningDistanceSpeedCadence();
-            Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
-            if (sensorData.equals(previous)) {
-                Log.d(TAG, "onChanged: running speed data repeated.");
-                return;
-            }
-            ((SensorDataRunning) sensorData).compute(previous);
-        }
-
-        sensorDataSet.set(sensorData);
-        observer.onChange(new SensorDataSet(sensorDataSet));
+        observer.onChange(sensorData);
     }
 
     @Override
     public void onDisconnecting(SensorData<?> sensorData) {
-        sensorDataSet.remove(sensorData);
+        observer.onDisconnect(sensorData);
     }
 
     @NonNull

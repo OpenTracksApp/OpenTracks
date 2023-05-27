@@ -1,15 +1,20 @@
 package de.dennisguse.opentracks.sensors.sensorData;
 
+import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.data.models.Cadence;
+import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public final class SensorDataSet {
+
+    private static final String TAG = SensorDataSet.class.getSimpleName();
 
     private SensorDataHeartRate heartRate;
 
@@ -140,28 +145,55 @@ public final class SensorDataSet {
                 + (runningDistanceSpeedCadence != null ? " " + runningDistanceSpeedCadence : "");
     }
 
-    private void set(@NonNull SensorData<?> type, SensorData<?> data) {
+    private void set(@NonNull SensorData<?> type, SensorData<?> sensorData) {
         if (type instanceof SensorDataHeartRate) {
-            this.heartRate = (SensorDataHeartRate) data;
+            this.heartRate = (SensorDataHeartRate) sensorData;
             return;
         }
 
         if (type instanceof SensorDataCyclingCadence) {
-            this.cyclingCadence = (SensorDataCyclingCadence) data;
+            SensorDataCyclingCadence previous = getCyclingCadence();
+            Log.d(TAG, "Previous: " + previous + "; current: " + sensorData);
+
+            if (sensorData.equals(previous)) {
+                Log.d(TAG, "onChanged: cadence data repeated.");
+                return;
+            }
+
+            this.cyclingCadence = (SensorDataCyclingCadence) sensorData;
+            this.cyclingCadence.compute(previous);
             return;
         }
+
         if (type instanceof SensorDataCyclingDistanceSpeed) {
-            this.cyclingDistanceSpeed = (SensorDataCyclingDistanceSpeed) data;
+            SensorDataCyclingDistanceSpeed previous = getCyclingDistanceSpeed();
+            Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
+            if (sensorData.equals(previous)) {
+                Log.d(TAG, "onChanged: cycling speed data repeated.");
+                return;
+            }
+            Distance preferenceWheelCircumference = PreferencesUtils.getWheelCircumference(); //TODO Fetch once and then listen for changes.
+
+            this.cyclingDistanceSpeed = (SensorDataCyclingDistanceSpeed) sensorData;
+            this.cyclingDistanceSpeed.compute(previous, preferenceWheelCircumference);
             return;
         }
 
         if (type instanceof SensorDataCyclingPower) {
-            this.cyclingPower = (SensorDataCyclingPower) data;
+            this.cyclingPower = (SensorDataCyclingPower) sensorData;
             return;
         }
 
         if (type instanceof SensorDataRunning) {
-            this.runningDistanceSpeedCadence = (SensorDataRunning) data;
+            SensorDataRunning previous = getRunningDistanceSpeedCadence();
+            Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
+            if (sensorData.equals(previous)) {
+                Log.d(TAG, "onChanged: running speed data repeated.");
+                return;
+            }
+
+            this.runningDistanceSpeedCadence = (SensorDataRunning) sensorData;
+            this.runningDistanceSpeedCadence.compute(previous);
             return;
         }
 

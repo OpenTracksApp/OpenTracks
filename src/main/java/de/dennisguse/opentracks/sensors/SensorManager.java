@@ -14,12 +14,34 @@ public class SensorManager {
 
     private static final String TAG = SensorManager.class.getSimpleName();
 
+    //TODO Should be final and not be visible for testing
+    @VisibleForTesting
+    public SensorDataSet sensorDataSet = new SensorDataSet();
+
+    private final SensorManager.SensorDataSetChangeObserver observer;
+
+    private final SensorDataChangedObserver listener = new SensorDataChangedObserver() {
+
+        @Override
+        public void onChange(SensorData<?> sensorData) {
+            sensorDataSet.set(sensorData);
+            observer.onChange(new SensorDataSet(sensorDataSet));
+        }
+
+        @Override
+        public void onDisconnect(SensorData<?> sensorData) {
+            sensorDataSet.remove(sensorData);
+            observer.onChange(new SensorDataSet(sensorDataSet));
+        }
+    };
+
     private BluetoothRemoteSensorManager bluetoothSensorManager;
 
     private AltitudeSumManager altitudeSumManager;
 
     public SensorManager(Context context, Handler handler, SensorDataSetChangeObserver observer) {
-        bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, observer);
+        this.observer = observer;
+        bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
         altitudeSumManager = new AltitudeSumManager();
     }
 
@@ -38,11 +60,14 @@ public class SensorManager {
             altitudeSumManager.stop(context);
             altitudeSumManager = null;
         }
+
+        sensorDataSet.clear();
     }
 
     public SensorDataSet fill(TrackPoint trackPoint) {
         altitudeSumManager.fill(trackPoint);
-        return bluetoothSensorManager.fill(trackPoint);
+        sensorDataSet.fillTrackPoint(trackPoint);
+        return new SensorDataSet(sensorDataSet);
     }
 
     public void reset() {
@@ -50,7 +75,7 @@ public class SensorManager {
             Log.d(TAG, "No recording running and no reset necessary.");
             return;
         }
-        bluetoothSensorManager.reset();
+        sensorDataSet.reset();
         altitudeSumManager.reset();
     }
 
@@ -58,12 +83,6 @@ public class SensorManager {
     @VisibleForTesting
     public BluetoothRemoteSensorManager getBluetoothSensorManager() {
         return bluetoothSensorManager;
-    }
-
-    @Deprecated
-    @VisibleForTesting
-    public void setBluetoothSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
-        this.bluetoothSensorManager = remoteSensorManager;
     }
 
     @Deprecated
@@ -76,6 +95,12 @@ public class SensorManager {
     @VisibleForTesting
     public void setAltitudeSumManager(AltitudeSumManager altitudeSumManager) {
         this.altitudeSumManager = altitudeSumManager;
+    }
+
+    public interface SensorDataChangedObserver {
+        void onChange(SensorData<?> sensorData);
+
+        void onDisconnect(SensorData<?> sensorData);
     }
 
     @Deprecated
