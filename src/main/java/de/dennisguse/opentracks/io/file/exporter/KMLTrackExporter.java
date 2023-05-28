@@ -289,7 +289,7 @@ public class KMLTrackExporter implements TrackExporter {
 
     private void writeMultiTrackBegin() {
         if (printWriter != null) {
-            printWriter.println("<Folder id=tour>");
+            printWriter.println("<Folder id=\"tracks\">");
             printWriter.println("<name>" + context.getString(R.string.generic_tracks) + "</name>");
             printWriter.println("<open>1</open>");
         }
