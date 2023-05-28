@@ -23,6 +23,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.io.file.exporter.ExportService;
 import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
 import de.dennisguse.opentracks.io.file.exporter.ExportTask;
@@ -65,7 +66,8 @@ public class ExportUtils {
         if (tracks.size() == 1) {
             exportDocumentFileUri = getExportDocumentFileUri(context, tracks.get(0), exportTask.getTrackFileFormat(), directory);
         } else {
-            exportDocumentFileUri = getExportDocumentFileUri(context, exportTask.getFilename(), exportTask.getTrackFileFormat(), directory);
+            String filename = TrackFilenameGenerator.format(exportTask.getFilename(), exportTask.getTrackFileFormat());
+            exportDocumentFileUri = getExportDocumentFileUri(context, filename, exportTask.getTrackFileFormat(), directory);
         }
 
         if (exportDocumentFileUri == null) {

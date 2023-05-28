@@ -39,6 +39,7 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.ExportActivityBinding;
 import de.dennisguse.opentracks.io.file.ErrorListDialog;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -260,7 +261,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private boolean exportFileExists(ExportTask exportTask) {
         String filename;
         if (exportTask.isMultiExport()) {
-            filename = exportTask.getFilename();
+            filename = TrackFilenameGenerator.format(exportTask.getFilename(), exportTask.getTrackFileFormat());
         } else {
             Track track = contentProviderUtils.getTrack(exportTask.getTrackIds().get(0));
             filename = PreferencesUtils.getTrackFileformatGenerator().format(track, trackFileFormat);
