@@ -349,6 +349,7 @@ limitations under the License.
         <activity android:name=".ui.aggregatedStatistics.AggregatedStatisticsActivity" />
 
         <activity android:name=".io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity" />
+        <activity android:name=".io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserOneFileActivity" />
         <activity android:name=".io.file.importer.DirectoryChooserActivity$DefaultTrackExportDirectoryChooserActivity" />
 
         <activity android:name=".io.file.exporter.ExportActivity" />

@@ -213,7 +213,7 @@ public class ShareContentProvider extends CustomContentProvider {
         PipeDataWriter<String> pipeDataWriter = (output, uri1, mimeType, opts, args) -> {
             try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
                 // TODO handle failure (i.e., do not export an empty file)
-                trackExporter.writeTrack(tracks.toArray(new Track[0]), fileOutputStream);
+                trackExporter.writeTrack(tracks, fileOutputStream);
             } catch (IOException e) {
                 Log.w(TAG, "there occurred an error while sharing a file: " + e);
             }

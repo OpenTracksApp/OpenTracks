@@ -29,6 +29,10 @@ public class TrackFilenameGenerator {
                 .collect(Collectors.joining(", "));
     }
 
+    public static String format(@NonNull String name, @NonNull TrackFileFormat trackFileFormat) {
+        return FileUtils.sanitizeFileName(name + "." + trackFileFormat.getExtension());
+    }
+
     private final String template;
 
     public TrackFilenameGenerator(@NonNull String template) {
@@ -44,7 +48,7 @@ public class TrackFilenameGenerator {
         values.put(STARTTIME_TIME_KEY, track.getStartTime().toLocalTime().toString());
         values.put(STARTTIME_DATE_KEY, track.getStartTime().toLocalDate().toString());
 
-        return FileUtils.sanitizeFileName(format(template, values)) + "." + trackFileFormat.getExtension();
+        return format(format(template, values), trackFileFormat);
     }
 
     private static String format(String template, Map<String, String> values) {
@@ -75,10 +79,6 @@ public class TrackFilenameGenerator {
         }
 
         return String.format(templateCompiled, valueList.toArray());
-    }
-
-    public String getTemplate() {
-        return template;
     }
 
     public boolean isValid() {

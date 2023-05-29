@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +23,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.FragmentActivity;
@@ -31,14 +31,15 @@ import androidx.fragment.app.FragmentActivity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.databinding.ExportActivityBinding;
 import de.dennisguse.opentracks.io.file.ErrorListDialog;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -47,12 +48,20 @@ import de.dennisguse.opentracks.util.FileUtils;
  * An activity for saving tracks to the external storage.
  *
  * @author Rodrigo Damazio
+ * TODO: This class needs some refactoring.
+ * * It pushes each export job (usually one Track) for export; although export could be run in parallel.
+ *   Also this requires that the ExportActivity stays in foreground, so the user has to activily wait.
+ *   It would be better to let the ExportService handle this and let it report progress / conflicts to ExportActivity
+ * * File name conflicts are checked in this class instead of the ExportService.
+ *    So, for this check actually a different file name might be used than in the ExportService.
+ * * Saved state as an object instead of individual values.
  */
 public class ExportActivity extends FragmentActivity implements ExportServiceResultReceiver.Receiver {
 
     private static final String TAG = ExportActivity.class.getSimpleName();
 
     public static final String EXTRA_DIRECTORY_URI_KEY = "directory_uri";
+    public static final String EXTRA_ONE_FILE_KEY = "one_file";
     public static final String EXTRA_TRACKFILEFORMAT_KEY = "trackfileformat";
 
     private static final String BUNDLE_AUTO_CONFLICT = "auto_conflict";
@@ -64,9 +73,13 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private static final String BUNDLE_DIRECTORY_FILES = "track_directory_files";
     private static final String BUNDLE_TRACK_ERRORS = "track_errors";
 
-    private static final int CONFLICT_NONE = 0;
-    private static final int CONFLICT_OVERWRITE = 1;
-    private static final int CONFLICT_SKIP = 2;
+    private static final String BUNDLE_EXPORT_TASKS = "export_tasks";
+
+    private enum ConflictResolutionStrategy {
+        CONFLICT_NONE,
+        CONFLICT_OVERWRITE,
+        CONFLICT_SKIP;
+    }
 
     private TrackFileFormat trackFileFormat;
     private Uri directoryUri;
@@ -87,12 +100,12 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
 
     private ArrayList<String> trackErrors = new ArrayList<>();
 
-    private int autoConflict;
+    private ConflictResolutionStrategy autoConflict;
 
     private ContentProviderUtils contentProviderUtils;
 
     // List of tracks to be exported.
-    private final ArrayList<Track> tracks = new ArrayList<>();
+    private ArrayList<ExportTask> exportTasks;
 
     private final LinkedBlockingQueue<PendingConflict> conflictsQueue = new LinkedBlockingQueue<>();
     private final Handler conflictsHandler = new Handler();
@@ -100,34 +113,36 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private final Runnable conflictsRunnable = new Runnable() {
         @Override
         public void run() {
-            if (conflictsQueue.size() > 0) {
-                PendingConflict conflict = conflictsQueue.peek();
-                if (conflict.resolve()) {
-                    conflictsQueue.remove(conflict);
-                    if (!conflictsQueue.isEmpty()) {
-                        conflictsHandler.post(conflictsRunnable);
-                    }
-                    return;
-                }
-
-                viewBinding.exportProgressLeftButton.setOnClickListener((view) -> {
-                    setConflictVisibility(View.GONE);
-                    conflict.skip();
-                    conflictsQueue.remove(conflict);
-                    if (!conflictsQueue.isEmpty()) {
-                        conflictsHandler.post(conflictsRunnable);
-                    }
-                });
-
-                viewBinding.exportProgressRightButton.setOnClickListener((view) -> {
-                    setConflictVisibility(View.GONE);
-                    conflict.overwrite();
-                    conflictsQueue.remove(conflict);
-                    if (!conflictsQueue.isEmpty()) {
-                        conflictsHandler.post(conflictsRunnable);
-                    }
-                });
+            if (conflictsQueue.isEmpty()) {
+                return;
             }
+
+            PendingConflict conflict = conflictsQueue.peek();
+            if (conflict.resolve()) {
+                conflictsQueue.remove(conflict);
+                if (!conflictsQueue.isEmpty()) {
+                    conflictsHandler.post(conflictsRunnable);
+                }
+                return;
+            }
+
+            viewBinding.exportProgressLeftButton.setOnClickListener((view) -> {
+                setConflictVisibility(View.GONE);
+                conflict.skip();
+                conflictsQueue.remove(conflict);
+                if (!conflictsQueue.isEmpty()) {
+                    conflictsHandler.post(conflictsRunnable);
+                }
+            });
+
+            viewBinding.exportProgressRightButton.setOnClickListener((view) -> {
+                setConflictVisibility(View.GONE);
+                conflict.overwrite();
+                conflictsQueue.remove(conflict);
+                if (!conflictsQueue.isEmpty()) {
+                    conflictsHandler.post(conflictsRunnable);
+                }
+            });
         }
     };
 
@@ -139,6 +154,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
 
         directoryUri = getIntent().getParcelableExtra(EXTRA_DIRECTORY_URI_KEY);
         trackFileFormat = (TrackFileFormat) getIntent().getSerializableExtra(EXTRA_TRACKFILEFORMAT_KEY);
+        boolean allInOneFile = getIntent().getBooleanExtra(EXTRA_ONE_FILE_KEY, false);
 
         contentProviderUtils = new ContentProviderUtils(this);
 
@@ -148,14 +164,17 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         resultReceiver = new ExportServiceResultReceiver(new Handler(), this);
 
         if (savedInstanceState == null) {
-            autoConflict = CONFLICT_NONE;
+            autoConflict = ConflictResolutionStrategy.CONFLICT_NONE;
             setProgress();
             new Thread(() -> {
                 directoryFiles = ExportUtils.getAllFiles(ExportActivity.this, documentFile.getUri());
-                runOnUiThread(() -> initExport(0));
+                runOnUiThread(() -> {
+                    createExportTasks(allInOneFile);
+                    nextExport(null);
+                });
             }).start();
         } else {
-            autoConflict = savedInstanceState.getInt(BUNDLE_AUTO_CONFLICT);
+            autoConflict = ConflictResolutionStrategy.valueOf(savedInstanceState.getString(BUNDLE_AUTO_CONFLICT));
             trackExportSuccessCount = savedInstanceState.getInt(BUNDLE_SUCCESS_COUNT);
             trackExportErrorCount = savedInstanceState.getInt(BUNDLE_ERROR_COUNT);
             trackExportOverwrittenCount = savedInstanceState.getInt(BUNDLE_OVERWRITTEN_COUNT);
@@ -163,9 +182,9 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
             trackExportTotalCount = savedInstanceState.getInt(BUNDLE_TOTAL_COUNT);
             directoryFiles = savedInstanceState.getStringArrayList(BUNDLE_DIRECTORY_FILES);
             trackErrors = savedInstanceState.getStringArrayList(BUNDLE_TRACK_ERRORS);
-
+            exportTasks = new ArrayList<>(savedInstanceState.getParcelableArrayList(BUNDLE_EXPORT_TASKS));
             setProgress();
-            initExport(getTotalDone());
+            nextExport(null);
         }
 
         viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.export_progress_message, directoryDisplayName));
@@ -175,7 +194,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(BUNDLE_AUTO_CONFLICT, autoConflict);
+        outState.putString(BUNDLE_AUTO_CONFLICT, autoConflict.name());
         outState.putInt(BUNDLE_SUCCESS_COUNT, trackExportSuccessCount);
         outState.putInt(BUNDLE_ERROR_COUNT, trackExportErrorCount);
         outState.putInt(BUNDLE_OVERWRITTEN_COUNT, trackExportOverwrittenCount);
@@ -183,13 +202,14 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         outState.putInt(BUNDLE_TOTAL_COUNT, trackExportTotalCount);
         outState.putStringArrayList(BUNDLE_DIRECTORY_FILES, (ArrayList<String>) directoryFiles);
         outState.putStringArrayList(BUNDLE_TRACK_ERRORS, trackErrors);
+        outState.putParcelableArrayList(BUNDLE_EXPORT_TASKS, exportTasks);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         conflictsQueue.clear();
-        tracks.clear();
+        exportTasks.clear();
     }
 
     @Override
@@ -202,57 +222,50 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         this.doubleBackToCancel = true;
         Toast.makeText(this, getString(R.string.generic_click_twice_cancel), Toast.LENGTH_SHORT).show();
 
-        new Handler().postDelayed(() -> doubleBackToCancel=false, 2000);
+        new Handler().postDelayed(() -> doubleBackToCancel = false, 2000);
     }
 
-    private void initExport(int from) {
-        try (Cursor cursor = contentProviderUtils.getTrackCursor(null, null, TracksColumns._ID)) {
-            if (cursor == null) {
-                onExportEnded();
-                return;
-            }
-
-            trackExportTotalCount = cursor.getCount();
-            viewBinding.exportProgressTotal.setText("" + trackExportTotalCount);
-            for (int i = from; i < trackExportTotalCount; i++) {
-                cursor.moveToPosition(i);
-                Track track = ContentProviderUtils.createTrack(cursor);
-                tracks.add(track);
-            }
-
-            if (!tracks.isEmpty()) {
-                export(tracks.get(0));
-            } else {
-                onExportEnded();
-            }
+    private void createExportTasks(boolean allInOneFile) {
+        List<Track> tracks = contentProviderUtils.getTracks();
+        exportTasks = new ArrayList<>();
+        if (allInOneFile) {
+            String filename = "OpenTracks-Backup";
+            exportTasks.add(new ExportTask(filename, trackFileFormat, tracks.stream().map(Track::getId).collect(Collectors.toList())));
+        } else {
+            exportTasks.addAll(tracks.stream().map(it -> new ExportTask(null, trackFileFormat, List.of(it.getId()))).collect(Collectors.toList()));
         }
+        trackExportTotalCount = exportTasks.size();
     }
 
     /**
      * Enqueue track identified by UUID to be exported if not exported already or there is a conflict resolution.
-     *
-     * @param track              Track object.
-     * @param conflictResolution conflict resolution to be applied if needed.
      */
-    private void export(Track track, int conflictResolution) {
-        boolean fileExists = exportFileExists(track);
+    private void export(ExportTask exportTask, ConflictResolutionStrategy conflictResolution) {
+        boolean fileExists = exportFileExists(exportTask);
 
-        if (fileExists && conflictResolution == CONFLICT_NONE) {
-            conflict(track);
-        } else if (fileExists && conflictResolution == CONFLICT_SKIP) {
+        if (fileExists && conflictResolution == ConflictResolutionStrategy.CONFLICT_NONE) {
+            conflict(exportTask);
+        } else if (fileExists && conflictResolution == ConflictResolutionStrategy.CONFLICT_SKIP) {
             trackExportSkippedCount++;
-            onExportCompleted(track);
+            nextExport(exportTask);
         } else {
-            ExportService.enqueue(this, resultReceiver, track.getId(), trackFileFormat, directoryUri);
+            ExportService.enqueue(this, resultReceiver, exportTask, directoryUri);
         }
     }
 
-    private void export(Track track) {
-        export(track, autoConflict);
+    private void export(ExportTask exportTask) {
+        export(exportTask, autoConflict);
     }
 
-    private boolean exportFileExists(Track track) {
-        String filename = PreferencesUtils.getTrackFileformatGenerator().format(track, trackFileFormat);
+    @Deprecated //TODO Check should be done in ExportService
+    private boolean exportFileExists(ExportTask exportTask) {
+        String filename;
+        if (exportTask.isMultiExport()) {
+            filename = TrackFilenameGenerator.format(exportTask.getFilename(), exportTask.getTrackFileFormat());
+        } else {
+            Track track = contentProviderUtils.getTrack(exportTask.getTrackIds().get(0));
+            filename = PreferencesUtils.getTrackFileformatGenerator().format(track, trackFileFormat);
+        }
         return directoryFiles.stream().anyMatch(filename::equals);
     }
 
@@ -269,31 +282,29 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     }
 
     private void setProgress() {
-        int done = getTotalDone();
-
-        viewBinding.exportProgressDone.setText("" + done);
+        viewBinding.exportProgressDone.setText("" + getTotalDone());
         viewBinding.exportProgressTotal.setText("" + trackExportTotalCount);
 
-        viewBinding.exportProgressBar.setProgress((int) ((float) done / (float) trackExportTotalCount * 100f));
-        viewBinding.exportProgressSummaryNew.setText(String.valueOf(trackExportSuccessCount));
-        viewBinding.exportProgressSummaryOverwrite.setText(String.valueOf(trackExportOverwrittenCount));
-        viewBinding.exportProgressSummarySkip.setText(String.valueOf(trackExportSkippedCount));
-        viewBinding.exportProgressSummaryErrors.setText(String.valueOf(trackExportErrorCount));
+        viewBinding.exportProgressBar.setProgress((int) ((float) getTotalDone() / (float) trackExportTotalCount * 100f));
+        viewBinding.exportProgressSummaryNew.setText("" + trackExportSuccessCount);
+        viewBinding.exportProgressSummaryOverwrite.setText("" + trackExportOverwrittenCount);
+        viewBinding.exportProgressSummarySkip.setText("" + trackExportSkippedCount);
+        viewBinding.exportProgressSummaryErrors.setText("" + trackExportErrorCount);
         viewBinding.exportProgressSummaryNewGroup.setVisibility(trackExportSuccessCount > 0 ? View.VISIBLE : View.GONE);
         viewBinding.exportProgressSummaryOverwriteGroup.setVisibility(trackExportOverwrittenCount > 0 ? View.VISIBLE : View.GONE);
         viewBinding.exportProgressSummarySkipGroup.setVisibility(trackExportSkippedCount > 0 ? View.VISIBLE : View.GONE);
         viewBinding.exportProgressSummaryErrorsGroup.setVisibility(trackExportErrorCount > 0 ? View.VISIBLE : View.GONE);
     }
 
-    private void onExportCompleted(Track track) {
-        tracks.remove(track);
+    private void nextExport(@Nullable ExportTask exportTask) {
+        exportTasks.remove(exportTask);
 
         setProgress();
-        if (tracks.isEmpty()) {
+        if (exportTasks.isEmpty()) {
             onExportEnded();
             return;
         }
-        export(tracks.get(0));
+        export(exportTasks.get(0));
     }
 
     private void onExportEnded() {
@@ -318,30 +329,32 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     }
 
     @Override
-    public void onExportSuccess(Track.Id trackId) {
-        Track track = contentProviderUtils.getTrack(trackId);
-
-        if (exportFileExists(track)) {
+    public void onExportSuccess(ExportTask exportTask) {
+        if (exportFileExists(exportTask)) {
             trackExportOverwrittenCount++;
         } else {
             trackExportSuccessCount++;
         }
 
-        onExportCompleted(track);
+        nextExport(exportTask);
     }
 
     @Override
-    public void onExportError(Track.Id trackId) {
-        Track track = contentProviderUtils.getTrack(trackId);
-
+    public void onExportError(ExportTask exportTask) {
         trackExportErrorCount++;
-        trackErrors.add(track.getName());
+        String name;
+        if (exportTask.isMultiExport()) {
+            name = exportTask.getFilename();
+        } else {
+            name = contentProviderUtils.getTrack(exportTask.getTrackIds().get(0)).getName();
+        }
+        trackErrors.add(name);
 
-        onExportCompleted(track);
+        nextExport(exportTask);
     }
 
-    private void conflict(Track track) {
-        PendingConflict newConflict = new PendingConflict(track);
+    private void conflict(ExportTask exportTask) {
+        PendingConflict newConflict = new PendingConflict(exportTask);
         conflictsQueue.add(newConflict);
 
         if (conflictsQueue.size() == 1) {
@@ -353,10 +366,10 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
      * Handle conflicts (exporting file already exists).
      */
     private class PendingConflict {
-        private final Track track;
+        private final ExportTask exportTask;
 
-        public PendingConflict(Track track) {
-            this.track = track;
+        public PendingConflict(ExportTask exportTask) {
+            this.exportTask = exportTask;
         }
 
         /**
@@ -366,14 +379,20 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
          * @return true if it could resolve the conflict or false otherwise.
          */
         public boolean resolve() {
-            if (autoConflict == CONFLICT_NONE) {
+            if (autoConflict == ConflictResolutionStrategy.CONFLICT_NONE) {
                 viewBinding.exportProgressAlertIcon.setImageDrawable(ContextCompat.getDrawable(ExportActivity.this, R.drawable.ic_report_problem_24));
-                viewBinding.exportProgressAlertMsg.setText(getString(R.string.export_track_already_exists_msg, track.getName()));
+                String name;
+                if (exportTask.isMultiExport()) {
+                    name = exportTask.getFilename();
+                } else {
+                    name = contentProviderUtils.getTrack(exportTask.getTrackIds().get(0)).getName();
+                }
+                viewBinding.exportProgressAlertMsg.setText(getString(R.string.export_track_already_exists_msg, name));
                 setConflictVisibility(View.VISIBLE);
                 return false;
             }
 
-            export(track);
+            export(exportTask);
             return true;
         }
 
@@ -381,10 +400,10 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
          * Overwrite the export file and set the autoConflict if user set the "do it for all" switch button.
          */
         public void overwrite() {
-            export(track, CONFLICT_OVERWRITE);
+            export(exportTask, ConflictResolutionStrategy.CONFLICT_OVERWRITE);
 
             if (viewBinding.exportProgressApplyToAll.isChecked()) {
-                autoConflict = CONFLICT_OVERWRITE;
+                autoConflict = ConflictResolutionStrategy.CONFLICT_OVERWRITE;
             }
         }
 
@@ -392,10 +411,10 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
          * Skip the export file and set the autoConflict if user set the "do it for all" switch button.
          */
         public void skip() {
-            export(track, CONFLICT_SKIP);
+            export(exportTask, ConflictResolutionStrategy.CONFLICT_SKIP);
 
             if (viewBinding.exportProgressApplyToAll.isChecked()) {
-                autoConflict = CONFLICT_SKIP;
+                autoConflict = ConflictResolutionStrategy.CONFLICT_SKIP;
             }
         }
     }

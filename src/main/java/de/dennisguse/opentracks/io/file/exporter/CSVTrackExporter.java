@@ -23,8 +23,6 @@ import androidx.annotation.NonNull;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
@@ -87,15 +85,23 @@ public class CSVTrackExporter implements TrackExporter {
     }
 
     @Override
-    public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {
-        return writeTrack(new Track[]{track}, outputStream);
-    }
+    public boolean writeTrack(@NonNull List<Track> tracks, @NonNull OutputStream outputStream) {
+        List<Column> columns = List.of(
+                new Column("time", null),
+                new Column("trackpoint_type", t -> quote(t.getType().name())),
+                new Column("latitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getLatitude()) : ""),
+                new Column("longitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getLongitude()) : ""),
+                new Column("altitude", t -> t.hasAltitude() ? COORDINATE_FORMAT.format(t.getAltitude().toM()) : ""),
+                new Column("accuracy_horizontal", t -> t.hasHorizontalAccuracy() ? DISTANCE_FORMAT.format(t.getHorizontalAccuracy().toM()) : ""),
+                new Column("accuracy_vertical", t -> t.hasVerticalAccuracy() ? DISTANCE_FORMAT.format(t.getVerticalAccuracy().toM()) : ""),
 
-    @Override
-    public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
-        List<Column> columns = Collections.unmodifiableList(Arrays.asList(new Column("time", null), new Column("trackpoint_type", t -> quote(t.getType().name())), new Column("latitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getLatitude()) : ""), new Column("longitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getLongitude()) : ""), new Column("altitude", t -> t.hasAltitude() ? COORDINATE_FORMAT.format(t.getAltitude().toM()) : ""), new Column("accuracy_horizontal", t -> t.hasHorizontalAccuracy() ? DISTANCE_FORMAT.format(t.getHorizontalAccuracy().toM()) : ""), new Column("accuracy_vertical", t -> t.hasVerticalAccuracy() ? DISTANCE_FORMAT.format(t.getVerticalAccuracy().toM()) : ""),
-
-                new Column("speed", t -> t.hasSpeed() ? SPEED_FORMAT.format(t.getSpeed().toKMH()) : ""), new Column("altitude_gain", t -> t.hasAltitudeGain() ? DISTANCE_FORMAT.format(t.getAltitudeGain()) : ""), new Column("altitude_loss", t -> t.hasAltitudeLoss() ? DISTANCE_FORMAT.format(t.getAltitudeLoss()) : ""), new Column("sensor_distance", t -> t.hasSensorDistance() ? DISTANCE_FORMAT.format(t.getSensorDistance().toM()) : ""), new Column("heartrate", t -> t.hasHeartRate() ? HEARTRATE_FORMAT.format(t.getHeartRate().getBPM()) : ""), new Column("cadence", t -> t.hasCadence() ? CADENCE_FORMAT.format(t.getCadence().getRPM()) : ""), new Column("power", t -> t.hasPower() ? ALTITUDE_FORMAT.format(t.getPower().getW()) : "")));
+                new Column("speed", t -> t.hasSpeed() ? SPEED_FORMAT.format(t.getSpeed().toKMH()) : ""),
+                new Column("altitude_gain", t -> t.hasAltitudeGain() ? DISTANCE_FORMAT.format(t.getAltitudeGain()) : ""),
+                new Column("altitude_loss", t -> t.hasAltitudeLoss() ? DISTANCE_FORMAT.format(t.getAltitudeLoss()) : ""),
+                new Column("sensor_distance", t -> t.hasSensorDistance() ? DISTANCE_FORMAT.format(t.getSensorDistance().toM()) : ""),
+                new Column("heartrate", t -> t.hasHeartRate() ? HEARTRATE_FORMAT.format(t.getHeartRate().getBPM()) : ""),
+                new Column("cadence", t -> t.hasCadence() ? CADENCE_FORMAT.format(t.getCadence().getRPM()) : ""),
+                new Column("power", t -> t.hasPower() ? ALTITUDE_FORMAT.format(t.getPower().getW()) : ""));
 
         try {
             prepare(outputStream);

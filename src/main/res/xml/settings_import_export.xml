@@ -27,6 +27,13 @@
                 android:targetPackage="@string/applicationId" />
         </Preference>
         <Preference
+            android:key="@string/settings_export"
+            android:title="@string/menu_export_all_one_file">
+            <intent
+                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserOneFileActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+        <Preference
             android:key="@string/settings_default_export_directory_key"
             android:title="@string/settings_default_export_uri_title">
             <intent
@@ -48,5 +55,4 @@
             android:title="@string/settings_export_filename_title"
             android:defaultValue="@string/export_filename_format_default" />
     </PreferenceCategory>
-
 </PreferenceScreen>

@@ -99,18 +99,14 @@ public class KMLTrackExporter implements TrackExporter {
         this.contentProviderUtils = contentProviderUtils;
     }
 
-    public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {
-        return writeTrack(new Track[]{track}, outputStream);
-    }
-
-    public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
+    public boolean writeTrack(List<Track> tracks, @NonNull OutputStream outputStream) {
         try {
             prepare(outputStream);
             writeHeader(tracks);
             for (Track track : tracks) {
                 writeMarkers(track);
             }
-            boolean hasMultipleTracks = tracks.length > 1;
+            boolean hasMultipleTracks = tracks.size() > 1;
             if (hasMultipleTracks) {
                 writeMultiTrackBegin();
             }
@@ -222,7 +218,7 @@ public class KMLTrackExporter implements TrackExporter {
         }
     }
 
-    private void writeHeader(Track[] tracks) {
+    private void writeHeader(List<Track> tracks) {
         if (printWriter != null) {
             printWriter.println(
                     """
@@ -241,7 +237,7 @@ public class KMLTrackExporter implements TrackExporter {
             printWriter.println("<open>1</open>");
             printWriter.println("<visibility>1</visibility>");
 
-            Track track = tracks[0];
+            Track track = tracks.get(0);
             printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
             printWriter.println("<atom:generator>" + StringUtils.formatCData(context.getString(R.string.app_name)) + "</atom:generator>");
 
@@ -293,7 +289,7 @@ public class KMLTrackExporter implements TrackExporter {
 
     private void writeMultiTrackBegin() {
         if (printWriter != null) {
-            printWriter.println("<Folder id=tour>");
+            printWriter.println("<Folder id=\"tracks\">");
             printWriter.println("<name>" + context.getString(R.string.generic_tracks) + "</name>");
             printWriter.println("<open>1</open>");
         }

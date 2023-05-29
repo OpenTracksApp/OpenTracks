@@ -208,7 +208,7 @@ public class ExportImportTest {
 
         // when
         // 1. export
-        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
+        trackExporter.writeTrack(List.of(track), context.getContentResolver().openOutputStream(tmpFileUri));
         contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
@@ -290,7 +290,7 @@ public class ExportImportTest {
         TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context, contentProviderUtils);
 
         // when
-        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
+        trackExporter.writeTrack(List.of(track), context.getContentResolver().openOutputStream(tmpFileUri));
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
@@ -314,7 +314,7 @@ public class ExportImportTest {
 
         // when
         // 1. export
-        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
+        trackExporter.writeTrack(List.of(track), context.getContentResolver().openOutputStream(tmpFileUri));
         contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
@@ -432,7 +432,7 @@ public class ExportImportTest {
 
         // when
         // 1. export
-        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
+        trackExporter.writeTrack(List.of(track), context.getContentResolver().openOutputStream(tmpFileUri));
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
@@ -457,7 +457,7 @@ public class ExportImportTest {
 
         // when
         // 1. export
-        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
+        trackExporter.writeTrack(List.of(track), context.getContentResolver().openOutputStream(tmpFileUri));
         contentProviderUtils.deleteTrack(context, trackId);
 
         // then
