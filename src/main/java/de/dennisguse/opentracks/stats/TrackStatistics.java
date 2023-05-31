@@ -38,6 +38,7 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
  */
 //TODO Use null instead of Double.isInfinite
 //TODO Check that data ranges are valid (not less than zero etc.)
+//TODO Should be a Java record
 public class TrackStatistics {
 
     // The min and max altitude (meters) seen on this track.

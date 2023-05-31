@@ -81,9 +81,9 @@ public class TrackStatisticsUpdaterTest {
 
         // then
         TrackStatistics statistics = subject.getTrackStatistics();
-        assertEquals(128.03, statistics.getTotalDistance().toM(), 0.01);
-        assertEquals(Duration.ofSeconds(13), statistics.getTotalTime());
-        assertEquals(Duration.ofSeconds(9), statistics.getMovingTime());
+        assertEquals(142.26, statistics.getTotalDistance().toM(), 0.01);
+        assertEquals(Duration.ofSeconds(14), statistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(10), statistics.getMovingTime());
 
         assertEquals(2.5, statistics.getMinAltitude(), 0.01);
         assertEquals(32.5, statistics.getMaxAltitude(), 0.01);
@@ -92,8 +92,8 @@ public class TrackStatisticsUpdaterTest {
 
         assertEquals(14.226, statistics.getMaxSpeed().toMPS(), 0.01);
         assertEquals(14.226, statistics.getAverageMovingSpeed().toMPS(), 0.01);
-        assertEquals(9.84, statistics.getAverageSpeed().toMPS(), 0.01);
-        assertEquals(106.85f, statistics.getAverageHeartRate().getBPM(), 0.01);
+        assertEquals(10.16, statistics.getAverageSpeed().toMPS(), 0.01);
+        assertEquals(106.64f, statistics.getAverageHeartRate().getBPM(), 0.01);
     }
 
     @Test

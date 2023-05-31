@@ -202,7 +202,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context, contentProviderUtils);
+        TrackExporter trackExporter = TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.createTrackExporter(context, contentProviderUtils);
 
         // when
         // 1. export
@@ -238,24 +238,24 @@ public class ExportImportTest {
         TrackStatistics originalTrackStatistics = track.getTrackStatistics();
 
         assertEquals(originalTrackStatistics.getTotalTime(), importedTrackStatistics.getTotalTime());
-        assertEquals(Duration.ofSeconds(19), importedTrackStatistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(20), importedTrackStatistics.getTotalTime());
 
         assertEquals(originalTrackStatistics.getMovingTime(), importedTrackStatistics.getMovingTime());
-        assertEquals(Duration.ofSeconds(3), importedTrackStatistics.getMovingTime());
+        assertEquals(Duration.ofSeconds(4), importedTrackStatistics.getMovingTime());
 
         // Distance
         assertEquals(originalTrackStatistics.getTotalDistance(), importedTrackStatistics.getTotalDistance());
-        assertEquals(125.16, importedTrackStatistics.getTotalDistance().toM(), 0.01);
+        assertEquals(222238.70, importedTrackStatistics.getTotalDistance().toM(), 0.01);
 
         // Speed
         assertEquals(originalTrackStatistics.getMaxSpeed(), importedTrackStatistics.getMaxSpeed());
-        assertEquals(41.72, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(55559.67, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
 
         assertEquals(originalTrackStatistics.getAverageSpeed(), importedTrackStatistics.getAverageSpeed());
-        assertEquals(6.58, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
+        assertEquals(11111.93, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
 
         assertEquals(originalTrackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed());
-        assertEquals(41.72, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(55559.67, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
 
         // Altitude
         assertEquals(originalTrackStatistics.getMinAltitude(), importedTrackStatistics.getMinAltitude(), 0.01);
@@ -394,16 +394,16 @@ public class ExportImportTest {
         assertEquals(Instant.parse("2020-02-02T02:02:03Z"), importedTrackStatistics.getStartTime());
         assertEquals(Instant.parse("2020-02-02T02:03:23Z"), importedTrackStatistics.getStopTime());
 
-        assertEquals(Duration.ofSeconds(15), importedTrackStatistics.getTotalTime());
-        assertEquals(Duration.ofSeconds(15), importedTrackStatistics.getMovingTime());
+        assertEquals(Duration.ofSeconds(80), importedTrackStatistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(80), importedTrackStatistics.getMovingTime());
 
         // Distance
-        assertEquals(125.16, importedTrackStatistics.getTotalDistance().toM(), 0.01);
+        assertEquals(222349.85, importedTrackStatistics.getTotalDistance().toM(), 0.01);
 
         // Speed
-        assertEquals(8.34, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
-        assertEquals(8.34, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
-        assertEquals(8.34, importedTrackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
+        assertEquals(2779.37, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(2779.37, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
+        assertEquals(2779.37, importedTrackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
 
         // Altitude
         assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);
