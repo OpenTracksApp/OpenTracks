@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">Jarak maksimum</string>
     <string name="settings_recording_min_recording_distance_title">Selang jarak rakaman</string>
     <string name="settings_recording_min_recording_interval_title">Selang masa rakaman</string>
-    <string name="settings_recording_min_required_accuracy_summary">Lokasi diabaikan jika ketepatannya kurang daripada %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Ketepatan GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Tarikh (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Tarikh (setempat)</string>

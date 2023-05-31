@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">Maximalt avstånd</string>
     <string name="settings_recording_min_recording_distance_title">Inspelningens avståndsintervall</string>
     <string name="settings_recording_min_recording_interval_title">Inspelningens tidsintervall</string>
-    <string name="settings_recording_min_required_accuracy_summary">Platsen ignoreras om dess noggrannhet är mindre än %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Exakthet för GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Datum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Datum (lokalt)</string>

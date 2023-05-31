@@ -203,7 +203,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">Maksymalna odległość</string>
     <string name="settings_recording_min_recording_distance_title">Rejestrowanie odcinka</string>
     <string name="settings_recording_min_recording_interval_title">Rejestrowanie interwału</string>
-    <string name="settings_recording_min_required_accuracy_summary">Lokalizacja jest ignorowana przy dokładności poniżej %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Dokładność GPS-u</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Data (lokalnie)</string>

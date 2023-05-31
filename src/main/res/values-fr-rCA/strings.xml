@@ -150,7 +150,6 @@
     <string name="settings_recording_max_recording_distance_title">Distance maximale</string>
     <string name="settings_recording_min_recording_distance_title">Intervalle dist. enreg.</string>
     <string name="settings_recording_min_recording_interval_title">Intervalle fréq. enreg.</string>
-    <string name="settings_recording_min_required_accuracy_summary">Ignorer la position si la précision est inférieure à %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Précision du GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Date (format ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Date (format local)</string>

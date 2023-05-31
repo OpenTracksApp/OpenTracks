@@ -233,7 +233,6 @@
     <string name="settings_recording_location_frequency_summary">%1$s idir suíomhanna taifeadta</string>
     <string name="settings_recording_max_recording_distance_summary">Cruthaítear teascán nua má tá an fad idir dhá shuíomh níos mó ná %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Fad uasta</string>
-    <string name="settings_recording_min_required_accuracy_summary">Ní thugtar aird ar shuíomh má tá a chruinneas níos lú ná %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Cruinneas GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Dáta (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Dáta (áitiúil)</string>

@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">최대 거리</string>
     <string name="settings_recording_min_recording_distance_title">거리 간격 기록하기</string>
     <string name="settings_recording_min_recording_interval_title">시간 간격 기록하기</string>
-    <string name="settings_recording_min_required_accuracy_summary">정확도가 %1$s 미만인 경우 위치는 무시됩니다.</string>
     <string name="settings_recording_min_required_accuracy_title">GPS 정확도</string>
     <string name="settings_recording_track_name_date_iso_8601_option">날짜 (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">날짜 (현지)</string>

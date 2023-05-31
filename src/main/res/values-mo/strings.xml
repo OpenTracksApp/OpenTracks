@@ -150,7 +150,6 @@
     <string name="settings_recording_max_recording_distance_title">Distanța maximă</string>
     <string name="settings_recording_min_recording_distance_title">Înreg. interval de distanță</string>
     <string name="settings_recording_min_recording_interval_title">Înreg. interval de timp</string>
-    <string name="settings_recording_min_required_accuracy_summary">Locația este ignorată în cazul în care exactitatea este mai mică decât %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Precizia sistemului GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Data (local)</string>

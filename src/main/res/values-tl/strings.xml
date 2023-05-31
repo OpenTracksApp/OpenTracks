@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">Max na distansya</string>
     <string name="settings_recording_min_recording_distance_title">Itinatala ang distansya ng pagitan</string>
     <string name="settings_recording_min_recording_interval_title">Itinatala ang agwat ng oras</string>
-    <string name="settings_recording_min_required_accuracy_summary">Binabalewala ang lokasyon kung mas mababa sa %1$s ang katumpakan nito</string>
     <string name="settings_recording_min_required_accuracy_title">Katumpakan ng GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Petsa (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Petsa (lokal)</string>

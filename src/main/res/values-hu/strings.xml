@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">Max. távolság</string>
     <string name="settings_recording_min_recording_distance_title">Rögz. táv. intervalluma</string>
     <string name="settings_recording_min_recording_interval_title">Rögz. időintervallum</string>
-    <string name="settings_recording_min_required_accuracy_summary">Hely figyelmen kívül hagyása, ha a pontosság kisebb, mint %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">GPS pontossága</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Dátum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Dátum (helyi)</string>

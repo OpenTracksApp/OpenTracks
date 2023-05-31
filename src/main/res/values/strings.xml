@@ -384,7 +384,7 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">Max distance</string>
     <string name="settings_recording_min_recording_distance_title">Recording distance interval</string>
     <string name="settings_recording_min_recording_interval_title">Recording time interval</string>
-    <string name="settings_recording_min_required_accuracy_summary">Location is ignored if its accuracy is less than %1$s</string>
+    <string name="settings_recording_min_required_accuracy_summary">Location is ignored if its accuracy is greater than %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">GPS accuracy</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Date (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Date (local)</string>

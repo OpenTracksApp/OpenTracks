@@ -249,7 +249,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="settings_recording_max_recording_distance_title">Maks. afstand</string>
     <string name="settings_recording_min_recording_distance_title">Reg. af afstandsinterval</string>
     <string name="settings_recording_min_recording_interval_title">Reg. af tidsinterval</string>
-    <string name="settings_recording_min_required_accuracy_summary">Placering ignoreres, hvis dens nøjagtighed er lavere end %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">GPS-nøjagtighed</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Dato (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Dato (lokal)</string>

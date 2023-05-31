@@ -246,7 +246,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_recording_max_recording_distance_title">Distance max</string>
     <string name="settings_recording_min_recording_distance_title">Intervalle dist. enreg</string>
     <string name="settings_recording_min_recording_interval_title">Intervalle temps enreg</string>
-    <string name="settings_recording_min_required_accuracy_summary">La position est ignorée si sa précision est inférieure à %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Précision du GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Date (format ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Date (format local)</string>

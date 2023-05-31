@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">Khoảng cách tối đa</string>
     <string name="settings_recording_min_recording_distance_title">Khoảng cách ghi</string>
     <string name="settings_recording_min_recording_interval_title">Khoảng thời gian ghi</string>
-    <string name="settings_recording_min_required_accuracy_summary">Vị trí được bỏ qua nếu độ chính xác của vị trí nhỏ hơn %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Độ chính xác của GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Ngày (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Ngày (địa phương)</string>

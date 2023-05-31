@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">Najdaljša razdalja</string>
     <string name="settings_recording_min_recording_distance_title">Dolžinski interval snemanja</string>
     <string name="settings_recording_min_recording_interval_title">Časovni interval snemanja</string>
-    <string name="settings_recording_min_required_accuracy_summary">Lokacija ne bo upoštevana, če bo določena z manjšo natančnostjo kot %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Natančnost GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Datum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Datum (lokalni)</string>

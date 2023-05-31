@@ -224,7 +224,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_recording_max_recording_distance_title">Distanza massima</string>
     <string name="settings_recording_min_recording_distance_title">Intervallo distanza tra registrazioni</string>
     <string name="settings_recording_min_recording_interval_title">Intervallo di tempo tra registrazioni</string>
-    <string name="settings_recording_min_required_accuracy_summary">La posizione viene ignorata se la sua precisione è inferiore a %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Precisione GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Data (locale)</string>

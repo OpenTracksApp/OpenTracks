@@ -244,7 +244,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">Max vahemaa</string>
     <string name="settings_recording_min_recording_distance_title">Salvestamiskauguse intervall</string>
     <string name="settings_recording_min_recording_interval_title">Salvestamisaja intervall</string>
-    <string name="settings_recording_min_required_accuracy_summary">Asukohta eiratakse, kui selle täpsus on väiksem kui %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">GPS-i täpsus</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Kuupäev (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Kuupäev (kohalik)</string>

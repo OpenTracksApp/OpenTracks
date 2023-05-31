@@ -150,7 +150,6 @@
     <string name="settings_recording_max_recording_distance_title">מרחק מקסימלי</string>
     <string name="settings_recording_min_recording_distance_title">מרחק בין הקלטות</string>
     <string name="settings_recording_min_recording_interval_title">זמן בין הקלטות</string>
-    <string name="settings_recording_min_required_accuracy_summary">אין התייחסות למיקום אם הוא פחות מ-%1$s</string>
     <string name="settings_recording_min_required_accuracy_title">דיוק של GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">תאריך (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">תאריך (מקומי)</string>

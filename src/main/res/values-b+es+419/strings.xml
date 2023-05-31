@@ -152,7 +152,6 @@
     <string name="settings_recording_max_recording_distance_title">Distancia máxima</string>
     <string name="settings_recording_min_recording_distance_title">Intervalo de distancia</string>
     <string name="settings_recording_min_recording_interval_title">Intervalo de tiempo</string>
-    <string name="settings_recording_min_required_accuracy_summary">La ubicación se ignora si su precisión es inferior a %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Precisión del GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Fecha (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Fecha (local)</string>

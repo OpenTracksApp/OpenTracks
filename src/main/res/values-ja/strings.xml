@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">最大距離</string>
     <string name="settings_recording_min_recording_distance_title">記録する距離の間隔</string>
     <string name="settings_recording_min_recording_interval_title">記録する時間の間隔</string>
-    <string name="settings_recording_min_required_accuracy_summary">精度が%1$s以下の場合は現在地を無視します</string>
     <string name="settings_recording_min_required_accuracy_title">GPSの精度</string>
     <string name="settings_recording_track_name_date_iso_8601_option">日付（ISO 8601）</string>
     <string name="settings_recording_track_name_date_local_option">日付（ローカル）</string>

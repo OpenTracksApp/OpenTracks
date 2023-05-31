@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">Максимальна відстань</string>
     <string name="settings_recording_min_recording_distance_title">Відстань відрізка</string>
     <string name="settings_recording_min_recording_interval_title">Тривалість відрізка</string>
-    <string name="settings_recording_min_required_accuracy_summary">Якщо точність менша за %1$s, місцезнаходження не враховується</string>
     <string name="settings_recording_min_required_accuracy_title">Точність GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Дата (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Дата (локаль. формат)</string>

@@ -246,7 +246,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_max_recording_distance_title">Maximale afstand</string>
     <string name="settings_recording_min_recording_distance_title">Afstand tussen opnamen</string>
     <string name="settings_recording_min_recording_interval_title">Tijd tussen opnamen</string>
-    <string name="settings_recording_min_required_accuracy_summary">Locatie wordt genegeerd als de nauwkeurigheid minder is dan %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">GPS-nauwkeurigheid</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Datum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Datum (lokaal)</string>

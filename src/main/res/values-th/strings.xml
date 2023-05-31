@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">ระยะทางสูงสุด</string>
     <string name="settings_recording_min_recording_distance_title">ช่วงระยะการบันทึก</string>
     <string name="settings_recording_min_recording_interval_title">ช่วงเวลาการบันทึก</string>
-    <string name="settings_recording_min_required_accuracy_summary">ตำแหน่งจะถูกละเว้นถ้าความแม่นยำน้อยกว่า %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">ความแม่นยำของ GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">วันที่ (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">วันที่ (ท้องถิ่น)</string>

@@ -361,7 +361,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">最遠距離</string>
     <string name="settings_recording_min_recording_distance_title">記錄位置的距離間隔</string>
     <string name="settings_recording_min_recording_interval_title">記錄位置的時間間隔</string>
-    <string name="settings_recording_min_required_accuracy_summary">系統會忽略準確度小於 %1$s的位置</string>
     <string name="settings_recording_min_required_accuracy_title">GPS 精度</string>
     <string name="settings_recording_track_name_date_iso_8601_option">日期 (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">日期 (當地)</string>

@@ -247,7 +247,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="settings_recording_max_recording_distance_title">Gehienezko distantzia</string>
     <string name="settings_recording_min_recording_distance_title">Distantzia-tarteak</string>
     <string name="settings_recording_min_recording_interval_title">Denbora-tarteak</string>
-    <string name="settings_recording_min_required_accuracy_summary">Zehaztasuna %1$s baino gutxiagokoa bada kokapenari ez ikusi egiten zaio</string>
     <string name="settings_recording_min_required_accuracy_title">GPS zehaztasuna</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Data (tokikoa)</string>

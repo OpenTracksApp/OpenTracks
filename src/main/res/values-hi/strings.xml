@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">अधिकतम दूरी</string>
     <string name="settings_recording_min_recording_distance_title">रिकॉर्डिंग दूरी अंतराल</string>
     <string name="settings_recording_min_recording_interval_title">रिकॉर्डिंग समय अंतराल</string>
-    <string name="settings_recording_min_required_accuracy_summary">यदि स्थान की सटीकता %1$s से कम होती है तो इसपर ध्यान नहीं दिया जाता</string>
     <string name="settings_recording_min_required_accuracy_title">GPS सटीकता</string>
     <string name="settings_recording_track_name_date_iso_8601_option">तिथि (आईएसओ 8601)</string>
     <string name="settings_recording_track_name_date_local_option">तिथि (स्थानीय)</string>

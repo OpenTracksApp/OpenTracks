@@ -183,7 +183,6 @@ limitations under the License.
     <string name="settings_recording_max_recording_distance_title">Максимално разстояние</string>
     <string name="settings_recording_min_recording_distance_title">Разст. между записите</string>
     <string name="settings_recording_min_recording_interval_title">Време между записите</string>
-    <string name="settings_recording_min_required_accuracy_summary">Местоположението се пренебрегва, ако точността му е по-малка от %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Точност на GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Дата (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Дата (местна)</string>

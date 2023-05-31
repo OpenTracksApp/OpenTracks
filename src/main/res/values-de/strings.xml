@@ -253,7 +253,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_recording_max_recording_distance_title">Max. Entfernung</string>
     <string name="settings_recording_min_recording_distance_title">Aufzeichnungsintervall</string>
     <string name="settings_recording_min_recording_interval_title">Zeitintervall aufz</string>
-    <string name="settings_recording_min_required_accuracy_summary">Der Standort wird ignoriert, wenn die Genauigkeit weniger als %1$s beträgt</string>
     <string name="settings_recording_min_required_accuracy_title">GPS-Genauigkeit</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Datum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Datum (lokal)</string>
