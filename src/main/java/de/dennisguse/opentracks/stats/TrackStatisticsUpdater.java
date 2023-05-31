@@ -95,7 +95,7 @@ public class TrackStatisticsUpdater {
      *
      */
     public void addTrackPoint(TrackPoint trackPoint) {
-        if (trackPoint.isSegmentStart()) {
+        if (trackPoint.isSegmentManualStart()) {
             reset(trackPoint);
         }
 
@@ -154,7 +154,7 @@ public class TrackStatisticsUpdater {
             updateSpeed(trackPoint, lastTrackPoint);
         }
 
-        if (trackPoint.isSegmentEnd()) {
+        if (trackPoint.isSegmentManualEnd()) {
             reset(trackPoint);
             return;
         }
