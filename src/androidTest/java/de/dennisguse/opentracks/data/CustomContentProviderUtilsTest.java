@@ -424,7 +424,7 @@ public class CustomContentProviderUtilsTest {
         Marker.Id markerId = new Marker.Id(System.currentTimeMillis());
         marker.setId(markerId);
         ContentValues contentValues = contentProviderUtils.createContentValues(marker);
-        assertEquals(markerId.getId(), contentValues.get(MarkerColumns._ID));
+        assertEquals(markerId.id(), contentValues.get(MarkerColumns._ID));
         assertEquals((int) (TestDataUtil.INITIAL_LONGITUDE * 1000000), contentValues.get(MarkerColumns.LONGITUDE));
         assertEquals(TEST_DESC, contentValues.get(MarkerColumns.DESCRIPTION));
     }
@@ -458,7 +458,7 @@ public class CustomContentProviderUtilsTest {
         when(cursorMock.getLong(columnIndex++)).thenReturn(trackId);
 
         Marker marker = contentProviderUtils.createMarker(cursorMock);
-        assertEquals(id, marker.getId().getId());
+        assertEquals(id, marker.getId().id());
         assertEquals(name, marker.getName());
         assertEquals(trackId, marker.getTrackId().getId());
     }

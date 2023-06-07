@@ -141,6 +141,6 @@ public class KmzTrackExporter implements TrackExporter {
     public static String buildKmzImageFilePath(Marker marker) {
         String ext = FileUtils.getExtension(marker.getPhotoUrl());
         ext = ext == null ? "" : "." + ext;
-        return KMZ_IMAGES_DIR + File.separatorChar + FileUtils.sanitizeFileName(marker.getId().getId() + ext);
+        return KMZ_IMAGES_DIR + File.separatorChar + FileUtils.sanitizeFileName(marker.getId().id() + ext);
     }
 }

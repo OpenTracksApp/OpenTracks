@@ -30,7 +30,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SensorDataSet sensorDataSet = data.getSensorDataSet();
+            SensorDataSet sensorDataSet = data.sensorDataSet();
             String sensorName = getContext().getString(R.string.value_unknown);
 
             Pair<String, String> valueAndUnit;
@@ -64,7 +64,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SensorDataSet sensorDataSet = data.getSensorDataSet();
+            SensorDataSet sensorDataSet = data.sensorDataSet();
             String sensorName = getContext().getString(R.string.value_unknown);
 
             Pair<String, String> valueAndUnit;
@@ -87,7 +87,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            SensorDataSet sensorDataSet = data.getSensorDataSet();
+            SensorDataSet sensorDataSet = data.sensorDataSet();
             String sensorName = getContext().getString(R.string.value_unknown);
 
             Pair<String, String> valueAndUnit;

@@ -60,13 +60,13 @@ public class BluetoothUtils {
     );
 
     // Used for device discovery in preferences
-    public static final List<ServiceMeasurementUUID> HEART_RATE_SUPPORTING_DEVICES = Collections.unmodifiableList(Arrays.asList(
+    public static final List<ServiceMeasurementUUID> HEART_RATE_SUPPORTING_DEVICES = List.of(
             HEARTRATE,
             //Devices that support HEART_RATE_SERVICE_UUID, but do not announce HEART_RATE_SERVICE_UUID in there BLE announcement messages (during device discovery).
             new ServiceMeasurementUUID(
                     UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb"), //Miband3
-                    HEARTRATE.getMeasurementUUID()
-            ))
+                    HEARTRATE.measurementUUID()
+            )
     );
 
     public static final ServiceMeasurementUUID CYCLING_POWER = new ServiceMeasurementUUID(

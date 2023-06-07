@@ -229,7 +229,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
         if (itemId == R.id.list_context_menu_edit) {
             if (markerIds.length == 1) {
-                resourceCursorAdapter.markerInvalid(markerIds[0].getId());
+                resourceCursorAdapter.markerInvalid(markerIds[0].id());
                 Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
                         .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerIds[0]);
                 startActivity(intent);

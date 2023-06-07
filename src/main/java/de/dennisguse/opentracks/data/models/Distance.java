@@ -7,12 +7,11 @@ import java.util.Objects;
 
 import de.dennisguse.opentracks.settings.UnitSystem;
 
-public class Distance {
+public record Distance(double distance_m) {
 
     public static Distance of(double distance_m) {
         return new Distance(distance_m);
     }
-
     public static Distance of(Double distance_m) {
         if (distance_m == null) {
             return Distance.of(Double.NaN);
@@ -20,11 +19,9 @@ public class Distance {
             return Distance.of((double) distance_m);
         }
     }
-
     public static Distance of(String distance_m) {
         return of(Float.parseFloat(distance_m));
     }
-
     @Nullable
     public static Distance ofOrNull(Double distance_m) {
         if (distance_m == null) {
@@ -63,12 +60,6 @@ public class Distance {
             case IMPERIAL -> Distance.ofMile(1);
             case NAUTICAL_IMPERIAL -> Distance.ofNauticalMile(1);
         };
-    }
-
-    private final double distance_m;
-
-    private Distance(double distance_m) {
-        this.distance_m = distance_m;
     }
 
     public Distance plus(@NonNull Distance distance) {
@@ -140,27 +131,6 @@ public class Distance {
             case METRIC -> toM();
             case NAUTICAL_IMPERIAL, IMPERIAL -> toFT();
         };
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Distance distance = (Distance) o;
-        return Double.compare(distance.distance_m, distance_m) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(distance_m);
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "Distance{" +
-                "distance_m=" + distance_m +
-                '}';
     }
 
     // multiplication factors for conversion
