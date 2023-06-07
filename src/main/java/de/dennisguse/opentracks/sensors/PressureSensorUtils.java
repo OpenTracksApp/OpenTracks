@@ -18,24 +18,7 @@ public class PressureSensorUtils {
     private PressureSensorUtils() {
     }
 
-    public static class AltitudeChange {
-
-        private final AtmosphericPressure currentSensorValue;
-
-        private final float altitudeChange_m;
-
-        public AltitudeChange(AtmosphericPressure currentSensorValue, float altitudeChange_m) {
-            this.currentSensorValue = currentSensorValue;
-            this.altitudeChange_m = altitudeChange_m;
-        }
-
-        public AtmosphericPressure getCurrentSensorValue() {
-            return currentSensorValue;
-        }
-
-        public float getAltitudeChange_m() {
-            return altitudeChange_m;
-        }
+    public record AltitudeChange(AtmosphericPressure currentSensorValue, float altitudeChange_m) {
 
         public float getAltitudeGain_m() {
             return altitudeChange_m > 0 ? altitudeChange_m : 0;
@@ -67,7 +50,7 @@ public class PressureSensorUtils {
 
         // Limit altitudeC change by ALTITUDE_CHANGE_DIFF and computes pressure value accordingly.
         AltitudeChange altitudeChange = new AltitudeChange(currentSensorValue, altitudeChange_m);
-        if (altitudeChange.getAltitudeChange_m() > 0) {
+        if (altitudeChange.altitudeChange_m() > 0) {
             return new AltitudeChange(getBarometricPressure(lastSensorValue_m + ALTITUDE_CHANGE_DIFF_M), ALTITUDE_CHANGE_DIFF_M);
         } else {
             return new AltitudeChange(getBarometricPressure(lastSensorValue_m - ALTITUDE_CHANGE_DIFF_M), -1 * ALTITUDE_CHANGE_DIFF_M);

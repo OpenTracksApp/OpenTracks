@@ -8,7 +8,7 @@ import java.util.Objects;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
 
-public class Speed {
+public record Speed(double speed_mps) {
 
     public static Speed of(Distance distance, Duration duration) {
         if (duration.isZero()) {
@@ -45,12 +45,6 @@ public class Speed {
     public static Speed absDiff(Speed speed1, Speed speed2) {
         //TODO Why Math.abs? Seems to be a leftover.
         return Speed.of(Math.abs(speed1.speed_mps - speed2.speed_mps));
-    }
-
-    private final double speed_mps;
-
-    private Speed(double speed_mps) {
-        this.speed_mps = speed_mps;
     }
 
     public Speed mul(double factor) {
@@ -120,26 +114,5 @@ public class Speed {
             case IMPERIAL -> toMPH();
             case NAUTICAL_IMPERIAL -> toKnots();
         };
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Speed speed = (Speed) o;
-        return Double.compare(speed.speed_mps, speed_mps) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(speed_mps);
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "Speed{" +
-                "speed_mps=" + speed_mps +
-                '}';
     }
 }

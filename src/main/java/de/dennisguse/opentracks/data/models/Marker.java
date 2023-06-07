@@ -26,7 +26,6 @@ import androidx.annotation.Nullable;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Objects;
 
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
@@ -267,31 +266,7 @@ public final class Marker {
         return photoUrl != null && !"".equals(photoUrl);
     }
 
-    public static class Id implements Parcelable {
-
-        private final long id;
-
-        public Id(long id) {
-            this.id = id;
-        }
-
-        //TOOD Limit visibility to TrackRecordingService / ContentProvider
-        public long getId() {
-            return id;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Id id1 = (Id) o;
-            return id == id1.id;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(id);
-        }
+    public record Id(long id) implements Parcelable {
 
         @NonNull
         @Override
@@ -309,7 +284,7 @@ public final class Marker {
             parcel.writeLong(id);
         }
 
-        public static final Parcelable.Creator<Id> CREATOR = new Parcelable.Creator<>() {
+        public static final Creator<Id> CREATOR = new Creator<>() {
             public Id createFromParcel(Parcel in) {
                 return new Id(in.readLong());
             }

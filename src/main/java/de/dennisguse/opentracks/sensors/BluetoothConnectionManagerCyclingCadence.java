@@ -28,7 +28,7 @@ public class BluetoothConnectionManagerCyclingCadence extends AbstractBluetoothC
         if (serviceMeasurementUUID.equals(BluetoothUtils.CYCLING_POWER)) {
             SensorDataCyclingPower.Data data = BluetoothUtils.parseCyclingPower(address, sensorName, characteristic);
             if (data!= null) {
-                return data.getCadence();
+                return data.cadence();
             }
         } else if (serviceMeasurementUUID.equals(BluetoothUtils.CYCLING_SPEED_CADENCE)) {
             SensorDataCyclingCadenceAndDistanceSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);

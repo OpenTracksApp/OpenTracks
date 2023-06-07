@@ -403,7 +403,7 @@ public class ContentProviderUtils {
     public void deleteMarker(Context context, Marker.Id markerId) {
         final Marker marker = getMarker(markerId);
         deleteMarkerPhoto(context, marker);
-        contentResolver.delete(MarkerColumns.CONTENT_URI, MarkerColumns._ID + "=?", new String[]{Long.toString(markerId.getId())});
+        contentResolver.delete(MarkerColumns.CONTENT_URI, MarkerColumns._ID + "=?", new String[]{Long.toString(markerId.id())});
     }
 
     /**
@@ -422,7 +422,7 @@ public class ContentProviderUtils {
     }
 
     public Marker getMarker(@NonNull Marker.Id markerId) {
-        try (Cursor cursor = getMarkerCursor(null, MarkerColumns._ID + "=?", new String[]{Long.toString(markerId.getId())}, MarkerColumns._ID, 1)) {
+        try (Cursor cursor = getMarkerCursor(null, MarkerColumns._ID + "=?", new String[]{Long.toString(markerId.id())}, MarkerColumns._ID, 1)) {
             if (cursor != null && cursor.moveToFirst()) {
                 return createMarker(cursor);
             }
@@ -442,7 +442,7 @@ public class ContentProviderUtils {
         String[] selectionArgs;
         if (minMarkerId != null) {
             selection = MarkerColumns.TRACKID + "=? AND " + MarkerColumns._ID + ">=?";
-            selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(minMarkerId.getId())};
+            selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(minMarkerId.id())};
         } else {
             selection = MarkerColumns.TRACKID + "=?";
             selectionArgs = new String[]{Long.toString(trackId.getId())};
@@ -495,7 +495,7 @@ public class ContentProviderUtils {
         if (!updateMarker.hasPhoto()) {
             deleteMarkerPhoto(context, savedMarker);
         }
-        int rows = contentResolver.update(MarkerColumns.CONTENT_URI, createContentValues(updateMarker), MarkerColumns._ID + "=?", new String[]{Long.toString(updateMarker.getId().getId())});
+        int rows = contentResolver.update(MarkerColumns.CONTENT_URI, createContentValues(updateMarker), MarkerColumns._ID + "=?", new String[]{Long.toString(updateMarker.getId().id())});
         return rows == 1;
     }
 
@@ -503,7 +503,7 @@ public class ContentProviderUtils {
         ContentValues values = new ContentValues();
 
         if (marker.getId() != null) {
-            values.put(MarkerColumns._ID, marker.getId().getId());
+            values.put(MarkerColumns._ID, marker.getId().id());
         }
         values.put(MarkerColumns.NAME, marker.getName());
         values.put(MarkerColumns.DESCRIPTION, marker.getDescription());

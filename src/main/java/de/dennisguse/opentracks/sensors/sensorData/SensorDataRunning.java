@@ -68,8 +68,8 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
             Distance overallDistance = null;
             if (previous != null && previous.hasTotalDistance()) {
                 overallDistance = this.totalDistance.minus(previous.totalDistance);
-                if (previous.hasValue() && previous.getValue().getDistance() != null) {
-                    overallDistance = overallDistance.plus(previous.getValue().getDistance());
+                if (previous.hasValue() && previous.getValue().distance() != null) {
+                    overallDistance = overallDistance.plus(previous.getValue().distance());
                 }
             }
 
@@ -84,41 +84,6 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
         }
     }
 
-    public static class Data {
-        private final Speed speed;
-        private final Cadence cadence;
-
-        @Nullable
-        private final Distance distance;
-
-        public Data(Speed speed, Cadence cadence, @Nullable Distance distance) {
-            this.speed = speed;
-            this.cadence = cadence;
-            this.distance = distance;
-        }
-
-        public Speed getSpeed() {
-            return speed;
-        }
-
-        public Cadence getCadence() {
-            return cadence;
-        }
-
-        @Nullable
-        public Distance getDistance() {
-            return distance;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return "Data{" +
-                    "speed=" + speed +
-                    ", cadence=" + cadence +
-                    ", distance=" + distance +
-                    '}';
-        }
-    }
+    public record Data(Speed speed, Cadence cadence, @Nullable Distance distance) {}
 }
 

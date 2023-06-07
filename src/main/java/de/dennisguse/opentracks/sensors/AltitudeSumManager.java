@@ -98,7 +98,7 @@ public class AltitudeSumManager implements SensorConnector {
 
             altitudeLoss_m += altitudeChange.getAltitudeLoss_m();
 
-            lastAcceptedSensorValue = altitudeChange.getCurrentSensorValue();
+            lastAcceptedSensorValue = altitudeChange.currentSensorValue();
         }
 
         lastSeenSensorValue = currentSensorValue;
