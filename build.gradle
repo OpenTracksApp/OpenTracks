@@ -51,7 +51,7 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    compileSdk 33
+    compileSdkPreview "UpsideDownCake"
 
     buildFeatures {
         viewBinding true
