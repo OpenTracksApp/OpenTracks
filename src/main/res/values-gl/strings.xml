@@ -210,7 +210,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="menu_aggregated_statistics">Estatísticas globais</string>
     <string name="menu_delete">Eliminar</string>
     <string name="menu_edit">Editar</string>
-    <string name="menu_export_all">Exportar todo</string>
+    <string name="menu_export_all">Exportar todo (un ficheiro por ruta)</string>
     <string name="menu_help">Axuda</string>
     <string name="menu_import_all">Importar todo</string>
     <string name="menu_insert_marker">Inserir marcador</string>
@@ -413,7 +413,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="share_image_body">Creo que che podería gustar esta imaxe.</string>
     <string name="hold_to_stop">Mantén preso para deter</string>
     <string name="export_all_do_it_for_all">facelo para todos os conflitos</string>
-    <string name="export_track_errors">Rutas non exportadas</string>
+    <string name="export_track_errors">Non se exportaron ficheiros</string>
     <string name="generic_skip">Omitir</string>
     <string name="generic_separator_done_total">/</string>
     <string name="generic_show_errors">Mostrar erros</string>
@@ -431,7 +431,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="track_detail_intervals_tab">Intervalos</string>
     <string name="instant_export_enabled_title">Exportación instantánea tras o adestramento</string>
     <string name="settings_default_export_uri_title">Directorio onde exportar as rutas</string>
-    <string name="export_track_already_exists_msg">A ruta %1$s xa existe no directorio de destino.</string>
+    <string name="export_track_already_exists_msg">O ficheiro %1$s xa existe no directorio de destino.</string>
     <string name="generic_overwrite">Sobrescribir</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Completado cun erro</item>
@@ -442,14 +442,14 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="interval_list_empty_message">Aínda non hai intervalos</string>
     <string name="instant_export_enabled_summary">Rematou a exportación da ruta á almacenaxe tras a gravación</string>
     <string name="import_thread_interrupted">Fío interrumpido</string>
-    <string name="export_progress_summary_new_msg">Exportadas as novas rutas</string>
+    <string name="export_progress_summary_new_msg">Exportados os novos ficheiros</string>
     <string name="import_no_kml_file_found">Non se atopou ficheiro doc.kml en KMZ</string>
     <string name="stats_loss">Perda</string>
     <string name="description_altitude_loss">Perda de altitude: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Fallou a exportación, comproba o directorio de exportación.</string>
     <string name="settings_prevent_reimport_tracks_title">Previr a reimportación de rutas</string>
-    <string name="export_progress_summary_overwrite_msg">Rutas sobrescritas</string>
-    <string name="export_progress_summary_skip_msg">Rutas omitidas</string>
+    <string name="export_progress_summary_overwrite_msg">Ficheiros sobrescritos</string>
+    <string name="export_progress_summary_skip_msg">Ficheiros omitidos</string>
     <string name="export_progress_summary_errors_msg">Erros</string>
     <string name="generic_open_track">Aberto O Control</string>
     <string name="import_prevent_reimport">Estableceches previr a reimportación da ruta</string>
@@ -611,4 +611,8 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_sensor_heart_rate_max">Zonas: Pulso máximo (lpm)</string>
     <string name="settings_api_summary">Control remoto e API de estatísticas para outras apps</string>
     <string name="voice_on_device_speaker_title">Usar o altofalante do dispositivo</string>
+    <string name="menu_export_all_one_file">Exportar todo (un ficheiro con todas as rutas)</string>
+    <string name="no_compatible_gallery_installed">Non hai unha aplicación de galería compatible instalada</string>
+    <string name="settings_recording_min_required_accuracy_summary">Ignórase a localización se a exactitude é maior de %1$s</string>
+    <string name="no_compatible_camera_installed">Non hai unha aplicación de cámara compatible</string>
 </resources>

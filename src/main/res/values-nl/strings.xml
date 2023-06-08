@@ -204,7 +204,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="menu_aggregated_statistics">Statistieken</string>
     <string name="menu_delete">Verwijderen</string>
     <string name="menu_edit">Bewerken</string>
-    <string name="menu_export_all">Alles exporteren</string>
+    <string name="menu_export_all">Exporteer alle (een track per bestand</string>
     <string name="menu_help">Help</string>
     <string name="menu_import_all">Alles importeren</string>
     <string name="menu_insert_marker">Markering invoegen</string>
@@ -389,7 +389,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="waypoint_type_swimming_pool">zwembad</string>
     <string name="waypoint_type_telephone">telefoon</string>
     <string name="waypoint_type_theater">schouwburg</string>
-    <string name="waypoint_type_toilet">toilet</string>
+    <string name="waypoint_type_toilet">wc</string>
     <string name="waypoint_type_tourist_information">toeristische informatie</string>
     <string name="waypoint_type_tree">boom</string>
     <string name="waypoint_type_tunnel">tunnel</string>
@@ -399,8 +399,8 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <!-- Share image -->
     <string name="share_image_subject">Ik wil graag een beeld met u delen</string>
     <string name="share_image_body">Ik denk dat je misschien geïnteresseerd bent in dit beeld.</string>
-    <string name="export_track_already_exists_msg">De track %1$s bestaat al in de doelmap.</string>
-    <string name="export_track_errors">Tracks niet geëxporteerd</string>
+    <string name="export_track_already_exists_msg">Het bestand %1$s bestaat al in de doelmap.</string>
+    <string name="export_track_errors">Bestanden niet geëxporteerd</string>
     <string name="description_altitude_loss">Hoogteverlies: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Uitvoer na de training mislukt, controleer de uitvoermap.</string>
     <string name="open_track_as_KML">Openen als KML</string>
@@ -408,7 +408,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="open_track_as_trackfileformat">Openen als %1$s</string>
     <string name="activity_type_escooter">scooter</string>
     <string name="export_all_do_it_for_all">doe het voor alle conflicten</string>
-    <string name="export_progress_summary_new_msg">Nieuwe sporen geëxporteerd</string>
+    <string name="export_progress_summary_new_msg">Nieuwe bestanden geëxporteerd</string>
     <string name="generic_click_twice_cancel">Klik nogmaals terug om te annuleren</string>
     <string name="settings_default_export_uri_title">Spoor export map</string>
     <string name="import_thread_interrupted">Draad onderbroken</string>
@@ -439,8 +439,8 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="stats_split_interval">Gesplitst interval</string>
     <string name="instant_export_enabled_title">Directe uitvoer na de training</string>
     <string name="instant_export_enabled_summary">Exporteer track naar opslag nadat opname is voltooid</string>
-    <string name="export_progress_summary_skip_msg">Tracks overgeslagen</string>
-    <string name="export_progress_summary_overwrite_msg">Tracks overschreven</string>
+    <string name="export_progress_summary_skip_msg">Bestanden overgeslagen</string>
+    <string name="export_progress_summary_overwrite_msg">Bestanden overschreven</string>
     <string name="export_progress_summary_errors_msg">Fouten</string>
     <string name="generic_open_track">Open spoor</string>
     <string name="generic_overwrite">Overschrijven</string>
@@ -607,4 +607,11 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="value_float_knots_recommended">%1$.1f knopen (aanbevolen)</string>
     <string name="value_float_knots">%1$.1f knopen</string>
     <string name="description_speed_nautical">Snelheid (knopen)</string>
+    <string name="no_compatible_camera_installed">Geen geschikte cameratoepassing geïnstalleerd</string>
+    <string name="no_compatible_gallery_installed">Geen geschikte afbeeldingsgalerij-app geïnstalleerd</string>
+    <string name="unit_minute_per_nautical_mile">min/NM</string>
+    <string name="unit_knots">kn</string>
+    <string name="settings_recording_min_required_accuracy_summary">Locatie wordt genegeerd als de nauwkeurigheid groter is dan %1$s</string>
+    <string name="menu_export_all_one_file">Exporteer alle (een bestand voor alle tracks</string>
+    <string name="description_pace_nautical">Tempo (min/NM)</string>
 </resources>
