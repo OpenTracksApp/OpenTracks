@@ -78,7 +78,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private enum ConflictResolutionStrategy {
         CONFLICT_NONE,
         CONFLICT_OVERWRITE,
-        CONFLICT_SKIP;
+        CONFLICT_SKIP
     }
 
     private TrackFileFormat trackFileFormat;

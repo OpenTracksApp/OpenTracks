@@ -133,7 +133,7 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
 
     private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        CustomStatsItemBinding viewBinding;
+        final CustomStatsItemBinding viewBinding;
 
         public ViewHolder(@NonNull CustomStatsItemBinding viewBinding) {
             super(viewBinding.getRoot());

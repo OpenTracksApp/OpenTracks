@@ -12,12 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 import androidx.documentfile.provider.DocumentFile;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import de.dennisguse.opentracks.data.ContentProviderUtils;
-import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.ExportUtils;
 
 public class ExportService extends JobIntentService {

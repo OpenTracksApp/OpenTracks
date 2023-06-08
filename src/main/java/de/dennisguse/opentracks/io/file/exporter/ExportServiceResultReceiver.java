@@ -6,8 +6,6 @@ import android.os.ResultReceiver;
 
 import androidx.annotation.NonNull;
 
-import de.dennisguse.opentracks.data.models.Track;
-
 /**
  * Create a new ResultReceive to receive results.
  * Your {@link #onReceiveResult} method will be called from the thread running <var>handler</var> if given, or from an arbitrary thread if null.
