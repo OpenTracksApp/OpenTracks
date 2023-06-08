@@ -134,7 +134,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
             final Bundle b = new Bundle(1);
             b.putString(ARG_KEY, preferenceKey);
             b.putParcelableArrayList(ARG_BLE_SERVICE_UUIDS, new ArrayList<>(sensorUUIDs.stream()
-                    .map(ServiceMeasurementUUID::getServiceUUID)
+                    .map(ServiceMeasurementUUID::serviceUUID)
                     .map(ParcelUuid::new)
                     .collect(Collectors.toList())));
             fragment.setArguments(b);

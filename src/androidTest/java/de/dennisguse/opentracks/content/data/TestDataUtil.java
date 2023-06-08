@@ -96,16 +96,7 @@ public class TestDataUtil {
         return new TrackData(track, trackPoints, markers);
     }
 
-    public static class TrackData {
-        public final Track track;
-        public final List<TrackPoint> trackPoints;
-        public final List<Marker> markers;
-
-        public TrackData(Track track, List<TrackPoint> trackPoints, List<Marker> markers) {
-            this.track = track;
-            this.trackPoints = trackPoints;
-            this.markers = markers;
-        }
+    public record TrackData(Track track, List<TrackPoint> trackPoints, List<Marker> markers) {
     }
 
 

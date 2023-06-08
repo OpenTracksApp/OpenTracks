@@ -22,6 +22,6 @@ public class BluetoothConnectionManagerCyclingPower extends AbstractBluetoothCon
     protected SensorDataCyclingPower parsePayload(@NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
         SensorDataCyclingPower.Data cyclingPower = BluetoothUtils.parseCyclingPower(address, sensorName, characteristic);
 
-        return cyclingPower != null ? cyclingPower.getPower() : null;
+        return cyclingPower != null ? cyclingPower.power() : null;
     }
 }

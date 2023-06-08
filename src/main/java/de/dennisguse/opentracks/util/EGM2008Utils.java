@@ -8,7 +8,6 @@ import androidx.annotation.VisibleForTesting;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Altitude;
@@ -144,42 +143,14 @@ public class EGM2008Utils {
     }
 
     @VisibleForTesting
-    static class Indices {
-        final int latitudeIndex;
-        final int longitudeIndex;
-
-        Indices(int latitudeIndex, int longitudeIndex) {
-            this.latitudeIndex = latitudeIndex;
-            this.longitudeIndex = longitudeIndex;
-        }
+    record Indices(int latitudeIndex, int longitudeIndex) {
 
         Indices offset(int latitudeOffset, int longitudeOffset) {
-            return new Indices(latitudeIndex + latitudeOffset, longitudeIndex + longitudeOffset);
-        }
+                return new Indices(latitudeIndex + latitudeOffset, longitudeIndex + longitudeOffset);
+            }
 
-        int getAbsoluteIndex() {
-            return latitudeIndex * LATITUDE_CORRECTION + longitudeIndex;
+            int getAbsoluteIndex() {
+                return latitudeIndex * LATITUDE_CORRECTION + longitudeIndex;
+            }
         }
-
-        @Override
-        public boolean equals(Object o) {
-            if (o == null || getClass() != o.getClass()) return false;
-            Indices indices = (Indices) o;
-            return latitudeIndex == indices.latitudeIndex &&
-                    longitudeIndex == indices.longitudeIndex;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(latitudeIndex, longitudeIndex);
-        }
-
-        @Override
-        public String toString() {
-            return "Indices{" +
-                    "latitudeIndex=" + latitudeIndex +
-                    ", longitudeIndex=" + longitudeIndex +
-                    '}';
-        }
-    }
 }

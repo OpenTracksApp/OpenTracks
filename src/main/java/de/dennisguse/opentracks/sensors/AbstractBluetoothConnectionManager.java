@@ -77,7 +77,7 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
             BluetoothGattService gattService = null;
             ServiceMeasurementUUID serviceMeasurement = null;
             for (ServiceMeasurementUUID s : serviceMeasurementUUIDs) {
-                gattService = gatt.getService(s.getServiceUUID());
+                gattService = gatt.getService(s.serviceUUID());
                 if (gattService != null) {
                     serviceMeasurement = s;
                     break;
@@ -89,9 +89,9 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
                 return;
             }
 
-            BluetoothGattCharacteristic characteristic = gattService.getCharacteristic(serviceMeasurement.getMeasurementUUID());
+            BluetoothGattCharacteristic characteristic = gattService.getCharacteristic(serviceMeasurement.measurementUUID());
             if (characteristic == null) {
-                Log.e(TAG, "Could not get BluetoothCharacteristic for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceMeasurement.getServiceUUID() + " characteristicUUID=" + serviceMeasurement.getMeasurementUUID());
+                Log.e(TAG, "Could not get BluetoothCharacteristic for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceMeasurement.serviceUUID() + " characteristicUUID=" + serviceMeasurement.measurementUUID());
                 return;
             }
             gatt.setCharacteristicNotification(characteristic, true);
@@ -113,7 +113,7 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
             UUID serviceUUID = characteristic.getService().getUuid();
             Log.d(TAG, "Received data from " + gatt.getDevice().getAddress() + " with service " + serviceUUID + " and characteristics " + characteristic.getUuid());
             Optional<ServiceMeasurementUUID> serviceMeasurementUUID = serviceMeasurementUUIDs.stream()
-                    .filter(s -> s.getServiceUUID().equals(characteristic.getService().getUuid())).findFirst();
+                    .filter(s -> s.serviceUUID().equals(characteristic.getService().getUuid())).findFirst();
             if (serviceMeasurementUUID.isEmpty()) {
                 Log.e(TAG, "Unknown service UUID; not supported?");
                 return;

@@ -82,8 +82,8 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
 
             Pair<String, String> valueAndUnit;
 
-            SensorDataSet sensorDataSet = data.getSensorDataSet();
-            final TrackPoint latestTrackPoint = data.getLatestTrackPoint();
+            SensorDataSet sensorDataSet = data.sensorDataSet();
+            final TrackPoint latestTrackPoint = data.latestTrackPoint();
             if (sensorDataSet != null && sensorDataSet.getSpeed() != null) {
                 valueAndUnit = localSpeedFormatter.getSpeedParts(sensorDataSet.getSpeed().first);
                 getBinding().statsDescriptionMain.setText(sensorDataSet.getSpeed().second);
@@ -220,7 +220,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            TrackPoint latestTrackPoint = data.getLatestTrackPoint();
+            TrackPoint latestTrackPoint = data.latestTrackPoint();
             Float altitude = latestTrackPoint != null && latestTrackPoint.hasAltitude() ? (float) latestTrackPoint.getAltitude().toM() : null;
             String altitudeReference = latestTrackPoint != null && latestTrackPoint.hasAltitude() ? getContext().getString(latestTrackPoint.getAltitude().getLabelId()) : null;
             Pair<String, String> valueAndUnit = StringUtils.getAltitudeParts(getContext(), altitude, unitSystem);
@@ -262,7 +262,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
-            TrackPoint latestTrackPoint = data.getLatestTrackPoint();
+            TrackPoint latestTrackPoint = data.latestTrackPoint();
             String value;
             if (latestTrackPoint != null && latestTrackPoint.hasLocation()) {
                 value = StringUtils.formatCoordinate(getContext(), latestTrackPoint.getLatitude(), latestTrackPoint.getLongitude());

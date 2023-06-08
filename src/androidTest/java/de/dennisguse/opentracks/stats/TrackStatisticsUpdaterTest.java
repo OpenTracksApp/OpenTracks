@@ -78,7 +78,7 @@ public class TrackStatisticsUpdaterTest {
 
         // when
         TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
-        data.trackPoints.forEach(subject::addTrackPoint);
+        data.trackPoints().forEach(subject::addTrackPoint);
 
         // then
         TrackStatistics statistics = subject.getTrackStatistics();

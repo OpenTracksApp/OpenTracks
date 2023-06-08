@@ -28,30 +28,19 @@ public class SensorDataCyclingPower extends SensorData<Power> {
         return super.toString() + " data=" + value;
     }
 
-    public static class Data {
-        private final SensorDataCyclingPower power;
-        private final SensorDataCyclingCadence cadence;
+    public record Data(SensorDataCyclingPower power, SensorDataCyclingCadence cadence) {
+            public Data(SensorDataCyclingPower power, @Nullable SensorDataCyclingCadence cadence) {
+                this.power = power;
+                this.cadence = cadence;
+            }
 
-        public Data(SensorDataCyclingPower power, @Nullable SensorDataCyclingCadence cadence) {
-            this.power = power;
-            this.cadence = cadence;
+            @NonNull
+            @Override
+            public String toString() {
+                return "Data{" +
+                        "power=" + power +
+                        ", cadence=" + cadence +
+                        '}';
+            }
         }
-
-        public SensorDataCyclingPower getPower() {
-            return power;
-        }
-
-        public SensorDataCyclingCadence getCadence() {
-            return cadence;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return "Data{" +
-                    "power=" + power +
-                    ", cadence=" + cadence +
-                    '}';
-        }
-    }
 }

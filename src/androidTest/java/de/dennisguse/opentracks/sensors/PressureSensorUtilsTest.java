@@ -39,7 +39,7 @@ public class PressureSensorUtilsTest {
             if (altitudeChange != null) {
                 altitudeGain_m += altitudeChange.getAltitudeGain_m();
                 altitudeLoss += altitudeChange.getAltitudeLoss_m();
-                lastUsedPressureValue = altitudeChange.getCurrentSensorValue();
+                lastUsedPressureValue = altitudeChange.currentSensorValue();
             }
         }
 

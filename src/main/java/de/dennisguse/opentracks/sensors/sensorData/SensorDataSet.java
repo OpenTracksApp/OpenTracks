@@ -62,7 +62,7 @@ public final class SensorDataSet {
             return new Pair<>(cyclingDistanceSpeed.getValue().getSpeed(), cyclingDistanceSpeed.getSensorNameOrAddress());
         }
 
-        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue() && runningDistanceSpeedCadence.getValue().getSpeed() != null) {
+        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue() && runningDistanceSpeedCadence.getValue().speed() != null) {
             return new Pair<>(runningDistanceSpeedCadence.getSpeed(), runningDistanceSpeedCadence.getSensorNameOrAddress());
         }
 
@@ -123,7 +123,7 @@ public final class SensorDataSet {
         }
 
         if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue()) {
-            trackPoint.setSensorDistance(runningDistanceSpeedCadence.getValue().getDistance());
+            trackPoint.setSensorDistance(runningDistanceSpeedCadence.getValue().distance());
         }
     }
 
