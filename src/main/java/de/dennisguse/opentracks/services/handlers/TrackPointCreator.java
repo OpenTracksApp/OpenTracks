@@ -18,11 +18,12 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.SensorManager;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * Creates TrackPoints while recording by fusing data from different sensors (e.g., GNSS, barometer, BLE sensors).
  */
-public class TrackPointCreator implements SensorManager.SensorDataSetChangeObserver {
+public class TrackPointCreator {
 
     private static final String TAG = TrackPointCreator.class.getSimpleName();
 
@@ -32,26 +33,21 @@ public class TrackPointCreator implements SensorManager.SensorDataSetChangeObser
 
     @NonNull
     private Clock clock = new MonotonicClock();
-
-    private final GPSManager gpsManager;
     private SensorManager sensorManager;
 
     public TrackPointCreator(Callback service, Context context, Handler handler) {
         this.service = service;
-        this.gpsManager = new GPSManager(this);
-        this.sensorManager = new SensorManager(context, handler, this);
+        this.sensorManager = new SensorManager(this);
     }
 
     @VisibleForTesting
-    TrackPointCreator(GPSManager gpsManager, Callback service) {
+    TrackPointCreator(Callback service) {
         this.service = service;
-        this.gpsManager = gpsManager;
     }
 
     public synchronized void start(@NonNull Context context, @NonNull Handler handler) {
         this.context = context;
 
-        gpsManager.start(context, handler);
         sensorManager.start(context, handler);
     }
 
@@ -73,8 +69,7 @@ public class TrackPointCreator implements SensorManager.SensorDataSetChangeObser
     }
 
     public synchronized void stop() {
-        gpsManager.stop(context);
-
+        sensorManager.stop(context);
         this.context = null;
     }
 
@@ -85,7 +80,6 @@ public class TrackPointCreator implements SensorManager.SensorDataSetChangeObser
     /**
      * Got a new TrackPoint from Bluetooth only; contains no GPS location.
      */
-    @Override
     public synchronized void onChange(@NonNull SensorDataSet unused) {
         onNewTrackPoint(new TrackPoint(TrackPoint.Type.SENSORPOINT, createNow()));
     }
@@ -94,7 +88,7 @@ public class TrackPointCreator implements SensorManager.SensorDataSetChangeObser
     public void onNewTrackPoint(@NonNull TrackPoint trackPoint) {
         addSensorData(trackPoint);
 
-        boolean stored = service.newTrackPoint(trackPoint, gpsManager.getThresholdHorizontalAccuracy());
+        boolean stored = service.newTrackPoint(trackPoint, PreferencesUtils.getThresholdHorizontalAccuracy());  //TODO Cache preference for performance
         if (stored) {
             reset();
         }
@@ -143,18 +137,13 @@ public class TrackPointCreator implements SensorManager.SensorDataSetChangeObser
     }
 
     @VisibleForTesting
+    public void setSensorManager(SensorManager sensorManager) {
+        this.sensorManager = sensorManager;
+    }
+
+    @VisibleForTesting
     public void setClock(@NonNull String time) {
         this.clock = Clock.fixed(Instant.parse(time), ZoneId.of("CET"));
-    }
-
-    @VisibleForTesting
-    public void setClock(@NonNull Clock clock) {
-        this.clock = clock;
-    }
-
-    @VisibleForTesting
-    public GPSManager getGpsHandler() {
-        return gpsManager;
     }
 
     void sendGpsStatus(GpsStatusValue gpsStatusValue) {

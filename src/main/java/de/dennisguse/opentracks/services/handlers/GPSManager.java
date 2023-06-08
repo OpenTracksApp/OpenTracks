@@ -30,7 +30,7 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
 
     private final String TAG = GPSManager.class.getSimpleName();
 
-    public static final String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
+    private static final String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
 
     private final TrackPointCreator trackPointCreator;
     private Context context;

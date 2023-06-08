@@ -57,7 +57,6 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.sensors.AltitudeSumManager;
-import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
@@ -165,8 +164,7 @@ public class ExportImportTest {
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
 
         trackPointCreator.setClock("2020-02-02T02:02:18Z");
-        BluetoothRemoteSensorManager mockRemoteSensorManager = Mockito.mock(BluetoothRemoteSensorManager.class);
-        trackPointCreator.getSensorManager().setBluetoothSensorManager(mockRemoteSensorManager);
+        trackPointCreator.getSensorManager().sensorDataSet = new SensorDataSet();
         service.endCurrentTrack();
 
         trackPointCreator.setClock("2020-02-02T02:03:20Z");
@@ -179,7 +177,6 @@ public class ExportImportTest {
         sendLocation(trackPointCreator, "2020-02-02T02:03:23Z", 3, 16.001, 10, 27, 15, 10, 0);
 
         trackPointCreator.setClock("2020-02-02T02:03:24Z");
-        trackPointCreator.getSensorManager().setBluetoothSensorManager(mockRemoteSensorManager);
         service.endCurrentTrack();
 
         Track track = contentProviderUtils.getTrack(trackId);
@@ -495,9 +492,6 @@ public class ExportImportTest {
     }
 
     private void mockBLESensorData(TrackPointCreator trackPointCreator, Float speed, Distance distance, float heartRate, float cadence, Float power) {
-        BluetoothRemoteSensorManager remoteSensorManager = Mockito.mock(BluetoothRemoteSensorManager.class);
-        Mockito.when(remoteSensorManager.fill(Mockito.any())).thenAnswer(invocation -> {
-            TrackPoint trackPoint = invocation.getArgument(0);
 
             SensorDataSet sensorDataSet = new SensorDataSet();
             sensorDataSet.set(new SensorDataCyclingPower("power", "power", Power.of(power)));
@@ -508,21 +502,20 @@ public class ExportImportTest {
             Mockito.when(cyclingCadence.getValue()).thenReturn(Cadence.of(cadence));
             sensorDataSet.set(cyclingCadence);
 
-            if (distance != null && speed != null) {
-                SensorDataCyclingDistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCyclingDistanceSpeed.Data.class);
-                Mockito.when(distanceSpeedData.getDistanceOverall()).thenReturn(distance);
-                Mockito.when(distanceSpeedData.getSpeed()).thenReturn(Speed.of(speed));
-                SensorDataCyclingDistanceSpeed distanceSpeed = Mockito.mock(SensorDataCyclingDistanceSpeed.class);
-                Mockito.when(distanceSpeed.hasValue()).thenReturn(true);
-                Mockito.when(distanceSpeed.getValue()).thenReturn(distanceSpeedData);
-                sensorDataSet.set(distanceSpeed);
-            }
+        if (distance != null && speed != null) {
+            SensorDataCyclingDistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCyclingDistanceSpeed.Data.class);
+            Mockito.when(distanceSpeedData.getDistanceOverall()).thenReturn(distance);
+            Mockito.when(distanceSpeedData.getSpeed()).thenReturn(Speed.of(speed));
+            SensorDataCyclingDistanceSpeed distanceSpeed = Mockito.mock(SensorDataCyclingDistanceSpeed.class);
+            Mockito.when(distanceSpeed.hasValue()).thenReturn(true);
+            Mockito.when(distanceSpeed.getValue()).thenReturn(distanceSpeedData);
+            sensorDataSet.set(distanceSpeed);
+        }
 
-            sensorDataSet.fillTrackPoint(trackPoint);
-            return sensorDataSet;
-        });
-        trackPointCreator.getSensorManager().setBluetoothSensorManager(remoteSensorManager);
-        trackPointCreator.onChange(new SensorDataSet());
+        trackPointCreator.getSensorManager().sensorDataSet = sensorDataSet;
+        trackPointCreator.onChange(sensorDataSet);
+
+        //TODO Might require: getSensorManager().sensorDataSet = new SensorDataSet()
     }
 
     private void mockAltitudeChange(TrackPointCreator trackPointCreator, float altitudeGain) {
@@ -545,6 +538,6 @@ public class ExportImportTest {
         mockAltitudeChange(trackPointCreator, altitudeGain);
 
         trackPointCreator.setClock(time);
-        trackPointCreator.getGpsHandler().onLocationChanged(location);
+        trackPointCreator.onChange(location);
     }
 }

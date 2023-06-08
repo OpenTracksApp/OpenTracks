@@ -9,19 +9,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
-import de.dennisguse.opentracks.TrackRecordedActivity;
-import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
-import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
@@ -89,6 +85,7 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setUnit(unitSystem)
                 .build(context);
+        // The decision if a trackpoint is not accurate enough should happen in the sensor subsystem.
         if (trackPoint.hasHorizontalAccuracy()) {
             formattedAccuracy = formatter.formatDistance(trackPoint.getHorizontalAccuracy());
 
@@ -105,26 +102,6 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
         updateNotification();
 
         notificationBuilder.setOnlyAlertOnce(true);
-    }
-
-    Notification setRecording(Context context, @NonNull Track.Id trackId) {
-        Intent intent = IntentUtils.newIntent(context, TrackRecordingActivity.class)
-                .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
-        int pendingIntentFlags = PendingIntent.FLAG_UPDATE_CURRENT;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            pendingIntentFlags |= PendingIntent.FLAG_IMMUTABLE;
-        }
-
-        PendingIntent pendingIntent = TaskStackBuilder.create(context)
-                .addNextIntentWithParentStack(intent)
-                .getPendingIntent(0, pendingIntentFlags);
-
-        updateContent(context.getString(R.string.gps_starting));
-
-        notificationBuilder.setContentIntent(pendingIntent);
-        updateNotification();
-
-        return getNotification();
     }
 
     Notification setGPSonlyStarted(Context context) {

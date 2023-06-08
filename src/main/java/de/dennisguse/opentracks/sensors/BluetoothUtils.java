@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import de.dennisguse.opentracks.data.models.AtmosphericPressure;
 import de.dennisguse.opentracks.data.models.BatteryLevel;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
@@ -67,6 +68,12 @@ public class BluetoothUtils {
                     UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb"), //Miband3
                     HEARTRATE.getMeasurementUUID()
             ))
+    );
+
+    private static final UUID ENVIRONMENTAL_SENSING_SERVICE = new UUID(0x181A00001000L, 0x800000805f9b34fbL);
+    public static final ServiceMeasurementUUID BAROMETRIC_PRESSURE = new ServiceMeasurementUUID(
+            ENVIRONMENTAL_SENSING_SERVICE,
+            new UUID(0x2A6D00001000L, 0x800000805f9b34fbL)
     );
 
     public static final ServiceMeasurementUUID CYCLING_POWER = new ServiceMeasurementUUID(
@@ -135,6 +142,17 @@ public class BluetoothUtils {
         }
 
         return null;
+    }
+
+    public static AtmosphericPressure parseEnvironmentalSensing(BluetoothGattCharacteristic characteristic) {
+        byte[] raw = characteristic.getValue();
+
+        if (raw.length < 4) {
+            return null;
+        }
+
+        Integer pressure = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, 0);
+        return AtmosphericPressure.ofPA(pressure / 10f);
     }
 
     public static SensorDataCyclingPower.Data parseCyclingPower(String address, String sensorName, BluetoothGattCharacteristic characteristic) {

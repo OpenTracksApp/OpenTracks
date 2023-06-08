@@ -189,6 +189,7 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
      */
     protected abstract SensorData<DataType> parsePayload(@NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, @NonNull BluetoothGattCharacteristic characteristic);
 
+    @Deprecated //TODO REMOVE
     interface SensorDataObserver {
 
         void onChanged(SensorData<?> sensorData);

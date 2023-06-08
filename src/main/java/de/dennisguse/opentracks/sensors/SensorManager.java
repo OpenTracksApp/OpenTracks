@@ -9,22 +9,52 @@ import androidx.annotation.VisibleForTesting;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
+import de.dennisguse.opentracks.services.handlers.GPSManager;
+import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 
 public class SensorManager {
 
     private static final String TAG = SensorManager.class.getSimpleName();
 
+    //TODO Should be final and not be visible for testing
+    @VisibleForTesting
+    public SensorDataSet sensorDataSet = new SensorDataSet();
+
+    private final TrackPointCreator observer;
+
+    private final SensorDataChangedObserver listener = new SensorDataChangedObserver() {
+
+        @Override
+        public void onChange(SensorData<?> sensorData) {
+            sensorDataSet.set(sensorData);
+            observer.onChange(new SensorDataSet(sensorDataSet));
+        }
+
+        @Override
+        public void onDisconnect(SensorData<?> sensorData) {
+            sensorDataSet.remove(sensorData);
+            observer.onChange(new SensorDataSet(sensorDataSet));
+        }
+    };
+
     private BluetoothRemoteSensorManager bluetoothSensorManager;
 
     private AltitudeSumManager altitudeSumManager;
 
-    public SensorManager(Context context, Handler handler, SensorDataSetChangeObserver observer) {
-        bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, observer);
-        altitudeSumManager = new AltitudeSumManager();
+    private GPSManager gpsManager;
+
+    public SensorManager(TrackPointCreator observer) {
+        this.observer = observer;
     }
 
     public void start(Context context, Handler handler) {
+        gpsManager = new GPSManager(observer); //TODO Pass listener
+        gpsManager.start(context, handler);
+
+        bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
         bluetoothSensorManager.start(context, handler);
+
+        altitudeSumManager = new AltitudeSumManager();
         altitudeSumManager.start(context, handler);
     }
 
@@ -38,11 +68,19 @@ public class SensorManager {
             altitudeSumManager.stop(context);
             altitudeSumManager = null;
         }
+
+        if (gpsManager != null) {
+            gpsManager.stop(context);
+            gpsManager = null;
+        }
+
+        sensorDataSet.clear();
     }
 
     public SensorDataSet fill(TrackPoint trackPoint) {
         altitudeSumManager.fill(trackPoint);
-        return bluetoothSensorManager.fill(trackPoint);
+        sensorDataSet.fillTrackPoint(trackPoint);
+        return new SensorDataSet(sensorDataSet);
     }
 
     public void reset() {
@@ -50,7 +88,7 @@ public class SensorManager {
             Log.d(TAG, "No recording running and no reset necessary.");
             return;
         }
-        bluetoothSensorManager.reset();
+        sensorDataSet.reset();
         altitudeSumManager.reset();
     }
 
@@ -60,10 +98,8 @@ public class SensorManager {
         return bluetoothSensorManager;
     }
 
-    @Deprecated
-    @VisibleForTesting
-    public void setBluetoothSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
-        this.bluetoothSensorManager = remoteSensorManager;
+    public GPSManager getGpsManager() {
+        return gpsManager;
     }
 
     @Deprecated
@@ -78,8 +114,9 @@ public class SensorManager {
         this.altitudeSumManager = altitudeSumManager;
     }
 
-    @Deprecated
-    public interface SensorDataSetChangeObserver {
-        void onChange(SensorDataSet sensorDataSet);
+    public interface SensorDataChangedObserver {
+        void onChange(SensorData<?> sensorData);
+
+        void onDisconnect(SensorData<?> sensorData);
     }
 }
