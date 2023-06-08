@@ -40,11 +40,7 @@ public class EspressoEditTrackRecordingTest {
     public ActivityScenarioRule<TrackListActivity> mActivityTestRule = new ActivityScenarioRule<>(TrackListActivity.class);
 
     @Rule
-    public GrantPermissionRule mGrantPermissionRuleLocation = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
-    @Rule
-    public GrantPermissionRule mGrantPermissionRuleBluetooth = GrantPermissionRule.grant(android.Manifest.permission.BLUETOOTH_CONNECT);
-    @Rule
-    public GrantPermissionRule mGrantPermissionRuleNotifications = GrantPermissionRule.grant(Manifest.permission.POST_NOTIFICATIONS);
+    public GrantPermissionRule mGrantPermissionRule = TestUtil.createGrantPermissionRule();
 
     @LargeTest
     @Test
