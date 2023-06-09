@@ -14,16 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/track_list_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_logo_color_24dp"
+            app:title="@string/app_name"
+            app:menu="@menu/track_list" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:orientation="vertical"
-        android:paddingBottom="50dp"
-        android:clipToPadding="false">
+        android:paddingBottom="?attr/actionBarSize"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ListView
             android:id="@+id/track_list"
@@ -43,19 +57,19 @@ limitations under the License.
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:paddingTop="16dp"
-                android:paddingBottom="12dp">
+                android:paddingBottom="0dp">
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.7" />
+                    android:layout_weight="3" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:paddingBottom="50dp"
+                    android:layout_weight="1"
                     android:contentDescription="@string/image_arrow"
+                    android:paddingBottom="50dp"
                     android:src="@drawable/ic_arrow_long" />
 
             </LinearLayout>
@@ -92,16 +106,32 @@ limitations under the License.
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:fabAlignmentMode="end"
-        app:logo="@drawable/ic_logo_color_24dp"
-        app:menu="@menu/track_list" />
+        app:fabAlignmentMode="end">
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.IconButton"
+            android:id="@+id/aggregated_stats_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_statistics_24dp"
+            app:iconTint="?attr/colorOnBackground" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sensor_start_button"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_gps_off_24dp"
+            app:iconTint="?attr/colorOnBackground" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/track_list_fab_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_record_24"
         android:contentDescription="@string/image_record"
+        android:src="@drawable/ic_baseline_record_24"
         app:layout_anchor="@id/bottom_app_bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

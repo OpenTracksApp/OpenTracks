@@ -22,12 +22,6 @@ limitations under the License.
     <color name="opentracks_secondary_transparent">#55FF6D00</color>
     <color name="opentracks_on_secondary_color">@android:color/white</color>
 
-    <color name="opentracks_surface_day_background_color">#f5f5f5</color>
-    <color name="opentracks_surface_day_on_background_color">@android:color/black</color>
-
-    <color name="opentracks_surface_night_background_color">@android:color/black</color>
-    <color name="opentracks_surface_night_on_background_color">@android:color/white</color>
-
     <!-- Chart colors -->
     <color name="chart_cadence_border">#FFF128F3</color> <!-- pink -->
     <color name="chart_cadence_fill">#40F128F3</color> <!-- transparent pink -->

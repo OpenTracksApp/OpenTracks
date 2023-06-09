@@ -113,7 +113,6 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(recyclerViewSwipeDeleteCallback);
         itemTouchhelper.attachToRecyclerView(recyclerView);
 
-        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.custom_layout_list_title));
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 

@@ -16,7 +16,7 @@ limitations under the License.
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- bottom buttons bar -->
-    <style name="BottomButton" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="BottomButton" parent="Widget.Material3.Button.TextButton">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
@@ -70,19 +70,19 @@ limitations under the License.
     </style>
 
     <!-- Snackbar -->
-    <style name="MaterialSnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
+    <style name="MaterialSnackbarTheme" parent="@style/Widget.Material3.Snackbar">
         <item name="materialThemeOverlay">@style/ThemeOverlay.OpenTracks.Snackbar</item>
         <item name="actionTextColorAlpha">1</item>
 
         <item name="backgroundTint">@android:color/holo_red_dark</item>
     </style>
 
-    <style name="MaterialSnackbarTextButtonTheme" parent="@style/Widget.MaterialComponents.Button.TextButton.Snackbar">
+    <style name="MaterialSnackbarTextButtonTheme" parent="@style/Widget.Material3.Button.TextButton.Snackbar">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="MaterialSnackbarTextViewTheme" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
+    <style name="MaterialSnackbarTextViewTheme" parent="@style/Widget.Material3.Snackbar.TextView">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textAppearance">?textAppearanceLabelMedium</item>
         <item name="android:textSize">14sp</item>

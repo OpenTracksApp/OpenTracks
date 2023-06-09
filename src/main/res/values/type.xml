@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- migrate MaterialComponents to Material3 -->
 <resources>
     <style name="TextAppearance.OpenTracks.PrimaryHeader" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="android:textColor">?attr/colorSecondary</item>
@@ -50,11 +51,6 @@
 
     <style name="TextAppearance.OpenTracks.PrimaryUnit" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textColor">?attr/colorOnBackground</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="TextAppearance.OpenTracks.OnBottomBarText" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:singleLine">true</item>
     </style>
 </resources>

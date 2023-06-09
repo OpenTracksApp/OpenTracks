@@ -11,9 +11,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
+import static de.dennisguse.opentracks.util.EspressoUtils.childAtPosition;
 import static de.dennisguse.opentracks.util.EspressoUtils.waitFor;
-
-import android.Manifest;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -53,7 +52,15 @@ public class EspressoDeleteTrackTest {
         onData(anything()).inAdapterView(withId(R.id.track_list)).atPosition(0).perform(longClick());
 
         // open menu and delete selected track
-        onView(allOf(withContentDescription("More options"), isDisplayed()))
+        //TODO openActionBarOverflowOrOptionsMenu(); doesn't work
+        onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.appcompat.R.id.action_mode_bar),
+                                        1),
+                                2),
+                        isDisplayed()))
                 .perform(click());
 
         onView(withText("Delete")).perform(click());

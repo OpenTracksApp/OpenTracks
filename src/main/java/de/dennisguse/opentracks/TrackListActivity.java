@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
@@ -42,12 +43,12 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import com.google.android.material.button.MaterialButton;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
@@ -82,7 +83,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
 
-    // The following are setFrequency in onCreate
+    // The following are set in onCreate
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private ResourceCursorAdapter resourceCursorAdapter;
 
@@ -136,7 +137,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
     // Menu items
     private MenuItem searchMenuItem;
-    private MenuItem startGpsMenuItem;
 
     private final TrackRecordingServiceConnection.Callback bindChangedCallback = (service, unused) -> {
         service.getRecordingStatusObservable()
@@ -163,6 +163,25 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         requestRequiredPermissions();
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
+
+        viewBinding.aggregatedStatsButton.setOnClickListener((view) -> startActivity(IntentUtils.newIntent(this, AggregatedStatisticsActivity.class)));
+        viewBinding.sensorStartButton.setOnClickListener((view) -> {
+            LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            if (locationManager != null && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            } else {
+                // Invoke trackRecordingService
+                if (!gpsStatusValue.isGpsStarted()) {
+                    trackRecordingServiceConnection.startAndBindWithCallback(this);
+                } else {
+                    TrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+                    if (trackRecordingService != null) {
+                        trackRecordingService.stopSensorsAndShutdown(); //TODO Handle this in TrackRecordingServiceConnection
+                    }
+                    trackRecordingServiceConnection.unbindAndStop(this);
+                }
+            }
+        });
 
         viewBinding.trackList.setEmptyView(viewBinding.trackListEmptyView);
         viewBinding.trackList.setOnItemClickListener((parent, view, position, trackIdId) -> {
@@ -253,7 +272,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             return true;
         });
 
-        setSupportActionBar(viewBinding.bottomAppBar);
+        setSupportActionBar(viewBinding.trackListToolbar);
 
         loadData(getIntent());
     }
@@ -308,21 +327,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         getMenuInflater().inflate(R.menu.track_list, menu);
 
         searchMenuItem = menu.findItem(R.id.track_list_search);
-        SearchView searchView = ActivityUtils.configureSearchWidget(this, searchMenuItem);
-
-        searchView.findViewById(androidx.appcompat.R.id.search_edit_frame).setPadding(0, 0, 48, 0);
-
-        SearchView.SearchAutoComplete searchAutoComplete = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-        searchAutoComplete.setHintTextColor(ContextCompat.getColor(this, android.R.color.white));
-        searchAutoComplete.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-
-        searchView.setOnCloseListener(() -> {
-            searchView.clearFocus();
-            searchMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-            return true;
-        });
-
-        startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
+        ActivityUtils.configureSearchWidget(this, searchMenuItem);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -339,34 +344,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.track_list_start_gps) {
-            LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-            if (locationManager != null && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-            } else {
-                // Invoke trackRecordingService
-                if (!gpsStatusValue.isGpsStarted()) {
-                    trackRecordingServiceConnection.startAndBindWithCallback(this);
-                } else {
-                    TrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
-                    if (trackRecordingService != null) {
-                        trackRecordingService.stopSensorsAndShutdown(); //TODO Handle this in TrackRecordingServiceConnection
-                    }
-                    trackRecordingServiceConnection.unbindAndStop(this);
-                }
-
-                // Update menu after starting or stopping gps
-                this.invalidateOptionsMenu();
-            }
-
-            return true;
-        }
-
-        if (item.getItemId() == R.id.track_list_aggregated_stats) {
-            startActivity(IntentUtils.newIntent(this, AggregatedStatisticsActivity.class));
-            return true;
-        }
-
         if (item.getItemId() == R.id.track_list_markers) {
             startActivity(IntentUtils.newIntent(this, MarkerListActivity.class));
             return true;
@@ -460,14 +437,12 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
      */
     //TODO Check if if can be avoided to call this outside of onGpsStatusChanged()
     private void updateGpsMenuItem(boolean isGpsStarted, boolean isRecording) {
-        if (startGpsMenuItem != null) {
-            startGpsMenuItem.setVisible(!isRecording);
-            if (!isRecording) {
-                startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
-                startGpsMenuItem.setIcon(isGpsStarted ? gpsStatusValue.icon : R.drawable.ic_gps_off_24dp);
-                if (startGpsMenuItem.getIcon() instanceof AnimatedVectorDrawable) {
-                    ((AnimatedVectorDrawable) startGpsMenuItem.getIcon()).start();
-                }
+        MaterialButton startGpsMenuItem = viewBinding.sensorStartButton;
+        startGpsMenuItem.setVisibility(!isRecording ? View.VISIBLE : View.INVISIBLE);
+        if (!isRecording) {
+            startGpsMenuItem.setIcon(AppCompatResources.getDrawable(this, isGpsStarted ? gpsStatusValue.icon : R.drawable.ic_gps_off_24dp));
+            if (startGpsMenuItem.getIcon() instanceof AnimatedVectorDrawable) {
+                ((AnimatedVectorDrawable) startGpsMenuItem.getIcon()).start();
             }
         }
     }
@@ -509,13 +484,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             return true;
         }
 
-        if (itemId == R.id.list_context_menu_aggregated_stats) {
-            Intent intent = IntentUtils.newIntent(this, AggregatedStatisticsActivity.class)
-                    .putParcelableArrayListExtra(AggregatedStatisticsActivity.EXTRA_TRACK_IDS, new ArrayList<>(Arrays.asList(trackIds)));
-            startActivity(intent);
-            return true;
-        }
-
         if (itemId == R.id.list_context_menu_select_all) {
             for (int i = 0; i < viewBinding.trackList.getCount(); i++) {
                 viewBinding.trackList.setItemChecked(i, true);
@@ -537,11 +505,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         public void setSearch(String searchQuery) {
             this.searchQuery = searchQuery;
             restart();
-            if (searchQuery != null) {
-                setTitle(searchQuery);
-            } else {
-                setTitle(R.string.app_name);
-            }
+            viewBinding.trackListToolbar.setTitle(searchQuery == null ? getString(R.string.app_name) : searchQuery);
         }
 
         public void restart() {

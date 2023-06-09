@@ -131,7 +131,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindCallback);
 
-        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
+        setSupportActionBar(viewBinding.markerListToolbar);
     }
 
     @Override
@@ -311,7 +311,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         public void setSearch(String searchQuery) {
             this.searchQuery = searchQuery;
             restart();
-            viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.menu_markers)));
+            viewBinding.markerListToolbar.setTitle(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.menu_markers)));
         }
 
         public void restart() {
