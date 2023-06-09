@@ -40,7 +40,6 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             fragment = new MainSettingsFragment();
         }
 
-        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.menu_settings));
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, fragment).commit();

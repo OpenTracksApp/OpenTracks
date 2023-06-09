@@ -59,8 +59,8 @@ public class EspressoAggregatedFilterTest {
     public void espressoAggregatedFilterTest() {
         // open AggregatedStatisticsActivity through toolbar's menu item
         onView(ViewMatchers.withId(R.id.bottom_app_bar)).check(matches(isDisplayed()));
-        onView(withId(R.id.bottom_app_bar)).check(matches(hasDescendant(withId(R.id.track_list_aggregated_stats))));
-        onView(withId(R.id.track_list_aggregated_stats)).perform(click());
+        onView(withId(R.id.bottom_app_bar)).check(matches(hasDescendant(withId(R.id.aggregated_stats_button))));
+        onView(withId(R.id.aggregated_stats_button)).perform(click());
 
         // open FilterDialogFragment through toolbar's menu item
         onView(withId(R.id.bottom_app_bar)).check(matches(isDisplayed()));

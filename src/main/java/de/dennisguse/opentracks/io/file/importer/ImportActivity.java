@@ -112,7 +112,7 @@ public class ImportActivity extends FragmentActivity {
         });
 
         //Works for a directory, but we might have received multiple files via SEND_MULTIPLE.
-        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.import_progress_message, documentFiles.get(0).getName()));
+        viewBinding.importActivityToolbar.setTitle(getString(R.string.import_progress_message, documentFiles.get(0).getName()));
         viewBinding.bottomAppBarLayout.bottomAppBar.setNavigationIcon(R.drawable.ic_logo_color_24dp);
     }
 

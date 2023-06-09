@@ -1,21 +1,17 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="ThemeCustom" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="ThemeCustom" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/opentracks_secondary_color</item>
-        <item name="colorPrimaryVariant">@android:color/black</item>
         <item name="colorOnPrimary">@android:color/white</item>
 
         <item name="colorSecondary">@color/opentracks_secondary_color</item>
         <item name="colorSecondaryVariant">@color/opentracks_secondary_color</item>
         <item name="colorOnSecondary">@color/opentracks_on_secondary_color</item>
 
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@android:color/black</item>
 
         <item name="android:colorBackground">@android:color/black</item>
         <item name="colorOnBackground">@android:color/white</item>
-
-        <item name="colorSurface">@color/opentracks_surface_night_background_color</item>
-        <item name="colorOnSurface">@color/opentracks_surface_night_on_background_color</item>
 
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
 
@@ -27,17 +23,15 @@
 
     </style>
 
-    <style name="Widget.OpenTracks.BottomAppBar" parent="Widget.MaterialComponents.BottomAppBar.Colored">
+    <style name="Widget.OpenTracks.BottomAppBar" parent="Widget.Material3.BottomAppBar">
         <item name="materialThemeOverlay">@style/ThemeOverlay.OpenTracks.BottomAppBar</item>
     </style>
 
     <style name="ThemeOverlay.OpenTracks.BottomAppBar" parent="">
         <item name="colorPrimary">@android:color/black</item>
-        <item name="colorOnPrimary">@android:color/white</item>
-    </style>
+        <item name="colorAccent">@android:color/white</item>
+        <!--        <item name="android:drawableTint">@android:color/white</item>-->
 
-    <style name="Widget.OpenTracks.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="fabCustomSize">64dp</item>
     </style>
 
 </resources>

@@ -21,7 +21,7 @@ limitations under the License.
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingBottom="60dp">
+        android:paddingBottom="@dimen/m3_bottom_nav_min_height">
 
         <include
             android:id="@+id/fields"

@@ -95,7 +95,7 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
         recyclerViewNotVisible.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewNotVisible.setAdapter(adapterFieldsHidden);
 
-        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(profile);
+//        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(profile); TODO
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 

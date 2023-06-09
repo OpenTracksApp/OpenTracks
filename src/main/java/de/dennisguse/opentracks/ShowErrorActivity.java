@@ -24,7 +24,7 @@ public class ShowErrorActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
 
         viewBinding.textViewError.setText(getIntent().getStringExtra(EXTRA_ERROR_TEXT));
-        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(createErrorTitle());
+        viewBinding.showErrorToolbar.setTitle(createErrorTitle());
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 

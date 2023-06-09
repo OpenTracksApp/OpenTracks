@@ -3,6 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/show_error_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_baseline_info_24" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <ScrollView
         android:id="@+id/error_page_container"
         android:layout_width="match_parent"

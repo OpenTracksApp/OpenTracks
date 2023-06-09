@@ -187,7 +187,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
             nextExport(null);
         }
 
-        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.export_progress_message, directoryDisplayName));
+        viewBinding.exportActivityToolbar.setTitle(getString(R.string.export_progress_message, directoryDisplayName));
         viewBinding.bottomAppBarLayout.bottomAppBar.setNavigationIcon(R.drawable.ic_logo_color_24dp);
     }
 
