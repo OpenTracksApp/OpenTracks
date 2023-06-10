@@ -15,7 +15,6 @@ import androidx.core.location.LocationManagerCompat;
 import androidx.core.location.LocationRequestCompat;
 
 import java.time.Duration;
-import java.time.Instant;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
@@ -26,7 +25,7 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-public class GPSManager implements SensorConnector, LocationListenerCompat, GpsStatus.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class GPSManager implements SensorConnector, LocationListenerCompat, GpsStatusManager.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final String TAG = GPSManager.class.getSimpleName();
 
@@ -37,7 +36,7 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
     private Handler handler;
 
     private LocationManager locationManager;
-    private GpsStatus gpsStatus;
+    private GpsStatusManager gpsStatusManager;
     private Duration gpsInterval;
     private Distance thresholdHorizontalAccuracy;
 
@@ -50,10 +49,10 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
         this.handler = handler;
 
         PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
-        gpsStatus = new GpsStatus(context, this);
+        gpsStatusManager = new GpsStatusManager(context, this, handler);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         registerLocationListener();
-        gpsStatus.start();
+        gpsStatusManager.start();
     }
 
     private boolean isStarted() {
@@ -72,9 +71,9 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
             handler = null;
         }
 
-        if (gpsStatus != null) {
-            gpsStatus.stop();
-            gpsStatus = null;
+        if (gpsStatusManager != null) {
+            gpsStatusManager.stop();
+            gpsStatusManager = null;
         }
         PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
     }
@@ -88,8 +87,8 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
 
             gpsInterval = PreferencesUtils.getMinRecordingInterval();
 
-            if (gpsStatus != null) {
-                gpsStatus.onMinRecordingIntervalChanged(gpsInterval);
+            if (gpsStatusManager != null) {
+                gpsStatusManager.onMinRecordingIntervalChanged(gpsInterval);
             }
         }
         if (PreferencesUtils.isKey(R.string.recording_gps_accuracy_key, key)) {
@@ -98,9 +97,9 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
         if (PreferencesUtils.isKey(R.string.recording_distance_interval_key, key)) {
             registerListener = true;
 
-            if (gpsStatus != null) {
+            if (gpsStatusManager != null) {
                 Distance gpsMinDistance = PreferencesUtils.getRecordingDistanceInterval();
-                gpsStatus.onRecordingDistanceChanged(gpsMinDistance);
+                gpsStatusManager.onRecordingDistanceChanged(gpsMinDistance);
             }
         }
 
@@ -121,10 +120,10 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
             return;
         }
 
-        if (gpsStatus != null) {
+        if (gpsStatusManager != null) {
             // Send each update to the status; please note that this TrackPoint is not stored.
-            TrackPoint trackPoint = new TrackPoint(location, Instant.ofEpochMilli(location.getTime()));
-            gpsStatus.onLocationChanged(trackPoint);
+            TrackPoint trackPoint = new TrackPoint(location, trackPointCreator.createNow());
+            gpsStatusManager.onNewTrackPoint(trackPoint);
         }
 
         if (!LocationUtils.isValidLocation(location)) {
@@ -146,15 +145,15 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
 
     @Override
     public void onProviderEnabled(@NonNull String provider) {
-        if (gpsStatus != null) {
-            gpsStatus.onGpsEnabled();
+        if (gpsStatusManager != null) {
+            gpsStatusManager.onGpsEnabled();
         }
     }
 
     @Override
     public void onProviderDisabled(@NonNull String provider) {
-        if (gpsStatus != null) {
-            gpsStatus.onGpsDisabled();
+        if (gpsStatusManager != null) {
+            gpsStatusManager.onGpsDisabled();
         }
     }
 
