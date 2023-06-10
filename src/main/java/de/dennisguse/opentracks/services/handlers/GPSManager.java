@@ -189,7 +189,7 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
     }
 
     @Override
-    public void onGpsStatusChanged(GpsStatusValue prevStatus, GpsStatusValue currentStatus) {
+    public void onGpsStatusChanged(GpsStatusValue currentStatus) {
         trackPointCreator.sendGpsStatus(currentStatus);
     }
 }

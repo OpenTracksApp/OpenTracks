@@ -17,7 +17,6 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
 /**
  * This class handle GPS status according to received locations` and some thresholds.
  */
-//TODO should handle sharedpreference changes
 class GpsStatus {
 
     private static final String TAG = GpsStatus.class.getSimpleName();
@@ -66,23 +65,21 @@ class GpsStatus {
         this.client = client;
         this.context = context;
 
-        thresholdHorizontalAccuracy = PreferencesUtils.getRecordingDistanceInterval();
-
-        Duration minRecordingInterval = PreferencesUtils.getMinRecordingInterval();
-        signalLostThreshold = SIGNAL_LOST_THRESHOLD.plus(minRecordingInterval);
+        onRecordingDistanceChanged(PreferencesUtils.getRecordingDistanceInterval());
+        onMinRecordingIntervalChanged(PreferencesUtils.getMinRecordingInterval());
 
         gpsStatusHandler = new Handler();
     }
 
     public void start() {
-        client.onGpsStatusChanged(GpsStatusValue.GPS_NONE, GpsStatusValue.GPS_ENABLED);
+        client.onGpsStatusChanged(GpsStatusValue.GPS_ENABLED);
     }
 
     /**
      * The client that uses GpsStatus has to call this method to stop the Runnable if needed.
      */
     public void stop() {
-        client.onGpsStatusChanged(gpsStatus, GpsStatusValue.GPS_NONE);
+        client.onGpsStatusChanged(GpsStatusValue.GPS_NONE);
         client = null;
         if (gpsStatusRunner != null) {
             gpsStatusRunner.stop();
@@ -136,22 +133,21 @@ class GpsStatus {
     private void checkStatusFromLastLocation() {
         if (Duration.between(lastTrackPoint.getTime(), Instant.now()).compareTo(signalLostThreshold) > 0 && gpsStatus != GpsStatusValue.GPS_SIGNAL_LOST) {
             // Too much time without receiving signal -> signal lost.
-            GpsStatusValue oldStatus = gpsStatus;
-            gpsStatus = GpsStatusValue.GPS_SIGNAL_LOST;
-            sendStatus(oldStatus, gpsStatus);
+            setGpsStatus(GpsStatusValue.GPS_SIGNAL_LOST);
             stopStatusRunner();
-        } else if (lastTrackPoint.fulfillsAccuracy(thresholdHorizontalAccuracy) && gpsStatus != GpsStatusValue.GPS_SIGNAL_BAD) {
+            return;
+        }
+        if (lastTrackPoint.fulfillsAccuracy(thresholdHorizontalAccuracy) && gpsStatus != GpsStatusValue.GPS_SIGNAL_BAD) {
             // Too little accuracy -> bad signal.
-            GpsStatusValue oldStatus = gpsStatus;
-            gpsStatus = GpsStatusValue.GPS_SIGNAL_BAD;
-            sendStatus(oldStatus, gpsStatus);
+            setGpsStatus(GpsStatusValue.GPS_SIGNAL_BAD);
             startStatusRunner();
-        } else if (lastTrackPoint.fulfillsAccuracy(thresholdHorizontalAccuracy) && gpsStatus != GpsStatusValue.GPS_SIGNAL_FIX) {
+            return;
+        }
+        if (lastTrackPoint.fulfillsAccuracy(thresholdHorizontalAccuracy) && gpsStatus != GpsStatusValue.GPS_SIGNAL_FIX) {
             // Gps okay.
-            GpsStatusValue oldStatus = gpsStatus;
-            gpsStatus = GpsStatusValue.GPS_SIGNAL_FIX;
-            sendStatus(oldStatus, gpsStatus);
+            setGpsStatus(GpsStatusValue.GPS_SIGNAL_FIX);
             startStatusRunner();
+            return;
         }
     }
 
@@ -164,9 +160,7 @@ class GpsStatus {
         Duration elapsed = Duration.between(lastValidTrackPoint.getTime(), Instant.now());
         if (signalLostThreshold.minus(elapsed).isNegative()) {
             // Too much time without locations -> lost signal? (wait signalLostThreshold from last valid location).
-            GpsStatusValue oldStatus = gpsStatus;
-            gpsStatus = GpsStatusValue.GPS_SIGNAL_LOST;
-            sendStatus(oldStatus, gpsStatus);
+            setGpsStatus(GpsStatusValue.GPS_SIGNAL_LOST);
             stopStatusRunner();
             lastValidTrackPoint = null;
         }
@@ -177,36 +171,37 @@ class GpsStatus {
      * Anyway, it checks that GPS is enabled because the client assumes that if it's on then GPS is enabled but user can disable GPS by hand.
      */
     public void onGpsEnabled() {
-        if (gpsStatus != GpsStatusValue.GPS_ENABLED) {
-            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                GpsStatusValue oldStatus = gpsStatus;
-                gpsStatus = GpsStatusValue.GPS_ENABLED;
-                sendStatus(oldStatus, gpsStatus);
-                startStatusRunner();
-            } else {
-                onGpsDisabled();
-            }
+        if (gpsStatus == GpsStatusValue.GPS_ENABLED) {
+            return;
+        }
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            setGpsStatus(GpsStatusValue.GPS_ENABLED);
+            startStatusRunner();
+        } else {
+            onGpsDisabled();
         }
     }
+
 
     /**
      * This method must be called from service every time the GPS sensor is disabled.
      */
     public void onGpsDisabled() {
-        if (gpsStatus != GpsStatusValue.GPS_DISABLED) {
-            GpsStatusValue oldStatus = gpsStatus;
-            gpsStatus = GpsStatusValue.GPS_DISABLED;
-            sendStatus(oldStatus, gpsStatus);
-            lastTrackPoint = null;
-            lastValidTrackPoint = null;
-            stopStatusRunner();
+        if (gpsStatus == GpsStatusValue.GPS_DISABLED) {
+            return;
         }
+
+        setGpsStatus(GpsStatusValue.GPS_DISABLED);
+        lastTrackPoint = null;
+        lastValidTrackPoint = null;
+        stopStatusRunner();
     }
 
-    private void sendStatus(GpsStatusValue prev, GpsStatusValue current) {
+    private void setGpsStatus(GpsStatusValue current) {
+        gpsStatus = GpsStatusValue.GPS_DISABLED;
         if (client != null) {
-            client.onGpsStatusChanged(prev, current);
+            client.onGpsStatusChanged(current);
         }
     }
 
@@ -228,11 +223,7 @@ class GpsStatus {
         return signalLostThreshold;
     }
 
-    public GpsStatusValue getGpsStatus() {
-        return gpsStatus;
-    }
-
     public interface GpsStatusListener {
-        void onGpsStatusChanged(GpsStatusValue prevStatus, GpsStatusValue currentStatus);
+        void onGpsStatusChanged(GpsStatusValue currentStatus);
     }
 }
