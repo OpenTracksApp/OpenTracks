@@ -51,11 +51,11 @@ public class SensorManager {
         gpsManager = new GPSManager(observer); //TODO Pass listener
         gpsManager.start(context, handler);
 
-        bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
-        bluetoothSensorManager.start(context, handler);
-
         altitudeSumManager = new AltitudeSumManager();
+        bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
+
         altitudeSumManager.start(context, handler);
+        bluetoothSensorManager.start(context, handler);
     }
 
     public void stop(Context context) {
