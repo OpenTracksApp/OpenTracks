@@ -568,7 +568,7 @@ limitations under the License.
     <string name="field_set_secondary">Дополнительная</string>
     <string name="field_set_primary">Главная</string>
     <string name="field_remove_from_layout">Удалить</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Показывать только устройства, объявляющие о требуемых службах</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Показывать только устройства, объявляющие о требуемых службах</string>
     <string name="settings_defaults_title">Единицы измерения и активность</string>
     <string name="settings_ui_title">Пользовательский интерфейс</string>
     <string name="settings_ui_summary">Вид, Раскладка записи, Тема</string>

@@ -527,7 +527,7 @@ limitations under the License.
     <string name="settings_export_filename_title">Tiedostonimen muoto</string>
     <string name="settings_export_section">Vienti</string>
     <string name="settings_recording_customize_layout_title">Muokkaa tallennuksen asettelua</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Näytä vain Bluetooth-laitteet, jotka ilmoittavat tarvittavat palvelut</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Näytä vain Bluetooth-laitteet, jotka ilmoittavat tarvittavat palvelut</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Tallennettuja tietoja ei jaeta automaattisesti muiden sovellusten kanssa.</string>
     <string name="voice_per_mile">per maili</string>
     <string name="voice_per_kilometer">kilometriä kohti</string>

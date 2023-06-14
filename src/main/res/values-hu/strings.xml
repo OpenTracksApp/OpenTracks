@@ -513,7 +513,7 @@ limitations under the License.
     <string name="stats_clock">Óra</string>
     <string name="current_heart_rate">Jelenlegi pulzusszám</string>
     <string name="average_heart_rate">Átlagos pulzusszám</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Csak azokat a Bluetooth-eszközöket jelenítse meg, amelyek bejelentik a szükséges szolgáltatásokat</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Csak azokat a Bluetooth-eszközöket jelenítse meg, amelyek bejelentik a szükséges szolgáltatásokat</string>
     <string name="settings_import_section">Behozatal</string>
     <string name="settings_export_section">Kivitel</string>
     <string name="settings_layout_reset_confirm_title">Állítsa vissza az elrendezéseket\?</string>

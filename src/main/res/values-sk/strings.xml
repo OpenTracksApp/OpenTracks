@@ -483,7 +483,7 @@ limitations under the License.
     <string name="location_coordinate">%1$s°</string>
     <string name="permission_bluetooth_failed">OpenTracks vyžaduje povolenie na používanie Bluetooth.</string>
     <string name="settings_sensor_wheel_circumference">Obvod kolesa (mm)</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Zobrazenie iba zariadení Bluetooth, ktoré oznamujú požadované služby</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Zobrazenie iba zariadení Bluetooth, ktoré oznamujú požadované služby</string>
     <string name="stats_loss">Straty</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
     <string name="track_speed_notification">Rýchlosť: %1$s</string>

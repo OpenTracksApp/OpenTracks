@@ -549,7 +549,7 @@ limitations under the License.
     <string name="current_heart_rate">Şu anki kalp atış hızı</string>
     <string name="field_set_primary">Birincil</string>
     <string name="field_set_secondary">İkincil</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Yalnızca gerekli hizmetleri bildiren Bluetooth cihazlarını göster</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Yalnızca gerekli hizmetleri bildiren Bluetooth cihazlarını göster</string>
     <string name="stats_loss">Kayıp</string>
     <string name="share_image_body">Bu görüntü ilginizi çekebilir.</string>
     <string name="share_image_subject">Sizinle bir resim paylaşmak istiyorum</string>

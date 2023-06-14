@@ -537,7 +537,7 @@ limitations under the License.
     <string name="settings_reset_summary">Restablecer a valores predeterminados</string>
     <string name="settings_activity_defaults_category">Prederminados de la actividad</string>
     <string name="settings_announcements_summary">Tiempo, Distancia, Velocidad de la voz</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Mostrar sólo los dispositivos Bluetooth que anuncian los servicios requeridos</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Mostrar sólo los dispositivos Bluetooth que anuncian los servicios requeridos</string>
     <string name="settings_open_tracks_summary">Todo sobre el proyecto OpenTracks</string>
     <string name="settings_defaults_title">Unidades y Actividad predeterminadas</string>
     <string name="settings_defaults_summary">Unidades preferidas, Actividad predeterminada, Nombre predeterminado del recorrido</string>

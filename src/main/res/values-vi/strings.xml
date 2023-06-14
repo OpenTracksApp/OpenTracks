@@ -521,7 +521,7 @@ limitations under the License.
     <string name="generic_to">Đến</string>
     <string name="menu_filter">Bộ lọc</string>
     <string name="aggregated_stats_filter_no_results">Không có hoạt động cho những quy định lọc</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Chỉ cho Bluetooth thiết bị thông báo cần dịch vụ</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Chỉ cho Bluetooth thiết bị thông báo cần dịch vụ</string>
     <string name="generic_yesterday">Ngày hôm qua</string>
     <string name="generic_today">Ngày hôm nay</string>
     <string name="export_dir_not_writable">" (không ghi được!)"</string>

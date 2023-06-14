@@ -539,7 +539,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="aggregated_stats_filter_no_results">Er zijn geen activiteiten voor het aangegeven filter</string>
     <string name="no_compatible_file_manager_installed">Geen geschikte bestandsbeheerder geïnstalleerd</string>
     <string name="generic_undo">Terugzetten</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Alleen Bluetooth-apparaten tonen die gevraagde diensten melden</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Alleen Bluetooth-apparaten tonen die gevraagde diensten melden</string>
     <string name="settings_activity_defaults_category">Standaardinstellingen van een activiteit</string>
     <string name="settings_import_export_summary">Invoer, uitvoer, automatische uitvoer</string>
     <string name="settings_units_category">Eenheden</string>

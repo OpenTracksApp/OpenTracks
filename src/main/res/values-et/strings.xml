@@ -530,7 +530,7 @@ limitations under the License.
     <string name="generic_from">Alates</string>
     <string name="generic_to">Kuni</string>
     <string name="menu_filter">Filtreeri</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Näitab ainult neid Bluetooth-seadmeid, mis teatavad nõutavatest teenustest</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Näitab ainult neid Bluetooth-seadmeid, mis teatavad nõutavatest teenustest</string>
     <string name="aggregated_stats_filter_no_results">Määratud filtri jaoks ei ole tegevusi</string>
     <string name="generic_today">Täna</string>
     <string name="export_dir_not_writable">" (pole kirjutatav!)"</string>

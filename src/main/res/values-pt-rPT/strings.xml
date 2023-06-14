@@ -476,7 +476,7 @@
     <string name="settings_sensor_cycling_cadence">Cadência</string>
     <string name="settings_sensor_running_speed_and_cadence">Distância, velocidade e cadência</string>
     <string name="settings_sensor_wheel_circumference">Circunferência da Roda (mm)</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Mostrar apenas aparelhos Bluetooth que anunciam os serviços necessários</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Mostrar apenas aparelhos Bluetooth que anunciam os serviços necessários</string>
     <string name="settings_public_api_enabled_summary_off">Apenas o OpenTracks pode iniciar e parar gravações.</string>
     <string name="settings_public_api_enabled_title">API pública</string>
     <string name="settings_public_api_disabled_toast">A API pública do OpenTracks está desativada: pode ser ativada nas configurações.</string>

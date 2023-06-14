@@ -362,7 +362,7 @@
     <string name="settings_layout_reset_done">Tá na socruithe leagan amach go léir curtha ar ais chuig na luachanna réamhshocraithe</string>
     <string name="settings_recording_min_recording_interval_title">Eatramh ama a thaifeadadh</string>
     <string name="settings_reset_done">Tá na socruithe go léir curtha ar ais chuig na luachanna réamhshocraithe</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Ná taispeáin ach gléasanna Bluetooth a fhógraíonn seirbhísí riachtanacha</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Ná taispeáin ach gléasanna Bluetooth a fhógraíonn seirbhísí riachtanacha</string>
     <string name="settings_public_api_dashboard_enabled_title">Aistriú sonraí uathoibríoch</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Is féidir le feidhmchlár a thosaigh taifeadadh rochtain a fháil ar na sonraí taifeadta freisin.</string>
     <string name="settings_prevent_reimport_tracks_title">Cosc a chur ar ath-allmhairiú rianta</string>

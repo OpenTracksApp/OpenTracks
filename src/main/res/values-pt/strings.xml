@@ -461,7 +461,7 @@ limitations under the License.
     <string name="settings_all_reset">Redefinir</string>
     <string name="settings_sensor_running_speed_and_cadence">Distância, velocidade e cadência</string>
     <string name="settings_sensor_wheel_circumference">Circunferência da Roda (mm)</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Mostrar apenas aparelhos Bluetooth que anunciam os serviços necessários</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Mostrar apenas aparelhos Bluetooth que anunciam os serviços necessários</string>
     <string name="settings_stats_units_nautical">Milha náutica (NM, ft)</string>
     <string name="settings_api_title">API pública</string>
     <string name="settings_public_api_package_title">Nome do pacote para API pública</string>

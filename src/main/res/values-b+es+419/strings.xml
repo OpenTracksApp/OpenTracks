@@ -495,7 +495,7 @@
     <string name="generic_undo">Deshacer</string>
     <string name="no_compatible_file_manager_installed">No hay un gestor de archivos compatible instalado</string>
     <string name="settings_running_sensor">Correr</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Mostrar sólo los dispositivos Bluetooth que anuncian los servicios requeridos</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Mostrar sólo los dispositivos Bluetooth que anuncian los servicios requeridos</string>
     <string name="settings_api_title">API pública</string>
     <string name="settings_public_api_dashboard_enabled_title">Transferencia automática de datos</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Los datos grabados no se compartirán automáticamente con otras aplicaciones.</string>

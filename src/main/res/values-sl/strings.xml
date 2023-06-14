@@ -422,7 +422,7 @@ limitations under the License.
     <string name="total_distance">Skupna razdalja</string>
     <string name="field_set_primary">Primarno</string>
     <string name="instant_export_enabled_summary">Izvoz skladbe v pomnilnik po končanem snemanju</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Prikažite samo naprave Bluetooth, ki napovedujejo zahtevane storitve</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Prikažite samo naprave Bluetooth, ki napovedujejo zahtevane storitve</string>
     <string name="hold_to_stop">Podržite za ustavitev</string>
     <string name="export_error_post_workout">Izvoz po vadbi ni uspel, preverite imenik za izvoz.</string>
     <string name="export_track_already_exists_msg">Skladba %1$s že obstaja v ciljnem imeniku.</string>

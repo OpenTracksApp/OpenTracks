@@ -520,7 +520,7 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="permission_bluetooth_failed">Openterrak bluetooth erabiltzeko baimena behar du.</string>
     <string name="permission_bluetooth_failed_rejected">Sistema-ezarpenetan Gertuko Gailuetarako Opentestrak sarbidea eskuz eman behar duzu.</string>
     <string name="settings_layout_reset_confirm_message">Diseinuaren ezarpen guztiak balio lehenetsietara itzuliko dira. Honek ez du gailuko pistarik ezabatuko.</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Eskatutako zerbitzuak iragartzen dituzten Bluetooth gailuak soilik erakutsi</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Eskatutako zerbitzuak iragartzen dituzten Bluetooth gailuak soilik erakutsi</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_open_tracks_summary">Guztiak Options Proiektuaren</string>
     <string name="settings_defaults_title">Unitate eta Jarduera lehenetsiak</string>

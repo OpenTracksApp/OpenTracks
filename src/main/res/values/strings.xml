@@ -431,7 +431,9 @@ limitations under the License.
     <string name="settings_sensor_cycling_cadence">Cadence</string>
     <string name="settings_sensor_running_speed_and_cadence">Distance, Speed, and Cadence</string>
     <string name="settings_sensor_wheel_circumference">Wheel Circumference (mm)</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Only show Bluetooth devices that announce required services</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Filter Bluetooth Devices</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Only show Bluetooth devices that announce required services</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Show all discoverable Bluetooth devices</string>
 
     <string name="settings_sensor_heart_rate_max">Zones: maximum Heart rate (bpm)</string>
 

@@ -539,7 +539,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="custom_layout_select_layout">Choisir la mise en page</string>
     <string name="custom_layout_list_layout_removed">La mise en page a été retirée</string>
     <string name="aggregated_stats_filter_no_results">Il n\'y a pas d\'activités pour le filtre spécifié</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Afficher uniquement les périphériques Bluetooth qui annoncent les services requis</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Afficher uniquement les périphériques Bluetooth qui annoncent les services requis</string>
     <string name="generic_today">Aujourd\'hui</string>
     <string name="generic_yesterday">Hier</string>
     <string name="export_cannot_write_to_dir">Impossible d\'écrire dans le répertoire d\'exportation.</string>

@@ -403,7 +403,7 @@ limitations under the License.
     <string name="settings_sensor_cycling_cadence">踏頻</string>
     <string name="settings_sensor_running_speed_and_cadence">距離、速度與踏頻</string>
     <string name="settings_sensor_wheel_circumference">輪周 (公釐)</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">僅顯示宣告所需服務的藍芽裝置</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">僅顯示宣告所需服務的藍芽裝置</string>
     <string name="settings_sensor_heart_rate_max">區間：最大心率 (bpm)</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">偏好速率</string>

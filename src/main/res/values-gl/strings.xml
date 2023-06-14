@@ -534,7 +534,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="generic_to">Ata</string>
     <string name="menu_filter">Filtro</string>
     <string name="aggregated_stats_filter_no_results">Non hai actividades para o filtro proporcionado</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Só mostrar dispositivos Bluetooth que anuncien os servizos requeridos</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Só mostrar dispositivos Bluetooth que anuncien os servizos requeridos</string>
     <string name="generic_today">Hoxe</string>
     <string name="generic_yesterday">Onte</string>
     <string name="export_cannot_write_to_dir">Non se pode escribir no directorio de exportación.</string>

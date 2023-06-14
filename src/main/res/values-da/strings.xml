@@ -526,7 +526,7 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="permission_bluetooth_failed">OpenTracks kræver tilladelse til at bruge Bluetooth.</string>
     <string name="permission_bluetooth_failed_rejected">Du skal manuelt give OpenTracks adgang til Nearby Devices i systemindstillingerne.</string>
     <string name="stats_sensors_heart_rate">Hjertefrekvens</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Vis kun Bluetooth-enheder, der annoncerer de krævede tjenester</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Vis kun Bluetooth-enheder, der annoncerer de krævede tjenester</string>
     <string name="aggregated_stats_filter_no_results">Der er ingen aktiviteter for det angivne filter</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="location_coordinate">%1$s°</string>

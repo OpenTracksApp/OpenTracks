@@ -528,7 +528,7 @@ limitations under the License.
     <string name="generic_undo">Відмінивши</string>
     <string name="aggregated_stats_filter_no_results">Для зазначеного фільтра немає дій</string>
     <string name="stats_coordinates">Широта/Довгота</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Показувати лише пристрої Bluetooth, які оголошують про необхідні послуги</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Показувати лише пристрої Bluetooth, які оголошують про необхідні послуги</string>
     <string name="settings_layout_reset_done">Всі налаштування макета були повернуті до значень за замовчуванням</string>
     <string name="settings_layout_reset_confirm_message">Всі налаштування макета будуть повернуті до значень за замовчуванням. Це не призведе до видалення будь-яких треків на пристрої.</string>
     <string name="custom_layout_list_title">Макет</string>
