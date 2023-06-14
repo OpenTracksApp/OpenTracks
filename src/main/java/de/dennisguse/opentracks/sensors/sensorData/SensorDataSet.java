@@ -4,6 +4,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
@@ -145,7 +146,7 @@ public final class SensorDataSet {
                 + (runningDistanceSpeedCadence != null ? " " + runningDistanceSpeedCadence : "");
     }
 
-    private void set(@NonNull SensorData<?> type, SensorData<?> sensorData) {
+    private void set(@NonNull SensorData<?> type, @Nullable SensorData<?> sensorData) {
         if (type instanceof SensorDataHeartRate) {
             this.heartRate = (SensorDataHeartRate) sensorData;
             return;
@@ -155,7 +156,7 @@ public final class SensorDataSet {
             SensorDataCyclingCadence previous = getCyclingCadence();
             Log.d(TAG, "Previous: " + previous + "; current: " + sensorData);
 
-            if (sensorData.equals(previous)) {
+            if (sensorData != null && sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: cadence data repeated.");
                 return;
             }
@@ -168,7 +169,7 @@ public final class SensorDataSet {
         if (type instanceof SensorDataCyclingDistanceSpeed) {
             SensorDataCyclingDistanceSpeed previous = getCyclingDistanceSpeed();
             Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
-            if (sensorData.equals(previous)) {
+            if (sensorData != null && sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: cycling speed data repeated.");
                 return;
             }
@@ -187,7 +188,7 @@ public final class SensorDataSet {
         if (type instanceof SensorDataRunning) {
             SensorDataRunning previous = getRunningDistanceSpeedCadence();
             Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
-            if (sensorData.equals(previous)) {
+            if (sensorData != null && sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: running speed data repeated.");
                 return;
             }
