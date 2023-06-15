@@ -44,7 +44,7 @@ public class Track {
 
     private String name = "";
     private String description = "";
-    private String category = "";
+    private String activityType = "";
 
     private String icon = "";
 
@@ -97,12 +97,12 @@ public class Track {
         this.description = description;
     }
 
-    public String getCategory() {
-        return category;
+    public String getActivityType() {
+        return activityType;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setActivityType(String activityType) {
+        this.activityType = activityType;
     }
 
     public String getIcon() {

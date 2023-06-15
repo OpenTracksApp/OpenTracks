@@ -164,7 +164,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
                 return;
             }
 
-            category = track.getCategory();
+            category = track.getActivityType();
             boolean reportSpeed = PreferencesUtils.isReportSpeed(category);
             if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
                 viewBinding.chartView.setReportSpeed(reportSpeed);

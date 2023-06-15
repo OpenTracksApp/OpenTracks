@@ -30,9 +30,9 @@ public class TrackSelection implements ContentProviderUtils.ContentProviderSelec
         return this;
     }
 
-    public TrackSelection addCategory(String category) {
-        if (!this.categories.contains(category)) {
-            this.categories.add(category);
+    public TrackSelection addActivityType(String activityType) {
+        if (!this.categories.contains(activityType)) {
+            this.categories.add(activityType);
         }
         return this;
     }
@@ -53,7 +53,7 @@ public class TrackSelection implements ContentProviderUtils.ContentProviderSelec
         }
         if (!categories.isEmpty()) {
             selection += selection.isEmpty() ? "" : " AND ";
-            selection += String.format(TracksColumns.CATEGORY + " IN (%s)", TextUtils.join(",", Collections.nCopies(categories.size(), "?")));
+            selection += String.format(TracksColumns.ACTIVITY_TYPE + " IN (%s)", TextUtils.join(",", Collections.nCopies(categories.size(), "?")));
         }
         if (from != null && to != null) {
             selection += selection.isEmpty() ? "" : " AND ";

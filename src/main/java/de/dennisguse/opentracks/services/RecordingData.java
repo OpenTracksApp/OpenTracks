@@ -2,8 +2,6 @@ package de.dennisguse.opentracks.services;
 
 import androidx.annotation.NonNull;
 
-import java.util.Objects;
-
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
@@ -18,7 +16,7 @@ public record RecordingData(Track track, TrackPoint latestTrackPoint, SensorData
         if (track == null) {
             return "";
         }
-        return track.getCategory();
+        return track.getActivityType();
     }
 
     @NonNull

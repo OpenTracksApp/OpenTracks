@@ -50,7 +50,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
 
         viewBinding.trackEditName.setText(track.getName());
 
-        viewBinding.trackEditActivityType.setText(track.getCategory());
+        viewBinding.trackEditActivityType.setText(track.getActivityType());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(this));
         viewBinding.trackEditActivityType.setAdapter(adapter);
@@ -74,7 +74,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
         {
             Pair<String, String> parts = SpeedFormatter.Builder()
                     .setUnit(PreferencesUtils.getUnitSystem())
-                    .setReportSpeedOrPace(PreferencesUtils.isReportSpeed(track.getCategory()))
+                    .setReportSpeedOrPace(PreferencesUtils.isReportSpeed(track.getActivityType()))
                     .build(this)
                     .getSpeedParts(track.getTrackStatistics().getAverageMovingSpeed());
             viewBinding.speed.setText(parts.first);

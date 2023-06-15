@@ -182,7 +182,7 @@ public class VoiceAnnouncement {
             sensorStatistics = contentProviderUtils.getSensorStats(track.getId());
         }
 
-        Spannable announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), PreferencesUtils.getUnitSystem(), PreferencesUtils.isReportSpeed(track.getCategory()), lastInterval, sensorStatistics);
+        Spannable announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), PreferencesUtils.getUnitSystem(), PreferencesUtils.isReportSpeed(track.getActivityType()), lastInterval, sensorStatistics);
 
         if (announcement.length() > 0) {
             // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.

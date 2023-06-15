@@ -39,7 +39,7 @@ public interface TracksColumns extends BaseColumns {
     String UUID = "uuid"; // identifier to make tracks globally unique (prevent re-import)
     String NAME = "name"; // track name
     String DESCRIPTION = "description"; // track description
-    String CATEGORY = "category"; // track activity type
+    String ACTIVITY_TYPE = "category"; // track activity type
     String STARTTIME = "starttime"; // track start time
     String STARTTIME_OFFSET = "starttime_offset"; // in plus/minus in seconds
     String STOPTIME = "stoptime"; // track stop time
@@ -63,7 +63,7 @@ public interface TracksColumns extends BaseColumns {
             + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + NAME + " TEXT, "
             + DESCRIPTION + " TEXT, "
-            + CATEGORY + " TEXT, "
+            + ACTIVITY_TYPE + " TEXT, "
             + STARTTIME + " INTEGER, "
             + STOPTIME + " INTEGER, "
             + NUMPOINTS + " INTEGER, "

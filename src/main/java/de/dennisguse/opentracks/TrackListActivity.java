@@ -193,7 +193,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
                 int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
                 int startTimeOffsetIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME_OFFSET);
-                int categoryIndex = cursor.getColumnIndexOrThrow(TracksColumns.CATEGORY);
+                int activityTypeIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE);
                 int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
                 int markerCountIndex = cursor.getColumnIndexOrThrow(TracksColumns.MARKER_COUNT);
 
@@ -209,13 +209,13 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 int markerCount = cursor.getInt(markerCountIndex);
                 long startTime = cursor.getLong(startTimeIndex);
                 int startTimeOffset = cursor.getInt(startTimeOffsetIndex);
-                String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);
+                String activityType = icon != null && !icon.equals("") ? null : cursor.getString(activityTypeIndex);
                 String description = cursor.getString(descriptionIndex);
 
                 ListItemUtils.setListItem(TrackListActivity.this, view, isRecording,
                         iconId, R.string.image_track, name, totalTime, totalDistance, markerCount,
                         OffsetDateTime.ofInstant(Instant.ofEpochMilli(startTime), ZoneOffset.ofTotalSeconds(startTimeOffset)),
-                        category, description, false);
+                        activityType, description, false);
             }
         };
         viewBinding.trackList.setAdapter(resourceCursorAdapter);
@@ -552,7 +552,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         @Override
         public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
             final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
-                    TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME, TracksColumns.STARTTIME_OFFSET,
+                    TracksColumns.DESCRIPTION, TracksColumns.ACTIVITY_TYPE, TracksColumns.STARTTIME, TracksColumns.STARTTIME_OFFSET,
                     TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON, TracksColumns.MARKER_COUNT};
 
             final String sortOrder = TracksColumns.STARTTIME + " DESC";
@@ -562,7 +562,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             } else {
                 final String SEARCH_QUERY = TracksColumns.NAME + " LIKE ? OR " +
                         TracksColumns.DESCRIPTION + " LIKE ? OR " +
-                        TracksColumns.CATEGORY + " LIKE ?";
+                        TracksColumns.ACTIVITY_TYPE + " LIKE ?";
                 final String[] selectionArgs = new String[]{"%" + searchQuery + "%", "%" + searchQuery + "%", "%" + searchQuery + "%"};
                 return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, SEARCH_QUERY, selectionArgs, sortOrder);
             }

@@ -62,7 +62,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if (TrackIconUtils.isSpeedIcon(context.getResources(), aggregatedStatistic.getCategory())) {
+        if (TrackIconUtils.isSpeedIcon(context.getResources(), aggregatedStatistic.getActivityType())) {
             viewHolder.setSpeed(aggregatedStatistic);
         } else {
             viewHolder.setPace(aggregatedStatistic);
@@ -80,7 +80,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
     public List<String> getCategories() {
         List<String> categories = new ArrayList<>();
         for (int i = 0; i < aggregatedStatistics.getCount(); i++) {
-            categories.add(aggregatedStatistics.getItem(i).getCategory());
+            categories.add(aggregatedStatistics.getItem(i).getActivityType());
         }
         return categories;
     }
@@ -159,13 +159,13 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
 
         //TODO Check preference handling.
         private void setCommonValues(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
-            String category = aggregatedStatistic.getCategory();
+            String activityType = aggregatedStatistic.getActivityType();
 
-            reportSpeed = PreferencesUtils.isReportSpeed(category);
+            reportSpeed = PreferencesUtils.isReportSpeed(activityType);
             unitSystem = PreferencesUtils.getUnitSystem();
 
             sportIcon.setImageResource(getIcon(aggregatedStatistic));
-            typeLabel.setText(category);
+            typeLabel.setText(activityType);
             numTracks.setText(StringUtils.valueInParentheses(String.valueOf(aggregatedStatistic.getCountTracks())));
 
             Pair<String, String> parts = DistanceFormatter.Builder()
@@ -178,7 +178,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         }
 
         private int getIcon(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
-            String iconValue = TrackIconUtils.getIconValue(context, aggregatedStatistic.getCategory());
+            String iconValue = TrackIconUtils.getIconValue(context, aggregatedStatistic.getActivityType());
             return TrackIconUtils.getIconDrawable(iconValue);
         }
     }

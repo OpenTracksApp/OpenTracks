@@ -72,7 +72,7 @@ public class DescriptionGenerator {
         builder.append(paragraphSeparator);
 
         writeString(track.getName(), builder, R.string.generic_name_line, lineBreak);
-        writeString(track.getCategory(), builder, R.string.description_activity_type, lineBreak);
+        writeString(track.getActivityType(), builder, R.string.description_activity_type, lineBreak);
         writeString(track.getDescription(), builder, R.string.generic_description_line, lineBreak);
         builder.append(generateTrackStatisticsDescription(track.getTrackStatistics(), html));
 

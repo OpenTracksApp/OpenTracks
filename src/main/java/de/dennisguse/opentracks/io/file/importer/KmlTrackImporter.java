@@ -61,7 +61,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private static final String TAG_MULTI_TRACK = "MultiTrack";
     private static final String TAG_KML22_MULTI_TRACK = "gx:MultiTrack";
 
-    private static final String TAG_DATA_CATEGORY = "Data"; //used for Track.category
+    private static final String TAG_DATA_ACTIVITYTYPE = "Data";
 
     private static final String TAG_SIMPLE_ARRAY_DATA = "SimpleArrayData";
     private static final String TAG_KML22_SIMPLE_ARRAY_DATA = "gx:SimpleArrayData";
@@ -113,7 +113,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private String icon;
     private String name;
     private String description;
-    private String category;
+    private String activityType;
     private String latitude;
     private String longitude;
     private String altitude;
@@ -146,7 +146,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 }
                 onTrackSegmentStart();
             }
-            case TAG_DATA_CATEGORY, TAG_SIMPLE_ARRAY_DATA, TAG_KML22_SIMPLE_ARRAY_DATA ->
+            case TAG_DATA_ACTIVITYTYPE, TAG_SIMPLE_ARRAY_DATA, TAG_KML22_SIMPLE_ARRAY_DATA ->
                     dataType = attributes.getValue(ATTRIBUTE_NAME);
         }
     }
@@ -165,15 +165,15 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                     onMarkerEnd();
             case TAG_COORDINATES -> onMarkerLocationEnd();
             case TAG_MULTI_TRACK, TAG_KML22_MULTI_TRACK -> {
-                trackImporter.setTrack(context, name, uuid, description, category, icon, zoneOffset);
+                trackImporter.setTrack(context, name, uuid, description, activityType, icon, zoneOffset);
                 zoneOffset = null;
             }
             case TAG_TRACK, TAG_KML22_TRACK -> onTrackSegmentEnd();
             case TAG_COORD, TAG_KML22_COORD -> onCoordEnded();
             case TAG_VALUE, TAG_KML22_VALUE -> {
-                if (KMLTrackExporter.EXTENDED_DATA_TYPE_CATEGORY.equals(dataType)) {
+                if (KMLTrackExporter.EXTENDED_DATA_TYPE_ACTIVITYTYPE.equals(dataType)) {
                     if (content != null) {
-                        category = content.trim();
+                        activityType = content.trim();
                     }
                 } else {
                     onExtendedDataValueEnd();
@@ -233,7 +233,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
         name = null;
         icon = null;
         description = null;
-        category = null;
+        activityType = null;
         photoUrl = null;
         latitude = null;
         longitude = null;
@@ -260,13 +260,13 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
         Marker marker = new Marker(null, new TrackPoint(TrackPoint.Type.TRACKPOINT, location, whenList.get(0))); //TODO Creating marker without need
         marker.setName(name != null ? name : "");
         marker.setDescription(description != null ? description : "");
-        marker.setCategory(category != null ? category : "");
+        marker.setCategory(activityType != null ? activityType : "");
         marker.setPhotoUrl(photoUrl);
         markers.add(marker);
 
         name = null;
         description = null;
-        category = null;
+        activityType = null;
         photoUrl = null;
         whenList.clear();
     }

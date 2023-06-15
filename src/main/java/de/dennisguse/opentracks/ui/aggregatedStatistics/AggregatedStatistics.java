@@ -26,7 +26,7 @@ public class AggregatedStatistics {
         dataList.addAll(dataMap.values());
         Collections.sort(dataList, (o1, o2) -> {
             if (o1.getCountTracks() == o2.getCountTracks()) {
-                return o1.getCategory().compareTo(o2.getCategory());
+                return o1.getActivityType().compareTo(o2.getActivityType());
             }
             return (o1.getCountTracks() < o2.getCountTracks() ? 1 : -1);
         });
@@ -34,11 +34,11 @@ public class AggregatedStatistics {
 
     @VisibleForTesting
     public void aggregate(@NonNull Track track) {
-        String category = track.getCategory();
-        if (dataMap.containsKey(category)) {
-            dataMap.get(category).add(track.getTrackStatistics());
+        String activityType = track.getActivityType();
+        if (dataMap.containsKey(activityType)) {
+            dataMap.get(activityType).add(track.getTrackStatistics());
         } else {
-            dataMap.put(category, new AggregatedStatistic(category, track.getTrackStatistics()));
+            dataMap.put(activityType, new AggregatedStatistic(activityType, track.getTrackStatistics()));
         }
     }
 
@@ -46,8 +46,8 @@ public class AggregatedStatistics {
         return dataMap.size();
     }
 
-    public AggregatedStatistic get(String category) {
-        return dataMap.get(category);
+    public AggregatedStatistic get(String activityType) {
+        return dataMap.get(activityType);
     }
 
     public AggregatedStatistic getItem(int position) {
@@ -55,17 +55,17 @@ public class AggregatedStatistics {
     }
 
     public static class AggregatedStatistic {
-        private final String category;
+        private final String activityType;
         private final TrackStatistics trackStatistics;
         private int countTracks = 1;
 
-        public AggregatedStatistic(String category, TrackStatistics trackStatistics) {
-            this.category = category;
+        public AggregatedStatistic(String activityType, TrackStatistics trackStatistics) {
+            this.activityType = activityType;
             this.trackStatistics = trackStatistics;
         }
 
-        public String getCategory() {
-            return category;
+        public String getActivityType() {
+            return activityType;
         }
 
         public TrackStatistics getTrackStatistics() {

@@ -32,24 +32,24 @@ public class TrackUtils {
     private TrackUtils() {
     }
 
-    public static void updateTrack(Context context, Track track, String name, String category, String description, ContentProviderUtils contentProviderUtils) {
-        updateTrack(context, track, name, category, TrackIconUtils.getIconValue(context, category), description, contentProviderUtils);
+    public static void updateTrack(Context context, Track track, String name, String activityType, String description, ContentProviderUtils contentProviderUtils) {
+        updateTrack(context, track, name, activityType, TrackIconUtils.getIconValue(context, activityType), description, contentProviderUtils);
     }
 
-    public static void updateTrack(Context context, Track track, String name, String category, String iconValue, String description, ContentProviderUtils contentProviderUtils) {
+    public static void updateTrack(Context context, Track track, String name, String activityType, String iconValue, String description, ContentProviderUtils contentProviderUtils) {
         boolean update = false;
         if (name != null) {
             track.setName(name);
             update = true;
         }
-        if (category != null) {
-            track.setCategory(category);
+        if (activityType != null) {
+            track.setActivityType(activityType);
             update = true;
         }
         if (iconValue != null) {
             track.setIcon(iconValue);
-        } else if (category != null){
-            track.setIcon(TrackIconUtils.getIconValue(context, category));
+        } else if (activityType != null) {
+            track.setIcon(TrackIconUtils.getIconValue(context, activityType));
         }
         if (description != null) {
             track.setDescription(description);

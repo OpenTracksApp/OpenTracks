@@ -59,7 +59,7 @@ public class KMLTrackExporter implements TrackExporter {
     private static final String TRACK_STYLE = "track";
     private static final String SCHEMA_ID = "schema";
 
-    public static final String EXTENDED_DATA_TYPE_CATEGORY = "type";
+    public static final String EXTENDED_DATA_TYPE_ACTIVITYTYPE = "type";
 
     public static final String EXTENDED_DATA_TYPE_SPEED = "speed";
     public static final String EXTENDED_DATA_TYPE_DISTANCE = "distance";
@@ -311,7 +311,7 @@ public class KMLTrackExporter implements TrackExporter {
             printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
 
             printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");
-            writeCategory(track.getCategory());
+            writeActivityType(track.getActivityType());
             printWriter.println("<MultiTrack>");
             printWriter.println("<altitudeMode>absolute</altitudeMode>");
             printWriter.println("<interpolate>1</interpolate>");
@@ -426,19 +426,19 @@ public class KMLTrackExporter implements TrackExporter {
     /**
      * Writes a placemark.
      *
-     * @param name        the name
-     * @param category    the category
-     * @param description the description
-     * @param location    the location
+     * @param name         the name
+     * @param activityType the activityType
+     * @param description  the description
+     * @param location     the location
      */
-    private void writePlacemark(String name, String category, String description, Location location, ZoneOffset zoneOffset) {
+    private void writePlacemark(String name, String activityType, String description, Location location, ZoneOffset zoneOffset) {
         if (location != null) {
             printWriter.println("<Placemark>");
             printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(description) + "</description>");
             printWriter.println("<TimeStamp><when>" + getTime(zoneOffset, location) + "</when></TimeStamp>");
             printWriter.println("<styleUrl>#" + KMLTrackExporter.MARKER_STYLE + "</styleUrl>");
-            writeCategory(category);
+            writeActivityType(activityType);
             printWriter.println("<Point>");
             printWriter.println("<coordinates>" + getCoordinates(location, ",") + "</coordinates>");
             printWriter.println("</Point>");
@@ -459,7 +459,7 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.println("</Camera>");
         printWriter.println("<TimeStamp><when>" + getTime(zoneOffset, marker.getLocation()) + "</when></TimeStamp>");
         printWriter.println("<styleUrl>#" + MARKER_STYLE + "</styleUrl>");
-        writeCategory(marker.getCategory());
+        writeActivityType(marker.getCategory());
 
         if (exportPhotos) {
             printWriter.println("<Icon><href>" + KmzTrackExporter.buildKmzImageFilePath(marker) + "</href></Icon>");
@@ -514,23 +514,15 @@ public class KMLTrackExporter implements TrackExporter {
         return result;
     }
 
-    /**
-     * Writes the category.
-     *
-     * @param category the category
-     */
-    private void writeCategory(String category) {
-        if (category == null || category.equals("")) {
+    private void writeActivityType(String actiivtyType) {
+        if (actiivtyType == null || actiivtyType.equals("")) {
             return;
         }
         printWriter.println("<ExtendedData>");
-        printWriter.println("<Data name=\"" + EXTENDED_DATA_TYPE_CATEGORY + "\"><value>" + StringUtils.formatCData(category) + "</value></Data>");
+        printWriter.println("<Data name=\"" + EXTENDED_DATA_TYPE_ACTIVITYTYPE + "\"><value>" + StringUtils.formatCData(actiivtyType) + "</value></Data>");
         printWriter.println("</ExtendedData>");
     }
 
-    /**
-     * Writes the track style.
-     */
     private void writeTrackStyle() {
         printWriter.println("<Style id=\"" + TRACK_STYLE + "\">");
         printWriter.println("<LineStyle><color>7f0000ff</color><width>4</width></LineStyle>");

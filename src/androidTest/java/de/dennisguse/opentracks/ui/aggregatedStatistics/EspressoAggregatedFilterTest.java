@@ -51,7 +51,7 @@ public class EspressoAggregatedFilterTest {
     @Before
     public void setUp() {
         Pair<Track, List<TrackPoint>> pair = TestDataUtil.createTrack(new Track.Id(System.currentTimeMillis()), 20);
-        pair.first.setCategory(CATEGORY);
+        pair.first.setActivityType(CATEGORY);
         TestDataUtil.insertTrackWithLocations(new ContentProviderUtils(ApplicationProvider.getApplicationContext()), pair.first, pair.second);
     }
 

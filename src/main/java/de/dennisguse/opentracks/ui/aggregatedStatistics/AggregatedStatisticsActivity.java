@@ -90,7 +90,7 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.aggregated_statistics_filter) {
             ArrayList<FilterDialogFragment.FilterItem> filterItems = new ArrayList<>();
-            adapter.getCategories().stream().forEach(category -> filterItems.add(new FilterDialogFragment.FilterItem(category, category, true)));
+            adapter.getCategories().stream().forEach(activityType -> filterItems.add(new FilterDialogFragment.FilterItem(activityType, activityType, true)));
             FilterDialogFragment.showDialog(getSupportFragmentManager(), filterItems);
             return true;
         }
@@ -116,7 +116,7 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
     public void onFilterDone(ArrayList<FilterDialogFragment.FilterItem> filterItems, LocalDateTime from, LocalDateTime to) {
         setMenuVisibility(true);
         selection.addDateRange(from.atZone(ZoneId.systemDefault()).toInstant(), to.atZone(ZoneId.systemDefault()).toInstant());
-        filterItems.stream().filter(fi -> fi.isChecked).forEach(fi -> selection.addCategory(fi.value));
+        filterItems.stream().filter(fi -> fi.isChecked).forEach(fi -> selection.addActivityType(fi.value));
         viewModel.updateSelection(selection);
     }
 }

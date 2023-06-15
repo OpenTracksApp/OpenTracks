@@ -90,7 +90,7 @@ public class TrackImporter {
         this.markers.addAll(markers);
     }
 
-    void setTrack(Context context, String name, String uuid, String description, String category, String icon, @Nullable ZoneOffset zoneOffset) {
+    void setTrack(Context context, String name, String uuid, String description, String activityType, String icon, @Nullable ZoneOffset zoneOffset) {
         track = new Track(zoneOffset != null ? zoneOffset : ZoneOffset.UTC);
         track.setName(name != null ? name : "");
 
@@ -103,11 +103,11 @@ public class TrackImporter {
 
         track.setDescription(description != null ? description : "");
 
-        if (category != null) {
-            track.setCategory(category);
+        if (activityType != null) {
+            track.setActivityType(activityType);
 
             if (icon == null) {
-                icon = TrackIconUtils.getIconValue(context, category);
+                icon = TrackIconUtils.getIconValue(context, activityType);
             }
         }
 

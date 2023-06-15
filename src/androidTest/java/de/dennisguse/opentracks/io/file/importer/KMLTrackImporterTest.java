@@ -70,7 +70,7 @@ public class KMLTrackImporterTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals("", importedTrack.getCategory());
+        assertEquals("", importedTrack.getActivityType());
         assertEquals("", importedTrack.getDescription());
         assertEquals("", importedTrack.getName());
         assertEquals("", importedTrack.getIcon());
@@ -119,7 +119,7 @@ public class KMLTrackImporterTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals("", importedTrack.getCategory());
+        assertEquals("", importedTrack.getActivityType());
         assertEquals("", importedTrack.getDescription());
         assertEquals("", importedTrack.getName());
         assertEquals("", importedTrack.getIcon());
@@ -159,7 +159,7 @@ public class KMLTrackImporterTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals("unknown", importedTrack.getCategory());
+        assertEquals("unknown", importedTrack.getActivityType());
         assertEquals("Test Track", importedTrack.getDescription());
         assertEquals("2020-11-28 18:06", importedTrack.getName());
         assertEquals("UNKNOWN", importedTrack.getIcon());

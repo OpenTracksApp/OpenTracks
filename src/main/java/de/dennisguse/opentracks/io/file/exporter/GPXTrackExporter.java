@@ -268,7 +268,7 @@ public class GPXTrackExporter implements TrackExporter {
             printWriter.println("<trk>");
             printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
             printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
-            printWriter.println("<type>" + StringUtils.formatCData(track.getCategory()) + "</type>");
+            printWriter.println("<type>" + StringUtils.formatCData(track.getActivityType()) + "</type>");
 
             printWriter.println("<extensions>");
             printWriter.println("<topografix:color>c0c0c0</topografix:color>");

@@ -96,7 +96,7 @@ public class ExportImportTest {
     private final ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
 
     private static final String TRACK_ICON = "the track icon";
-    private static final String TRACK_CATEGORY = "the category";
+    private static final String TRACK_ACTIVITY_TYPE = "the activity type";
     private static final String TRACK_DESCRIPTION = "the description";
 
     private File tmpFile;
@@ -181,7 +181,7 @@ public class ExportImportTest {
 
         Track track = contentProviderUtils.getTrack(trackId);
         track.setIcon(TRACK_ICON);
-        track.setCategory(TRACK_CATEGORY);
+        track.setActivityType(TRACK_ACTIVITY_TYPE);
         track.setDescription(TRACK_DESCRIPTION);
         contentProviderUtils.updateTrack(track);
 
@@ -216,7 +216,7 @@ public class ExportImportTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals(track.getCategory(), importedTrack.getCategory());
+        assertEquals(track.getActivityType(), importedTrack.getActivityType());
         assertEquals(track.getDescription(), importedTrack.getDescription());
         assertEquals(track.getName(), importedTrack.getName());
         assertEquals(track.getIcon(), importedTrack.getIcon());
@@ -323,7 +323,7 @@ public class ExportImportTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals(track.getCategory(), importedTrack.getCategory());
+        assertEquals(track.getActivityType(), importedTrack.getActivityType());
         assertEquals(track.getDescription(), importedTrack.getDescription());
         assertEquals(track.getName(), importedTrack.getName());
 

@@ -74,7 +74,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
         viewBinding.fields.trackEditName.setText(track.getName());
 
-        viewBinding.fields.trackEditActivityType.setText(track.getCategory());
+        viewBinding.fields.trackEditActivityType.setText(track.getActivityType());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(this));
         viewBinding.fields.trackEditActivityType.setAdapter(adapter);

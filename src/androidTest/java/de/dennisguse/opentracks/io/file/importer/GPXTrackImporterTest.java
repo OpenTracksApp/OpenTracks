@@ -79,7 +79,7 @@ public class GPXTrackImporterTest {
         // 2. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals("the category", importedTrack.getCategory());
+        assertEquals("the category", importedTrack.getActivityType());
         assertEquals("the description", importedTrack.getDescription());
         assertEquals("2021-01-07 22:51", importedTrack.getName());
         assertEquals("UNKNOWN", importedTrack.getIcon());
@@ -133,7 +133,7 @@ public class GPXTrackImporterTest {
         // 2. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals("", importedTrack.getCategory());
+        assertEquals("", importedTrack.getActivityType());
         assertEquals("", importedTrack.getDescription());
         assertEquals("20210907_213924.gpx", importedTrack.getName());
         assertEquals("", importedTrack.getIcon());
@@ -181,7 +181,7 @@ public class GPXTrackImporterTest {
         // 2. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals("", importedTrack.getCategory());
+        assertEquals("", importedTrack.getActivityType());
         assertEquals("", importedTrack.getDescription());
         assertEquals("20210907_213924.gpx", importedTrack.getName());
         assertEquals("", importedTrack.getIcon());

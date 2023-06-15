@@ -98,7 +98,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
     private String name;
     private String description;
-    private String category;
+    private String activityType;
     private String latitude;
     private String longitude;
     private String altitude;
@@ -159,7 +159,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
             case TAG_GPX -> onFileEnd();
             case TAG_MARKER -> onMarkerEnd();
             case TAG_TRACK -> {
-                trackImporter.setTrack(context, name, uuid, description, category, null, zoneOffset);
+                trackImporter.setTrack(context, name, uuid, description, activityType, null, zoneOffset);
                 zoneOffset = null;
             }
             case TAG_TRACK_SEGMENT -> onTrackSegmentEnd();
@@ -176,7 +176,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
             }
             case TAG_TYPE -> {
                 if (content != null) {
-                    category = content.trim();
+                    activityType = content.trim();
                 }
             }
             case TAG_TIME -> {
@@ -385,7 +385,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private void onMarkerStart(Attributes attributes) {
         name = null;
         description = null;
-        category = null;
+        activityType = null;
         photoUrl = null;
         latitude = attributes.getValue(ATTRIBUTE_LAT);
         longitude = attributes.getValue(ATTRIBUTE_LON);
@@ -415,8 +415,8 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
         if (description != null) {
             marker.setDescription(description);
         }
-        if (category != null) {
-            marker.setCategory(category);
+        if (activityType != null) {
+            marker.setCategory(activityType);
         }
 
         if (photoUrl != null) {

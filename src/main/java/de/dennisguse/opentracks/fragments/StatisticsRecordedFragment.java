@@ -89,7 +89,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         if (PreferencesUtils.isKey(R.string.stats_rate_key, key) && track != null) {
             updateUInecessary = true;
-            preferenceReportSpeed = PreferencesUtils.isReportSpeed(track.getCategory());
+            preferenceReportSpeed = PreferencesUtils.isReportSpeed(track.getActivityType());
         }
 
         if (key != null && updateUInecessary && isResumed()) {
@@ -155,7 +155,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
                     sensorStatistics = contentProviderUtils.getSensorStats(trackId);
 
-                    boolean prefsChanged = this.track == null || (!this.track.getCategory().equals(track.getCategory()));
+                    boolean prefsChanged = this.track == null || (!this.track.getActivityType().equals(track.getActivityType()));
                     this.track = track;
                     if (prefsChanged) {
                         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, getString(R.string.stats_rate_key));
@@ -191,7 +191,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set activity type
         {
-            String trackIconValue = TrackIconUtils.getIconValue(getContext(), track.getCategory());
+            String trackIconValue = TrackIconUtils.getIconValue(getContext(), track.getActivityType());
             viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), TrackIconUtils.getIconDrawable(trackIconValue)));
         }
 

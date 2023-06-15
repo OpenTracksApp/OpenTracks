@@ -67,7 +67,7 @@ public class TrackSelectionTest extends TestCase {
     @Test
     public void testFilterBuildSelection_onlyOneCategory() {
         // given
-        TrackSelection filter = new TrackSelection().addCategory("running");
+        TrackSelection filter = new TrackSelection().addActivityType("running");
 
         // when
         SelectionData selection = filter.buildSelection();
@@ -82,10 +82,10 @@ public class TrackSelectionTest extends TestCase {
     public void testFilterBuildSelection_severalCategories() {
         // given
         TrackSelection filter = new TrackSelection()
-                .addCategory("running")
-                .addCategory("road biking")
-                .addCategory("mountain biking")
-                .addCategory("trail walking");
+                .addActivityType("running")
+                .addActivityType("road biking")
+                .addActivityType("mountain biking")
+                .addActivityType("trail walking");
 
         // when
         SelectionData selection = filter.buildSelection();
@@ -136,8 +136,8 @@ public class TrackSelectionTest extends TestCase {
                 .addTrackId(trackId1)
                 .addTrackId(trackId2)
                 .addTrackId(trackId3)
-                .addCategory("running")
-                .addCategory("road biking");
+                .addActivityType("running")
+                .addActivityType("road biking");
 
         // when
         SelectionData selection = filter.buildSelection();
@@ -188,8 +188,8 @@ public class TrackSelectionTest extends TestCase {
         long oneDay = 24 * 60 * 60 * 1000;
 
         TrackSelection filter = new TrackSelection()
-                .addCategory("running")
-                .addCategory("road biking")
+                .addActivityType("running")
+                .addActivityType("road biking")
                 .addDateRange(instant, instant.plusMillis(oneDay));
 
         // when

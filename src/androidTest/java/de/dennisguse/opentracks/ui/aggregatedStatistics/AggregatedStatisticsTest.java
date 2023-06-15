@@ -41,7 +41,7 @@ public class AggregatedStatisticsTest {
 
         Track track = new Track();
         track.setIcon(TrackIconUtils.getIconValue(context, category));
-        track.setCategory(category);
+        track.setActivityType(category);
         track.setTrackStatistics(statistics);
         return track;
     }
@@ -243,8 +243,8 @@ public class AggregatedStatisticsTest {
         // Check order
 
         {
-            assertEquals(biking, aggregatedStatistics.getItem(0).getCategory());
-            assertEquals(driving, aggregatedStatistics.getItem(3).getCategory());
+            assertEquals(biking, aggregatedStatistics.getItem(0).getActivityType());
+            assertEquals(driving, aggregatedStatistics.getItem(3).getActivityType());
         }
     }
 }
