@@ -615,4 +615,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="no_compatible_gallery_installed">Non hai unha aplicación de galería compatible instalada</string>
     <string name="settings_recording_min_required_accuracy_summary">Ignórase a localización se a exactitude é maior de %1$s</string>
     <string name="no_compatible_camera_installed">Non hai unha aplicación de cámara compatible</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Filtrar Dispositivos Bluetooth</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Mostrar todos os dispositivos Bluetooth dispoñibles</string>
 </resources>
