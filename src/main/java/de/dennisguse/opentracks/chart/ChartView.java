@@ -735,7 +735,7 @@ public class ChartView extends View {
         if (chartByDistance) {
             return switch (unitSystem) {
                 case METRIC -> context.getString(R.string.unit_kilometer);
-                case IMPERIAL -> context.getString(R.string.unit_mile);
+                case IMPERIAL_FEET, IMPERIAL_METER -> context.getString(R.string.unit_mile);
                 case NAUTICAL_IMPERIAL -> context.getString(R.string.unit_nautical_mile);
             };
         } else {

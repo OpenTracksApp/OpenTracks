@@ -440,6 +440,7 @@ limitations under the License.
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Preferred rate</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
+    <string name="settings_stats_units_imperial_meter">Imperial (mi, m)</string>
     <string name="settings_stats_units_metric">Metric (km, m)</string>
     <string name="settings_stats_units_nautical">Nautical (NM, ft)</string>
     <string name="settings_stats_units_title">Preferred units</string>

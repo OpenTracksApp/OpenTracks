@@ -228,7 +228,7 @@ public class PreferencesUtils {
             if (!Locale.US.equals(Locale.getDefault())) {
                 setUnit(UnitSystem.METRIC);
             } else {
-                setUnit(UnitSystem.IMPERIAL);
+                setUnit(UnitSystem.IMPERIAL_FEET);
             }
         }
     }
@@ -455,7 +455,7 @@ public class PreferencesUtils {
                         entries[i] = displayValue;
                     }
                 }
-                case IMPERIAL, NAUTICAL_IMPERIAL -> {
+                case IMPERIAL_FEET, NAUTICAL_IMPERIAL -> {
                     if (value == recordingDistanceIntervalDefault) {
                         entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                     } else {
@@ -499,7 +499,7 @@ public class PreferencesUtils {
                         entries[i] = displayValue;
                     }
                 }
-                case IMPERIAL, NAUTICAL_IMPERIAL -> {
+                case IMPERIAL_FEET, NAUTICAL_IMPERIAL -> {
                     if (value == maxRecordingDistanceDefault) {
                         entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                     } else {
@@ -576,7 +576,7 @@ public class PreferencesUtils {
                         entries[i] = displayValue;
                     }
                 }
-                case IMPERIAL, NAUTICAL_IMPERIAL -> {
+                case IMPERIAL_FEET, NAUTICAL_IMPERIAL -> {
                     if (value == recordingGPSAccuracyDefault) {
                         entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                     } else if (value == recordingGPSAccuracyExcellent) {
@@ -618,7 +618,7 @@ public class PreferencesUtils {
                         entries[i] = resources.getString(R.string.value_float_kilometer_hour, value);
                     }
                 }
-                case IMPERIAL -> {
+                case IMPERIAL_FEET -> {
                     double valueMPH = Speed.ofKMH(value).toMPH();
                     if (value == idleSpeedDefault) {
                         entries[i] = resources.getString(R.string.value_float_mile_hour_recommended, valueMPH);

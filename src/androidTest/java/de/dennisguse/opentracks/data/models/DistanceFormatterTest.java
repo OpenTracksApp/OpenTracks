@@ -35,7 +35,7 @@ public class DistanceFormatterTest {
     public void testFormatDistance_imperial() {
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(2)
-                .setUnit(UnitSystem.IMPERIAL)
+                .setUnit(UnitSystem.IMPERIAL_FEET)
                 .build(context);
 
         // A large number in imperial

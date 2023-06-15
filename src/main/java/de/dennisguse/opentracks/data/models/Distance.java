@@ -3,8 +3,6 @@ package de.dennisguse.opentracks.data.models;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.Objects;
-
 import de.dennisguse.opentracks.settings.UnitSystem;
 
 public record Distance(double distance_m) {
@@ -57,7 +55,7 @@ public record Distance(double distance_m) {
     public static Distance one(UnitSystem unitSystem) {
         return switch (unitSystem) {
             case METRIC -> Distance.ofKilometer(1);
-            case IMPERIAL -> Distance.ofMile(1);
+            case IMPERIAL_FEET, IMPERIAL_METER -> Distance.ofMile(1);
             case NAUTICAL_IMPERIAL -> Distance.ofNauticalMile(1);
         };
     }
@@ -121,15 +119,15 @@ public record Distance(double distance_m) {
     public double toKM_Miles(UnitSystem unitSystem) {
         return switch (unitSystem) {
             case METRIC -> toKM();
-            case IMPERIAL -> toMI();
+            case IMPERIAL_FEET, IMPERIAL_METER -> toMI();
             case NAUTICAL_IMPERIAL -> toNauticalMiles();
         };
     }
 
     public double toM_FT(UnitSystem unitSystem) {
         return switch (unitSystem) {
-            case METRIC -> toM();
-            case NAUTICAL_IMPERIAL, IMPERIAL -> toFT();
+            case METRIC, IMPERIAL_METER -> toM();
+            case NAUTICAL_IMPERIAL, IMPERIAL_FEET -> toFT();
         };
     }
 

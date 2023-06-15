@@ -50,7 +50,7 @@ class VoiceAnnouncementUtils {
                 unitDistanceTTS = "kilometer";
                 unitSpeedTTS = "kilometer per hour";
             }
-            case IMPERIAL -> {
+            case IMPERIAL_FEET -> {
                 perUnitStringId = R.string.voice_per_mile;
                 distanceId = R.plurals.voiceDistanceMiles;
                 speedId = R.plurals.voiceSpeedMilesPerHour;

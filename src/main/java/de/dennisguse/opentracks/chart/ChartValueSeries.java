@@ -212,7 +212,7 @@ abstract class ChartValueSeries {
     int getTitleId(UnitSystem unitSystem) {
         return switch (unitSystem) {
             case METRIC -> metricTitleId;
-            case IMPERIAL -> imperialTitleId;
+            case IMPERIAL_FEET, IMPERIAL_METER -> imperialTitleId;
             case NAUTICAL_IMPERIAL -> nauticalTitleId;
         };
     }
