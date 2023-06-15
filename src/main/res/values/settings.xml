@@ -169,15 +169,18 @@
     <string name="stats_units_default" translatable="false">@string/stats_units_metric</string>
     <string-array name="stats_units_values">
         <item>@string/stats_units_metric</item>
-        <item>@string/stats_units_imperial</item>
+        <item>@string/stats_units_imperial_feet</item>
+        <item>@string/stats_units_imperial_meter</item>
         <item>@string/stats_units_nautical</item>
     </string-array>
     <string name="stats_units_metric" translatable="false">METRIC</string>
-    <string name="stats_units_imperial" translatable="false">IMPERIAL</string>
+    <string name="stats_units_imperial_feet" translatable="false">IMPERIAL</string>
+    <string name="stats_units_imperial_meter" translatable="false">IMPERIAL_METER</string>
     <string name="stats_units_nautical" translatable="false">NAUTICAL</string>
     <string-array name="stats_units_options">
         <item>@string/settings_stats_units_metric</item>
         <item>@string/settings_stats_units_imperial</item>
+        <item>@string/settings_stats_units_imperial_meter</item>
         <item>@string/settings_stats_units_nautical</item>
     </string-array>
 

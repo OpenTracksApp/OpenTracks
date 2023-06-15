@@ -47,8 +47,9 @@ public class DistanceFormatter {
         if (distance.isInvalid()) {
             String valueUnknown = resources.getString(R.string.value_unknown);
             return switch (unitSystem) {
-                case METRIC -> new Pair<>(valueUnknown, resources.getString(R.string.unit_meter));
-                case IMPERIAL, NAUTICAL_IMPERIAL ->
+                case METRIC, IMPERIAL_METER ->
+                        new Pair<>(valueUnknown, resources.getString(R.string.unit_meter));
+                case IMPERIAL_FEET, NAUTICAL_IMPERIAL ->
                         new Pair<>(valueUnknown, resources.getString(R.string.unit_feet));
             };
         }
@@ -61,11 +62,18 @@ public class DistanceFormatter {
                     return new Pair<>(StringUtils.formatDecimal(distance.toM(), decimalCount), resources.getString(R.string.unit_meter));
                 }
             }
-            case IMPERIAL -> {
+            case IMPERIAL_FEET -> {
                 if (distance.greaterThan(Distance.ofMile(threshold))) {
                     return new Pair<>(StringUtils.formatDecimal(distance.toMI(), decimalCount), resources.getString(R.string.unit_mile));
                 } else {
                     return new Pair<>(StringUtils.formatDecimal(distance.toFT(), decimalCount), resources.getString(R.string.unit_feet));
+                }
+            }
+            case IMPERIAL_METER -> {
+                if (distance.greaterThan(Distance.ofMile(threshold))) {
+                    return new Pair<>(StringUtils.formatDecimal(distance.toMI(), decimalCount), resources.getString(R.string.unit_mile));
+                } else {
+                    return new Pair<>(StringUtils.formatDecimal(distance.toM(), decimalCount), resources.getString(R.string.unit_meter));
                 }
             }
             case NAUTICAL_IMPERIAL -> {

@@ -1,9 +1,6 @@
 package de.dennisguse.opentracks.data.models;
 
-import androidx.annotation.NonNull;
-
 import java.time.Duration;
-import java.util.Objects;
 
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
@@ -111,7 +108,7 @@ public record Speed(double speed_mps) {
     public double to(UnitSystem unitSystem) {
         return switch (unitSystem) {
             case METRIC -> toKMH();
-            case IMPERIAL -> toMPH();
+            case IMPERIAL_FEET, IMPERIAL_METER -> toMPH();
             case NAUTICAL_IMPERIAL -> toKnots();
         };
     }

@@ -70,7 +70,8 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
 
         int entriesId = switch (unitSystem) {
             case METRIC -> R.array.stats_rate_metric_options;
-            case IMPERIAL, NAUTICAL_IMPERIAL -> R.array.stats_rate_imperial_options;
+            case IMPERIAL_FEET, IMPERIAL_METER, NAUTICAL_IMPERIAL ->
+                    R.array.stats_rate_imperial_options;
         };
 
         String[] entries = getResources().getStringArray(entriesId);

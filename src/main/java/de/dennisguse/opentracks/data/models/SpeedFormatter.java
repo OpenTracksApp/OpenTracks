@@ -42,7 +42,7 @@ public class SpeedFormatter {
         int unitId = switch (unitSystem) {
             case METRIC ->
                     reportSpeedOrPace ? R.string.unit_kilometer_per_hour : R.string.unit_minute_per_kilometer;
-            case IMPERIAL ->
+            case IMPERIAL_FEET, IMPERIAL_METER ->
                     reportSpeedOrPace ? R.string.unit_mile_per_hour : R.string.unit_minute_per_mile;
             case NAUTICAL_IMPERIAL ->
                     reportSpeedOrPace ? R.string.unit_knots : R.string.unit_minute_per_nautical_mile;

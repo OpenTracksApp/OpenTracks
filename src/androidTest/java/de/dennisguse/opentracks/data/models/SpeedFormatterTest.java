@@ -36,7 +36,7 @@ public class SpeedFormatterTest {
     public void testGetSpeedParts_pace_imperial() {
         SpeedFormatter formatter = SpeedFormatter.Builder()
                 .setDecimalCount(2)
-                .setUnit(UnitSystem.IMPERIAL)
+                .setUnit(UnitSystem.IMPERIAL_FEET)
                 .setReportSpeedOrPace(false)
                 .build(context);
 
@@ -72,7 +72,7 @@ public class SpeedFormatterTest {
     public void testGetSpeedParts_speed_imperial() {
         SpeedFormatter formatter = SpeedFormatter.Builder()
                 .setDecimalCount(2)
-                .setUnit(UnitSystem.IMPERIAL)
+                .setUnit(UnitSystem.IMPERIAL_FEET)
                 .setReportSpeedOrPace(true)
                 .build(context);
 

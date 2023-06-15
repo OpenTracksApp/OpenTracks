@@ -27,7 +27,7 @@ public class ChartPointTest {
         statistics.setTotalTime(Duration.ofSeconds(1000));
 
         // when
-        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(0), false, UnitSystem.IMPERIAL);
+        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(0), false, UnitSystem.IMPERIAL_FEET);
 
         // then
         assertEquals(1000000, (long) point.getTimeOrDistance());
