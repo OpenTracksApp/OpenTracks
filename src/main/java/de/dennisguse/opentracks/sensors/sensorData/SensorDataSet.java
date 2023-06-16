@@ -162,7 +162,9 @@ public final class SensorDataSet {
             }
 
             this.cyclingCadence = (SensorDataCyclingCadence) sensorData;
-            this.cyclingCadence.compute(previous);
+            if (this.cyclingCadence != null) {
+                this.cyclingCadence.compute(previous);
+            }
             return;
         }
 
@@ -176,7 +178,9 @@ public final class SensorDataSet {
             Distance preferenceWheelCircumference = PreferencesUtils.getWheelCircumference(); //TODO Fetch once and then listen for changes.
 
             this.cyclingDistanceSpeed = (SensorDataCyclingDistanceSpeed) sensorData;
-            this.cyclingDistanceSpeed.compute(previous, preferenceWheelCircumference);
+            if (this.cyclingDistanceSpeed != null) {
+                this.cyclingDistanceSpeed.compute(previous, preferenceWheelCircumference);
+            }
             return;
         }
 
@@ -194,7 +198,9 @@ public final class SensorDataSet {
             }
 
             this.runningDistanceSpeedCadence = (SensorDataRunning) sensorData;
-            this.runningDistanceSpeedCadence.compute(previous);
+            if (this.runningDistanceSpeedCadence != null) {
+                this.runningDistanceSpeedCadence.compute(previous);
+            }
             return;
         }
 
