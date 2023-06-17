@@ -617,4 +617,5 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="no_compatible_camera_installed">Non hai unha aplicación de cámara compatible</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Filtrar Dispositivos Bluetooth</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Mostrar todos os dispositivos Bluetooth dispoñibles</string>
+    <string name="settings_stats_units_imperial_meter">Imperial (mi, m)</string>
 </resources>
