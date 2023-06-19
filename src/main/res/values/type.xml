@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- migrate MaterialComponents to Material3 -->
 <resources>
-    <style name="TextAppearance.OpenTracks.PrimaryHeader" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="android:textColor">?attr/colorSecondary</item>
+
+    <style name="TextAppearance.OpenTracks.PrimaryHeader" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="TextAppearance.OpenTracks.SecondaryHeader" parent="TextAppearance.MaterialComponents.Subtitle2">
+    <style name="TextAppearance.OpenTracks.SecondaryHeader" parent="TextAppearance.Material3.LabelSmall">
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="TextAppearance.OpenTracks.HiddenHeader" parent="TextAppearance.MaterialComponents.Subtitle1">
+    <style name="TextAppearance.OpenTracks.HiddenHeader" parent="TextAppearance.Material3.LabelLarge">
         <item name="android:textColor">@color/light_gray</item>
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="TextAppearance.OpenTracks.PrimaryValue" parent="TextAppearance.MaterialComponents.Headline4">
+    <style name="TextAppearance.OpenTracks.PrimaryValue" parent="TextAppearance.Material3.DisplaySmall">
         <item name="android:textColor">?attr/colorOnBackground</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textStyle">bold</item>
@@ -31,7 +32,7 @@
         <item name="android:layout_marginBottom">8dp</item>
     </style>
 
-    <style name="TextAppearance.OpenTracks.SecondaryValue" parent="TextAppearance.MaterialComponents.Headline5">
+    <style name="TextAppearance.OpenTracks.SecondaryValue" parent="TextAppearance.Material3.DisplaySmall">
         <item name="android:textColor">?attr/colorOnBackground</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textStyle">bold</item>
@@ -40,7 +41,7 @@
         <item name="android:layout_marginBottom">8dp</item>
     </style>
 
-    <style name="TextAppearance.OpenTracks.HiddenValue" parent="TextAppearance.MaterialComponents.Headline4">
+    <style name="TextAppearance.OpenTracks.HiddenValue" parent="TextAppearance.Material3.DisplaySmall">
         <item name="android:textColor">@color/light_gray</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textStyle">bold</item>

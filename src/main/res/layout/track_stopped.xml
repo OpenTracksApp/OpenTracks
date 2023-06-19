@@ -184,6 +184,7 @@
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.5" />
 
+                <!-- TOOD Use MaterialDesign buttons instead of ImageView -->
                 <ImageView
                     android:id="@+id/discard_button"
                     android:layout_width="32dp"
@@ -193,6 +194,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/resume_button"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?attr/colorOnBackground"
                     app:srcCompat="@drawable/ic_delete_forever_24dp" />
 
                 <ImageView

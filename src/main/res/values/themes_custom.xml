@@ -16,42 +16,21 @@ limitations under the License.
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="ThemeCustom" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/opentracks_primary_color</item>
-        <item name="colorOnPrimary">@color/opentracks_on_primary_color</item>
+        <item name="colorPrimary">@color/opentracks_secondary_color</item>
 
-        <item name="colorSecondary">@color/opentracks_secondary_color</item>
-        <item name="colorOnSecondary">@color/opentracks_on_secondary_color</item>
-
-        <item name="colorError">@color/red_dark</item>
-        <item name="colorOnError">@android:color/white</item>
-
-        <item name="android:statusBarColor">@color/opentracks_primary_variant_color</item>
-
-        <item name="android:colorBackground">@android:color/white</item>
-        <item name="colorOnBackground">@android:color/black</item>
-
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
+        <item name="android:statusBarColor">?attr/colorSurfaceBright</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">?attr/colorSurfaceContainer</item>
 
         <!-- Snackbar -->
         <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
         <item name="snackbarButtonStyle">@style/MaterialSnackbarTextButtonTheme</item>
         <item name="snackbarTextViewStyle">@style/MaterialSnackbarTextViewTheme</item>
 
-        <!-- Linear progress indicator -->
-        <item name="linearProgressIndicatorStyle">@style/OpenTracksLinearProgressIndicator</item>
-
-        <!-- Bottom bar -->
-        <item name="bottomAppBarStyle">@style/Widget.Material3.BottomAppBar</item>
-
-        <!-- Floating buttons -->
+        <item name="bottomAppBarStyle">@style/Widget.OpenTracks.BottomAppBar</item>
         <item name="floatingActionButtonStyle">@style/Widget.OpenTracks.FloatingActionButton</item>
 
         <item name="windowActionModeOverlay">true</item>
-
-    </style>
-
-    <style name="OpenTracksLinearProgressIndicator" parent="Widget.Material3.LinearProgressIndicator">
-        <item name="indicatorColor">?attr/colorSecondary</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.SplashScreen">
@@ -59,6 +38,10 @@ limitations under the License.
 
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_color_splashscreen</item>
         <item name="postSplashScreenTheme">@style/ThemeCustom</item>
+    </style>
+
+    <style name="Widget.OpenTracks.BottomAppBar" parent="Widget.Material3.BottomAppBar">
+        <item name="backgroundTint">?attr/colorSurfaceContainer</item>
     </style>
 
     <style name="Widget.OpenTracks.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
