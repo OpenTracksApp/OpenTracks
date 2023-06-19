@@ -16,7 +16,8 @@ limitations under the License.
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="ThemeCustom" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/opentracks_secondary_color</item>
+        <item name="colorPrimary">@color/opentracks</item>
+        <item name="colorSecondary">@color/opentracks</item>
 
         <item name="android:statusBarColor">?attr/colorSurfaceBright</item>
         <item name="android:windowLightStatusBar">true</item>

@@ -550,7 +550,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
     private void setFloatButton() {
         viewBinding.trackListFabAction.setImageResource(recordingStatus.isRecording() ? R.drawable.ic_baseline_stop_24 : R.drawable.ic_baseline_record_24);
-        viewBinding.trackListFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, recordingStatus.isRecording() ? R.color.opentracks_secondary_color : R.color.red_dark));
+        viewBinding.trackListFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, recordingStatus.isRecording() ? R.color.opentracks : R.color.red_dark));
     }
 
     private void onRecordingStatusChanged(RecordingStatus status) {

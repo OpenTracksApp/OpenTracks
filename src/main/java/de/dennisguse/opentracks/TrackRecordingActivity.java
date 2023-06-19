@@ -133,8 +133,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         }
 
         viewBinding.trackRecordingFabAction.setImageResource(R.drawable.ic_baseline_stop_24);
-        viewBinding.trackRecordingFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.opentracks_secondary_color));
-        viewBinding.trackRecordingFabAction.setBackgroundColor(ContextCompat.getColor(this, R.color.opentracks_secondary_color));
+        viewBinding.trackRecordingFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.opentracks));
+        viewBinding.trackRecordingFabAction.setBackgroundColor(ContextCompat.getColor(this, R.color.opentracks));
         viewBinding.trackRecordingFabAction.setOnLongClickListener((view) -> {
             ActivityUtils.vibrate(this, 1000);
             trackRecordingServiceConnection.stopRecording(TrackRecordingActivity.this);
