@@ -1,0 +1,14 @@
+v4.5.0: OpenTracks
+
+Changes:
+- Material3 
+- App shortcut for aggregated statistics
+- New Unit: miles with meters
+
+Bugfix:
+- GPS disabled warnings shown repeatedly (#1429)
+
+Developer:
+- Use Java Records
+- Target API34
+- Refactor sensor handling
