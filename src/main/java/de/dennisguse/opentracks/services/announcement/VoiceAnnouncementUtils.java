@@ -9,6 +9,7 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
 
 import android.content.Context;
+import android.icu.text.MessageFormat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.TtsSpan;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.time.Duration;
+import java.util.Map;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
@@ -45,22 +47,22 @@ class VoiceAnnouncementUtils {
         switch (unitSystem) {
             case METRIC -> {
                 perUnitStringId = R.string.voice_per_kilometer;
-                distanceId = R.plurals.voiceDistanceKilometers;
-                speedId = R.plurals.voiceSpeedKilometersPerHour;
+                distanceId = R.string.voiceDistanceKilometersPlural;
+                speedId = R.string.voiceSpeedKilometersPerHourPlural;
                 unitDistanceTTS = "kilometer";
                 unitSpeedTTS = "kilometer per hour";
             }
             case IMPERIAL_FEET -> {
                 perUnitStringId = R.string.voice_per_mile;
-                distanceId = R.plurals.voiceDistanceMiles;
-                speedId = R.plurals.voiceSpeedMilesPerHour;
+                distanceId = R.string.voiceDistanceMilesPlural;
+                speedId = R.string.voiceSpeedMilesPerHourPlural;
                 unitDistanceTTS = "mile";
                 unitSpeedTTS = "mile per hour";
             }
             case NAUTICAL_IMPERIAL -> {
                 perUnitStringId = R.string.voice_per_nautical_mile;
-                distanceId = R.plurals.voiceDistanceNauticalMiles;
-                speedId = R.plurals.voiceSpeedMKnots;
+                distanceId = R.string.voiceDistanceNauticalMilesPlural;
+                speedId = R.string.voiceSpeedMKnotsPlural;
                 unitDistanceTTS = "nautical mile";
                 unitSpeedTTS = "knots";
             }
@@ -73,7 +75,8 @@ class VoiceAnnouncementUtils {
             builder.append(context.getString(R.string.total_distance));
             // Units should always be english singular for TTS.
             // See https://developer.android.com/reference/android/text/style/TtsSpan?hl=en#TYPE_MEASURE
-            appendDecimalUnit(builder, context.getResources().getQuantityString(distanceId, getQuantityCount(distanceInUnit), distanceInUnit), distanceInUnit, 1, unitDistanceTTS);
+            String template = context.getResources().getString(distanceId);
+            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", distanceInUnit)), distanceInUnit, 1, unitDistanceTTS);
             // Punctuation helps introduce natural pauses in TTS
             builder.append(".");
         }
@@ -93,7 +96,8 @@ class VoiceAnnouncementUtils {
                 double speedInUnit = averageMovingSpeed.to(unitSystem);
                 builder.append(" ")
                         .append(context.getString(R.string.speed));
-                appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit), speedInUnit, 1, unitSpeedTTS);
+                String template = context.getResources().getString(speedId);
+                appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
                 builder.append(".");
             }
             if (shouldVoiceAnnounceLapSpeedPace() && currentDistancePerTime != null) {
@@ -101,7 +105,8 @@ class VoiceAnnouncementUtils {
                 if (currentDistancePerTimeInUnit > 0) {
                     builder.append(" ")
                             .append(context.getString(R.string.lap_speed));
-                    appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTimeInUnit), currentDistancePerTimeInUnit), currentDistancePerTimeInUnit, 1, unitSpeedTTS);
+                    String template = context.getResources().getString(speedId);
+                    appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", currentDistancePerTimeInUnit)), currentDistancePerTimeInUnit, 1, unitSpeedTTS);
                     builder.append(".");
                 }
             }
@@ -147,23 +152,22 @@ class VoiceAnnouncementUtils {
         return builder;
     }
 
-    static int getQuantityCount(double d) {
-        return (int) d;
-    }
-
     private static void appendDuration(@NonNull Context context, @NonNull SpannableStringBuilder builder, @NonNull Duration duration) {
         int hours = (int) (duration.toHours());
         int minutes = (int) (duration.toMinutes() % 60);
         int seconds = (int) (duration.getSeconds() % 60);
 
         if (hours > 0) {
-            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceHours, hours, hours), hours, 0, "hour");
+            String template = context.getResources().getString(R.string.voiceHoursPlural);
+            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", hours)), hours, 0, "hour");
         }
         if (minutes > 0) {
-            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceMinutes, minutes, minutes), minutes, 0, "minute");
+            String template = context.getResources().getString(R.string.voiceMinutesPlural);
+            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", minutes)), minutes, 0, "minute");
         }
         if (seconds > 0 || duration.isZero()) {
-            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceSeconds, seconds, seconds), seconds, 0, "second");
+            String template = context.getResources().getString(R.string.voiceSecondsPlural);
+            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", seconds)), seconds, 0, "second");
         }
     }
 

@@ -3,6 +3,7 @@ package de.dennisguse.opentracks.services.announcement;
 import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
+import android.icu.text.MessageFormat;
 import android.util.Pair;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -15,6 +16,7 @@ import org.junit.runner.RunWith;
 
 import java.time.Duration;
 import java.util.Locale;
+import java.util.Map;
 
 import de.dennisguse.opentracks.LocaleRule;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
@@ -192,6 +194,34 @@ public class VoiceAnnouncementUtilsTest {
     }
 
     @Test
+    public void getAnnouncement_imperial_speed_1() {
+        TrackStatistics stats = new TrackStatistics();
+        stats.setTotalDistance(Distance.ofMile(1.1));
+        stats.setTotalTime(Duration.ofHours(2).plusMinutes(5).plusSeconds(10));
+        stats.setMovingTime(Duration.ofHours(1));
+
+        // when
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.IMPERIAL_FEET, true, null, null).toString();
+
+        // then
+        assertEquals("Total distance 1.1 miles. 1 hour. Average moving speed 1.1 miles per hour.", announcement);
+    }
+
+    @Test
+    public void getAnnouncement_metric_speed_1() {
+        TrackStatistics stats = new TrackStatistics();
+        stats.setTotalDistance(Distance.ofKilometer(1.1));
+        stats.setTotalTime(Duration.ofHours(2).plusMinutes(5).plusSeconds(10));
+        stats.setMovingTime(Duration.ofHours(1));
+
+        // when
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, null, null).toString();
+
+        // then
+        assertEquals("Total distance 1.1 kilometers. 1 hour. Average moving speed 1.1 kilometers per hour.", announcement);
+    }
+
+    @Test
     public void getAnnouncement_withInterval_imperial_speed() {
         // given
         int numberOfPoints = 1000;
@@ -305,5 +335,20 @@ public class VoiceAnnouncementUtilsTest {
 
         // then
         assertEquals(" Current heart rate 133 bpm.", announcement);
+    }
+
+    @Test
+    public void ICUMessageDemo() {
+        // Android 7's ICU MessageFormat; working
+        String template = """
+                {n, plural,
+                one {1 mile}
+                other {{n,number,#.#} miles}
+                }""";
+
+        assertEquals("1.1 miles", MessageFormat.format(template, Map.of("n", 1.1)));
+        assertEquals("1 mile", MessageFormat.format(template, Map.of("n", 1)));
+        assertEquals("1.1 miles", MessageFormat.format(template, Map.of("n", 1.11)));
+        assertEquals("1.2 miles", MessageFormat.format(template, Map.of("n", 1.18)));
     }
 }
