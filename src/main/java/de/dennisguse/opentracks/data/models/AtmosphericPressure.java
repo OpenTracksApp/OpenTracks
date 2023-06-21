@@ -1,7 +1,5 @@
 package de.dennisguse.opentracks.data.models;
 
-import java.util.Objects;
-
 public record AtmosphericPressure(float value) {
 
     public static AtmosphericPressure ofPA(float value_Pa) {

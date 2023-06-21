@@ -1,9 +1,6 @@
 package de.dennisguse.opentracks.data.models;
 
-import androidx.annotation.NonNull;
-
 import java.time.Duration;
-import java.util.Objects;
 
 public record Cadence(float value_rpm) {
 

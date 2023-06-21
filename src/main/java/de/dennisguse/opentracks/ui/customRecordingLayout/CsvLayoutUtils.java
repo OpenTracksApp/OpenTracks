@@ -35,7 +35,6 @@ public final class CsvLayoutUtils {
 
     /**
      * @param csvField Layout's field in a CSV format.
-     * @return List of field parts or null if it's malformed.
      */
     @Nullable
     public static String[] getCsvFieldParts(@Nullable String csvField) {

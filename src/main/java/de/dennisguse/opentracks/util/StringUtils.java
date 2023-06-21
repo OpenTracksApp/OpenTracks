@@ -232,7 +232,7 @@ public class StringUtils {
     }
 
     /**
-     * Gets the time, in milliseconds, from an XML date time string (ISO8601) as defined at http://www.w3.org/TR/xmlschema-2/#dateTime
+     * Gets the time, in milliseconds, from an XML date time string (ISO8601) as defined at <a href="http://www.w3.org/TR/xmlschema-2/#dateTime">...</a>
      * Let's be lenient: if timezone information is not provided, UTC will be used.
      *
      * @param xmlDateTime the XML date time string

@@ -16,7 +16,7 @@ import de.dennisguse.opentracks.data.models.Altitude;
  * Converts WGS84 altitude to EGM2008 (should be close to height above sea level).
  * <p>
  * Uses <a href="https://geographiclib.sourceforge.io/">GeographicLib</a>] EGM2008 5minute undulation data.
- * https://geographiclib.sourceforge.io/html/geoid.html
+ * <a href="https://geographiclib.sourceforge.io/html/geoid.html">...</a>
  * <p>
  * File starts at 90N, 0E (North pole) and is encoded in parallel bands as unsigned shorts.
  */

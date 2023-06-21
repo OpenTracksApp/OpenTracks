@@ -65,39 +65,36 @@ public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBl
     private final BluetoothConnectionManagerCyclingPower cyclingPower = new BluetoothConnectionManagerCyclingPower(this);
     private final BluetoothConnectionRunningSpeedAndCadence runningSpeedAndCadence = new BluetoothConnectionRunningSpeedAndCadence(this);
 
-    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (!started) return;
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
+        if (!started) return;
 
-            if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_heart_rate_key, key)) {
-                String address = PreferencesUtils.getBluetoothHeartRateSensorAddress();
-                connect(heartRate, address);
-            }
+        if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_heart_rate_key, key)) {
+            String address = PreferencesUtils.getBluetoothHeartRateSensorAddress();
+            connect(heartRate, address);
+        }
 
-            if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_cycling_cadence_key, key)) {
-                String address = PreferencesUtils.getBluetoothCyclingCadenceSensorAddress();
-                connect(cyclingCadence, address);
-            }
+        if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_cycling_cadence_key, key)) {
+            String address = PreferencesUtils.getBluetoothCyclingCadenceSensorAddress();
+            connect(cyclingCadence, address);
+        }
 
-            if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_cycling_speed_key, key)) {
-                String address = PreferencesUtils.getBluetoothCyclingSpeedSensorAddress();
+        if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_cycling_speed_key, key)) {
+            String address = PreferencesUtils.getBluetoothCyclingSpeedSensorAddress();
 
-                connect(cyclingSpeed, address);
-            }
+            connect(cyclingSpeed, address);
+        }
 
-            if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_cycling_power_key, key)) {
-                String address = PreferencesUtils.getBluetoothCyclingPowerSensorAddress();
+        if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_cycling_power_key, key)) {
+            String address = PreferencesUtils.getBluetoothCyclingPowerSensorAddress();
 
-                connect(cyclingPower, address);
-            }
+            connect(cyclingPower, address);
+        }
 
 
-            if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_running_speed_and_cadence_key, key)) {
-                String address = PreferencesUtils.getBluetoothRunningSpeedAndCadenceAddress();
+        if (PreferencesUtils.isKey(R.string.settings_sensor_bluetooth_running_speed_and_cadence_key, key)) {
+            String address = PreferencesUtils.getBluetoothRunningSpeedAndCadenceAddress();
 
-                connect(runningSpeedAndCadence, address);
-            }
+            connect(runningSpeedAndCadence, address);
         }
     };
 

@@ -1,9 +1,5 @@
 package de.dennisguse.opentracks.data.models;
 
-import androidx.annotation.NonNull;
-
-import java.util.Objects;
-
 public record Power(float value) {
 
     public static Power of(float value) {

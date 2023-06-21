@@ -5,8 +5,6 @@ import android.os.Build;
 
 import androidx.test.rule.GrantPermissionRule;
 
-import de.dennisguse.opentracks.test.BuildConfig;
-
 public class TestUtil {
 
     public static GrantPermissionRule createGrantPermissionRule() {

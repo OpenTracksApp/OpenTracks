@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class AggregatedStatistics {
         }
 
         dataList.addAll(dataMap.values());
-        Collections.sort(dataList, (o1, o2) -> {
+        dataList.sort((o1, o2) -> {
             if (o1.getCountTracks() == o2.getCountTracks()) {
                 return o1.getActivityType().compareTo(o2.getActivityType());
             }

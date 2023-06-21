@@ -45,7 +45,7 @@ import de.dennisguse.opentracks.util.StringUtils;
 
 /**
  * Convert {@link Track} incl. {@link Marker} and {@link TrackPoint} to KML version 2.3.
- * https://docs.opengeospatial.org/is/12-007r2/12-007r2.html
+ * <a href="https://docs.opengeospatial.org/is/12-007r2/12-007r2.html">...</a>
  *
  * @author Sandor Dornbush
  * @author Rodrigo Damazio

@@ -135,7 +135,7 @@ public class TrackImporter {
             track.setUuid(UUID.randomUUID());
         }
 
-        Collections.sort(trackPoints, (o1, o2) -> {
+        trackPoints.sort((o1, o2) -> {
             if (o1.getTime().isBefore(o2.getTime())) {
                 return -1;
             }

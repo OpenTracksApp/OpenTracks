@@ -32,7 +32,7 @@ limitations under the License.
         android:title="@string/menu_settings" />
     <item
         android:id="@+id/track_list_help"
-        android:icon="@drawable/ic_help_black_24dp"
+        android:icon="@drawable/ic_help_24dp"
         android:title="@string/menu_help" />
 
 </menu>

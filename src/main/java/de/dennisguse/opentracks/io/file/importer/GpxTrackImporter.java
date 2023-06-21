@@ -41,8 +41,8 @@ import de.dennisguse.opentracks.util.StringUtils;
 /**
  * Imports a GPX file.
  * Uses:
- * * https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd
- * * https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd
+ * * <a href="https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd">...</a>
+ * * <a href="https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd">...</a>
  * <p>
  * {@link de.dennisguse.opentracks.io.file.exporter.GPXTrackExporter} does not export information if a segment was started automatic or manually.
  * Therefore, all segments starts are marked as SEGMENT_START_AUTOMATIC.

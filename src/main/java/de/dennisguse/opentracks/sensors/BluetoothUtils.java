@@ -23,8 +23,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 

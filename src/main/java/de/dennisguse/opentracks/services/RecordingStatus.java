@@ -1,9 +1,6 @@
 package de.dennisguse.opentracks.services;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-
-import java.util.Objects;
 
 import de.dennisguse.opentracks.data.models.Track;
 

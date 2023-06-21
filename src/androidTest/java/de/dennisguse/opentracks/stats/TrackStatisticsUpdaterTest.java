@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNull;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -226,25 +225,6 @@ public class TrackStatisticsUpdaterTest {
         assertEquals(59.18, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
     }
 
-    @Ignore("TODO: create a concept ont to compute speed from GPS and sensor")
-    @Test
-    public void addTrackPoint_speed_from_GPS_not_moving() {
-    }
-
-    @Ignore("TODO: create a concept ont to compute speed from GPS and sensor")
-    @Test
-    public void addTrackPoint_speed_from_GPS_moving() {
-    }
-
-    @Ignore("TODO: create a concept ont to compute speed from GPS and sensor")
-    @Test
-    public void addTrackPoint_speed_from_GPS_not_moving_and_sensor_speed() {
-    }
-
-    @Ignore("TODO: create a concept ont to compute speed from GPS and sensor")
-    @Test
-    public void addTrackPoint_speed_from_GPS_moving_and_sensor_speed() {
-    }
 
     @Test
     public void addTrackPoint_maxSpeed_ignore_above_acceleration() {

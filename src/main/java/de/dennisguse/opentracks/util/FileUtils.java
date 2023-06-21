@@ -47,7 +47,7 @@ public class FileUtils {
 
     /**
      * The maximum FAT32 path length. See the FAT32 spec at
-     * http://msdn.microsoft.com/en-us/windows/hardware/gg463080
+     * <a href="http://msdn.microsoft.com/en-us/windows/hardware/gg463080">...</a>
      */
     static final int MAX_FAT32_PATH_LENGTH = 260;
 

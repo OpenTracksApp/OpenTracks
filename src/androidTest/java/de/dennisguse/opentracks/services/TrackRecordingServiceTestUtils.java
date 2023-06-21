@@ -5,8 +5,6 @@ import android.location.Location;
 
 import androidx.test.rule.ServiceTestRule;
 
-import java.util.concurrent.TimeoutException;
-
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
@@ -16,7 +14,7 @@ public class TrackRecordingServiceTestUtils {
     //TODO Workaround as service is not stopped on API23; thus sharedpreferences are not reset between tests.
     //TODO Anyhow, the service should re-create all it's resources if a recording starts and makes sure that there is no leftovers from previous recordings.
     @Deprecated
-    public static void resetService(ServiceTestRule mServiceRule, Context context) throws TimeoutException {
+    public static void resetService(ServiceTestRule mServiceRule, Context context) {
         // Let's use default values.
         PreferencesUtils.clear();
     }

@@ -13,8 +13,6 @@ import static org.hamcrest.Matchers.anything;
 import static de.dennisguse.opentracks.util.EspressoUtils.selectTabAtIndex;
 import static de.dennisguse.opentracks.util.EspressoUtils.waitFor;
 
-import android.Manifest;
-
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
