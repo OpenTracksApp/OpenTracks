@@ -69,7 +69,7 @@ android {
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
-        minSdk 21
+        minSdk 24
         targetSdk 34
 
         testInstrumentationRunner "de.dennisguse.opentracks.TestRunner"
