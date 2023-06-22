@@ -1,18 +1,25 @@
 # How to contribute?
 
-## Testing 
+## Testing
 
-Just use OpenTracks and tell us what can be improved by opening an issue [here](https://github.com/OpenTracksApp/OpenTracks/issues/new/choose)
+Just use OpenTracks and tell us what can be improved by opening an
+issue [here](https://github.com/OpenTracksApp/OpenTracks/issues/new/choose)
 
 If we broke things (happens now and then), please tell us also.
+
+## Translations
+
+Translations are hosted on [hosted.weblate.org](https://hosted.weblate.org/engage/opentracks/).
 
 ## Coding new features
 
 You have a cool idea for a feature that is missing in OpenTracks?
 And you would like to help by implementing it?
-If not, you can just take a look at the [issue tracker](https://github.com/OpenTracksApp/OpenTracks/issues).
+If not, you can just take a look at
+the [issue tracker](https://github.com/OpenTracksApp/OpenTracks/issues).
 
 Advices:
+
 * creating an issue beforehand might be a good idea
   Sometimes it is helpful to discuss your idea and also your implementation approach first.
   We may be able to give you some hints on how to tackle the problem.
