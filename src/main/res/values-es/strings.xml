@@ -322,31 +322,41 @@ limitations under the License.
     <string name="value_off">Desactivado</string>
     <string name="value_smallest_recommended">Mínimo (recomendado)</string>
     <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 hora</item>
-        <item quantity="many">%1$d horas</item>
-        <item quantity="other">%1$d horas</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minuto</item>
-        <item quantity="many">%1$d minutos</item>
-        <item quantity="other">%1$d minutos</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 segundo</item>
-        <item quantity="many">%1$d segundos</item>
-        <item quantity="other">%1$d segundos</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilómetro por hora</item>
-        <item quantity="many">%1$.1f kilómetros por hora</item>
-        <item quantity="other">%1$.1f kilómetros por hora</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 milla por hora</item>
-        <item quantity="many">%1$.1f millas por hora</item>
-        <item quantity="other">%1$.1f millas por hora</item>
-    </plurals>
+    <string name="voiceHoursPlural">
+        { n, plural,
+        one {{n} hora}
+        many {{n} horas}
+        other {{n} horas}
+        }
+    </string>
+    <string name="voiceMinutesPlural">
+        { n, plural,
+        one {{n} minuto}
+        many {{n} minutos}
+        other {{n} minutos}
+        }
+    </string>
+    <string name="voiceSecondsPlural">
+        { n, plural,
+        one {{n} segundo}
+        many {{n} segundos}
+        other {{n} segundos}
+        }
+    </string>
+    <string name="voiceSpeedKilometersPerHourPlural">
+        { n, plural,
+        one {{n,number,#.0} kilómetro por hora}
+        many {{n,number,#.0} kilómetros por hora}
+        other {{n,number,#.0} kilómetros por hora}
+        }
+    </string>
+    <string name="voiceSpeedMilesPerHourPlural">
+        { n, plural,
+        one {{n,number,#.0} milla por hora}
+        many {{n,number,#.0} millas por hora}
+        other {{n,number,#.0} millas por hora}
+        }
+    </string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">cajero automático</string>
     <string name="waypoint_type_bank">banco</string>
@@ -564,16 +574,20 @@ limitations under the License.
     <string name="lap_speed">Velocidad de vuelta</string>
     <string name="speed">Velocidad</string>
     <string name="total_distance">Distancia total</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 kilómetro</item>
-        <item quantity="many">%1$.1f kilómetros</item>
-        <item quantity="other">%1$.1f kilómetros</item>
-    </plurals>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 milla</item>
-        <item quantity="many">%1$.1f millas</item>
-        <item quantity="other">%1$.1f millas</item>
-    </plurals>
+    <string name="voiceDistanceKilometersPlural">
+        { n, plural,
+        one {{n,number,#.0} kilomètre}
+        many {{n,number,#.0} kilomètres}
+        other {{n,number,#.0} kilomètres}
+        }
+    </string>
+    <string name="voiceDistanceMilesPlural">
+        { n, plural,
+        one {{n,number,#.0} milla}
+        many {{n,number,#.0} millas}
+        other {{n,number,#.0} millas}
+        }
+    </string>
     <string name="average_heart_rate">Ritmo cardíaco promedio</string>
     <string name="current_heart_rate">Ritmo cardíaco actual</string>
     <string name="settings_export_filename_title">Formato del nombre del archivo</string>
@@ -602,16 +616,20 @@ limitations under the License.
     <string name="settings_announcements_lap_heart_rate">Frecuencia cardiaca por vuelta</string>
     <string name="settings_public_api_package_title">Nombre del paquete para el API público</string>
     <string name="unit_knots">Nudo</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">%1$.1f nudo</item>
-        <item quantity="many">%1$.1f nudos</item>
-        <item quantity="other">%1$.1f nudos</item>
-    </plurals>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">%1$.1f milla náutica</item>
-        <item quantity="many">%1$.1f millas náuticas</item>
-        <item quantity="other">%1$.1f millas náuticas</item>
-    </plurals>
+    <string name="voiceSpeedMKnotsPlural">
+        { n, plural,
+        one {{n,number,#.0} nudo}
+        many {{n,number,#.0} nudos}
+        other {{n,number,#.0} nudos}
+        }
+    </string>
+    <string name="voiceDistanceNauticalMilesPlural">
+        { n, plural,
+        one {{n,number,#.0} milla náutica}
+        many {{n,number,#.0} millas náuticas}
+        other {{n,number,#.0} millas náuticas}
+        }
+    </string>
     <string name="select_show_on_map_behavior">Seleccionar el comportamiento de \"mostrar en el mapa\"</string>
     <string name="introduction_osm_dashboard">OpenTracks en sí no proporciona un mapa. Por favor, instale OSMDashboard para ver sus grabaciones en un mapa.</string>
     <string name="share_crash_report">Compartir informe de fallo</string>

@@ -212,26 +212,6 @@
     <string name="value_none">Nenhuma</string>
     <string name="value_off">Desativar</string>
     <string name="value_smallest_recommended">Menor (recomendado)</string>
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d hora</item>
-        <item quantity="other">%1$d horas</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d minuto</item>
-        <item quantity="other">%1$d minutos</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d segundo</item>
-        <item quantity="other">%1$d segundos</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f quilómetro por hora</item>
-        <item quantity="other">%1$.1f quilómetros por hora</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">%1$.1f milha por hora</item>
-        <item quantity="other">%1$.1f milhas por hora</item>
-    </plurals>
     <string name="waypoint_type_atm">caixa eletrônico</string>
     <string name="waypoint_type_bank">banco</string>
     <string name="waypoint_type_bar">bar</string>
@@ -512,10 +492,6 @@
     <string name="value_float_knots">%1$.1f nós</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (Recomendado)</string>
     <string name="value_float_knots_recommended">%1$.1f nós (recomendado)</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">%1$.1f nó</item>
-        <item quantity="other">%1$.1f nós</item>
-    </plurals>
     <string name="voice_per_kilometer">por quilômetro</string>
     <string name="voice_per_mile">por milha</string>
     <string name="voice_per_nautical_mile">por milha náutica</string>
@@ -524,18 +500,6 @@
     <string name="lap_speed">Velocidade da volta</string>
     <string name="speed">Velocidade</string>
     <string name="total_distance">Distância total</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">%1$.1f quilómetro</item>
-        <item quantity="other">%1$.1f quilómetros</item>
-    </plurals>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">%1$.1f milha</item>
-        <item quantity="other">%1$.1f milhas</item>
-    </plurals>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">%1$.1f milha náutica</item>
-        <item quantity="other">%1$.1f milhas náuticas</item>
-    </plurals>
     <string name="share_image_body">Acho que pode estar interessado nesta imagem.</string>
     <string name="hold_to_stop">Segure para parar</string>
     <string name="instant_export_enabled_summary">Exportar trilha para armazenamento depois que a gravação for concluída</string>

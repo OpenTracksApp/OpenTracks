@@ -214,26 +214,6 @@
     <string name="value_none">Ninguno</string>
     <string name="value_off">Desactivado</string>
     <string name="value_smallest_recommended">Mínimo (recomendado)</string>
-    <plurals name="voiceHours">
-        <item quantity="one">1 hora</item>
-        <item quantity="other">%1$d horas</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minuto</item>
-        <item quantity="other">%1$d minutos</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 segundo</item>
-        <item quantity="other">%1$d segundos</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilómetro por hora</item>
-        <item quantity="other">%1$.1f kilómetros por hora</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 milla por hora</item>
-        <item quantity="other">%1$.1f millas por hora</item>
-    </plurals>
     <string name="waypoint_type_atm">cajero automático</string>
     <string name="waypoint_type_bank">banco</string>
     <string name="waypoint_type_bar">barra</string>
@@ -507,14 +487,6 @@
     <string name="lap_speed">Velocidad de vuelta</string>
     <string name="speed">Velocidad</string>
     <string name="total_distance">Distancia total</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 kilómetro</item>
-        <item quantity="other">%1$.1f kilómetros</item>
-    </plurals>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 milla</item>
-        <item quantity="other">%1$.1f millas</item>
-    </plurals>
     <string name="average_heart_rate">Ritmo cardíaco promedio</string>
     <string name="current_heart_rate">Ritmo cardíaco actual</string>
     <string name="settings_export_filename_title">Formato del nombre del archivo</string>

@@ -333,26 +333,36 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="value_off">Aus</string>
     <string name="value_smallest_recommended">Kleinster (empfohlen)</string>
     <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 Stunde</item>
-        <item quantity="other">%1$d Stunden</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 Minuten</item>
-        <item quantity="other">%1$d Minuten</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 Sekunde</item>
-        <item quantity="other">%1$d Sekunden</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 Kilometer pro Stunde</item>
-        <item quantity="other">%1$.1f Kilometer pro Stunde</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 Meile pro Stunde</item>
-        <item quantity="other">%1$.1f Meilen pro Stunde</item>
-    </plurals>
+    <string name="voiceHoursPlural">
+        { n, plural,
+        =1 {1 Stunde}
+        other {{n,number,#.0} Stunden}
+        }
+    </string>
+    <string name="voiceMinutesPlural">
+        { n, plural,
+        =1 {1 Minuten}
+        other {{n} Minuten}
+        }
+    </string>
+    <string name="voiceSecondsPlural">
+        { n, plural,
+        =1 {1 Sekunde}
+        other {{n} Sekunden}
+        }
+    </string>
+    <string name="voiceSpeedKilometersPerHourPlural">
+        { n, plural,
+        =1 {1 Kilometer pro Stunde}
+        other {{n,number,#.0} Kilometer pro Stunde}
+        }
+    </string>
+    <string name="voiceSpeedMilesPerHourPlural">
+        { n, plural,
+        =1 {1 Meile pro Stunde}
+        other {{n,number,#.0} Meilen pro Stunde}
+        }
+    </string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Geldautomat</string>
     <string name="waypoint_type_bank">Bank</string>
@@ -537,10 +547,12 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="current_heart_rate">Aktueller Puls</string>
     <string name="export_cannot_write_to_dir">Kann nicht in Export-Verzeichnis schreiben.</string>
     <string name="stats_sensors_cadence">Trittfrequenz</string>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 Meile</item>
-        <item quantity="other">%1$.1f Meilen</item>
-    </plurals>
+    <string name="voiceDistanceMilesPlural">
+        { n, plural,
+        =1 {1 Meile}
+        other {{n,number,#.0} Meilen}
+        }
+    </string>
     <string name="field_set_primary">Primär</string>
     <string name="voice_per_mile">pro Meile</string>
     <string name="lap_time">Rundenzeit</string>
@@ -549,10 +561,12 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="lap_speed">Rundengeschwindigkeit</string>
     <string name="speed">Geschwindigkeit</string>
     <string name="total_distance">Gesamtstrecke</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 Kilometer</item>
-        <item quantity="other">%1$.1f Kilometer</item>
-    </plurals>
+    <string name="voiceDistanceKilometersPlural">
+        { n, plural,
+        =1 {1 Kilometer}
+        other {{n,number,#.0} Kilometer}
+        }
+    </string>
     <string name="no_compatible_file_manager_installed">Kein kompatibler Dateimanager installiert</string>
     <string name="aggregated_stats_filter_no_results">Es gibt keine Aktivitäten für diesen Filter</string>
     <string name="settings_announcements_summary">Zeit, Entfernung, Sprachgeschwindigkeit</string>

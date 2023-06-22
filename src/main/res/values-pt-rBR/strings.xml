@@ -212,18 +212,6 @@
     <string name="value_none">Nenhuma</string>
     <string name="value_off">Desativar</string>
     <string name="value_smallest_recommended">Menor (recomendado)</string>
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d hora</item>
-        <item quantity="other">%1$d horas</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d minuto</item>
-        <item quantity="other">%1$d minutos</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d segundo</item>
-        <item quantity="other">%1$d segundos</item>
-    </plurals>
     <string name="waypoint_type_atm">caixa eletrônico</string>
     <string name="waypoint_type_bank">banco</string>
     <string name="waypoint_type_bar">bar</string>
@@ -405,14 +393,6 @@
     <string name="delete_service">Serviço de exclusão</string>
     <string name="menu_voice_rate">Velocidade da voz</string>
     <string name="track_delete_not_recording">Esta trilha não pode ser excluída porque está gravada no momento.</string>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f quilômetro por hora</item>
-        <item quantity="other">%1$.1f quilômetros por hora</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">%1$.1f milha por hora</item>
-        <item quantity="other">%1$.1f milhas por hora</item>
-    </plurals>
     <string name="settings_sensor_cycling_cadence">Cadência</string>
     <string name="settings_sensor_cycling_distance_speed">Distância e velocidade</string>
     <string name="settings_sensor_running_speed_and_cadence">Distância, velocidade e cadência</string>
@@ -500,10 +480,6 @@
     <string name="average_heart_rate">Frequência cardíaca média</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Um aplicativo que iniciou uma gravação também pode acessar os dados gravados.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Os dados gravados não serão compartilhados automaticamente com outros aplicativos.</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">%1$.1f quilômetro</item>
-        <item quantity="other">%1$.1f quilômetros</item>
-    </plurals>
     <string name="generic_dismiss">Dispensar</string>
     <string name="settings_api_title">API pública</string>
     <string name="settings_public_api_dashboard_enabled_title">Transferência automática de dados</string>
@@ -511,10 +487,6 @@
     <string name="voice_per_mile">por milha</string>
     <string name="lap_speed">Velocidade da volta</string>
     <string name="total_distance">Distância total</string>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">%1$.1f milha</item>
-        <item quantity="other">%1$.1f milhas</item>
-    </plurals>
     <string name="current_heart_rate">Frequência cardíaca atual</string>
     <string name="settings_export_filename_title">Formato do nome do arquivo</string>
     <string name="settings_announcements_average_heart_rate">Frequência cardíaca média</string>
@@ -544,12 +516,4 @@
     <string name="show_on_dashboard">Painel API do OpenTracks</string>
     <string name="always">Sempre</string>
     <string name="description_speed_nautical">Velocidade (nós)</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">%1$.1f nó</item>
-        <item quantity="other">%1$.1f nós</item>
-    </plurals>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">%1$.1f milha náutica</item>
-        <item quantity="other">%1$.1f milhas náuticas</item>
-    </plurals>
 </resources>

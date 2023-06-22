@@ -277,21 +277,31 @@ limitations under the License.
     <string name="value_off">关闭</string>
     <string name="value_smallest_recommended">最小（建议）</string>
     <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="other">%1$d 小时</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="other">%1$d 分钟</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="other">%1$d 秒</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="other">每小时 %1$.1f 公里</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="other">每小时 %1$.1f 英里</item>
-    </plurals>
+    <string name="voiceHoursPlural">
+        { n, plural,
+        other {{n} 小时}
+        }
+    </string>
+    <string name="voiceMinutesPlural">
+        { n, plural,
+        other {{n} 分钟}
+        }
+    </string>
+    <string name="voiceSecondsPlural">
+        { n, plural,
+        other {{n} 秒}
+        }
+    </string>
+    <string name="voiceSpeedKilometersPerHourPlural">
+        { n, plural,
+        other {每小时 {n,number,#.0} 公里}
+        }
+    </string>
+    <string name="voiceSpeedMilesPerHourPlural">
+        { n, plural,
+        other {每小时 {n,number,#.0} 英里}
+        }
+    </string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">自动取款机</string>
     <string name="waypoint_type_bank">银行</string>
@@ -488,22 +498,30 @@ limitations under the License.
     <string name="track_distance_notification">距离：%1$s</string>
     <string name="value_float_mile_hour_recommended">%1$.1f 英里/小时（推荐）</string>
     <string name="lap_time">单圈用时</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="other">%1$.1f 公里</item>
-    </plurals>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="other">%1$.1f 英里</item>
-    </plurals>
+    <string name="voiceDistanceKilometersPlural">
+        { n, plural,
+        other {{n,number,#.0} 公里}
+        }
+    </string>
+    <string name="voiceDistanceMilesPlural">
+        { n, plural,
+        other {{n,number,#.0} 英里}
+        }
+    </string>
     <string name="average_heart_rate">平均心率</string>
     <string name="export_without_photos">不带照片</string>
     <string name="settings_sensor_bluetooth_service_filter_on">只显示蓝牙广播中包含所需服务的设备</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="other">%1$.1f 节</item>
-    </plurals>
+    <string name="voiceSpeedMKnotsPlural">
+        { n, plural,
+        other {{n,number,#.0} 节}
+        }
+    </string>
     <string name="voice_per_nautical_mile">每海里</string>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="other">%1$.1f 海里</item>
-    </plurals>
+    <string name="voiceDistanceNauticalMilesPlural">
+        { n, plural,
+        other {{n,number,#.0} 海里}
+        }
+    </string>
     <string name="share_image_subject">我想跟你分享一张图片</string>
     <string name="share_image_body">我觉得你可能对这张图片感兴趣。</string>
     <string name="field_set_primary">设为主要</string>

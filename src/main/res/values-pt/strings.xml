@@ -260,31 +260,41 @@ limitations under the License.
     <string name="value_off">Desativar</string>
     <string name="value_smallest_recommended">Menor (recomendado)</string>
     <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d hora</item>
-        <item quantity="many">%1$d horas</item>
-        <item quantity="other">%1$d horas</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d minuto</item>
-        <item quantity="many">%1$d minutos</item>
-        <item quantity="other">%1$d minutos</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d segundo</item>
-        <item quantity="many">%1$d segundos</item>
-        <item quantity="other">%1$d segundos</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f quilómetro por hora</item>
-        <item quantity="many">%1$.1f quilómetros por hora</item>
-        <item quantity="other">%1$.1f quilómetros por hora</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">%1$.1f milha por hora</item>
-        <item quantity="many">%1$.1f milhas por hora</item>
-        <item quantity="other">%1$.1f milhas por hora</item>
-    </plurals>
+    <string name="voiceHoursPlural">
+        { n, plural,
+        one {{n} hora}
+        many {{n} horas}
+        other {{n} horas}
+        }
+    </string>
+    <string name="voiceMinutesPlural">
+        { n, plural,
+        one {{n} minuto}
+        many {{n} minutos}
+        other {{n} minutos}
+        }
+    </string>
+    <string name="voiceSecondsPlural">
+         { n, plural,
+        one {{n} segundo}
+        many {{n} segundos}
+        other {{n} segundos}
+        }
+    </string>
+    <string name="voiceSpeedKilometersPerHourPlural">
+        { n, plural,
+        one {{n,number,#.0} quilômetro por hora}
+        many {{n,number,#.0} quilómetros por hora}
+        other {{n,number,#.0} quilómetros por hora}
+        }
+    </string>
+    <string name="voiceSpeedMilesPerHourPlural">
+        { n, plural,
+        one {{n,number,#.0} milha por hora}
+        many {{n,number,#.0} milhas por hora}
+        other {{n,number,#.0} milhas por hora}
+        }
+    </string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">caixa eletrônico</string>
     <string name="waypoint_type_bank">banco</string>
@@ -492,27 +502,35 @@ limitations under the License.
     <string name="value_float_knots">%1$.1f nós</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (Recomendado)</string>
     <string name="voice_per_kilometer">por quilômetro</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">%1$.1f nó</item>
-        <item quantity="other">%1$.1f nós</item>
-    </plurals>
+    <string name="voiceSpeedMKnotsPlural">
+        { n, plural,
+        one {{n,number,#.0} nó}
+        other {{n,number,#.0} nós}
+        }
+    </string>
     <string name="voice_per_mile">por milha</string>
     <string name="voice_per_nautical_mile">por milha náutica</string>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">%1$.1f milha</item>
-        <item quantity="other">%1$.1f milhas</item>
-    </plurals>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">%1$.1f milha náutica</item>
-        <item quantity="other">%1$.1f milhas náuticas</item>
-    </plurals>
+    <string name="voiceDistanceMilesPlural">
+        { n, plural,
+        one {{n,number,#.0} milha}
+        other {{n,number,#.0} milhas}
+        }
+    </string>
+    <string name="voiceDistanceNauticalMilesPlural">
+        { n, plural,
+        one {{n,number,#.0} milha náutica}
+        other {{n,number,#.0} milhas náuticas}
+        }
+    </string>
     <string name="total_distance">Distância total</string>
     <string name="average_heart_rate">Frequência cardíaca média</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">%1$.1f quilómetro</item>
-        <item quantity="many">%1$.1f quilómetros</item>
-        <item quantity="other">%1$.1f quilómetros</item>
-    </plurals>
+    <string name="voiceDistanceKilometersPlural">
+        { n, plural,
+        one {{n,number,#.0} quilómetro}
+        many {{n,number,#.0} quilómetros}
+        other {{n,number,#.0} quilómetros}
+        }
+    </string>
     <string name="current_heart_rate">Frequência cardíaca atual</string>
     <string name="share_image_subject">Gostaria de compartilhar uma imagem consigo</string>
     <string name="share_image_body">Acho que pode estar interessado nesta imagem.</string>

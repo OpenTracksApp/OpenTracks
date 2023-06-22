@@ -324,31 +324,41 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="value_off">Désactiver</string>
     <string name="value_smallest_recommended">La plus petite (recommandé)</string>
     <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d heure</item>
-        <item quantity="many">%1$d heures</item>
-        <item quantity="other">%1$d heures</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="many">%1$d minutes</item>
-        <item quantity="other">%1$d minutes</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d seconde</item>
-        <item quantity="many">%1$d secondes</item>
-        <item quantity="other">%1$d secondes</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f kilomètre-heure</item>
-        <item quantity="many">%1$.1f kilomètres-heure</item>
-        <item quantity="other">%1$.1f kilomètres-heure</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">%1$.1f mile par heure</item>
-        <item quantity="many">%1$.1f miles par heure</item>
-        <item quantity="other">%1$.1f miles par heure</item>
-    </plurals>
+    <string name="voiceHoursPlural">
+        { n, plural,
+        one {{n} heure}
+        many {{n} heures}
+        other {{n} heures}
+        }
+    </string>
+    <string name="voiceMinutesPlural">
+        { n, plural,
+        one {{n} minute}
+        many {{n} minute}
+        other {{n} minutes}
+        }
+    </string>
+    <string name="voiceSecondsPlural">
+        { n, plural,
+        one {{n} seconde}
+        many {{n} secondes}
+        other {{n} secondes}
+        }
+    </string>
+    <string name="voiceSpeedKilometersPerHourPlural">
+        { n, plural,
+        one {{n,number,#.0} kilomètre-heure}
+        many {{n,number,#.0} kilomètres-heure}
+        other {{n,number,#.0} kilomètres-heure}
+        }
+    </string>
+    <string name="voiceSpeedMilesPerHourPlural">
+        { n, plural,
+        one {{n,number,#.0} mile par heure}
+        many {{n,number,#.0} miles par heure}
+        other {{n,number,#.0} miles par heure}
+        }
+    </string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">distributeur de billets</string>
     <string name="waypoint_type_bank">banque</string>
@@ -548,21 +558,25 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_public_api_enabled_title">API publique</string>
     <string name="average_heart_rate">Fréquence cardiaque moyenne</string>
     <string name="current_heart_rate">Fréquence cardiaque actuelle</string>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">%1$.1f mile</item>
-        <item quantity="many">%1$.1f miles</item>
-        <item quantity="other">%1$.1f miles</item>
-    </plurals>
+    <string name="voiceDistanceMilesPlural">
+        { n, plural,
+        one {{n,number,#.0} mile}
+        many {{n,number,#.0} miles}
+        other {{n,number,#.0} miles}
+        }
+    </string>
     <string name="lap_time">Temps par tour</string>
     <string name="speed">Vitesse moyenne</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Les données enregistrées ne seront pas automatiquement partagées avec d\'autres applications.</string>
     <string name="settings_public_api_enabled_summary_on">D\'autres applications installées peuvent démarrer ou arrêter les enregistrements.</string>
     <string name="settings_public_api_enabled_summary_off">Seul OpenTracks peut démarrer et arrêter les enregistrements.</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">%1$.1f kilomètre</item>
-        <item quantity="many">%1$.1f kilomètres</item>
-        <item quantity="other">%1$.1f kilomètres</item>
-    </plurals>
+    <string name="voiceDistanceKilometersPlural">
+        { n, plural,
+        one {{n,number,#.0} kilomètre}
+        many {{n,number,#.0} kilomètres}
+        other {{n,number,#.0} kilomètres}
+        }
+    </string>
     <string name="total_distance">Distance totale</string>
     <string name="activity_type_swimming">natation</string>
     <string name="activity_type_swimming_open">natation en eau libre</string>
@@ -603,16 +617,20 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="value_float_knots">%1$.1f nœuds</string>
     <string name="value_float_knots_recommended">%1$.1f nœuds (recommandé)</string>
     <string name="voice_per_nautical_mile">par mile nautique</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">%1$.1f nœud</item>
-        <item quantity="many">%1$.1f nœuds</item>
-        <item quantity="other">%1$.1f nœuds</item>
-    </plurals>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">%1$.1f mille nautique</item>
-        <item quantity="many">%1$.1f milles nautique</item>
-        <item quantity="other">%1$.1f milles nautique</item>
-    </plurals>
+    <string name="voiceSpeedMKnotsPlural">
+        { n, plural,
+        one {{n,number,#.0} nœud}
+        many {{n,number,#.0} nœuds}
+        other {{n,number,#.0} nœuds}
+        }
+    </string>
+    <string name="voiceDistanceNauticalMilesPlural">
+        { n, plural,
+        one {{n,number,#.0} mille nautique}
+        many {{n,number,#.0} milles nautique}
+        other {{n,number,#.0} milles nautique}
+        }
+    </string>
     <string name="settings_public_api_package_title">Nom du paquet pour l\'API Publique</string>
     <string name="track_delete_number_of_tracks">%1$d tracés</string>
     <string name="introduction_osm_dashboard">OpenTracks ne fournit pas de carte en tant que telle. Veuillez installer OSMDashboard pour visualiser vos tracés sur une carte.</string>

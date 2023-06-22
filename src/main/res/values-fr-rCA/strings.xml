@@ -210,26 +210,6 @@
     <string name="value_none">Aucun</string>
     <string name="value_off">Désactivé</string>
     <string name="value_smallest_recommended">La plus petite (recommandé)</string>
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d heure</item>
-        <item quantity="other">%1$d heures</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d seconde</item>
-        <item quantity="other">%1$d secondes</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f kilomètre à l\'heure</item>
-        <item quantity="other">%1$.1f kilomètres à l\'heure</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">%1$.1f mille à l\'heure</item>
-        <item quantity="other">%1$.1f milles à l\'heure</item>
-    </plurals>
     <string name="waypoint_type_atm">guichet automatique bancaire</string>
     <string name="waypoint_type_bank">banque</string>
     <string name="waypoint_type_bar">bar</string>
