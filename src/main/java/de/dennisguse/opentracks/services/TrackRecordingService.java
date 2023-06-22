@@ -36,7 +36,7 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.announcement.VoiceAnnouncementManager;
-import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
+import de.dennisguse.opentracks.services.handlers.AltitudeCorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.util.SystemUtils;
@@ -95,7 +95,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     private VoiceAnnouncementManager voiceAnnouncementManager;
     private TrackRecordingServiceNotificationManager notificationManager;
 
-    private EGM2008CorrectionManager egm2008CorrectionManager;
+    private AltitudeCorrectionManager egm2008CorrectionManager;
 
     @Override
     public void onCreate() {
@@ -108,7 +108,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         gpsStatusObservable = new MutableLiveData<>(STATUS_GPS_DEFAULT);
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
-        egm2008CorrectionManager = new EGM2008CorrectionManager();
+        egm2008CorrectionManager = new AltitudeCorrectionManager();
         trackRecordingManager = new TrackRecordingManager(this);
         trackRecordingManager.start();
         trackPointCreator = new TrackPointCreator(this, this, handler);

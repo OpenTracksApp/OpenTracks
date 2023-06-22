@@ -39,7 +39,7 @@ import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
 import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
+import de.dennisguse.opentracks.services.handlers.AltitudeCorrectionManager;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 
@@ -73,7 +73,7 @@ public class TrackDataHub {
     private final ContentProviderUtils contentProviderUtils;
     private final int targetNumPoints;
 
-    private final EGM2008CorrectionManager egm2008Correction = new EGM2008CorrectionManager();
+    private final AltitudeCorrectionManager egm2008Correction = new AltitudeCorrectionManager();
 
     //TODO Check if this is needed.
     private HandlerThread handlerThread;
