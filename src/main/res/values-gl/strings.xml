@@ -506,7 +506,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="stats_clock">Reloxo</string>
     <string name="settings_defaults_summary">Unidades preferidas, Actividade por defecto, Nome da ruta</string>
     <string name="settings_announcements_summary">A Distancia, Tempo, Voz Velocidade</string>
-    <string name="settings_open_tracks_summary">Todo Sobre OpenTracks Proxecto</string>
+    <string name="settings_open_tracks_summary">Todo sobre o Proxecto OpenTracks</string>
     <string name="settings_defaults_title">Unidades e Actividade por defecto</string>
     <string name="settings_ui_title">Interface da app</string>
     <string name="settings_ui_summary">Aparencia, Gravación, Deseño, Tema</string>
@@ -618,4 +618,13 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_sensor_bluetooth_service_filter_title">Filtrar Dispositivos Bluetooth</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Mostrar todos os dispositivos Bluetooth dispoñibles</string>
     <string name="settings_stats_units_imperial_meter">Imperial (mi, m)</string>
+    <string name="voiceHoursPlural">{n, plural, =1 {1 hora} other {{n,number} horas} }</string>
+    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 nó} other {{n,number,#.0} nós} }</string>
+    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 quilómetro} other {{n,number,#.0} quilómetros} }</string>
+    <string name="voiceDistanceMilesPlural">{n, plural, =1 {1 milla} other {{n,number,#.0} millas} }</string>
+    <string name="voiceMinutesPlural">{n, plural, =1 {1 minutos} other {{n,number} minutos} }</string>
+    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 quilómetro por hora} other {{n,number,#.0} quilómetros por hora} }</string>
+    <string name="voiceSecondsPlural">{n, plural, =1 {1 segundo} other {{n,number} segundos} }</string>
+    <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 milla por hora} other {{n,number,#.0} millas por hora} }</string>
+    <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 milla náutica} other {{n,number,#.0} millas náuticas} }</string>
 </resources>
