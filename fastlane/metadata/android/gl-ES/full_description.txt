@@ -1,0 +1,22 @@
+Gravador de actividades deportivas que respecta a túa privacidade.
+
+As actividades deportivas e ao aire libre proporcionanche felicidade, destreza e confianza.
+
+Dalle valor á túa saúde facendo un seguimento dos teus adestramentos.
+Grava mentras saes a correr ou camiñar, e será un ciclocomputador cunha pantalla máis grande e clara.
+Marca as localizacións interesantes na ruta podendo engadir unha imaxe.
+Garda un rexistro das túas estatísticas con gran detalle e análise.
+Comparte só os datos que outras persoas poden ver.
+
+* Anuncios por voz.
+* Soporte para sensores Bluetooth LE: de frecuencia cardíaca, velocidade e distancia (ciclismo), cadencia (ciclismo), e de potencia (ciclismo).
+* Gañancia e perda de altitude: a través do sensor barométrico.
+* Altitude mostrada en EGM2008 (sobre o nivel do mar); exportada como WGS84.
+* Exporta os datos como rutas tanto como KMZ (inclúe fotos), KML, ou GPX.
+* Non precisa conexión a internet ou permisos extra.
+* Decorado escuro, claro, ou seguindo os axustes do sistema.
+* Sen publicidade.
+
+Software Libre / Free Software / Open Source
+significa que podes usar, estudar, cambiar e compartir o código fonte.
+Licenza Apache 2.0

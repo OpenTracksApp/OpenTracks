@@ -1,0 +1,14 @@
+v4.5.0: OpenTracks
+
+Cambios:
+- Material3 
+- Atallo na app para estatísticas acumuladas
+- Nova unidade: millas con metros
+
+Arranxo:
+- avisos repetidos do GPS desactivado (#1429)
+
+Desenvolvemento:
+- Utilizar Java Records
+- Obxectivo API34
+- Refactorización da xestión dos sensores

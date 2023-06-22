@@ -1,0 +1,4 @@
+v4.4.0: OpenTracks
+
+Cambios:
+- Exportar todas as rutas nun único ficheiro
