@@ -50,6 +50,7 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.Track;
@@ -72,7 +73,6 @@ import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * An activity displaying a list of tracks.
@@ -219,7 +219,8 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 Track.Id trackId = new Track.Id(cursor.getLong(idIndex));
                 boolean isRecording = trackId.equals(recordingStatus.getTrackId());
                 String icon = cursor.getString(iconIndex);
-                int iconId = TrackIconUtils.getIconDrawableId(icon);
+                int iconId = ActivityType.findByActivityTypeId(icon)
+                        .getIconDrawableId();
                 String name = cursor.getString(nameIndex);
                 String totalTime = StringUtils.formatElapsedTime(Duration.ofMillis(cursor.getLong(totalTimeIndex)));
                 String totalDistance = DistanceFormatter.Builder()

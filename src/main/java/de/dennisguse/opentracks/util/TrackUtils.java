@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.util;
 import android.content.Context;
 
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Track;
 
 /**
@@ -33,7 +34,8 @@ public class TrackUtils {
     }
 
     public static void updateTrack(Context context, Track track, String name, String activityType, String description, ContentProviderUtils contentProviderUtils) {
-        updateTrack(context, track, name, activityType, TrackIconUtils.getActivityTypeId(context, activityType), description, contentProviderUtils);
+        updateTrack(context, track, name, activityType, ActivityType.findByLocalizedString(context, activityType)
+                .getId(), description, contentProviderUtils);
     }
 
     public static void updateTrack(Context context, Track track, String name, String activityType, String iconValue, String description, ContentProviderUtils contentProviderUtils) {
@@ -49,7 +51,8 @@ public class TrackUtils {
         if (iconValue != null) {
             track.setIcon(iconValue);
         } else if (activityType != null) {
-            track.setIcon(TrackIconUtils.getActivityTypeId(context, activityType));
+            track.setIcon(ActivityType.findByLocalizedString(context, activityType)
+                    .getId());
         }
         if (description != null) {
             track.setDescription(description);

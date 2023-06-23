@@ -30,7 +30,6 @@ import androidx.preference.PreferenceDialogFragmentCompat;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * For entering the default activity type.
@@ -83,12 +82,16 @@ public class ActivityTypePreference extends DialogPreference {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(context));
             textView.setAdapter(adapter);
             textView.setOnItemClickListener((parent, v, position, id) -> {
-                String iconValue = TrackIconUtils.getActivityTypeId(context, (String) textView.getAdapter().getItem(position));
+                String localizedActivityType = (String) textView.getAdapter().getItem(position);
+                String iconValue = ActivityType.findByLocalizedString(context, localizedActivityType)
+                        .getId();
                 updateIcon(iconValue);
             });
             textView.setOnFocusChangeListener((v, hasFocus) -> {
                 if (!hasFocus) {
-                    String iconValue = TrackIconUtils.getActivityTypeId(context, textView.getText().toString());
+                    String localizedActivityType = textView.getText().toString();
+                    String iconValue = ActivityType.findByLocalizedString(context, localizedActivityType)
+                            .getId();
                     updateIcon(iconValue);
                 }
             });
@@ -96,7 +99,8 @@ public class ActivityTypePreference extends DialogPreference {
             iconView = view.findViewById(R.id.activity_type_preference_spinner);
             iconView.setOnClickListener((it) -> showIconSelectDialog());
 
-            updateIcon(TrackIconUtils.getActivityTypeId(context, category));
+            updateIcon(ActivityType.findByLocalizedString(context, category)
+                    .getId());
         }
 
         private void showIconSelectDialog() {
@@ -117,12 +121,14 @@ public class ActivityTypePreference extends DialogPreference {
 
         public void updateUI(String iconValue) {
             updateIcon(iconValue);
-            textView.setText(getActivity().getString(TrackIconUtils.getIconActivityType(iconValue)));
+            textView.setText(getActivity().getString(ActivityType.findByActivityTypeId(iconValue)
+                    .getFirstLocalizedStringId()));
             textView.clearFocus();
         }
 
         private void updateIcon(String iconValue) {
-            iconView.setImageResource(TrackIconUtils.getIconDrawableId(iconValue));
+            iconView.setImageResource(ActivityType.findByActivityTypeId(iconValue)
+                    .getIconDrawableId());
         }
     }
 }

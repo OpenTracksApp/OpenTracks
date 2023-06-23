@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.databinding.ChooseActivityTypeBinding;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * A DialogFragment to choose an activity type.
@@ -37,7 +36,8 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
         if (category == null) {
             return -1;
         }
-        String iconValue = TrackIconUtils.getActivityTypeId(context, category);
+        String iconValue = ActivityType.findByLocalizedString(context, category)
+                .getId();
 
         return getAllActivityTypeIds().indexOf(iconValue);
     }
@@ -66,7 +66,8 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
 
         List<Integer> iconDrawableIds = new ArrayList<>();
         for (String iconValue : getAllActivityTypeIds()) {
-            iconDrawableIds.add(TrackIconUtils.getIconDrawableId(iconValue));
+            iconDrawableIds.add(ActivityType.findByActivityTypeId(iconValue)
+                    .getIconDrawableId());
         }
 
         final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(iconDrawableIds);

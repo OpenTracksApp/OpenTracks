@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Speed;
@@ -30,7 +31,6 @@ import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.ui.markers.MarkerUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * Handles logic to import:
@@ -107,7 +107,8 @@ public class TrackImporter {
             track.setActivityType(activityType);
 
             if (icon == null) {
-                icon = TrackIconUtils.getActivityTypeId(context, activityType);
+                icon = ActivityType.findByLocalizedString(context, activityType)
+                        .getId();
             }
         }
 

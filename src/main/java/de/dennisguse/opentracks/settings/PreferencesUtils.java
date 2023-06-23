@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.HeartRate;
@@ -51,7 +52,6 @@ import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
 import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayoutIO;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * Utilities to access preferences stored in {@link SharedPreferences}.
@@ -237,7 +237,8 @@ public class PreferencesUtils {
         final String STATS_RATE_DEFAULT = resources.getString(R.string.stats_rate_default);
         String currentStatsRate = getString(R.string.stats_rate_key, STATS_RATE_DEFAULT);
         if (currentStatsRate.equals(getString(R.string.stats_rate_speed_or_pace_default, STATS_RATE_DEFAULT))) {
-            return TrackIconUtils.isSpeedIcon(resources, category);
+            return ActivityType.findByLocalizedString(resources, category)
+                    .isShowSpeedPreferred();
         }
 
         return currentStatsRate.equals(resources.getString(R.string.stats_rate_speed));

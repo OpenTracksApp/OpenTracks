@@ -15,6 +15,7 @@ import java.time.ZoneOffset;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
@@ -24,7 +25,6 @@ import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackNameUtils;
 
 class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -74,7 +74,8 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
 
         String category = PreferencesUtils.getDefaultActivity();
         track.setActivityType(category);
-        track.setIcon(TrackIconUtils.getActivityTypeId(context, category));
+        track.setIcon(ActivityType.findByLocalizedString(context, category)
+                .getId());
         track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
         //TODO Pass TrackPoint
         track.setName(TrackNameUtils.getTrackName(context, trackId, track.getStartTime()));

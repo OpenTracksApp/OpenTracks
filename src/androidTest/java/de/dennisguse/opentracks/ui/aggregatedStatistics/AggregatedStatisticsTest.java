@@ -16,11 +16,11 @@ import java.time.Instant;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 @RunWith(JUnit4.class)
 public class AggregatedStatisticsTest {
@@ -40,7 +40,8 @@ public class AggregatedStatisticsTest {
         statistics.setMinAltitude(1200.0);  // Resulting min altitude
 
         Track track = new Track();
-        track.setIcon(TrackIconUtils.getActivityTypeId(context, category));
+        track.setIcon(ActivityType.findByLocalizedString(context, category)
+                .getId());
         track.setActivityType(category);
         track.setTrackStatistics(statistics);
         return track;
