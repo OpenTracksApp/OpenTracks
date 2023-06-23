@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
     <string name="about_preference_title">Über OpenTracks</string>
-    <string name="about_description"><i>OpenTracks</i> ist eine Sport-Tracking-Anwendung, die Ihre Privatsphäre vollständig respektiert.</string>
+    <string name="about_description"><i>OpenTracks</i> ist eine Sport-Tracking-Anwendung, die Ihre Privatsphäre respektiert.</string>
     <string name="about_url">Projekt-Website: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Version Name: %1$s</string>
     <string name="about_version_code">Version Code: %1$d</string>
@@ -620,4 +620,18 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (empfohlen)</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_knots_recommended">%1$.1f Knoten (empfohlen)</string>
+    <string name="stats_sensors_power">Stärke</string>
+    <string name="menu_export_all_one_file">Alle exportieren (eine Datei für alle Aufzeichnungen)</string>
+    <string name="settings_generic_sensor">Generisch</string>
+    <string name="settings_public_api_package_title">Package name Öffentlichen API</string>
+    <string name="settings_api_summary">API zur Kontrolle und dem Abrufen von Statistiken für andere Apps bereitstellen</string>
+    <string name="settings_import_export_summary">Import, Export, automatischer Export</string>
+    <string name="settings_sensor_heart_rate_max">Zonen: maximaler Puls (bpm)</string>
+    <string name="custom_layout_list_edit_name">Gebe die layout-Bezeichnung ein, um sie hinzuzufügen</string>
+    <string name="settings_activity_defaults_category">Standards der Aktivität</string>
+    <string name="help_data_google_play_services_content">Nein</string>
+    <string name="description_pace_nautical">Geschwindigkeit (min/SM)</string>
+    <string name="settings_recording_min_required_accuracy_summary">Ort wird ignoriert wenn seine Genauigkeit über %1$s liegt</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth Geräte filtern</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Alle verfügbaren Bluetooth Geräte anzeigen</string>
 </resources>
