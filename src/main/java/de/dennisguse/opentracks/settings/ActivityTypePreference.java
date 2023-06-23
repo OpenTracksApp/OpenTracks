@@ -46,7 +46,7 @@ public class ActivityTypePreference extends DialogPreference {
         setDialogIcon(null);
         setPersistent(true);
 
-        SummaryProvider<DialogPreference> summaryProvider = preference -> PreferencesUtils.getDefaultActivity();
+        SummaryProvider<DialogPreference> summaryProvider = preference -> PreferencesUtils.getDefaultActivityTypeLocalized();
         setSummaryProvider(summaryProvider);
     }
 
@@ -77,7 +77,7 @@ public class ActivityTypePreference extends DialogPreference {
             final Context context = getActivity();
 
             textView = view.findViewById(R.id.activity_type_preference_text_view);
-            String category = PreferencesUtils.getDefaultActivity();
+            String category = PreferencesUtils.getDefaultActivityTypeLocalized();
             textView.setText(category);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(context));
             textView.setAdapter(adapter);
@@ -104,7 +104,7 @@ public class ActivityTypePreference extends DialogPreference {
         }
 
         private void showIconSelectDialog() {
-            String category = PreferencesUtils.getDefaultActivity();
+            String category = PreferencesUtils.getDefaultActivityTypeLocalized();
             ChooseActivityTypeDialogFragment.showDialog(getActivity().getSupportFragmentManager(), category);
         }
 
@@ -113,7 +113,7 @@ public class ActivityTypePreference extends DialogPreference {
             if (positiveResult) {
                 String newDefaultActivity = textView.getText().toString();
                 if (getPreference().callChangeListener(newDefaultActivity)) {
-                    PreferencesUtils.setDefaultActivity(newDefaultActivity);
+                    PreferencesUtils.setDefaultActivityLocalized(newDefaultActivity);
                     HackUtils.invalidatePreference(getPreference());
                 }
             }

@@ -95,7 +95,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
             iconValue = bundle.getString(ICON_VALUE_KEY);
         }
         if (iconValue == null) {
-            iconValue = track.getIcon();
+            iconValue = track.getActivityTypeId();
         }
 
         setActivityTypeIcon(iconValue);

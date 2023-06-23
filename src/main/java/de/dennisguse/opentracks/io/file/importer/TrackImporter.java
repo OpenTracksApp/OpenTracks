@@ -112,7 +112,7 @@ public class TrackImporter {
             }
         }
 
-        track.setIcon(icon != null ? icon : "");
+        track.setActivityTypeId(icon != null ? icon : "");
     }
 
     void finish() {

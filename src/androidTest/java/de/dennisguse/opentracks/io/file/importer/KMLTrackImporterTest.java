@@ -73,7 +73,7 @@ public class KMLTrackImporterTest {
         assertEquals("", importedTrack.getActivityType());
         assertEquals("", importedTrack.getDescription());
         assertEquals("", importedTrack.getName());
-        assertEquals("", importedTrack.getIcon());
+        assertEquals("", importedTrack.getActivityTypeId());
 
         // 2. markers
         assertEquals(0, contentProviderUtils.getMarkers(importTrackId).size());
@@ -122,7 +122,7 @@ public class KMLTrackImporterTest {
         assertEquals("", importedTrack.getActivityType());
         assertEquals("", importedTrack.getDescription());
         assertEquals("", importedTrack.getName());
-        assertEquals("", importedTrack.getIcon());
+        assertEquals("", importedTrack.getActivityTypeId());
 
         // 2. markers
         assertEquals(0, contentProviderUtils.getMarkers(importTrackId).size());
@@ -162,7 +162,7 @@ public class KMLTrackImporterTest {
         assertEquals("unknown", importedTrack.getActivityType());
         assertEquals("Test Track", importedTrack.getDescription());
         assertEquals("2020-11-28 18:06", importedTrack.getName());
-        assertEquals("UNKNOWN", importedTrack.getIcon());
+        assertEquals("UNKNOWN", importedTrack.getActivityTypeId());
 
         // 2. markers
         assertEquals(0, contentProviderUtils.getMarkers(importTrackId).size());

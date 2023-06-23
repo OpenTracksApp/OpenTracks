@@ -163,7 +163,7 @@ public class ContentProviderUtils {
             trackStatistics.setTotalAltitudeLoss(cursor.getFloat(altitudeLossIndex));
         }
         if (!cursor.isNull(iconIndex)) {
-            track.setIcon(cursor.getString(iconIndex));
+            track.setActivityTypeId(cursor.getString(iconIndex));
         }
         return track;
     }
@@ -308,7 +308,7 @@ public class ContentProviderUtils {
         values.put(TracksColumns.MAX_ALTITUDE, trackStatistics.getMaxAltitude());
         values.put(TracksColumns.ALTITUDE_GAIN, trackStatistics.getTotalAltitudeGain());
         values.put(TracksColumns.ALTITUDE_LOSS, trackStatistics.getTotalAltitudeLoss());
-        values.put(TracksColumns.ICON, track.getIcon());
+        values.put(TracksColumns.ICON, track.getActivityTypeId());
 
         return values;
     }

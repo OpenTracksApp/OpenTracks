@@ -90,11 +90,11 @@ public class PreferencesUtils {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener);
     }
 
-    public static String getDefaultActivity() {
+    public static String getDefaultActivityTypeLocalized() {
         return getString(R.string.default_activity_key, resources.getString(R.string.default_activity_default));
     }
 
-    public static void setDefaultActivity(String newDefaultActivity) {
+    public static void setDefaultActivityLocalized(String newDefaultActivity) {
         setString(R.string.default_activity_key, newDefaultActivity);
     }
 

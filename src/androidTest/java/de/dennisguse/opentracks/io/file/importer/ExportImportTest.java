@@ -180,7 +180,7 @@ public class ExportImportTest {
         service.endCurrentTrack();
 
         Track track = contentProviderUtils.getTrack(trackId);
-        track.setIcon(TRACK_ICON);
+        track.setActivityTypeId(TRACK_ICON);
         track.setActivityType(TRACK_ACTIVITY_TYPE);
         track.setDescription(TRACK_DESCRIPTION);
         contentProviderUtils.updateTrack(track);
@@ -219,7 +219,7 @@ public class ExportImportTest {
         assertEquals(track.getActivityType(), importedTrack.getActivityType());
         assertEquals(track.getDescription(), importedTrack.getDescription());
         assertEquals(track.getName(), importedTrack.getName());
-        assertEquals(track.getIcon(), importedTrack.getIcon());
+        assertEquals(track.getActivityTypeId(), importedTrack.getActivityTypeId());
 
         // 2. trackpoints
         TrackPointAssert a = new TrackPointAssert();

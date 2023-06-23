@@ -72,9 +72,9 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
 
         onNewTrackPoint(segmentStartTrackPoint);
 
-        String category = PreferencesUtils.getDefaultActivity();
+        String category = PreferencesUtils.getDefaultActivityTypeLocalized();
         track.setActivityType(category);
-        track.setIcon(ActivityType.findByLocalizedString(context, category)
+        track.setActivityTypeId(ActivityType.findByLocalizedString(context, category)
                 .getId());
         track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
         //TODO Pass TrackPoint

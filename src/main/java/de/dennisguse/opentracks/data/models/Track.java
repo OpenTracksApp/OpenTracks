@@ -46,7 +46,7 @@ public class Track {
     private String description = "";
     private String activityType = "";
 
-    private String icon = "";
+    private String activityTypeId = "";
 
     private final ZoneOffset zoneOffset;
 
@@ -105,12 +105,12 @@ public class Track {
         this.activityType = activityType;
     }
 
-    public String getIcon() {
-        return icon;
+    public String getActivityTypeId() {
+        return activityTypeId;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setActivityTypeId(String activityTypeId) {
+        this.activityTypeId = activityTypeId;
     }
 
     public ZoneOffset getZoneOffset() {

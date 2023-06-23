@@ -49,9 +49,9 @@ public class TrackUtils {
             update = true;
         }
         if (iconValue != null) {
-            track.setIcon(iconValue);
+            track.setActivityTypeId(iconValue);
         } else if (activityType != null) {
-            track.setIcon(ActivityType.findByLocalizedString(context, activityType)
+            track.setActivityTypeId(ActivityType.findByLocalizedString(context, activityType)
                     .getId());
         }
         if (description != null) {

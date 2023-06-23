@@ -307,7 +307,7 @@ public class KMLTrackExporter implements TrackExporter {
 
             printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
-            printWriter.println("<icon>" + StringUtils.formatCData(track.getIcon()) + "</icon>");
+            printWriter.println("<icon>" + StringUtils.formatCData(track.getActivityTypeId()) + "</icon>");
             printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
 
             printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");

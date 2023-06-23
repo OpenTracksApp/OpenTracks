@@ -66,7 +66,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
             }
         });
 
-        String iconValue = track.getIcon();
+        String iconValue = track.getActivityTypeId();
 
         setActivityTypeIcon(iconValue);
         viewBinding.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.trackEditActivityType.getText().toString()));
