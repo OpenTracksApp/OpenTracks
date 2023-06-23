@@ -191,8 +191,8 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set activity type
         {
-            String trackIconValue = TrackIconUtils.getIconValue(getContext(), track.getActivityType());
-            viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), TrackIconUtils.getIconDrawable(trackIconValue)));
+            String trackIconValue = TrackIconUtils.getActivityTypeId(getContext(), track.getActivityType());
+            viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), TrackIconUtils.getIconDrawableId(trackIconValue)));
         }
 
         // Set time and start datetime

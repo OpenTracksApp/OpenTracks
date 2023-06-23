@@ -21,11 +21,6 @@ import android.content.res.Resources;
 
 import androidx.annotation.NonNull;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import de.dennisguse.opentracks.data.models.ActivityType;
 
 /**
@@ -35,65 +30,24 @@ import de.dennisguse.opentracks.data.models.ActivityType;
  */
 public class TrackIconUtils {
 
-    public static int getIconDrawable(String activityTypeId) {
-        Optional<ActivityType> found = Arrays.stream(ActivityType.values()).filter(
-                it -> it.getId().equals(activityTypeId)
-        ).findFirst();
-
-        return found.map(ActivityType::getIconId)
-                .orElseGet(ActivityType.UNKNOWN::getIconId);
-
+    public static int getIconDrawableId(String activityTypeId) {
+        return ActivityType.findByActivityTypeId(activityTypeId)
+                .getIconDrawableId();
     }
 
     public static int getIconActivityType(String activityTypeId) {
-        Optional<ActivityType> found = Arrays.stream(ActivityType.values()).filter(
-                it -> it.getId().equals(activityTypeId)
-        ).findFirst();
-
-        return found.map(ActivityType::getFirstLocalizedStringId)
-                .orElseGet(ActivityType.UNKNOWN::getFirstLocalizedStringId);
-
+        return ActivityType.findByActivityTypeId(activityTypeId)
+                .getFirstLocalizedStringId();
     }
 
-    /**
-     * Gets all icon values.
-     */
-    public static List<String> getAllIconValues() {
-        return Arrays.stream(ActivityType.values())
-                .map(ActivityType::getId)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Gets the icon value.
-     *
-     * @param context        the context
-     * @param activityTypeId the activity type
-     */
     @NonNull
-    public static String getIconValue(Context context, String activityTypeId) {
-        Optional<ActivityType> selected = Arrays.stream(ActivityType.values())
-                .filter(
-                        it -> Arrays.stream(it.getLocalizedStringIds())
-                                .anyMatch(id -> context.getString(id).equals(activityTypeId))
-                )
-                .findFirst();
-        if (selected.isEmpty()) {
-            return ActivityType.UNKNOWN.getId();
-        }
-        return selected.get().getId();
+    public static String getActivityTypeId(Context context, String localizedActivityType) {
+        return ActivityType.findByLocalizedString(context, localizedActivityType)
+                .getId();
     }
 
-    public static boolean isSpeedIcon(Resources resources, String activityTypeId) {
-        Optional<ActivityType> selected = Arrays.stream(ActivityType.values())
-                .filter(
-                        it -> Arrays.stream(it.getLocalizedStringIds())
-                                .anyMatch(id -> resources.getString(id).equals(activityTypeId))
-                )
-                .findFirst();
-
-        return selected.map(ActivityType::isShowSpeedPreferred)
-                .orElse(false);
-
+    public static boolean isSpeedIcon(Resources resources, String localizedActivityType) {
+        return ActivityType.findByLocalizedString(resources, localizedActivityType)
+                .isShowSpeedPreferred();
     }
 }

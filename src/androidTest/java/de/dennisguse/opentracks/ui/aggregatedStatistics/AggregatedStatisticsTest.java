@@ -40,7 +40,7 @@ public class AggregatedStatisticsTest {
         statistics.setMinAltitude(1200.0);  // Resulting min altitude
 
         Track track = new Track();
-        track.setIcon(TrackIconUtils.getIconValue(context, category));
+        track.setIcon(TrackIconUtils.getActivityTypeId(context, category));
         track.setActivityType(category);
         track.setTrackStatistics(statistics);
         return track;

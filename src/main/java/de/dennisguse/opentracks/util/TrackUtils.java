@@ -33,7 +33,7 @@ public class TrackUtils {
     }
 
     public static void updateTrack(Context context, Track track, String name, String activityType, String description, ContentProviderUtils contentProviderUtils) {
-        updateTrack(context, track, name, activityType, TrackIconUtils.getIconValue(context, activityType), description, contentProviderUtils);
+        updateTrack(context, track, name, activityType, TrackIconUtils.getActivityTypeId(context, activityType), description, contentProviderUtils);
     }
 
     public static void updateTrack(Context context, Track track, String name, String activityType, String iconValue, String description, ContentProviderUtils contentProviderUtils) {
@@ -49,7 +49,7 @@ public class TrackUtils {
         if (iconValue != null) {
             track.setIcon(iconValue);
         } else if (activityType != null) {
-            track.setIcon(TrackIconUtils.getIconValue(context, activityType));
+            track.setIcon(TrackIconUtils.getActivityTypeId(context, activityType));
         }
         if (description != null) {
             track.setDescription(description);

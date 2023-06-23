@@ -54,10 +54,10 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(this));
         viewBinding.trackEditActivityType.setAdapter(adapter);
-        viewBinding.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> setActivityTypeIcon(TrackIconUtils.getIconValue(this, (String) viewBinding.trackEditActivityType.getAdapter().getItem(position))));
+        viewBinding.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> setActivityTypeIcon(TrackIconUtils.getActivityTypeId(this, (String) viewBinding.trackEditActivityType.getAdapter().getItem(position))));
         viewBinding.trackEditActivityType.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                setActivityTypeIcon(TrackIconUtils.getIconValue(
+                setActivityTypeIcon(TrackIconUtils.getActivityTypeId(
                         TrackStoppedActivity.this, viewBinding.trackEditActivityType.getText().toString()));
             }
         });
@@ -126,7 +126,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
     }
 
     private void setActivityTypeIcon(String iconValue) {
-        viewBinding.trackEditActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawable(iconValue));
+        viewBinding.trackEditActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawableId(iconValue));
     }
 
     @Override

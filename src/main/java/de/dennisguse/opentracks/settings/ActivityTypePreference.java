@@ -83,12 +83,12 @@ public class ActivityTypePreference extends DialogPreference {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(context));
             textView.setAdapter(adapter);
             textView.setOnItemClickListener((parent, v, position, id) -> {
-                String iconValue = TrackIconUtils.getIconValue(context, (String) textView.getAdapter().getItem(position));
+                String iconValue = TrackIconUtils.getActivityTypeId(context, (String) textView.getAdapter().getItem(position));
                 updateIcon(iconValue);
             });
             textView.setOnFocusChangeListener((v, hasFocus) -> {
                 if (!hasFocus) {
-                    String iconValue = TrackIconUtils.getIconValue(context, textView.getText().toString());
+                    String iconValue = TrackIconUtils.getActivityTypeId(context, textView.getText().toString());
                     updateIcon(iconValue);
                 }
             });
@@ -96,7 +96,7 @@ public class ActivityTypePreference extends DialogPreference {
             iconView = view.findViewById(R.id.activity_type_preference_spinner);
             iconView.setOnClickListener((it) -> showIconSelectDialog());
 
-            updateIcon(TrackIconUtils.getIconValue(context, category));
+            updateIcon(TrackIconUtils.getActivityTypeId(context, category));
         }
 
         private void showIconSelectDialog() {
@@ -122,7 +122,7 @@ public class ActivityTypePreference extends DialogPreference {
         }
 
         private void updateIcon(String iconValue) {
-            iconView.setImageResource(TrackIconUtils.getIconDrawable(iconValue));
+            iconView.setImageResource(TrackIconUtils.getIconDrawableId(iconValue));
         }
     }
 }

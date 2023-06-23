@@ -13,9 +13,12 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.databinding.ChooseActivityTypeBinding;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
@@ -34,9 +37,9 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
         if (category == null) {
             return -1;
         }
-        String iconValue = TrackIconUtils.getIconValue(context, category);
+        String iconValue = TrackIconUtils.getActivityTypeId(context, category);
 
-        return TrackIconUtils.getAllIconValues().indexOf(iconValue);
+        return getAllActivityTypeIds().indexOf(iconValue);
     }
 
     private ChooseActivityTypeBinding viewBinding;
@@ -61,12 +64,12 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewBinding = ChooseActivityTypeBinding.inflate(inflater, container, false);
 
-        List<Integer> imageIds = new ArrayList<>();
-        for (String iconValue : TrackIconUtils.getAllIconValues()) {
-            imageIds.add(TrackIconUtils.getIconDrawable(iconValue));
+        List<Integer> iconDrawableIds = new ArrayList<>();
+        for (String iconValue : getAllActivityTypeIds()) {
+            iconDrawableIds.add(TrackIconUtils.getIconDrawableId(iconValue));
         }
 
-        final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(imageIds);
+        final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(iconDrawableIds);
         int position = getPosition(getContext(), preselectedCategory);
         if (position != -1) {
             imageAdapter.setSelected(position);
@@ -94,8 +97,14 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        chooseActivityTypeCaller.onChooseActivityTypeDone(TrackIconUtils.getAllIconValues().get(position));
+        chooseActivityTypeCaller.onChooseActivityTypeDone(getAllActivityTypeIds().get(position));
         dismiss();
+    }
+
+    public static List<String> getAllActivityTypeIds() {
+        return Arrays.stream(ActivityType.values())
+                .map(ActivityType::getId)
+                .collect(Collectors.toList());
     }
 
     /**

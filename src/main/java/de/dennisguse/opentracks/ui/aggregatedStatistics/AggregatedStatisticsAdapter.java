@@ -178,8 +178,8 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         }
 
         private int getIcon(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
-            String iconValue = TrackIconUtils.getIconValue(context, aggregatedStatistic.getActivityType());
-            return TrackIconUtils.getIconDrawable(iconValue);
+            String iconValue = TrackIconUtils.getActivityTypeId(context, aggregatedStatistic.getActivityType());
+            return TrackIconUtils.getIconDrawableId(iconValue);
         }
     }
 }

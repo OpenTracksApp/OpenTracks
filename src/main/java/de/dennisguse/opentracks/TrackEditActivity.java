@@ -78,10 +78,10 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(this));
         viewBinding.fields.trackEditActivityType.setAdapter(adapter);
-        viewBinding.fields.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> setActivityTypeIcon(TrackIconUtils.getIconValue(this, (String) viewBinding.fields.trackEditActivityType.getAdapter().getItem(position))));
+        viewBinding.fields.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> setActivityTypeIcon(TrackIconUtils.getActivityTypeId(this, (String) viewBinding.fields.trackEditActivityType.getAdapter().getItem(position))));
         viewBinding.fields.trackEditActivityType.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                setActivityTypeIcon(TrackIconUtils.getIconValue(
+                setActivityTypeIcon(TrackIconUtils.getActivityTypeId(
                         TrackEditActivity.this, viewBinding.fields.trackEditActivityType.getText().toString()));
             }
         });
@@ -138,7 +138,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
     private void setActivityTypeIcon(String iconValue) {
         this.iconValue = iconValue;
-        viewBinding.fields.trackEditActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawable(iconValue));
+        viewBinding.fields.trackEditActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawableId(iconValue));
     }
 
     @Override

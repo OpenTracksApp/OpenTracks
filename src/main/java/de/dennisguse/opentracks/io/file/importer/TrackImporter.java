@@ -107,7 +107,7 @@ public class TrackImporter {
             track.setActivityType(activityType);
 
             if (icon == null) {
-                icon = TrackIconUtils.getIconValue(context, activityType);
+                icon = TrackIconUtils.getActivityTypeId(context, activityType);
             }
         }
 

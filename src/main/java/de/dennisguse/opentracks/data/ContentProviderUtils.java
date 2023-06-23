@@ -100,7 +100,7 @@ public class ContentProviderUtils {
         int uuidIndex = cursor.getColumnIndexOrThrow(TracksColumns.UUID);
         int nameIndex = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
         int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
-        int categoryIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE);
+        int activityTypeIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE);
         int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
         int startTimeOffsetIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME_OFFSET);
         int stopTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STOPTIME);
@@ -128,8 +128,8 @@ public class ContentProviderUtils {
         if (!cursor.isNull(descriptionIndex)) {
             track.setDescription(cursor.getString(descriptionIndex));
         }
-        if (!cursor.isNull(categoryIndex)) {
-            track.setActivityType(cursor.getString(categoryIndex));
+        if (!cursor.isNull(activityTypeIndex)) {
+            track.setActivityType(cursor.getString(activityTypeIndex));
         }
 
         if (!cursor.isNull(startTimeIndex)) {

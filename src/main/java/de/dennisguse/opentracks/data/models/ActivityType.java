@@ -1,6 +1,9 @@
 package de.dennisguse.opentracks.data.models;
 
 import android.content.Context;
+import android.content.res.Resources;
+
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,15 +35,15 @@ public enum ActivityType {
     WORKOUT("WORKOUT", R.drawable.ic_activity_workout_24dp, false, R.string.activity_type_workout);
 
     final String id;
-    final int iconId;
+    final int iconDrawableId;
     final boolean showSpeedPreferred;
     final int[] localizedStringIds;
 
     //isSpeed?
 
-    ActivityType(String id, int iconId, boolean showSpeedPreferred, int... localizedStringIds) {
+    ActivityType(String id, int iconDrawableId, boolean showSpeedPreferred, int... localizedStringIds) {
         this.id = id;
-        this.iconId = iconId;
+        this.iconDrawableId = iconDrawableId;
         this.showSpeedPreferred = showSpeedPreferred;
         this.localizedStringIds = localizedStringIds;
     }
@@ -49,8 +52,8 @@ public enum ActivityType {
         return id;
     }
 
-    public int getIconId() {
-        return iconId;
+    public int getIconDrawableId() {
+        return iconDrawableId;
     }
 
     public boolean isShowSpeedPreferred() {
@@ -75,5 +78,26 @@ public enum ActivityType {
         }
 
         return result;
+    }
+
+    @NonNull
+    public static ActivityType findByActivityTypeId(String activityTypeId) {
+        return Arrays.stream(ActivityType.values()).filter(
+                        it -> it.getId().equals(activityTypeId)
+                ).findFirst()
+                .orElse(ActivityType.UNKNOWN);
+    }
+
+    public static ActivityType findByLocalizedString(Context context, String localizedActivityType) {
+        return findByLocalizedString(context.getResources(), localizedActivityType);
+    }
+
+    public static ActivityType findByLocalizedString(Resources resources, String localizedActivityType) {
+        return Arrays.stream(ActivityType.values())
+                .filter(
+                        it -> Arrays.stream(it.getLocalizedStringIds())
+                                .anyMatch(id -> resources.getString(id).equals(localizedActivityType))
+                ).findFirst()
+                .orElse(ActivityType.UNKNOWN);
     }
 }

@@ -219,7 +219,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 Track.Id trackId = new Track.Id(cursor.getLong(idIndex));
                 boolean isRecording = trackId.equals(recordingStatus.getTrackId());
                 String icon = cursor.getString(iconIndex);
-                int iconId = TrackIconUtils.getIconDrawable(icon);
+                int iconId = TrackIconUtils.getIconDrawableId(icon);
                 String name = cursor.getString(nameIndex);
                 String totalTime = StringUtils.formatElapsedTime(Duration.ofMillis(cursor.getLong(totalTimeIndex)));
                 String totalDistance = DistanceFormatter.Builder()
