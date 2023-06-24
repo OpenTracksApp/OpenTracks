@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -14,8 +15,8 @@ import de.dennisguse.opentracks.util.TrackUtils;
 public class StartRecording extends AbstractAPIActivity {
 
     public static final String EXTRA_TRACK_NAME = "TRACK_NAME";
-    public static final String EXTRA_TRACK_CATEGORY = "TRACK_CATEGORY";
-    public static final String EXTRA_TRACK_ICON = "TRACK_ICON";
+    public static final String EXTRA_TRACK_ACTIVITY_TYPE_LOCALIZED = "TRACK_CATEGORY"; //TODO Update constant
+    public static final String EXTRA_TRACK_ACTIVITY_TYPE_ID = "TRACK_ICON"; //TODO Update constant
     public static final String EXTRA_TRACK_DESCRIPTION = "TRACK_DESCRIPTION";
 
     public static final String EXTRA_STATS_TARGET_PACKAGE = "STATS_TARGET_PACKAGE";
@@ -43,8 +44,8 @@ public class StartRecording extends AbstractAPIActivity {
 
         TrackUtils.updateTrack(this, track,
                 bundle.getString(EXTRA_TRACK_NAME, null),
-                bundle.getString(EXTRA_TRACK_CATEGORY, null),
-                bundle.getString(EXTRA_TRACK_ICON, null),
+                bundle.getString(EXTRA_TRACK_ACTIVITY_TYPE_LOCALIZED, null),
+                ActivityType.findBy(bundle.getString(EXTRA_TRACK_ACTIVITY_TYPE_ID, null)),
                 bundle.getString(EXTRA_TRACK_DESCRIPTION, null),
                 contentProviderUtils);
     }

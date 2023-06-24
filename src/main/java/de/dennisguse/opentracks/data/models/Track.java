@@ -44,9 +44,9 @@ public class Track {
 
     private String name = "";
     private String description = "";
-    private String activityType = "";
+    private String activityTypeLocalized = "";
 
-    private String activityTypeId = "";
+    private ActivityType activityType;
 
     private final ZoneOffset zoneOffset;
 
@@ -54,7 +54,7 @@ public class Track {
 
     @VisibleForTesting
     public Track() {
-        this.zoneOffset = ZoneOffset.UTC;
+        this(ZoneOffset.UTC);
     }
 
     public Track(@NonNull ZoneOffset zoneOffset) {
@@ -97,20 +97,20 @@ public class Track {
         this.description = description;
     }
 
-    public String getActivityType() {
+    public String getActivityTypeLocalized() {
+        return activityTypeLocalized;
+    }
+
+    public void setActivityTypeLocalized(String activityType) {
+        this.activityTypeLocalized = activityType;
+    }
+
+    public ActivityType getActivityType() {
         return activityType;
     }
 
-    public void setActivityType(String activityType) {
+    public void setActivityType(ActivityType activityType) {
         this.activityType = activityType;
-    }
-
-    public String getActivityTypeId() {
-        return activityTypeId;
-    }
-
-    public void setActivityTypeId(String activityTypeId) {
-        this.activityTypeId = activityTypeId;
     }
 
     public ZoneOffset getZoneOffset() {

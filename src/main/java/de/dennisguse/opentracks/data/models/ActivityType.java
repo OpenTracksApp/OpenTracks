@@ -34,22 +34,22 @@ public enum ActivityType {
     SWIMMING_OPEN("SWIMMING_OPEN", R.drawable.ic_activity_swimming_open_24dp, false, R.string.activity_type_swimming_open),
     WORKOUT("WORKOUT", R.drawable.ic_activity_workout_24dp, false, R.string.activity_type_workout);
 
-    final String id;
+    final String iconId;
     final int iconDrawableId;
     final boolean showSpeedPreferred;
     final int[] localizedStringIds;
 
     //isSpeed?
 
-    ActivityType(String id, int iconDrawableId, boolean showSpeedPreferred, int... localizedStringIds) {
-        this.id = id;
+    ActivityType(String iconId, int iconDrawableId, boolean showSpeedPreferred, int... localizedStringIds) {
+        this.iconId = iconId;
         this.iconDrawableId = iconDrawableId;
         this.showSpeedPreferred = showSpeedPreferred;
         this.localizedStringIds = localizedStringIds;
     }
 
-    public String getId() {
-        return id;
+    public String getIconId() {
+        return iconId;
     }
 
     public int getIconDrawableId() {
@@ -81,9 +81,9 @@ public enum ActivityType {
     }
 
     @NonNull
-    public static ActivityType findByActivityTypeId(String activityTypeId) {
+    public static ActivityType findBy(String iconId) {
         return Arrays.stream(ActivityType.values()).filter(
-                        it -> it.getId().equals(activityTypeId)
+                        it -> it.getIconId().equals(iconId)
                 ).findFirst()
                 .orElse(ActivityType.UNKNOWN);
     }

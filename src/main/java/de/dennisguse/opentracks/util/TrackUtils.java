@@ -27,32 +27,32 @@ import de.dennisguse.opentracks.data.models.Track;
  *
  * @author Jimmy Shih
  */
+//TOOD Refactor ActivityType handling in here!
 @Deprecated //TODO Refactor: all this should happen somewhere else (ContentProviderUtils?)
 public class TrackUtils {
 
     private TrackUtils() {
     }
 
-    public static void updateTrack(Context context, Track track, String name, String activityType, String description, ContentProviderUtils contentProviderUtils) {
-        updateTrack(context, track, name, activityType, ActivityType.findByLocalizedString(context, activityType)
-                .getId(), description, contentProviderUtils);
+    public static void updateTrack(Context context, Track track, String name, String activityTypeLocalized, String description, ContentProviderUtils contentProviderUtils) {
+        updateTrack(context, track, name, activityTypeLocalized, ActivityType.findByLocalizedString(context, activityTypeLocalized), description, contentProviderUtils);
     }
 
-    public static void updateTrack(Context context, Track track, String name, String activityType, String iconValue, String description, ContentProviderUtils contentProviderUtils) {
+    public static void updateTrack(Context context, Track track, String name, String activityTypeLocalized, ActivityType activityType, String description, ContentProviderUtils contentProviderUtils) {
         boolean update = false;
         if (name != null) {
             track.setName(name);
             update = true;
         }
-        if (activityType != null) {
-            track.setActivityType(activityType);
+        if (activityTypeLocalized != null) {
+            track.setActivityTypeLocalized(activityTypeLocalized);
             update = true;
         }
-        if (iconValue != null) {
-            track.setActivityTypeId(iconValue);
-        } else if (activityType != null) {
-            track.setActivityTypeId(ActivityType.findByLocalizedString(context, activityType)
-                    .getId());
+        if (activityType != null) {
+            track.setActivityType(activityType);
+        } else if (activityTypeLocalized != null) {
+            track.setActivityType(ActivityType.findByLocalizedString(context, activityTypeLocalized)
+            );
         }
         if (description != null) {
             track.setDescription(description);

@@ -307,11 +307,11 @@ public class KMLTrackExporter implements TrackExporter {
 
             printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
-            printWriter.println("<icon>" + StringUtils.formatCData(track.getActivityTypeId()) + "</icon>");
+            printWriter.println("<icon>" + StringUtils.formatCData(track.getActivityType().getIconId()) + "</icon>");
             printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
 
             printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");
-            writeActivityType(track.getActivityType());
+            writeActivityType(track.getActivityTypeLocalized());
             printWriter.println("<MultiTrack>");
             printWriter.println("<altitudeMode>absolute</altitudeMode>");
             printWriter.println("<interpolate>1</interpolate>");
@@ -514,12 +514,12 @@ public class KMLTrackExporter implements TrackExporter {
         return result;
     }
 
-    private void writeActivityType(String actiivtyType) {
-        if (actiivtyType == null || actiivtyType.equals("")) {
+    private void writeActivityType(String activityTypeLocalized) {
+        if (activityTypeLocalized == null || activityTypeLocalized.equals("")) {
             return;
         }
         printWriter.println("<ExtendedData>");
-        printWriter.println("<Data name=\"" + EXTENDED_DATA_TYPE_ACTIVITYTYPE + "\"><value>" + StringUtils.formatCData(actiivtyType) + "</value></Data>");
+        printWriter.println("<Data name=\"" + EXTENDED_DATA_TYPE_ACTIVITYTYPE + "\"><value>" + StringUtils.formatCData(activityTypeLocalized) + "</value></Data>");
         printWriter.println("</ExtendedData>");
     }
 

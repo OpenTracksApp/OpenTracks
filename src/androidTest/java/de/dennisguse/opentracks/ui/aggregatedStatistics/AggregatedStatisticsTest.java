@@ -27,7 +27,7 @@ public class AggregatedStatisticsTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
 
-    private static Track createTrack(Context context, Distance totalDistance, Duration totalTime, String category) {
+    private static Track createTrack(Context context, Distance totalDistance, Duration totalTime, String activityTypeLocalized) {
         TrackStatistics statistics = new TrackStatistics();
         statistics.setStartTime(Instant.ofEpochMilli(1000L));  // Resulting start time
         statistics.setStopTime(statistics.getStartTime().plus(totalTime));
@@ -40,9 +40,8 @@ public class AggregatedStatisticsTest {
         statistics.setMinAltitude(1200.0);  // Resulting min altitude
 
         Track track = new Track();
-        track.setActivityTypeId(ActivityType.findByLocalizedString(context, category)
-                .getId());
-        track.setActivityType(category);
+        track.setActivityType(ActivityType.findByLocalizedString(context, activityTypeLocalized));
+        track.setActivityTypeLocalized(activityTypeLocalized);
         track.setTrackStatistics(statistics);
         return track;
     }

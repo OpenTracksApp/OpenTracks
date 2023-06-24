@@ -37,7 +37,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
             return -1;
         }
         String iconValue = ActivityType.findByLocalizedString(context, category)
-                .getId();
+                .getIconId();
 
         return getAllActivityTypeIds().indexOf(iconValue);
     }
@@ -66,7 +66,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
 
         List<Integer> iconDrawableIds = new ArrayList<>();
         for (String iconValue : getAllActivityTypeIds()) {
-            iconDrawableIds.add(ActivityType.findByActivityTypeId(iconValue)
+            iconDrawableIds.add(ActivityType.findBy(iconValue)
                     .getIconDrawableId());
         }
 
@@ -98,13 +98,14 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        chooseActivityTypeCaller.onChooseActivityTypeDone(getAllActivityTypeIds().get(position));
+        chooseActivityTypeCaller.onChooseActivityTypeDone(ActivityType.findBy(getAllActivityTypeIds().get(position)));
         dismiss();
     }
 
+    // TODO Return List<ActivityType>
     public static List<String> getAllActivityTypeIds() {
         return Arrays.stream(ActivityType.values())
-                .map(ActivityType::getId)
+                .map(ActivityType::getIconId)
                 .collect(Collectors.toList());
     }
 
@@ -113,6 +114,6 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
      */
     public interface ChooseActivityTypeCaller {
 
-        void onChooseActivityTypeDone(String iconValue);
+        void onChooseActivityTypeDone(ActivityType activityType);
     }
 }

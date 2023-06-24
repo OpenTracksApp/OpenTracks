@@ -184,8 +184,8 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         private int getIcon(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             String localizedActivityType = aggregatedStatistic.getActivityType();
             String iconValue = ActivityType.findByLocalizedString(context, localizedActivityType)
-                    .getId();
-            return ActivityType.findByActivityTypeId(iconValue)
+                    .getIconId();
+            return ActivityType.findBy(iconValue)
                     .getIconDrawableId();
         }
     }

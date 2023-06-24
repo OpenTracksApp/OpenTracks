@@ -39,7 +39,7 @@ public interface TracksColumns extends BaseColumns {
     String UUID = "uuid"; // identifier to make tracks globally unique (prevent re-import)
     String NAME = "name"; // track name
     String DESCRIPTION = "description"; // track description
-    String ACTIVITY_TYPE = "category"; // track activity type
+    String ACTIVITY_TYPE_LOCALIZED = "category"; // track activity type
     String STARTTIME = "starttime"; // track start time
     String STARTTIME_OFFSET = "starttime_offset"; // in plus/minus in seconds
     String STOPTIME = "stoptime"; // track stop time
@@ -57,13 +57,13 @@ public interface TracksColumns extends BaseColumns {
     String MAX_ALTITUDE = "maxelevation"; // maximum altitude //TODO RENAME column
     String ALTITUDE_GAIN = "elevationgain"; // altitude gain //TODO RENAME column
     String ALTITUDE_LOSS = "elevationloss"; // altitude loss //TODO RENAME column
-    String ICON = "icon"; // track activity type icon
+    String ICON = "icon"; // track activity type icon //TODO DEPRECATED
 
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + NAME + " TEXT, "
             + DESCRIPTION + " TEXT, "
-            + ACTIVITY_TYPE + " TEXT, "
+            + ACTIVITY_TYPE_LOCALIZED + " TEXT, "
             + STARTTIME + " INTEGER, "
             + STOPTIME + " INTEGER, "
             + NUMPOINTS + " INTEGER, "

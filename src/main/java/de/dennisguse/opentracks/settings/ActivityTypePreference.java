@@ -83,24 +83,21 @@ public class ActivityTypePreference extends DialogPreference {
             textView.setAdapter(adapter);
             textView.setOnItemClickListener((parent, v, position, id) -> {
                 String localizedActivityType = (String) textView.getAdapter().getItem(position);
-                String iconValue = ActivityType.findByLocalizedString(context, localizedActivityType)
-                        .getId();
-                updateIcon(iconValue);
+                ActivityType activityType = ActivityType.findByLocalizedString(context, localizedActivityType);
+                updateIcon(activityType);
             });
             textView.setOnFocusChangeListener((v, hasFocus) -> {
                 if (!hasFocus) {
                     String localizedActivityType = textView.getText().toString();
-                    String iconValue = ActivityType.findByLocalizedString(context, localizedActivityType)
-                            .getId();
-                    updateIcon(iconValue);
+                    ActivityType activityType = ActivityType.findByLocalizedString(context, localizedActivityType);
+                    updateIcon(activityType);
                 }
             });
 
             iconView = view.findViewById(R.id.activity_type_preference_spinner);
             iconView.setOnClickListener((it) -> showIconSelectDialog());
 
-            updateIcon(ActivityType.findByLocalizedString(context, category)
-                    .getId());
+            updateIcon(ActivityType.findByLocalizedString(context, category));
         }
 
         private void showIconSelectDialog() {
@@ -119,16 +116,14 @@ public class ActivityTypePreference extends DialogPreference {
             }
         }
 
-        public void updateUI(String iconValue) {
-            updateIcon(iconValue);
-            textView.setText(getActivity().getString(ActivityType.findByActivityTypeId(iconValue)
-                    .getFirstLocalizedStringId()));
+        public void updateUI(ActivityType activityType) {
+            updateIcon(activityType);
+            textView.setText(getActivity().getString(activityType.getFirstLocalizedStringId()));
             textView.clearFocus();
         }
 
-        private void updateIcon(String iconValue) {
-            iconView.setImageResource(ActivityType.findByActivityTypeId(iconValue)
-                    .getIconDrawableId());
+        private void updateIcon(ActivityType activityType) {
+            iconView.setImageResource(activityType.getIconDrawableId());
         }
     }
 }

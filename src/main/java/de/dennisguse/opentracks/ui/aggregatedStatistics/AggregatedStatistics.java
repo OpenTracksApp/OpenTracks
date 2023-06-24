@@ -33,7 +33,7 @@ public class AggregatedStatistics {
 
     @VisibleForTesting
     public void aggregate(@NonNull Track track) {
-        String activityType = track.getActivityType();
+        String activityType = track.getActivityTypeLocalized();
         if (dataMap.containsKey(activityType)) {
             dataMap.get(activityType).add(track.getTrackStatistics());
         } else {

@@ -317,11 +317,10 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     @Override
-    public void onChooseActivityTypeDone(String iconValue) {
+    public void onChooseActivityTypeDone(ActivityType activityType) {
         Track track = contentProviderUtils.getTrack(trackId);
-        String activityType = getString(ActivityType.findByActivityTypeId(iconValue)
-                .getFirstLocalizedStringId());
-        TrackUtils.updateTrack(this, track, null, activityType, null, contentProviderUtils);
+        String activityTypeLocalized = getString(activityType.getFirstLocalizedStringId());
+        TrackUtils.updateTrack(this, track, null, activityTypeLocalized, null, contentProviderUtils);
     }
 
     private class CustomFragmentPagerAdapter extends FragmentStateAdapter {

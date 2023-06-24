@@ -90,7 +90,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         if (PreferencesUtils.isKey(R.string.stats_rate_key, key) && track != null) {
             updateUInecessary = true;
-            preferenceReportSpeed = PreferencesUtils.isReportSpeed(track.getActivityType());
+            preferenceReportSpeed = PreferencesUtils.isReportSpeed(track.getActivityTypeLocalized());
         }
 
         if (key != null && updateUInecessary && isResumed()) {
@@ -156,7 +156,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
                     sensorStatistics = contentProviderUtils.getSensorStats(trackId);
 
-                    boolean prefsChanged = this.track == null || (!this.track.getActivityType().equals(track.getActivityType()));
+                    boolean prefsChanged = this.track == null || (!this.track.getActivityTypeLocalized().equals(track.getActivityTypeLocalized()));
                     this.track = track;
                     if (prefsChanged) {
                         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, getString(R.string.stats_rate_key));
@@ -193,10 +193,10 @@ public class StatisticsRecordedFragment extends Fragment {
         // Set activity type
         {
             Context context = getContext();
-            String localizedActivityType = track.getActivityType();
+            String localizedActivityType = track.getActivityTypeLocalized();
             String trackIconValue = ActivityType.findByLocalizedString(context, localizedActivityType)
-                    .getId();
-            viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), ActivityType.findByActivityTypeId(trackIconValue)
+                    .getIconId();
+            viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), ActivityType.findBy(trackIconValue)
                     .getIconDrawableId()));
         }
 

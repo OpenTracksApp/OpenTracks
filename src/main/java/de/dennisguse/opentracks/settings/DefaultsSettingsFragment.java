@@ -9,6 +9,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 
 public class DefaultsSettingsFragment extends PreferenceFragmentCompat implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
@@ -81,9 +82,9 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
     }
 
     @Override
-    public void onChooseActivityTypeDone(String iconValue) {
+    public void onChooseActivityTypeDone(ActivityType activityType) {
         if (activityPreferenceDialog != null) {
-            activityPreferenceDialog.updateUI(iconValue);
+            activityPreferenceDialog.updateUI(activityType);
         }
     }
 }

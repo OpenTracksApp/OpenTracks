@@ -80,7 +80,7 @@ public class DescriptionGeneratorTest {
         stats.setTotalAltitudeLoss(6000f);
         stats.setStartTime(START_TIME);
         track.setTrackStatistics(stats);
-        track.setActivityType("hiking");
+        track.setActivityTypeLocalized("hiking");
         String expected = //"Created by"
                 "<a href='https://github.com/OpenTracksApp/OpenTracks'>OpenTracks (Debug)</a><p>"
                         + "Name: -<br>"
@@ -118,7 +118,7 @@ public class DescriptionGeneratorTest {
         stats.setTotalAltitudeLoss(6000f);
         stats.setStartTime(START_TIME);
         track.setTrackStatistics(stats);
-        track.setActivityType("hiking");
+        track.setActivityTypeLocalized("hiking");
         String expected = //"Created by"
                 "<a href='https://github.com/OpenTracksApp/OpenTracks'>OpenTracks (Debug)</a><p>"
                         + "Name: -<br>"

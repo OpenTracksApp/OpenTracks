@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.BuildConfig;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
@@ -100,7 +101,7 @@ public class ContentProviderUtils {
         int uuidIndex = cursor.getColumnIndexOrThrow(TracksColumns.UUID);
         int nameIndex = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
         int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
-        int activityTypeIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE);
+        int activityTypeLocalizedIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE_LOCALIZED);
         int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
         int startTimeOffsetIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME_OFFSET);
         int stopTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STOPTIME);
@@ -128,8 +129,8 @@ public class ContentProviderUtils {
         if (!cursor.isNull(descriptionIndex)) {
             track.setDescription(cursor.getString(descriptionIndex));
         }
-        if (!cursor.isNull(activityTypeIndex)) {
-            track.setActivityType(cursor.getString(activityTypeIndex));
+        if (!cursor.isNull(activityTypeLocalizedIndex)) {
+            track.setActivityTypeLocalized(cursor.getString(activityTypeLocalizedIndex));
         }
 
         if (!cursor.isNull(startTimeIndex)) {
@@ -163,7 +164,7 @@ public class ContentProviderUtils {
             trackStatistics.setTotalAltitudeLoss(cursor.getFloat(altitudeLossIndex));
         }
         if (!cursor.isNull(iconIndex)) {
-            track.setActivityTypeId(cursor.getString(iconIndex));
+            track.setActivityType(ActivityType.findBy(cursor.getString(iconIndex)));
         }
         return track;
     }
@@ -290,7 +291,7 @@ public class ContentProviderUtils {
         values.put(TracksColumns.UUID, UUIDUtils.toBytes(track.getUuid()));
         values.put(TracksColumns.NAME, track.getName());
         values.put(TracksColumns.DESCRIPTION, track.getDescription());
-        values.put(TracksColumns.ACTIVITY_TYPE, track.getActivityType());
+        values.put(TracksColumns.ACTIVITY_TYPE_LOCALIZED, track.getActivityTypeLocalized());
         values.put(TracksColumns.STARTTIME_OFFSET, track.getZoneOffset().getTotalSeconds());
         if (trackStatistics.getStartTime() != null) {
             values.put(TracksColumns.STARTTIME, trackStatistics.getStartTime().toEpochMilli());
@@ -308,7 +309,7 @@ public class ContentProviderUtils {
         values.put(TracksColumns.MAX_ALTITUDE, trackStatistics.getMaxAltitude());
         values.put(TracksColumns.ALTITUDE_GAIN, trackStatistics.getTotalAltitudeGain());
         values.put(TracksColumns.ALTITUDE_LOSS, trackStatistics.getTotalAltitudeLoss());
-        values.put(TracksColumns.ICON, track.getActivityTypeId());
+        values.put(TracksColumns.ICON, track.getActivityType() != null ? track.getActivityType().getIconId() : "");
 
         return values;
     }
