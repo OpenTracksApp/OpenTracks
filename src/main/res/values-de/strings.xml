@@ -451,7 +451,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="generic_completed">Abgeschlossen</string>
     <string name="gps_disabled_msg">GPS deaktiviert</string>
     <string name="export_progress_summary_overwrite_msg">Streckenaufzeichnung überschrieben</string>
-    <string name="export_progress_summary_skip_msg">Strecke übersprungen</string>
+    <string name="export_progress_summary_skip_msg">Dateien übersprungen</string>
     <string name="export_progress_summary_errors_msg">Fehler</string>
     <string name="generic_click_twice_cancel">Klicke nochmal auf zurück, um abzubrechen</string>
     <string name="import_error_list_dialog_title">Dateien wurden nicht importiert</string>
@@ -624,7 +624,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="menu_export_all_one_file">Alle exportieren (eine Datei für alle Aufzeichnungen)</string>
     <string name="settings_generic_sensor">Generisch</string>
     <string name="settings_public_api_package_title">Package name Öffentlichen API</string>
-    <string name="settings_api_summary">API zur Kontrolle und dem Abrufen von Statistiken für andere Apps bereitstellen</string>
+    <string name="settings_api_summary">API zur Kontrolle und zum Abrufen von Statistiken für andere Apps bereitstellen</string>
     <string name="settings_import_export_summary">Import, Export, automatischer Export</string>
     <string name="settings_sensor_heart_rate_max">Zonen: maximaler Puls (bpm)</string>
     <string name="custom_layout_list_edit_name">Gebe die layout-Bezeichnung ein, um sie hinzuzufügen</string>
@@ -634,4 +634,33 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_recording_min_required_accuracy_summary">Ort wird ignoriert wenn seine Genauigkeit über %1$s liegt</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth Geräte filtern</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Alle verfügbaren Bluetooth Geräte anzeigen</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="one">1 Knoten [Replaced by voiceSpeedMKnotsPlural]</item>
+        <item quantity="other">%1$.1f Knoten [Replaced by voiceSpeedMKnotsPlural]</item>
+    </plurals>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="one">1 Kilometer [Replaced by voiceDistanceKilometersPlural]</item>
+        <item quantity="other">%1$.1f Kilometer [Replaced by voiceDistanceKilometersPlural]</item>
+    </plurals>
+    <plurals name="voiceHours">
+        <item quantity="one">1 Stunde [Replaced by VoiceHoursPlural]</item>
+        <item quantity="other">%1$d Stunden [Replaced by VoiceHoursPlural]</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 Minute [Replaced by VoiceMinutesPlural]</item>
+        <item quantity="other">%1$d Minuten [Replaced by VoiceMinutesPlural]</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 Sekunde [Replaced by voiceSecondsPlural]</item>
+        <item quantity="other">%1$d Sekunden [Replaced by voiceSecondsPlural]</item>
+    </plurals>
+    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 Knoten} other {{n,number,#.0} Knoten} }</string>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">1 Meile pro Stunde [Replaced by voiceSpeedMilesPerHourPlural]</item>
+        <item quantity="other">%1$.1f Meilen pro Stunde [Replaced by voiceSpeedMilesPerHourPlural]</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">1 Kilometer pro Stunde [Replaced by voiceSpeedKilometersPerHourPlural]</item>
+        <item quantity="other">%1$.1f Kilometer pro Stunde [Replaced by voiceSpeedKilometersPerHourPlural]</item>
+    </plurals>
 </resources>
