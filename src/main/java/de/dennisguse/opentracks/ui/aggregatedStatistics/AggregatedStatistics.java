@@ -25,7 +25,7 @@ public class AggregatedStatistics {
         dataList.addAll(dataMap.values());
         dataList.sort((o1, o2) -> {
             if (o1.getCountTracks() == o2.getCountTracks()) {
-                return o1.getActivityType().compareTo(o2.getActivityType());
+                return o1.getActivityTypeLocalized().compareTo(o2.getActivityTypeLocalized());
             }
             return (o1.getCountTracks() < o2.getCountTracks() ? 1 : -1);
         });
@@ -33,11 +33,11 @@ public class AggregatedStatistics {
 
     @VisibleForTesting
     public void aggregate(@NonNull Track track) {
-        String activityType = track.getActivityTypeLocalized();
-        if (dataMap.containsKey(activityType)) {
-            dataMap.get(activityType).add(track.getTrackStatistics());
+        String activityTypeLocalized = track.getActivityTypeLocalized();
+        if (dataMap.containsKey(activityTypeLocalized)) {
+            dataMap.get(activityTypeLocalized).add(track.getTrackStatistics());
         } else {
-            dataMap.put(activityType, new AggregatedStatistic(activityType, track.getTrackStatistics()));
+            dataMap.put(activityTypeLocalized, new AggregatedStatistic(activityTypeLocalized, track.getTrackStatistics()));
         }
     }
 
@@ -54,17 +54,17 @@ public class AggregatedStatistics {
     }
 
     public static class AggregatedStatistic {
-        private final String activityType;
+        private final String activityTypeLocalized;
         private final TrackStatistics trackStatistics;
         private int countTracks = 1;
 
-        public AggregatedStatistic(String activityType, TrackStatistics trackStatistics) {
-            this.activityType = activityType;
+        public AggregatedStatistic(String activityTypeLocalized, TrackStatistics trackStatistics) {
+            this.activityTypeLocalized = activityTypeLocalized;
             this.trackStatistics = trackStatistics;
         }
 
-        public String getActivityType() {
-            return activityType;
+        public String getActivityTypeLocalized() {
+            return activityTypeLocalized;
         }
 
         public TrackStatistics getTrackStatistics() {

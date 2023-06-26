@@ -77,8 +77,8 @@ public class ActivityTypePreference extends DialogPreference {
             final Context context = getActivity();
 
             textView = view.findViewById(R.id.activity_type_preference_text_view);
-            String category = PreferencesUtils.getDefaultActivityTypeLocalized();
-            textView.setText(category);
+            String activityTypeLocalized = PreferencesUtils.getDefaultActivityTypeLocalized();
+            textView.setText(activityTypeLocalized);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(context));
             textView.setAdapter(adapter);
             textView.setOnItemClickListener((parent, v, position, id) -> {
@@ -97,12 +97,12 @@ public class ActivityTypePreference extends DialogPreference {
             iconView = view.findViewById(R.id.activity_type_preference_spinner);
             iconView.setOnClickListener((it) -> showIconSelectDialog());
 
-            updateIcon(ActivityType.findByLocalizedString(context, category));
+            updateIcon(ActivityType.findByLocalizedString(context, activityTypeLocalized));
         }
 
         private void showIconSelectDialog() {
             String category = PreferencesUtils.getDefaultActivityTypeLocalized();
-            ChooseActivityTypeDialogFragment.showDialog(getActivity().getSupportFragmentManager(), category);
+            ChooseActivityTypeDialogFragment.showDialog(getActivity().getSupportFragmentManager(), getContext(), category);
         }
 
         @Override
@@ -118,7 +118,7 @@ public class ActivityTypePreference extends DialogPreference {
 
         public void updateUI(ActivityType activityType) {
             updateIcon(activityType);
-            textView.setText(getActivity().getString(activityType.getFirstLocalizedStringId()));
+            textView.setText(getActivity().getString(activityType.getLocalizedStringId()));
             textView.clearFocus();
         }
 

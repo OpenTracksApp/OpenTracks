@@ -90,7 +90,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         if (PreferencesUtils.isKey(R.string.stats_rate_key, key) && track != null) {
             updateUInecessary = true;
-            preferenceReportSpeed = PreferencesUtils.isReportSpeed(track.getActivityTypeLocalized());
+            preferenceReportSpeed = PreferencesUtils.isReportSpeed(track);
         }
 
         if (key != null && updateUInecessary && isResumed()) {

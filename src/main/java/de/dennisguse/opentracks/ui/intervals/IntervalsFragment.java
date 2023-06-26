@@ -151,7 +151,7 @@ public class IntervalsFragment extends Fragment {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(getContext());
         Track track = contentProviderUtils.getTrack(trackId);
         if (track != null) {
-            isReportSpeed = PreferencesUtils.isReportSpeed(track.getActivityTypeLocalized());
+            isReportSpeed = PreferencesUtils.isReportSpeed(track);
         }
 
         viewModel = new ViewModelProvider(getActivity()).get(IntervalStatisticsModel.class);

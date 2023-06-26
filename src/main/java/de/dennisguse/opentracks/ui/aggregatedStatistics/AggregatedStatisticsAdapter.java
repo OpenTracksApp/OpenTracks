@@ -64,7 +64,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         }
 
         Resources resources = context.getResources();
-        String localizedActivityType = aggregatedStatistic.getActivityType();
+        String localizedActivityType = aggregatedStatistic.getActivityTypeLocalized();
         if (ActivityType.findByLocalizedString(resources, localizedActivityType)
                 .isShowSpeedPreferred()) {
             viewHolder.setSpeed(aggregatedStatistic);
@@ -84,7 +84,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
     public List<String> getCategories() {
         List<String> categories = new ArrayList<>();
         for (int i = 0; i < aggregatedStatistics.getCount(); i++) {
-            categories.add(aggregatedStatistics.getItem(i).getActivityType());
+            categories.add(aggregatedStatistics.getItem(i).getActivityTypeLocalized());
         }
         return categories;
     }
@@ -163,7 +163,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
 
         //TODO Check preference handling.
         private void setCommonValues(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
-            String activityType = aggregatedStatistic.getActivityType();
+            String activityType = aggregatedStatistic.getActivityTypeLocalized();
 
             reportSpeed = PreferencesUtils.isReportSpeed(activityType);
             unitSystem = PreferencesUtils.getUnitSystem();
@@ -182,7 +182,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         }
 
         private int getIcon(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
-            String localizedActivityType = aggregatedStatistic.getActivityType();
+            String localizedActivityType = aggregatedStatistic.getActivityTypeLocalized();
             String iconValue = ActivityType.findByLocalizedString(context, localizedActivityType)
                     .getIconId();
             return ActivityType.findBy(iconValue)

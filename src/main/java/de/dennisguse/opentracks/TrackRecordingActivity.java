@@ -319,7 +319,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     @Override
     public void onChooseActivityTypeDone(ActivityType activityType) {
         Track track = contentProviderUtils.getTrack(trackId);
-        String activityTypeLocalized = getString(activityType.getFirstLocalizedStringId());
+        String activityTypeLocalized = getString(activityType.getLocalizedStringId());
         TrackUtils.updateTrack(this, track, null, activityTypeLocalized, null, contentProviderUtils);
     }
 

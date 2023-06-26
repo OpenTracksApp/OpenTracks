@@ -65,7 +65,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
         });
 
         setActivityTypeIcon(track.getActivityType());
-        viewBinding.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.trackEditActivityType.getText().toString()));
+        viewBinding.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), this, viewBinding.trackEditActivityType.getText().toString()));
 
         viewBinding.trackEditDescription.setText(track.getDescription());
 
@@ -74,7 +74,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
         {
             Pair<String, String> parts = SpeedFormatter.Builder()
                     .setUnit(PreferencesUtils.getUnitSystem())
-                    .setReportSpeedOrPace(PreferencesUtils.isReportSpeed(track.getActivityTypeLocalized()))
+                    .setReportSpeedOrPace(PreferencesUtils.isReportSpeed(track))
                     .build(this)
                     .getSpeedParts(track.getTrackStatistics().getAverageMovingSpeed());
             viewBinding.speed.setText(parts.first);
@@ -132,7 +132,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
     @Override
     public void onChooseActivityTypeDone(ActivityType activityType) {
         setActivityTypeIcon(activityType);
-        viewBinding.trackEditActivityType.setText(getString(activityType.getFirstLocalizedStringId()));
+        viewBinding.trackEditActivityType.setText(getString(activityType.getLocalizedStringId()));
     }
 
     private void resumeTrackAndFinish() {

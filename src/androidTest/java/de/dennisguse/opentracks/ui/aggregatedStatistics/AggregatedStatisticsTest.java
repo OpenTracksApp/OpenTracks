@@ -243,8 +243,8 @@ public class AggregatedStatisticsTest {
         // Check order
 
         {
-            assertEquals(biking, aggregatedStatistics.getItem(0).getActivityType());
-            assertEquals(driving, aggregatedStatistics.getItem(3).getActivityType());
+            assertEquals(biking, aggregatedStatistics.getItem(0).getActivityTypeLocalized());
+            assertEquals(driving, aggregatedStatistics.getItem(3).getActivityTypeLocalized());
         }
     }
 }

@@ -65,7 +65,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
 
     // Stats gathered from the received data
     private final List<ChartPoint> pendingPoints = new ArrayList<>();
-    private String category = "";
+    private String activityTypeLocalized = "";
 
     // Modes of operation
     private boolean chartByDistance;
@@ -87,7 +87,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
                 }
             }
             if (PreferencesUtils.isKey(R.string.stats_rate_key, key)) {
-                boolean reportSpeed = PreferencesUtils.isReportSpeed(category);
+                boolean reportSpeed = PreferencesUtils.isReportSpeed(activityTypeLocalized);
                 if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
                     viewBinding.chartView.setReportSpeed(reportSpeed);
                     viewBinding.chartView.applyReportSpeed();
@@ -160,12 +160,12 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
     public void onTrackUpdated(Track track) {
         if (isResumed()) {
             if (track == null) {
-                category = "";
+                activityTypeLocalized = "";
                 return;
             }
 
-            category = track.getActivityTypeLocalized();
-            boolean reportSpeed = PreferencesUtils.isReportSpeed(category);
+            activityTypeLocalized = track.getActivityTypeLocalized();
+            boolean reportSpeed = PreferencesUtils.isReportSpeed(activityTypeLocalized);
             if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
                 viewBinding.chartView.setReportSpeed(reportSpeed);
                 viewBinding.chartView.applyReportSpeed();

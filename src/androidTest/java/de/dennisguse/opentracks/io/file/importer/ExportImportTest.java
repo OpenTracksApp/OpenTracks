@@ -96,7 +96,7 @@ public class ExportImportTest {
 
     private final ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
 
-    private static final ActivityType TRACK_ACTIVITY_TYPE = ActivityType.MOUNTAIN_BIKE;
+    private static final ActivityType TRACK_ACTIVITY_TYPE = ActivityType.MOUNTAIN_BIKING;
     private static final String TRACK_ACTIVITY_TYPE_LOCALIZED = "the activity type";
     private static final String TRACK_DESCRIPTION = "the description";
 

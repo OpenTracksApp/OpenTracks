@@ -83,7 +83,7 @@ public class GPXTrackImporterTest {
         assertEquals("the category", importedTrack.getActivityTypeLocalized());
         assertEquals("the description", importedTrack.getDescription());
         assertEquals("2021-01-07 22:51", importedTrack.getName());
-        assertEquals("UNKNOWN", importedTrack.getActivityType());
+        assertEquals(ActivityType.UNKNOWN, importedTrack.getActivityType());
 
         //TODO Check trackstatistics
 
@@ -137,7 +137,7 @@ public class GPXTrackImporterTest {
         assertEquals("", importedTrack.getActivityTypeLocalized());
         assertEquals("", importedTrack.getDescription());
         assertEquals("20210907_213924.gpx", importedTrack.getName());
-        assertEquals("", importedTrack.getActivityType());
+        assertEquals(ActivityType.UNKNOWN, importedTrack.getActivityType());
 
         // 3. trackstatistics
         TrackStatistics trackStatistics = importedTrack.getTrackStatistics();

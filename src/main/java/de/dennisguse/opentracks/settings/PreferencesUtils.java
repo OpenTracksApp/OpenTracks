@@ -46,6 +46,7 @@ import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.HeartRateZones;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
@@ -233,15 +234,19 @@ public class PreferencesUtils {
         }
     }
 
-    public static boolean isReportSpeed(String category) {
+    public static boolean isReportSpeed(String activityTypeLocalized) {
         final String STATS_RATE_DEFAULT = resources.getString(R.string.stats_rate_default);
         String currentStatsRate = getString(R.string.stats_rate_key, STATS_RATE_DEFAULT);
         if (currentStatsRate.equals(getString(R.string.stats_rate_speed_or_pace_default, STATS_RATE_DEFAULT))) {
-            return ActivityType.findByLocalizedString(resources, category)
+            return ActivityType.findByLocalizedString(resources, activityTypeLocalized)
                     .isShowSpeedPreferred();
         }
 
         return currentStatsRate.equals(resources.getString(R.string.stats_rate_speed));
+    }
+
+    public static boolean isReportSpeed(Track track) {
+        return isReportSpeed(track.getActivityTypeLocalized());
     }
 
     private static String getBluetoothSensorAddressNone() {

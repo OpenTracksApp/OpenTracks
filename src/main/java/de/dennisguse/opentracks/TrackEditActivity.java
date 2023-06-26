@@ -97,7 +97,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         }
 
         setActivityTypeIcon(activityType);
-        viewBinding.fields.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.fields.trackEditActivityType.getText().toString()));
+        viewBinding.fields.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), this, viewBinding.fields.trackEditActivityType.getText().toString()));
 
         viewBinding.fields.trackEditDescription.setText(track.getDescription());
 
@@ -146,6 +146,6 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     @Override
     public void onChooseActivityTypeDone(ActivityType activityType) {
         setActivityTypeIcon(activityType);
-        viewBinding.fields.trackEditActivityType.setText(getString(activityType.getFirstLocalizedStringId()));
+        viewBinding.fields.trackEditActivityType.setText(getString(activityType.getLocalizedStringId()));
     }
 }

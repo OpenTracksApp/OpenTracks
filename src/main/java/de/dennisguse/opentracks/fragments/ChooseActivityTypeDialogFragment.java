@@ -13,43 +13,65 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.databinding.ChooseActivityTypeBinding;
 
-/**
- * A DialogFragment to choose an activity type.
- */
 public class ChooseActivityTypeDialogFragment extends DialogFragment implements AdapterView.OnItemClickListener {
 
     private static final String CHOOSE_ACTIVITY_TYPE_DIALOG_TAG = "chooseActivityType";
 
-    public static void showDialog(FragmentManager fragmentManager, String preselectedCategory) {
-        new ChooseActivityTypeDialogFragment(preselectedCategory).show(fragmentManager, ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+    @Deprecated
+    public static void showDialog(FragmentManager fragmentManager, Context context, String activityTypeLocalized) {
+        ActivityType activityType = ActivityType.findByLocalizedString(context, activityTypeLocalized);
+        showDialog(fragmentManager, activityType);
     }
 
-    private static int getPosition(Context context, String category) {
-        if (category == null) {
+    public static void showDialog(FragmentManager fragmentManager, ActivityType activityType) {
+        new ChooseActivityTypeDialogFragment(activityType).show(fragmentManager, ChooseActivityTypeDialogFragment.CHOOSE_ACTIVITY_TYPE_DIALOG_TAG);
+    }
+
+    private static final List<ActivityType> activityTypes = List.of(
+            ActivityType.UNKNOWN,
+            ActivityType.AIRPLANE,
+            ActivityType.BIKING,
+            ActivityType.MOUNTAIN_BIKING,
+            ActivityType.MOTOR_BIKE,
+            ActivityType.KAYAKING,
+            ActivityType.BOAT,
+            ActivityType.SAILING,
+            ActivityType.DRIVING,
+            ActivityType.RUNNING,
+            ActivityType.SNOW_BOARDING,
+            ActivityType.SKIING,
+            ActivityType.WALKING,
+            ActivityType.ESCOOTER,
+            ActivityType.INLINE_SKATING,
+            ActivityType.SKATE_BOARDING,
+            ActivityType.CLIMBING,
+            ActivityType.SWIMMING,
+            ActivityType.SWIMMING_OPEN,
+            ActivityType.WORKOUT
+    );
+
+    private static int getPosition(Context context, ActivityType activityType) {
+        if (activityType == null) {
             return -1;
         }
-        String iconValue = ActivityType.findByLocalizedString(context, category)
-                .getIconId();
 
-        return getAllActivityTypeIds().indexOf(iconValue);
+        return activityTypes.indexOf(activityType);
     }
 
     private ChooseActivityTypeBinding viewBinding;
 
-    private final String preselectedCategory;
+    private final ActivityType preselectedActivityType;
 
     private ChooseActivityTypeCaller chooseActivityTypeCaller;
 
-    private ChooseActivityTypeDialogFragment(String preselectedCategory) {
-        this.preselectedCategory = preselectedCategory;
+    private ChooseActivityTypeDialogFragment(ActivityType activityType) {
+        this.preselectedActivityType = activityType;
     }
 
     @NonNull
@@ -65,13 +87,12 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
         viewBinding = ChooseActivityTypeBinding.inflate(inflater, container, false);
 
         List<Integer> iconDrawableIds = new ArrayList<>();
-        for (String iconValue : getAllActivityTypeIds()) {
-            iconDrawableIds.add(ActivityType.findBy(iconValue)
-                    .getIconDrawableId());
+        for (ActivityType activityType : activityTypes) {
+            iconDrawableIds.add(activityType.getIconDrawableId());
         }
 
         final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(iconDrawableIds);
-        int position = getPosition(getContext(), preselectedCategory);
+        int position = getPosition(getContext(), preselectedActivityType);
         if (position != -1) {
             imageAdapter.setSelected(position);
         }
@@ -98,15 +119,8 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        chooseActivityTypeCaller.onChooseActivityTypeDone(ActivityType.findBy(getAllActivityTypeIds().get(position)));
+        chooseActivityTypeCaller.onChooseActivityTypeDone(activityTypes.get(position));
         dismiss();
-    }
-
-    // TODO Return List<ActivityType>
-    public static List<String> getAllActivityTypeIds() {
-        return Arrays.stream(ActivityType.values())
-                .map(ActivityType::getIconId)
-                .collect(Collectors.toList());
     }
 
     /**
