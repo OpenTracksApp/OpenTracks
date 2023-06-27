@@ -16,7 +16,7 @@ public record RecordingData(Track track, TrackPoint latestTrackPoint, SensorData
         if (track == null) {
             return "";
         }
-        return track.getActivityType();
+        return track.getActivityTypeLocalized();
     }
 
     @NonNull

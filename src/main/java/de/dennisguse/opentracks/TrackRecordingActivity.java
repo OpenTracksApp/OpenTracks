@@ -30,6 +30,7 @@ import de.dennisguse.opentracks.chart.ChartFragment;
 import de.dennisguse.opentracks.chart.TrackDataHubInterface;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackDataHub;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackRecordingBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
@@ -46,7 +47,6 @@ import de.dennisguse.opentracks.ui.markers.MarkerListActivity;
 import de.dennisguse.opentracks.ui.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
@@ -317,10 +317,10 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     @Override
-    public void onChooseActivityTypeDone(String iconValue) {
+    public void onChooseActivityTypeDone(ActivityType activityType) {
         Track track = contentProviderUtils.getTrack(trackId);
-        String activityType = getString(TrackIconUtils.getIconActivityType(iconValue));
-        TrackUtils.updateTrack(this, track, null, activityType, null, contentProviderUtils);
+        String activityTypeLocalized = getString(activityType.getLocalizedStringId());
+        TrackUtils.updateTrack(this, track, null, activityTypeLocalized, null, contentProviderUtils);
     }
 
     private class CustomFragmentPagerAdapter extends FragmentStateAdapter {

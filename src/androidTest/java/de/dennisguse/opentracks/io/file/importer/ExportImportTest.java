@@ -46,6 +46,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TimezoneRule;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
@@ -95,8 +96,8 @@ public class ExportImportTest {
 
     private final ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
 
-    private static final String TRACK_ICON = "the track icon";
-    private static final String TRACK_ACTIVITY_TYPE = "the activity type";
+    private static final ActivityType TRACK_ACTIVITY_TYPE = ActivityType.MOUNTAIN_BIKING;
+    private static final String TRACK_ACTIVITY_TYPE_LOCALIZED = "the activity type";
     private static final String TRACK_DESCRIPTION = "the description";
 
     private File tmpFile;
@@ -180,8 +181,8 @@ public class ExportImportTest {
         service.endCurrentTrack();
 
         Track track = contentProviderUtils.getTrack(trackId);
-        track.setIcon(TRACK_ICON);
         track.setActivityType(TRACK_ACTIVITY_TYPE);
+        track.setActivityTypeLocalized(TRACK_ACTIVITY_TYPE_LOCALIZED);
         track.setDescription(TRACK_DESCRIPTION);
         contentProviderUtils.updateTrack(track);
 
@@ -192,7 +193,7 @@ public class ExportImportTest {
         assertEquals(2, markers.size());
     }
 
-    //TODO Does not test images
+    //TODO Does not test marker images
     @LargeTest
     @Test
     public void kmz_with_trackdetail_and_sensordata() throws TimeoutException, IOException {
@@ -216,10 +217,10 @@ public class ExportImportTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals(track.getActivityType(), importedTrack.getActivityType());
+        assertEquals(track.getActivityTypeLocalized(), importedTrack.getActivityTypeLocalized());
         assertEquals(track.getDescription(), importedTrack.getDescription());
         assertEquals(track.getName(), importedTrack.getName());
-        assertEquals(track.getIcon(), importedTrack.getIcon());
+        assertEquals(track.getActivityType(), importedTrack.getActivityType());
 
         // 2. trackpoints
         TrackPointAssert a = new TrackPointAssert();
@@ -323,7 +324,7 @@ public class ExportImportTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals(track.getActivityType(), importedTrack.getActivityType());
+        assertEquals(track.getActivityTypeLocalized(), importedTrack.getActivityTypeLocalized());
         assertEquals(track.getDescription(), importedTrack.getDescription());
         assertEquals(track.getName(), importedTrack.getName());
 

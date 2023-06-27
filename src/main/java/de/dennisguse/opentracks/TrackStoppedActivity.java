@@ -20,7 +20,6 @@ import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragm
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
 public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
@@ -50,22 +49,23 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
 
         viewBinding.trackEditName.setText(track.getName());
 
-        viewBinding.trackEditActivityType.setText(track.getActivityType());
+        viewBinding.trackEditActivityType.setText(track.getActivityTypeLocalized());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(this));
         viewBinding.trackEditActivityType.setAdapter(adapter);
-        viewBinding.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> setActivityTypeIcon(TrackIconUtils.getIconValue(this, (String) viewBinding.trackEditActivityType.getAdapter().getItem(position))));
+        viewBinding.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> {
+            String localizedActivityType = (String) viewBinding.trackEditActivityType.getAdapter().getItem(position);
+            setActivityTypeIcon(ActivityType.findByLocalizedString(this, localizedActivityType));
+        });
         viewBinding.trackEditActivityType.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                setActivityTypeIcon(TrackIconUtils.getIconValue(
-                        TrackStoppedActivity.this, viewBinding.trackEditActivityType.getText().toString()));
+                String localizedActivityType = viewBinding.trackEditActivityType.getText().toString();
+                setActivityTypeIcon(ActivityType.findByLocalizedString(this, localizedActivityType));
             }
         });
 
-        String iconValue = track.getIcon();
-
-        setActivityTypeIcon(iconValue);
-        viewBinding.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.trackEditActivityType.getText().toString()));
+        setActivityTypeIcon(track.getActivityType());
+        viewBinding.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), this, viewBinding.trackEditActivityType.getText().toString()));
 
         viewBinding.trackEditDescription.setText(track.getDescription());
 
@@ -74,7 +74,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
         {
             Pair<String, String> parts = SpeedFormatter.Builder()
                     .setUnit(PreferencesUtils.getUnitSystem())
-                    .setReportSpeedOrPace(PreferencesUtils.isReportSpeed(track.getActivityType()))
+                    .setReportSpeedOrPace(PreferencesUtils.isReportSpeed(track))
                     .build(this)
                     .getSpeedParts(track.getTrackStatistics().getAverageMovingSpeed());
             viewBinding.speed.setText(parts.first);
@@ -125,14 +125,14 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
         return viewBinding.getRoot();
     }
 
-    private void setActivityTypeIcon(String iconValue) {
-        viewBinding.trackEditActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawable(iconValue));
+    private void setActivityTypeIcon(ActivityType activityType) {
+        viewBinding.trackEditActivityTypeIcon.setImageResource(activityType.getIconDrawableId());
     }
 
     @Override
-    public void onChooseActivityTypeDone(String iconValue) {
-        setActivityTypeIcon(iconValue);
-        viewBinding.trackEditActivityType.setText(getString(TrackIconUtils.getIconActivityType(iconValue)));
+    public void onChooseActivityTypeDone(ActivityType activityType) {
+        setActivityTypeIcon(activityType);
+        viewBinding.trackEditActivityType.setText(getString(activityType.getLocalizedStringId()));
     }
 
     private void resumeTrackAndFinish() {

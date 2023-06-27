@@ -10,6 +10,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.databinding.SettingsBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 
@@ -104,9 +105,9 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
     }
 
     @Override
-    public void onChooseActivityTypeDone(String iconValue) {
+    public void onChooseActivityTypeDone(ActivityType activityType) {
         try {
-            ((ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller) this.fragment).onChooseActivityTypeDone(iconValue);
+            ((ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller) this.fragment).onChooseActivityTypeDone(activityType);
         } catch (ClassCastException e) {
             throw new ClassCastException(this.fragment.getClass().getSimpleName() + " must implement " + ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller.class.getSimpleName());
         }

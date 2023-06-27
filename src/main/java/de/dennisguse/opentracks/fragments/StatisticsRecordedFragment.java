@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.Track;
@@ -43,7 +45,6 @@ import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * A fragment to display track statistics to the user for a recorded {@link Track}.
@@ -89,7 +90,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         if (PreferencesUtils.isKey(R.string.stats_rate_key, key) && track != null) {
             updateUInecessary = true;
-            preferenceReportSpeed = PreferencesUtils.isReportSpeed(track.getActivityType());
+            preferenceReportSpeed = PreferencesUtils.isReportSpeed(track);
         }
 
         if (key != null && updateUInecessary && isResumed()) {
@@ -155,7 +156,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
                     sensorStatistics = contentProviderUtils.getSensorStats(trackId);
 
-                    boolean prefsChanged = this.track == null || (!this.track.getActivityType().equals(track.getActivityType()));
+                    boolean prefsChanged = this.track == null || (!this.track.getActivityTypeLocalized().equals(track.getActivityTypeLocalized()));
                     this.track = track;
                     if (prefsChanged) {
                         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, getString(R.string.stats_rate_key));
@@ -191,8 +192,12 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set activity type
         {
-            String trackIconValue = TrackIconUtils.getIconValue(getContext(), track.getActivityType());
-            viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), TrackIconUtils.getIconDrawable(trackIconValue)));
+            Context context = getContext();
+            String localizedActivityType = track.getActivityTypeLocalized();
+            String trackIconValue = ActivityType.findByLocalizedString(context, localizedActivityType)
+                    .getIconId();
+            viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), ActivityType.findBy(trackIconValue)
+                    .getIconDrawableId()));
         }
 
         // Set time and start datetime

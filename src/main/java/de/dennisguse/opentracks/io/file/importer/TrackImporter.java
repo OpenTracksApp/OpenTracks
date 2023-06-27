@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Speed;
@@ -30,7 +31,6 @@ import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.ui.markers.MarkerUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * Handles logic to import:
@@ -90,7 +90,7 @@ public class TrackImporter {
         this.markers.addAll(markers);
     }
 
-    void setTrack(Context context, String name, String uuid, String description, String activityType, String icon, @Nullable ZoneOffset zoneOffset) {
+    void setTrack(Context context, String name, String uuid, String description, String activityTypeLocalized, String activityTypeId, @Nullable ZoneOffset zoneOffset) {
         track = new Track(zoneOffset != null ? zoneOffset : ZoneOffset.UTC);
         track.setName(name != null ? name : "");
 
@@ -103,15 +103,17 @@ public class TrackImporter {
 
         track.setDescription(description != null ? description : "");
 
-        if (activityType != null) {
-            track.setActivityType(activityType);
-
-            if (icon == null) {
-                icon = TrackIconUtils.getIconValue(context, activityType);
-            }
+        if (activityTypeLocalized != null) {
+            track.setActivityTypeLocalized(activityTypeLocalized);
         }
 
-        track.setIcon(icon != null ? icon : "");
+        ActivityType activityType;
+        if (activityTypeId == null) {
+            activityType = ActivityType.findByLocalizedString(context, activityTypeId);
+        } else {
+            activityType = ActivityType.findBy(activityTypeId);
+        }
+        track.setActivityType(activityType);
     }
 
     void finish() {

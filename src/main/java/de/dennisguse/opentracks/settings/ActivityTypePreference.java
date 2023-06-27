@@ -30,7 +30,6 @@ import androidx.preference.PreferenceDialogFragmentCompat;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * For entering the default activity type.
@@ -47,7 +46,7 @@ public class ActivityTypePreference extends DialogPreference {
         setDialogIcon(null);
         setPersistent(true);
 
-        SummaryProvider<DialogPreference> summaryProvider = preference -> PreferencesUtils.getDefaultActivity();
+        SummaryProvider<DialogPreference> summaryProvider = preference -> PreferencesUtils.getDefaultActivityTypeLocalized();
         setSummaryProvider(summaryProvider);
     }
 
@@ -78,30 +77,32 @@ public class ActivityTypePreference extends DialogPreference {
             final Context context = getActivity();
 
             textView = view.findViewById(R.id.activity_type_preference_text_view);
-            String category = PreferencesUtils.getDefaultActivity();
-            textView.setText(category);
+            String activityTypeLocalized = PreferencesUtils.getDefaultActivityTypeLocalized();
+            textView.setText(activityTypeLocalized);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(context));
             textView.setAdapter(adapter);
             textView.setOnItemClickListener((parent, v, position, id) -> {
-                String iconValue = TrackIconUtils.getIconValue(context, (String) textView.getAdapter().getItem(position));
-                updateIcon(iconValue);
+                String localizedActivityType = (String) textView.getAdapter().getItem(position);
+                ActivityType activityType = ActivityType.findByLocalizedString(context, localizedActivityType);
+                updateIcon(activityType);
             });
             textView.setOnFocusChangeListener((v, hasFocus) -> {
                 if (!hasFocus) {
-                    String iconValue = TrackIconUtils.getIconValue(context, textView.getText().toString());
-                    updateIcon(iconValue);
+                    String localizedActivityType = textView.getText().toString();
+                    ActivityType activityType = ActivityType.findByLocalizedString(context, localizedActivityType);
+                    updateIcon(activityType);
                 }
             });
 
             iconView = view.findViewById(R.id.activity_type_preference_spinner);
             iconView.setOnClickListener((it) -> showIconSelectDialog());
 
-            updateIcon(TrackIconUtils.getIconValue(context, category));
+            updateIcon(ActivityType.findByLocalizedString(context, activityTypeLocalized));
         }
 
         private void showIconSelectDialog() {
-            String category = PreferencesUtils.getDefaultActivity();
-            ChooseActivityTypeDialogFragment.showDialog(getActivity().getSupportFragmentManager(), category);
+            String category = PreferencesUtils.getDefaultActivityTypeLocalized();
+            ChooseActivityTypeDialogFragment.showDialog(getActivity().getSupportFragmentManager(), getContext(), category);
         }
 
         @Override
@@ -109,20 +110,20 @@ public class ActivityTypePreference extends DialogPreference {
             if (positiveResult) {
                 String newDefaultActivity = textView.getText().toString();
                 if (getPreference().callChangeListener(newDefaultActivity)) {
-                    PreferencesUtils.setDefaultActivity(newDefaultActivity);
+                    PreferencesUtils.setDefaultActivityLocalized(newDefaultActivity);
                     HackUtils.invalidatePreference(getPreference());
                 }
             }
         }
 
-        public void updateUI(String iconValue) {
-            updateIcon(iconValue);
-            textView.setText(getActivity().getString(TrackIconUtils.getIconActivityType(iconValue)));
+        public void updateUI(ActivityType activityType) {
+            updateIcon(activityType);
+            textView.setText(getActivity().getString(activityType.getLocalizedStringId()));
             textView.clearFocus();
         }
 
-        private void updateIcon(String iconValue) {
-            iconView.setImageResource(TrackIconUtils.getIconDrawable(iconValue));
+        private void updateIcon(ActivityType activityType) {
+            iconView.setImageResource(activityType.getIconDrawableId());
         }
     }
 }

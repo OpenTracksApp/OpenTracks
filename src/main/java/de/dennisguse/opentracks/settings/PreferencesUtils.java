@@ -40,18 +40,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.HeartRateZones;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
 import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayoutIO;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * Utilities to access preferences stored in {@link SharedPreferences}.
@@ -90,11 +91,11 @@ public class PreferencesUtils {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener);
     }
 
-    public static String getDefaultActivity() {
+    public static String getDefaultActivityTypeLocalized() {
         return getString(R.string.default_activity_key, resources.getString(R.string.default_activity_default));
     }
 
-    public static void setDefaultActivity(String newDefaultActivity) {
+    public static void setDefaultActivityLocalized(String newDefaultActivity) {
         setString(R.string.default_activity_key, newDefaultActivity);
     }
 
@@ -233,14 +234,19 @@ public class PreferencesUtils {
         }
     }
 
-    public static boolean isReportSpeed(String category) {
+    public static boolean isReportSpeed(String activityTypeLocalized) {
         final String STATS_RATE_DEFAULT = resources.getString(R.string.stats_rate_default);
         String currentStatsRate = getString(R.string.stats_rate_key, STATS_RATE_DEFAULT);
         if (currentStatsRate.equals(getString(R.string.stats_rate_speed_or_pace_default, STATS_RATE_DEFAULT))) {
-            return TrackIconUtils.isSpeedIcon(resources, category);
+            return ActivityType.findByLocalizedString(resources, activityTypeLocalized)
+                    .isShowSpeedPreferred();
         }
 
         return currentStatsRate.equals(resources.getString(R.string.stats_rate_speed));
+    }
+
+    public static boolean isReportSpeed(Track track) {
+        return isReportSpeed(track.getActivityTypeLocalized());
     }
 
     private static String getBluetoothSensorAddressNone() {

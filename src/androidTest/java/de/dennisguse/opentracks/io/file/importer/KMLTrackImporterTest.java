@@ -22,6 +22,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
@@ -70,10 +71,10 @@ public class KMLTrackImporterTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals("", importedTrack.getActivityType());
+        assertEquals("", importedTrack.getActivityTypeLocalized());
         assertEquals("", importedTrack.getDescription());
         assertEquals("", importedTrack.getName());
-        assertEquals("", importedTrack.getIcon());
+        assertEquals(ActivityType.UNKNOWN, importedTrack.getActivityType());
 
         // 2. markers
         assertEquals(0, contentProviderUtils.getMarkers(importTrackId).size());
@@ -119,10 +120,10 @@ public class KMLTrackImporterTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals("", importedTrack.getActivityType());
+        assertEquals("", importedTrack.getActivityTypeLocalized());
         assertEquals("", importedTrack.getDescription());
         assertEquals("", importedTrack.getName());
-        assertEquals("", importedTrack.getIcon());
+        assertEquals(ActivityType.UNKNOWN, importedTrack.getActivityType());
 
         // 2. markers
         assertEquals(0, contentProviderUtils.getMarkers(importTrackId).size());
@@ -159,10 +160,10 @@ public class KMLTrackImporterTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        assertEquals("unknown", importedTrack.getActivityType());
+        assertEquals("unknown", importedTrack.getActivityTypeLocalized());
         assertEquals("Test Track", importedTrack.getDescription());
         assertEquals("2020-11-28 18:06", importedTrack.getName());
-        assertEquals("UNKNOWN", importedTrack.getIcon());
+        assertEquals(ActivityType.UNKNOWN, importedTrack.getActivityType());
 
         // 2. markers
         assertEquals(0, contentProviderUtils.getMarkers(importTrackId).size());

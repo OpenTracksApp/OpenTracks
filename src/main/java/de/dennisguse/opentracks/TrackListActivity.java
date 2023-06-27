@@ -50,6 +50,7 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.Track;
@@ -72,7 +73,6 @@ import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * An activity displaying a list of tracks.
@@ -212,14 +212,15 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
                 int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
                 int startTimeOffsetIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME_OFFSET);
-                int activityTypeIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE);
+                int activityTypeIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE_LOCALIZED);
                 int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
                 int markerCountIndex = cursor.getColumnIndexOrThrow(TracksColumns.MARKER_COUNT);
 
                 Track.Id trackId = new Track.Id(cursor.getLong(idIndex));
                 boolean isRecording = trackId.equals(recordingStatus.getTrackId());
                 String icon = cursor.getString(iconIndex);
-                int iconId = TrackIconUtils.getIconDrawable(icon);
+                int iconId = ActivityType.findBy(icon)
+                        .getIconDrawableId();
                 String name = cursor.getString(nameIndex);
                 String totalTime = StringUtils.formatElapsedTime(Duration.ofMillis(cursor.getLong(totalTimeIndex)));
                 String totalDistance = DistanceFormatter.Builder()
@@ -516,7 +517,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         @Override
         public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
             final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
-                    TracksColumns.DESCRIPTION, TracksColumns.ACTIVITY_TYPE, TracksColumns.STARTTIME, TracksColumns.STARTTIME_OFFSET,
+                    TracksColumns.DESCRIPTION, TracksColumns.ACTIVITY_TYPE_LOCALIZED, TracksColumns.STARTTIME, TracksColumns.STARTTIME_OFFSET,
                     TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON, TracksColumns.MARKER_COUNT};
 
             final String sortOrder = TracksColumns.STARTTIME + " DESC";
@@ -526,7 +527,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             } else {
                 final String SEARCH_QUERY = TracksColumns.NAME + " LIKE ? OR " +
                         TracksColumns.DESCRIPTION + " LIKE ? OR " +
-                        TracksColumns.ACTIVITY_TYPE + " LIKE ?";
+                        TracksColumns.ACTIVITY_TYPE_LOCALIZED + " LIKE ?";
                 final String[] selectionArgs = new String[]{"%" + searchQuery + "%", "%" + searchQuery + "%", "%" + searchQuery + "%"};
                 return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, SEARCH_QUERY, selectionArgs, sortOrder);
             }

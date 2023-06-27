@@ -29,7 +29,6 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackEditBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
@@ -48,7 +47,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private ContentProviderUtils contentProviderUtils;
     private Track track;
-    private String iconValue;
+    private ActivityType activityType;
 
     private TrackEditBinding viewBinding;
 
@@ -74,28 +73,31 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
         viewBinding.fields.trackEditName.setText(track.getName());
 
-        viewBinding.fields.trackEditActivityType.setText(track.getActivityType());
+        viewBinding.fields.trackEditActivityType.setText(track.getActivityTypeLocalized());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(this));
         viewBinding.fields.trackEditActivityType.setAdapter(adapter);
-        viewBinding.fields.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> setActivityTypeIcon(TrackIconUtils.getIconValue(this, (String) viewBinding.fields.trackEditActivityType.getAdapter().getItem(position))));
+        viewBinding.fields.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> {
+            String localizedActivityType = (String) viewBinding.fields.trackEditActivityType.getAdapter().getItem(position);
+            setActivityTypeIcon(ActivityType.findByLocalizedString(this, localizedActivityType));
+        });
         viewBinding.fields.trackEditActivityType.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                setActivityTypeIcon(TrackIconUtils.getIconValue(
-                        TrackEditActivity.this, viewBinding.fields.trackEditActivityType.getText().toString()));
+                String localizedActivityType = viewBinding.fields.trackEditActivityType.getText().toString();
+                setActivityTypeIcon(ActivityType.findByLocalizedString(this, localizedActivityType));
             }
         });
 
-        iconValue = null;
+        activityType = null;
         if (bundle != null) {
-            iconValue = bundle.getString(ICON_VALUE_KEY);
+            activityType = (ActivityType) bundle.getSerializable(ICON_VALUE_KEY);
         }
-        if (iconValue == null) {
-            iconValue = track.getIcon();
+        if (activityType == null) {
+            activityType = track.getActivityType();
         }
 
-        setActivityTypeIcon(iconValue);
-        viewBinding.fields.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.fields.trackEditActivityType.getText().toString()));
+        setActivityTypeIcon(activityType);
+        viewBinding.fields.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), this, viewBinding.fields.trackEditActivityType.getText().toString()));
 
         viewBinding.fields.trackEditDescription.setText(track.getDescription());
 
@@ -127,7 +129,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ICON_VALUE_KEY, iconValue);
+        outState.putSerializable(ICON_VALUE_KEY, activityType);
     }
 
     @Override
@@ -136,14 +138,14 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         return viewBinding.getRoot();
     }
 
-    private void setActivityTypeIcon(String iconValue) {
-        this.iconValue = iconValue;
-        viewBinding.fields.trackEditActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawable(iconValue));
+    private void setActivityTypeIcon(ActivityType activityType) {
+        this.activityType = activityType;
+        viewBinding.fields.trackEditActivityTypeIcon.setImageResource(activityType.getIconDrawableId());
     }
 
     @Override
-    public void onChooseActivityTypeDone(String value) {
-        setActivityTypeIcon(value);
-        viewBinding.fields.trackEditActivityType.setText(getString(TrackIconUtils.getIconActivityType(value)));
+    public void onChooseActivityTypeDone(ActivityType activityType) {
+        setActivityTypeIcon(activityType);
+        viewBinding.fields.trackEditActivityType.setText(getString(activityType.getLocalizedStringId()));
     }
 }

@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.ui.aggregatedStatistics;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 public class AggregatedStatisticsAdapter extends BaseAdapter {
 
@@ -62,7 +63,10 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if (TrackIconUtils.isSpeedIcon(context.getResources(), aggregatedStatistic.getActivityType())) {
+        Resources resources = context.getResources();
+        String localizedActivityType = aggregatedStatistic.getActivityTypeLocalized();
+        if (ActivityType.findByLocalizedString(resources, localizedActivityType)
+                .isShowSpeedPreferred()) {
             viewHolder.setSpeed(aggregatedStatistic);
         } else {
             viewHolder.setPace(aggregatedStatistic);
@@ -80,7 +84,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
     public List<String> getCategories() {
         List<String> categories = new ArrayList<>();
         for (int i = 0; i < aggregatedStatistics.getCount(); i++) {
-            categories.add(aggregatedStatistics.getItem(i).getActivityType());
+            categories.add(aggregatedStatistics.getItem(i).getActivityTypeLocalized());
         }
         return categories;
     }
@@ -159,7 +163,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
 
         //TODO Check preference handling.
         private void setCommonValues(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
-            String activityType = aggregatedStatistic.getActivityType();
+            String activityType = aggregatedStatistic.getActivityTypeLocalized();
 
             reportSpeed = PreferencesUtils.isReportSpeed(activityType);
             unitSystem = PreferencesUtils.getUnitSystem();
@@ -178,8 +182,11 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         }
 
         private int getIcon(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
-            String iconValue = TrackIconUtils.getIconValue(context, aggregatedStatistic.getActivityType());
-            return TrackIconUtils.getIconDrawable(iconValue);
+            String localizedActivityType = aggregatedStatistic.getActivityTypeLocalized();
+            String iconValue = ActivityType.findByLocalizedString(context, localizedActivityType)
+                    .getIconId();
+            return ActivityType.findBy(iconValue)
+                    .getIconDrawableId();
         }
     }
 }

@@ -53,7 +53,7 @@ public class TrackSelection implements ContentProviderUtils.ContentProviderSelec
         }
         if (!categories.isEmpty()) {
             selection += selection.isEmpty() ? "" : " AND ";
-            selection += String.format(TracksColumns.ACTIVITY_TYPE + " IN (%s)", TextUtils.join(",", Collections.nCopies(categories.size(), "?")));
+            selection += String.format(TracksColumns.ACTIVITY_TYPE_LOCALIZED + " IN (%s)", TextUtils.join(",", Collections.nCopies(categories.size(), "?")));
         }
         if (from != null && to != null) {
             selection += selection.isEmpty() ? "" : " AND ";

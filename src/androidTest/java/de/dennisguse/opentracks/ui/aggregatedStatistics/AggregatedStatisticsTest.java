@@ -16,18 +16,18 @@ import java.time.Instant;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 @RunWith(JUnit4.class)
 public class AggregatedStatisticsTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
 
-    private static Track createTrack(Context context, Distance totalDistance, Duration totalTime, String category) {
+    private static Track createTrack(Context context, Distance totalDistance, Duration totalTime, String activityTypeLocalized) {
         TrackStatistics statistics = new TrackStatistics();
         statistics.setStartTime(Instant.ofEpochMilli(1000L));  // Resulting start time
         statistics.setStopTime(statistics.getStartTime().plus(totalTime));
@@ -40,8 +40,8 @@ public class AggregatedStatisticsTest {
         statistics.setMinAltitude(1200.0);  // Resulting min altitude
 
         Track track = new Track();
-        track.setIcon(TrackIconUtils.getIconValue(context, category));
-        track.setActivityType(category);
+        track.setActivityType(ActivityType.findByLocalizedString(context, activityTypeLocalized));
+        track.setActivityTypeLocalized(activityTypeLocalized);
         track.setTrackStatistics(statistics);
         return track;
     }
@@ -243,8 +243,8 @@ public class AggregatedStatisticsTest {
         // Check order
 
         {
-            assertEquals(biking, aggregatedStatistics.getItem(0).getActivityType());
-            assertEquals(driving, aggregatedStatistics.getItem(3).getActivityType());
+            assertEquals(biking, aggregatedStatistics.getItem(0).getActivityTypeLocalized());
+            assertEquals(driving, aggregatedStatistics.getItem(3).getActivityTypeLocalized());
         }
     }
 }

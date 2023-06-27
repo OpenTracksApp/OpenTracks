@@ -44,7 +44,7 @@ public class TrackFilenameGenerator {
 
         values.put(UUID_KEY, track.getUuid().toString().substring(0, 8));
         values.put(TRACKNAME_KEY, track.getName());
-        values.put(ACTIVITY_TYPE_KEY, track.getActivityType());
+        values.put(ACTIVITY_TYPE_KEY, track.getActivityTypeLocalized());
         values.put(STARTTIME_TIME_KEY, track.getStartTime().toLocalTime().toString());
         values.put(STARTTIME_DATE_KEY, track.getStartTime().toLocalDate().toString());
 
