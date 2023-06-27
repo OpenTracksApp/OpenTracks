@@ -22,10 +22,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
@@ -35,6 +33,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
@@ -71,7 +70,7 @@ public class MarkerEditActivity extends AbstractActivity {
     private Uri cameraPhotoUri;
 
     private ActivityResultLauncher<Intent> takePictureFromCamera;
-    private ActivityResultLauncher<Intent> takePictureFromGallery;
+    private ActivityResultLauncher<PickVisualMediaRequest> takePictureFromGallery;
 
     private MarkerEditViewModel viewModel;
 
@@ -139,10 +138,10 @@ public class MarkerEditActivity extends AbstractActivity {
         takePictureFromCamera = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == RESULT_CANCELED) {
-                        Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
-                    } else if (result.getResultCode() == RESULT_OK) {
-                        viewModel.onNewCameraPhoto(cameraPhotoUri,
+                    switch (result.getResultCode()) {
+                        case RESULT_CANCELED ->
+                                Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
+                        case RESULT_OK -> viewModel.onNewCameraPhoto(cameraPhotoUri,
                                 viewBinding.markerEditName.getText().toString(),
                                 viewBinding.markerEditMarkerType.getText().toString(),
                                 viewBinding.markerEditDescription.getText().toString());
@@ -150,12 +149,12 @@ public class MarkerEditActivity extends AbstractActivity {
                 });
 
         takePictureFromGallery = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_CANCELED) {
+                new ActivityResultContracts.PickVisualMedia(),
+                uri -> {
+                    if (uri == null) {
                         Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
-                    } else if (result.getResultCode() == RESULT_OK) {
-                        viewModel.onNewGalleryPhoto(result.getData().getData(),
+                    } else {
+                        viewModel.onNewGalleryPhoto(uri,
                                 viewBinding.markerEditName.getText().toString(),
                                 viewBinding.markerEditMarkerType.getText().toString(),
                                 viewBinding.markerEditDescription.getText().toString());
@@ -256,16 +255,11 @@ public class MarkerEditActivity extends AbstractActivity {
     }
 
     private void createMarkerWithGalleryImage() {
-        Intent intent;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent = new Intent(MediaStore.ACTION_PICK_IMAGES);
-            intent.putExtra(MediaStore.EXTRA_PICK_IMAGES_MAX, 1);
-        } else {
-            intent = new Intent(Intent.ACTION_GET_CONTENT);
-        }
-        intent.setType("image/*");
+        PickVisualMediaRequest request = new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                .build();
         try {
-            takePictureFromGallery.launch(intent);
+            takePictureFromGallery.launch(request);
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, R.string.no_compatible_gallery_installed, Toast.LENGTH_LONG).show();
         }
