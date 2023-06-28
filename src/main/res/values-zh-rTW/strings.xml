@@ -198,12 +198,12 @@ limitations under the License.
     <string name="export_cannot_write_to_dir">無法寫入匯出目錄。</string>
     <string name="export_dir_not_writable">" (不可寫入!)"</string>
     <string name="export_progress_message">正在匯出至 %1$s…</string>
-    <string name="export_track_already_exists_msg">蹤跡 %1$s 已存在於目標目錄之中。</string>
+    <string name="export_track_already_exists_msg">檔案 %1$s 已存在於目標目錄之中。</string>
     <string name="export_all_do_it_for_all">對所有衝突這麼做</string>
-    <string name="export_track_errors">蹤跡未匯出</string>
-    <string name="export_progress_summary_new_msg">新蹤跡已匯出</string>
-    <string name="export_progress_summary_overwrite_msg">蹤跡覆蓋</string>
-    <string name="export_progress_summary_skip_msg">蹤跡已略過</string>
+    <string name="export_track_errors">檔案未匯出</string>
+    <string name="export_progress_summary_new_msg">新檔案已匯出</string>
+    <string name="export_progress_summary_overwrite_msg">檔案覆蓋</string>
+    <string name="export_progress_summary_skip_msg">檔案已略過</string>
     <string name="export_progress_summary_errors_msg">錯誤</string>
     <!-- External Storage -->
     <!-- Generic -->
@@ -285,7 +285,7 @@ limitations under the License.
     <string name="menu_aggregated_statistics">彙總的統計資料</string>
     <string name="menu_delete">刪除</string>
     <string name="menu_edit">編輯</string>
-    <string name="menu_export_all">全部匯出</string>
+    <string name="menu_export_all">全部匯出 (每蹤跡一個檔案)</string>
     <string name="menu_help">說明</string>
     <string name="menu_import_all">全部匯入</string>
     <string name="menu_insert_marker">插入標記</string>
@@ -636,4 +636,11 @@ limitations under the License.
     <string name="always">總是</string>
     <string name="introduction_osm_dashboard">OpenTracks 本身不提供地圖。請安裝 OSMDashboard 以在地圖上檢視您的紀錄。</string>
     <string name="voice_on_device_speaker_title">使用裝置的揚聲器</string>
+    <string name="settings_stats_units_imperial_meter">英制 (英里、公尺)</string>
+    <string name="menu_export_all_one_file">全部匯出 (所有蹤跡於單一檔案)</string>
+    <string name="settings_recording_min_required_accuracy_summary">如果定位的精度大於 %1$s，則它將被忽略</string>
+    <string name="no_compatible_gallery_installed">沒有安裝相容的圖片庫應用程式</string>
+    <string name="no_compatible_camera_installed">沒有安裝相容的攝影機應用程式</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">篩選藍芽裝置</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">顯示所有可發現的藍芽裝置</string>
 </resources>
