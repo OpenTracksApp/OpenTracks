@@ -119,7 +119,7 @@ public class CustomContentProviderUtilsTest {
                 assertNotNull(trackPoint);
                 locations.add(trackPoint);
                 // Make sure the IDs are returned in the right order.
-                assertEquals(lastPointId.getId() - numPoints + locations.size(), trackPoint.getId().getId());
+                assertEquals(lastPointId.id() - numPoints + locations.size(), trackPoint.getId().id());
             }
             assertEquals(numPoints, locations.size());
         }
@@ -128,7 +128,7 @@ public class CustomContentProviderUtilsTest {
     private TrackPoint.Id initializeTrack(Track.Id id, int numPoints) {
         Track track = new Track();
         track.setId(id);
-        track.setName("Test: " + id.getId());
+        track.setName("Test: " + id.id());
         contentProviderUtils.insertTrack(track);
         track = contentProviderUtils.getTrack(id);
         assertNotNull(track);
@@ -155,7 +155,7 @@ public class CustomContentProviderUtilsTest {
             }
         }
 
-        assertTrue(numPoints == 0 || lastPointId.getId() > 0);
+        assertTrue(numPoints == 0 || lastPointId.id() > 0);
         assertEquals(numPoints, counter);
 
         return lastPointId;
@@ -172,7 +172,7 @@ public class CustomContentProviderUtilsTest {
         // Id
         when(cursorMock.getColumnIndexOrThrow(TracksColumns._ID)).thenReturn(columnIndex);
         when(cursorMock.isNull(columnIndex)).thenReturn(false);
-        when(cursorMock.getLong(columnIndex)).thenReturn(trackId.getId());
+        when(cursorMock.getLong(columnIndex)).thenReturn(trackId.id());
 
         //Uuid
         columnIndex++;
@@ -182,7 +182,7 @@ public class CustomContentProviderUtilsTest {
 
         // Name
         columnIndex++;
-        String name = NAME_PREFIX + trackId.getId();
+        String name = NAME_PREFIX + trackId.id();
         when(cursorMock.getColumnIndexOrThrow(TracksColumns.NAME)).thenReturn(columnIndex);
         when(cursorMock.isNull(columnIndex)).thenReturn(false);
         when(cursorMock.getString(columnIndex)).thenReturn(name);
@@ -460,7 +460,7 @@ public class CustomContentProviderUtilsTest {
         Marker marker = contentProviderUtils.createMarker(cursorMock);
         assertEquals(id, marker.getId().id());
         assertEquals(name, marker.getName());
-        assertEquals(trackId, marker.getTrackId().getId());
+        assertEquals(trackId, marker.getTrackId().id());
     }
 
     /**
@@ -640,7 +640,7 @@ public class CustomContentProviderUtilsTest {
         marker.setDescription(TEST_DESC);
         Marker.Id markerId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker)));
 
-        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
+        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.id());
         assertTrue(dir.exists());
         assertTrue(dir.isDirectory());
         assertEquals(1, dir.list().length);
@@ -675,7 +675,7 @@ public class CustomContentProviderUtilsTest {
         marker.setDescription(TEST_DESC);
         Marker.Id markerId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker)));
 
-        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
+        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.id());
         assertTrue(dir.exists());
         assertTrue(dir.isDirectory());
         assertEquals(1, dir.list().length);
@@ -712,7 +712,7 @@ public class CustomContentProviderUtilsTest {
         Marker.Id markerId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker)));
         contentProviderUtils.insertMarker(otherMarker);
 
-        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
+        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.id());
         assertTrue(dir.exists());
         assertTrue(dir.isDirectory());
         assertEquals(2, dir.list().length);
@@ -889,7 +889,7 @@ public class CustomContentProviderUtilsTest {
         for (int i = 0; i < trackpointIds.size(); i++) {
             assertTrue(trackPointIterator.hasNext());
             TrackPoint trackPoint = trackPointIterator.next();
-            assertEquals(startTrackPointId.getId() + i, trackPoint.getId().getId());
+            assertEquals(startTrackPointId.id() + i, trackPoint.getId().id());
 
             checkLocation(i, trackPoint.getLocation());
         }

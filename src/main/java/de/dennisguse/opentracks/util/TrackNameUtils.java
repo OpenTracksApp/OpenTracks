@@ -44,7 +44,7 @@ public class TrackNameUtils {
         } else if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_iso_8601_value))) {
             return startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX"));
         } else {
-            return context.getString(R.string.track_name_format, trackId.getId());
+            return context.getString(R.string.track_name_format, trackId.id());
         }
     }
 }

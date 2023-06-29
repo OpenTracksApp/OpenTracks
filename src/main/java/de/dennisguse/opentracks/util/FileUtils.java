@@ -59,7 +59,7 @@ public class FileUtils {
     }
 
     public static File getPhotoDir(Context context, Track.Id trackId) {
-        File photoDirectory = new File(getPhotoDir(context), "" + trackId.getId());
+        File photoDirectory = new File(getPhotoDir(context), "" + trackId.id());
         photoDirectory.mkdirs();
         return photoDirectory;
     }

@@ -67,7 +67,7 @@ public class TrackSelection implements ContentProviderUtils.ContentProviderSelec
         }
 
         // Builds selection arguments.
-        ArrayList<String> args = trackIds.stream().map(id -> Long.toString(id.getId())).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<String> args = trackIds.stream().map(id -> Long.toString(id.id())).collect(Collectors.toCollection(ArrayList::new));
         args.addAll(categories);
         args.addAll(fromToArgs);
         selectionArgs = args.stream().toArray(String[]::new);

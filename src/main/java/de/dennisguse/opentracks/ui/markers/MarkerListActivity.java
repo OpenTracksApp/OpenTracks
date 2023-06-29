@@ -327,7 +327,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
             if (searchQuery == null) {
                 if (track != null) {
-                    return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, MarkerColumns.TRACKID + "=?", new String[]{String.valueOf(track.getId().getId())}, null);
+                    return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, MarkerColumns.TRACKID + "=?", new String[]{String.valueOf(track.getId().id())}, null);
                 } else {
                     return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, null, null, null);
                 }
