@@ -49,6 +49,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Distance;
@@ -482,6 +484,13 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
         if (itemId == R.id.list_context_menu_delete) {
             deleteTracks(trackIds);
+            return true;
+        }
+
+        if (itemId == R.id.list_context_menu_aggregated_stats) {
+            Intent intent = IntentUtils.newIntent(this, AggregatedStatisticsActivity.class)
+                    .putParcelableArrayListExtra(AggregatedStatisticsActivity.EXTRA_TRACK_IDS, new ArrayList<>(Arrays.asList(trackIds)));
+            startActivity(intent);
             return true;
         }
 
