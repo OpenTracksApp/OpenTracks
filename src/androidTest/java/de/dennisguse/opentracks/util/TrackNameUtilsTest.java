@@ -75,6 +75,6 @@ public class TrackNameUtilsTest {
     @Test
     public void testTrackName_number() {
         PreferencesUtils.setString(R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_number_value));
-        assertEquals("Track " + TRACK_ID.getId(), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
+        assertEquals("Track " + TRACK_ID.id(), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
 }

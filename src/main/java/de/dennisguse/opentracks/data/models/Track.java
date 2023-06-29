@@ -143,45 +143,12 @@ public class Track {
         return Objects.hash(id);
     }
 
-    public static class Id implements Parcelable {
 
-        private final long id;
-
-        public Id(long id) {
-            this.id = id;
-        }
-
-        protected Id(Parcel in) {
-            id = in.readLong();
-        }
-
-        //TOOD Limit visibility to TrackRecordingService / ContentProvider
-        public long getId() {
-            return id;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Id id1 = (Id) o;
-            return id == id1.id;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(id);
-        }
+    public record Id(long id) implements Parcelable {
 
         @Override
         public int describeContents() {
             return 0;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return String.valueOf(id);
         }
 
         @Override
@@ -189,7 +156,7 @@ public class Track {
             parcel.writeLong(id);
         }
 
-        public static final Parcelable.Creator<Track.Id> CREATOR = new Parcelable.Creator<>() {
+        public static final Creator<Track.Id> CREATOR = new Creator<>() {
             public Track.Id createFromParcel(Parcel in) {
                 return new Track.Id(in.readLong());
             }

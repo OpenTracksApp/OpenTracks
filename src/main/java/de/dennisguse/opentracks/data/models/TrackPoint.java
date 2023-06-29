@@ -18,6 +18,7 @@ package de.dennisguse.opentracks.data.models;
 import android.location.Location;
 import android.os.Build;
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +26,6 @@ import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Objects;
 
 /**
  * Sensor and/or location information for a specific point in time.
@@ -462,40 +462,26 @@ public class TrackPoint {
                 '}';
     }
 
-    public static class Id {
+    public record Id(long id) implements Parcelable {
 
-        private final long id;
-
-        public Id(long id) {
-            this.id = id;
-        }
-
-        protected Id(Parcel in) {
-            id = in.readLong();
-        }
-
-        //TOOD Limit visibility to TrackRecordingService / ContentProvider
-        public long getId() {
-            return id;
+        @Override
+        public int describeContents() {
+            return 0;
         }
 
         @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            TrackPoint.Id id1 = (TrackPoint.Id) o;
-            return id == id1.id;
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeLong(id);
         }
 
-        @Override
-        public int hashCode() {
-            return Objects.hash(id);
-        }
+        public static final Creator<Id> CREATOR = new Creator<>() {
+            public Id createFromParcel(Parcel in) {
+                return new Id(in.readLong());
+            }
 
-        @NonNull
-        @Override
-        public String toString() {
-            return String.valueOf(id);
-        }
+            public Id[] newArray(int size) {
+                return new Id[size];
+            }
+        };
     }
 }

@@ -86,7 +86,7 @@ public class ShareContentProvider extends CustomContentProvider {
 
         StringBuilder trackIdBuilder = new StringBuilder();
         for (Track.Id trackId : trackIds) {
-            trackIdBuilder.append(trackId.getId()).append(TRACKID_DELIMITER);
+            trackIdBuilder.append(trackId.id()).append(TRACKID_DELIMITER);
         }
         trackIdBuilder.deleteCharAt(trackIdBuilder.lastIndexOf(TRACKID_DELIMITER));
 
@@ -199,7 +199,7 @@ public class ShareContentProvider extends CustomContentProvider {
     public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
         Set<Track.Id> trackIds = parseURI(uri);
         final ArrayList<Track> tracks = new ArrayList<>();
-        String[] trackIdsString = trackIds.stream().map(Track.Id::toString).toArray(String[]::new);
+        String[] trackIdsString = trackIds.stream().map(id -> String.valueOf(id.id())).toArray(String[]::new);
         String whereClause = String.format(TracksColumns._ID + " IN (%s)", TextUtils.join(",", Collections.nCopies(trackIds.size(), "?")));
 
         try (Cursor cursor = super.query(TracksColumns.CONTENT_URI, null, whereClause, trackIdsString, TracksColumns._ID)) {

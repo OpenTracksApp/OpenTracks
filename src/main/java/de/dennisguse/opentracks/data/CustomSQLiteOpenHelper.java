@@ -177,7 +177,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                     Track.Id trackId = new Track.Id(cursor.getLong(trackIdIndex));
                     ContentValues cv = new ContentValues();
                     cv.put("uuid", UUIDUtils.toBytes(UUID.randomUUID()));
-                    db.update("tracks", cv, "_id = ?", new String[]{String.valueOf(trackId.getId())});
+                    db.update("tracks", cv, "_id = ?", new String[]{String.valueOf(trackId.id())});
                 } while (cursor.moveToNext());
             }
         }
@@ -455,7 +455,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
                     ContentValues cv = new ContentValues();
                     cv.put("starttime_offset", zoneRules.getOffset(Instant.ofEpochMilli(startTime)).getTotalSeconds());
-                    db.update("tracks", cv, "_id = ?", new String[]{String.valueOf(trackId.getId())});
+                    db.update("tracks", cv, "_id = ?", new String[]{String.valueOf(trackId.id())});
                 } while (cursor.moveToNext());
             }
         }

@@ -37,7 +37,7 @@ public class TestDataUtil {
     public static Track createTrack(Track.Id trackId) {
         Track track = new Track();
         track.setId(trackId);
-        track.setName("Test: " + trackId.getId());
+        track.setName("Test: " + trackId.id());
 
         return track;
     }

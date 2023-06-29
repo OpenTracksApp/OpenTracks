@@ -88,7 +88,7 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         trackId = resumeTrackId;
         Track track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
-            Log.e(TAG, "Ignore resumeTrack. Track " + trackId.getId() + " does not exists.");
+            Log.e(TAG, "Ignore resumeTrack. Track " + trackId.id() + " does not exists.");
             return false;
         }
 

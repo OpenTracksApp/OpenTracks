@@ -166,7 +166,7 @@ public class TrackDataHub {
     public void loadTrack(final @NonNull Track.Id trackId) {
         handler.post(() -> {
             if (trackId.equals(selectedTrackId)) {
-                Log.i(TAG, "Not reloading track " + trackId.getId());
+                Log.i(TAG, "Not reloading track " + trackId.id());
                 return;
             }
             selectedTrackId = trackId;
@@ -326,7 +326,7 @@ public class TrackDataHub {
 
         TrackPoint.Id next = null;
         if (localLastSeenTrackPointIdId != null) {
-            next = new TrackPoint.Id(localLastSeenTrackPointIdId.getId() + 1); //TODO startTrackPointId + 1 is an assumption assumption; should be derived from the DB.
+            next = new TrackPoint.Id(localLastSeenTrackPointIdId.id() + 1); //TODO startTrackPointId + 1 is an assumption assumption; should be derived from the DB.
         }
 
         TrackPoint trackPoint = null;
@@ -344,7 +344,7 @@ public class TrackDataHub {
                 TrackPoint.Id trackPointId = trackPoint.getId();
 
                 // Stop if past the last wanted point
-                if (maxPointId != null && trackPointId.getId() > maxPointId.getId()) {
+                if (maxPointId != null && trackPointId.id() > maxPointId.id()) {
                     break;
                 }
 
@@ -355,7 +355,7 @@ public class TrackDataHub {
                 }
 
                 if (samplingFrequency == -1) {
-                    long numTotalPoints = Math.max(0L, lastTrackPointId.getId() - localFirstSeenTrackPointId.getId()); //TODO That is an assumption; should be derived from the DB.
+                    long numTotalPoints = Math.max(0L, lastTrackPointId.id() - localFirstSeenTrackPointId.id()); //TODO That is an assumption; should be derived from the DB.
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
