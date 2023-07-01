@@ -410,7 +410,7 @@ limitations under the License.
     <string name="generic_click_twice_cancel">Trykk tilbake-knappen igjen for å avbryte</string>
     <string name="help_track_map_content"> Bruk det lille kartikonet.
 \n a) (sanntidsoppdateringer) Installer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Dette gir nettbaserte eller nettfrakoblede kart via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
-\n Egentlig er OSMDashboard et egen program som bare har tilgang (midlertidig) på dataene til spor som skal vises.
+\n Egentlig er OSMDashboard et eget program som bare har tilgang (midlertidig) på dataene til spor som skal vises.
 \n b) Via et vanlig kartprogram (f.eks. <a href="http://osmand.net/">OsmAnd</a> og <a href="https://maps.me/">MAPS.ME</a>). Disse programmene må støtte KMZ-filformatet (bare posisjoner og tidsstempler). Faktisk trenger et program å støtte <i>ACTION_VIEW</i> med MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_track_export_title">Hvordan eksportere/dele spor som er tatt opp\?</string>
     <string name="help_track_export_content"> Spor kan eksporteres fra Innstillinger som KMZ, KML eller GPX. KMZ/KML alle data; GPX bare posisjoner. Spor som deles via <i>deleikonet</i> blir delt som KMZ. </string>
@@ -539,7 +539,7 @@ limitations under the License.
     <string name="settings_public_api_disabled_toast">OpenTracks offentlige API er slått av: Det kan slås på i innstillingene.</string>
     <string name="activity_type_swimming">svømming</string>
     <string name="activity_type_swimming_open">svømming i åpent vann</string>
-    <string name="activity_type_workout">styrketrening</string>
+    <string name="activity_type_workout">treningsøkt</string>
     <string name="generic_dismiss">Avvis</string>
     <string name="gps_recording_status">%1$s: %2$s</string>
     <string name="gps_recording_without_signal">OpenTracks gjør opptak uten GPS-data.</string>
@@ -608,4 +608,12 @@ limitations under the License.
     <string name="settings_recording_min_required_accuracy_summary">Posisjonen ignoreres hvis nøyaktigheten er over %1$s</string>
     <string name="no_compatible_gallery_installed">Ingen kompatibel bildegalleri-app installert</string>
     <string name="no_compatible_camera_installed">Ingen kompatibel kamera-app installert</string>
+    <string name="settings_stats_units_imperial_meter">Britiske (mi, m)</string>
+    <string name="voiceHoursPlural">{n, plural, =1 {1 time} other {{n,number} timer} }</string>
+    <string name="voiceMinutesPlural">{n, plural, =1 {1 minutt} other {{n,number} minutter} }</string>
+    <string name="voiceSecondsPlural">{n, plural, =1 {1 sekund} other {{n,number} sekunder} }</string>
+    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometer i timen} other {{n,number,#.0} kilometer i timen} }</string>
+    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 knop} other {{n,number,#.0} knop} }</string>
+    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometer} other {{n,number,#.0} kilometer} }</string>
+    <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 nautisk mil} other {{n,number,#.0} nautiske mil} }</string>
 </resources>
