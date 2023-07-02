@@ -1,0 +1,12 @@
+v4.6.0: OpenTracks
+
+Cambios:
+- Anuncios por voz usando o formato de plurais ICU (en, es, pt, zh, dr, de) debido ás cantidades en fraccións #1584
+- Require Android 7.0 / SDK24+ debido aos plurais ICU
+- En Android 14+: usar o conversor AltitudeConverter de Android no lugar do interno EGM2008
+
+Arrranxo:
+- Non se podía escoller unha imaxe da galería en Android 13
+
+Desenvolvemento:
+- Separamos ActivityType e ActivityIcon

@@ -1,0 +1,4 @@
+v4.6.1: OpenTracks
+
+Arranxo:
+- Volvemos a engadir estatísticas conxuntas para as rutas seleccionadas
