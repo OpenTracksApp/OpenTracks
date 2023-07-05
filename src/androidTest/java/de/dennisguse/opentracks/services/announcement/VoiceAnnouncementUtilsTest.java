@@ -208,6 +208,20 @@ public class VoiceAnnouncementUtilsTest {
     }
 
     @Test
+    public void getAnnouncement_imperial_meter_speed_1() {
+        TrackStatistics stats = new TrackStatistics();
+        stats.setTotalDistance(Distance.ofMile(1.1));
+        stats.setTotalTime(Duration.ofHours(2).plusMinutes(5).plusSeconds(10));
+        stats.setMovingTime(Duration.ofHours(1));
+
+        // when
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.IMPERIAL_METER, true, null, null).toString();
+
+        // then
+        assertEquals("Total distance 1.1 miles. 1 hour. Average moving speed 1.1 miles per hour.", announcement);
+    }
+
+    @Test
     public void getAnnouncement_metric_speed_1() {
         TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(Distance.ofKilometer(1.1));
