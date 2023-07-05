@@ -454,7 +454,7 @@ public class PreferencesUtils {
 
             String displayValue = formatter.formatDistance(distance);
             switch (unitSystem) {
-                case METRIC -> {
+                case METRIC, IMPERIAL_METER -> {
                     if (value == recordingDistanceIntervalDefault) {
                         entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
                     } else {
@@ -498,7 +498,7 @@ public class PreferencesUtils {
 
             String displayValue = formatter.formatDistance(distance);
             switch (unitSystem) {
-                case METRIC -> {
+                case METRIC, IMPERIAL_METER -> {
                     if (value == maxRecordingDistanceDefault) {
                         entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
                     } else {
@@ -571,7 +571,7 @@ public class PreferencesUtils {
 
             String displayValue = formatter.formatDistance(distance);
             switch (unitSystem) {
-                case METRIC -> {
+                case METRIC, IMPERIAL_METER -> {
                     if (value == recordingGPSAccuracyDefault) {
                         entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
                     } else if (value == recordingGPSAccuracyExcellent) {
@@ -624,7 +624,7 @@ public class PreferencesUtils {
                         entries[i] = resources.getString(R.string.value_float_kilometer_hour, value);
                     }
                 }
-                case IMPERIAL_FEET -> {
+                case IMPERIAL_FEET, IMPERIAL_METER -> {
                     double valueMPH = Speed.ofKMH(value).toMPH();
                     if (value == idleSpeedDefault) {
                         entries[i] = resources.getString(R.string.value_float_mile_hour_recommended, valueMPH);
