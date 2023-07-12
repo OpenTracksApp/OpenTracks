@@ -353,8 +353,8 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
         <item quantity="other">%1$.1f quilómetros por hora</item>
     </plurals>
     <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 quilómetro por hora</item>
-        <item quantity="other">%1$.1f quilómetros por hora</item>
+        <item quantity="one">1 milla por hora</item>
+        <item quantity="other">%1$.1f millas por hora</item>
     </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Caixeiro automático</string>
