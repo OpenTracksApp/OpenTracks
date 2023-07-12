@@ -946,7 +946,7 @@ public class ChartView extends View {
      */
     private void updateEffectiveDimensions() {
         effectiveWidth = Math.max(0, width - leftBorder - rightBorder);
-        effectiveHeight = Math.max(0, height - topBorder - bottomBorder);
+        effectiveHeight = Math.max(0, height - topBorder - bottomBorder - spacer);
     }
 
     /**
