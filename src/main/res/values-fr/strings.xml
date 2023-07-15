@@ -45,14 +45,14 @@ OpenTracks utilise le capteur GPS de lappareil pour enregistrer la position en c
 Si le dispositif GPS signale des données inexactes (par exemple, la localisation, la vitesse, laltitude), OpenTracks ne peut rien y faire.</string>
     <string name="help_data_storage_title">Comment OpenTracks stocke-t-il les données des capteurs \?</string>
     <string name="help_data_storage_content"> Les données des capteurs sont stockées par emplacement enregistré. Dans le cas dun capteur de fréquence cardiaque, cela signifie que seule la mesure de la fréquence cardiaque <i>one</i> est stockée par emplacement. Si vous êtes à larrêt ou à lintérieur, aucune donnée du capteur ne sera enregistrée (mais elle sera affichée). </string>
-    <string name="help_gps_troubleshooting_title">OpenTracks nenregistre pas les lieux \?</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks n’enregistre pas la position \?</string>
     <string name="help_gps_troubleshooting_content"> Ce que vous pouvez faire :
 \n a) vérifier si le GPS est activé,
-\n b) améliorer la réception GPS (par exemple, aller à lextérieur),
-\n c) vérifier si avec <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, et
-\n d) désactiver léconomie dénergie.
+\n b) améliorer la réception du GPS (p. ex. aller à l\'extérieur),
+\n c) contrôler avec l\'application <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>
+\n d) désactiver l\'économie d\'énergie.
 \n
-\n Si tout ne va pas dans le bon sens, veuillez signaler un bug. </string>
+\n Si le problème persiste, veuillez signaler un bug. </string>
     <string name="help_support_title">Comment puis-je soutenir OpenTracks \?</string>
     <string name="help_support_content"> Vous pouvez :
 \n a) faire connaître OpenTracks,
@@ -204,7 +204,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="menu_aggregated_statistics">Statistiques cumulées</string>
     <string name="menu_delete">Supprimer</string>
     <string name="menu_edit">Modifier</string>
-    <string name="menu_export_all">Tout exporter</string>
+    <string name="menu_export_all">Tout exporter (Un fichier par tracé)</string>
     <string name="menu_help">Aide</string>
     <string name="menu_import_all">Tout importer</string>
     <string name="menu_insert_marker">Insérer un repère</string>
@@ -242,7 +242,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_recording_keep_screen_on_while_recording_summary">Pendant l\'enregistrement, garder l\'écran allumé.</string>
     <string name="settings_recording_default_activity_title">Type d\'activité par défaut</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre chaque enregistrement de la position</string>
-    <string name="settings_recording_max_recording_distance_summary">Une nouvelle section est créée si la distance entre deux positions est supérieure à %1$s</string>
+    <string name="settings_recording_max_recording_distance_summary">Un nouveau segment est créé si la distance entre deux positions est supérieure à %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Distance max</string>
     <string name="settings_recording_min_recording_distance_title">Intervalle dist. enreg</string>
     <string name="settings_recording_min_recording_interval_title">Intervalle temps enreg</string>
@@ -259,7 +259,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Mode de calcul souhaité</string>
-    <string name="settings_stats_units_imperial">Unités impériales (mi, pi)</string>
+    <string name="settings_stats_units_imperial">Unités impériales (miles, pieds)</string>
     <string name="settings_stats_units_metric">Unités métriques (km, m)</string>
     <string name="settings_stats_units_title">Unités souhaitées</string>
     <!-- Share Track -->
@@ -437,7 +437,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_sensor_wheel_circumference">Circonférence de la roue (mm)</string>
     <string name="export_error_post_workout">L\'exportation du post-travail a échoué, veuillez vérifier le répertoire d\'exportation.</string>
     <string name="export_all_do_it_for_all">le faire pour tous les conflits</string>
-    <string name="export_track_errors">Tracés non exportés</string>
+    <string name="export_track_errors">Fichiers non exportés</string>
     <string name="import_unable_to_import_file">Impossible d\'importer le fichier : %1$s</string>
     <string name="import_no_kml_file_found">Pas de doc.fichier kml trouvé dans KMZ</string>
     <string name="import_error_info">%1$s : %2$s</string>
@@ -446,14 +446,14 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="generic_completed">Compléter</string>
     <string name="sensor_state_cadence_max">Cadence maximale</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Plein écran</string>
-    <string name="settings_recording_fullscreen_on_while_recording_summary">Pendant l\'enregistrement, présent en plein écran.</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Pendant l\'enregistrement, affichage en plein écran.</string>
     <string name="sensor_state_power_avg">Puissance moyenne</string>
     <string name="sensor_state_heart_rate_max">Fréquence cardiaque max</string>
     <string name="sensor_state_heart_rate_avg">Rythme cardiaque moyen</string>
     <string name="sensor_state_cadence_avg">Cadence moyenne</string>
     <string name="generic_click_twice_cancel">Cliquez sur retour pour annuler</string>
-    <string name="export_progress_summary_new_msg">Nouveaux tracés exportés</string>
-    <string name="export_progress_summary_skip_msg">Tracés ignorés</string>
+    <string name="export_progress_summary_new_msg">Nouveaux fichiers exportés</string>
+    <string name="export_progress_summary_skip_msg">Fichiers ignorés</string>
     <string name="export_progress_summary_errors_msg">Erreurs</string>
     <string name="generic_overwrite">Écraser</string>
     <string name="generic_show_errors">Afficher les erreurs</string>
@@ -477,14 +477,14 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     </plurals>
     <string name="settings_default_trackfileformat">Format de fichier d\'exportation / partage</string>
     <string name="description_altitude_loss">Dénivelé négatif : %1$d m (%2$d ft)</string>
-    <string name="export_track_already_exists_msg">Le tracé %1$s existe déjà dans le répertoire de destination.</string>
-    <string name="export_progress_summary_overwrite_msg">Tracés écrasés</string>
+    <string name="export_track_already_exists_msg">Le fichier %1$s existe déjà dans le répertoire de destination.</string>
+    <string name="export_progress_summary_overwrite_msg">Fichiers écrasés</string>
     <string name="about_third_party_data">Données de tiers</string>
     <string name="delete_service">Service de suppression</string>
     <string name="menu_voice_rate">Vitesse vocale</string>
     <string name="track_delete_not_recording">Cette piste ne peut pas être supprimée car elle est en cours d\'enregistrement.</string>
     <string name="settings_sensor_cycling_distance_speed">Distance et vitesse</string>
-    <string name="settings_sensor_cycling_cadence">Cadre</string>
+    <string name="settings_sensor_cycling_cadence">Cadence</string>
     <string name="settings_sensor_running_speed_and_cadence">Distance, vitesse et cadence</string>
     <string name="settings_layout_reset">Réinitialiser la disposition personnalisée</string>
     <string name="settings_layout_reset_confirm_message">Tous les paramètres de disposition reviendront à leur valeur par défaut. Ceci ne supprimera aucun tracé de l\'appareil.</string>
@@ -516,7 +516,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="settings_generic_sensor">Générique</string>
     <string name="settings_cycling_sensor">Cyclisme</string>
-    <string name="settings_running_sensor">Courant</string>
+    <string name="settings_running_sensor">Course à pied</string>
     <string name="settings_import_section">Importer</string>
     <string name="settings_export_section">Exporter</string>
     <string name="settings_reset_summary">Réinitialiser les paramètres aux valeurs par défaut</string>
@@ -528,7 +528,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_import_export_title">Importez/Exportez</string>
     <string name="settings_announcements_summary">Temps, distance, vitesse de la voix</string>
     <string name="settings_announcements_title">Annonces vocales</string>
-    <string name="settings_sensors_title">Intervalle de temps, Intervalle de distance, Distance maximale, Précision</string>
+    <string name="settings_sensors_title">Capteurs Bluetooth</string>
     <string name="settings_gps_summary">Intervalle de temps, Intervalle de distance, Distance maximale, Précision</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_ui_title">Interface utilisateur</string>
@@ -609,7 +609,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="description_pace_nautical">Allure (min/MN)</string>
     <string name="show_on_dashboard_not_installed">Il n\'y a pas d\'application installé supportant l\'API OpenTracks Dashboard.</string>
     <string name="description_speed_nautical">Vitesse (nœuds)</string>
-    <string name="settings_stats_units_nautical">Nautique (MN, pieds)</string>
+    <string name="settings_stats_units_nautical">Nautique (NM, pieds)</string>
     <string name="unit_nautical_mile">MN</string>
     <string name="unit_knots">kn</string>
     <string name="unit_minute_per_nautical_mile">min/MN</string>
@@ -635,4 +635,59 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="track_delete_number_of_tracks">%1$d tracés</string>
     <string name="introduction_osm_dashboard">OpenTracks ne fournit pas de carte en tant que telle. Veuillez installer OSMDashboard pour visualiser vos tracés sur une carte.</string>
     <string name="help_data_google_play_services_content">Non</string>
+    <string name="settings_stats_units_imperial_meter">Unités impériales (miles, m)</string>
+    <plurals name="voiceHours">
+        <item quantity="one">une heure</item>
+        <item quantity="many">%1$d heures</item>
+        <item quantity="other">%1$d heures</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">une seconde</item>
+        <item quantity="many">%1$d secondes</item>
+        <item quantity="other">%1$d secondes</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">un kilomètre par heure</item>
+        <item quantity="many">%1$.1f kilomètres par heure</item>
+        <item quantity="other">%1$.1f kilomètres par heure</item>
+    </plurals>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="one">1 kilomètre</item>
+        <item quantity="many">%1$.1f kilomètres</item>
+        <item quantity="other">%1$.1f kilomètres</item>
+    </plurals>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="one">1 mile nautique</item>
+        <item quantity="many">%1$.1f miles nautiques</item>
+        <item quantity="other">%1$.1f miles nautiques</item>
+    </plurals>
+    <string name="menu_export_all_one_file">Tout exporter (En un seul fichier)</string>
+    <string name="no_compatible_camera_installed">Aucune application pour l\'appareil photo compatible n\'est installée</string>
+    <plurals name="voiceMinutes">
+        <item quantity="one">une minute</item>
+        <item quantity="many">%1$d minutes</item>
+        <item quantity="other">%1$d minutes</item>
+    </plurals>
+    <string name="settings_recording_min_required_accuracy_summary">La position est ignoré si sa précision est supérieure à %1$s</string>
+    <string name="voice_on_device_speaker_title">Utiliser l\'haut-parleur de l\'appareil</string>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">un mile par heure</item>
+        <item quantity="many">%1$.1f miles par heure</item>
+        <item quantity="other">%1$.1f miles par heure</item>
+    </plurals>
+    <plurals name="voiceDistanceMiles">
+        <item quantity="one">1 mile</item>
+        <item quantity="many">%1$.1f miles</item>
+        <item quantity="other">%1$.1f miles</item>
+    </plurals>
+    <string name="no_compatible_gallery_installed">Aucune application de galerie d\'images compatible n\'est installée</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="one">un nœud</item>
+        <item quantity="many">%1$.1f nœuds</item>
+        <item quantity="other">%1$.1f nœuds</item>
+    </plurals>
+    <string name="settings_api_summary">API de contrôle et de statistiques pour applications tierces</string>
+    <string name="settings_sensor_heart_rate_max">Zones : fréquence cardiaque maximale (bpm)</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Filtrer les périphériques Bluetooth</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Afficher tout les périphériques Bluetooth découverts</string>
 </resources>
