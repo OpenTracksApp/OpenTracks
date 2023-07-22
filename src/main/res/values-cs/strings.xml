@@ -434,7 +434,7 @@ limitations under the License.
     <string name="description_altitude_loss">Převýšení: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Export po ukončení aktivity selhal, zkontrolujte prosím adresář pro export.</string>
     <string name="stats_loss">Ztráta</string>
-    <string name="export_track_already_exists_msg">Trasa %1$s již existuje v cílovém adresáři.</string>
+    <string name="export_track_already_exists_msg">Soubor %1$s již existuje v cílovém adresáři.</string>
     <string name="generic_overwrite">Přepsat</string>
     <string name="generic_show_errors">Zobrazit chyby</string>
     <string name="generic_click_twice_cancel">Opakovaně kliknout zpět pro ukončení</string>
