@@ -202,7 +202,7 @@ limitations under the License.
     <string name="menu_aggregated_statistics">Souhrnná statistika</string>
     <string name="menu_delete">Smazat</string>
     <string name="menu_edit">Upravit</string>
-    <string name="menu_export_all">Exportovat vše</string>
+    <string name="menu_export_all">Exportovat vše (jeden soubor na stopu)</string>
     <string name="menu_help">Nápověda</string>
     <string name="menu_import_all">Importovat vše</string>
     <string name="menu_insert_marker">Vložit značku</string>
@@ -406,7 +406,7 @@ limitations under the License.
     <string name="open_track_as_GPX">Otevřít jako GPX</string>
     <string name="open_track_as_trackfileformat">Otevřít jako %1$s</string>
     <string name="export_all_do_it_for_all">provést pro všechny konflikty</string>
-    <string name="export_track_errors">Trasa nebyla exportována</string>
+    <string name="export_track_errors">Soubory nebyly exportovány</string>
     <string name="generic_separator_done_total">/</string>
     <string name="generic_completed">Ukončeno</string>
     <string name="gps_disabled_msg">GPS vypnuto</string>
@@ -453,9 +453,9 @@ limitations under the License.
     <string name="import_progress_summary_errors_msg">Chyba</string>
     <string name="settings_prevent_reimport_tracks_title">Zabraňte opětovnému importu aktivit</string>
     <string name="export_progress_summary_errors_msg">Chyba</string>
-    <string name="export_progress_summary_skip_msg">Stopy přeskočeny</string>
-    <string name="export_progress_summary_overwrite_msg">Skladby přepsány</string>
-    <string name="export_progress_summary_new_msg">Vyvezeny nové tratě</string>
+    <string name="export_progress_summary_skip_msg">Soubory přeskočeny</string>
+    <string name="export_progress_summary_overwrite_msg">Soubory přepsány</string>
+    <string name="export_progress_summary_new_msg">Nové soubory exportovány</string>
     <string name="import_progress_summary_exists_msg">Existovat</string>
     <string name="import_progress_summary_ok_msg">Importované soubory</string>
     <string name="generic_open_track">Otevřená trať</string>
@@ -617,4 +617,12 @@ limitations under the License.
     <string name="unit_minute_per_nautical_mile">min/NM</string>
     <string name="value_integer_knots">%1$d uzlů</string>
     <string name="value_float_knots_recommended">%1$.1f uzlů (doporučeno)</string>
+    <string name="settings_stats_units_imperial_meter">Imperiální (mi, m)</string>
+    <string name="menu_export_all_one_file">Exportovat vše (jeden soubor na všechny stopy)</string>
+    <string name="settings_recording_min_required_accuracy_summary">Poloha bude ignorována, pokud je její přesnost větší než %1$s</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Filtrovat zařízení Bluetooth</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Zobrazit všechna zjistitelná zařízení Bluetooth</string>
+    <string name="no_compatible_camera_installed">Není nainstalována kompatibilní aplikace fotoaparátu</string>
+    <string name="no_compatible_gallery_installed">Není nainstalována kompatibilní aplikace galerie obrázků</string>
+    <string name="show_on_dashboard">API OpenTracks Dashboard</string>
 </resources>
