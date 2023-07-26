@@ -636,56 +636,11 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="introduction_osm_dashboard">OpenTracks ne fournit pas de carte en tant que telle. Veuillez installer OSMDashboard pour visualiser vos tracés sur une carte.</string>
     <string name="help_data_google_play_services_content">Non</string>
     <string name="settings_stats_units_imperial_meter">Unités impériales (miles, m)</string>
-    <plurals name="voiceHours">
-        <item quantity="one">une heure</item>
-        <item quantity="many">%1$d heures</item>
-        <item quantity="other">%1$d heures</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">une seconde</item>
-        <item quantity="many">%1$d secondes</item>
-        <item quantity="other">%1$d secondes</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">un kilomètre par heure</item>
-        <item quantity="many">%1$.1f kilomètres par heure</item>
-        <item quantity="other">%1$.1f kilomètres par heure</item>
-    </plurals>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 kilomètre</item>
-        <item quantity="many">%1$.1f kilomètres</item>
-        <item quantity="other">%1$.1f kilomètres</item>
-    </plurals>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">1 mile nautique</item>
-        <item quantity="many">%1$.1f miles nautiques</item>
-        <item quantity="other">%1$.1f miles nautiques</item>
-    </plurals>
     <string name="menu_export_all_one_file">Tout exporter (En un seul fichier)</string>
     <string name="no_compatible_camera_installed">Aucune application pour l\'appareil photo compatible n\'est installée</string>
-    <plurals name="voiceMinutes">
-        <item quantity="one">une minute</item>
-        <item quantity="many">%1$d minutes</item>
-        <item quantity="other">%1$d minutes</item>
-    </plurals>
     <string name="settings_recording_min_required_accuracy_summary">La position est ignoré si sa précision est supérieure à %1$s</string>
     <string name="voice_on_device_speaker_title">Utiliser l\'haut-parleur de l\'appareil</string>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">un mile par heure</item>
-        <item quantity="many">%1$.1f miles par heure</item>
-        <item quantity="other">%1$.1f miles par heure</item>
-    </plurals>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 mile</item>
-        <item quantity="many">%1$.1f miles</item>
-        <item quantity="other">%1$.1f miles</item>
-    </plurals>
     <string name="no_compatible_gallery_installed">Aucune application de galerie d\'images compatible n\'est installée</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">un nœud</item>
-        <item quantity="many">%1$.1f nœuds</item>
-        <item quantity="other">%1$.1f nœuds</item>
-    </plurals>
     <string name="settings_api_summary">API de contrôle et de statistiques pour applications tierces</string>
     <string name="settings_sensor_heart_rate_max">Zones : fréquence cardiaque maximale (bpm)</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Filtrer les périphériques Bluetooth</string>
