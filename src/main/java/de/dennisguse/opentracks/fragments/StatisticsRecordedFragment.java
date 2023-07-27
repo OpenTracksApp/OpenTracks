@@ -68,6 +68,7 @@ public class StatisticsRecordedFragment extends Fragment {
     }
 
     private SensorStatistics sensorStatistics;
+    private SensorStatisticsAdapter sensorsAdapter;
 
     private Track.Id trackId;
     @Nullable // Lazily loaded.
@@ -116,7 +117,8 @@ public class StatisticsRecordedFragment extends Fragment {
 
         RecyclerView sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;
         sensorsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-//        sensorsRecyclerView.setAdapter(sensorsAdapter);
+        sensorsAdapter = new SensorStatisticsAdapter();
+        sensorsRecyclerView.setAdapter(sensorsAdapter);
 
         return viewBinding.getRoot();
     }
@@ -141,6 +143,7 @@ public class StatisticsRecordedFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         viewBinding = null;
+        sensorsAdapter = null;
     }
 
     public void loadStatistics() {
@@ -258,6 +261,6 @@ public class StatisticsRecordedFragment extends Fragment {
         if (sensorStatistics == null) {
             return;
         }
-        //TODO
+        sensorsAdapter.swapData(getContext(), sensorStatistics);
     }
 }
