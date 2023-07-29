@@ -29,8 +29,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
@@ -113,10 +111,6 @@ public class StatisticsRecordedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewBinding = StatisticsRecordedBinding.inflate(inflater, container, false);
-
-        RecyclerView sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;
-        sensorsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-//        sensorsRecyclerView.setAdapter(sensorsAdapter);
 
         return viewBinding.getRoot();
     }
@@ -258,6 +252,28 @@ public class StatisticsRecordedFragment extends Fragment {
         if (sensorStatistics == null) {
             return;
         }
-        //TODO
+
+        if (sensorStatistics.hasHeartRate()) {
+            String maxBPM = String.valueOf(Math.round(sensorStatistics.getMaxHeartRate().getBPM()));
+            String avgBPM = String.valueOf(Math.round(sensorStatistics.getAvgHeartRate().getBPM()));
+
+            viewBinding.statsHeartRateGroup.setVisibility(View.VISIBLE);
+            viewBinding.statsMaxHeartRateValue.setText(maxBPM);
+            viewBinding.statsAvgHeartRateValue.setText(avgBPM);
+        }
+        if (sensorStatistics.hasCadence()) {
+            String maxRPM = String.valueOf(Math.round(sensorStatistics.getMaxCadence().getRPM()));
+            String avgRPM = String.valueOf(Math.round(sensorStatistics.getAvgCadence().getRPM()));
+
+            viewBinding.statsCadenceGroup.setVisibility(View.VISIBLE);
+            viewBinding.statsMaxCadenceValue.setText(maxRPM);
+            viewBinding.statsAvgCadenceValue.setText(avgRPM);
+        }
+        if (sensorStatistics.hasPower()) {
+            String W = String.valueOf(Math.round(sensorStatistics.getAvgPower().getW()));
+
+            viewBinding.statsPowerGroup.setVisibility(View.VISIBLE);
+            viewBinding.statsPowerValue.setText(W);
+        }
     }
 }
