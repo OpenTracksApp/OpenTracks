@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">zrakoplov</string>
     <string name="activity_type_atv">ATV</string>
@@ -152,7 +152,7 @@ limitations under the License.
     <string name="menu_aggregated_statistics">Skupna statistika</string>
     <string name="menu_delete">Izbriši</string>
     <string name="menu_edit">Uredi</string>
-    <string name="menu_export_all">Izvezi sve</string>
+    <string name="menu_export_all">Izvezi sve (jedna datoteka za pojediečanu pjesmu)</string>
     <string name="menu_help">Pomoć</string>
     <string name="menu_import_all">Uvezi sve</string>
     <string name="menu_insert_marker">Umetni oznaku</string>
@@ -170,7 +170,7 @@ limitations under the License.
     <!-- Search -->
     <!-- Sensor State -->
     <string name="sensor_state_heart_rate">Brzina otkucaja srca</string>
-    <string name="sensor_state_heart_rate_value">%1$d otkuc./min.</string>
+    <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Napajanje</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Napredno</string>
@@ -199,10 +199,11 @@ limitations under the License.
     <string name="settings_stats_units_imperial">Imperijalne (milje, stope)</string>
     <string name="settings_stats_units_metric">Metričke (km, m)</string>
     <string name="settings_stats_units_title">Preferirane jedinice</string>
-
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Mislim da bi vam ova staza mogla biti zanimljiva.\n\nDa biste ju pogledali, upotrijebite Google Earth ili neki drugi softver za izradu karata.\n\n%1$s</string>
-    <string name="share_track_subject">Želim podijeliti stazu s vama.</string>
+    <string name="share_track_share_file_body">Mislim da bi te ova pjesma mogla zanimati.
+\n
+\n%1$s</string>
+    <string name="share_track_subject">Želim podijeliti pjesmu s tobom</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Prosj. tempo kretanja</string>
     <string name="stats_average_moving_speed">Prosj. brzina kretanja</string>
@@ -336,4 +337,41 @@ limitations under the License.
     <string name="waypoint_type_waterfall">vodopad</string>
     <string name="waypoint_type_water_fountain">fontana</string>
     <string name="waypoint_type_waypoint">točka rute</string>
+    <string name="settings_import_section">Uvoz</string>
+    <string name="settings_export_section">Izvoz</string>
+    <string name="settings_prevent_reimport_tracks_title">Spriječi ponovni uvoz pjesama</string>
+    <string name="menu_export_all_one_file">Izvezi sve (jedna datoteka za sve pjesme)</string>
+    <string name="menu_select_layout">Odaberi raspored</string>
+    <string name="sensor_state_heart_rate_max">Maksimalna brzina otkucaja srca</string>
+    <string name="menu_voice_rate">Brzina glasa</string>
+    <string name="sensor_state_heart_rate_avg">Prosječna brzina otkucaja srca</string>
+    <string name="permission_gps_failed">OpenTracks zahtijeva dozvolu za korištenje GPS-a.</string>
+    <string name="sensor_state_cadence_avg">Prosječna kadenca</string>
+    <string name="permission_bluetooth_failed">OpenTracks zahtijeva dozvolu za korištenje Bluetootha.</string>
+    <string name="permission_bluetooth_failed_rejected">OpenTracksu moraš ručno dozvoliti pristup obližnjim uređajima u postavkama sustava.</string>
+    <string name="menu_add_custom_layout">Novi raspored</string>
+    <string name="settings_sensors_title">Bluetooth senzori</string>
+    <string name="menu_filter">Filtar</string>
+    <string name="delete_service">Usluga brisanja</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Tijekom snimanja ostavi ekran uključenim.</string>
+    <string name="settings_import_export_summary">Uvoz, Izvoz, Automatski izvoz</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Cjeloekranski prikaz</string>
+    <string name="settings_import_export_title">Uvoz/Izvoz</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Tijekom snimanja prikaži cjeloekranski prikaz.</string>
+    <string name="sensor_state_cadence_max">Maksimalna kadenca</string>
+    <string name="settings_units_category">Jedinice</string>
+    <string name="settings_open_tracks_summary">Sve o projektu OpenTracks</string>
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_announcements_summary">Vrijeme, udaljenost, brzina glasa</string>
+    <string name="menu_resume_track">Nastavi svirati pjesmu</string>
+    <string name="settings_ui_summary">Izgled, raspored snimanja, tema</string>
+    <string name="settings_defaults_title">Standardne jedinice i aktivnost</string>
+    <string name="settings_ui_title">Korisničko sučelje</string>
+    <string name="settings_export_filename_title">Format imena datoteke</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Tijekom snimanja prikaži statistiku bez otključavanja uređaja.</string>
+    <string name="menu_insert_gallery_img">Umetni sliku galerije</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="bluetooth_disabled">Aktiviraj Bluetooth.</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Ostavi ekran uključenim</string>
 </resources>
