@@ -30,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="206dp" />
+            app:layout_constraintGuide_percent="0.5" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
