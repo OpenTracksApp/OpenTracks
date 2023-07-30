@@ -59,16 +59,38 @@ We do not support type of movement (i.e., walking vs running).
 
 ## Tested Barometric Sensor Smartphones
 
-There are smartphones that have a barometric sensor that OpenTracks uses to compute altitude gain and loss.
+OpenTracks derives the altitude gain and altitude loss using the internal barometric sensor of a device (if present).
+However, barometric sensor seem to be prone to a lot of noise.
+This may either be a malfunctioning sensor, a case that prevents the device from measuring, or something else. 
 
-In our tests there are smartphones whose barometric sensor works well and others don't. Here is a list of the smartphones tested:
+To check if the barometric sensor of a device is working with OpenTracks:
+1. Record a track (ca. 1min) with the device stationary.
+   Expectation: 0m gain and 0m loss should.
+2. Record a track (ca. 1min) while shaking the device.
+   Expectation: 0m gain and 0m loss should.
+3. Record a track (ca. 1min) while moving the device up (less than 3m difference between highest and lowest point).
+   Expectation: 0m gain and 0m loss should.
+4. Record a track walking up some stairs or taking an elevator.
+   Expectation: some gain and some loss is recorded that seems realistic.
 
-| Brand  | Model              | Android Version | Tests                                                                          |
-|--------|--------------------|-----------------|--------------------------------------------------------------------------------|
-| Google | Pixel              | LineageOS 17.1  | Ok                                                                             |
-| Google | Pixel 2 XL         | LineageOS 17.1  | Ok on the bike handlebars but it fails when I carry it in a pocket or backpack |
-| Google | Pixel 3            | Android 11      | Failure                                                                        |
-| Google | Pixel 3a           | Android 11      | Ok                                                                             |
-| Google | Pixel 3a           | Lineage 18.1    | Ok                                                                             |
-| Google | Pixel 4a           | Android 11      | Ok                                                                             |
-| Sony   | Xperia XZ1 Compact | LineageOS 16.1  | Failure                                                                        |
+If any of these tests do **not** show expected values for gain/loss, OpenTracks will not show useful values.
+
+Please note that OpenTracks:
+* only records gain/loss if +/- 3m to the initial/previous of are measured to the previous
+* solely uses the barometric sensor for gain/loss; GPS is not used for this.
+
+In our tests there are smartphones whose barometric sensor works well and others don't. 
+
+Here is a list of the smartphones tested:
+
+| Brand   | Model              | Android Version | Tests                                                                          |
+|---------|--------------------|-----------------|--------------------------------------------------------------------------------|
+| Google  | Pixel              | LineageOS 17.1  | Ok                                                                             |
+| Google  | Pixel 2 XL         | LineageOS 17.1  | Ok on the bike handlebars but it fails when I carry it in a pocket or backpack |
+| Google  | Pixel 3            | Android 11      | Failure                                                                        |
+| Google  | Pixel 3a           | Android 11      | Ok                                                                             |
+| Google  | Pixel 3a           | Lineage 18.1    | Ok                                                                             |
+| Google  | Pixel 4a           | Android 11      | Ok                                                                             |
+| Google  | Nexus 4            | LineageOS 18.1  | Ok                                                                             |
+| Samsung | S4                 | Android 11      | Ok                                                                             |
+| Sony    | Xperia XZ1 Compact | LineageOS 16.1  | Failure                                                                        |
