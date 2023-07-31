@@ -490,7 +490,6 @@ limitations under the License.
     <string name="stats_clock">Часы</string>
     <string name="settings_activity_defaults_category">Настройки активности</string>
     <string name="settings_reset_summary">Сбросить настройки</string>
-    <string name="settings_recording_idle_speed_title">Порог скорости холостого хода</string>
     <string name="settings_generic_sensor">Обычные</string>
     <string name="custom_layout_select_layout">Выбрать раскладку</string>
     <string name="stats_custom_layout_default_layout">Раскладка по умолчанию</string>

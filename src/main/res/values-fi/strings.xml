@@ -521,7 +521,6 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_title">Automaattinen tiedonsiirto</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Tallennuksen aloittanut sovellus voi myös käyttää tallennettuja tietoja.</string>
     <string name="menu_filter">Suodatin</string>
-    <string name="settings_recording_idle_speed_title">Joutokäyntinopeuden kynnysarvo</string>
     <string name="stats_sensors_cadence">Kadenssi</string>
     <string name="stats_clock">Kello</string>
     <string name="current_heart_rate">Nykyinen syke</string>

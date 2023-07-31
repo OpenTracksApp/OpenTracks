@@ -45,7 +45,6 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.HeartRateZones;
-import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
@@ -530,11 +529,12 @@ public class PreferencesUtils {
 
     static String[] getMinRecordingIntervalEntries() {
         String[] entryValues = resources.getStringArray(R.array.min_recording_interval_values);
+        long recommended = PreferencesUtils.getMinRecordingIntervalDefault().getSeconds();
         String[] entries = new String[entryValues.length];
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
 
-            if (value == PreferencesUtils.getMinRecordingIntervalDefault().getSeconds()) {
+            if (value == recommended) {
                 entries[i] = resources.getString(R.string.value_smallest_recommended);
             } else {
                 entries[i] = value < 60 ? resources.getString(R.string.value_integer_second, value) : resources.getString(R.string.value_integer_minute, value / 60);
@@ -598,49 +598,25 @@ public class PreferencesUtils {
         return entries;
     }
 
-
-    public static Speed getIdleSpeed() {
-        final float DEFAULT = Float.parseFloat(resources.getString(R.string.idle_speed_default));
-        float value = getFloat(R.string.idle_speed_key, DEFAULT);
-        return Speed.ofKMH(value);
+    public static Duration getIdleDurationTimeout() {
+        final int DEFAULT = Integer.parseInt(resources.getString(R.string.idle_duration_default));
+        int value = getInt(R.string.idle_duration_key, DEFAULT);
+        return Duration.ofSeconds(value);
     }
 
-    static String[] getIdleSpeedEntries() {
-        String[] entryValues = resources.getStringArray(R.array.idle_speed_values);
+    static String[] getIdleDurationEntries() {
+        String[] entryValues = resources.getStringArray(R.array.idle_duration_values);
         String[] entries = new String[entryValues.length];
 
-        final float idleSpeedDefault = Float.parseFloat(resources.getString(R.string.idle_speed_default));
-
-        UnitSystem unitSystem = getUnitSystem();
+        final int idleDurationDefault = Integer.parseInt(resources.getString(R.string.idle_duration_default));
 
         for (int i = 0; i < entryValues.length; i++) {
-            float value = Float.parseFloat(entryValues[i]);
+            int value = Integer.parseInt(entryValues[i]);
 
-            switch (unitSystem) {
-                case METRIC -> {
-                    if (value == idleSpeedDefault) {
-                        entries[i] = resources.getString(R.string.value_float_kilometer_hour_recommended, value);
-                    } else {
-                        entries[i] = resources.getString(R.string.value_float_kilometer_hour, value);
-                    }
-                }
-                case IMPERIAL_FEET, IMPERIAL_METER -> {
-                    double valueMPH = Speed.ofKMH(value).toMPH();
-                    if (value == idleSpeedDefault) {
-                        entries[i] = resources.getString(R.string.value_float_mile_hour_recommended, valueMPH);
-                    } else {
-                        entries[i] = resources.getString(R.string.value_float_mile_hour, valueMPH);
-                    }
-                }
-                case NAUTICAL_IMPERIAL -> {
-                    double valueKnots = Speed.ofKMH(value).toKnots();
-                    if (value == idleSpeedDefault) {
-                        entries[i] = resources.getString(R.string.value_float_knots_recommended, valueKnots);
-                    } else {
-                        entries[i] = resources.getString(R.string.value_float_knots, valueKnots);
-                    }
-                }
-                default -> throw new RuntimeException("Not implemented");
+            if (value == idleDurationDefault) {
+                entries[i] = resources.getString(R.string.value_int_seconds, value);
+            } else {
+                entries[i] = value < 60 ? resources.getString(R.string.value_integer_second, value) : resources.getString(R.string.value_integer_minute, value / 60);
             }
         }
 

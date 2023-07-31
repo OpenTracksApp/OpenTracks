@@ -507,7 +507,6 @@ limitations under the License.
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (recomendado)</string>
-    <string name="settings_recording_idle_speed_title">Umbral de velocidad de ralentí</string>
     <string name="stats_clock">Reloj</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (recomendado)</string>
     <string name="settings_generic_sensor">Genérico</string>

@@ -438,7 +438,6 @@
     <string name="settings_recording_keep_screen_on_while_recording_title">Mantenha o ecrã ligada</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Durante a gravação, apresente em ecrã inteiro.</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Durante a gravação, mantenha o ecrã ligado.</string>
-    <string name="settings_recording_idle_speed_title">Limite de velocidade de marcha lenta</string>
     <string name="settings_night_mode_title">Tema UI</string>
     <string name="settings_night_mode_option_system">Sistema</string>
     <string name="settings_night_mode_option_night">Noite</string>

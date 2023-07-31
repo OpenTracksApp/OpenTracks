@@ -487,7 +487,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="settings_import_section">Importere</string>
     <string name="settings_export_section">Eksport</string>
     <string name="stats_clock">Klokken</string>
-    <string name="settings_recording_idle_speed_title">Tærskel for tomgangshastighed</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (anbefalet)</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="generic_to">Til</string>

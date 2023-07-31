@@ -88,7 +88,7 @@ public class TrackRecordingServiceRecordingTest {
         contentProviderUtils = new ContentProviderUtils(context);
 
         PreferencesUtils.setString(R.string.recording_distance_interval_key, R.string.recording_distance_interval_default);
-        PreferencesUtils.setString(R.string.idle_speed_key, R.string.idle_speed_default);
+        PreferencesUtils.setString(R.string.idle_duration_key, R.string.idle_duration_default);
 
         service = startService();
     }

@@ -34,8 +34,6 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
 
     private static final String TAG = TrackRecordingManager.class.getSimpleName();
 
-    private static final Duration IDLE_TIMEOUT = Duration.ofSeconds(30);
-
     private static final AltitudeCorrectionManager ALTITUDE_CORRECTION_MANAGER = new AltitudeCorrectionManager();
 
     private final Runnable ON_IDLE = this::onIdle;
@@ -49,6 +47,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
 
     private Distance recordingDistanceInterval;
     private Distance maxRecordingDistance;
+    private Duration idleDuration;
 
     private Track.Id trackId;
     private TrackStatisticsUpdater trackStatisticsUpdater;
@@ -69,7 +68,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
 
     Track.Id startNewTrack() {
         TrackPoint segmentStartTrackPoint = trackPointCreator.createSegmentStartManual();
-        // Create new track
+
         ZoneOffset zoneOffset = ZoneOffset.systemDefault().getRules().getOffset(segmentStartTrackPoint.getTime());
         Track track = new Track(zoneOffset);
         trackId = contentProviderUtils.insertTrack(track);
@@ -83,7 +82,6 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         track.setActivityTypeLocalized(activityTypeLocalized);
         track.setActivityType(ActivityType.findByLocalizedString(context, activityTypeLocalized));
         track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
-        //TODO Pass TrackPoint
         track.setName(TrackNameUtils.getTrackName(context, trackId, track.getStartTime()));
         contentProviderUtils.updateTrack(track);
 
@@ -109,7 +107,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         return true;
     }
 
-    void end() {
+    void endCurrentTrack() {
         TrackPoint segmentEnd = trackPointCreator.createSegmentEnd();
         insertTrackPoint(segmentEnd, true);
 
@@ -223,7 +221,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
             insertTrackPoint(trackPoint, true);
 
             handler.removeCallbacks(ON_IDLE);
-            handler.postDelayed(ON_IDLE, IDLE_TIMEOUT.toMillis());
+            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
             return true;
         }
 
@@ -231,7 +229,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
             insertTrackPoint(trackPoint, false);
 
             handler.removeCallbacks(ON_IDLE);
-            handler.postDelayed(ON_IDLE, IDLE_TIMEOUT.toMillis());
+            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
             return true;
         }
 
@@ -296,6 +294,9 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         }
         if (PreferencesUtils.isKey(R.string.max_recording_distance_key, key)) {
             maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance();
+        }
+        if (PreferencesUtils.isKey(R.string.idle_duration_key, key)) {
+            idleDuration = PreferencesUtils.getIdleDurationTimeout();
         }
     }
 }

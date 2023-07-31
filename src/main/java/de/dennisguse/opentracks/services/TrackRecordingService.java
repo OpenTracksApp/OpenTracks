@@ -214,7 +214,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Set recording status
         updateRecordingStatus(STATUS_DEFAULT);
 
-        trackRecordingManager.end();
+        trackRecordingManager.endCurrentTrack();
 
         stopUpdateRecordingData();
 

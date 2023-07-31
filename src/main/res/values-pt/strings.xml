@@ -465,7 +465,6 @@ limitations under the License.
     <string name="settings_import_export_title">Importar/Exportar</string>
     <string name="settings_import_export_summary">Importar, Exportar, Auto Export</string>
     <string name="settings_units_category">Unidades</string>
-    <string name="settings_recording_idle_speed_title">Limite de velocidade de marcha lenta</string>
     <string name="settings_night_mode_title">Tema UI</string>
     <string name="settings_layout_reset_confirm_message">Todas as configurações de layout serão revertidas para os valores padrão. Isso não excluirá nenhuma trilha do aparelho.</string>
     <string name="settings_all_reset">Redefinir</string>

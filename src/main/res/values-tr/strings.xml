@@ -453,7 +453,6 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Kilit ekranında istatistikleri göster</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Kayıt esnasında ekranı açık tutar.</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Kayıt esnasında tam ekranda sunar.</string>
-    <string name="settings_recording_idle_speed_title">Boşta hız eşiği</string>
     <string name="settings_night_mode_title">Kullanıcı arayüzü teması</string>
     <string name="settings_night_mode_option_system">Sistem</string>
     <string name="settings_night_mode_option_night">Gece</string>

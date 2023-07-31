@@ -485,7 +485,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="settings_sensors_summary">Txirrindularitza Sentsoreak, Gurpila Zirkunferentzia, Sentsore Exekutatzen</string>
     <string name="settings_recording_customize_layout_select_columns">Datu-eremuak errenkadako</string>
     <string name="settings_recording_customize_layout_title">Pertsonalizatu zure grabazioaren diseinua</string>
-    <string name="settings_recording_idle_speed_title">Inaktibitatearen abiaduraren muga</string>
     <string name="settings_announcements_totaltime_frequency">Denbora-tartea</string>
     <string name="settings_announcements_distance_frequency">Distantzia tartea</string>
     <string name="settings_running_sensor">Exekutatzen</string>

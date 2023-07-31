@@ -429,7 +429,6 @@
     <string name="settings_announcements_summary">Tiempo, Distancia, Velocidad de la voz</string>
     <string name="settings_import_export_summary">Importar, Exportar, Autoexportar</string>
     <string name="settings_units_category">Unidades</string>
-    <string name="settings_recording_idle_speed_title">Umbral de velocidad de ralentí</string>
     <string name="custom_layout_select_layout">Seleccionar diseño</string>
     <string name="stats_custom_layout_default_layout">Diseño predeterminado</string>
     <string name="settings_generic_sensor">Genérico</string>

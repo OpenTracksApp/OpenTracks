@@ -448,7 +448,6 @@ limitations under the License.
     <string name="settings_all_reset">Ponastavitev</string>
     <string name="settings_sensor_running_speed_and_cadence">Razdalja, hitrost in kadenca</string>
     <string name="settings_sensor_wheel_circumference">Obod kolesa (mm)</string>
-    <string name="settings_recording_idle_speed_title">Prag prostega teka</string>
     <string name="settings_night_mode_option_system">Sistem</string>
     <string name="settings_public_api_disabled_toast">OpenTracks Public API je onemogočen: omogočite ga lahko v nastavitvah.</string>
     <string name="current_heart_rate">Trenutni srčni utrip</string>

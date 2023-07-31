@@ -496,7 +496,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="description_speed_source_gps">GPS</string>
     <string name="menu_select_layout">Wähle Layout</string>
     <string name="generic_choose_an_option">Wähle eine Option</string>
-    <string name="settings_recording_idle_speed_title">Inaktivitätsgeschwindigkeit</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_import_export_title">Import/Export</string>
     <string name="settings_sensors_title">Bluetooth Sensoren</string>

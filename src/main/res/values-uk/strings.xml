@@ -475,7 +475,6 @@ limitations under the License.
     <string name="custom_layout_list_edit_name">Введіть ім\'я макета для додавання</string>
     <string name="settings_announcements_distance_frequency">Інтервал відстаней</string>
     <string name="settings_announcements_totaltime_frequency">Часовий інтервал</string>
-    <string name="settings_recording_idle_speed_title">Поріг холостого ходу</string>
     <string name="settings_running_sensor">Рухомий</string>
     <string name="settings_generic_sensor">Загальний</string>
     <string name="settings_layout_reset_confirm_title">Скинути ваші макети\?</string>
