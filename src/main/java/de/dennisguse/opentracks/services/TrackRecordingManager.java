@@ -112,10 +112,7 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         reset();
     }
 
-    Pair<Track, Pair<TrackPoint, SensorDataSet>> getDataForUI(TrackPointCreator trackPointCreator) {
-        if (trackPointCreator == null) {
-            return null;
-        }
+    Pair<Track, Pair<TrackPoint, SensorDataSet>> getDataForUI(@NonNull TrackPointCreator trackPointCreator) {
         TrackStatisticsUpdater tmpTrackStatisticsUpdater = new TrackStatisticsUpdater(trackStatisticsUpdater);
         Pair<TrackPoint, SensorDataSet> current = trackPointCreator.createCurrentTrackPoint(lastTrackPointUIWithSpeed, lastTrackPointUIWithAltitude, lastStoredTrackPointWithLocation);
 

@@ -71,13 +71,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         public void run() {
             updateRecordingDataWhileRecording();
 
-            Handler localHandler = TrackRecordingService.this.handler;
-            if (localHandler == null) {
-                // when this happens, no recording is running and we should not send any notifications.
-                //TODO This implementation is not a good idea; rather solve the issue for this properly
-                return;
-            }
-            localHandler.postDelayed(this, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
+            TrackRecordingService.this.handler.postDelayed(this, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
         }
     };
 
@@ -137,11 +131,9 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         notificationManager = null;
 
         egm2008CorrectionManager = null;
-        try {
-            voiceAnnouncementManager.stop();
-        } finally {
-            voiceAnnouncementManager = null;
-        }
+
+        voiceAnnouncementManager.stop();
+        voiceAnnouncementManager = null;
 
         // This should be the next to last operation
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
@@ -272,13 +264,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     @Override
     public void newGpsStatus(GpsStatusValue gpsStatusValue) {
-
-        //TODO This check should not be necessary, but prevents a crash; somehow the shutdown is not working correctly as we should not receive a notification then.
-        // It is likely a race condition as the LocationManager provides location updates without using the Handler.
-        if (gpsStatusObservable != null) {
-            notificationManager.updateContent(getString(gpsStatusValue.message));
-            gpsStatusObservable.postValue(gpsStatusValue);
-        }
+        notificationManager.updateContent(getString(gpsStatusValue.message));
+        gpsStatusObservable.postValue(gpsStatusValue);
     }
 
     public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
@@ -316,15 +303,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         // Compute temporary track statistics using sensorData and update time.
-
-        TrackPointCreator localTrackPointCreator = this.trackPointCreator;
-        VoiceAnnouncementManager localVoiceAnnouncementManager = this.voiceAnnouncementManager;
-        if (localTrackPointCreator == null || localVoiceAnnouncementManager == null) {
-            // when this happens, no recording is running and we should not send any notifications.
-            //TODO This implementation is not a good idea; rather solve the issue for this properly
-            return;
-        }
-
         Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI(trackPointCreator);
         if (data == null) {
             Log.w(TAG, "Requesting data if not recording is taking place, should not be done.");
@@ -333,7 +311,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         TrackPoint trackPoint = data.second.first;
         egm2008CorrectionManager.correctAltitude(this, trackPoint);
 
-        localVoiceAnnouncementManager.update(this, data.first);
+        voiceAnnouncementManager.update(this, data.first);
 
         recordingDataObservable.postValue(new RecordingData(data.first, trackPoint, data.second.second));
     }
