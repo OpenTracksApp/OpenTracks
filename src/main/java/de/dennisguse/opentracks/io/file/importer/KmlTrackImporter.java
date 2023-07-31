@@ -315,6 +315,10 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
             if (i < sensorSpeedList.size() && sensorSpeedList.get(i) != null) {
                 trackPoint.setSpeed(Speed.of(sensorSpeedList.get(i)));
+
+                if (TrackPoint.IDLE_SPEED.greaterOrEqualThan(trackPoint.getSpeed())) {
+                    trackPoint.setType(TrackPoint.Type.IDLE);
+                }
             }
             if (i < sensorDistanceList.size() && sensorDistanceList.get(i) != null) {
                 trackPoint.setSensorDistance(Distance.of(sensorDistanceList.get(i)));
