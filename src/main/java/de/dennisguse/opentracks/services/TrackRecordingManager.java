@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
 
@@ -32,10 +33,16 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
 
     private static final String TAG = TrackRecordingManager.class.getSimpleName();
 
+    private static final Duration IDLE_TIMEOUT = Duration.ofSeconds(30);
+
     private static final AltitudeCorrectionManager ALTITUDE_CORRECTION_MANAGER = new AltitudeCorrectionManager();
+
+    private final Runnable ON_IDLE = this::onIdle;
 
     private final ContentProviderUtils contentProviderUtils;
     private final Context context;
+
+    private final Handler handler;
 
     private final TrackPointCreator trackPointCreator;
 
@@ -52,9 +59,10 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
     private TrackPoint lastStoredTrackPoint;
     private TrackPoint lastStoredTrackPointWithLocation;
 
-    TrackRecordingManager(Context context, TrackPointCreator trackPointCreator) {
+    TrackRecordingManager(Context context, TrackPointCreator trackPointCreator, Handler handler) {
         this.context = context;
         this.trackPointCreator = trackPointCreator;
+        this.handler = handler;
         contentProviderUtils = new ContentProviderUtils(context);
     }
 
@@ -154,15 +162,26 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         return new Marker.Id(ContentUris.parseId(uri));
     }
 
+    void onIdle() {
+        Log.d(TAG, "Becoming idle");
+        onNewTrackPoint(trackPointCreator.createIdle());
+    }
+
     /**
      * @return TrackPoint was stored?
      */
-    boolean onNewTrackPoint(@NonNull TrackPoint trackPoint) {
+    synchronized boolean onNewTrackPoint(@NonNull TrackPoint trackPoint) {
         if (trackPoint.hasSpeed()) {
             lastTrackPointUIWithSpeed = trackPoint;
         }
         if (trackPoint.hasAltitude()) {
             lastTrackPointUIWithAltitude = trackPoint;
+        }
+
+        if (trackPoint.getType() == TrackPoint.Type.IDLE) {
+            insertTrackPoint(trackPoint, true);
+            handler.removeCallbacks(ON_IDLE);
+            return true;
         }
         //Storing trackPoint
 
@@ -184,10 +203,10 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
             if (!shouldStore) {
                 Log.d(TAG, "Ignoring TrackPoint as it has no distance (and sensor data is not new enough).");
                 return false;
-            } else {
-                insertTrackPoint(trackPoint, true);
-                return true;
             }
+
+            insertTrackPoint(trackPoint, true);
+            return true;
         }
 
         Distance distanceToLastStoredTrackPoint;
@@ -200,18 +219,17 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         if (distanceToLastStoredTrackPoint.greaterThan(maxRecordingDistance)) {
             trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
             insertTrackPoint(trackPoint, true);
+
+            handler.removeCallbacks(ON_IDLE);
+            handler.postDelayed(ON_IDLE, IDLE_TIMEOUT.toMillis());
             return true;
         }
 
-        if (distanceToLastStoredTrackPoint.greaterOrEqualThan(recordingDistanceInterval)
-                && trackPoint.isMoving()) {
+        if (distanceToLastStoredTrackPoint.greaterOrEqualThan(recordingDistanceInterval)) {
             insertTrackPoint(trackPoint, false);
-            return true;
-        }
 
-        if (trackPoint.isMoving() != lastStoredTrackPoint.isMoving()) {
-            // Moving from non-moving to moving or vice versa; required to compute moving time correctly.
-            insertTrackPoint(trackPoint, true);
+            handler.removeCallbacks(ON_IDLE);
+            handler.postDelayed(ON_IDLE, IDLE_TIMEOUT.toMillis());
             return true;
         }
 

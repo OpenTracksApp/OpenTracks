@@ -107,8 +107,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         gpsStatusObservable = new MutableLiveData<>(STATUS_GPS_DEFAULT);
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
-        trackPointCreator = new TrackPointCreator(this, this, handler);
-        trackRecordingManager = new TrackRecordingManager(this, trackPointCreator);
+        trackPointCreator = new TrackPointCreator(this);
+        trackRecordingManager = new TrackRecordingManager(this, trackPointCreator, handler);
 
         voiceAnnouncementManager = new VoiceAnnouncementManager(this);
         notificationManager = new TrackRecordingServiceNotificationManager(this);

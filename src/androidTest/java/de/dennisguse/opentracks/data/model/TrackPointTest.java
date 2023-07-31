@@ -1,32 +1,15 @@
 package de.dennisguse.opentracks.data.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 
 public class TrackPointTest {
-
-    @Test
-    public void isRecent_true() {
-        TrackPoint tp = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.now());
-
-        assertTrue(tp.isRecent());
-    }
-
-    @Test
-    public void isRecent_false() {
-        TrackPoint tp = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.now().minus(2, ChronoUnit.MINUTES));
-
-        assertFalse(tp.isRecent());
-    }
 
     @Test
     public void distanceToPrevious() {

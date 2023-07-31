@@ -287,11 +287,6 @@ public class TrackPoint {
         this.speed = speed;
         return this;
     }
-
-    public boolean isMoving() {
-        return hasSpeed() && getSpeed().isMoving();
-    }
-
     public boolean hasBearing() {
         return bearing != null;
     }
@@ -352,9 +347,8 @@ public class TrackPoint {
         return hasHorizontalAccuracy() && horizontalAccuracy.lessThan(thresholdHorizontalAccuracy);
     }
 
-    //TODO Bearing requires a location; what do we do if we don't have any?
     public float bearingTo(@NonNull TrackPoint dest) {
-        return getLocation().bearingTo(dest.getLocation());
+        return bearingTo(dest.getLocation());
     }
 
     //TODO Bearing requires a location; what do we do if we don't have any?

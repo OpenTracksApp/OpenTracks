@@ -182,7 +182,7 @@ public class ExportImportTest {
         track = contentProviderUtils.getTrack(trackId);
         trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         markers = contentProviderUtils.getMarkers(trackId);
-        assertEquals(12, trackPoints.size());
+        assertEquals(11, trackPoints.size());
         assertEquals(2, markers.size());
     }
 
@@ -234,21 +234,21 @@ public class ExportImportTest {
         assertEquals(Duration.ofSeconds(20), importedTrackStatistics.getTotalTime());
 
         assertEquals(originalTrackStatistics.getMovingTime(), importedTrackStatistics.getMovingTime());
-        assertEquals(Duration.ofSeconds(4), importedTrackStatistics.getMovingTime());
+        assertEquals(Duration.ofSeconds(20), importedTrackStatistics.getMovingTime());
 
         // Distance
         assertEquals(originalTrackStatistics.getTotalDistance(), importedTrackStatistics.getTotalDistance());
-        assertEquals(222238.70, importedTrackStatistics.getTotalDistance().toM(), 0.01);
+        assertEquals(222236.70, importedTrackStatistics.getTotalDistance().toM(), 0.01);
 
         // Speed
         assertEquals(originalTrackStatistics.getMaxSpeed(), importedTrackStatistics.getMaxSpeed());
-        assertEquals(55559.67, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(11111.83, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
 
         assertEquals(originalTrackStatistics.getAverageSpeed(), importedTrackStatistics.getAverageSpeed());
-        assertEquals(11111.93, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
+        assertEquals(11111.83, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
 
         assertEquals(originalTrackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed());
-        assertEquals(55559.67, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(11111.83, importedTrackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
 
         // Altitude
         assertEquals(originalTrackStatistics.getMinAltitude(), importedTrackStatistics.getMinAltitude(), 0.01);
@@ -347,7 +347,7 @@ public class ExportImportTest {
                         .setSpeed(Speed.of(5))
                         .setAltitudeLoss(1f)
                         .setAltitudeGain(1f)
-                        .setSensorDistance(Distance.of(14))
+                        .setSensorDistance(Distance.of(12))
                         .setHeartRate(69)
                         .setPower(50f)
                         .setCadence(3f)
@@ -391,12 +391,12 @@ public class ExportImportTest {
         assertEquals(Duration.ofSeconds(80), importedTrackStatistics.getMovingTime());
 
         // Distance
-        assertEquals(222349.85, importedTrackStatistics.getTotalDistance().toM(), 0.01);
+        assertEquals(222347.85, importedTrackStatistics.getTotalDistance().toM(), 0.01);
 
         // Speed
-        assertEquals(2779.37, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
-        assertEquals(2779.37, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
-        assertEquals(2779.37, importedTrackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
+        assertEquals(2779.34, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(2779.34, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
+        assertEquals(2779.34, importedTrackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
 
         // Altitude
         assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);

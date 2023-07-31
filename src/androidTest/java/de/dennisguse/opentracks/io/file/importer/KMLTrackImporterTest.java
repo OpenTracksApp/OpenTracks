@@ -186,7 +186,7 @@ public class KMLTrackImporterTest {
                         .setAltitude(439.1626281738281)
                         .setAltitudeGain(0f)
                         .setSpeed(Speed.of(0.1577)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-11-28T17:06:47.888Z"))
+                new TrackPoint(TrackPoint.Type.IDLE, Instant.parse("2020-11-28T17:06:47.888Z"))
                         .setLatitude(12.340057)
                         .setLongitude(1.23405)
                         .setAltitude(421.8070983886719)
@@ -200,13 +200,13 @@ public class KMLTrackImporterTest {
                         .setAltitude(419.93902587890625)
                         .setAltitudeGain(0f)
                         .setSpeed(Speed.of(0)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-11-28T17:06:56.905Z"))
+                new TrackPoint(TrackPoint.Type.IDLE, Instant.parse("2020-11-28T17:06:56.905Z"))
                         .setLatitude(12.340057)
                         .setLongitude(1.23405)
                         .setAltitude(419.9036560058594)
                         .setAltitudeGain(0f)
                         .setSpeed(Speed.of(0)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-11-28T17:07:20.870Z"))
+                new TrackPoint(TrackPoint.Type.IDLE, Instant.parse("2020-11-28T17:07:20.870Z"))
                         .setLatitude(12.340082)
                         .setLongitude(1.234046)
                         .setAltitude(417.99432373046875)

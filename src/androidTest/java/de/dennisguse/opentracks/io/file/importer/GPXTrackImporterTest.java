@@ -141,8 +141,8 @@ public class GPXTrackImporterTest {
 
         // 3. trackstatistics
         TrackStatistics trackStatistics = importedTrack.getTrackStatistics();
-        assertEquals(1.44, trackStatistics.getMaxSpeed().toMPS(), 0.01);
-        assertEquals(Duration.ofSeconds(53), trackStatistics.getMovingTime());
+        assertEquals(0.75, trackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(Duration.ofSeconds(101), trackStatistics.getMovingTime());
 
         // 4. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
@@ -189,7 +189,7 @@ public class GPXTrackImporterTest {
 
         // 3. trackstatistics
         TrackStatistics trackStatistics = importedTrack.getTrackStatistics();
-        assertEquals(4.0, trackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(5.0, trackStatistics.getMaxSpeed().toMPS(), 0.01);
         assertEquals(Duration.ofSeconds(101), trackStatistics.getMovingTime());
 
         // 4. trackpoints
