@@ -238,7 +238,6 @@
     <string name="settings_recording_track_name_date_local_option">Dáta (áitiúil)</string>
     <string name="settings_recording_track_name_number_option">Uimhir</string>
     <string name="settings_recording_track_name_title">Ainm rian réamhshocraithe</string>
-    <string name="settings_recording_idle_speed_title">Tairseach luais díomhaoin</string>
     <string name="settings_night_mode_title">Téama Chomhéadain</string>
     <string name="settings_night_mode_option_system">Córas</string>
     <string name="settings_night_mode_option_day">Lá</string>

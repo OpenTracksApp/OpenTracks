@@ -394,7 +394,7 @@ limitations under the License.
     <string name="settings_recording_track_name_date_local_option">Date (local)</string>
     <string name="settings_recording_track_name_number_option">Number</string>
     <string name="settings_recording_track_name_title">Default track name</string>
-    <string name="settings_recording_idle_speed_title">Idle speed threshold</string>
+    <string name="settings_recording_idle_timeout_title">Idle threshold</string>
     <string name="settings_night_mode_title">UI Theme</string>
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Day</string>
@@ -556,6 +556,7 @@ limitations under the License.
     <string name="value_none">None</string>
     <string name="value_off">Off</string>
     <string name="value_smallest_recommended">Smallest (recommended)</string>
+    <string name="value_int_seconds">%1$d s (recommended)</string>
     <string name="voiceHoursPlural">
         {n, plural,
         =1 {1 hour}

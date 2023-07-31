@@ -474,7 +474,6 @@ limitations under the License.
     <string name="stats_sensors_cadence">Ütem</string>
     <string name="settings_all_reset">Visszaállítás</string>
     <string name="settings_layout_reset_confirm_message">Minden elrendezési beállítás visszaáll az alapértelmezett értékekre. Ez nem törli az eszközön lévő zeneszámokat.</string>
-    <string name="settings_recording_idle_speed_title">Alapjárati fordulatszám-küszöbérték</string>
     <string name="custom_layout_list_title">Elrendezések</string>
     <string name="custom_layout_list_edit_name">Írja be az elrendezés nevét a hozzáadáshoz</string>
     <string name="aggregated_stats_filter_no_results">A megadott szűrőhöz nincsenek tevékenységek</string>

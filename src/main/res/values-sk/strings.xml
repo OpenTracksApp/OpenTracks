@@ -427,7 +427,6 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Počas nahrávania zobrazte štatistiky bez odomknutia zariadenia.</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Zobrazenie štatistík na uzamknutej obrazovke</string>
     <string name="settings_generic_sensor">Všeobecné</string>
-    <string name="settings_recording_idle_speed_title">Prahová hodnota voľnobehu</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="settings_default_export_uri_title">Adresár pre export stôp</string>
     <string name="instant_export_enabled_title">Okamžitý export po tréningu</string>

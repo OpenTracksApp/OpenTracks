@@ -450,7 +450,6 @@ limitations under the License.
     <string name="stats_clock">Kell</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (soovitatav)</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
-    <string name="settings_recording_idle_speed_title">Tühikäigu kiiruse lävi</string>
     <string name="settings_announcements_distance_frequency">Vahemaa intervall</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="settings_cycling_sensor">Jalgrattasõit</string>

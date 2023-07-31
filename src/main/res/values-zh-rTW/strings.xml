@@ -366,7 +366,6 @@ limitations under the License.
     <string name="settings_recording_track_name_date_local_option">日期 (當地)</string>
     <string name="settings_recording_track_name_number_option">數字</string>
     <string name="settings_recording_track_name_title">預設蹤跡名稱</string>
-    <string name="settings_recording_idle_speed_title">怠速閾值</string>
     <string name="settings_night_mode_title">界面主題</string>
     <string name="settings_night_mode_option_system">系統</string>
     <string name="settings_night_mode_option_day">日</string>

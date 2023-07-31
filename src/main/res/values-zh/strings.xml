@@ -430,7 +430,6 @@ limitations under the License.
 \n 方法二：通过一个正常的地图应用（例如 <a href="http://osmand.net/">OsmAnd</a> 和 <a href="https://maps.me/">MAPS.ME</a>）。这些应用需要支持 KMZ 文件格式（只包含位置和时间戳）。事实上，应用需要支持 <i>application/vnd.google-earth.kmz</i> MIME 类型的 <i>ACTION_VIEW</i> 操作。 </string>
     <string name="export_progress_summary_errors_msg">错误</string>
     <string name="permission_gps_failed">OpenTracks 需要使用 GPS 的权限。</string>
-    <string name="settings_recording_idle_speed_title">静止速度阈值</string>
     <string name="custom_layout_list_title">布局</string>
     <string name="image_discard">丢弃</string>
     <string name="import_thread_interrupted">线程被中断</string>
