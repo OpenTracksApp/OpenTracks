@@ -21,6 +21,7 @@ import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
+import de.dennisguse.opentracks.services.handlers.AltitudeCorrectionManager;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -31,8 +32,11 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
 
     private static final String TAG = TrackRecordingManager.class.getSimpleName();
 
+    private static final AltitudeCorrectionManager ALTITUDE_CORRECTION_MANAGER = new AltitudeCorrectionManager();
+
     private final ContentProviderUtils contentProviderUtils;
     private final Context context;
+
 
     private Distance recordingDistanceInterval;
     private Distance maxRecordingDistance;
@@ -117,6 +121,8 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         Pair<TrackPoint, SensorDataSet> current = trackPointCreator.createCurrentTrackPoint(lastTrackPointUIWithSpeed, lastTrackPointUIWithAltitude, lastStoredTrackPointWithLocation);
 
         tmpTrackStatisticsUpdater.addTrackPoint(current.first);
+
+        ALTITUDE_CORRECTION_MANAGER.correctAltitude(context, current.first);
 
         Track track = contentProviderUtils.getTrack(trackId); //Get copy
         if (track == null) {

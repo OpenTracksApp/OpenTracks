@@ -38,7 +38,6 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.announcement.VoiceAnnouncementManager;
-import de.dennisguse.opentracks.services.handlers.AltitudeCorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.util.SystemUtils;
@@ -91,8 +90,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     private VoiceAnnouncementManager voiceAnnouncementManager;
     private TrackRecordingServiceNotificationManager notificationManager;
 
-    private AltitudeCorrectionManager egm2008CorrectionManager;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -104,7 +101,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         gpsStatusObservable = new MutableLiveData<>(STATUS_GPS_DEFAULT);
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
-        egm2008CorrectionManager = new AltitudeCorrectionManager();
         trackRecordingManager = new TrackRecordingManager(this);
         trackRecordingManager.start();
         trackPointCreator = new TrackPointCreator(this, this, handler);
@@ -129,8 +125,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         notificationManager.stop();
         notificationManager = null;
-
-        egm2008CorrectionManager = null;
 
         voiceAnnouncementManager.stop();
         voiceAnnouncementManager = null;
@@ -304,16 +298,10 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         // Compute temporary track statistics using sensorData and update time.
         Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI(trackPointCreator);
-        if (data == null) {
-            Log.w(TAG, "Requesting data if not recording is taking place, should not be done.");
-            return;
-        }
-        TrackPoint trackPoint = data.second.first;
-        egm2008CorrectionManager.correctAltitude(this, trackPoint);
 
         voiceAnnouncementManager.update(this, data.first);
 
-        recordingDataObservable.postValue(new RecordingData(data.first, trackPoint, data.second.second));
+        recordingDataObservable.postValue(new RecordingData(data.first, data.second.first, data.second.second));
     }
 
     @VisibleForTesting
