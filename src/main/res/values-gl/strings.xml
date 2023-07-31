@@ -627,4 +627,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="voiceSecondsPlural">{n, plural, =1 {1 segundo} other {{n,number} segundos} }</string>
     <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 milla por hora} other {{n,number,#.0} millas por hora} }</string>
     <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 milla náutica} other {{n,number,#.0} millas náuticas} }</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="sensor_state_heart_rate_unit">lpm</string>
+    <string name="sensor_state_power_unit">W</string>
 </resources>
