@@ -101,9 +101,9 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         gpsStatusObservable = new MutableLiveData<>(STATUS_GPS_DEFAULT);
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
-        trackRecordingManager = new TrackRecordingManager(this);
-        trackRecordingManager.start();
         trackPointCreator = new TrackPointCreator(this, this, handler);
+        trackRecordingManager = new TrackRecordingManager(this, trackPointCreator);
+        trackRecordingManager.start();
 
         voiceAnnouncementManager = new VoiceAnnouncementManager(this);
         notificationManager = new TrackRecordingServiceNotificationManager(this);
@@ -157,7 +157,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         // Set recording status
-        Track.Id trackId = trackRecordingManager.startNewTrack(trackPointCreator);
+        Track.Id trackId = trackRecordingManager.startNewTrack();
         updateRecordingStatus(RecordingStatus.record(trackId));
 
         startRecording();
@@ -165,7 +165,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     }
 
     public void resumeTrack(Track.Id trackId) {
-        if (!trackRecordingManager.resumeExistingTrack(trackId, trackPointCreator)) {
+        if (!trackRecordingManager.resumeExistingTrack(trackId)) {
             Log.w(TAG, "Cannot resume a non-existing track.");
             return;
         }
@@ -209,7 +209,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Set recording status
         updateRecordingStatus(STATUS_DEFAULT);
 
-        trackRecordingManager.end(trackPointCreator);
+        trackRecordingManager.end();
         endRecording();
 
         stopSelf();
@@ -297,7 +297,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         // Compute temporary track statistics using sensorData and update time.
-        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI(trackPointCreator);
+        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
 
         voiceAnnouncementManager.update(this, data.first);
 
