@@ -212,196 +212,170 @@ public class KMLTrackExporter implements TrackExporter {
 
     @VisibleForTesting
     void close() {
-        if (printWriter != null) {
-            printWriter.flush();
-            printWriter = null;
-        }
+        printWriter.flush();
+        printWriter = null;
     }
 
     private void writeHeader(List<Track> tracks) {
-        if (printWriter != null) {
-            printWriter.println(
-                    """
-                            <?xml version="1.0" encoding="UTF-8"?>
-                            """);
-            printWriter.println(
-                    """
-                            <kml xmlns="http://www.opengis.net/kml/2.3"
-                                xmlns:atom="http://www.w3.org/2005/Atom"
-                                xmlns:opentracks="http://opentracksapp.com/xmlschemas/v1"
-                                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                                xsi:schemaLocation="http://www.opengis.net/kml/2.3 http://schemas.opengis.net/kml/2.3/ogckml23.xsd
-                                                    http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd">
-                            """); //TODO ADD xsi:schemaLocation for atom
-            printWriter.println("<Document>");
-            printWriter.println("<open>1</open>");
-            printWriter.println("<visibility>1</visibility>");
+        printWriter.println(
+                """
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        """);
+        printWriter.println(
+                """
+                        <kml xmlns="http://www.opengis.net/kml/2.3"
+                            xmlns:atom="http://www.w3.org/2005/Atom"
+                            xmlns:opentracks="http://opentracksapp.com/xmlschemas/v1"
+                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                            xsi:schemaLocation="http://www.opengis.net/kml/2.3 http://schemas.opengis.net/kml/2.3/ogckml23.xsd
+                                                http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd">
+                        """); //TODO ADD xsi:schemaLocation for atom
+        printWriter.println("<Document>");
+        printWriter.println("<open>1</open>");
+        printWriter.println("<visibility>1</visibility>");
 
-            Track track = tracks.get(0);
-            printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
-            printWriter.println("<atom:generator>" + StringUtils.formatCData(context.getString(R.string.app_name)) + "</atom:generator>");
+        Track track = tracks.get(0);
+        printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+        printWriter.println("<atom:generator>" + StringUtils.formatCData(context.getString(R.string.app_name)) + "</atom:generator>");
 
-            writeTrackStyle();
-            writePlacemarkerStyle();
-            printWriter.println("<Schema id=\"" + SCHEMA_ID + "\">");
+        writeTrackStyle();
+        writePlacemarkerStyle();
+        printWriter.println("<Schema id=\"" + SCHEMA_ID + "\">");
 
-            writeSimpleArrayStyle(EXTENDED_DATA_TYPE_SPEED, context.getString(R.string.description_speed_ms));
-            writeSimpleArrayStyle(EXTENDED_DATA_TYPE_POWER, context.getString(R.string.description_sensor_power));
-            writeSimpleArrayStyle(EXTENDED_DATA_TYPE_CADENCE, context.getString(R.string.description_sensor_cadence));
-            writeSimpleArrayStyle(EXTENDED_DATA_TYPE_HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
+        writeSimpleArrayStyle(EXTENDED_DATA_TYPE_SPEED, context.getString(R.string.description_speed_ms));
+        writeSimpleArrayStyle(EXTENDED_DATA_TYPE_POWER, context.getString(R.string.description_sensor_power));
+        writeSimpleArrayStyle(EXTENDED_DATA_TYPE_CADENCE, context.getString(R.string.description_sensor_cadence));
+        writeSimpleArrayStyle(EXTENDED_DATA_TYPE_HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
 
-            printWriter.println("</Schema>");
-        }
+        printWriter.println("</Schema>");
     }
 
     private void writeFooter() {
-        if (printWriter != null) {
-            printWriter.println("</Document>");
-            printWriter.println("</kml>");
-        }
+        printWriter.println("</Document>");
+        printWriter.println("</kml>");
     }
 
     private void writeBeginMarkers(Track track) {
-        if (printWriter != null) {
-            printWriter.println("<Folder>");
-            printWriter.println("<name>" + StringUtils.formatCData(context.getString(R.string.track_markers, track.getName())) + "</name>");
-            printWriter.println("<open>1</open>");
-        }
+        printWriter.println("<Folder>");
+        printWriter.println("<name>" + StringUtils.formatCData(context.getString(R.string.track_markers, track.getName())) + "</name>");
+        printWriter.println("<open>1</open>");
     }
 
     private void writeMarker(Marker marker, ZoneOffset zoneOffset) {
-        if (printWriter != null) {
-            boolean existsPhoto = MarkerUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoURI()) != null;
-            if (marker.hasPhoto() && exportPhotos && existsPhoto) {
-                float heading = getHeading(marker.getTrackId(), marker.getLocation());
-                writePhotoOverlay(marker, heading, zoneOffset);
-            } else {
-                writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), marker.getLocation(), zoneOffset);
-            }
+        boolean existsPhoto = MarkerUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoURI()) != null;
+        if (marker.hasPhoto() && exportPhotos && existsPhoto) {
+            float heading = getHeading(marker.getTrackId(), marker.getLocation());
+            writePhotoOverlay(marker, heading, zoneOffset);
+        } else {
+            writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), marker.getLocation(), zoneOffset);
         }
     }
 
     private void writeEndMarkers() {
-        if (printWriter != null) {
-            printWriter.println("</Folder>");
-        }
+        printWriter.println("</Folder>");
     }
 
     private void writeMultiTrackBegin() {
-        if (printWriter != null) {
-            printWriter.println("<Folder id=\"tracks\">");
-            printWriter.println("<name>" + context.getString(R.string.generic_tracks) + "</name>");
-            printWriter.println("<open>1</open>");
-        }
+        printWriter.println("<Folder id=\"tracks\">");
+        printWriter.println("<name>" + context.getString(R.string.generic_tracks) + "</name>");
+        printWriter.println("<open>1</open>");
     }
 
     private void writeMultiTrackEnd() {
-        if (printWriter != null) {
-            printWriter.println("</Folder>");
-        }
+        printWriter.println("</Folder>");
     }
 
     private void writeBeginTrack(Track track) {
-        if (printWriter != null) {
-            printWriter.println("<Placemark>");
+        printWriter.println("<Placemark>");
 
-            printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
-            printWriter.println("<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
-            printWriter.println("<icon>" + StringUtils.formatCData(track.getActivityType().getIconId()) + "</icon>");
-            printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
+        printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+        printWriter.println("<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
+        printWriter.println("<icon>" + StringUtils.formatCData(track.getActivityType().getIconId()) + "</icon>");
+        printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
 
-            printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");
-            writeActivityType(track.getActivityTypeLocalized());
-            printWriter.println("<MultiTrack>");
-            printWriter.println("<altitudeMode>absolute</altitudeMode>");
-            printWriter.println("<interpolate>1</interpolate>");
-        }
+        printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");
+        writeActivityType(track.getActivityTypeLocalized());
+        printWriter.println("<MultiTrack>");
+        printWriter.println("<altitudeMode>absolute</altitudeMode>");
+        printWriter.println("<interpolate>1</interpolate>");
     }
 
 
     private void writeEndTrack() {
-        if (printWriter != null) {
-            printWriter.println("</MultiTrack>");
-            printWriter.println("</Placemark>");
-        }
+        printWriter.println("</MultiTrack>");
+        printWriter.println("</Placemark>");
     }
 
     @VisibleForTesting
     void writeOpenSegment() {
-        if (printWriter != null) {
-            printWriter.println("<Track>");
-            speedList.clear();
-            distanceList.clear();
-            powerList.clear();
-            cadenceList.clear();
-            heartRateList.clear();
-            altitudeGainList.clear();
-            altitudeLossList.clear();
-            accuracyHorizontal.clear();
-            accuracyVertical.clear();
-        }
+        printWriter.println("<Track>");
+        speedList.clear();
+        distanceList.clear();
+        powerList.clear();
+        cadenceList.clear();
+        heartRateList.clear();
+        altitudeGainList.clear();
+        altitudeLossList.clear();
+        accuracyHorizontal.clear();
+        accuracyVertical.clear();
     }
 
     @VisibleForTesting
     void writeCloseSegment() {
-        if (printWriter != null) {
-            printWriter.println("<ExtendedData>");
-            printWriter.println("<SchemaData schemaUrl=\"#" + SCHEMA_ID + "\">");
-            if (speedList.stream().anyMatch(Objects::nonNull)) {
-                writeSimpleArrayData(speedList, EXTENDED_DATA_TYPE_SPEED);
-            }
-            if (distanceList.stream().anyMatch(Objects::nonNull)) {
-                writeSimpleArrayData(distanceList, EXTENDED_DATA_TYPE_DISTANCE);
-            }
-            if (powerList.stream().anyMatch(Objects::nonNull)) {
-                writeSimpleArrayData(powerList, EXTENDED_DATA_TYPE_POWER);
-            }
-            if (cadenceList.stream().anyMatch(Objects::nonNull)) {
-                writeSimpleArrayData(cadenceList, EXTENDED_DATA_TYPE_CADENCE);
-            }
-            if (heartRateList.stream().anyMatch(Objects::nonNull)) {
-                writeSimpleArrayData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
-            }
-            if (altitudeGainList.stream().anyMatch(Objects::nonNull)) {
-                writeSimpleArrayData(altitudeGainList, EXTENDED_DATA_TYPE_ALTITUDE_GAIN);
-            }
-            if (altitudeLossList.stream().anyMatch(Objects::nonNull)) {
-                writeSimpleArrayData(altitudeLossList, EXTENDED_DATA_TYPE_ALTITUDE_LOSS);
-            }
-            if (accuracyHorizontal.stream().anyMatch(Objects::nonNull)) {
-                writeSimpleArrayData(accuracyHorizontal, EXTENDED_DATA_TYPE_ACCURACY_HORIZONTAL);
-            }
-            if (accuracyVertical.stream().anyMatch(Objects::nonNull)) {
-                writeSimpleArrayData(accuracyVertical, EXTENDED_DATA_TYPE_ACCURACY_VERTICAL);
-            }
-            printWriter.println("</SchemaData>");
-            printWriter.println("</ExtendedData>");
-            printWriter.println("</Track>");
+        printWriter.println("<ExtendedData>");
+        printWriter.println("<SchemaData schemaUrl=\"#" + SCHEMA_ID + "\">");
+        if (speedList.stream().anyMatch(Objects::nonNull)) {
+            writeSimpleArrayData(speedList, EXTENDED_DATA_TYPE_SPEED);
         }
+        if (distanceList.stream().anyMatch(Objects::nonNull)) {
+            writeSimpleArrayData(distanceList, EXTENDED_DATA_TYPE_DISTANCE);
+        }
+        if (powerList.stream().anyMatch(Objects::nonNull)) {
+            writeSimpleArrayData(powerList, EXTENDED_DATA_TYPE_POWER);
+        }
+        if (cadenceList.stream().anyMatch(Objects::nonNull)) {
+            writeSimpleArrayData(cadenceList, EXTENDED_DATA_TYPE_CADENCE);
+        }
+        if (heartRateList.stream().anyMatch(Objects::nonNull)) {
+            writeSimpleArrayData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
+        }
+        if (altitudeGainList.stream().anyMatch(Objects::nonNull)) {
+            writeSimpleArrayData(altitudeGainList, EXTENDED_DATA_TYPE_ALTITUDE_GAIN);
+        }
+        if (altitudeLossList.stream().anyMatch(Objects::nonNull)) {
+            writeSimpleArrayData(altitudeLossList, EXTENDED_DATA_TYPE_ALTITUDE_LOSS);
+        }
+        if (accuracyHorizontal.stream().anyMatch(Objects::nonNull)) {
+            writeSimpleArrayData(accuracyHorizontal, EXTENDED_DATA_TYPE_ACCURACY_HORIZONTAL);
+        }
+        if (accuracyVertical.stream().anyMatch(Objects::nonNull)) {
+            writeSimpleArrayData(accuracyVertical, EXTENDED_DATA_TYPE_ACCURACY_VERTICAL);
+        }
+        printWriter.println("</SchemaData>");
+        printWriter.println("</ExtendedData>");
+        printWriter.println("</Track>");
     }
 
     @VisibleForTesting
     void writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint) {
-        if (printWriter != null) {
-            printWriter.println("<when>" + getTime(zoneOffset, trackPoint.getLocation()) + "</when>");
+        printWriter.println("<when>" + getTime(zoneOffset, trackPoint.getLocation()) + "</when>");
 
-            if (trackPoint.hasLocation()) {
-                printWriter.println("<coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</coord>");
-            } else {
-                printWriter.println("<coord/>");
-            }
-            speedList.add(trackPoint.hasSpeed() ? (float) trackPoint.getSpeed().toMPS() : null);
-
-            distanceList.add(trackPoint.hasSensorDistance() ? (float) trackPoint.getSensorDistance().toM() : null);
-            heartRateList.add(trackPoint.hasHeartRate() ? trackPoint.getHeartRate().getBPM() : null);
-            cadenceList.add(trackPoint.hasCadence() ? trackPoint.getCadence().getRPM() : null);
-            powerList.add(trackPoint.hasPower() ? trackPoint.getPower().getW() : null);
-
-            altitudeGainList.add(trackPoint.hasAltitudeGain() ? trackPoint.getAltitudeGain() : null);
-            altitudeLossList.add(trackPoint.hasAltitudeLoss() ? trackPoint.getAltitudeLoss() : null);
-            accuracyHorizontal.add(trackPoint.hasHorizontalAccuracy() ? (float) trackPoint.getHorizontalAccuracy().toM() : null);
-            accuracyVertical.add(trackPoint.hasVerticalAccuracy() ? (float) trackPoint.getVerticalAccuracy().toM() : null);
+        if (trackPoint.hasLocation()) {
+            printWriter.println("<coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</coord>");
+        } else {
+            printWriter.println("<coord/>");
         }
+        speedList.add(trackPoint.hasSpeed() ? (float) trackPoint.getSpeed().toMPS() : null);
+
+        distanceList.add(trackPoint.hasSensorDistance() ? (float) trackPoint.getSensorDistance().toM() : null);
+        heartRateList.add(trackPoint.hasHeartRate() ? trackPoint.getHeartRate().getBPM() : null);
+        cadenceList.add(trackPoint.hasCadence() ? trackPoint.getCadence().getRPM() : null);
+        powerList.add(trackPoint.hasPower() ? trackPoint.getPower().getW() : null);
+
+        altitudeGainList.add(trackPoint.hasAltitudeGain() ? trackPoint.getAltitudeGain() : null);
+        altitudeLossList.add(trackPoint.hasAltitudeLoss() ? trackPoint.getAltitudeLoss() : null);
+        accuracyHorizontal.add(trackPoint.hasHorizontalAccuracy() ? (float) trackPoint.getHorizontalAccuracy().toM() : null);
+        accuracyVertical.add(trackPoint.hasVerticalAccuracy() ? (float) trackPoint.getVerticalAccuracy().toM() : null);
     }
 
     /**

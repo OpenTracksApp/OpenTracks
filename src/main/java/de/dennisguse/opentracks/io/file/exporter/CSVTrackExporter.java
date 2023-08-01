@@ -153,24 +153,18 @@ public class CSVTrackExporter implements TrackExporter {
     }
 
     public void close() {
-        if (printWriter != null) {
-            printWriter.flush();
-            printWriter = null;
-        }
+        printWriter.flush();
+        printWriter = null;
     }
 
     public void writeHeader(List<Column> columns) {
-        if (printWriter != null) {
-            String columnNames = columns.stream().map(c -> c.columnName).reduce((s, s2) -> s + "," + s2).orElseThrow(() -> new RuntimeException("No columns defined"));
-            printWriter.println("#" + columnNames);
-        }
+        String columnNames = columns.stream().map(c -> c.columnName).reduce((s, s2) -> s + "," + s2).orElseThrow(() -> new RuntimeException("No columns defined"));
+        printWriter.println("#" + columnNames);
     }
 
     public void writeTrackPoint(List<Column> columns, TrackPoint trackPoint) {
-        if (printWriter != null) {
-            String columnNames = columns.stream().map(c -> c.extractor.apply(trackPoint)).reduce((s, s2) -> s + "," + s2).orElseThrow(() -> new RuntimeException("No columns defined"));
-            printWriter.println(columnNames);
-        }
+        String columnNames = columns.stream().map(c -> c.extractor.apply(trackPoint)).reduce((s, s2) -> s + "," + s2).orElseThrow(() -> new RuntimeException("No columns defined"));
+        printWriter.println(columnNames);
     }
 
     private static class Column {
