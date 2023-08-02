@@ -361,7 +361,7 @@ limitations under the License.
 \nd) вимкнути енергозбереження.
 \n
 \nЯкщо це не допомогло - будь ласка, повідомте про помилку. </string>
-    <string name="about_preference_title">Про Open Tracks</string>
+    <string name="about_preference_title">Про OpenTracks</string>
     <string name="about_url">Сторінка проекта: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Версія: %1$s</string>
     <string name="about_version_code">Код версії: %1$d</string>
