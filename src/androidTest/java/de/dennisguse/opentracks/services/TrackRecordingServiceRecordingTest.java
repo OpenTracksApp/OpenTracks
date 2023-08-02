@@ -280,7 +280,7 @@ public class TrackRecordingServiceRecordingTest {
         // then
         new TrackPointAssert().assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
-                new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor3))
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(sensor3))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f)
                         .setHeartRate(HeartRate.of(7)),
@@ -867,7 +867,7 @@ public class TrackRecordingServiceRecordingTest {
         // then
         new TrackPointAssert().assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
-                new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor2)) //First moving TrackPoint: store as the time might be interesting.
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(sensor2)) //First moving TrackPoint: store as the time might be interesting.
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(2)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps1))
@@ -876,7 +876,7 @@ public class TrackRecordingServiceRecordingTest {
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(0)),
-                new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor3))
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(sensor3))
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(10)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps3))

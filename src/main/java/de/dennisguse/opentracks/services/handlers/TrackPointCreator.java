@@ -81,7 +81,7 @@ public class TrackPointCreator {
      * Got a new TrackPoint from Bluetooth only; contains no GPS location.
      */
     public synchronized void onChange(@NonNull SensorDataSet unused) {
-        onNewTrackPoint(new TrackPoint(TrackPoint.Type.SENSORPOINT, createNow()));
+        onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, createNow()));
     }
 
     @VisibleForTesting

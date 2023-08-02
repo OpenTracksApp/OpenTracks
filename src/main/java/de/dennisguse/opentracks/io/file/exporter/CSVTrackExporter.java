@@ -136,14 +136,7 @@ public class CSVTrackExporter implements TrackExporter {
             while (trackPointIterator.hasNext()) {
                 if (Thread.interrupted()) throw new InterruptedException();
 
-                TrackPoint trackPoint = trackPointIterator.next();
-
-                switch (trackPoint.getType()) {
-                    case SEGMENT_START_MANUAL, SEGMENT_END_MANUAL, SEGMENT_START_AUTOMATIC, SENSORPOINT, TRACKPOINT ->
-                            writeTrackPoint(columns, trackPoint);
-                    default ->
-                            throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
-                }
+                 writeTrackPoint(columns, trackPointIterator.next());
             }
         }
     }
