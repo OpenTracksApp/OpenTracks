@@ -16,13 +16,13 @@ limitations under the License.
 --><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">літак</string>
-    <string name="activity_type_atv">Мотовсюдиходи</string>
-    <string name="activity_type_biking">велосипедний спорт</string>
+    <string name="activity_type_atv">мотовсюдиходи</string>
+    <string name="activity_type_biking">велоспорт</string>
     <string name="activity_type_blimp">дирижабль</string>
     <string name="activity_type_boat">човен</string>
     <string name="activity_type_climbing">скелелазіння</string>
     <string name="activity_type_commercial_airplane">комерційний літак</string>
-    <string name="activity_type_cross_country_skiing">лижні перегони</string>
+    <string name="activity_type_cross_country_skiing">біг на лижах</string>
     <string name="activity_type_cycling">велоспорт</string>
     <string name="activity_type_dirt_bike">Їзда на велосипеді по бездоріжжю</string>
     <string name="activity_type_donkey_back_riding">верхова їзда на віслюках</string>
@@ -82,14 +82,14 @@ limitations under the License.
     <string name="activity_type_water_skiing">водні лижі</string>
     <string name="activity_type_wind_surfing">віндсерфінг</string>
     <!-- Description -->
-    <string name="description_activity_type">Тип тренування: %1$s</string>
-    <string name="description_average_moving_pace_in_minute">Середній темп: %1$s хв/км (%2$s хв/мл)</string>
-    <string name="description_average_moving_speed">Середня швидкість: %1$.2f км/год (%2$.1f мл/год)</string>
+    <string name="description_activity_type">Тип активності: %1$s</string>
+    <string name="description_average_moving_pace_in_minute">Середній темп руху: %1$s хв/км (%2$s хв/мл)</string>
+    <string name="description_average_moving_speed">Середня швидкість руху: %1$.2f км/год (%2$.1f мл/год)</string>
     <string name="description_average_pace_in_minute">Середній темп: %1$s хв/км (%2$s хв/мл)</string>
     <string name="description_average_speed">Середня швидкість: %1$.2f км/год (%2$.1f мл/год)</string>
-    <string name="description_altitude_gain">Сумарний підйом: %1$d м (%2$d фт)</string>
-    <string name="description_altitude_imperial">Підйом (фути)</string>
-    <string name="description_altitude_metric">Підйом (м)</string>
+    <string name="description_altitude_gain">Збільшення висоти: %1$d м (%2$d фт)</string>
+    <string name="description_altitude_imperial">Висота (фути)</string>
+    <string name="description_altitude_metric">Висота (метри)</string>
     <string name="description_fastest_pace_in_minute">Найшвидший темп: %1$s хв/км (%2$s хв/мл)</string>
     <string name="description_max_altitude">Максимальний підйом: %1$d м (%2$d фт)</string>
     <string name="description_max_speed">Макс. швидкість: %1$.2f км/год (%2$.1f мл/год)</string>
@@ -355,34 +355,34 @@ limitations under the License.
     <string name="instant_export_enabled_summary">Експорт треку в сховище після завершення запису</string>
     <string name="instant_export_enabled_title">Миттєвий експорт після тренування</string>
     <string name="help_gps_troubleshooting_content"> Що ви можете зробити:
-\na) перевірте, чи увімкнено GPS,
-\nb) покращити прийом GPS (наприклад, вийти на вулицю),
-\nc) перевірити за допомогою застосунку <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> та
-\nd) вимкнути енергозбереження.
+\n a) перевірте, чи увімкнено GPS,
+\n b) покращте прийом GPS (наприклад, вийдіть на вулицю),
+\n c) перевірте за допомогою застосунку <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> та
+\n d) вимкніть енергоощадження.
 \n
-\nЯкщо це не допомогло - будь ласка, повідомте про помилку. </string>
+\n Якщо нічого не допомагає, будь ласка, повідомте нам про помилку. </string>
     <string name="about_preference_title">Про OpenTracks</string>
-    <string name="about_url">Сторінка проекта: <a href="%1$s">%1$s</a></string>
+    <string name="about_url">Веб-сторінка проєкту: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Версія: %1$s</string>
     <string name="about_version_code">Код версії: %1$d</string>
     <string name="about_libraries">Бібліотеки</string>
     <string name="help_feature_title">OpenTracks має такі особливості:</string>
     <string name="help_storage_pictures_title">Як OpenTracks зберігає зображення зроблені за допомогою маркувань\?</string>
     <string name="help_storage_pictures_content">Вони зберігаються у внутрішній пам\'яті застосунку (тобто, доступні тільки для OpenTracks).</string>
-    <string name="help_data_google_play_services_title">Чи потребує OpenTracks використання Google Play Service\?</string>
+    <string name="help_data_google_play_services_title">Чи потрібен/використовує OpenTrack Google Play Service\?</string>
     <string name="help_track_map_title">Як показати трек на мапі\?</string>
-    <string name="help_data_storage_title">Як OpenTracks зберігає дані датчиків\?</string>
+    <string name="help_data_storage_title">Як OpenTracks зберігає дані з датчиків\?</string>
     <string name="help_recording_title">Як OpenTracks записує дані\?</string>
-    <string name="help_track_export_title">Як я можу експортувати або обмінятися записаним треком\?</string>
+    <string name="help_track_export_title">Як я можу експортувати/поширювати записані треки\?</string>
     <string name="settings_night_mode_title">Тема UI</string>
     <string name="help_gps_troubleshooting_title">OpenTracks не записує моє місцеположення\?</string>
     <string name="help_support_title">Як я можу підтримати OpenTracks\?</string>
     <string name="open_track_as_KML">Відкрити як KML</string>
     <string name="open_track_as_GPX">Відкрити як GPX</string>
-    <string name="open_track_as_trackfileformat">Відкрити яка %1$s</string>
+    <string name="open_track_as_trackfileformat">Відкрити як %1$s</string>
     <string name="activity_type_escooter">електро-байк</string>
     <string name="settings_sensor_wheel_circumference">Окружність колеса (мм)</string>
-    <string name="description_altitude_loss">Втрата висоти: %1$d м (%2$d фут.)</string>
+    <string name="description_altitude_loss">Зменшення висоти: %1$d м (%2$d фут.)</string>
     <string name="export_progress_summary_new_msg">Нові треки експортовано</string>
     <string name="export_progress_summary_overwrite_msg">Треки перезаписано</string>
     <string name="export_progress_summary_skip_msg">Треки пропущено</string>
@@ -416,25 +416,25 @@ limitations under the License.
     <string name="menu_resume_track">Відновити трек</string>
     <string name="permission_gps_failed">OpenTracks вимагає дозволу на використання GPS.</string>
     <string name="settings_night_mode_option_system">Системна</string>
-    <string name="about_description"><i>Open Tracks</i> це спортивний GPS трекер який поважає вашу приватність.</string>
-    <string name="about_history">Open Tracks це відгалуження застосунку <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (закритого в 2016р).</string>
-    <string name="help_feature_content">* запис GPS-шляху
-\n* використання датчика ритму серця (тільки Bluetooth LE)
-\n* голосовий путівник (за часом або дистацією)
-\n* створення маркувань (включаючи фотознімки)
+    <string name="about_description"><i>OpenTracks</i> - це застосунок для відстеження спортивної діяльності, який поважає вашу приватність.</string>
+    <string name="about_history">OpenTracks це відгалуження застосунку <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (закритого в 2016р).</string>
+    <string name="help_feature_content">* створення GPS треків
+\n* використання датчика серцевого ритму (тільки Bluetooth LE)
+\n* голосовий путівник (за часом або відстанню)
+\n* створення маркувань (включаючи зображення)
 \n* повноцінний автономний режим
-\n* відображення щляхів на мапі (див. нижче)</string>
-    <string name="help_track_export_content"> Треки можна експортувати з налаштувань як KMZ, KML або GPX, KMZ/KML всі дані або тільки розташування GPX. Доріжки, опубліковані за допомогою <i>значка поширення</i>, експортуються як KMZ. </string>
-    <string name="help_recording_content">OpenTracks використовує датчик GPS пристрою для безперервного запису місця розташування. Якщо пристрій GPS повідомляє неточні дані (наприклад, місце розташування, швидкість, висоту), OpenTracks нічого не може з цим вдіяти.</string>
-    <string name="help_data_storage_content"> Дані датчика зиписуються в кожному зареєстрованому місці. Що стосується датчика частоти пульсу, це означає, що для кожного місця розташування зберігається тільки <i>одне</i> вимірювання частоти пульсу. Якщо ви зупинилися або перебуваєте в приміщенні, дані датчика не будуть записані (але будуть відображатися). </string>
+\n* відображення треків на мапі (див. нижче)</string>
+    <string name="help_track_export_content"> Треки можна експортувати з налаштувань у форматах KMZ, KML або GPX. KMZ/KML всі дані, а GPX тільки розташування. Треки, опубліковані за допомогою <i>значка поширення</i>, експортуються як KMZ. </string>
+    <string name="help_recording_content">OpenTracks використовує GPS датчик пристрою для безперервного запису місцезнаходження. Якщо GPS пристрій повідомляє неточні дані (наприклад, місцеперебування, швидкість, висота), OpenTracks нічого не може з цим вдіяти.</string>
+    <string name="help_data_storage_content"> Дані датчика зиписуються в кожному зареєстрованому місці. Що стосується датчика частоти серцевих скорочень для кожного місцезнаходження зберігається тільки <i>одне</i> вимірювання частоти. Якщо ви зупинилися або перебуваєте в приміщенні, дані датчика не будуть записані (але будуть відображатися). </string>
     <string name="help_support_content"> Ви можете:
-\nа) поширювати інформацію про OpenTracks,
-\nb) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">пропонувати функції</a>,
-\nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">повідомляти про помилки</a>,
-\nd) допомогти в розробці програмного забезпечення,
-\ne) купувати в <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
-\nf) зробити фінансовий внесок, та
-\ng) робити все, що, на вашу думку, допомагає OpenTracks. </string>
+\n а) поширювати інформацію про OpenTracks,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">пропонувати нові функції</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">повідомляти про помилки</a>,
+\n d) допомогти в розробці програмного забезпечення,
+\n e) купувати в <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n f) зробити фінансовий внесок, та
+\n g) робити все, що, на вашу думку, допомагає OpenTracks. </string>
     <string name="description_default_speed_or_pace">За активністю</string>
     <string name="export_error_post_workout">Не вдалося виконати експорт після тренування, перевірте каталог експорту.</string>
     <string name="aggregated_stats_empty_message">Запишіть свій перший трек, щоб побачити загальну статистику</string>
@@ -449,10 +449,10 @@ limitations under the License.
     <string name="stats_loss">Втрачено</string>
     <string name="share_image_subject">Я хотів би поділитися з вами зображенням</string>
     <string name="settings_default_export_uri_title">Каталог експорту треків</string>
-    <string name="help_track_map_content"> Натисніть іконку мапи.
-\na) (оновлення в реальному часі) Встановіть застосунок <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Він дозволить подивитися карту онлайн й оффлайн завдяки <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
-\nНасправді, OSMDashboard є окремим застосунком, який може отримати тимчасовий доступ до даних треку які будуть відображені на карті.
-\nb) Через звичайний картографічний застосунок (на приклад, <a href="http://osmand.net/">OsmAnd</a> та <a href="https://maps.me/">MAPS.ME</a>). Ці застосунки повинні підтримувати формати файлів треку KMZ (тільки місцеположення та мітки часу). Фактично, застосунок повинен підтримувати функцію <i>ACTION_VIEW</i> із MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="help_track_map_content"> Використовуйте маленьку піктограму мапи.
+\n a) (оновлення в реальному часі) Встановіть застосунок <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Він дозволяє дивитися карти онлайн чи офлайн завдяки <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n Насправді OSMDashboard є окремим застосунком, який має тимчасовий доступ лише до даних треку(ів) які будуть відображені.
+\n b) Через звичайний картографічний застосунок (на приклад, <a href="http://osmand.net/">OsmAnd</a> та <a href="https://maps.me/">MAPS.ME</a>). Ці застосунки повинні підтримувати формат файлів KMZ (тільки місцеположення та мітки часу). Фактично, застосунок повинен підтримувати функцію <i>ACTION_VIEW</i> з MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="settings_prevent_reimport_tracks_title">Заборонити повторний імпорт треків</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Завершено з %1$d однією помилкою</item>
@@ -460,9 +460,9 @@ limitations under the License.
         <item quantity="many">Завершено з %1$d помилками</item>
         <item quantity="other">Завершено з %1$d помилками</item>
     </plurals>
-    <string name="settings_recording_show_on_lockscreen_while_recording_title">Показувати статистику на заблокованому єкрані</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Показувати статистику на заблокованому екрані</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Під час запису тримати екран включеним.</string>
-    <string name="settings_recording_keep_screen_on_while_recording_title">Єкран завжди включено</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Екран завжди включено</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Повний екран</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Під час запису бути в повноекранному режимі.</string>
     <string name="hold_to_stop">Затисніть щоб зупинити</string>
@@ -545,4 +545,8 @@ limitations under the License.
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="settings_gps_title">GPS</string>
     <string name="no_compatible_file_manager_installed">Не встановлено сумісний файловий менеджер</string>
+    <string name="help_data_google_play_services_content">Ні</string>
+    <string name="activity_type_workout">тренування</string>
+    <string name="activity_type_swimming_open">плавання у відкритих водоймах</string>
+    <string name="activity_type_swimming">плавання</string>
 </resources>
