@@ -66,6 +66,9 @@ public class CSVTrackExporter implements TrackExporter {
         SPEED_FORMAT.setMaximumFractionDigits(2);
         SPEED_FORMAT.setGroupingUsed(false);
 
+        DISTANCE_FORMAT.setMaximumFractionDigits(0);
+        DISTANCE_FORMAT.setGroupingUsed(false);
+
         HEARTRATE_FORMAT.setMaximumFractionDigits(0);
         HEARTRATE_FORMAT.setGroupingUsed(false);
 
