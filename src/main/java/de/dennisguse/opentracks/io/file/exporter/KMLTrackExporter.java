@@ -61,6 +61,7 @@ public class KMLTrackExporter implements TrackExporter {
 
     public static final String EXTENDED_DATA_TYPE_ACTIVITYTYPE = "type";
 
+    public static final String EXTENDED_DATA_TYPE_TRACKPOINT = "trackpoint_type";
     public static final String EXTENDED_DATA_TYPE_SPEED = "speed";
     public static final String EXTENDED_DATA_TYPE_DISTANCE = "distance";
     public static final String EXTENDED_DATA_TYPE_CADENCE = "cadence";
@@ -83,6 +84,9 @@ public class KMLTrackExporter implements TrackExporter {
     private final ContentProviderUtils contentProviderUtils;
 
     private PrintWriter printWriter;
+
+    private ArrayList<TrackPoint.Type> trackpointTypeList = new ArrayList<>();
+
     private final List<Float> speedList = new ArrayList<>();
     private final List<Float> distanceList = new ArrayList<>();
     private final List<Float> powerList = new ArrayList<>();
@@ -177,12 +181,13 @@ public class KMLTrackExporter implements TrackExporter {
                         writeCloseSegment();
                         wroteSegment = false;
                     }
-                    case TRACKPOINT -> {
+                    case TRACKPOINT, IDLE -> {
                         if (!wroteSegment) {
                             // Might happen for older data (pre v3.15.0)
                             writeOpenSegment();
                             wroteSegment = true;
                         }
+
                         writeTrackPoint(track.getZoneOffset(), trackPoint);
                     }
                     default ->
@@ -309,6 +314,7 @@ public class KMLTrackExporter implements TrackExporter {
     @VisibleForTesting
     void writeOpenSegment() {
         printWriter.println("<Track>");
+        trackpointTypeList.clear();
         speedList.clear();
         distanceList.clear();
         powerList.clear();
@@ -324,32 +330,35 @@ public class KMLTrackExporter implements TrackExporter {
     void writeCloseSegment() {
         printWriter.println("<ExtendedData>");
         printWriter.println("<SchemaData schemaUrl=\"#" + SCHEMA_ID + "\">");
+
+        writeTrackPointType(trackpointTypeList);
+
         if (speedList.stream().anyMatch(Objects::nonNull)) {
-            writeSimpleArrayData(speedList, EXTENDED_DATA_TYPE_SPEED);
+            writeSimpleArraySensorData(speedList, EXTENDED_DATA_TYPE_SPEED);
         }
         if (distanceList.stream().anyMatch(Objects::nonNull)) {
-            writeSimpleArrayData(distanceList, EXTENDED_DATA_TYPE_DISTANCE);
+            writeSimpleArraySensorData(distanceList, EXTENDED_DATA_TYPE_DISTANCE);
         }
         if (powerList.stream().anyMatch(Objects::nonNull)) {
-            writeSimpleArrayData(powerList, EXTENDED_DATA_TYPE_POWER);
+            writeSimpleArraySensorData(powerList, EXTENDED_DATA_TYPE_POWER);
         }
         if (cadenceList.stream().anyMatch(Objects::nonNull)) {
-            writeSimpleArrayData(cadenceList, EXTENDED_DATA_TYPE_CADENCE);
+            writeSimpleArraySensorData(cadenceList, EXTENDED_DATA_TYPE_CADENCE);
         }
         if (heartRateList.stream().anyMatch(Objects::nonNull)) {
-            writeSimpleArrayData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
+            writeSimpleArraySensorData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
         }
         if (altitudeGainList.stream().anyMatch(Objects::nonNull)) {
-            writeSimpleArrayData(altitudeGainList, EXTENDED_DATA_TYPE_ALTITUDE_GAIN);
+            writeSimpleArraySensorData(altitudeGainList, EXTENDED_DATA_TYPE_ALTITUDE_GAIN);
         }
         if (altitudeLossList.stream().anyMatch(Objects::nonNull)) {
-            writeSimpleArrayData(altitudeLossList, EXTENDED_DATA_TYPE_ALTITUDE_LOSS);
+            writeSimpleArraySensorData(altitudeLossList, EXTENDED_DATA_TYPE_ALTITUDE_LOSS);
         }
         if (accuracyHorizontal.stream().anyMatch(Objects::nonNull)) {
-            writeSimpleArrayData(accuracyHorizontal, EXTENDED_DATA_TYPE_ACCURACY_HORIZONTAL);
+            writeSimpleArraySensorData(accuracyHorizontal, EXTENDED_DATA_TYPE_ACCURACY_HORIZONTAL);
         }
         if (accuracyVertical.stream().anyMatch(Objects::nonNull)) {
-            writeSimpleArrayData(accuracyVertical, EXTENDED_DATA_TYPE_ACCURACY_VERTICAL);
+            writeSimpleArraySensorData(accuracyVertical, EXTENDED_DATA_TYPE_ACCURACY_VERTICAL);
         }
         printWriter.println("</SchemaData>");
         printWriter.println("</ExtendedData>");
@@ -359,6 +368,8 @@ public class KMLTrackExporter implements TrackExporter {
     @VisibleForTesting
     void writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint) {
         printWriter.println("<when>" + getTime(zoneOffset, trackPoint.getLocation()) + "</when>");
+
+        trackpointTypeList.add(trackPoint.getType());
 
         if (trackPoint.hasLocation()) {
             printWriter.println("<coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</coord>");
@@ -378,13 +389,7 @@ public class KMLTrackExporter implements TrackExporter {
         accuracyVertical.add(trackPoint.hasVerticalAccuracy() ? (float) trackPoint.getVerticalAccuracy().toM() : null);
     }
 
-    /**
-     * Writes the simple array data.
-     *
-     * @param list a list of simple array data
-     * @param name the name of the simple array data
-     */
-    private void writeSimpleArrayData(List<Float> list, String name) {
+    private void writeSimpleArraySensorData(List<Float> list, String name) {
         printWriter.println("<SimpleArrayData name=\"" + name + "\">");
         for (int i = 0; i < list.size(); i++) {
             Float value = list.get(i);
@@ -397,14 +402,14 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.println("</SimpleArrayData>");
     }
 
-    /**
-     * Writes a placemark.
-     *
-     * @param name         the name
-     * @param activityType the activityType
-     * @param description  the description
-     * @param location     the location
-     */
+    private void writeTrackPointType(List<TrackPoint.Type> list) {
+        printWriter.println("<SimpleArrayData name=\"" + EXTENDED_DATA_TYPE_TRACKPOINT + "\">");
+        for (TrackPoint.Type value : list) {
+            printWriter.println("<value>" + value.name() + "</value>");
+        }
+        printWriter.println("</SimpleArrayData>");
+    }
+
     private void writePlacemark(String name, String activityType, String description, Location location, ZoneOffset zoneOffset) {
         if (location != null) {
             printWriter.println("<Placemark>");
