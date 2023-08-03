@@ -151,8 +151,12 @@ public class GPXTrackExporter implements TrackExporter {
                         if (wroteSegment) writeCloseSegment();
                         writeOpenSegment();
                         wroteSegment = true;
-                        trackDistance = trackDistance.plus(writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints, trackDistance));
-                        sensorPoints.clear();
+                        if (trackPoint.hasLocation()) {
+                            trackDistance = trackDistance.plus(writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints, trackDistance));
+                            sensorPoints.clear();
+                        } else {
+                            sensorPoints.add(trackPoint);
+                        }
                     }
                     case SENSORPOINT -> sensorPoints.add(trackPoint);
                     case TRACKPOINT -> {
