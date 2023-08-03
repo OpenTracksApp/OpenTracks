@@ -66,6 +66,7 @@ public class TrackPoint {
 
         public final int type_db;
 
+
         Type(int type_db) {
             this.type_db = type_db;
         }

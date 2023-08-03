@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
 import java.time.ZoneOffset;
@@ -29,7 +30,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.TrackNameUtils;
 
-class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = TrackRecordingManager.class.getSimpleName();
 
@@ -162,7 +163,8 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         return new Marker.Id(ContentUris.parseId(uri));
     }
 
-    void onIdle() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    public void onIdle() {
         Log.d(TAG, "Becoming idle");
         onNewTrackPoint(trackPointCreator.createIdle());
     }

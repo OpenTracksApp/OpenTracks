@@ -79,7 +79,7 @@ public class TrackStatisticsUpdater {
         this.trackStatistics = new TrackStatistics(toCopy.trackStatistics);
 
         this.lastTrackPoint = toCopy.lastTrackPoint;
-        this.idle = idle;
+        this.idle = toCopy.idle;
         resetAverageHeartRate();
     }
 
@@ -181,6 +181,7 @@ public class TrackStatisticsUpdater {
         currentSegment.reset(trackPoint.getTime());
 
         lastTrackPoint = null;
+        idle = false;
         resetAverageHeartRate();
     }
 
