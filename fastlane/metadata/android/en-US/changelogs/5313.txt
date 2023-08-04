@@ -1,0 +1,11 @@
+v4.7.0: OpenTracks
+
+Changes:
+- Statistics: distance, total time, and moving time are included between automatic segments (created due to distance too previous location too long)
+- Recorded tracks show sensor statistics again
+
+Bugfix:
+- GPX exporter: for automatic segments their might be no location
+- CSV exporter: distance didn't use decimal grouping
+
+
