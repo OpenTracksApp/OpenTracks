@@ -24,7 +24,7 @@ limitations under the License.
     <string name="activity_type_commercial_airplane">комерційний літак</string>
     <string name="activity_type_cross_country_skiing">біг на лижах</string>
     <string name="activity_type_cycling">велоспорт</string>
-    <string name="activity_type_dirt_bike">Їзда на велосипеді по бездоріжжю</string>
+    <string name="activity_type_dirt_bike">їзда на велосипеді по бездоріжжю</string>
     <string name="activity_type_donkey_back_riding">верхова їзда на віслюках</string>
     <string name="activity_type_driving">автомобіль</string>
     <string name="activity_type_driving_bus">водіння автобуса</string>
