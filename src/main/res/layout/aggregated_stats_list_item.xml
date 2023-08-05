@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingTop="8dp"
     android:paddingEnd="8dp"
     android:paddingStart="8dp"
-    android:paddingBottom="24dp">
+    android:paddingBottom="8dp">
 
     <!-- Guidelines -->
     <androidx.constraintlayout.widget.Guideline
@@ -165,5 +165,13 @@
         app:layout_constraintStart_toEndOf="@id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/aggregated_stats_max_rate"
         tools:text="@string/stats_max_speed" />
+
+    <View
+        android:id="@+id/aggregated_stats_horizontal_line"
+        style="@style/HorizontalLine"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@id/guideline1"
+        app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toBottomOf="@id/aggregated_stats_max_rate_label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

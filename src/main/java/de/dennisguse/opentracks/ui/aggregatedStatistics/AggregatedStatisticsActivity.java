@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -40,8 +41,6 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewBinding.aggregatedStatsList.setEmptyView(viewBinding.aggregatedStatsEmptyView);
-
         areFiltersApplied = savedInstanceState != null && savedInstanceState.getBoolean(STATE_ARE_FILTERS_APPLIED);
 
         List<Track.Id> trackIds = getIntent().getParcelableArrayListExtra(EXTRA_TRACK_IDS);
@@ -49,19 +48,33 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
             trackIds.stream().forEach(selection::addTrackId);
         }
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        adapter = new AggregatedStatisticsAdapter(this, null);
+        viewBinding.aggregatedStatsList.setLayoutManager(layoutManager);
+        viewBinding.aggregatedStatsList.setAdapter(adapter);
+
         viewModel = new ViewModelProvider(this).get(AggregatedStatisticsModel.class);
         viewModel.getAggregatedStats(selection).observe(this, aggregatedStatistics -> {
             if ((aggregatedStatistics == null || aggregatedStatistics.getCount() == 0) && !selection.isEmpty()) {
                 viewBinding.aggregatedStatsEmptyView.setText(getString(R.string.aggregated_stats_filter_no_results));
             }
             if (aggregatedStatistics != null) {
-                adapter = new AggregatedStatisticsAdapter(this, aggregatedStatistics);
-                viewBinding.aggregatedStatsList.setAdapter(adapter);
+                adapter.swapData(aggregatedStatistics);
             }
-            adapter.notifyDataSetChanged();
+            checkListEmpty();
         });
 
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
+    }
+
+    private void checkListEmpty() {
+        if (adapter.getItemCount() == 0) {
+            viewBinding.aggregatedStatsList.setVisibility(View.GONE);
+            viewBinding.aggregatedStatsEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            viewBinding.aggregatedStatsList.setVisibility(View.VISIBLE);
+            viewBinding.aggregatedStatsEmptyView.setVisibility(View.GONE);
+        }
     }
 
     @Override
