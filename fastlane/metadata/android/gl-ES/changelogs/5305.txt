@@ -1,0 +1,8 @@
+v4.6.2: OpenTracks
+
+Arranxos:
+- Fallo da app cos anuncios por voz para imperial+métrico
+- Fallo nos axustes para imperial+métrico
+- Arranxo da inconsistencia nas gráficas (actualización Material3)
+- Perda do permiso Bluetooth
+- Estatítiscas acumuladas da velocidade media non mostraban unidades imperiais

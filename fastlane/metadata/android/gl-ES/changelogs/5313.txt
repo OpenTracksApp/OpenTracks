@@ -1,0 +1,9 @@
+v4.7.0 OpenTracks
+
+Cambios:
+- Estatísticas: inclúese distancia, tempo total e tempo en movemento entre os segmentos automáticos (creado debido a que a distancia á localización anterior era demasiado grande)
+- As rutas gravadas volven a mostrar estatísticas do sensor outra vez
+
+Arranxos:
+- GPX exporter: para os segmentos automáticos que poderían non ter localización
+- CSV exporter: a distancia non usaba o agrupamento con decimal
