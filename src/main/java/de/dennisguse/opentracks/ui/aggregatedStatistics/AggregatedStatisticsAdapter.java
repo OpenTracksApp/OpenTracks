@@ -1,14 +1,15 @@
 package de.dennisguse.opentracks.ui.aggregatedStatistics;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.util.StringUtils;
 
-public class AggregatedStatisticsAdapter extends BaseAdapter {
+public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private AggregatedStatistics aggregatedStatistics;
     private final Context context;
@@ -31,54 +32,38 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         this.aggregatedStatistics = aggregatedStatistics;
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        if (aggregatedStatistics != null) {
-            return aggregatedStatistics.getCount();
-        }
-        return 0;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.aggregated_stats_list_item, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public AggregatedStatistics.AggregatedStatistic getItem(int position) {
-        return aggregatedStatistics.getItem(position);
-    }
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        ViewHolder viewHolder = (ViewHolder) holder;
 
-    @Override
-    public long getItemId(int position) {
-        // Not important because data are not database register but cooked data.
-        return position;
-    }
+        AggregatedStatistics.AggregatedStatistic aggregatedStatistic = aggregatedStatistics.getItem(position);
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        AggregatedStatistics.AggregatedStatistic aggregatedStatistic = getItem(position);
-
-        ViewHolder viewHolder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.aggregated_stats_list_item, parent, false);
-            viewHolder = new ViewHolder(convertView);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
-
-        Resources resources = context.getResources();
-        String localizedActivityType = aggregatedStatistic.getActivityTypeLocalized();
-        if (ActivityType.findByLocalizedString(resources, localizedActivityType)
-                .isShowSpeedPreferred()) {
+        String type = aggregatedStatistic.getActivityTypeLocalized();
+        if (ActivityType.findByLocalizedString(context, type).isShowSpeedPreferred()) {
             viewHolder.setSpeed(aggregatedStatistic);
         } else {
             viewHolder.setPace(aggregatedStatistic);
         }
-
-        return convertView;
     }
 
-    public AggregatedStatistics swapData(AggregatedStatistics aggregatedStatistics) {
+    @Override
+    public int getItemCount() {
+        if (aggregatedStatistics == null) {
+            return 0;
+        }
+        return aggregatedStatistics.getCount();
+    }
+
+    public void swapData(AggregatedStatistics aggregatedStatistics) {
         this.aggregatedStatistics = aggregatedStatistics;
         this.notifyDataSetChanged();
-        return aggregatedStatistics;
     }
 
     public List<String> getCategories() {
@@ -89,7 +74,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         return categories;
     }
 
-    private class ViewHolder {
+    private class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView sportIcon;
         private final TextView typeLabel;
         private final TextView numTracks;
@@ -108,6 +93,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         private boolean reportSpeed;
 
         public ViewHolder(View view) {
+            super(view);
             sportIcon = view.findViewById(R.id.aggregated_stats_sport_icon);
             typeLabel = view.findViewById(R.id.aggregated_stats_type_label);
             numTracks = view.findViewById(R.id.aggregated_stats_num_tracks);
@@ -183,9 +169,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
 
         private int getIcon(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             String localizedActivityType = aggregatedStatistic.getActivityTypeLocalized();
-            String iconValue = ActivityType.findByLocalizedString(context, localizedActivityType)
-                    .getIconId();
-            return ActivityType.findBy(iconValue)
+            return ActivityType.findByLocalizedString(context, localizedActivityType)
                     .getIconDrawableId();
         }
     }
