@@ -222,7 +222,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <!-- OpenTracks -->
     <string name="recording_service">Opnameservice</string>
     <!-- Permission -->
-    <string name="permission_gps_failed">Voor OpenTracks is toestemming nodig om GPS te gebruiken.</string>
+    <string name="permission_gps_failed">OpenTracks vereist toestemming om GPS te gebruiken.</string>
     <!-- Search -->
     <!-- Sensor State -->
     <string name="sensor_state_heart_rate">Hartslag</string>
