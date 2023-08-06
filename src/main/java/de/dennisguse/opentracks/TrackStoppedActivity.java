@@ -158,7 +158,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
     }
 
     @Override
-    protected void onDeleteFinished() {
+    public void onDeleteFinished() {
         finish();
     }
 

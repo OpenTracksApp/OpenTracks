@@ -422,7 +422,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     @Override
-    protected void onDeleteFinished() {
+    public void onDeleteFinished() {
         // Do nothing
     }
 

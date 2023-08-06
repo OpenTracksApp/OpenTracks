@@ -40,7 +40,6 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackRecordedBinding;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
 import de.dennisguse.opentracks.services.RecordingStatus;
-import de.dennisguse.opentracks.services.TrackDeleteService;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -231,21 +230,12 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     }
 
     @Override
-    protected void onTrackDeleteStatus(TrackDeleteService.DeletionFinishedStatus deletionFinishedStatus) {
-        super.onTrackDeleteStatus(deletionFinishedStatus);
-        if (deletionFinishedStatus.isDeleted(trackId)) {
-            runOnUiThread(this::finish);
-        }
-    }
-
-    @Override
     protected void onDeleteConfirmed() {
         runOnUiThread(this::finish);
     }
 
-    @Override
-    protected void onDeleteFinished() {
-        // Do nothing
+    public void onDeleteFinished() {
+        runOnUiThread(this::finish);
     }
 
     /**

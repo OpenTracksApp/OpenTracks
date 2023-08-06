@@ -59,10 +59,6 @@ public class ExportService extends JobIntentService {
         resultReceiver.send(resultCode, bundle);
     }
 
-    /**
-     * Create a new ResultReceive to receive results.
-     * Your {@link #onReceiveResult} method will be called from the thread running <var>handler</var> if given, or from an arbitrary thread if null.
-     */
     public static class ExportServiceResultReceiver extends ResultReceiver {
 
         public static final int RESULT_CODE_SUCCESS = 1;

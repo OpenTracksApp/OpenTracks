@@ -410,10 +410,8 @@ limitations under the License.
 
         <service
             android:name=".services.TrackDeleteService"
-            android:enabled="true"
             android:exported="false"
-            android:icon="@drawable/ic_logo_color_24dp"
-            android:label="@string/delete_service" />
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
     </application>
 
     <queries>

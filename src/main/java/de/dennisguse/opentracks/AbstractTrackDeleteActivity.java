@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks;
 
+import android.os.Handler;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.TrackDeleteService;
-import de.dennisguse.opentracks.services.TrackDeleteServiceConnection;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
 
@@ -37,31 +37,8 @@ import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragm
  * @author Jimmy Shih
  */
 //TODO Check if this class is still such a good idea; inheritance might limit maintainability
-public abstract class AbstractTrackDeleteActivity extends AbstractActivity implements ConfirmDeleteCaller, TrackDeleteServiceConnection.Listener {
+public abstract class AbstractTrackDeleteActivity extends AbstractActivity implements ConfirmDeleteCaller, TrackDeleteService.TrackDeleteResultReceiver.Receiver {
 
-    private TrackDeleteServiceConnection trackDeleteServiceConnection;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        trackDeleteServiceConnection = new TrackDeleteServiceConnection(this);
-        trackDeleteServiceConnection.bind(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (trackDeleteServiceConnection != null) {
-            trackDeleteServiceConnection.unbind(this);
-            trackDeleteServiceConnection = null;
-        }
-    }
-
-    /**
-     * Delete tracks.
-     *
-     * @param trackIds the track ids
-     */
     protected void deleteTracks(Track.Id... trackIds) {
         ConfirmDeleteDialogFragment.showDialog(getSupportFragmentManager(), trackIds);
     }
@@ -77,29 +54,10 @@ public abstract class AbstractTrackDeleteActivity extends AbstractActivity imple
             Toast.makeText(this, getString(R.string.track_delete_not_recording), Toast.LENGTH_LONG).show();
         }
 
-        trackDeleteServiceConnection = new TrackDeleteServiceConnection(this);
-        trackDeleteServiceConnection.startAndBind(this, trackIdList);
-    }
-
-    /**
-     * Called every time a track is deleted.
-     */
-    protected void onTrackDeleteStatus(TrackDeleteService.DeletionFinishedStatus deletionFinishedStatus) {
-        if (trackDeleteServiceConnection != null) {
-            trackDeleteServiceConnection.unbind(this);
-            trackDeleteServiceConnection = null;
-            onDeleteFinished();
-        }
+        TrackDeleteService.enqueue(this, new TrackDeleteService.TrackDeleteResultReceiver(new Handler(), this), trackIdList);
     }
 
     protected abstract void onDeleteConfirmed();
 
-    protected abstract void onDeleteFinished();
-
     protected abstract Track.Id getRecordingTrackId();
-
-    @Override
-    public void connected(TrackDeleteService service) {
-        service.getDeletingStatusObservable().observe(AbstractTrackDeleteActivity.this, this::onTrackDeleteStatus);
-    }
 }
