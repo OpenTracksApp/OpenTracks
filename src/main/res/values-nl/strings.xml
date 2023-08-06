@@ -17,28 +17,28 @@ limitations under the License.
     <string name="about_preference_title">Over OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> is een sport tracker applicatie met respect voor privacy.</string>
     <string name="about_url">Project webpagina: <a href="%1$s">%1$s</a></string>
-    <string name="about_version_name">Versie naam: %1$s</string>
+    <string name="about_version_name">Versienaam: %1$s</string>
     <string name="about_version_code">Versiecode: %1$d</string>
-    <string name="about_history">OpenTracks is een vork van <a href="https://code.google.com/archive/p/mytracks/"><i>Google\s MyTracks</i></a> (stopgezet in 2016).</string>
+    <string name="about_history">OpenTracks is afgeleid van <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a> (stopgezet in 2016).</string>
     <string name="about_libraries">Bibliotheken</string>
     <!-- Help -->
     <string name="help_feature_title">OpenTracks heeft de volgende kenmerken:</string>
-    <string name="help_feature_content">* GPS tracks maken
+    <string name="help_feature_content">* GPS-tracks aanmaken
 \n * een hartslagsensor gebruiken (alleen Bluetooth LE)
 \n * spraakaankondigingen (op tijd of afstand)
 \n * markers maken (incl. foto\'s)
 \n * werkt volledig offline
 \n * toon tracks op een kaart (zie hieronder)</string>
-    <string name="help_track_map_title">Hoe toon je een spoor op een kaart?</string>
+    <string name="help_track_map_title">Hoe wordt een spoor op een kaart weergegeven\?</string>
     <string name="help_track_map_content"> Gebruik het kleine kaartpictogram.
 \n a) (live updates) Installeer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Het biedt online of offline kaarten via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Eigenlijk is OSMDashboard een aparte app die alleen (tijdelijk) toegang heeft tot de gegevens van de track(s) die getoond gaan worden.
 \n b) Via een normale kaartapplicatie (bijv. <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>). Deze apps moeten het KMZ-bestandsformaat ondersteunen (alleen locaties en tijdstempels). In feite moet een app <i>ACTION_VIEW</i> ondersteunen met MIME <i>application/vnd.google-earth.kmz</i>. </string>
-    <string name="help_storage_pictures_title">Hoe slaat OpenTracks fotos op die als markers zijn genomen?</string>
+    <string name="help_storage_pictures_title">Hoe slaat OpenTracks foto\'s op die als markeringen zijn genomen\?</string>
     <string name="help_storage_pictures_content">Deze worden opgeslagen in de interne opslag van de app (d.w.z. alleen toegankelijk binnen OpenTracks).</string>
     <string name="help_track_export_title">Hoe kan ik opgenomen tracks exporteren/delen?</string>
     <string name="help_track_export_content"> Tracks kunnen worden geëxporteerd vanuit de instellingen als KMZ, KML of GPX. KMZ/KML alle gegevens; GPX alleen locaties. Tracks die worden gedeeld via het <i>share-icoontje</i> worden gedeeld als KMZ </string>
-    <string name="help_data_google_play_services_title">Gebruikt/vereist OpenTracks Google Play Service\?</string>
+    <string name="help_data_google_play_services_title">Vereist/gebruikt OpenTracks Google Play Service\?</string>
     <string name="help_recording_title">Hoe legt OpenTracks gegevens vast?</string>
     <string name="help_recording_content">
 OpenTracks gebruikt de GPS-sensor van het apparaat om de locatie continu te registreren.
@@ -52,33 +52,33 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
 \n c) controleren met <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, en
 \n d) schakel energiebesparing uit.
 \n
-\n Als alles niet helpt, meld dan een bug. </string>
+\n Als alles niet helpt, rapporteer dan een mogelijke fout. </string>
     <string name="help_support_title">Hoe kan ik OpenTracks ondersteunen?</string>
     <string name="help_support_content"> U kunt:
-\n a) het woord verspreiden over OpenTracks,
+\n a) anderen vertellen over OpenTracks,
 \n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">functies voorstellen</a>,
 \n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">bugs melden</a>,
 \n d) helpen bij de ontwikkeling van software,
-\n e) kopen in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n e) aanschaffen in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) doneren, en
-\n g) doe wat u denkt dat OpenTracks helpt. </string>
+\n g) wat u ook denkt dat OpenTracks helpt. </string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">vliegtuig</string>
     <string name="activity_type_atv">quad</string>
     <string name="activity_type_biking">fietsen</string>
-    <string name="activity_type_blimp">slap luchtschip</string>
+    <string name="activity_type_blimp">luchtballon</string>
     <string name="activity_type_boat">boot</string>
     <string name="activity_type_climbing">klimmen</string>
-    <string name="activity_type_commercial_airplane">commercieel vliegtuig</string>
+    <string name="activity_type_commercial_airplane">verkeersvliegtuig</string>
     <string name="activity_type_cross_country_skiing">langlaufen</string>
     <string name="activity_type_cycling">fietsen</string>
     <string name="activity_type_dirt_bike">crossmotor</string>
     <string name="activity_type_donkey_back_riding">ezelrijden</string>
     <string name="activity_type_driving">rijden</string>
-    <string name="activity_type_driving_bus">bus besturen</string>
+    <string name="activity_type_driving_bus">bustocht</string>
     <string name="activity_type_driving_car">autorijden</string>
     <string name="activity_type_ferry">veerboot</string>
-    <string name="activity_type_frisbee">Frisbee</string>
+    <string name="activity_type_frisbee">frisbee</string>
     <string name="activity_type_gliding">zweefvliegen</string>
     <string name="activity_type_hang_gliding">deltavliegen</string>
     <string name="activity_type_helicopter">helikopter</string>
@@ -87,13 +87,13 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="activity_type_hot_air_balloon">heteluchtballon</string>
     <string name="activity_type_ice_sailing">ijszeilen</string>
     <string name="activity_type_inline_skating">inline skaten</string>
-    <string name="activity_type_kayaking">kajakken</string>
+    <string name="activity_type_kayaking">kajak</string>
     <string name="activity_type_kite_surfing">kitesurfen</string>
     <string name="activity_type_land_sailing">landzeilen</string>
     <string name="activity_type_mixed_type">combinatie</string>
     <string name="activity_type_motor_bike">motorfiets</string>
     <string name="activity_type_motor_boating">motorboot varen</string>
-    <string name="activity_type_mountain_biking">mountainbiken</string>
+    <string name="activity_type_mountain_biking">mountainbike</string>
     <string name="activity_type_off_trail_hiking">trektocht (terrein)</string>
     <string name="activity_type_other">overige</string>
     <string name="activity_type_paddling">peddelen</string>
@@ -325,24 +325,24 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="value_smallest_recommended">Kleinste (aanbevolen)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
-        <item quantity="one">1 uur</item>
-        <item quantity="other">%1$d uur</item>
+        <item quantity="one">1 uur [Replaced by VoiceHoursPlural]</item>
+        <item quantity="other">%1$d uur [Replaced by VoiceHoursPlural]</item>
     </plurals>
     <plurals name="voiceMinutes">
-        <item quantity="one">1 minuut</item>
-        <item quantity="other">%1$d minutenr</item>
+        <item quantity="one">1 minuut [Replaced by VoiceMinutesPlural]</item>
+        <item quantity="other">%1$d minuten [Replaced by VoiceMinutesPlural]</item>
     </plurals>
     <plurals name="voiceSeconds">
-        <item quantity="one">1 seconde</item>
-        <item quantity="other">%1$d seconden</item>
+        <item quantity="one">1 seconde [Replaced by voiceSecondsPlural]</item>
+        <item quantity="other">%1$d seconden [Replaced by voiceSecondsPlural]</item>
     </plurals>
     <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilometer per uur</item>
-        <item quantity="other">%1$.1f kilometer per uur</item>
+        <item quantity="one">1 kilometer per uur [Replaced by voiceSpeedKilometersPerHourPlural]</item>
+        <item quantity="other">%1$.1f kilometer per uur [Replaced by voiceSpeedKilometersPerHourPlural]</item>
     </plurals>
     <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 mijl per uur</item>
-        <item quantity="other">%1$.1f mijl per uur</item>
+        <item quantity="one">1 mijl per uur [Replaced by voiceSpeedMilesPerHourPlural]</item>
+        <item quantity="other">%1$.1f mijl per uur [Replaced by voiceSpeedMilesPerHourPlural]</item>
     </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Pinautomaat</string>
@@ -403,9 +403,9 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="export_track_errors">Bestanden niet geëxporteerd</string>
     <string name="description_altitude_loss">Hoogteverlies: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Uitvoer na de training mislukt, controleer de uitvoermap.</string>
-    <string name="open_track_as_KML">Openen als KML</string>
-    <string name="open_track_as_GPX">Openen als GPX</string>
-    <string name="open_track_as_trackfileformat">Openen als %1$s</string>
+    <string name="open_track_as_KML">Als KML openen</string>
+    <string name="open_track_as_GPX">Als GPX openen</string>
+    <string name="open_track_as_trackfileformat">Als %1$s openen</string>
     <string name="activity_type_escooter">scooter</string>
     <string name="export_all_do_it_for_all">doe het voor alle conflicten</string>
     <string name="export_progress_summary_new_msg">Nieuwe bestanden geëxporteerd</string>
@@ -510,12 +510,12 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="speed">Snelheid</string>
     <string name="total_distance">Totale afstand</string>
     <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 kilometer</item>
-        <item quantity="other">%1$.1f kilometers</item>
+        <item quantity="one">1 kilometer [Replaced by voiceDistanceKilometersPlural]</item>
+        <item quantity="other">%1$.1f kilometer [Replaced by voiceDistanceKilometersPlural]</item>
     </plurals>
     <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 mijl</item>
-        <item quantity="other">%1$.1f mijlen</item>
+        <item quantity="one">1 mijl [Replaced by voiceDistanceMilesPlural]</item>
+        <item quantity="other">%1$.1f mijlen [Replaced by voiceDistanceMilesPlural]</item>
     </plurals>
     <string name="average_heart_rate">Gemiddelde hartslag</string>
     <string name="current_heart_rate">Actuele hartslag</string>
@@ -531,7 +531,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_gps_title">GPS</string>
     <string name="export_cannot_write_to_dir">Geen schrijfrecht in export map.</string>
     <string name="generic_choose_an_option">Maak een keuze</string>
-    <string name="permission_bluetooth_failed">OpenTracks vereist recht om Bluetooth te gebruiken.</string>
+    <string name="permission_bluetooth_failed">OpenTracks heeft toestemming nodig om Bluetooth te gebruiken.</string>
     <string name="settings_ui_summary">Uiterlijk, opname lay-out, thema</string>
     <string name="settings_public_api_enabled_summary_off">Alleen OpenTracks kan opnames starten en stoppen.</string>
     <string name="settings_public_api_disabled_toast">OpenTracks Publieke API is uitgeschakeld: inschakelen kan onder instellingen.</string>
@@ -589,12 +589,12 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="introduction_osm_dashboard">OpenTracks zelf biedt geen kaart. Installeer OSMDashboard om uw opnames op een kaart te bekijken.</string>
     <string name="unit_nautical_mile">NM</string>
     <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 knoop</item>
-        <item quantity="other">%1$.1f knopen</item>
+        <item quantity="one">1 knoop [Replaced by voiceSpeedMKnotsPlural]</item>
+        <item quantity="other">%1$.1f knopen [Replaced by voiceSpeedMKnotsPlural]</item>
     </plurals>
     <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">1 zeemijl</item>
-        <item quantity="other">%1$.1f zeemijlen</item>
+        <item quantity="one">1 zeemijl [Replaced by voiceDistanceNauticalMilesPlural]</item>
+        <item quantity="other">%1$.1f zeemijlen [Replaced by voiceDistanceNauticalMilesPlural]</item>
     </plurals>
     <string name="value_integer_knots">%1$d knopen</string>
     <string name="voice_per_nautical_mile">per zeemijl</string>
@@ -614,4 +614,19 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_min_required_accuracy_summary">Locatie wordt genegeerd als de nauwkeurigheid groter is dan %1$s</string>
     <string name="menu_export_all_one_file">Exporteer alle (een bestand voor alle tracks</string>
     <string name="description_pace_nautical">Tempo (min/NM)</string>
+    <string name="settings_stats_units_imperial_meter">Imperial (mi, m)</string>
+    <string name="voiceDistanceMilesPlural">{n, plural, =1 {1 mijl} other {{n,number,#.0} mijlen} }</string>
+    <string name="voiceHoursPlural">{n, plural, =1 {1 uur} other {{n,number} uren} }</string>
+    <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 nautisch mijl} other {{n,number,#.0} nautische mijlen} }</string>
+    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometer} other {{n,number,#.0} kilometers} }</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Alle ontdekbare Bluetooth-apparaten weergeven</string>
+    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 knoop} other {{n,number,#.0} knopen} }</string>
+    <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 mijl per uur} other {{n,number,#.0} mijlen per uur} }</string>
+    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometer per uur} other {{n,number,#.0} kilometer per uur} }</string>
+    <string name="voiceSecondsPlural">{n, plural, =1 {1 seconde} other {{n,number} seconden} }</string>
+    <string name="voiceMinutesPlural">{n, plural, =1 {1 minuut} other {{n,number} minuten} }</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth-apparaten filteren</string>
 </resources>
