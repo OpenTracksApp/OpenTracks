@@ -56,7 +56,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  *    So, for this check actually a different file name might be used than in the ExportService.
  * * Saved state as an object instead of individual values.
  */
-public class ExportActivity extends FragmentActivity implements ExportServiceResultReceiver.Receiver {
+public class ExportActivity extends FragmentActivity implements ExportService.ExportServiceResultReceiver.Receiver {
 
     private static final String TAG = ExportActivity.class.getSimpleName();
 
@@ -84,7 +84,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private TrackFileFormat trackFileFormat;
     private Uri directoryUri;
 
-    private ExportServiceResultReceiver resultReceiver;
+    private ExportService.ExportServiceResultReceiver resultReceiver;
 
     private List<String> directoryFiles;
 
@@ -161,7 +161,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         DocumentFile documentFile = DocumentFile.fromTreeUri(this, directoryUri);
         String directoryDisplayName = FileUtils.getPath(documentFile);
 
-        resultReceiver = new ExportServiceResultReceiver(new Handler(), this);
+        resultReceiver = new ExportService.ExportServiceResultReceiver(new Handler(), this);
 
         if (savedInstanceState == null) {
             autoConflict = ConflictResolutionStrategy.CONFLICT_NONE;

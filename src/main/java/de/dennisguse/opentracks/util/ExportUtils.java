@@ -25,7 +25,7 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.io.file.exporter.ExportService;
-import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
+import de.dennisguse.opentracks.io.file.exporter.ExportService.ExportServiceResultReceiver;
 import de.dennisguse.opentracks.io.file.exporter.ExportTask;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
