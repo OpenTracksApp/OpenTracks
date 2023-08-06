@@ -29,6 +29,10 @@ public class AltitudeCorrectionManager {
     }
 
     public void correctAltitude(Context context, TrackPoint trackPoint) {
+        if (!trackPoint.hasLocation() || !trackPoint.hasAltitude()) {
+            Log.d(TAG, "No altitude correction necessary.");
+            return;
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && altitudeConverter != null) {
             try {
                 Location loc = trackPoint.getLocation();
@@ -52,11 +56,6 @@ public class AltitudeCorrectionManager {
         private EGM2008Utils.EGM2008Correction egm2008Correction;
 
         public void correctAltitude(Context context, TrackPoint trackPoint) {
-            if (!trackPoint.hasLocation() || !trackPoint.hasAltitude()) {
-                Log.d(TAG, "No altitude correction necessary.");
-                return;
-            }
-
             if (egm2008Correction == null || !egm2008Correction.canCorrect(trackPoint.getLocation())) {
                 try {
                     egm2008Correction = EGM2008Utils.createCorrection(context, trackPoint.getLocation());
