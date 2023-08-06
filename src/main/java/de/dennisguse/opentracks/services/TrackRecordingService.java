@@ -208,7 +208,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         trackPointCreator.start(this, handler);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this), ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
+            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this), ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION + ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
         } else {
             startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this));
         }
