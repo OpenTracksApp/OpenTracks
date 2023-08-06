@@ -25,11 +25,11 @@ public class AltitudeCorrectionManager {
 
     public AltitudeCorrectionManager() {
         this.altitudeConverterFallback = new EGM2008Internal();
-        this.altitudeConverter = Build.VERSION.SDK_INT >= 34 ? new AltitudeConverter() : null;
+        this.altitudeConverter = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE ? new AltitudeConverter() : null;
     }
 
     public void correctAltitude(Context context, TrackPoint trackPoint) {
-        if (Build.VERSION.SDK_INT >= 34 && altitudeConverter != null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && altitudeConverter != null) {
             try {
                 Location loc = trackPoint.getLocation();
                 altitudeConverter.addMslAltitudeToLocation(context, loc);
