@@ -1,0 +1,11 @@
+v3.20.2: OpenTracks
+
+Veranderingen:
+- Hoogtetoename en -verlies zijn gehele getallen in plaats van decimalen
+- Vraag toestemming voordat u Bluetooth gebruikt via een Toast-bericht
+
+Bugfix :
+- Stel FLAG_IMMUTABLE in voor PendingIntents om crash op Android 12 te voorkomen
+- Cadans-sensor geeft 0 in plaats van Geen wanneer de gebruiker niet trapt
+- Snelheidssensor geeft 0 in plaats van de laatste snelheid wanneer er is gestopt
+- Met sensoren stopt de bewegende tijd wanneer deze niet beweegt

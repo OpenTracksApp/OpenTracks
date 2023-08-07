@@ -1,0 +1,8 @@
+v3.19.1: OpenTracks
+
+Veranderingen:
+- Vertalingen bijgewerkt.
+
+Bugfix :
+- Exporteer alle tracks bug opgelost.
+- Hervatten Track bug opgelost.

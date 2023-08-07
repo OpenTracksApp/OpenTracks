@@ -1,0 +1,10 @@
+v3.18.4: OpenTracks
+
+Veranderingen:
+- Snelheid / afstand worden consistent geformatteerd
+- Het tabblad Intervallen is nu sneller
+
+Bugfix :
+- Fietssnelheid / afstandssensor: 
+  - vaste parsing (UINT32)
+  - gegevens correct naar gebruikersinterface verzenden

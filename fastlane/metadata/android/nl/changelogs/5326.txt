@@ -1,0 +1,8 @@
+v4.7.1: OpenTracks
+
+Bugfixes :
+- Android 14: crash bij het starten van de opname (ontbrekende rechten)
+- Android 14: crash op het verwijderen van nummers (ForegroundService zonder reden)
+
+Ontwikkelaar:
+- AggregatedStats is nu een RecyclerView

@@ -1,0 +1,7 @@
+v3.20.0: OpenTracks
+
+Veranderingen:
+- Tijdens het opnemen: statistieken UI is nu configureerbaar
+
+Bugfix :
+- Het wijzigen van tracknaam/categorie tijdens het opnemen werd genegeerd (geïntroduceerd in v3.19.0)

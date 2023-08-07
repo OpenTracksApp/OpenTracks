@@ -1,0 +1,13 @@
+v3.18.3: OpenTracks
+
+Veranderingen:
+- KML-verwerking vereist geen volgorde van when/gx:coords
+- Importeur volgen: locaties opnieuw bestellen op tijdstempel
+- Verwijderde pictogrammen voor gerenderde opstartprogramma's voor Android <8.0.0 (API 26)
+  (ziet er misschien iets anders uit, maar vermijd problemen voor reproduceerbare builds)
+
+Bugfix :
+- Vermijd crash in hitlijsten vanwege raceconditie
+
+Ontwikkelaar:
+- Gesplitste GPX- en KML-importeur (verwijderde algemene erfenis)
