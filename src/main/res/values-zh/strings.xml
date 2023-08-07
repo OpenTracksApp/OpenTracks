@@ -152,7 +152,7 @@ limitations under the License.
     <string name="menu_aggregated_statistics">汇总统计数据</string>
     <string name="menu_delete">删除</string>
     <string name="menu_edit">修改</string>
-    <string name="menu_export_all">全部导出</string>
+    <string name="menu_export_all">全部导出（一个文件存储一条路线）</string>
     <string name="menu_help">帮助</string>
     <string name="menu_import_all">全部导入</string>
     <string name="menu_insert_marker">插入标记</string>
@@ -406,7 +406,7 @@ limitations under the License.
 \n 七、做任何你认为可以帮助到 OpenTracks 的事情。 </string>
     <string name="activity_type_swimming">游泳</string>
     <string name="export_with_photos">带照片</string>
-    <string name="export_progress_summary_skip_msg">路线已跳过</string>
+    <string name="export_progress_summary_skip_msg">已跳过的文件</string>
     <string name="generic_overwrite">覆盖</string>
     <string name="import_progress_summary_ok_msg">文件已导入</string>
     <string name="delete_service">删除服务</string>
@@ -442,7 +442,7 @@ limitations under the License.
     <string name="track_delete_number_of_tracks">%1$d 条路线</string>
     <string name="stats_clock">时钟</string>
     <string name="export_error_post_workout">健身后导出失败，请检查导出文件夹。</string>
-    <string name="export_track_already_exists_msg">路线 %1$s 已经存在于目标文件夹。</string>
+    <string name="export_track_already_exists_msg">文件 %1$s 已经存在于目标文件夹。</string>
     <string name="pace">配速</string>
     <string name="generic_show_errors">显示错误</string>
     <string name="settings_export_filename_title">文件名格式</string>
@@ -467,7 +467,7 @@ limitations under the License.
     <string name="settings_generic_sensor">通用</string>
     <string name="settings_cycling_sensor">骑自行车</string>
     <string name="settings_public_api_package_title">公共 API 包名</string>
-    <string name="stats_sensors_cadence">步频</string>
+    <string name="stats_sensors_cadence">踏频</string>
     <string name="stats_sensors_power">功率</string>
     <string name="track_recording_notification_accuracy">位置精度：%1$s</string>
     <string name="unit_knots">节</string>
@@ -480,7 +480,7 @@ limitations under the License.
     <string name="value_float_knots_recommended">%1$.1f 节（推荐）</string>
     <string name="total_distance">总距离</string>
     <string name="current_heart_rate">当前心率</string>
-    <string name="sensor_state_cadence_max">最大步频</string>
+    <string name="sensor_state_cadence_max">最大踏频</string>
     <string name="sensor_state_heart_rate_avg">平均心率</string>
     <string name="sensor_state_heart_rate_max">最大心率</string>
     <string name="sensor_state_power_avg">平均功率</string>
@@ -544,7 +544,7 @@ limitations under the License.
     <string name="help_track_map_title">如何在地图上显示路线？</string>
     <string name="help_track_export_title">如何导出或分享我记录的路线？</string>
     <string name="export_all_do_it_for_all">用同样方式处理全部冲突</string>
-    <string name="export_progress_summary_overwrite_msg">路线已覆盖</string>
+    <string name="export_progress_summary_overwrite_msg">已覆盖的文件</string>
     <string name="show_on_dashboard_not_installed">没有安装支持 OpenTracks 仪表盘 API 的应用。</string>
     <string name="help_storage_pictures_content">这些照片被保存在设备内部存储中（也就是说只能在 OpenTracks 内访问）。</string>
     <string name="help_data_storage_content"> 应用每记录一次位置便同时记录一次传感器数据。以心率传感器为例，这意味着每一个位置仅仅对应<i>一个</i>心率读数。如果你站着不动或者处于室内，心率数据就不会被记录（但会被显示）。 </string>
@@ -552,8 +552,8 @@ limitations under the License.
     <string name="description_speed_source_gps">GPS</string>
     <string name="export_cannot_write_to_dir">无法写入导出文件夹。</string>
     <string name="export_dir_not_writable">" （不可写！）"</string>
-    <string name="export_track_errors">路线没有被导出</string>
-    <string name="export_progress_summary_new_msg">新路线已导出</string>
+    <string name="export_track_errors">未导出的文件</string>
+    <string name="export_progress_summary_new_msg">已导出的新文件</string>
     <string name="generic_undo">撤销</string>
     <string name="generic_dismiss">关闭</string>
     <string name="settings_defaults_title">默认的单位和活动类型</string>
@@ -594,7 +594,7 @@ limitations under the License.
     <string name="import_progress_summary_exists_msg">已存在</string>
     <string name="import_progress_summary_errors_msg">错误</string>
     <string name="marker_add_photo_canceled">已取消，照片标记没有被添加</string>
-    <string name="sensor_state_cadence_avg">平均步频</string>
+    <string name="sensor_state_cadence_avg">平均踏频</string>
     <string name="sensor_could_not_scan">无法扫描蓝牙设备（错误：%1$i）。</string>
     <string name="settings_units_category">单位</string>
     <string name="settings_recording_customize_layout_select_columns">每行数据字段数</string>
@@ -609,4 +609,45 @@ limitations under the License.
     <string name="show_on_dashboard">OpenTracks 仪表盘 API</string>
     <string name="always">总是</string>
     <string name="track_speed_notification">速度：%1$s</string>
+    <string name="settings_stats_units_imperial_meter">英制（英里，米）</string>
+    <string name="voice_on_device_speaker_title">使用设备的扬声器</string>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="other">%1$.1f 海里</item>
+    </plurals>
+    <string name="introduction_osm_dashboard">OpenTracks 本身不提供地图。请安装 OSMDashboard 应用，以便在地图上查看您的记录。</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">筛选蓝牙设备</string>
+    <string name="menu_export_all_one_file">全部导出（一个文件存储全部路线）</string>
+    <string name="no_compatible_camera_installed">尚未安装兼容的照相机应用</string>
+    <string name="no_compatible_gallery_installed">尚未安装兼容的图库应用</string>
+    <string name="settings_recording_min_required_accuracy_summary">精度不足 %1$s 的位置会被忽略</string>
+    <plurals name="voiceHours">
+        <item quantity="other">%1$d 小时</item>
+    </plurals>
+    <string name="settings_sensor_heart_rate_max">心率区间：最大心率（bpm）</string>
+    <string name="settings_api_summary">给其他应用使用的远程控制和统计 API</string>
+    <plurals name="voiceMinutes">
+        <item quantity="other">%1$d 分钟</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="other">%1$d 秒</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="other">%1$.1f 公里每小时</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="other">%1$.1f 英里每小时</item>
+    </plurals>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="other">%1$.1f 节</item>
+    </plurals>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="other">%1$.1f 公里</item>
+    </plurals>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="sensor_state_power_unit">瓦</string>
+    <plurals name="voiceDistanceMiles">
+        <item quantity="other">%1$.1f 英里</item>
+    </plurals>
+    <string name="settings_sensor_bluetooth_service_filter_off">显示所有可发现的蓝牙设备</string>
 </resources>
