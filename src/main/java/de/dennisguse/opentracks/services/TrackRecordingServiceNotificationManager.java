@@ -108,9 +108,7 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
         Intent intent = IntentUtils.newIntent(context, TrackListActivity.class);
 
         int pendingIntentFlags = 0;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            pendingIntentFlags = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
-        }
+        pendingIntentFlags = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
         PendingIntent pendingIntent = TaskStackBuilder.create(context)
                 .addParentStack(TrackListActivity.class)
                 .addNextIntent(intent)

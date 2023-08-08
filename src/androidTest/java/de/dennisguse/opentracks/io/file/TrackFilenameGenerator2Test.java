@@ -14,7 +14,7 @@ import de.dennisguse.opentracks.data.models.Track;
 //TODO Merge with TrackFilenameGeneratorTest whenever Junit5 gets available.
 //https://github.com/android/android-test/issues/224
 @RunWith(Parameterized.class)
-public class TrackFilenameGeneratorTest2 {
+public class TrackFilenameGenerator2Test {
 
     @Parameterized.Parameters
     public static Collection<String> data() {
@@ -26,7 +26,7 @@ public class TrackFilenameGeneratorTest2 {
 
     private final TrackFilenameGenerator subject;
 
-    public TrackFilenameGeneratorTest2(String template) {
+    public TrackFilenameGenerator2Test(String template) {
         this.subject = new TrackFilenameGenerator(template);
     }
 

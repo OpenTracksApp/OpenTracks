@@ -51,7 +51,7 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 
 @RunWith(AndroidJUnit4.class)
-public class TrackRecordingServiceTestMarker {
+public class TrackRecordingServiceMarkerTest {
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
@@ -86,7 +86,7 @@ public class TrackRecordingServiceTestMarker {
     }
 
     @After
-    public void tearDown() throws TimeoutException {
+    public void tearDown() {
         TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
 
         // Ensure that the database is empty after every test

@@ -54,7 +54,7 @@ import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
  * As states are checked against MutableLiveData that are updated via `postValue()` (is asynchronous to be inform other Threads), Thread.sleep() is required.
  */
 @RunWith(AndroidJUnit4.class)
-public class TrackRecordingServiceTestStateMachine {
+public class TrackRecordingServiceStateMachineTest {
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
@@ -93,7 +93,7 @@ public class TrackRecordingServiceTestStateMachine {
     }
 
     @After
-    public void tearDown() throws TimeoutException {
+    public void tearDown() {
         TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
         // Ensure that the database is empty after every test
         contentProviderUtils.deleteAllTracks(context);

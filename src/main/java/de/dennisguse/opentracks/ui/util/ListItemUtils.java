@@ -81,7 +81,7 @@ public class ListItemUtils {
             // Match list_item_time_distance in list_item.xml
             timeDistanceText = getTimeDistance(totalTime, totalDistance);
             if (markerCount > 0) {
-                timeDistanceText += "  \u2027";
+                timeDistanceText += "  ‧";
             }
         }
         setTextView(context, timeDistanceTextView, timeDistanceText, hasPhoto);
@@ -145,7 +145,7 @@ public class ListItemUtils {
         StringBuilder builder = new StringBuilder();
         if (totalTime != null && totalTime.length() != 0) {
             if (builder.length() != 0) {
-                builder.append(" \u2027 ");
+                builder.append(" ‧ ");
             }
             builder.append(totalTime);
         }

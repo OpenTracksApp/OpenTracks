@@ -49,7 +49,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
  * So, if something fails, subsequent tests may be affected.
  */
 @RunWith(AndroidJUnit4.class)
-public class TrackRecordingServiceTestRecording {
+public class TrackRecordingServiceRecordingTest {
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
@@ -96,7 +96,7 @@ public class TrackRecordingServiceTestRecording {
     }
 
     @After
-    public void tearDown() throws TimeoutException {
+    public void tearDown() {
         TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
         // Ensure that the database is empty after every test
         contentProviderUtils.deleteAllTracks(context);

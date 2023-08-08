@@ -112,7 +112,7 @@ public class ExportImportTest {
     private TrackImporter trackImporter;
 
     @Before
-    public void fileSetup() throws IOException, TimeoutException {
+    public void fileSetup() throws IOException {
         TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
 
         tmpFile = File.createTempFile("test", "test", context.getFilesDir());
@@ -124,7 +124,7 @@ public class ExportImportTest {
     }
 
     @After
-    public void tearDown() throws TimeoutException {
+    public void tearDown() {
         tmpFile.deleteOnExit();
         tmpFileUri = null;
 
