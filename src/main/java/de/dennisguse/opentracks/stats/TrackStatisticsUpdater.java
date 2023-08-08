@@ -16,8 +16,6 @@
 
 package de.dennisguse.opentracks.stats;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import java.time.Duration;
@@ -40,11 +38,6 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 public class TrackStatisticsUpdater {
 
     private static final String TAG = TrackStatisticsUpdater.class.getSimpleName();
-    /**
-     * Ignore any acceleration faster than this.
-     * Will ignore any speeds that imply acceleration greater than 2g's
-     */
-    private static final double SPEED_MAX_ACCELERATION = 2 * 9.81;
 
     private final TrackStatistics trackStatistics;
 
@@ -193,25 +186,11 @@ public class TrackStatisticsUpdater {
     /**
      * Updates a speed reading while assuming the user is moving.
      */
-    private void updateSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
-        if (isValidSpeed(trackPoint, lastTrackPoint)) {
-            Speed currentSpeed = trackPoint.getSpeed();
-            if (currentSpeed.greaterThan(currentSegment.getMaxSpeed())) {
-                currentSegment.setMaxSpeed(currentSpeed);
-            }
-        } else {
-            Log.d(TAG, "Invalid speed. speed: " + trackPoint.getSpeed() + " lastLocationSpeed: " + lastTrackPoint.getSpeed());
+    private void updateSpeed(@NonNull TrackPoint trackPoint) {
+        Speed currentSpeed = trackPoint.getSpeed();
+        if (currentSpeed.greaterThan(currentSegment.getMaxSpeed())) {
+            currentSegment.setMaxSpeed(currentSpeed);
         }
-    }
-
-    private boolean isValidSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
-        // See if the speed seems physically likely. Ignore any speeds that imply acceleration greater than 2g.
-        Duration timeDifference = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
-        Speed maxSpeedDifference = Speed.of(Distance.of(SPEED_MAX_ACCELERATION), Duration.ofMillis(1000))
-                .mul(timeDifference.toSeconds());
-
-        Speed speedDifference = Speed.absDiff(lastTrackPoint.getSpeed(), trackPoint.getSpeed());
-        return speedDifference.lessThan(maxSpeedDifference);
     }
 
     @NonNull

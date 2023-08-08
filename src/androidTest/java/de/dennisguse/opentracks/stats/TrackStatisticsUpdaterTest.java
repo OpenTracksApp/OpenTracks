@@ -178,42 +178,6 @@ public class TrackStatisticsUpdaterTest {
         assertEquals(59.18, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
     }
 
-
-    @Test
-    public void addTrackPoint_maxSpeed_ignore_above_acceleration() {
-        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
-        assertEquals(Speed.of(0f), subject.getTrackStatistics().getMaxSpeed());
-
-        subject.addTrackPoint(new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0)));
-        assertEquals(Speed.of(0f), subject.getTrackStatistics().getMaxSpeed());
-
-        // Ignore as we set max speed if two consecutive trackpoints were considered moving
-        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
-                .setSpeed(Speed.of(1f)));
-        assertEquals(Speed.of(0f), subject.getTrackStatistics().getMaxSpeed());
-
-        // Update max speed
-        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
-                .setSpeed(Speed.of(1f)));
-        assertEquals(Speed.of(1f), subject.getTrackStatistics().getMaxSpeed());
-
-        // Update max speed
-        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(12))
-                .setSpeed(Speed.of(50f)));
-        assertEquals(Speed.of(50f), subject.getTrackStatistics().getMaxSpeed());
-
-        // Ignore; we were getting slower
-        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(13))
-                .setSpeed(Speed.of(5f)));
-        assertEquals(Speed.of(50f), subject.getTrackStatistics().getMaxSpeed());
-
-        // Ignore acceleration above 2g
-        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(14))
-                .setSpeed(Speed.of(500f)));
-        assertEquals(Speed.of(50f), subject.getTrackStatistics().getMaxSpeed());
-
-    }
-
     @Test
     public void addTrackPoint_maxSpeed_multiple_segments() {
         TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
