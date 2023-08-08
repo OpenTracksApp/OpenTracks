@@ -53,6 +53,7 @@ captures/
 .idea/.name
 .idea/caches/
 .idea/compiler.xml
+.idea/androidTestResultsUserPreferences.xml
 .idea/copyright/profiles_settings.xml
 .idea/dataSources.ids
 .idea/datasources.xml

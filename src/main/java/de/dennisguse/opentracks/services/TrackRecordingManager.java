@@ -58,14 +58,6 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         contentProviderUtils = new ContentProviderUtils(context);
     }
 
-    public void start() {
-        PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
-    }
-
-    public void stop() {
-        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
-    }
-
     Track.Id startNewTrack() {
         TrackPoint segmentStartTrackPoint = trackPointCreator.createSegmentStartManual();
         // Create new track

@@ -132,7 +132,7 @@ public class TrackRecordingServiceStateMachineTest {
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());
 
         // when
-        service.stopSensorsAndShutdown();
+        service.stopSensors();
         Thread.sleep(1000);
 
         // then
@@ -177,7 +177,7 @@ public class TrackRecordingServiceStateMachineTest {
         // then
         assertFalse(service.isRecording());
         assertEquals(TrackRecordingService.STATUS_DEFAULT, service.getRecordingStatusObservable().getValue());
-        assertEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
+        assertNotEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_NONE, service.getGpsStatusObservable().getValue());
 
 

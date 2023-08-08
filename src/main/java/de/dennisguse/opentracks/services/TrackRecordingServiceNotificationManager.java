@@ -42,7 +42,6 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
     private UnitSystem unitSystem = null;
 
     TrackRecordingServiceNotificationManager(Context context) {
-        PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, context.getString(R.string.app_name), NotificationManager.IMPORTANCE_HIGH);
@@ -65,7 +64,6 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
 
     void stop() {
         cancelNotification();
-        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @VisibleForTesting

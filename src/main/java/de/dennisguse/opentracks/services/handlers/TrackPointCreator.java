@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Handler;
 import android.util.Log;
@@ -23,7 +24,7 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
 /**
  * Creates TrackPoints while recording by fusing data from different sensors (e.g., GNSS, barometer, BLE sensors).
  */
-public class TrackPointCreator {
+public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = TrackPointCreator.class.getSimpleName();
 
@@ -148,6 +149,11 @@ public class TrackPointCreator {
 
     void sendGpsStatus(GpsStatusValue gpsStatusValue) {
         service.newGpsStatus(gpsStatusValue);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
+        sensorManager.onSharedPreferenceChanged(sharedPreferences, key);
     }
 
     public interface Callback {
