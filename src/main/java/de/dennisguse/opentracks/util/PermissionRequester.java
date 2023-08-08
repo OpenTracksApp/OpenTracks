@@ -57,7 +57,7 @@ public class PermissionRequester {
         locationPermissionRequest.launch(permissions.toArray(permissions.toArray(new String[0])));
     }
 
-    private static final List<String> GPS_PERMISSION = List.of(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
+    private static final List<String> GPS_PERMISSION = List.of(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
 
     private static final List<String> BLUETOOTH_PERMISSIONS;
 

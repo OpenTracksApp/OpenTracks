@@ -94,8 +94,9 @@ OpenTracks can be used with [Gadgetbridge](https://www.gadgetbridge.org/):
 * __No in-app analytics__
 * __No use of Google Play Services__
 
-__Only required permission:__
+__Only required permissions:__
 * _ACCESS_FINE_LOCATION_: required to use the GPS.
+* _ACCESS_BACKGROUND_LOCATION_: required to start recording with GPS while phone is in standby. (e.g. when triggered by Public API from an external device)
 
 ### Public API
 
