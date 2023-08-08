@@ -48,7 +48,8 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
         this.context = context;
         this.handler = handler;
 
-        PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
+        onSharedPreferenceChanged(null, null);
+
         gpsStatusManager = new GpsStatusManager(context, this, handler);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         registerLocationListener();
@@ -62,20 +63,15 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
     @SuppressWarnings({"MissingPermission"})
     //TODO upgrade to AGP7.0.0/API31 started complaining about removeUpdates.
     public void stop(Context context) {
-        if (locationManager != null && context != null) {
-            if (PermissionRequester.GPS.hasPermission(context)) {
-                LocationManagerCompat.removeUpdates(locationManager, this);
-            }
-            locationManager = null;
-            context = null;
-            handler = null;
+        if (locationManager != null) {
+            LocationManagerCompat.removeUpdates(locationManager, this);
         }
+        locationManager = null;
+        this.context = null;
+        handler = null;
 
-        if (gpsStatusManager != null) {
-            gpsStatusManager.stop();
-            gpsStatusManager = null;
-        }
-        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
+        gpsStatusManager.stop();
+        gpsStatusManager = null;
     }
 
     @Override

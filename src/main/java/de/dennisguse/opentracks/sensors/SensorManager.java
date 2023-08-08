@@ -1,9 +1,11 @@
 package de.dennisguse.opentracks.sensors;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -12,7 +14,7 @@ import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.handlers.GPSManager;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 
-public class SensorManager {
+public class SensorManager implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = SensorManager.class.getSimpleName();
 
@@ -49,11 +51,12 @@ public class SensorManager {
 
     public void start(Context context, Handler handler) {
         gpsManager = new GPSManager(observer); //TODO Pass listener
-        gpsManager.start(context, handler);
-
         altitudeSumManager = new AltitudeSumManager();
         bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
 
+        onSharedPreferenceChanged(null, null);
+
+        gpsManager.start(context, handler);
         altitudeSumManager.start(context, handler);
         bluetoothSensorManager.start(context, handler);
     }
@@ -112,6 +115,14 @@ public class SensorManager {
     @VisibleForTesting
     public void setAltitudeSumManager(AltitudeSumManager altitudeSumManager) {
         this.altitudeSumManager = altitudeSumManager;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
+        if (gpsManager != null) {
+            gpsManager.onSharedPreferenceChanged(sharedPreferences, key);
+            bluetoothSensorManager.onSharedPreferenceChanged(sharedPreferences, key);
+        }
     }
 
     public interface SensorDataChangedObserver {

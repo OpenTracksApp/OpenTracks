@@ -60,7 +60,6 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
 
     public VoiceAnnouncementManager(@NonNull TrackRecordingService trackRecordingService) {
         this.trackRecordingService = trackRecordingService;
-        PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
     }
 
     public void start(@Nullable TrackStatistics trackStatistics) {
@@ -106,7 +105,6 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
     }
 
     public void stop() {
-        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
         if (voiceAnnouncement != null) {
             voiceAnnouncement.stop();
             voiceAnnouncement = null;
