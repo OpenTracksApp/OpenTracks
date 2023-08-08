@@ -21,6 +21,7 @@ import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
+import de.dennisguse.opentracks.services.handlers.AltitudeCorrectionManager;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -31,8 +32,12 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
 
     private static final String TAG = TrackRecordingManager.class.getSimpleName();
 
+    private static final AltitudeCorrectionManager ALTITUDE_CORRECTION_MANAGER = new AltitudeCorrectionManager();
+
     private final ContentProviderUtils contentProviderUtils;
     private final Context context;
+
+    private final TrackPointCreator trackPointCreator;
 
     private Distance recordingDistanceInterval;
     private Distance maxRecordingDistance;
@@ -47,8 +52,9 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
     private TrackPoint lastStoredTrackPoint;
     private TrackPoint lastStoredTrackPointWithLocation;
 
-    TrackRecordingManager(Context context) {
+    TrackRecordingManager(Context context, TrackPointCreator trackPointCreator) {
         this.context = context;
+        this.trackPointCreator = trackPointCreator;
         contentProviderUtils = new ContentProviderUtils(context);
     }
 
@@ -60,7 +66,7 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    Track.Id startNewTrack(TrackPointCreator trackPointCreator) {
+    Track.Id startNewTrack() {
         TrackPoint segmentStartTrackPoint = trackPointCreator.createSegmentStartManual();
         // Create new track
         ZoneOffset zoneOffset = ZoneOffset.systemDefault().getRules().getOffset(segmentStartTrackPoint.getTime());
@@ -86,7 +92,7 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
     /**
      * @return if the recording could be started.
      */
-    boolean resumeExistingTrack(@NonNull Track.Id resumeTrackId, @NonNull TrackPointCreator trackPointCreator) {
+    boolean resumeExistingTrack(@NonNull Track.Id resumeTrackId) {
         trackId = resumeTrackId;
         Track track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
@@ -102,7 +108,7 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         return true;
     }
 
-    void end(TrackPointCreator trackPointCreator) {
+    void end() {
         TrackPoint segmentEnd = trackPointCreator.createSegmentEnd();
         insertTrackPoint(segmentEnd, true);
 
@@ -112,14 +118,13 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         reset();
     }
 
-    Pair<Track, Pair<TrackPoint, SensorDataSet>> getDataForUI(TrackPointCreator trackPointCreator) {
-        if (trackPointCreator == null) {
-            return null;
-        }
+    Pair<Track, Pair<TrackPoint, SensorDataSet>> getDataForUI() {
         TrackStatisticsUpdater tmpTrackStatisticsUpdater = new TrackStatisticsUpdater(trackStatisticsUpdater);
         Pair<TrackPoint, SensorDataSet> current = trackPointCreator.createCurrentTrackPoint(lastTrackPointUIWithSpeed, lastTrackPointUIWithAltitude, lastStoredTrackPointWithLocation);
 
         tmpTrackStatisticsUpdater.addTrackPoint(current.first);
+
+        ALTITUDE_CORRECTION_MANAGER.correctAltitude(context, current.first);
 
         Track track = contentProviderUtils.getTrack(trackId); //Get copy
         if (track == null) {

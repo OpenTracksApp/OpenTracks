@@ -199,42 +199,36 @@ public class GPXTrackExporter implements TrackExporter {
     }
 
     public void close() {
-        if (printWriter != null) {
-            printWriter.flush();
-            printWriter = null;
-        }
+        printWriter.flush();
+        printWriter = null;
     }
 
 
     public void writeHeader() {
-        if (printWriter != null) {
-            printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            printWriter.println("<gpx");
-            printWriter.println("version=\"1.1\"");
-            printWriter.println("creator=\"" + creator + "\"");
-            printWriter.println("xmlns=\"http://www.topografix.com/GPX/1/1\"");
-            printWriter.println("xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\"");
-            printWriter.println("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-            printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\"");
-            printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v2\"");
-            printWriter.println("xmlns:gpxtrkx=\"http://www.garmin.com/xmlschemas/TrackStatsExtension/v1\"");
-            printWriter.println("xmlns:cluetrust=\"http://www.cluetrust.com/Schemas/\"");
-            printWriter.println("xmlns:pwr=\"http://www.garmin.com/xmlschemas/PowerExtension/v1\"");
-            printWriter.println("xsi:schemaLocation=" +
-                    "\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
-                    + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd"
-                    + " http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd"
-                    + " http://www.garmin.com/xmlschemas/PowerExtension/v1 https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd"
-                    + " http://www.garmin.com/xmlschemas/TrackStatsExtension/v1"
-                    + " http://www.cluetrust.com/Schemas http://www.cluetrust.com/Schemas/gpxdata10.xsd"
-                    + " http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd\">");
-        }
+        printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        printWriter.println("<gpx");
+        printWriter.println("version=\"1.1\"");
+        printWriter.println("creator=\"" + creator + "\"");
+        printWriter.println("xmlns=\"http://www.topografix.com/GPX/1/1\"");
+        printWriter.println("xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\"");
+        printWriter.println("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+        printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\"");
+        printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v2\"");
+        printWriter.println("xmlns:gpxtrkx=\"http://www.garmin.com/xmlschemas/TrackStatsExtension/v1\"");
+        printWriter.println("xmlns:cluetrust=\"http://www.cluetrust.com/Schemas/\"");
+        printWriter.println("xmlns:pwr=\"http://www.garmin.com/xmlschemas/PowerExtension/v1\"");
+        printWriter.println("xsi:schemaLocation=" +
+                "\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
+                + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd"
+                + " http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd"
+                + " http://www.garmin.com/xmlschemas/PowerExtension/v1 https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd"
+                + " http://www.garmin.com/xmlschemas/TrackStatsExtension/v1"
+                + " http://www.cluetrust.com/Schemas http://www.cluetrust.com/Schemas/gpxdata10.xsd"
+                + " http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd\">");
     }
 
     public void writeFooter() {
-        if (printWriter != null) {
-            printWriter.println("</gpx>");
-        }
+        printWriter.println("</gpx>");
     }
 
     private void writeMarkers(Track track) throws InterruptedException {
@@ -254,49 +248,43 @@ public class GPXTrackExporter implements TrackExporter {
     }
 
     public void writeMarker(ZoneOffset zoneOffset, Marker marker) {
-        if (printWriter != null) {
-            printWriter.println("<wpt " + formatLocation(marker.getLatitude(), marker.getLongitude()) + ">");
-            if (marker.hasAltitude()) {
-                printWriter.println("<ele>" + ALTITUDE_FORMAT.format(marker.getAltitude().toM()) + "</ele>");
-            }
-            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(marker.getTime(), zoneOffset) + "</time>");
-            printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
-            printWriter.println("<desc>" + StringUtils.formatCData(marker.getDescription()) + "</desc>");
-            printWriter.println("<type>" + StringUtils.formatCData(marker.getCategory()) + "</type>");
-            printWriter.println("</wpt>");
+        printWriter.println("<wpt " + formatLocation(marker.getLatitude(), marker.getLongitude()) + ">");
+        if (marker.hasAltitude()) {
+            printWriter.println("<ele>" + ALTITUDE_FORMAT.format(marker.getAltitude().toM()) + "</ele>");
         }
+        printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(marker.getTime(), zoneOffset) + "</time>");
+        printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
+        printWriter.println("<desc>" + StringUtils.formatCData(marker.getDescription()) + "</desc>");
+        printWriter.println("<type>" + StringUtils.formatCData(marker.getCategory()) + "</type>");
+        printWriter.println("</wpt>");
     }
 
     public void writeBeginTrack(Track track) {
-        if (printWriter != null) {
-            printWriter.println("<trk>");
-            printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
-            printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
-            printWriter.println("<type>" + StringUtils.formatCData(track.getActivityTypeLocalized()) + "</type>");
+        printWriter.println("<trk>");
+        printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+        printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
+        printWriter.println("<type>" + StringUtils.formatCData(track.getActivityTypeLocalized()) + "</type>");
 
-            printWriter.println("<extensions>");
-            printWriter.println("<topografix:color>c0c0c0</topografix:color>");
-            printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
+        printWriter.println("<extensions>");
+        printWriter.println("<topografix:color>c0c0c0</topografix:color>");
+        printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
 
-            TrackStatistics trackStatistics = track.getTrackStatistics();
-            printWriter.println("<gpxtrkx:TrackStatsExtension>");
-            printWriter.println("<gpxtrkx:Distance>" + trackStatistics.getTotalDistance().toM() + "</gpxtrkx:Distance>");
-            printWriter.println("<gpxtrkx:TimerTime>" + trackStatistics.getTotalTime().getSeconds() + "</gpxtrkx:TimerTime>");
-            printWriter.println("<gpxtrkx:MovingTime>" + trackStatistics.getMovingTime().getSeconds() + "</gpxtrkx:MovingTime>");
-            printWriter.println("<gpxtrkx:StoppedTime>" + trackStatistics.getStoppedTime().getSeconds() + "</gpxtrkx:StoppedTime>");
-            printWriter.println("<gpxtrkx:MaxSpeed>" + trackStatistics.getMaxSpeed().toMPS() + "</gpxtrkx:MaxSpeed>");
-            printWriter.println("<gpxtrkx:Ascent>" + trackStatistics.getTotalAltitudeGain() + "</gpxtrkx:Ascent>");
-            printWriter.println("<gpxtrkx:Descent>" + trackStatistics.getTotalAltitudeLoss() + "</gpxtrkx:Descent>");
-            printWriter.println("</gpxtrkx:TrackStatsExtension>");
+        TrackStatistics trackStatistics = track.getTrackStatistics();
+        printWriter.println("<gpxtrkx:TrackStatsExtension>");
+        printWriter.println("<gpxtrkx:Distance>" + trackStatistics.getTotalDistance().toM() + "</gpxtrkx:Distance>");
+        printWriter.println("<gpxtrkx:TimerTime>" + trackStatistics.getTotalTime().getSeconds() + "</gpxtrkx:TimerTime>");
+        printWriter.println("<gpxtrkx:MovingTime>" + trackStatistics.getMovingTime().getSeconds() + "</gpxtrkx:MovingTime>");
+        printWriter.println("<gpxtrkx:StoppedTime>" + trackStatistics.getStoppedTime().getSeconds() + "</gpxtrkx:StoppedTime>");
+        printWriter.println("<gpxtrkx:MaxSpeed>" + trackStatistics.getMaxSpeed().toMPS() + "</gpxtrkx:MaxSpeed>");
+        printWriter.println("<gpxtrkx:Ascent>" + trackStatistics.getTotalAltitudeGain() + "</gpxtrkx:Ascent>");
+        printWriter.println("<gpxtrkx:Descent>" + trackStatistics.getTotalAltitudeLoss() + "</gpxtrkx:Descent>");
+        printWriter.println("</gpxtrkx:TrackStatsExtension>");
 
-            printWriter.println("</extensions>");
-        }
+        printWriter.println("</extensions>");
     }
 
     public void writeEndTrack() {
-        if (printWriter != null) {
-            printWriter.println("</trk>");
-        }
+        printWriter.println("</trk>");
     }
 
     public void writeOpenSegment() {
@@ -310,67 +298,65 @@ public class GPXTrackExporter implements TrackExporter {
     public Distance writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint, List<TrackPoint> sensorPoints, Distance trackDistance) {
         Distance cumulativeDistance = null;
 
-        if (printWriter != null) {
+        printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");
 
-            printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");
-
-            if (trackPoint.hasAltitude()) {
-                printWriter.println("<ele>" + ALTITUDE_FORMAT.format(trackPoint.getAltitude().toM()) + "</ele>");
-            }
-
-            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime(), zoneOffset) + "</time>");
-
-            {
-                String trackPointExtensionContent = "";
-
-                if (trackPoint.hasSpeed()) {
-                    trackPointExtensionContent += "<gpxtpx:speed>" + SPEED_FORMAT.format(trackPoint.getSpeed().toMPS()) + "</gpxtpx:speed>\n";
-                }
-
-                if (trackPoint.hasHeartRate()) {
-                    trackPointExtensionContent += "<gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate().getBPM()) + "</gpxtpx:hr>\n";
-                }
-
-                if (trackPoint.hasCadence()) {
-                    trackPointExtensionContent += "<gpxtpx:cad>" + CADENCE_FORMAT.format(trackPoint.getCadence().getRPM()) + "</gpxtpx:cad>\n";
-                }
-
-                if (trackPoint.hasPower()) {
-                    trackPointExtensionContent += "<pwr:PowerInWatts>" + POWER_FORMAT.format(trackPoint.getPower().getW()) + "</pwr:PowerInWatts>\n";
-                }
-
-                Double cumulativeGain = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasAltitudeGain() ? (double) tp.getAltitudeGain() : null);
-                if (cumulativeGain != null) {
-                    trackPointExtensionContent += ("<opentracks:gain>" + ALTITUDE_FORMAT.format(cumulativeGain) + "</opentracks:gain>\n");
-                }
-
-                Double cumulativeLoss = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasAltitudeLoss() ? (double) tp.getAltitudeLoss() : null);
-                if (cumulativeLoss != null) {
-                    trackPointExtensionContent += ("<opentracks:loss>" + ALTITUDE_FORMAT.format(cumulativeLoss) + "</opentracks:loss>\n");
-                }
-
-                if (trackPoint.hasHorizontalAccuracy()) {
-                    trackPointExtensionContent += ("<opentracks:accuracy_horizontal>" + DISTANCE_FORMAT.format(trackPoint.getHorizontalAccuracy().toM()) + "</opentracks:accuracy_horizontal>");
-                }
-                if (trackPoint.hasVerticalAccuracy()) {
-                    trackPointExtensionContent += ("<opentracks:accuracy_vertical>" + DISTANCE_FORMAT.format(trackPoint.getVerticalAccuracy().toM()) + "</opentracks:accuracy_vertical>");
-                }
-
-                cumulativeDistance = Distance.ofOrNull(cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasSensorDistance() ? tp.getSensorDistance().toM() : null));
-                if (cumulativeDistance != null) {
-                    trackPointExtensionContent += ("<opentracks:distance>" + DISTANCE_FORMAT.format(cumulativeDistance.toM()) + "</opentracks:distance>\n");
-                    trackPointExtensionContent += ("<cluetrust:distance>" + DISTANCE_FORMAT.format(trackDistance.plus(cumulativeDistance).toM()) + "</cluetrust:distance>\n");
-                }
-
-                if (!trackPointExtensionContent.isEmpty()) {
-                    printWriter.println("<extensions><gpxtpx:TrackPointExtension>");
-                    printWriter.print(trackPointExtensionContent);
-                    printWriter.println("</gpxtpx:TrackPointExtension></extensions>");
-                }
-            }
-
-            printWriter.println("</trkpt>");
+        if (trackPoint.hasAltitude()) {
+            printWriter.println("<ele>" + ALTITUDE_FORMAT.format(trackPoint.getAltitude().toM()) + "</ele>");
         }
+
+        printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime(), zoneOffset) + "</time>");
+
+        {
+            String trackPointExtensionContent = "";
+
+            if (trackPoint.hasSpeed()) {
+                trackPointExtensionContent += "<gpxtpx:speed>" + SPEED_FORMAT.format(trackPoint.getSpeed().toMPS()) + "</gpxtpx:speed>\n";
+            }
+
+            if (trackPoint.hasHeartRate()) {
+                trackPointExtensionContent += "<gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate().getBPM()) + "</gpxtpx:hr>\n";
+            }
+
+            if (trackPoint.hasCadence()) {
+                trackPointExtensionContent += "<gpxtpx:cad>" + CADENCE_FORMAT.format(trackPoint.getCadence().getRPM()) + "</gpxtpx:cad>\n";
+            }
+
+            if (trackPoint.hasPower()) {
+                trackPointExtensionContent += "<pwr:PowerInWatts>" + POWER_FORMAT.format(trackPoint.getPower().getW()) + "</pwr:PowerInWatts>\n";
+            }
+
+            Double cumulativeGain = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasAltitudeGain() ? (double) tp.getAltitudeGain() : null);
+            if (cumulativeGain != null) {
+                trackPointExtensionContent += ("<opentracks:gain>" + ALTITUDE_FORMAT.format(cumulativeGain) + "</opentracks:gain>\n");
+            }
+
+            Double cumulativeLoss = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasAltitudeLoss() ? (double) tp.getAltitudeLoss() : null);
+            if (cumulativeLoss != null) {
+                trackPointExtensionContent += ("<opentracks:loss>" + ALTITUDE_FORMAT.format(cumulativeLoss) + "</opentracks:loss>\n");
+            }
+
+            if (trackPoint.hasHorizontalAccuracy()) {
+                trackPointExtensionContent += ("<opentracks:accuracy_horizontal>" + DISTANCE_FORMAT.format(trackPoint.getHorizontalAccuracy().toM()) + "</opentracks:accuracy_horizontal>");
+            }
+            if (trackPoint.hasVerticalAccuracy()) {
+                trackPointExtensionContent += ("<opentracks:accuracy_vertical>" + DISTANCE_FORMAT.format(trackPoint.getVerticalAccuracy().toM()) + "</opentracks:accuracy_vertical>");
+            }
+
+            cumulativeDistance = Distance.ofOrNull(cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasSensorDistance() ? tp.getSensorDistance().toM() : null));
+            if (cumulativeDistance != null) {
+                trackPointExtensionContent += ("<opentracks:distance>" + DISTANCE_FORMAT.format(cumulativeDistance.toM()) + "</opentracks:distance>\n");
+                trackPointExtensionContent += ("<cluetrust:distance>" + DISTANCE_FORMAT.format(trackDistance.plus(cumulativeDistance).toM()) + "</cluetrust:distance>\n");
+            }
+
+            if (!trackPointExtensionContent.isEmpty()) {
+                printWriter.println("<extensions><gpxtpx:TrackPointExtension>");
+                printWriter.print(trackPointExtensionContent);
+                printWriter.println("</gpxtpx:TrackPointExtension></extensions>");
+            }
+        }
+
+        printWriter.println("</trkpt>");
+
         if (cumulativeDistance != null) {
             return cumulativeDistance;
         }

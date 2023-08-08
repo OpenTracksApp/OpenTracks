@@ -38,7 +38,6 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.announcement.VoiceAnnouncementManager;
-import de.dennisguse.opentracks.services.handlers.AltitudeCorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.util.SystemUtils;
@@ -71,13 +70,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         public void run() {
             updateRecordingDataWhileRecording();
 
-            Handler localHandler = TrackRecordingService.this.handler;
-            if (localHandler == null) {
-                // when this happens, no recording is running and we should not send any notifications.
-                //TODO This implementation is not a good idea; rather solve the issue for this properly
-                return;
-            }
-            localHandler.postDelayed(this, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
+            TrackRecordingService.this.handler.postDelayed(this, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
         }
     };
 
@@ -97,8 +90,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     private VoiceAnnouncementManager voiceAnnouncementManager;
     private TrackRecordingServiceNotificationManager notificationManager;
 
-    private AltitudeCorrectionManager egm2008CorrectionManager;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -110,10 +101,9 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         gpsStatusObservable = new MutableLiveData<>(STATUS_GPS_DEFAULT);
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
-        egm2008CorrectionManager = new AltitudeCorrectionManager();
-        trackRecordingManager = new TrackRecordingManager(this);
-        trackRecordingManager.start();
         trackPointCreator = new TrackPointCreator(this, this, handler);
+        trackRecordingManager = new TrackRecordingManager(this, trackPointCreator);
+        trackRecordingManager.start();
 
         voiceAnnouncementManager = new VoiceAnnouncementManager(this);
         notificationManager = new TrackRecordingServiceNotificationManager(this);
@@ -136,12 +126,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         notificationManager.stop();
         notificationManager = null;
 
-        egm2008CorrectionManager = null;
-        try {
-            voiceAnnouncementManager.stop();
-        } finally {
-            voiceAnnouncementManager = null;
-        }
+        voiceAnnouncementManager.stop();
+        voiceAnnouncementManager = null;
 
         // This should be the next to last operation
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
@@ -171,7 +157,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         // Set recording status
-        Track.Id trackId = trackRecordingManager.startNewTrack(trackPointCreator);
+        Track.Id trackId = trackRecordingManager.startNewTrack();
         updateRecordingStatus(RecordingStatus.record(trackId));
 
         startRecording();
@@ -179,7 +165,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     }
 
     public void resumeTrack(Track.Id trackId) {
-        if (!trackRecordingManager.resumeExistingTrack(trackId, trackPointCreator)) {
+        if (!trackRecordingManager.resumeExistingTrack(trackId)) {
             Log.w(TAG, "Cannot resume a non-existing track.");
             return;
         }
@@ -223,7 +209,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Set recording status
         updateRecordingStatus(STATUS_DEFAULT);
 
-        trackRecordingManager.end(trackPointCreator);
+        trackRecordingManager.end();
         endRecording();
 
         stopSelf();
@@ -272,13 +258,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     @Override
     public void newGpsStatus(GpsStatusValue gpsStatusValue) {
-
-        //TODO This check should not be necessary, but prevents a crash; somehow the shutdown is not working correctly as we should not receive a notification then.
-        // It is likely a race condition as the LocationManager provides location updates without using the Handler.
-        if (gpsStatusObservable != null) {
-            notificationManager.updateContent(getString(gpsStatusValue.message));
-            gpsStatusObservable.postValue(gpsStatusValue);
-        }
+        notificationManager.updateContent(getString(gpsStatusValue.message));
+        gpsStatusObservable.postValue(gpsStatusValue);
     }
 
     public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
@@ -316,26 +297,11 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         // Compute temporary track statistics using sensorData and update time.
+        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
 
-        TrackPointCreator localTrackPointCreator = this.trackPointCreator;
-        VoiceAnnouncementManager localVoiceAnnouncementManager = this.voiceAnnouncementManager;
-        if (localTrackPointCreator == null || localVoiceAnnouncementManager == null) {
-            // when this happens, no recording is running and we should not send any notifications.
-            //TODO This implementation is not a good idea; rather solve the issue for this properly
-            return;
-        }
+        voiceAnnouncementManager.update(this, data.first);
 
-        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI(trackPointCreator);
-        if (data == null) {
-            Log.w(TAG, "Requesting data if not recording is taking place, should not be done.");
-            return;
-        }
-        TrackPoint trackPoint = data.second.first;
-        egm2008CorrectionManager.correctAltitude(this, trackPoint);
-
-        localVoiceAnnouncementManager.update(this, data.first);
-
-        recordingDataObservable.postValue(new RecordingData(data.first, trackPoint, data.second.second));
+        recordingDataObservable.postValue(new RecordingData(data.first, data.second.first, data.second.second));
     }
 
     @VisibleForTesting
