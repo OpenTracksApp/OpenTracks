@@ -1,0 +1,5 @@
+v3.9.2: OpenTracks
+
+Bugfixes :
+- Sluiten op API<25 verholpen (vanwege een animatie)
+- Reset de opnametoestand (bij het opstarten van de app) als deze tijdens het opnemen is gecrasht

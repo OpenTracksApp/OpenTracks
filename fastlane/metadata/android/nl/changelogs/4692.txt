@@ -1,0 +1,16 @@
+v3.24.1: OpenTracks
+
+Veranderingen:
+- API toegevoegd voor het starten van opnames van andere applicaties (standaard uitgeschakeld)
+- Verkorte ISO8601-spoornamen
+- BLE afstandssensoren: GPS-locaties opslaan op basis van eerdere GPS-locaties
+
+Bugfix :
+- Tijdens het opnemen: vaste crash bij het openen van grafieken
+- TrackDataHub moet de verwerking beëindigen na stop ()
+- Zeldzame crash bij verwijdering van tracks
+
+Ontwikkelaar:
+- Pakketstructuur aangepast
+- Monotone klok
+- Waardeobjecten voor hartslag, cadans en kracht

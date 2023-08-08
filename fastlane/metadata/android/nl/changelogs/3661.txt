@@ -1,0 +1,4 @@
+v3.11.1: OpenTracks
+
+Bugfix :
+- Spraakaankondigingen rapporteerden verkeerde statistieken

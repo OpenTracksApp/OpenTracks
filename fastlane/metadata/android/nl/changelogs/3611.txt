@@ -1,0 +1,10 @@
+v3.10.0: OpenTracks
+
+Veranderingen:
+- Hoogtetoename via barometer
+- Voeg een spatscherm toe
+- Android 11 / F-Droid: downgrade naar targetSDK 29 (v1-handtekening)
+  zie https://gitlab.com/fdroid/fdroidserver/-/issues/827
+
+Bugfix :
+- Verschillende oplossingen vanwege trackId-refactoring

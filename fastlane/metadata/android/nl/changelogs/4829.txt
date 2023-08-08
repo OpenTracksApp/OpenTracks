@@ -1,0 +1,6 @@
+v3.28.0: OpenTracks
+
+Veranderingen:
+- Configureerbare bestandsnaam voor exporteren / delen (standaard: {starttime} _ {name}.{suffix})
+- Verticale GPS-nauwkeurigheid is nu opgeslagen en kan worden geëxporteerd / geïmporteerd
+ (API-niveau>=26).

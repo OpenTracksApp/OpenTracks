@@ -1,0 +1,6 @@
+v3.17.1: OpenTracks
+
+Bugfix :
+- Intervallengte in meters in plaats van kilometers (geïntroduceerd in v3.17.0)
+- Hoogteversterking / -verlies niet geregistreerd (geïntroduceerd in v3.17.0)
+- Aankondigingen werken niet op Android 11

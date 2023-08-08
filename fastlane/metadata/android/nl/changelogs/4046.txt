@@ -1,0 +1,15 @@
+v3.18.0: OpenTracks
+
+Veranderingen:
+- Hoogte wordt getoond in EGM2008 (opgeslagen / geëxporteerd als WGS84)
+
+Bugfix :
+- Vast geheugenlek (geïntroduceerd in v3.17.0)
+- Grafieken: hoogte moet in M / FT zijn (geïntroduceerd in v3.17.1)
+- Grafieken: terwijl de opname niet correct is bijgewerkt (geïntroduceerd in v3.17.3)
+- TrackDataHub hield geen rekening met opnameDistanceInterval (geïntroduceerd in v3.17.2)
+
+Ontwikkelaar:
+- Schakel PNG-crunching uit (reproduceerbare build)
+- Gerefactureerde TrackImporter en geoptimaliseerde KMZ-import
+- Gebruik LiveData voor TrackRecordingService naar UI-communicatie (herstel van geheugenlek)

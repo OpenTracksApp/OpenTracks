@@ -1,0 +1,16 @@
+v3.8.0: OpenTracks
+
+Essentiële verandering:
+- GPX import / export snelheid, cadans en hartslag via TrackPointExtension / v2
+
+Veranderingen:
+- Dashboard API: geef toegang tot markeringen (incl. callback om te laten zien in OpenTracks)
+- Nieuw markeringspictogram (oranje pin, SVG)
+- Te importeren bestanden kunnen worden geselecteerd via bestandsbeheer
+
+Bugfixes :
+- Geaggregeerde statistieken UI respecteert het voorkeurspercentage
+- Het bewerken van een marker is mislukt bij oriëntatieverandering
+
+Ontwikkelaar:
+- Gerefactureerde trackopnameservice

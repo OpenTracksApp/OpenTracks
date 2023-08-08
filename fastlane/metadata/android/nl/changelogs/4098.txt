@@ -1,0 +1,7 @@
+v3.18.2: OpenTracks
+
+Bugfix :
+- Crash tijdens het overstappen van grafieken naar een andere activiteit / app # 787
+
+Ontwikkelaar:
+- TrackRecordingService duwt gegevens tijdens het opnemen naar UI

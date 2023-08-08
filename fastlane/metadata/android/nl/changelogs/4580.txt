@@ -1,0 +1,10 @@
+v3.23.0: OpenTracks
+
+Veranderingen:
+- UI-profielen toegevoegd
+- Geaggregeerde statistieken voor geselecteerde tracks
+- Opnieuw geïmplementeerde inactieve / niet-inactieve trackpoints omdat de verplaatsingstijd niet meer werkte (geïntroduceerd in v3.22.0)
+
+Bugfixes :
+- BLE-sensoren: duidelijke gegevens over loskoppelen
+- Automatische export moet de toestemming behouden

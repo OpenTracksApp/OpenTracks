@@ -1,0 +1,12 @@
+v4.0.4: OpenTracks
+
+Veranderingen:
+- Bewaar BLE-sensorgegevens, zelfs zonder afstand (elke 10 jaar)
+- Openbare API: staat het instellen van naam, categorie en beschrijving toe
+
+Bugfix :
+- Crash bij het maken van een foto en het draaien van de telefoon
+
+Ontwikkelaar:
+- Target SDK 33
+- Barometer gebruikt interval van 5s

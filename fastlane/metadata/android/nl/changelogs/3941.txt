@@ -1,0 +1,13 @@
+v3.16.0: OpenTracks
+
+Veranderingen:
+- Fietsen: neem afstand van de BLE-snelheidssensor
+- Herwerkte gebruikersinterface gepresenteerd tijdens het opnemen
+- UI-prestatieoptimalisaties
+- Geëxporteerde bestandsnamen: <Eerste 32bits UUID> _ <tracknaam>.<extensie>
+- Importeer meerdere bestanden via Intent (bijv., van Gadgetbridge)
+- GPX: export van stroomgegevens
+- Bijgewerkte vertalingen
+
+Bugfix :
+- Spraakaankondiging gebruikt minuten correct

@@ -1,0 +1,10 @@
+v3.17.3: OpenTracks
+
+WAARSCHUWING: De v3.17.0 + releases bevatten een geheugenlek.
+Deze problemen zijn NIET opgelost door deze release.
+Het wordt aanbevolen om niet te upgraden als u nog steeds een release gebruikt vóór v3.17.0
+
+Bugfix :
+- Crash als je tempo gebruikt voor spraakaankondigingen (geïntroduceerd in v3.17.0)
+- Statistieken lieten aanvankelijk tempo zien (geïntroduceerd in v3.17.0)
+- Zeldzame crash bij het verwijderen van nummers

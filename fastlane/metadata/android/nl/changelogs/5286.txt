@@ -1,0 +1,12 @@
+v4.6.0: OpenTracks
+
+Veranderingen:
+- Spraakaankondigingen gebruiken ICU-meervoudformaat (en, es, pt, zh, dr, de) vanwege fractionele quanitieten # 1584
+- Vereist Android 7.0 / SDK24 + vanwege ICU-meervouden
+- Op Android 14+: gebruik Android's AltitudeConverter in plaats van interne EGM2008
+
+Bugfix :
+- Android 13 kon geen afbeeldingen uit de galerij selecteren
+
+Ontwikkelaar:
+- Split ActivityType en ActivityIcon

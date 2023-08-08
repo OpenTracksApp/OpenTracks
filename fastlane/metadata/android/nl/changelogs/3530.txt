@@ -1,0 +1,4 @@
+v3.9.1: OpenTracks
+
+Bugfixes :
+- GPS-voorstart toont de status van fix

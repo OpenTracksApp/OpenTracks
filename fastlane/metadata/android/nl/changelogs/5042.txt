@@ -1,0 +1,8 @@
+v4.1.0: OpenTracks
+
+Veranderingen:
+- Exporteer alleen KML / KMZ versie 2.3 (was 2.2)
+- Voor op krukken gebaseerde powermeters: haal cadans
+
+Bugfix :
+- Tijdelijke oplossing voor crash op "importeer alles"

@@ -1,0 +1,11 @@
+v3.7.6: OpenTracks
+
+Veranderingen:
+- Landschapsmodus
+- Trackverwijdering UI is nu slechts een spinner
+- Snelheid wordt geëxporteerd en geïmporteerd (GPX / KML / KMZ)
+- Standaard exportformaat is KMZ incl. alle gegevens en afbeeldingen
+
+Ontwikkelaar:
+- Vervangen AsyncTasks met Threads
+- Synchronisatie: UUID wordt gegenereerd per track (nog niet geëxporteerd)

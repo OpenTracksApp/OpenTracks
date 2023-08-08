@@ -1,0 +1,22 @@
+v3.12.0: OpenTracks
+
+Veranderingen:
+- Bluetooth-sensoradressen
+- Intervallen: hoogteverschil weergeven
+- Exporteren: standaard exportdirectory
+- Exporteren: automatische export na het voltooien van een track
+- Handmatige import / export: nieuwe gebruikersinterface
+- Handmatige export: optie om te overschrijven bij handmatige export
+
+Sneller:
+- Tracklijsten laden
+- Meerdere nummers verwijderen
+
+Bugfix :
+- Filters met vaste bedoeling voor import
+- KMZ kon niet worden geparseerd
+- Exporteren: crash op Android 11 oplossen
+
+Ontwikkelaar:
+- Gebruik ViewBindings
+- Database handhaaft buitenlandse sleutel en gebruikt cascade-verwijderingen

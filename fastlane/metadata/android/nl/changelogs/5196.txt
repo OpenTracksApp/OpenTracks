@@ -1,0 +1,4 @@
+v4.3.4: OpenTracks
+
+Bugfix :
+- Android 13: regionale locaties konden niet worden geselecteerd (geïntroduceerd in v4.3.0)

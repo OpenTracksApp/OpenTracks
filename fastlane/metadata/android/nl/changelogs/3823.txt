@@ -1,0 +1,4 @@
+v3.14.3: OpenTracks
+
+Bugfix :
+- Downgrading database van aankomende release v3.15.0

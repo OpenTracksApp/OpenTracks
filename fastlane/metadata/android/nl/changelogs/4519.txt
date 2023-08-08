@@ -1,0 +1,11 @@
+v3.22.0: OpenTracks
+
+Veranderingen:
+- Locaties worden alleen opgeslagen als de afgelegde afstand> het opnameafstandsinterval
+  (verwijderde overgebleven functionaliteit van stationaire / niet-inactieve detectie)
+- UI kan worden geconfigureerd om een klok te tonen
+- Stationair toerental is nu configureerbaar
+
+Bugfix :
+- Intervallen: crash wanneer winst maar geen verlies is opgeslagen
+- Tijdens het opnemen: crash voorkomen bij het uitschakelen van spraakaankondigingen

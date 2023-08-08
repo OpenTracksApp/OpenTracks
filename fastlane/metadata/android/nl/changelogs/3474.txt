@@ -1,0 +1,8 @@
+v3.8.1: OpenTracks
+
+Veranderingen:
+- Tijdens het opnemen: voeg optie toe voor volledig scherm
+- Dashboard is voor dezelfde taak gestart
+
+Bugfixes :
+- Intentiefilters voor het importeren van bestanden waren veel te optimistisch

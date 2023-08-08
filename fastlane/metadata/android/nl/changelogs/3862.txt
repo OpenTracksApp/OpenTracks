@@ -1,0 +1,7 @@
+v3.15.1: OpenTracks
+
+Veranderingen:
+- Na opname sensorstatistieken weergeven (bijv., gem. HR)
+
+Bugfix :
+- Crash bij opname begint met showbreedtegraad / lengtegraad ingeschakeld

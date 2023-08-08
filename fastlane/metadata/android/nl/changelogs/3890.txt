@@ -1,0 +1,8 @@
+v3.15.3: OpenTracks
+
+Veranderingen:
+- Berekening gem.v. / max: hartslag, cadans en kracht
+
+Bugfix :
+- KML / KMZ exporteren geen # start / # eindplaatsmarkeringen meer
+- Tijdens het opnemen: snelheid / locatie werd soms vals weergegeven als 0.

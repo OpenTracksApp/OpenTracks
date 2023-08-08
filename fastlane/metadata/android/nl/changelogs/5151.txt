@@ -1,0 +1,5 @@
+v4.3.0: OpenTracks
+
+Veranderingen:
+- Back-ups toestaan (incl. versleuteld naar Google)
+- Android 13: app-specifieke taalinstellingen toestaan

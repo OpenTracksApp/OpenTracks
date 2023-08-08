@@ -1,0 +1,5 @@
+v3.13.1: OpenTracks
+
+Bugfix :
+- Crash bij recordstart: minifiëren / verkleinen verwijderde een teken
+- Automatische export is stil mislukt (voornamelijk afgelegen bestemmingen)

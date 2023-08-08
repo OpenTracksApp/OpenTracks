@@ -1,0 +1,4 @@
+v3.15.4: OpenTracks
+
+Bugfix :
+- Het interval voor stemaankondigingen moet in hele minuten zijn (geïntroduceerd in v3.15.0)

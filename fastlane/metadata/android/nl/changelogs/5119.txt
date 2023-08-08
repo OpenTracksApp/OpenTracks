@@ -1,0 +1,8 @@
+v4.2.0: OpenTracks
+
+Veranderingen:
+- Toon hartslagzone-informatie
+
+Ontwikkelaar:
+- Migratie naar hosting.weblate.org
+- UI opnemen gebruikt direct Weergave
