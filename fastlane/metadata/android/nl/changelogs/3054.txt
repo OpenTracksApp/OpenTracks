@@ -1,0 +1,16 @@
+v3.2.0: OpenTracks
+
+Veranderingen:
+- Widget verwijderd
+- Geïntroduceerde pictogrammen voor materiaalontwerp
+- Snowboarden en skiën verwijderd (nieuwe pictogrammen nodig)
+
+Bugfix :
+- Vaste zoekfunctionaliteit
+
+Ontwikkelaar:
+- (Sommige) testgevallen opgelost
+- Ongebruikte pakketfunctionaliteit verwijderd
+- Grote schoonmaak en herformulering
+- Gebruik geen uitzending voor app om communicatie te widgeten
+- stats_content.xml bevat geen andere bestanden

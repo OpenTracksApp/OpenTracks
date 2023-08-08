@@ -1,0 +1,7 @@
+v3.7.1: OpenTracks
+
+Tijdelijke oplossing:
+- Verberg de GPS-knop
+
+Bugfix :
+- Vaste null-aanwijzer

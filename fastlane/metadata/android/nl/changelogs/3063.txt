@@ -1,0 +1,7 @@
+v3.2.1: OpenTracks
+
+Veranderingen:
+- Instellingen staan nu op één pagina
+
+Ontwikkelaar:
+- Instellingen verplaatst naar Androidx-compatibel (gebruikt fragmenten)

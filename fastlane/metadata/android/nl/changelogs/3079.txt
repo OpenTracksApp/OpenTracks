@@ -1,0 +1,13 @@
+v3.2.2: OpenTracks
+
+Veranderingen:
+- Geaggregeerde statistieken verwijderd
+- Gegraapt naar materiaalontwerp
+
+Bugfix :
+- Vaste export van sensorgegevens
+- Vaste invoer van onvolledige sensorgegevens
+
+Ontwikkelaar:
+- Vervangen actiebalk met werkbalk
+- Gemigreerd naar Android Appcompat (incl. Materiaalontwerp)

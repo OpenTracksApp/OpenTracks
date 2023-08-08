@@ -1,0 +1,10 @@
+v3.2.9: OpenTracks
+
+Veranderingen:
+- Optie om het scherm aan te houden tijdens het opnemen
+- Markeringen: verwijderde gesplitste markeringen volledig
+- Stemaankondiging werkt nu zonder READ_PHONE_STATE-toestemming
+
+Bugfixes :
+- Statistieken: hartslag werd niet getoond
+- Statistieken: de tijd werd kort teruggezet naar 0s

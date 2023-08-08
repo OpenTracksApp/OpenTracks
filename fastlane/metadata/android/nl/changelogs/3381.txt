@@ -1,0 +1,6 @@
+v3.7.2: OpenTracks
+
+Bugfix :
+- Opnieuw toegevoegd start GPS-knop
+- Tracknaam wordt niet overschreven aan het einde van een opname
+- Markeringen: het verwijderen van een foto verwijdert ook het bestand

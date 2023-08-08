@@ -1,0 +1,12 @@
+v3.3.1: OpenTracks
+
+Veranderingen:
+- Android 10: laat bij het verwijderen app-gegevens behouden
+- Geïntroduceerde Dashboard API: kaartpictogram kan worden gebruikt om de huidige track in de externe app te openen
+  (vereist installatie van een andere app zoals OSMDashboard)
+
+Bugfix :
+- App-label is verbroken (geïntroduceerd in v3.3.0)
+
+Ontwikkelaar:
+- Documentatie voor Dashboard API is te vinden in README_DEVELOPER.md

@@ -1,0 +1,8 @@
+v3.2.6: OpenTracks
+
+Veranderingen:
+- Hartslagmeter: scan op beschikbare apparaten
+- Snelkoppeling naar Bluetooth-instellingen verwijderen
+
+Ontwikkelaar:
+- Voorkeuren: verplaatst standaard van voorkeuren van code naar xml

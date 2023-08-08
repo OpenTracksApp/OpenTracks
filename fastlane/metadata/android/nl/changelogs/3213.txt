@@ -1,0 +1,12 @@
+v3.2.11: OpenTracks
+
+Bug:
+- Max snelheid is identiek aan gem. Snelheid
+
+Bugfix :
+- Crash op hartslagsensorselectie
+
+Ontwikkelaar:
+- TabHost vervangen door TabsLayout
+- Speciale eerste waypoint verwijderd
+- Dubbele vertalingen verwijderd

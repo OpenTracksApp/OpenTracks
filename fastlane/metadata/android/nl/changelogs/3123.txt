@@ -1,0 +1,15 @@
+v3.2.5: OpenTracks
+
+Veranderingen:
+- Verandering van activiteit uitschakelen
+- Toestemming toevoegen voor Android 10: locatiegegevens vastleggen
+
+Bugfix :
+- Instellingen voor resetten repareren
+
+Ontwikkelaar:
+- Voorkeuren
+  - als Instellingen niet kunnen worden geladen, reset dan alle voorkeuren
+  - de toegang tot voorkeuren verplaatst naar PreferencesUtil
+  - verplaatst standaard van voorkeuren van code naar xml
+  - gebruik SummaryProvider

@@ -1,0 +1,17 @@
+v3.0.1: OpenTracks
+
+Veranderingen:
+- Deel markeringen
+- Geherstructureerde instellingen
+- Verwijderde actiebalk terugknop
+- Exporteren: optie voor het verwijderen van foto-instellingen
+- Exporteren: KML als formaat is nu selecteerbaar
+
+Bugfixes :
+- exportdirectory is nu / OpenTracks /
+- landschapsmodus crasht niet
+- vaste KML / KMZ-export
+
+Ontwikkelaar:
+- Test is uitvoerbaar (maar veel mislukken)
+- Continue integratie met TravisCI mogelijk gemaakt (geen tests)

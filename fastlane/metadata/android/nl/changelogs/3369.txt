@@ -1,0 +1,13 @@
+v3.7.0: OpenTracks
+
+Veranderingen:
+- Rapporteer snelheid / ruimte per activiteitstype
+- Toegevoegde oplossing voor het doorrollen van GPS-weken
+- (Experimenteel) Ondersteuning voor Bluetooth LE fietssensoren (cadentie en snelheid)
+- KMZ / KML-import verbeterd
+
+Bugfix :
+- KMZ-import: importeer alleen gebruikte afbeeldingen
+
+Ontwikkelaar:
+- Gerefactureerde trackopnameservice
