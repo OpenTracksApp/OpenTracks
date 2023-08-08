@@ -26,7 +26,7 @@ limitations under the License.
     <string name="help_feature_content">* GPS-tracks aanmaken
 \n * een hartslagsensor gebruiken (alleen Bluetooth LE)
 \n * spraakaankondigingen (op tijd of afstand)
-\n * markers maken (incl. foto\'s)
+\n * markereringen aanmaken (incl. foto\'s)
 \n * werkt volledig offline
 \n * toon tracks op een kaart (zie hieronder)</string>
     <string name="help_track_map_title">Hoe wordt een spoor op een kaart weergegeven\?</string>
@@ -189,7 +189,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="marker_add_error">Kan geen markering invoegen. Er is geen GPS-signaal. Probeer het opnieuw.</string>
     <string name="marker_add_success">Markering is ingevoegd</string>
     <string name="marker_add_canceled">Geannuleerd, geen markering toegevoegd</string>
-    <string name="marker_add_photo_canceled">Geannuleerd, geen fotomarker toegevoegd</string>
+    <string name="marker_add_photo_canceled">Geannuleerd, geen fotomarkering toegevoegd</string>
     <string name="marker_delete_one_confirm_message">De markering wordt definitief verwijderd van het apparaat</string>
     <string name="marker_delete_one_confirm_title">Markering verwijderen?</string>
     <string name="marker_delete_multiple_confirm_message">De geselecteerde markeringen worden definitief verwijderd van het apparaat</string>
@@ -199,7 +199,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Type markering (bijv. waterval)</string>
     <!-- Marker List -->
-    <string name="marker_list_empty_message">U heeft geen markeringen</string>
+    <string name="marker_list_empty_message">Er zijn geen markeringen</string>
     <!-- Menu -->
     <string name="menu_aggregated_statistics">Statistieken</string>
     <string name="menu_delete">Verwijderen</string>
