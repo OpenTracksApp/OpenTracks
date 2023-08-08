@@ -158,15 +158,18 @@ public class GPXTrackExporter implements TrackExporter {
                             sensorPoints.add(trackPoint);
                         }
                     }
-                    case SENSORPOINT -> sensorPoints.add(trackPoint);
                     case TRACKPOINT -> {
                         if (!wroteSegment) {
                             // Might happen for older data (pre v3.15.0)
                             writeOpenSegment();
                             wroteSegment = true;
                         }
-                        trackDistance = trackDistance.plus(writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints, trackDistance));
-                        sensorPoints.clear();
+                        if (trackPoint.hasLocation()) {
+                            trackDistance = trackDistance.plus(writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints, trackDistance));
+                            sensorPoints.clear();
+                        }  else {
+                            sensorPoints.add(trackPoint);
+                        }
                     }
                     default ->
                             throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());

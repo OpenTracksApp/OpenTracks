@@ -177,7 +177,7 @@ public class KMLTrackExporter implements TrackExporter {
                         writeCloseSegment();
                         wroteSegment = false;
                     }
-                    case SENSORPOINT, TRACKPOINT -> {
+                    case TRACKPOINT -> {
                         if (!wroteSegment) {
                             // Might happen for older data (pre v3.15.0)
                             writeOpenSegment();

@@ -55,8 +55,12 @@ public class TrackPoint {
         SEGMENT_START_MANUAL(-2), //Start of a segment due to user interaction (start, resume)
 
         SEGMENT_START_AUTOMATIC(-1), //Start of a segment due to too much distance from previous TrackPoint
-        TRACKPOINT(0), //Just GPS data and may contain BLE sensor data
-        SENSORPOINT(2), //Just BLE sensor data; may have speed and sensorDistance
+        TRACKPOINT(0), //Was created due to sensor data (may contain GPS or other BLE data)
+
+        // Was used to distinguish the source (i.e., GPS vs BLE sensor), but this was too complicated. Everything is now a TRACKPOINT again.
+        @Deprecated
+        SENSORPOINT(2),
+        IDLE(3), //Device became idle
 
         SEGMENT_END_MANUAL(1); //End of a segment
 

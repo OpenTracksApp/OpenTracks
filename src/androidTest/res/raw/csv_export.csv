@@ -1,9 +1,9 @@
 #time,trackpoint_type,latitude,longitude,altitude,accuracy_horizontal,accuracy_vertical,speed,altitude_gain,altitude_loss,sensor_distance,heartrate,cadence,power
 "2020-02-02T03:02:02+01:00","SEGMENT_START_MANUAL",,,,,,,,,,,,
 "2020-02-02T03:02:03+01:00","TRACKPOINT",3,14,10,10,,54,1,1,,,,
-"2020-02-02T03:02:04+01:00","SENSORPOINT",,,,,,54,1,1,10,66,3,50
-"2020-02-02T03:02:15+01:00","SENSORPOINT",,,,,,,,,,68,3,50
-"2020-02-02T03:02:16+01:00","SENSORPOINT",,,,,,18,,,2,69,3,50
+"2020-02-02T03:02:04+01:00","TRACKPOINT",,,,,,54,1,1,10,66,3,50
+"2020-02-02T03:02:15+01:00","TRACKPOINT",,,,,,,,,,68,3,50
+"2020-02-02T03:02:16+01:00","TRACKPOINT",,,,,,18,,,2,69,3,50
 "2020-02-02T03:02:17+01:00","TRACKPOINT",3,14.001,10,10,,18,0,0,2,69,3,50
 "2020-02-02T03:02:18+01:00","SEGMENT_END_MANUAL",,,,,,,,,,,,
 "2020-02-02T03:03:20+01:00","SEGMENT_START_MANUAL",,,,,,,,,,,,
