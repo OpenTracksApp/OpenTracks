@@ -172,15 +172,10 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             if (locationManager != null && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             } else {
-                // Invoke trackRecordingService
-                if (!gpsStatusValue.isGpsStarted()) {
-                    trackRecordingServiceConnection.startAndBindWithCallback(this);
-                } else {
-                    TrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
-                    if (trackRecordingService != null) {
-                        trackRecordingService.stopSensorsAndShutdown(); //TODO Handle this in TrackRecordingServiceConnection
-                    }
+                if (gpsStatusValue.isGpsStarted()) {
                     trackRecordingServiceConnection.unbindAndStop(this);
+                } else {
+                    trackRecordingServiceConnection.startAndBindWithCallback(this);
                 }
             }
         });
