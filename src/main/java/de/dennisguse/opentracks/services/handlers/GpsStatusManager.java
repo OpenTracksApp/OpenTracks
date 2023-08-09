@@ -37,9 +37,6 @@ class GpsStatusManager {
     @Nullable
     private TrackPoint lastTrackPoint = null;
 
-    // Flag to prevent GpsStatus checks two or more locations at the same time.
-    private boolean checking = false;
-
     private Handler handler;
 
     public final Runnable gpsStatusTimer = () -> {
@@ -87,18 +84,10 @@ class GpsStatusManager {
      * Receive new trackPoint and calculate the new status if needed.
      * It look for GPS changes in lastLocation if it's not null. If it's null then look for in lastValidLocation if any.
      */
-    //TODO Remove checking; should be synchronized if this is a problem.
     public void onNewTrackPoint(@NonNull final TrackPoint trackPoint) {
-        if (checking) {
-            return;
-        }
-
-        checking = true;
         lastTrackPoint = trackPoint;
 
         determineGpsStatusOnTrackpoint(trackPoint);
-
-        checking = false;
     }
 
     /**
