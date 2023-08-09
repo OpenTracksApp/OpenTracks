@@ -63,7 +63,7 @@ limitations under the License.
     <!-- Activity Type -->
     <string name="activity_type_airplane">letadlo</string>
     <string name="activity_type_atv">terénní auta</string>
-    <string name="activity_type_biking">cyklistika</string>
+    <string name="activity_type_biking">jízda na kole</string>
     <string name="activity_type_blimp">neztužená vzducholoď</string>
     <string name="activity_type_boat">člun</string>
     <string name="activity_type_climbing">horolezectví</string>
@@ -99,7 +99,7 @@ limitations under the License.
     <string name="activity_type_rc_airplane">letadlo na dálkové ovládání</string>
     <string name="activity_type_rc_boat">loď na dálkové ovládání</string>
     <string name="activity_type_rc_helicopter">vrtulník na dálkové ovládání</string>
-    <string name="activity_type_riding">jízda na koni</string>
+    <string name="activity_type_riding">jízda</string>
     <string name="activity_type_road_biking">silniční cyklistika</string>
     <string name="activity_type_roller_skiing">jízda na kolečkových lyžích</string>
     <string name="activity_type_rowing">veslování</string>
@@ -358,7 +358,7 @@ limitations under the License.
     <string name="waypoint_type_campfire">ohniště</string>
     <string name="waypoint_type_campground">kempink</string>
     <string name="waypoint_type_church">kostel</string>
-    <string name="waypoint_type_coffee_house">kavárna</string>
+    <string name="waypoint_type_coffee_house">obchod s kávou</string>
     <string name="waypoint_type_convenience_store">samoobsluha</string>
     <string name="waypoint_type_drinking_water">pitná voda</string>
     <string name="waypoint_type_falling_rocks">padající kamení</string>
@@ -466,7 +466,7 @@ limitations under the License.
     <string name="sensor_state_cadence_avg">Avg kadence</string>
     <string name="track_distance_notification">Vzdálenost: %1$s</string>
     <string name="track_speed_notification">Rychlost: %1$s</string>
-    <string name="track_pace_notification">Rychlost: %1$s</string>
+    <string name="track_pace_notification">Tempo: %1$s</string>
     <string name="about_third_party_data">Údaje třetích stran</string>
     <string name="delete_service">Služba mazání</string>
     <string name="menu_voice_rate">Rychlost hlasových oznámení</string>
@@ -625,4 +625,16 @@ limitations under the License.
     <string name="no_compatible_camera_installed">Není nainstalována kompatibilní aplikace fotoaparátu</string>
     <string name="no_compatible_gallery_installed">Není nainstalována kompatibilní aplikace galerie obrázků</string>
     <string name="show_on_dashboard">API OpenTracks Dashboard</string>
+    <string name="voiceDistanceMilesPlural">{n, plural, =1 {1 míle} few {{n,number,#.0} míle} other {{n,number,#.0} mil} }</string>
+    <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 námořní míle} few {{n,number,#.0} námořní míle} other {{n,number,#.0} námořních mil} }</string>
+    <string name="voiceHoursPlural">{n, plural, =1 {1 hodina} few {{n,number} hodiny} other {{n,number} hodin} }</string>
+    <string name="voiceMinutesPlural">{n, plural, =1 {1 minuta} few {{n,number} minuty} other {{n,number} minut} }</string>
+    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 knot} few {{n,number,#.0} knoty} other {{n,number,#.0} knotů} }</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="voiceSecondsPlural">{n, plural, =1 {1 sekunda} few {{n,number} sekundy} other {{n,number} sekund} }</string>
+    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometr za hodinu} few {{n,number,#.0} kilometry za hodinu} other {{n,number,#.0} kilometrů za hodinu} }</string>
+    <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 míle za hodinu} few {{n,number,#.0} míle za hodinu} other {{n,number,#.0} mil za hodinu} }</string>
+    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometr} few {{n,number,#.0} kilometry} other {{n,number,#.0} kilometrů} }</string>
 </resources>
