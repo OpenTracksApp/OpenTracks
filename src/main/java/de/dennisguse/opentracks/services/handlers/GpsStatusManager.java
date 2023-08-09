@@ -61,6 +61,7 @@ class GpsStatusManager {
      * The client that uses GpsStatus has to call this method to stop the Runnable if needed.
      */
     public void stop() {
+        stopTimer();
         client.onGpsStatusChanged(GpsStatusValue.GPS_NONE);
         client = null;
         handler = null;
