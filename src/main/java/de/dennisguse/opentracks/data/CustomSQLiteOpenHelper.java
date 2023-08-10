@@ -58,8 +58,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.i(TAG, "Upgrade from " + oldVersion + " to " + newVersion);
         for (int toVersion = oldVersion + 1; toVersion <= newVersion; toVersion++) {
-            Log.i(TAG, "Upgrade from " + oldVersion + " to " + toVersion);
+            Log.i(TAG, ".. upgrading to " + toVersion);
             switch (toVersion) {
                 case 24 -> upgradeFrom23to24(db);
                 case 25 -> upgradeFrom24to25(db);
@@ -538,6 +539,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
     private void upgradeFrom35to36(SQLiteDatabase db) {
         db.beginTransaction();
 
+        db.execSQL("UPDATE trackpoints SET type = 0 WHERE type = 2"); //SENSORPOINTs are now TRACKPOINTs
         db.execSQL("ALTER TABLE trackpoints RENAME TO trackpoints_old");
         db.execSQL("CREATE TABLE trackpoints (_id INTEGER PRIMARY KEY AUTOINCREMENT, trackid INTEGER NOT NULL, longitude INTEGER, latitude INTEGER, time INTEGER, elevation FLOAT, accuracy FLOAT, speed FLOAT, bearing FLOAT, sensor_heartrate FLOAT, sensor_cadence FLOAT, sensor_power FLOAT, elevation_gain FLOAT, elevation_loss FLOAT, type TEXT CHECK(type IN (-2, -1, 0, 1, 3)), sensor_distance FLOAT, accuracy_vertical FLOAT, FOREIGN KEY (trackid) REFERENCES tracks(_id) ON UPDATE CASCADE ON DELETE CASCADE)");
         db.execSQL("INSERT INTO trackpoints SELECT _id, trackid, longitude, latitude, time, elevation, accuracy, speed, bearing, sensor_heartrate, sensor_cadence, sensor_power, elevation_gain, elevation_gain, type, sensor_distance, accuracy_vertical FROM trackpoints_old");
