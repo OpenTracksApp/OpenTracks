@@ -61,9 +61,8 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
     }
 
     @SuppressWarnings({"MissingPermission"})
-    //TODO upgrade to AGP7.0.0/API31 started complaining about removeUpdates.
     public void stop(Context context) {
-        if (locationManager != null) {
+        if (isStarted()) {
             LocationManagerCompat.removeUpdates(locationManager, this);
         }
         locationManager = null;
@@ -99,7 +98,7 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
             }
         }
 
-        if (registerListener) {
+        if (registerListener && isStarted()) {
             registerLocationListener();
         }
     }
@@ -111,16 +110,9 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
      */
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        if (!isStarted()) {
-            Log.w(TAG, "Location is ignored; not started.");
-            return;
-        }
-
-        if (gpsStatusManager != null) {
-            // Send each update to the status; please note that this TrackPoint is not stored.
-            TrackPoint trackPoint = new TrackPoint(location, trackPointCreator.createNow());
-            gpsStatusManager.onNewTrackPoint(trackPoint);
-        }
+        // Send each update to the status; please note that this TrackPoint is not stored.
+        TrackPoint trackPoint = new TrackPoint(location, trackPointCreator.createNow());
+        gpsStatusManager.onNewTrackPoint(trackPoint);
 
         if (!LocationUtils.isValidLocation(location)) {
             Log.w(TAG, "Ignore newTrackPoint. location is invalid.");
@@ -136,29 +128,20 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+    public void onStatusChanged(@NonNull String provider, int status, Bundle extras) {
     }
 
     @Override
     public void onProviderEnabled(@NonNull String provider) {
-        if (gpsStatusManager != null) {
-            gpsStatusManager.onGpsEnabled();
-        }
+        gpsStatusManager.onGpsEnabled();
     }
 
     @Override
     public void onProviderDisabled(@NonNull String provider) {
-        if (gpsStatusManager != null) {
-            gpsStatusManager.onGpsDisabled();
-        }
+        gpsStatusManager.onGpsDisabled();
     }
 
     private void registerLocationListener() {
-        if (locationManager == null || context == null) {
-            Log.e(TAG, "Not started.");
-            return;
-        }
-
         if (!LocationManagerCompat.hasProvider(locationManager, LOCATION_PROVIDER)) {
             Log.e(TAG, "Device doesn't have GPS.");
             return;
@@ -171,16 +154,12 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
 
         if (PermissionRequester.GPS.hasPermission(context)) {
             try {
-                final Handler HANDLER = handler;
-                LocationManagerCompat.requestLocationUpdates(locationManager, LOCATION_PROVIDER, locationRequest, HANDLER::post, this);
+                Log.i(TAG, "Register for location updates " + context);
+                LocationManagerCompat.requestLocationUpdates(locationManager, LOCATION_PROVIDER, locationRequest, handler::post, this);
             } catch (SecurityException e) {
                 Log.e(TAG, "Could not register location listener; permissions not granted.", e);
             }
         }
-    }
-
-    Distance getThresholdHorizontalAccuracy() {
-        return thresholdHorizontalAccuracy;
     }
 
     @Override
