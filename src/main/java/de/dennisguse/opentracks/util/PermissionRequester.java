@@ -54,10 +54,18 @@ public class PermissionRequester {
                 }
         );
 
-        locationPermissionRequest.launch(permissions.toArray(permissions.toArray(new String[0])));
+        locationPermissionRequest.launch(permissions.toArray(new String[0]));
     }
 
-    private static final List<String> GPS_PERMISSION = List.of(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
+    private static final List<String> GPS_PERMISSION;
+
+    static {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            GPS_PERMISSION = List.of(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+        } else {
+            GPS_PERMISSION = List.of(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+    }
 
     private static final List<String> BLUETOOTH_PERMISSIONS;
 
