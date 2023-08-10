@@ -62,20 +62,14 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
     }
 
     public void stop(Context context) {
-        if (bluetoothSensorManager != null) {
-            bluetoothSensorManager.stop(context);
-            bluetoothSensorManager = null;
-        }
+        bluetoothSensorManager.stop(context);
+        bluetoothSensorManager = null;
 
-        if (altitudeSumManager != null) {
-            altitudeSumManager.stop(context);
-            altitudeSumManager = null;
-        }
+        altitudeSumManager.stop(context);
+        altitudeSumManager = null;
 
-        if (gpsManager != null) {
-            gpsManager.stop(context);
-            gpsManager = null;
-        }
+        gpsManager.stop(context);
+        gpsManager = null;
 
         sensorDataSet.clear();
     }
