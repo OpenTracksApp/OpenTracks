@@ -616,4 +616,6 @@ limitations under the License.
     <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 knop} other {{n,number,#.0} knop} }</string>
     <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometer} other {{n,number,#.0} kilometer} }</string>
     <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 nautisk mil} other {{n,number,#.0} nautiske mil} }</string>
+    <string name="sensor_state_cadence_unit">o/min</string>
+    <string name="sensor_state_heart_rate_unit">slag/min</string>
 </resources>
