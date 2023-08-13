@@ -31,7 +31,7 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
 
     private static final String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
 
-    private final TrackPointCreator trackPointCreator;
+    private TrackPointCreator trackPointCreator;
     private Context context;
     private Handler handler;
 
@@ -71,6 +71,8 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
 
         gpsStatusManager.stop();
         gpsStatusManager = null;
+
+        trackPointCreator = null;
     }
 
     @Override
