@@ -87,8 +87,6 @@ public class TrackRecordingServiceMarkerTest {
 
     @After
     public void tearDown() {
-        TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
-
         // Ensure that the database is empty after every test
         contentProviderUtils.deleteAllTracks(context);
     }

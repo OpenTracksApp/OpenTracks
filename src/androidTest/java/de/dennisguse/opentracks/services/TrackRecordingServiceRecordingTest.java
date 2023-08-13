@@ -13,7 +13,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
 import androidx.test.rule.ServiceTestRule;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -87,19 +86,11 @@ public class TrackRecordingServiceRecordingTest {
     @Before
     public void setUp() throws TimeoutException {
         contentProviderUtils = new ContentProviderUtils(context);
-        tearDown();
 
         PreferencesUtils.setString(R.string.recording_distance_interval_key, R.string.recording_distance_interval_default);
         PreferencesUtils.setString(R.string.idle_speed_key, R.string.idle_speed_default);
 
         service = startService();
-    }
-
-    @After
-    public void tearDown() {
-        TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
-        // Ensure that the database is empty after every test
-        contentProviderUtils.deleteAllTracks(context);
     }
 
     @MediumTest
