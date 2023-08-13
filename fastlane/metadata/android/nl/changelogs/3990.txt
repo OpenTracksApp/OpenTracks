@@ -1,0 +1,8 @@
+v3.17.2: OpenTracks
+
+WAARSCHUWING: De v3.17.0 + releases bevatten een geheugenlek.
+Deze problemen zijn NIET opgelost door deze release.
+Het wordt aanbevolen om niet te upgraden als u nog steeds een release gebruikt vóór v3.17.0
+
+Bugfix :
+- Crash tijdens het gebruik van spraakaankondigingen

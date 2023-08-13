@@ -1,0 +1,11 @@
+v4.0.8: OpenTracks
+
+Veranderingen:
+- Hoogte altijd weergegeven in m / ft
+- Toon track tijdzone indien anders dan apparaat tijdzone
+- PublicAPI: ondersteuning bij het expliciet instellen van het trackpictogram
+
+Ontwikkelaar:
+- Geïntroduceerde DistanceFormatter
+- Upgrade naar AGP 7.3 / desugar voor Duur. Klasse
+- Android12 +: doe spatscherm via Androidx

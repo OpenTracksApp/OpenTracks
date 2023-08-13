@@ -1,0 +1,7 @@
+v4.3.1: OpenTracks
+
+Veranderingen:
+- Instellen om spraakaankondigingen op apparaatluidspreker over te slaan
+
+Bugfix :
+- Incorrecte waarschuwing GPS uitgeschakeld

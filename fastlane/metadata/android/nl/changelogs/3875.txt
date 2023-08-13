@@ -1,0 +1,7 @@
+v3.15.2: OpenTracks
+
+Veranderingen:
+- Bijgewerkte vertalingen
+
+Bugfix :
+- Crash bij GPX-export

@@ -1,0 +1,22 @@
+v3.15.0: OpenTracks
+
+WAARSCHUWING :
+Deze release past databasebewegingen toe die NIET KUNNEN WORDEN OMGEVERD
+Aangezien KMZ / KML ook gedragsveranderingen exporteert / importeert, wordt aanbevolen om (A) een back-up te maken VOORDAT u upgradet en (B) daarna.
+Aanbevolen formaat: KMZ .
+
+Essentiële veranderingen:
+- Interne opslag van spoorsegmenten wordt gewijzigd
+  (door de gebruiker gegenereerde gebeurtenissen worden nu beschouwd als trackpoints zonder locatie maar met tijdstempel)
+- Apparaattijd in plaats van GPS-tijd wordt opgeslagen
+  (bestaande gegevens worden niet gewijzigd)
+- Dashboard API v2
+  (upgrade OSMDashboard 2.10.0)
+
+Veranderingen:
+- KML / KMZ kan worden gebruikt om een back-up te maken en precies te herstellen (incl. statistieken)
+
+Ontwikkelaar:
+- Herwerkte spoorsegmentatie en de opslag ervan (voorheen PAUSE / RESUME-markering)
+- TrackStatistics worden uitsluitend berekend met TrackPoints
+- Lang vervangen door Instant / Duration

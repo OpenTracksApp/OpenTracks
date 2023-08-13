@@ -1,0 +1,14 @@
+v3.9.0: OpenTracks
+
+Veranderingen:
+- Exporteer tracks met hun UUID
+- Voorkom import van reeds bestaande tracks door UUID (configureerbaar; standaard ja)
+- Pauze / stop-knop vereist nu lange druk
+- GPS-voorstart toont de status van fix
+- Nieuwe activiteitspictogrammen toegevoegd
+- Snelheidssensor: wielen worden nu configureerbaar in millimeter
+
+Bugfixes :
+- Enkele zeldzame crashes (NPE) opgelost
+- Tempo-opmaak gecorrigeerd
+- App-pictogram in launcher verplaatst

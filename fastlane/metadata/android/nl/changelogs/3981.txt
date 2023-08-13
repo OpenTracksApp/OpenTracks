@@ -1,0 +1,17 @@
+v3.17.0: OpenTracks
+
+Veranderingen:
+- Pictogram toevoegen voor kajakken
+- Grafieken tekenen ontbrekende sensorgegevens correct
+- Standaard: toon coördinaten tijdens het opnemen
+
+Bugfixes :
+- GPX-schema gecorrigeerd
+- GPX exporteerde hoogteverlies als sensorafstand
+- Statistieken niet correct berekend bij gebruik van een snelheids- / afstandssensor
+
+Ontwikkelaar:
+- Afstand / snelheidswaardeobjecten
+- Vervangen communicatie via SharedPreferences
+- Gebruik een niet-statisch servicebindmiddel
+- Gebruik hoogte in de codebasis (in plaats van hoogte)

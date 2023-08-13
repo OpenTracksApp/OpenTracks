@@ -259,27 +259,6 @@ limitations under the License.
     <string name="value_none">Никоя</string>
     <string name="value_off">Изключено</string>
     <string name="value_smallest_recommended">Най-малкото (препоръчително)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 час</item>
-        <item quantity="other">%1$d часа</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 минута</item>
-        <item quantity="other">%1$d минути</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 секунда</item>
-        <item quantity="other">%1$d секунди</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 километър в час</item>
-        <item quantity="other">%1$.1f километра в час</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 миля в час</item>
-        <item quantity="other">%1$.1f мили в час</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Банкомат</string>
     <string name="waypoint_type_bank">банка</string>

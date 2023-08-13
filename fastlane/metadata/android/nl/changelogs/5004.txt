@@ -1,0 +1,10 @@
+v4.0.7: OpenTracks
+
+Veranderingen:
+- GPS-signaal verloren time-out: 30s
+- Android13: vraag toestemming om meldingen te tonen
+- Sneller verwijderen van tracks (vacuümdatabase alleen indien nodig)
+
+Bugfix :
+- PublicAPI stop commando resulteerde in crash (geïntroduceerd in v4.0.6)
+- Toestemmingen: vraag alle toestemmingen aan tijdens het opstarten

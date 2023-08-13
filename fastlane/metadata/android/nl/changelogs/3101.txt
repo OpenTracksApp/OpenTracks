@@ -1,0 +1,14 @@
+v3.2.3: OpenTracks
+
+Veranderingen:
+- Delen: gebruik Android Sharesheet
+- Delen: deel meerdere nummers als individuele bestanden
+- Gebruik Android ShareSheet
+- Hartslagsensor (Bluetooth LE): automatisch opnieuw verbinden
+
+Bugfix :
+- Hartslagsensor (Bluetooth LE): de verbinding goed verbreken
+- Hartslag werd niet altijd getoond tijdens het opnemen
+
+Ontwikkelaar:
+- TravisCI-instrumentatietests ingeschakeld

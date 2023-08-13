@@ -1,0 +1,10 @@
+v3.6.0: OpenTracks
+
+Veranderingen:
+- Gestopte nummers kunnen nu worden hervat
+
+Bugfix :
+- Import van KMZ heeft de foto-URL niet correct verwerkt
+
+Ontwikkelaar:
+- Vereenvoudigde gegevensverwerking

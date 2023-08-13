@@ -1,0 +1,11 @@
+v3.3.2: OpenTracks
+
+Veranderingen:
+- Exporteren: overschrijft nu bestanden
+
+Bugfix :
+- Verwijder altijd de opnamemelding
+
+Ontwikkelaar:
+- Op API 26+ java.time wordt gebruikt voor het parseren en schrijven van datums
+- Refactoring van TrackRecordingService

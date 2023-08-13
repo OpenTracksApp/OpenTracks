@@ -1,0 +1,8 @@
+v3.9.5: OpenTracks
+
+Veranderingen:
+- UI toont snelheid slechts met één fractioneel cijfer
+
+Bugfix :
+- App crash op zoek (vanwege Track.Id refactoring)
+- Tracklijst liet nu zien of er een opname aan de gang was (vanwege Track.Id-refactoring)

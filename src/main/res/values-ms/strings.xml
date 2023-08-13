@@ -258,22 +258,6 @@ limitations under the License.
     <string name="value_none">Tiada</string>
     <string name="value_off">Dimatikan</string>
     <string name="value_smallest_recommended">Terkecil (disyorkan)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="other">%1$d jam</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="other">%1$d minit</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="other">%1$d saat</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="other">%1$.1f kilometer sejam</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="other">%1$.1f batu sejam</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bank</string>

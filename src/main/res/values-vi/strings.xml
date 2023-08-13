@@ -259,22 +259,6 @@ limitations under the License.
     <string name="value_none">Không có</string>
     <string name="value_off">Tắt</string>
     <string name="value_smallest_recommended">Nhỏ nhất (được đề nghị)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="other">%1$d giờ</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="other">%1$d phút</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="other">%1$d giây</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="other">%1$.1f ki lô mét mỗi giờ</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="other">%1$.1f dặm mỗi giờ</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">ngân hàng</string>
@@ -545,12 +529,6 @@ limitations under the License.
     <string name="pace">Tốc độ</string>
     <string name="lap_speed">Vòng tốc độ</string>
     <string name="speed">Tốc độ di chuyển trung bình</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="other">%1$.1f Tầng km</item>
-    </plurals>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="other">%1$.1f dặm</item>
-    </plurals>
     <string name="average_heart_rate">Nhịp tim trung bình</string>
     <string name="current_heart_rate">Hiện tại nhịp tim</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Một ứng dụng bắt đầu ghi hình cũng có thể truy cập vào dữ liệu ghi lại.</string>
@@ -565,15 +543,9 @@ limitations under the License.
     <string name="settings_announcements_average_speed_pace">Tốc độ trung bình/nhịp độ</string>
     <string name="settings_stats_units_nautical">Hải lý (dặm hải lý, ft)</string>
     <string name="settings_public_api_package_title">Tên gói cho API công khai</string>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="other">%1$.1f dặm hải lý</item>
-    </plurals>
     <string name="select_show_on_map_behavior">Chọn hành vi \"hiện trên bản đồ\"</string>
     <string name="settings_announcements_lap_speed_pace">Tốc độ vòng/nhịp độ</string>
     <string name="track_discarding">Đang bỏ đoạn đường</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="other">%1$.1f nút</item>
-    </plurals>
     <string name="voice_per_nautical_mile">trên dặm hải lý</string>
     <string name="description_speed_nautical">Tốc độ (nút)</string>
     <string name="unit_nautical_mile">Dặm hải lý</string>

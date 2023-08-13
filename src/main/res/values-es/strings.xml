@@ -76,7 +76,7 @@ limitations under the License.
     <string name="activity_type_driving_bus">conducción de autobuses</string>
     <string name="activity_type_driving_car">conducción de automóviles</string>
     <string name="activity_type_ferry">transbordador</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_frisbee">frisbi</string>
     <string name="activity_type_gliding">vuelo sin motor</string>
     <string name="activity_type_hang_gliding">aladeltismo</string>
     <string name="activity_type_helicopter">helicóptero</string>
@@ -202,7 +202,7 @@ limitations under the License.
     <string name="menu_aggregated_statistics">Estadíst. globales</string>
     <string name="menu_delete">Eliminar</string>
     <string name="menu_edit">Editar</string>
-    <string name="menu_export_all">Exportar todo</string>
+    <string name="menu_export_all">Exportar todo (un archivo por pista)</string>
     <string name="menu_help">Ayuda</string>
     <string name="menu_import_all">Importar todo</string>
     <string name="menu_insert_marker">Insertar marcador</string>
@@ -417,7 +417,7 @@ limitations under the License.
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <string name="activity_type_escooter">moto</string>
     <string name="export_all_do_it_for_all">hacerlo para todos los conflictos</string>
-    <string name="export_track_errors">Recorridos no exportados</string>
+    <string name="export_track_errors">Archivos no exportados</string>
     <string name="generic_skip">Saltear</string>
     <string name="generic_separator_done_total">/</string>
     <string name="generic_show_errors">Mostrar errores</string>
@@ -441,7 +441,7 @@ limitations under the License.
     <string name="aggregated_stats_empty_message">Grabe su primer recorrido para ver estadísticas agregadas</string>
     <string name="instant_export_enabled_title">Exportación instantánea post-entrenamiento</string>
     <string name="settings_default_export_uri_title">Directorio de exportación de recorrido</string>
-    <string name="export_track_already_exists_msg">El recorrido %1$s ya existe en el directorio de destino.</string>
+    <string name="export_track_already_exists_msg">El archivo %1$s ya existe en el directorio de destino.</string>
     <string name="generic_overwrite">Sobreescribir</string>
     <string name="generic_click_twice_cancel">Haga nuevamente clic en atrás para cancelar</string>
     <string name="gps_disabled_msg">GPS deshabilitado</string>
@@ -460,15 +460,15 @@ limitations under the License.
     <string name="sensor_state_heart_rate_max">Tasa cardíaca máxima</string>
     <string name="sensor_state_heart_rate_avg">Tasa cardíaca promedio</string>
     <string name="export_error_post_workout">La exportación posterior al entrenamiento falló, consulte el directorio de exportación.</string>
-    <string name="export_progress_summary_new_msg">Nuevos recorridos exportados</string>
+    <string name="export_progress_summary_new_msg">Nuevos archivos exportados</string>
     <string name="import_thread_interrupted">Hilo interrumpido</string>
     <string name="import_progress_summary_errors_msg">Errores</string>
     <string name="import_progress_summary_ok_msg">Archivos importados</string>
     <string name="description_altitude_loss">Pérdida de elevación: %1$d m (%2$d pies)</string>
     <string name="sensor_state_cadence_max">Ritmo máximo</string>
     <string name="sensor_state_cadence_avg">Ritmo promedio</string>
-    <string name="export_progress_summary_overwrite_msg">Recorridos sobreescritos</string>
-    <string name="export_progress_summary_skip_msg">Recorridos salteados</string>
+    <string name="export_progress_summary_overwrite_msg">Archivos sobrescritos</string>
+    <string name="export_progress_summary_skip_msg">Archivos omitidos</string>
     <string name="export_progress_summary_errors_msg">Errores</string>
     <string name="generic_open_track">Abrir recorrido</string>
     <string name="import_progress_summary_exists_msg">Ya existe</string>
@@ -486,7 +486,7 @@ limitations under the License.
     <string name="settings_sensor_cycling_cadence">Cadencia</string>
     <string name="settings_announcements_totaltime_frequency">Intervalo de tiempo</string>
     <string name="settings_announcements_distance_frequency">Intervalo de distancia</string>
-    <string name="stats_sensors_heart_rate">Ritmo cardíaco</string>
+    <string name="stats_sensors_heart_rate">Frecuencia cardiaca</string>
     <string name="stats_sensors_cadence">Cadencia</string>
     <string name="stats_sensors_power">Poder</string>
     <string name="field_set_primary">Primario</string>
@@ -633,4 +633,18 @@ limitations under the License.
     <string name="select_show_on_map_behavior">Seleccionar el comportamiento de \"mostrar en el mapa\"</string>
     <string name="introduction_osm_dashboard">OpenTracks en sí no proporciona un mapa. Por favor, instale OSMDashboard para ver sus grabaciones en un mapa.</string>
     <string name="share_crash_report">Compartir informe de fallo</string>
+    <string name="settings_stats_units_imperial_meter">Imperial (millas, metros)</string>
+
+    <string name="settings_recording_min_required_accuracy_summary">La ubicación se ignora si la precisión es superior a %1$s</string>
+    <string name="settings_sensor_heart_rate_max">Zonas: frecuencia cardíaca máxima (lpm)</string>
+    <string name="settings_api_summary">API de control remoto y estadísticas para otras aplicaciones</string>
+
+    <string name="no_compatible_camera_installed">No hay ninguna aplicación de cámara compatible instalada</string>
+    <string name="no_compatible_gallery_installed">No hay ninguna aplicación de galería de imágenes compatible instalada</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="sensor_state_heart_rate_unit">lpm</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Filtrar dispositivos Bluetooth</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Mostrar todos los dispositivos Bluetooth detectados</string>
+    <string name="voice_on_device_speaker_title">Utiliza el altavoz del dispositivo</string>
 </resources>

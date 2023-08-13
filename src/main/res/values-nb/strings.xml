@@ -259,27 +259,6 @@ limitations under the License.
     <string name="value_none">Ingen</string>
     <string name="value_off">Av</string>
     <string name="value_smallest_recommended">Minste (anbefales)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 time</item>
-        <item quantity="other">%1$d timer</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minutt</item>
-        <item quantity="other">%1$d minutter</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 sekund</item>
-        <item quantity="other">%1$d sekunder</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilometer i timen</item>
-        <item quantity="other">%1$.1f kilometer i timen</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 engelsk mil i timen</item>
-        <item quantity="other">%1$.1f engelske mil i timen</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">minibank</string>
     <string name="waypoint_type_bank">bank</string>
@@ -554,15 +533,6 @@ limitations under the License.
     <string name="lap_speed">Rundehastighet</string>
     <string name="speed">Gjen. forflytningshastighet</string>
     <string name="total_distance">Total distanse</string>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 engelsk mil</item>
-        <item quantity="other">%1$.1f engelske mil</item>
-    </plurals>
-    <string name="average_heart_rate">Gjen. puls</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 kilometer</item>
-        <item quantity="other">%1$.1f kilometer</item>
-    </plurals>
     <string name="current_heart_rate">Gjeldende puls</string>
     <string name="settings_export_filename_title">Format på filnavnet</string>
     <string name="error_crash_title">%1$s krasjet</string>
@@ -588,14 +558,6 @@ limitations under the License.
     <string name="value_float_knots">%1$.1f knop</string>
     <string name="value_float_knots_recommended">%1$.1f knop (anbefales)</string>
     <string name="voice_per_nautical_mile">per nautisk mil</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 knop</item>
-        <item quantity="other">%1$.1f knop</item>
-    </plurals>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">1 nautisk mil</item>
-        <item quantity="other">%1$.1f nautiske mil</item>
-    </plurals>
     <string name="show_on_dashboard_not_installed">Ingen app som støtter OpenTracks-API for oversikten er installert.</string>
     <string name="track_delete_number_of_tracks">%1$d spor</string>
     <string name="settings_public_api_package_title">Pakkenavn for offentlig API</string>
@@ -616,4 +578,6 @@ limitations under the License.
     <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 knop} other {{n,number,#.0} knop} }</string>
     <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometer} other {{n,number,#.0} kilometer} }</string>
     <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 nautisk mil} other {{n,number,#.0} nautiske mil} }</string>
+    <string name="sensor_state_cadence_unit">o/min</string>
+    <string name="sensor_state_heart_rate_unit">slag/min</string>
 </resources>

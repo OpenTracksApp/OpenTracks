@@ -335,27 +335,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="value_none">Ningunha</string>
     <string name="value_off">Desactivar</string>
     <string name="value_smallest_recommended">O máis pequeno (recomendado)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 hora</item>
-        <item quantity="other">%1$d horas</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minuto</item>
-        <item quantity="other">%1$d minutos</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 segundo</item>
-        <item quantity="other">%1$d segundos</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 quilómetro por hora</item>
-        <item quantity="other">%1$.1f quilómetros por hora</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 milla por hora</item>
-        <item quantity="other">%1$.1f millas por hora</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Caixeiro automático</string>
     <string name="waypoint_type_bank">banco</string>
@@ -546,10 +525,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="lap_time">Tempo da volta</string>
     <string name="lap_speed">Velocidade da volta</string>
     <string name="total_distance">Distancia total</string>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 milla</item>
-        <item quantity="other">%1$.1f millas</item>
-    </plurals>
     <string name="settings_public_api_enabled_summary_on">Outras aplicacións instaladas poden iniciar ou deter gravacións.</string>
     <string name="settings_public_api_enabled_summary_off">Só OpenTracks pode iniciar e deter as gravacións.</string>
     <string name="settings_public_api_dashboard_enabled_title">Transferencia automática de datos</string>
@@ -559,10 +534,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="voice_per_mile">por milla</string>
     <string name="pace">Ritmo</string>
     <string name="speed">Vel. media en movemento</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 quilómetro</item>
-        <item quantity="other">%1$.1f quilómetros</item>
-    </plurals>
     <string name="average_heart_rate">Pulso medio</string>
     <string name="current_heart_rate">Pulso actual</string>
     <string name="activity_type_swimming">nadando</string>
@@ -589,15 +560,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="value_float_knots">%1$.1f nós</string>
     <string name="value_float_knots_recommended">%1$.1f nós (recomendado)</string>
     <string name="voice_per_nautical_mile">por milla náutica</string>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">1 milla náutica</item>
-        <item quantity="other">%1$.1f millas náuticas</item>
-    </plurals>
-    <string name="show_on_dashboard">Usar API OpenTracks</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 nó</item>
-        <item quantity="other">%1$.1f nós</item>
-    </plurals>
     <string name="show_on_dashboard_not_installed">Non hai ningunha aplicación instalada con soporte para a API de OpenTracks.</string>
     <string name="select_show_on_map_behavior">Elixe \"ver no mapa\"</string>
     <string name="show_on_map_format_ask">Preguntar</string>

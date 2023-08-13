@@ -1,0 +1,10 @@
+v3.2.8: OpenTracks
+
+Veranderingen:
+- Grafiek: zoom via gebaren
+
+Bugfixes :
+- Exporteren via KMZ heeft de beeldbestandsnamen niet correct geëxporteerd
+- Het delen van meerdere nummers bevatte geen KMZ-bestanden
+- De gebruikersinterface van MarkerDetailActivity werd niet getoond
+- Instellingen crashten als de voorkeur voor hartslag niet werd geïnitialiseerd

@@ -1,0 +1,11 @@
+v4.1.2: OpenTracks
+
+Veranderingen:
+- Spraakaankondigingen gebruiken alleen op decimaal voor afstand
+
+Bugfix :
+- Crash bij stoppen (raceconditie)
+
+Ontwikkelaar:
+- Github-acties: uitgeschakelde instrumentatietests (te traag)
+- Tests worden gedaan met alleen nep-GPS-gegevens

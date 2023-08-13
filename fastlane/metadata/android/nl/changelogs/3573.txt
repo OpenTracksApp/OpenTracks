@@ -1,0 +1,10 @@
+v3.9.4: OpenTracks
+
+Veranderingen:
+- Intervalberekening toegevoegd
+- Spraakaankondigingen presenteren statistieken van het laatste interval
+- Instellingen: Bluetooth-pictogram is geanimeerd
+
+Bugfix :
+- GPS is niet uitgeschakeld bij het stoppen van een opname
+- Toon op kaart via KML / KMZ / GPX is gebroken door refactoring

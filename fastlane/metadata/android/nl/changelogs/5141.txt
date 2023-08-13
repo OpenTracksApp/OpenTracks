@@ -1,0 +1,7 @@
+v4.2.2: OpenTracks
+
+Bugfix :
+- Trackpictogram verkeerd weergegeven in dialoogvenster
+- Textcolor voor hartslagzone 1 negeerde thema
+- Niet alle activiteitenTypes werden weergegeven in de vervolgkeuzelijst
+- Crash door kleur niet gevonden

@@ -300,27 +300,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="value_none">Nessuno</string>
     <string name="value_off">Disattivato</string>
     <string name="value_smallest_recommended">Il più piccolo (consigliato)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 ora</item>
-        <item quantity="other">%1$d ore</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minuto</item>
-        <item quantity="other">%1$d minuti</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 secondo</item>
-        <item quantity="other">%1$d secondi</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 km all\'ora</item>
-        <item quantity="other">%1$.1f chilometri all\'ora</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 miglio all\'ora</item>
-        <item quantity="other">%1$.1f miglia all\'ora</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bancomat</string>
     <string name="waypoint_type_bank">banca</string>

@@ -258,22 +258,6 @@ limitations under the License.
     <string name="value_none">選択しない</string>
     <string name="value_off">オフ</string>
     <string name="value_smallest_recommended">最小値（推奨）</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="other">%1$d時間</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="other">%1$d分</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="other">%1$d秒</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="other">時速%1$.1fキロ</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="other">時速%1$.1fマイル</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">銀行</string>

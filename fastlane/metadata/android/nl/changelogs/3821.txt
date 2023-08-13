@@ -1,0 +1,10 @@
+v3.14.2: OpenTracks
+
+Veranderingen:
+- Downgrade database van aankomende release v3.15.0
+- UI importeren / exporteren verbeterd
+- Importaanbiedingen om geïmporteerde track te tonen
+- De prestaties van de markerlijst zijn verbeterd
+
+Ontwikkelaar:
+- Track.Id / Marker.Id: gebruik null

@@ -259,37 +259,6 @@ limitations under the License.
     <string name="value_none">Нет</string>
     <string name="value_off">Выкл.</string>
     <string name="value_smallest_recommended">Мин. время (рекомендуется)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d час</item>
-        <item quantity="few">%1$d часа</item>
-        <item quantity="many">%1$d часов</item>
-        <item quantity="other">%1$d часа</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d минута</item>
-        <item quantity="few">%1$d минуты</item>
-        <item quantity="many">%1$d минут</item>
-        <item quantity="other">%1$d минуты</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d секунда</item>
-        <item quantity="few">%1$d секунды</item>
-        <item quantity="many">%1$d секунд</item>
-        <item quantity="other">%1$d секунды</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f километр в час</item>
-        <item quantity="few">%1$.1f километра в час</item>
-        <item quantity="many">%1$.1f километров в час</item>
-        <item quantity="other">%1$.1f километра в час</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">%1$.1f миля в час</item>
-        <item quantity="few">%1$.1f мили в час</item>
-        <item quantity="many">%1$.1f миль в час</item>
-        <item quantity="other">%1$.1f мили в ча</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Банкомат</string>
     <string name="waypoint_type_bank">Банк</string>
@@ -512,12 +481,6 @@ limitations under the License.
     <string name="custom_layout_list_edit_name">Напишите имя раскладки</string>
     <string name="aggregated_stats_filter_no_results">Нет активностей для данного фильтра</string>
     <string name="custom_layout_list_edit_already_exists">Имя раскладки уже существует</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">%1$.1f километр</item>
-        <item quantity="few">%1$.1f километра</item>
-        <item quantity="many">%1$.1f километров</item>
-        <item quantity="other">%1$.1f километров</item>
-    </plurals>
     <string name="settings_layout_reset">Сбросить свои раскладки</string>
     <string name="settings_layout_reset_done">Настройки всех раскладок были сброшены</string>
     <string name="generic_to">по</string>
@@ -543,12 +506,6 @@ limitations under the License.
     <string name="lap_speed">Скорость круга</string>
     <string name="speed">Скорость</string>
     <string name="total_distance">Общая дистанция</string>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">%1$.1f миля</item>
-        <item quantity="few">%1$.1f миля</item>
-        <item quantity="many">%1$.1f миль</item>
-        <item quantity="other">%1$.1f миль</item>
-    </plurals>
     <string name="average_heart_rate">Средний пульс</string>
     <string name="current_heart_rate">Текущий пульс</string>
     <string name="generic_filter">Фильтр</string>
@@ -584,19 +541,7 @@ limitations under the License.
     <string name="error_crash_title">%1$s вылетел</string>
     <string name="share_crash_report">Поделиться отчётом о вылете</string>
     <string name="report_bug">Сообщить об ошибке</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">%1$.1f узел</item>
-        <item quantity="few">%1$.1f узла</item>
-        <item quantity="many">%1$.1f узлов</item>
-        <item quantity="other">%1$.1f узлов</item>
-    </plurals>
     <string name="unit_knots">уз</string>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">%1$.1f морская миля</item>
-        <item quantity="few">%1$.1f морские мили</item>
-        <item quantity="many">%1$.1f морских миль</item>
-        <item quantity="other">%1$.1f морских миль</item>
-    </plurals>
     <string name="value_integer_knots">%1$d узлов</string>
     <string name="value_float_knots">%1$.1f узла</string>
     <string name="image_discard">Отменить</string>

@@ -1,0 +1,12 @@
+v3.7.4: OpenTracks
+
+Veranderingen:
+- Configureerbaar formaat delen / exporteren
+
+Bugfix :
+- Wieldiameter niet correct opgeslagen (voor snelheidssensor)
+- Help: links zijn klikbaar
+
+Ontwikkelaar:
+- Split TrackDetailActivity
+- De opvolger van StatsFragement gebruikt ConstraintLayout

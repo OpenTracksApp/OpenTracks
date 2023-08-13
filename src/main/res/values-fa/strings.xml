@@ -258,27 +258,6 @@ limitations under the License.
     <string name="value_none">هیچ</string>
     <string name="value_off">خاموش</string>
     <string name="value_smallest_recommended">کوچکترین (توصیه می‌شود)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d ساعت</item>
-        <item quantity="other">%1$d ساعت</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d دقیقه</item>
-        <item quantity="other">%1$d دقیقه</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d ثانیه</item>
-        <item quantity="other">%1$d ثانیه</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f کیلومتر در ساعت</item>
-        <item quantity="other">%1$.1f کیلومتر در ساعت</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">%1$.1f مایل در ساعت</item>
-        <item quantity="other">%1$.1f مایل در ساعت</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">خودپرداز</string>
     <string name="waypoint_type_bank">بانک</string>

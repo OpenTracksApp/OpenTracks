@@ -257,32 +257,6 @@ limitations under the License.
     <string name="value_none">Ништа</string>
     <string name="value_off">Искључено</string>
     <string name="value_smallest_recommended">Најмање (препоручено)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d сат</item>
-        <item quantity="few">%1$d сати</item>
-        <item quantity="other">%1$d сата</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d минут</item>
-        <item quantity="few">%1$d минута</item>
-        <item quantity="other">%1$d минута</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d секунда</item>
-        <item quantity="few">%1$d секунде</item>
-        <item quantity="other">%1$d секунди</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f километар на сат</item>
-        <item quantity="few">%1$.1f километра на сат</item>
-        <item quantity="other">%1$.1f километара на сат</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">укупна раздаљина %1$.1f километар</item>
-        <item quantity="few">укупна раздаљина %1$.1f километра</item>
-        <item quantity="other">укупна раздаљина %1$.1f километара</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">банкомат</string>
     <string name="waypoint_type_bank">банка</string>

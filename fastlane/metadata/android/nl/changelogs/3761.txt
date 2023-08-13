@@ -1,0 +1,10 @@
+v3.14.0: OpenTracks
+
+Veranderingen:
+- Juiste ondersteuning voor van rechts naar links
+- Importeren: snellere opruiming na importstoring
+- Tekst in grafiekenschalen volgens Android-instellingen
+- Hartslag: ondersteuning voor Huami-apparaten (vereist Gadgetbridge)
+
+Ontwikkelaar:
+- Import wordt nu in het geheugen afgehandeld

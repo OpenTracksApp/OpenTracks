@@ -1,0 +1,8 @@
+v4.3.2: OpenTracks
+
+Bugfix :
+- Incorrecte KML-header (# 1522)
+
+Ontwikkelaar:
+- Gebruik Java 17 (tekst met meerdere regels, schakelaar)
+- API33: locale config wordt gegenereerd

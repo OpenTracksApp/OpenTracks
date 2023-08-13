@@ -1,0 +1,14 @@
+v3.5.0: OpenTracks
+
+Veranderingen:
+- Marker: selecteer afbeeldingen uit galerij
+- Marker: deel foto
+- Gebruik tracknaam als bestandsnaam bij het delen
+- Verwijderde hoogte min / max (was onnauwkeurig)
+
+Bugfix :
+- Grafieken gebruiken voorkeurseenheden en tarief
+
+Ontwikkelaar:
+- Database: verwijder ongebruikte kolommen
+- Database: voeg indices toe

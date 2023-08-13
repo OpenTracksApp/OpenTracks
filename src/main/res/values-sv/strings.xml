@@ -259,27 +259,6 @@ limitations under the License.
     <string name="value_none">Inga</string>
     <string name="value_off">Av</string>
     <string name="value_smallest_recommended">Minsta (rekommenderas)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 timme</item>
-        <item quantity="other">%1$d timmar</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 sekund</item>
-        <item quantity="other">%1$d minuter</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 sekund</item>
-        <item quantity="other">%1$d sekunder</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 km per timme</item>
-        <item quantity="other">%1$.1f kilometer per timme</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 mile per timme</item>
-        <item quantity="other">%1$.1f miles per timme</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">bank</string>

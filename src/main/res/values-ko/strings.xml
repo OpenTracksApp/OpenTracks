@@ -258,22 +258,6 @@ limitations under the License.
     <string name="value_none">없음</string>
     <string name="value_off">사용 안함</string>
     <string name="value_smallest_recommended">최소(권장)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="other">%1$d시간</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="other">%1$d분</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="other">%1$d초</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="other">시속 %1$.1f킬로미터</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="other">시간 당 %1$.1f마일</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">은행</string>

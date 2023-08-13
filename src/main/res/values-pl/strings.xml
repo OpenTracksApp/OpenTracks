@@ -293,37 +293,6 @@ limitations under the License.
     <string name="value_none">Brak</string>
     <string name="value_off">Wyłącz</string>
     <string name="value_smallest_recommended">Najmniejsza (zalecane)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 godzina</item>
-        <item quantity="few">%1$d godziny</item>
-        <item quantity="many">%1$d godzin</item>
-        <item quantity="other">%1$d godzinr</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minuta</item>
-        <item quantity="few">%1$d minuty</item>
-        <item quantity="many">%1$d minut</item>
-        <item quantity="other">%1$d minut</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 sekunda</item>
-        <item quantity="few">%1$d sekundy</item>
-        <item quantity="many">%1$d sekund</item>
-        <item quantity="other">%1$d sekund</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilometr na godzinę</item>
-        <item quantity="few">%1$.1f kilometra na godzinę</item>
-        <item quantity="many">%1$.1f kilometra na godzinę</item>
-        <item quantity="other">%1$.1f kilometra na godzinę</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 mila na godzinę</item>
-        <item quantity="few">%1$.1f mili na godzinę</item>
-        <item quantity="many">%1$.1f mili na godzinę</item>
-        <item quantity="other">%1$.1f mili na godzinę</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">bank</string>

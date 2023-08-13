@@ -1,0 +1,14 @@
+v3.14.1: OpenTracks
+
+Veranderingen:
+- Toegevoegd hoogteverlies (via barometer)
+- Bijgewerkte vertalingen (cz, gl, it, nb, pl, pt, sp)
+- Markeringen kunnen worden gedeeld vanuit de lijst
+- Actionbar-pictogram (linksboven) om terug te gaan
+
+Bugfix :
+- Potentiële crash bij import
+
+Ontwikkelaar:
+- Implementeerde basis EspressoUI-test
+- Referentie resourceIds via in plaats van switch / case

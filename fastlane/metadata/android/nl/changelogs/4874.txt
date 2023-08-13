@@ -1,0 +1,24 @@
+v4.0.0: OpenTracks
+
+Veranderingen:
+- UI-refactoring met een Bottom App Bar.
+- Openbare API: STOP correct geïmplementeerd.
+- Opruimen: gebruik expliciete voorkeurs-ID's voor TrackFileFormat.
+- Verbeteringen aan BLE-handler.
+- Voeg een uitzonderingshandler toe en toon foutactiviteit zodat gebruikers rapporten over bugs kunnen verzenden.
+- Android 13: opstartpictogram, geef een themapictogram op.
+- Verander de titel van het nummer in zinnen.
+- Vertalingen bijgewerkt.
+
+Bugfix :
+- Het delen van het achtervoegsel van het toegevoegde bestand tweemaal delen.
+- Eenheidssysteem niet correct geladen.
+- Sjabloon voor bestandsindeling is niet geladen (NPE).
+- Openbare API: respecteer export na de training.
+
+Ontwikkelaar:
+- Ga naar androix.constraintlayout.
+- Robuuster UI-tests.
+- Toestemmingsverzoek aangepast.
+- Upgrade naar gradlew 7.4.2
+- Material van 1.5.0 tot 1.6.0

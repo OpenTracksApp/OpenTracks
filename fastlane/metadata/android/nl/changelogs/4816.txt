@@ -1,0 +1,17 @@
+v3.27.0: OpenTracks
+
+Veranderingen:
+- Stemaankondigingen: voeg 100 m, 200 m en 500 m toe
+- Interval: voeg 100 m en 500 m toe
+- Klok toont nu ook seconden
+- GPX, KML, KMZ: exporteer en importeer horizontale nauwkeurigheid
+- GPX: exporteer cumulatieve afstand via clustrust-extensie
+- CSV: basisexport (alleen TrackPoints; niet voor back-up)
+- Tijdelijke oplossing voor Tickr X omdat het SPM rapporteert in plaats van RPM
+
+Bugfixes :
+- Houd u aan het opnemen van afstandsinterval
+  TrackPoints zijn opgenomen, hoewel ze te dichtbij waren
+- Voorkom crash bij stopopname (raceconditie)
+- Voorkom crash bij gebruik van meerdere sensoren (raceconditie)
+- Voorkom crash bij het openen van OpenTracks via een melding

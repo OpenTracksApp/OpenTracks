@@ -1,0 +1,10 @@
+v3.2.7: OpenTracks
+
+Veranderingen:
+- Kennisgeving toont GPS-nauwkeurigheid
+- Toon heads-upmelding als de GPS-nauwkeurigheid boven de drempel daalt
+- Toon altijd een grafiek op tijd en op afstand
+- Hulp toegevoegd (in instellingen)
+
+Bugfix :
+- TrackDetailActivity: uitgeschakelde niet-werkende landschapsmodus (tijdelijk)

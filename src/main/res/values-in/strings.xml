@@ -212,21 +212,6 @@
     <string name="value_none">Tidak ada</string>
     <string name="value_off">Nonaktif</string>
     <string name="value_smallest_recommended">Terkecil (disarankan)</string>
-    <plurals name="voiceHours">
-        <item quantity="other">%1$d jam</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="other">%1$d menit</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="other">%1$d detik</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="other">%1$.1f kilometer per jam</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="other">%1$.1f mil per jam</item>
-    </plurals>
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bank</string>
     <string name="waypoint_type_bar">bar</string>

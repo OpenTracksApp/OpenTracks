@@ -259,32 +259,6 @@ limitations under the License.
     <string name="value_none">Niciuna</string>
     <string name="value_off">Dezactivare</string>
     <string name="value_smallest_recommended">Cea mai mică valoare (recomandată)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 oră</item>
-        <item quantity="few">%1$d ore</item>
-        <item quantity="other">%1$d (de) ore</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minut</item>
-        <item quantity="few">%1$d minute</item>
-        <item quantity="other">%1$d (de) minute</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 secundă</item>
-        <item quantity="few">%1$d secunde</item>
-        <item quantity="other">%1$d secunde</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilometru pe oră</item>
-        <item quantity="few">%1$.1f kilometri pe oră</item>
-        <item quantity="other">%1$.1f (de) kilometri pe oră</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 milă pe oră</item>
-        <item quantity="few">%1$.1f mile pe oră</item>
-        <item quantity="other">%1$.1f (de) mile pe oră</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bancomat</string>
     <string name="waypoint_type_bank">bancă</string>

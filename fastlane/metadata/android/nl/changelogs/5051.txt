@@ -1,0 +1,7 @@
+v4.1.1: OpenTracks
+
+Veranderingen:
+- Voeg introductiescherm toe (een keer laten zien)
+
+Bugfix :
+- Niet crashen als er geen GPS-apparaat aanwezig is

@@ -257,27 +257,6 @@ limitations under the License.
     <string name="value_none">Hiç</string>
     <string name="value_off">Kapalı</string>
     <string name="value_smallest_recommended">En küçük (önerilir)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 saat</item>
-        <item quantity="other">%1$d saat</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 dakika</item>
-        <item quantity="other">%1$d dakika</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 saniye</item>
-        <item quantity="other">%1$d saniye</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">saatte 1 kilometre</item>
-        <item quantity="other">saatte %1$.1f kilometre</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">saatte 1 mil</item>
-        <item quantity="other">saatte %1$.1f mil</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">banka</string>
@@ -522,10 +501,6 @@ limitations under the License.
     <string name="voice_per_mile">mil başına</string>
     <string name="average_heart_rate">Ortalama kalp atış hızı</string>
     <string name="total_distance">Toplam mesafe</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 kilometre</item>
-        <item quantity="other">%1$.1f kilometre</item>
-    </plurals>
     <string name="instant_export_enabled_summary">Kayıt tamamlandıktan sonra parçayı depolamaya aktar</string>
     <string name="value_float_mile_hour">%1$.1f mi/s</string>
     <string name="settings_announcements_totaltime_frequency">Zaman aralığı</string>
@@ -541,10 +516,6 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_summary_off">Kaydedilen veriler diğer uygulamalarla otomatik olarak paylaşılmayacaktır.</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/s (önerilen)</string>
     <string name="speed">Hız</string>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 mil</item>
-        <item quantity="other">%1$.1f mil</item>
-    </plurals>
     <string name="settings_recording_fullscreen_on_while_recording_title">Tam ekran</string>
     <string name="current_heart_rate">Şu anki kalp atış hızı</string>
     <string name="field_set_primary">Birincil</string>
@@ -578,15 +549,7 @@ limitations under the License.
     <string name="value_integer_knots">%1$d düğüm</string>
     <string name="value_float_knots">%1$.1f düğüm</string>
     <string name="value_float_knots_recommended">%1$.1f düğüm (önerilen)</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 düğüm</item>
-        <item quantity="other">%1$.1f düğüm</item>
-    </plurals>
     <string name="voice_per_nautical_mile">deniz mili başına</string>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">1 deniz mili</item>
-        <item quantity="other">%1$.1f deniz mili</item>
-    </plurals>
     <string name="settings_public_api_package_title">Genel API için paket adı</string>
     <string name="show_on_dashboard_not_installed">OpenTracks Gösterge Paneli API\'sini destekleyen hiçbir uygulama yüklü değil.</string>
 </resources>

@@ -1,0 +1,13 @@
+v4.0.1: OpenTracks
+
+Veranderingen:
+- Spraakaankondigingen zijn nu configureerbaar
+- De modus Volledig scherm verbergt nu ook de navigatiebalk van Android
+- Verbinding met BLE-sensoren zou nu sneller moeten zijn
+- Sta toe om instellingen te resetten tijdens het opnemen
+- Sta toe om import/export-instellingen te wijzigen tijdens het opnemen
+- KML/KMZ: gebruik geen pictogrammen om vanuit Google te laden
+
+Bugfix :
+- TrackStoppedActivity werkt nu op kleinere schermen
+- Verzoeken om toestemming op tracklijst

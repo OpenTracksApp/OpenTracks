@@ -1,0 +1,13 @@
+v3.18.1: OpenTracks
+
+Veranderingen:
+- Het verwijderen van tracks wordt afgehandeld door een service
+- Verwijderen verwijdert alle gegevens (d.w.z., hasFragileData = false)
+
+Bugfixes :
+- Raceconditie: crash tijdens het opnemen en omschakelen van OpenTracks naar de achtergrond
+- Zoeken in tracklijst werkte niet
+- Fietssnelheidssensor: afstandsberekening was verkeerd (alleen getroffen statistieken)
+
+Ontwikkelaar:
+- ControllerFragment vervangt TrackController

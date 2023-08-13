@@ -1,0 +1,7 @@
+v4.2.1: OpenTracks
+
+Veranderingen:
+- Snelheidssensor: acceptabele wieldiameter is 100 mm-4000 mm
+
+Bugfix :
+- Maak opnieuw verbinding met een sensor als de verbinding is verbroken

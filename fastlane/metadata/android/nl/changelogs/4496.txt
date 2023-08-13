@@ -1,0 +1,19 @@
+v3.21.0: OpenTracks
+
+Veranderingen:
+- Tijdens het opnemen: verwijder het inactief / niet-inactief maken van TrackPoints
+- Instellingen bevinden zich nu in afzonderlijke mappen
+- OpenTracks openen vanaf melding (tijdens opname) en terugzetten opent tracklijst
+- GPX-compatibiliteit: ondersteuning <snelheid> voor import
+
+Bugfixes :
+- Hoogte en afstand (van BlE-sensor): reset alleen tellers als er daadwerkelijk gegevens zijn opgeslagen
+- Import zonder snelheid, vereist rekensnelheid
+- Niet-aangesloten BLE-loopsensor mag niet als aanwezig worden gerapporteerd
+- BLE-runningsensor: toon gegevens tijdens het opnemen
+- Activiteitstype-pictogram is niet bijgewerkt tijdens het wijzigen van activiteit
+
+Ontwikkelaar:
+- SharedPrefences via statische referentie
+- Tests worden uitgevoerd tegen in-memory database
+- TrackRecordingManager houdt de laatste TrackPoint in het geheugen

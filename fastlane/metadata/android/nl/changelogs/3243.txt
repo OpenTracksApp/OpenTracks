@@ -1,0 +1,13 @@
+v3.3.0: OpenTracks
+
+Doorbrekende veranderingen :
+- Afbeeldingen worden nu opgeslagen in app-privéopslag (laat geen andere foto-apps zien)
+  OPMERKING: foto's maken met vorige versie kunnen niet worden weergegeven
+- Lokalisatie voor Spaans (Latijns-Amerika) werkt alleen op Android 7.0 of hoger
+
+Veranderingen:
+- Importeren / exporteren via Storage Access Framework (vermeld READ / WRITE_EXTERNAL_STORAGE toestemming)
+
+Ontwikkelaar:
+- Opgeschoonde interne gegevensstructuren
+- Gebruik afzonderlijke pictogrammen / app-namen voor debug-versie

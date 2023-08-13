@@ -1,0 +1,10 @@
+v4.0.2: OpenTracks
+
+Veranderingen:
+- Toevoeging eenheid zeemijl
+- Instellingen kunnen tijdens het opnemen worden gereset
+
+Bugfix :
+- Afronding van spraakaankondigingen
+- Kaart: hoogte werd raar gladgestreken
+- Export controleerde niet of er een bestand bestaat

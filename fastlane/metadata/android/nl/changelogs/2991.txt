@@ -1,0 +1,14 @@
+v3.1.0: OpenTracks
+
+Veranderingen:
+- Show track toegevoegd in kaart-apps (getest met OsmAnd en Maps.ME)
+- Toegevoegd tijdens het volgen, trackstatistieken weergeven zonder het apparaat te ontgrendelen
+- Verwijderde landschapsmodus voor weergave van trackdetails (was buggy)
+- Geschiedenis van zoeksuggesties verwijderd
+
+Bugfix :
+- Vraag opslagvergunning aan voor import alles / export alles
+
+Ontwikkelaar:
+- Upgrade naar Gradle 5.6
+- Minificeer niet de release builds

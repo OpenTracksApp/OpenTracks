@@ -1,0 +1,14 @@
+v4.5.0: OpenTracks
+
+Veranderingen:
+- Material3
+- App-snelkoppeling voor geaggregeerde statistieken
+- Nieuwe eenheid: mijlen met meters
+
+Bugfix :
+- Herhaaldelijk waarschuwen voor GPS uitgeschakeld (# 1429)
+
+Ontwikkelaar:
+- Gebruik Java Records
+- Target API34
+- Afhandeling van sensoren verbeterd

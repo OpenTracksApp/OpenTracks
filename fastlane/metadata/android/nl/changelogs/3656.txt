@@ -1,0 +1,10 @@
+v3.11.0: OpenTracks
+
+Veranderingen:
+- Theming: dag / nacht-modus (standaard: nacht)
+- Theming: gebruik Material Design in plaats van aangepaste elemententhema's
+- Gebruik opnieuw targetSDK 30 (F-Droid tekent nu met V2)
+
+Bugfix :
+- Android 11: export crashte allemaal
+- TrackDetail niet bijgewerkt in gebruikersinterface nadat de gegevens door de gebruiker zijn gewijzigd

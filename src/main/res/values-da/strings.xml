@@ -326,27 +326,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="value_none">Ingen</string>
     <string name="value_off">Fra</string>
     <string name="value_smallest_recommended">Mindst (anbefalet)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 time</item>
-        <item quantity="other">%1$d timer</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minut</item>
-        <item quantity="other">%1$d minutter</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 sekund</item>
-        <item quantity="other">%1$d sekunder</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilometer i timen</item>
-        <item quantity="other">%1$.1f kilometer i timen</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 mil i timen</item>
-        <item quantity="other">%1$.1f mil i timen</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Pengeautomat</string>
     <string name="waypoint_type_bank">bank</string>

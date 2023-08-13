@@ -1,0 +1,11 @@
+v3.2.10: OpenTracks
+
+Veranderingen:
+- ChartView is niet meer configureerbaar
+- Na herstart: automatische herstart van een onvoltooide opname verwijderd
+
+Bugfix :
+- Aankondigingen van toespraken gebruiken MAY_DUCK (opnieuw)
+- ChartView toont (opnieuw) markeringen
+- Opname met vast landschap Afstalling van TrackListActivity
+- Verzoek om verouderd API-gedrag van bestanden (noodzakelijk voor Android 10)

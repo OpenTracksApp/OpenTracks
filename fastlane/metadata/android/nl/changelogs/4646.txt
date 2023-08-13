@@ -1,0 +1,16 @@
+v3.24.0: OpenTracks
+
+Veranderingen:
+- GPS is optioneel (ook voor gebruik binnenshuis): als er gebruik wordt gemaakt van BLE-sensoren die afstand bieden
+- Instellingen: optie om BLE-filtering van apparaten uit te schakelen
+- Grafieken: hoogte begint bij minimale waarde in plaats van 0m.
+- UI ondersteunt het tonen van opgeslagen tijdzone-informatie
+
+Bugfix :
+- Opnieuw toegevoegd tijdelijke oplossing voor crash als gevolg van terugreizen in de tijd (workaround werd verwijderd in v3.23.0)
+- Onnodige oplossing voor BLE fietssensor (RTFM) verwijderd
+- GPX-importeur heeft ontbrekende gegevens niet goed verwerkt
+
+Ontwikkelaar:
+- BLE-sensoren rapporteren gegevens die door gebeurtenissen worden aangedreven dan op pull-based
+- Herwerkte en toegevoegde integratietests voor opname

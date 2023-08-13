@@ -1,0 +1,7 @@
+v4.0.5: OpenTracks
+
+Veranderingen:
+- PlayStore relase get is een ander logo
+
+Bugfix :
+- Intervallijst toont "-" als er geen winst/verlies aanwezig is

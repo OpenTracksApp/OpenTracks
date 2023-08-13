@@ -1,11 +1,22 @@
-OpenTracks je aplikace pro sledování sportu, která zcela respektuje vaše soukromí.
+Sportovní tracker, který respektuje vaše soukromí.
 
-Funkce:
-* Sledování sportu: sledujte své sportovní a outdoorové aktivity.
-* Fotografie a značky: označte zajímavá místa při sledování
-* Zvyšování a snižování nadmořské výšky: pomocí barometrického senzoru.
-* Nadmořská výška se zobrazuje v EGM2008 (nad průměrnou hladinou moře); exportuje se jako WGS84
-* Hlasová hlášení
+Sportovní a venkovní aktivity přinášejí štěstí, dovednosti a sebevědomí.
+
+Važte si svého zdraví tím, že budete sledovat svůj trénink.
+Zaznamenává, jak běžíte nebo jdete, a poskytuje vám cyklistický počítač s větší obrazovkou pro jízdu na kole.
+Označte si zajímavá místa na své cestě pomocí obrázků.
+Uchovávejte zaznamenané statistiky ve velkých podrobnostech pro analýzu.
+Sdílejte pouze data, která chcete, aby měli ostatní.
+
+* Hlasová oznámení.
 * Podporuje snímače Bluetooth LE: srdeční tep, rychlost a vzdálenost (cyklistika), kadence (cyklistika) a měřič výkonu (cyklistika).
-* Export dat: export tras ve formátu KMZ (včetně fotografií), KML nebo GPX.
-* Bez přístupu k internetu: Internet se nepoužívá
+* Zvyšování a snižování nadmořské výšky: prostřednictvím barometrického snímače.
+* Nadmořská výška zobrazená v EGM2008 (nad průměrnou hladinou moře); exportována jako WGS84.
+* Export dat ve formě stop ve formátu KMZ (včetně fotografií), KML nebo GPX.
+* Není nutný přístup k internetu ani další oprávnění.
+* Tmavé a světlé téma, respektující nastavení systému.
+* Žádné reklamy.
+
+Svobodný software / Open Source
+což znamená, že zdrojový kód můžete používat, studovat, měnit a sdílet.
+Licence Apache 2.0

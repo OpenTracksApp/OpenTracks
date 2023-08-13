@@ -259,32 +259,6 @@ limitations under the License.
     <string name="value_none">Nav</string>
     <string name="value_off">Izslēgts</string>
     <string name="value_smallest_recommended">Mazākais (ieteicams)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="zero">%1$d stundas</item>
-        <item quantity="one">%1$d stunda</item>
-        <item quantity="other">%1$d stundas</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="zero">%1$d minūtes</item>
-        <item quantity="one">%1$d minūte</item>
-        <item quantity="other">%1$d minūtes</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="zero">%1$d sekundes</item>
-        <item quantity="one">%1$d sekunde</item>
-        <item quantity="other">%1$d sekundes</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="zero">%1$.1f kilometri stundā</item>
-        <item quantity="one">%1$.1f kilometrs stundā</item>
-        <item quantity="other">%1$.1f kilometri stundā</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="zero">kopējais garums ir %1$.1f kilometri</item>
-        <item quantity="one">kopējais garums ir %1$.1f kilometrs</item>
-        <item quantity="other">kopējais garums ir %1$.1f kilometri</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bankas automāts</string>
     <string name="waypoint_type_bank">banka</string>

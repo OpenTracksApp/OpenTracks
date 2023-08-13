@@ -1,0 +1,8 @@
+v4.6.2: OpenTracks
+
+Bugfix :
+- Crash op stemannoucement voor imperial + meter
+- Crash op instellingen voor imperial + meter
+- Afkappen van grafieken verholpen (Material3-upgrade)
+- Bluetooth-instellingen hebben betrekking op ontbrekende toestemming
+- Geaggregeerde statistieken toonden geen imperiale eenheden voor gemiddelde snelheid

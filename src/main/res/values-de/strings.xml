@@ -595,10 +595,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="value_integer_knots">%1$d Knoten</string>
     <string name="no_compatible_camera_installed">Keine kompatible Kamera-Anwendung installiert</string>
     <string name="no_compatible_gallery_installed">Keine kompatible Bildergalerie Anwendung installiert</string>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">1 nautische Meile [Replaced by voiceDistanceNauticalMilesPlural]</item>
-        <item quantity="other">%1$.1f nautische Meilen [Replaced by voiceDistanceNauticalMilesPlural]</item>
-    </plurals>
     <string name="show_on_dashboard_not_installed">Es ist keine Anwendung installiert, die die OpenTracks Dashboard API unterstützt.</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="show_on_map_format_ask">Frag</string>
@@ -611,10 +607,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="introduction_osm_dashboard">OpenTracks selbst stellt keine Karte bereit. Bitte installieren Sie OSMDashboard, um Ihre Aufnahmen auf einer Karte anzuzeigen.</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 Meile [Replaced by voiceDistanceMilesPlural]</item>
-        <item quantity="other">%1$.1f Meilen [Replaced by voiceDistanceMilesPlural]</item>
-    </plurals>
     <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 nautische Meile} other {{n,number,#.0} nautische Meilen} }</string>
     <string name="value_float_knots">%1$.1f Knoten</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (empfohlen)</string>
@@ -634,33 +626,4 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_recording_min_required_accuracy_summary">Ort wird ignoriert wenn seine Genauigkeit über %1$s liegt</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth Geräte filtern</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Alle verfügbaren Bluetooth Geräte anzeigen</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 Knoten [Replaced by voiceSpeedMKnotsPlural]</item>
-        <item quantity="other">%1$.1f Knoten [Replaced by voiceSpeedMKnotsPlural]</item>
-    </plurals>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 Kilometer [Replaced by voiceDistanceKilometersPlural]</item>
-        <item quantity="other">%1$.1f Kilometer [Replaced by voiceDistanceKilometersPlural]</item>
-    </plurals>
-    <plurals name="voiceHours">
-        <item quantity="one">1 Stunde [Replaced by VoiceHoursPlural]</item>
-        <item quantity="other">%1$d Stunden [Replaced by VoiceHoursPlural]</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 Minute [Replaced by VoiceMinutesPlural]</item>
-        <item quantity="other">%1$d Minuten [Replaced by VoiceMinutesPlural]</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 Sekunde [Replaced by voiceSecondsPlural]</item>
-        <item quantity="other">%1$d Sekunden [Replaced by voiceSecondsPlural]</item>
-    </plurals>
-    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 Knoten} other {{n,number,#.0} Knoten} }</string>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 Meile pro Stunde [Replaced by voiceSpeedMilesPerHourPlural]</item>
-        <item quantity="other">%1$.1f Meilen pro Stunde [Replaced by voiceSpeedMilesPerHourPlural]</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 Kilometer pro Stunde [Replaced by voiceSpeedKilometersPerHourPlural]</item>
-        <item quantity="other">%1$.1f Kilometer pro Stunde [Replaced by voiceSpeedKilometersPerHourPlural]</item>
-    </plurals>
 </resources>

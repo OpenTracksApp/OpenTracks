@@ -1,0 +1,9 @@
+v4.7.0: OpenTracks
+
+Veranderingen:
+- Statistieken: afstand, totale tijd en verplaatsingstijd zijn inbegrepen tussen automatische segmenten (gemaakt vanwege afstand te vorige locatie te lang)
+- Opgenomen tracks tonen weer sensorstatistieken
+
+Bugfix :
+- GPX-export: voor automatische segmenten is er mogelijk geen locatie
+- CSV-export: afstand gebruikte geen decimale groepering

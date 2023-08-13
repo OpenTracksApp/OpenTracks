@@ -258,27 +258,6 @@ limitations under the License.
     <string name="value_none">कोई नहीं</string>
     <string name="value_off">बंद करें</string>
     <string name="value_smallest_recommended">सबसे छोटा (अनुशंसित)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d घंटा</item>
-        <item quantity="other">%1$d घंटे</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d मिनट</item>
-        <item quantity="other">%1$d मिनट</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d सेकंड</item>
-        <item quantity="other">%1$d सेकंड</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f किलोमीटर प्रति घंट</item>
-        <item quantity="other">%1$.1f किलोमीटर प्रति घंट</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">%1$.1f  मील प्रति घंटा</item>
-        <item quantity="other">%1$.1f मील प्रति घंट</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">बैंक</string>
