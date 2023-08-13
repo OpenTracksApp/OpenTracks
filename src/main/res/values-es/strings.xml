@@ -634,61 +634,17 @@ limitations under the License.
     <string name="introduction_osm_dashboard">OpenTracks en sí no proporciona un mapa. Por favor, instale OSMDashboard para ver sus grabaciones en un mapa.</string>
     <string name="share_crash_report">Compartir informe de fallo</string>
     <string name="settings_stats_units_imperial_meter">Imperial (millas, metros)</string>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 milla</item>
-        <item quantity="many">%1$.1f millas</item>
-        <item quantity="other">%1$.1f millas</item>
-    </plurals>
-    <string name="menu_export_all_one_file">Exportar todo (un archivo para todas las pistas)</string>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 mph</item>
-        <item quantity="many">%1$.1f mph</item>
-        <item quantity="other">%1$.1f mph</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minuto</item>
-        <item quantity="many">%1$d minutos</item>
-        <item quantity="other">%1$d minutos</item>
-    </plurals>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 nudo</item>
-        <item quantity="many">%1$.1f nudos</item>
-        <item quantity="other">%1$.1f nudos</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 segundo</item>
-        <item quantity="many">%1$d segundos</item>
-        <item quantity="other">%1$d segundos</item>
-    </plurals>
+
     <string name="settings_recording_min_required_accuracy_summary">La ubicación se ignora si la precisión es superior a %1$s</string>
     <string name="settings_sensor_heart_rate_max">Zonas: frecuencia cardíaca máxima (lpm)</string>
     <string name="settings_api_summary">API de control remoto y estadísticas para otras aplicaciones</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 kilómetro</item>
-        <item quantity="many">%1$.1f kilómetros</item>
-        <item quantity="other">%1$.1f kilómetros</item>
-    </plurals>
+
     <string name="no_compatible_camera_installed">No hay ninguna aplicación de cámara compatible instalada</string>
     <string name="no_compatible_gallery_installed">No hay ninguna aplicación de galería de imágenes compatible instalada</string>
     <string name="sensor_state_cadence_unit">rpm</string>
     <string name="sensor_state_power_unit">W</string>
     <string name="sensor_state_heart_rate_unit">lpm</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Filtrar dispositivos Bluetooth</string>
-    <plurals name="voiceHours">
-        <item quantity="one">1 hora</item>
-        <item quantity="many">%1$d horas</item>
-        <item quantity="other">%1$d horas</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 km/h</item>
-        <item quantity="many">%1$.1f km/h</item>
-        <item quantity="other">%1$.1f km/h</item>
-    </plurals>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">1 milla náutica</item>
-        <item quantity="many">%1$.1f millas náuticas</item>
-        <item quantity="other">%1$.1f millas náuticas</item>
-    </plurals>
     <string name="settings_sensor_bluetooth_service_filter_off">Mostrar todos los dispositivos Bluetooth detectados</string>
     <string name="voice_on_device_speaker_title">Utiliza el altavoz del dispositivo</string>
 </resources>

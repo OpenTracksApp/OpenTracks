@@ -259,37 +259,6 @@ limitations under the License.
     <string name="value_none">Немає</string>
     <string name="value_off">Вимк.</string>
     <string name="value_smallest_recommended">Найменше (рекомендовано)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d година</item>
-        <item quantity="few">%1$d години</item>
-        <item quantity="many">%1$d годин</item>
-        <item quantity="other">%1$d годин</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d хвилина</item>
-        <item quantity="few">%1$d хвилини</item>
-        <item quantity="many">%1$d хвилин</item>
-        <item quantity="other">%1$d хв</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d секунда</item>
-        <item quantity="few">%1$d секунди</item>
-        <item quantity="many">%1$d секунд</item>
-        <item quantity="other">1$d секунд</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f кілометр на годину</item>
-        <item quantity="few">%1$.1f кілометри на годину</item>
-        <item quantity="many">%1$.1f км/год</item>
-        <item quantity="other">%1$.1f кілометра на годину</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">%1$.1f миля на годину</item>
-        <item quantity="few">%1$.1f милі на годину</item>
-        <item quantity="many">%1$.1f миль на годину</item>
-        <item quantity="other">%1$.1f милі на годину</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Банкомат</string>
     <string name="waypoint_type_bank">банк</string>

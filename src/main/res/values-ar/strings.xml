@@ -259,47 +259,6 @@ limitations under the License.
     <string name="value_none">لا شيء</string>
     <string name="value_off">إيقاف</string>
     <string name="value_smallest_recommended">الأصغر (موصى به)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="zero">0 ساعة</item>
-        <item quantity="one">ساعة واحدة</item>
-        <item quantity="two">ساعتان</item>
-        <item quantity="few">%1$d ساعات</item>
-        <item quantity="many">%1$d ساعة</item>
-        <item quantity="other">%1$d ساعة</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="zero">0 دقائق</item>
-        <item quantity="one">دقيقة واحدة</item>
-        <item quantity="two">دقيقتان</item>
-        <item quantity="few">%1$d دقائق</item>
-        <item quantity="many">%1$d دقيقة</item>
-        <item quantity="other">%1$d دقيقة</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="zero">0 ثانية</item>
-        <item quantity="one">ثانية واحدة</item>
-        <item quantity="two">ثانيتان</item>
-        <item quantity="few">%1$d ثوانٍ</item>
-        <item quantity="many">%1$d ثانية</item>
-        <item quantity="other">%1$d ثانية</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="zero">0 كيلومتر في الساعة</item>
-        <item quantity="one">1 كيلومتر في الساعة</item>
-        <item quantity="two">2 كيلومتر في الساعة</item>
-        <item quantity="few">%1$.1f كيلومتر في الساعة</item>
-        <item quantity="many">%1$.1f كيلومتر في الساعة</item>
-        <item quantity="other">%1$.1f كيلومتر في الساعة</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="zero">0 ميل في الساعة</item>
-        <item quantity="one">ميل واحد في الساعة</item>
-        <item quantity="two">2 ميل في الساعة</item>
-        <item quantity="few">%1$.1f أميال في الساعة</item>
-        <item quantity="many">%1$.1f ميلاً في الساعة</item>
-        <item quantity="other">%1$.1f من الأميال في الساعة</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">أجهزة الصراف الآلي</string>
     <string name="waypoint_type_bank">مصرف</string>

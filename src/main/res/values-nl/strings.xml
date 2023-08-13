@@ -323,27 +323,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="value_none">Geen</string>
     <string name="value_off">Uit</string>
     <string name="value_smallest_recommended">Kleinste (aanbevolen)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 uur [Replaced by VoiceHoursPlural]</item>
-        <item quantity="other">%1$d uur [Replaced by VoiceHoursPlural]</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minuut [Replaced by VoiceMinutesPlural]</item>
-        <item quantity="other">%1$d minuten [Replaced by VoiceMinutesPlural]</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 seconde [Replaced by voiceSecondsPlural]</item>
-        <item quantity="other">%1$d seconden [Replaced by voiceSecondsPlural]</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilometer per uur [Replaced by voiceSpeedKilometersPerHourPlural]</item>
-        <item quantity="other">%1$.1f kilometer per uur [Replaced by voiceSpeedKilometersPerHourPlural]</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 mijl per uur [Replaced by voiceSpeedMilesPerHourPlural]</item>
-        <item quantity="other">%1$.1f mijl per uur [Replaced by voiceSpeedMilesPerHourPlural]</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Pinautomaat</string>
     <string name="waypoint_type_bank">bank</string>
@@ -509,14 +488,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="lap_speed">Ronde snelheid</string>
     <string name="speed">Snelheid</string>
     <string name="total_distance">Totale afstand</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 kilometer [Replaced by voiceDistanceKilometersPlural]</item>
-        <item quantity="other">%1$.1f kilometer [Replaced by voiceDistanceKilometersPlural]</item>
-    </plurals>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 mijl [Replaced by voiceDistanceMilesPlural]</item>
-        <item quantity="other">%1$.1f mijlen [Replaced by voiceDistanceMilesPlural]</item>
-    </plurals>
+
     <string name="average_heart_rate">Gemiddelde hartslag</string>
     <string name="current_heart_rate">Actuele hartslag</string>
     <string name="settings_cycling_sensor">Fietsen</string>
@@ -588,14 +560,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="help_data_google_play_services_content">Nee</string>
     <string name="introduction_osm_dashboard">OpenTracks zelf biedt geen kaart. Installeer OSMDashboard om uw opnames op een kaart te bekijken.</string>
     <string name="unit_nautical_mile">NM</string>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 knoop [Replaced by voiceSpeedMKnotsPlural]</item>
-        <item quantity="other">%1$.1f knopen [Replaced by voiceSpeedMKnotsPlural]</item>
-    </plurals>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">1 zeemijl [Replaced by voiceDistanceNauticalMilesPlural]</item>
-        <item quantity="other">%1$.1f zeemijlen [Replaced by voiceDistanceNauticalMilesPlural]</item>
-    </plurals>
     <string name="value_integer_knots">%1$d knopen</string>
     <string name="voice_per_nautical_mile">per zeemijl</string>
     <string name="track_delete_number_of_tracks">%1$d routes</string>

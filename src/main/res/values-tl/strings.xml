@@ -259,27 +259,6 @@ limitations under the License.
     <string name="value_none">Wala</string>
     <string name="value_off">I-off</string>
     <string name="value_smallest_recommended">Pinakamaliit (inirerekomenda)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d oras</item>
-        <item quantity="other">%1$d (na) oras</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d minuto</item>
-        <item quantity="other">%1$d (na) minuto</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d segundo</item>
-        <item quantity="other">%1$d (na) segundo</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f kilometro bawat oras</item>
-        <item quantity="other">%1$.1f (na) kilometro bawat oras</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">%1$.1f milya bawat oras</item>
-        <item quantity="other">%1$.1f (na) milya bawat oras</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bangko</string>

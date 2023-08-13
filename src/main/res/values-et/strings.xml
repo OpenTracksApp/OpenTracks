@@ -321,27 +321,6 @@ limitations under the License.
     <string name="value_none">Mitte ühtegi</string>
     <string name="value_off">Väljas</string>
     <string name="value_smallest_recommended">Väikseim (soovitatav)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 tund</item>
-        <item quantity="other">%1$d tundi</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minut</item>
-        <item quantity="other">%1$d minutit</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 sekund</item>
-        <item quantity="other">%1$d sekundit</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilomeeter tunnis</item>
-        <item quantity="other">%1$.1f kilomeetrit tunnisr</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 miil tunnis</item>
-        <item quantity="other">%1$.1f miili tunnis</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Sularahaautomaat</string>
     <string name="waypoint_type_bank">pank</string>

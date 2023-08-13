@@ -257,27 +257,6 @@ limitations under the License.
     <string name="value_none">Cap</string>
     <string name="value_off">Desactivat</string>
     <string name="value_smallest_recommended">Més petit (recomanat)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 hora</item>
-        <item quantity="other">%1$d hores</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minut</item>
-        <item quantity="other">%1$d minuts</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 segon</item>
-        <item quantity="other">%1$d segons</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 quilòmetre per hora</item>
-        <item quantity="other">%1$.1f quilòmetres per hora</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 milla per hora</item>
-        <item quantity="other">%1$.1f milles per hora</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">caixer</string>
     <string name="waypoint_type_bank">banc</string>

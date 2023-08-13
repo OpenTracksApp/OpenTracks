@@ -258,27 +258,6 @@ limitations under the License.
     <string name="value_none">Καμία</string>
     <string name="value_off">Απενεργοποιημένο</string>
     <string name="value_smallest_recommended">Μικρότερη (συνιστάται)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 ώρα</item>
-        <item quantity="other">%1$d ώρες</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 λεπτό</item>
-        <item quantity="other">%1$d λεπτά</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 δευτερόλεπτο</item>
-        <item quantity="other">%1$d δευτερόλεπταr</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 χιλιόμετρο ανά ώρα</item>
-        <item quantity="other">%1$.1f χιλιόμετρα ανά ώρα</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 μίλι ανά ώρα</item>
-        <item quantity="other">%1$.1f μίλια ανά ώρα</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">τράπεζα</string>

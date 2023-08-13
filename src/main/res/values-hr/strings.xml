@@ -259,32 +259,6 @@ limitations under the License.
     <string name="value_none">Ništa</string>
     <string name="value_off">Isključeno</string>
     <string name="value_smallest_recommended">Najmanji (preporučeno)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">%1$d sat</item>
-        <item quantity="few">%1$d sata</item>
-        <item quantity="other">%1$d sati</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">%1$d minutu</item>
-        <item quantity="few">%1$d minute</item>
-        <item quantity="other">%1$d minuta</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">%1$d sekundu</item>
-        <item quantity="few">%1$d sekunde</item>
-        <item quantity="other">%1$d sekunda</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">%1$.1f kilometra na sat</item>
-        <item quantity="few">%1$.1f kilometra na sat</item>
-        <item quantity="other">%1$.1f kilometara na sat</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">%1$.1f milje na sat</item>
-        <item quantity="few">%1$.1f milje na sat</item>
-        <item quantity="other">%1$.1f milja na sat</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bankomat</string>
     <string name="waypoint_type_bank">banka</string>

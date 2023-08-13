@@ -257,22 +257,6 @@ limitations under the License.
     <string name="value_none">ไม่มี</string>
     <string name="value_off">ปิด</string>
     <string name="value_smallest_recommended">น้อยที่สุด (แนะนำ)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="other">%1$d ชั่วโมง</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="other">%1$d นาท</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="other">%1$d ต่อไมล</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="other">%1$.1f กิโลเมตรต่อชั่วโมง</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="other">%1$.1f ไมล์ต่อชั่วโมง</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">เอทีเอ็ม</string>
     <string name="waypoint_type_bank">ธนาคาร</string>

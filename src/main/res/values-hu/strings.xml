@@ -259,27 +259,6 @@ limitations under the License.
     <string name="value_none">Egy sem</string>
     <string name="value_off">Ki</string>
     <string name="value_smallest_recommended">Legkisebb (ajánlott)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 óra</item>
-        <item quantity="other">%1$d óra</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 perc</item>
-        <item quantity="other">%1$d perc</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 másodperc</item>
-        <item quantity="other">%1$d másodperc</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilométer óránként</item>
-        <item quantity="other">%1$.1f kilométer óránként</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 mérföld óránként</item>
-        <item quantity="other">%1$.1f mérföld óránként</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankautomata</string>
     <string name="waypoint_type_bank">bank</string>

@@ -331,27 +331,6 @@ limitations under the License.
     <string name="value_none">Ei mitään</string>
     <string name="value_off">Pois käytöstä</string>
     <string name="value_smallest_recommended">Pienin (suositus)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 tunti</item>
-        <item quantity="other">%1$d tuntia</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minuutti</item>
-        <item quantity="other">%1$d minuuttia</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 sekunti</item>
-        <item quantity="other">%1$d sekuntia</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilometri tunnissa</item>
-        <item quantity="other">%1$.1f kilometriä tunnissa</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 maili tunnissa</item>
-        <item quantity="other">%1$.1f mailia tunnissa</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">pankkiautomaatti</string>
     <string name="waypoint_type_bank">pankki</string>

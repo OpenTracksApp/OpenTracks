@@ -324,27 +324,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="value_none">Bat ere ez</string>
     <string name="value_off">Desaktibatuta</string>
     <string name="value_smallest_recommended">Txikiena (gomendatua)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 ordu</item>
-        <item quantity="other">%1$d ordu</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minutu</item>
-        <item quantity="other">%1$d minutu</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 segundo</item>
-        <item quantity="other">%1$d segundo</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilometro orduko</item>
-        <item quantity="other">%1$.1f kilometro orduko</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 milia orduko</item>
-        <item quantity="other">%1$.1f milia orduko</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">kutxazaina</string>
     <string name="waypoint_type_bank">bankua</string>

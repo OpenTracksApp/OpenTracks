@@ -555,31 +555,6 @@ limitations under the License.
     <string name="value_none">None</string>
     <string name="value_off">Off</string>
     <string name="value_smallest_recommended">Smallest (recommended)</string>
-    <!-- Voice -->
-    <plurals name="voiceHours">
-        <item quantity="one">1 hour [Replaced by VoiceHoursPlural]</item>
-        <item quantity="other">%1$d hours [Replaced by VoiceHoursPlural]</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">1 minute [Replaced by VoiceMinutesPlural]</item>
-        <item quantity="other">%1$d minutes [Replaced by VoiceMinutesPlural]</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">1 second [Replaced by voiceSecondsPlural]</item>
-        <item quantity="other">%1$d seconds [Replaced by voiceSecondsPlural]</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 kilometer per hour [Replaced by voiceSpeedKilometersPerHourPlural]</item>
-        <item quantity="other">%1$.1f kilometers per hour [Replaced by voiceSpeedKilometersPerHourPlural]</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 mile per hour [Replaced by voiceSpeedMilesPerHourPlural]</item>
-        <item quantity="other">%1$.1f miles per hour [Replaced by voiceSpeedMilesPerHourPlural]</item>
-    </plurals>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 knot [Replaced by voiceSpeedMKnotsPlural]</item>
-        <item quantity="other">%1$.1f knots [Replaced by voiceSpeedMKnotsPlural]</item>
-    </plurals>
     <string name="voiceHoursPlural">
         {n, plural,
         =1 {1 hour}
@@ -625,18 +600,6 @@ limitations under the License.
     <string name="lap_speed">Lap speed</string>
     <string name="speed">Average moving speed</string>
     <string name="total_distance">Total distance</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 kilometer [Replaced by voiceDistanceKilometersPlural]</item>
-        <item quantity="other">%1$.1f kilometers [Replaced by voiceDistanceKilometersPlural]</item>
-    </plurals>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 mile [Replaced by voiceDistanceMilesPlural]</item>
-        <item quantity="other">%1$.1f miles [Replaced by voiceDistanceMilesPlural]</item>
-    </plurals>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">1 nautical mile [Replaced by voiceDistanceNauticalMilesPlural]</item>
-        <item quantity="other">%1$.1f nautical miles [Replaced by voiceDistanceNauticalMilesPlural]</item>
-    </plurals>
     <string name="voiceDistanceKilometersPlural">
         {n, plural,
         =1 {1 kilometer}

@@ -210,36 +210,6 @@
     <string name="value_none">ללא</string>
     <string name="value_off">מושתק</string>
     <string name="value_smallest_recommended">הנמוך ביותר (מומלץ)</string>
-    <plurals name="voiceHours">
-        <item quantity="one">שעה אחת</item>
-        <item quantity="two">שעתיים</item>
-        <item quantity="many">%1$d שעות</item>
-        <item quantity="other">%1$d שעות</item>
-    </plurals>
-    <plurals name="voiceMinutes">
-        <item quantity="one">דקה אחת</item>
-        <item quantity="two">שתי דקות</item>
-        <item quantity="many">%1$d דקות</item>
-        <item quantity="other">%1$d דקות</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="one">שנייה אחת</item>
-        <item quantity="two">שתי שניות</item>
-        <item quantity="many">%1$d שניות</item>
-        <item quantity="other">%1$d שניותr</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">קילומטר אחד לשעה</item>
-        <item quantity="two">שני קילומטר לשעה</item>
-        <item quantity="many">%1$.1f קילומטר לשעה</item>
-        <item quantity="other">%1$.1f קילומטר לשעה</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">מייל אחד לשעה</item>
-        <item quantity="two">שני מייל לשעה</item>
-        <item quantity="many">%1$.1f מייל לשעה</item>
-        <item quantity="other">%1$.1f מייל לשעה</item>
-    </plurals>
     <string name="waypoint_type_atm">כספומט</string>
     <string name="waypoint_type_bank">בנק</string>
     <string name="waypoint_type_bar">בר</string>

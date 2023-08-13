@@ -611,43 +611,16 @@ limitations under the License.
     <string name="track_speed_notification">速度：%1$s</string>
     <string name="settings_stats_units_imperial_meter">英制（英里，米）</string>
     <string name="voice_on_device_speaker_title">使用设备的扬声器</string>
-    <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="other">%1$.1f 海里</item>
-    </plurals>
     <string name="introduction_osm_dashboard">OpenTracks 本身不提供地图。请安装 OSMDashboard 应用，以便在地图上查看您的记录。</string>
     <string name="settings_sensor_bluetooth_service_filter_title">筛选蓝牙设备</string>
     <string name="menu_export_all_one_file">全部导出（一个文件存储全部路线）</string>
     <string name="no_compatible_camera_installed">尚未安装兼容的照相机应用</string>
     <string name="no_compatible_gallery_installed">尚未安装兼容的图库应用</string>
     <string name="settings_recording_min_required_accuracy_summary">精度不足 %1$s 的位置会被忽略</string>
-    <plurals name="voiceHours">
-        <item quantity="other">%1$d 小时</item>
-    </plurals>
     <string name="settings_sensor_heart_rate_max">心率区间：最大心率（bpm）</string>
     <string name="settings_api_summary">给其他应用使用的远程控制和统计 API</string>
-    <plurals name="voiceMinutes">
-        <item quantity="other">%1$d 分钟</item>
-    </plurals>
-    <plurals name="voiceSeconds">
-        <item quantity="other">%1$d 秒</item>
-    </plurals>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="other">%1$.1f 公里每小时</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="other">%1$.1f 英里每小时</item>
-    </plurals>
-    <plurals name="voiceSpeedMKnots">
-        <item quantity="other">%1$.1f 节</item>
-    </plurals>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="other">%1$.1f 公里</item>
-    </plurals>
     <string name="sensor_state_cadence_unit">rpm</string>
     <string name="sensor_state_heart_rate_unit">bpm</string>
     <string name="sensor_state_power_unit">瓦</string>
-    <plurals name="voiceDistanceMiles">
-        <item quantity="other">%1$.1f 英里</item>
-    </plurals>
     <string name="settings_sensor_bluetooth_service_filter_off">显示所有可发现的蓝牙设备</string>
 </resources>
