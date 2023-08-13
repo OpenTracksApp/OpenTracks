@@ -64,7 +64,6 @@ import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.services.TrackRecordingServiceTestUtils;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
@@ -113,14 +112,10 @@ public class ExportImportTest {
 
     @Before
     public void fileSetup() throws IOException {
-        TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
-
         tmpFile = File.createTempFile("test", "test", context.getFilesDir());
         tmpFileUri = Uri.fromFile(tmpFile);
 
         trackImporter = new TrackImporter(context, contentProviderUtils, Distance.of(200), true);
-
-        TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
     }
 
     @After
@@ -130,8 +125,6 @@ public class ExportImportTest {
 
         // Ensure that the database is empty after every test
         contentProviderUtils.deleteAllTracks(context);
-
-        TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
     }
 
     public void setUp() throws TimeoutException {

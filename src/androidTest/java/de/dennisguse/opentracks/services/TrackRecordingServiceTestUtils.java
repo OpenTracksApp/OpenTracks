@@ -1,23 +1,10 @@
 package de.dennisguse.opentracks.services;
 
-import android.content.Context;
 import android.location.Location;
 
-import androidx.test.rule.ServiceTestRule;
-
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public class TrackRecordingServiceTestUtils {
-
-
-    //TODO Workaround as service is not stopped on API23; thus sharedpreferences are not reset between tests.
-    //TODO Anyhow, the service should re-create all it's resources if a recording starts and makes sure that there is no leftovers from previous recordings.
-    @Deprecated
-    public static void resetService(ServiceTestRule mServiceRule, Context context) {
-        // Let's use default values.
-        PreferencesUtils.clear();
-    }
 
     static void sendGPSLocation(TrackPointCreator trackPointCreator, String time, double latitude, double longitude, float accuracy, long speed) {
         Location location = new Location("mock");
