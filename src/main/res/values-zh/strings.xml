@@ -623,4 +623,5 @@ limitations under the License.
     <string name="sensor_state_heart_rate_unit">bpm</string>
     <string name="sensor_state_power_unit">瓦</string>
     <string name="settings_sensor_bluetooth_service_filter_off">显示所有可发现的蓝牙设备</string>
+    <string name="help_data_google_play_services_content">否</string>
 </resources>
