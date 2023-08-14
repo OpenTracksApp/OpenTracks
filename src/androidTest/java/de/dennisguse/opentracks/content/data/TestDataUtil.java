@@ -109,7 +109,7 @@ public class TestDataUtil {
     }
 
     public static TrackPoint createTrackPoint(int i) {
-        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(i + 1));
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(i));
         trackPoint.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
         trackPoint.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
         trackPoint.setHorizontalAccuracy(Distance.of(i / 100.0f));
