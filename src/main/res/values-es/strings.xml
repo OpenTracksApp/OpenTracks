@@ -634,11 +634,9 @@ limitations under the License.
     <string name="introduction_osm_dashboard">OpenTracks en sí no proporciona un mapa. Por favor, instale OSMDashboard para ver sus grabaciones en un mapa.</string>
     <string name="share_crash_report">Compartir informe de fallo</string>
     <string name="settings_stats_units_imperial_meter">Imperial (millas, metros)</string>
-
     <string name="settings_recording_min_required_accuracy_summary">La ubicación se ignora si la precisión es superior a %1$s</string>
     <string name="settings_sensor_heart_rate_max">Zonas: frecuencia cardíaca máxima (lpm)</string>
     <string name="settings_api_summary">API de control remoto y estadísticas para otras aplicaciones</string>
-
     <string name="no_compatible_camera_installed">No hay ninguna aplicación de cámara compatible instalada</string>
     <string name="no_compatible_gallery_installed">No hay ninguna aplicación de galería de imágenes compatible instalada</string>
     <string name="sensor_state_cadence_unit">rpm</string>
@@ -647,4 +645,5 @@ limitations under the License.
     <string name="settings_sensor_bluetooth_service_filter_title">Filtrar dispositivos Bluetooth</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Mostrar todos los dispositivos Bluetooth detectados</string>
     <string name="voice_on_device_speaker_title">Utiliza el altavoz del dispositivo</string>
+    <string name="menu_export_all_one_file">Exportar todo (un archivo para todas las pistas)</string>
 </resources>
