@@ -542,7 +542,7 @@ limitations under the License.
     <string name="show_on_map_format_ask">Spør</string>
     <string name="show_on_dashboard">OpenTracks-API for oversikten</string>
     <string name="always">Alltid</string>
-    <string name="settings_announcements_average_heart_rate">Gjen. puls</string>
+    <string name="settings_announcements_average_heart_rate">Gjennomsnittlig puls</string>
     <string name="settings_announcements_lap_heart_rate">Runde-puls</string>
     <string name="settings_announcements_average_speed_pace">Gjen. hastighet/tempo</string>
     <string name="image_discard">Forkast</string>
@@ -580,4 +580,5 @@ limitations under the License.
     <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 nautisk mil} other {{n,number,#.0} nautiske mil} }</string>
     <string name="sensor_state_cadence_unit">o/min</string>
     <string name="sensor_state_heart_rate_unit">slag/min</string>
+    <string name="average_heart_rate">Gjennomsnittlig puls</string>
 </resources>
