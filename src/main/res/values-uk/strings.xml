@@ -152,7 +152,7 @@ limitations under the License.
     <string name="menu_aggregated_statistics">Сукупна статистика</string>
     <string name="menu_delete">Видалити</string>
     <string name="menu_edit">Редагувати</string>
-    <string name="menu_export_all">Експортувати все</string>
+    <string name="menu_export_all">Експортувати все (один файл на трек)</string>
     <string name="menu_help">Довідка</string>
     <string name="menu_import_all">Імпортувати все</string>
     <string name="menu_insert_marker">Вставити маркер</string>
@@ -352,9 +352,9 @@ limitations under the License.
     <string name="activity_type_escooter">електро-байк</string>
     <string name="settings_sensor_wheel_circumference">Окружність колеса (мм)</string>
     <string name="description_altitude_loss">Зменшення висоти: %1$d м (%2$d фут.)</string>
-    <string name="export_progress_summary_new_msg">Нові треки експортовано</string>
-    <string name="export_progress_summary_overwrite_msg">Треки перезаписано</string>
-    <string name="export_progress_summary_skip_msg">Треки пропущено</string>
+    <string name="export_progress_summary_new_msg">Нові файли експортовано</string>
+    <string name="export_progress_summary_overwrite_msg">Файли перезаписано</string>
+    <string name="export_progress_summary_skip_msg">Пропущені файли</string>
     <string name="export_progress_summary_errors_msg">Помилки</string>
     <string name="generic_open_track">Відкрити Трек</string>
     <string name="import_file_imported">Файл %1$s імпортовано</string>
@@ -364,9 +364,9 @@ limitations under the License.
     <string name="import_progress_summary_errors_msg">Помилки</string>
     <string name="export_with_photos">з фото</string>
     <string name="export_without_photos">без</string>
-    <string name="export_track_already_exists_msg">Трек %1$s вже існує в цільовій директорії.</string>
+    <string name="export_track_already_exists_msg">Файл %1$s вже існує в цільовій директорії.</string>
     <string name="export_all_do_it_for_all">робити це для усіх конфліктів</string>
-    <string name="export_track_errors">Треки не експортовано</string>
+    <string name="export_track_errors">Файли не експортовано</string>
     <string name="generic_overwrite">Перезаписати</string>
     <string name="generic_skip">Пропустити</string>
     <string name="generic_show_errors">Показати помилки</string>
@@ -518,4 +518,22 @@ limitations under the License.
     <string name="activity_type_workout">тренування</string>
     <string name="activity_type_swimming_open">плавання у відкритих водоймах</string>
     <string name="activity_type_swimming">плавання</string>
+    <string name="generic_dismiss">Відхилити</string>
+    <string name="settings_export_filename_title">Формат імені файлу</string>
+    <string name="description_pace_nautical">Темп (хв/мм)</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="description_speed_nautical">Швидкість (вузли)</string>
+    <string name="image_discard">Скасувати</string>
+    <string name="sensor_state_cadence_unit">об/хв</string>
+    <string name="sensor_state_heart_rate_unit">уд/хв</string>
+    <string name="sensor_state_power_unit">Вт</string>
+    <string name="settings_recording_min_required_accuracy_summary">Місцезнаходження ігнорується, якщо його точність перевищує %1$s</string>
+    <string name="settings_announcements_average_heart_rate">Середній пульс</string>
+    <string name="settings_announcements_lap_heart_rate">Пульс за коло</string>
+    <string name="settings_announcements_average_speed_pace">Середня швидкість/темп</string>
+    <string name="gps_recording_without_signal">OpenTracks записує без даних GPS.</string>
+    <string name="settings_announcements_lap_speed_pace">Швидкість/темп за коло</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Фільтрувати пристрої Bluetooth</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Показати всі видимі пристрої Bluetooth</string>
+    <string name="menu_export_all_one_file">Експортувати все (один файл для всіх треків)</string>
 </resources>
