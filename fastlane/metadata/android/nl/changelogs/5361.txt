@@ -1,0 +1,10 @@
+v4.8.0: OpenTracks
+
+Veranderingen:
+- Toestemming: ACCESS_BACKGROUND_LOCATION is vereist vanwege API
+- Voorbereiding voor tijdgebaseerde stationaire detectie
+- Onderscheid bron (GPS vs BLE sensoren) vervallen voor opgeslagen gegevens 
+
+Ontwikkelaar:
+- verwijderde raceconditie-werkplekken (TrackRecordingService en GpsStatusManager)
+- TrackRecordingServiceConnection zorgt voor service-uitschakeling
