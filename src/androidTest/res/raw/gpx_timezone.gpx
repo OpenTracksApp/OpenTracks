@@ -31,8 +31,6 @@ xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/
 <gpxtrkx:MovingTime>0</gpxtrkx:MovingTime>
 <gpxtrkx:StoppedTime>0</gpxtrkx:StoppedTime>
 <gpxtrkx:MaxSpeed>0.0</gpxtrkx:MaxSpeed>
-<gpxtrkx:Ascent>null</gpxtrkx:Ascent>
-<gpxtrkx:Descent>null</gpxtrkx:Descent>
 </gpxtrkx:TrackStatsExtension>
 </extensions>
 <trkseg>
