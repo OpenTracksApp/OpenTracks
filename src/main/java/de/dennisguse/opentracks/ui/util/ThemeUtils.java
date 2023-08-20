@@ -52,4 +52,15 @@ public class ThemeUtils {
         typedArray.recycle();
         return fontSize;
     }
+
+    /**
+     * Gets the photo height.
+     */
+    public static int getPhotoHeight(Context context) {
+        int[] attrs = new int[]{android.R.attr.listPreferredItemHeight};
+        TypedArray typeArray = context.obtainStyledAttributes(attrs);
+        int height = typeArray.getDimensionPixelSize(0, 128);
+        typeArray.recycle();
+        return 2 * height;
+    }
 }
