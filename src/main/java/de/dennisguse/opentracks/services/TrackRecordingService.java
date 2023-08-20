@@ -32,6 +32,8 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.data.models.Distance;
@@ -244,6 +246,15 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     public void newGpsStatus(GpsStatusValue gpsStatusValue) {
         Log.e(TAG, "newGpsStatus: " + gpsStatusValue.message);
 
+        if (notificationManager == null) {
+
+            StringWriter writer = new StringWriter();
+            Exception e = new RuntimeException("TrackRecording.newGpsStatus() called after onDestroy(); objectID: " + this + " with thread: " + Thread.currentThread().toString());
+            e.printStackTrace(new PrintWriter(writer));
+
+            Log.e(TAG, e.getMessage() + " " + writer);
+            return;
+        }
         notificationManager.updateContent(getString(gpsStatusValue.message));
         gpsStatusObservable.postValue(gpsStatusValue);
     }
