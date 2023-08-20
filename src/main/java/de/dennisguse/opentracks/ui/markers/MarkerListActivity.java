@@ -18,19 +18,16 @@ package de.dennisguse.opentracks.ui.markers;
 
 import android.app.SearchManager;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import java.util.List;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.AbstractActivity;
@@ -38,15 +35,12 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.databinding.MarkerListBinding;
 import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.share.ShareUtils;
-import de.dennisguse.opentracks.ui.markers.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.ui.util.ActivityUtils;
-import de.dennisguse.opentracks.ui.util.ScrollVisibleViews;
 import de.dennisguse.opentracks.util.IntentUtils;
 
 /**
@@ -54,22 +48,19 @@ import de.dennisguse.opentracks.util.IntentUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class MarkerListActivity extends AbstractActivity implements DeleteMarkerCaller {
+public class MarkerListActivity extends AbstractActivity {
 
     public static final String EXTRA_TRACK_ID = "track_id";
-
-    private static final String TAG = MarkerListActivity.class.getSimpleName();
 
     private ContentProviderUtils contentProviderUtils;
 
     private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
-    private Track track;
-    private MarkerResourceCursorAdapter resourceCursorAdapter;
+    private Track.Id trackId;
+
+    private MarkerListAdapter adapter;
 
     private MarkerListBinding viewBinding;
-
-    private final MarkerLoaderCallback loaderCallbacks = new MarkerLoaderCallback();
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
@@ -105,33 +96,24 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     private MenuItem insertMarkerMenuItem;
     private MenuItem searchMenuItem;
 
+    private String searchQuery;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-        Track.Id trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
-
         contentProviderUtils = new ContentProviderUtils(this);
 
-        track = trackId != null ? contentProviderUtils.getTrack(trackId) : null;
-
-        viewBinding.markerList.setEmptyView(viewBinding.markerListEmpty);
-        viewBinding.markerList.setOnItemClickListener((parent, view, position, id) -> {
-            resourceCursorAdapter.markerInvalid(id);
-            Intent intent = IntentUtils.newIntent(MarkerListActivity.this, MarkerDetailActivity.class)
-                    .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, new Marker.Id(id));
-            startActivity(intent);
-        });
-
-        resourceCursorAdapter = new MarkerResourceCursorAdapter(this, R.layout.list_item);
-        ScrollVisibleViews scrollVisibleViews = new ScrollVisibleViews(resourceCursorAdapter);
-        viewBinding.markerList.setOnScrollListener(scrollVisibleViews);
-        viewBinding.markerList.setAdapter(resourceCursorAdapter);
-        ActivityUtils.configureListViewContextualMenu(viewBinding.markerList, contextualActionModeCallback);
+        trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindCallback);
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        adapter = new MarkerListAdapter(this, viewBinding.markerList, null);
+        viewBinding.markerList.setLayoutManager(layoutManager);
+        viewBinding.markerList.setAdapter(adapter);
+
         setSupportActionBar(viewBinding.markerListToolbar);
+        adapter.setActionModeCallback(contextualActionModeCallback);
     }
 
     @Override
@@ -145,7 +127,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         super.onResume();
         trackRecordingServiceConnection.bind(this);
         this.invalidateOptionsMenu();
-        loadData(getIntent());
+        loadData();
     }
 
     @Override
@@ -157,9 +139,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        resourceCursorAdapter.clear();
         viewBinding = null;
-        resourceCursorAdapter = null;
+        adapter = null;
         contentProviderUtils = null;
     }
 
@@ -183,15 +164,15 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        insertMarkerMenuItem.setVisible(track != null && track.getId().equals(recordingStatus.getTrackId()));
+        insertMarkerMenuItem.setVisible(trackId != null && trackId.equals(recordingStatus.getTrackId()));
         return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (track != null && item.getItemId() == R.id.marker_list_insert_marker) {
+        if (trackId != null && item.getItemId() == R.id.marker_list_insert_marker) {
             Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-                    .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, track.getId());
+                    .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
             startActivity(intent);
             return true;
         }
@@ -229,7 +210,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
         if (itemId == R.id.list_context_menu_edit) {
             if (markerIds.length == 1) {
-                resourceCursorAdapter.markerInvalid(markerIds[0].id());
                 Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
                         .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerIds[0]);
                 startActivity(intent);
@@ -243,21 +223,11 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         }
 
         if (itemId == R.id.list_context_menu_select_all) {
-            for (int i = 0; i < viewBinding.markerList.getCount(); i++) {
-                viewBinding.markerList.setItemChecked(i, true);
-            }
+            adapter.setAllSelected(true);
             return false;
         }
 
         return false;
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_SEARCH && searchMenuItem != null) {
-            return true;
-        }
-        return super.onKeyUp(keyCode, event);
     }
 
     @Override
@@ -267,8 +237,9 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             searchView.setIconified(true);
         }
 
-        if (loaderCallbacks.getSearchQuery() != null) {
-            loaderCallbacks.setSearch(null);
+        if (searchQuery != null) {
+            searchQuery = null;
+            loadData();
             return;
         }
 
@@ -276,78 +247,33 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     }
 
     @Override
-    public void onNewIntent(Intent intent) {
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        setIntent(intent);
-        loadData(intent);
-    }
 
-    private void loadData(Intent intent) {
-        String searchQuery = null;
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             searchQuery = intent.getStringExtra(SearchManager.QUERY);
+        } else {
+            searchQuery = null;
         }
-
-        loaderCallbacks.setSearch(searchQuery);
     }
 
-    @Override
-    public void onMarkerDeleted() {
-        // Do nothing
+    private void loadData() {
+        viewBinding.markerListToolbar.setTitle(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.menu_markers)));
+
+        List<Marker> markers = contentProviderUtils.searchMarkers(trackId, searchQuery);
+
+        adapter.swapData(markers);
+
+        if (markers.isEmpty()) {
+            viewBinding.markerListEmpty.setVisibility(View.VISIBLE);
+            viewBinding.markerList.setVisibility(View.GONE);
+        } else {
+            viewBinding.markerListEmpty.setVisibility(View.GONE);
+            viewBinding.markerList.setVisibility(View.VISIBLE);
+        }
     }
 
     private void onRecordingStatusChanged(RecordingStatus status) {
         recordingStatus = status;
-    }
-
-    private class MarkerLoaderCallback implements LoaderManager.LoaderCallbacks<Cursor> {
-
-        private String searchQuery = null;
-
-        public String getSearchQuery() {
-            return searchQuery;
-        }
-
-        public void setSearch(String searchQuery) {
-            this.searchQuery = searchQuery;
-            restart();
-            viewBinding.markerListToolbar.setTitle(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.menu_markers)));
-        }
-
-        public void restart() {
-            LoaderManager.getInstance(MarkerListActivity.this).restartLoader(0, null, loaderCallbacks);
-        }
-
-        @NonNull
-        @Override
-        public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-            final String[] PROJECTION = new String[]{MarkerColumns._ID,
-                    MarkerColumns.NAME, MarkerColumns.DESCRIPTION, MarkerColumns.CATEGORY,
-                    MarkerColumns.TIME, MarkerColumns.PHOTOURL, MarkerColumns.TRACKID};
-
-            if (searchQuery == null) {
-                if (track != null) {
-                    return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, MarkerColumns.TRACKID + "=?", new String[]{String.valueOf(track.getId().id())}, null);
-                } else {
-                    return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, null, null, null);
-                }
-            } else {
-                final String SEARCH_QUERY = MarkerColumns.NAME + " LIKE ? OR " +
-                        MarkerColumns.DESCRIPTION + " LIKE ? OR " +
-                        MarkerColumns.CATEGORY + " LIKE ?";
-                final String[] selectionArgs = new String[]{"%" + searchQuery + "%", "%" + searchQuery + "%", "%" + searchQuery + "%"};
-                return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, SEARCH_QUERY, selectionArgs, MarkerColumns.DEFAULT_SORT_ORDER + " DESC");
-            }
-        }
-
-        @Override
-        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-            resourceCursorAdapter.swapCursor(cursor);
-        }
-
-        @Override
-        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-            resourceCursorAdapter.swapCursor(null);
-        }
     }
 }
