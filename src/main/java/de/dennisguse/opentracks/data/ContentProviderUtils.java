@@ -548,6 +548,35 @@ public class ContentProviderUtils {
         return contentResolver.query(MarkerColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
     }
 
+    public List<Marker> searchMarkers(Track.Id trackId, String query) {
+        String selection = null;
+        String[] selectionArgs = null;
+        String sortOrder = null;
+
+        if (query == null) {
+            if (trackId != null) {
+                selection = MarkerColumns.TRACKID + " = ?";
+                selectionArgs = new String[]{Long.toString(trackId.id())};
+            }
+        } else {
+            selection = MarkerColumns.NAME + " LIKE ? OR " +
+                    MarkerColumns.DESCRIPTION + " LIKE ? OR " +
+                    MarkerColumns.CATEGORY + " LIKE ?";
+            selectionArgs = new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%"};
+            sortOrder = MarkerColumns.DEFAULT_SORT_ORDER + " DESC";
+        }
+
+        ArrayList<Marker> markers = new ArrayList<>();
+        try (Cursor cursor = getMarkerCursor(null, selection, selectionArgs, sortOrder, -1)) {
+            if (cursor.moveToFirst()) {
+                do {
+                    markers.add(createMarker(cursor));
+                } while (cursor.moveToNext());
+            }
+        }
+        return markers;
+    }
+
     /**
      * Fills a {@link TrackPoint} from a cursor.
      *
