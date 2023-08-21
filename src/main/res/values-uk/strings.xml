@@ -482,7 +482,7 @@ limitations under the License.
     <string name="settings_import_section">Імпорт</string>
     <string name="stats_sensors_power">Сила</string>
     <string name="stats_sensors_cadence">Каденція</string>
-    <string name="stats_sensors_heart_rate">частота серцебиття</string>
+    <string name="stats_sensors_heart_rate">Частота серцебиття</string>
     <string name="settings_defaults_summary">Переважні одиниці виміру, активність за замовчуванням, Ім\'я треку за замовчуванням</string>
     <string name="settings_open_tracks_summary">Все про проект OpenTracks</string>
     <string name="settings_defaults_title">Одиниці виміру і дії за замовчуванням</string>
@@ -536,4 +536,21 @@ limitations under the License.
     <string name="settings_sensor_bluetooth_service_filter_title">Фільтрувати пристрої Bluetooth</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Показати всі видимі пристрої Bluetooth</string>
     <string name="menu_export_all_one_file">Експортувати все (один файл для всіх треків)</string>
+    <string name="settings_stats_units_imperial_meter">Британська (милі, метри)</string>
+    <string name="settings_api_title">Публічний API</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Записані дані не будуть автоматично передаватись іншим програмам.</string>
+    <string name="settings_public_api_package_title">Назва пакета для публічного API</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Програма, яка почала запис, також може отримати доступ до записаних даних.</string>
+    <string name="unit_nautical_mile">Морські милі</string>
+    <string name="settings_public_api_enabled_summary_on">Інші встановлені програми можуть запускати або зупиняти записи.</string>
+    <string name="settings_public_api_enabled_summary_off">Тільки OpenTracks може запускати та зупиняти записи.</string>
+    <string name="track_delete_number_of_tracks">%1$d треків</string>
+    <string name="settings_public_api_dashboard_enabled_title">Автоматична передача даних</string>
+    <string name="settings_public_api_enabled_title">Публічний API</string>
+    <string name="settings_public_api_disabled_toast">Публічний API OpenTracks вимкнено: його можна ввімкнути в налаштуваннях.</string>
+    <string name="track_discarding">Скасування Доріжки</string>
+    <string name="unit_knots">вузли</string>
+    <string name="settings_sensor_heart_rate_max">Зони: максимальна частота серцевих скорочень (уд/хв)</string>
+    <string name="settings_stats_units_nautical">Морська (морські милі, фут)</string>
+    <string name="settings_api_summary">API дистанційного керування та статистики для інших програм</string>
 </resources>
