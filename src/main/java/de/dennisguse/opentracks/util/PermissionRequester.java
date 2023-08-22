@@ -60,11 +60,12 @@ public class PermissionRequester {
     private static final List<String> GPS_PERMISSION;
 
     static {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            GPS_PERMISSION = List.of(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION);
-        } else {
+        //TODO ACCESS_BACKGROUND_LOCATION is required for API, but the permission is not properly granted. See #1653.
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//            GPS_PERMISSION = List.of(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION);
+//        } else {
             GPS_PERMISSION = List.of(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
-        }
+//        }
     }
 
     private static final List<String> BLUETOOTH_PERMISSIONS;

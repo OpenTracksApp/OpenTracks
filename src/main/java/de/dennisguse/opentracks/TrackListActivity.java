@@ -276,7 +276,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     private void requestRequiredPermissions() {
-        PermissionRequester.ALL.requestPermissionsIfNeeded(this, this, null, (requester) -> Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show());
+        PermissionRequester.ALL.requestPermissionsIfNeeded(this, this, null, (requester) -> Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_LONG).show());
     }
 
     @Override
