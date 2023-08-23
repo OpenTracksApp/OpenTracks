@@ -1,0 +1,10 @@
+v4.8.0: OpenTracks
+
+Cambios:
+- Permiso: ACCESS_BACKGROUND_LOCATION é requerido debido á API
+- Preparación para a detección da pausa en función do tempoPreparation for time-based idle detection
+- Retirada da distinción por orixe nos datos gardados (sensores GPS vs. BLE)
+
+Desenvolvemento:
+- retirados algúns atallos no código que entraban en conflito (TrackRecordingService e GpsStatusManager)
+- TrackRecordingServiceConnection xestiona o apagado do servizo

@@ -1,0 +1,4 @@
+v4.8.1: OpenTracks
+
+Arranxo:
+- Non se concedía o permiso de localización debido a ACCESS_LOCATION_BACKGROUND (eliminado)
