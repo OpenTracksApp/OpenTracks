@@ -1,0 +1,4 @@
+v4.8.1: OpenTracks
+
+Bugfix :
+- Toestemming tot locatie is niet verleend vanwege ACCESS_LOCATION_BACKGROUND (verwijderd)
