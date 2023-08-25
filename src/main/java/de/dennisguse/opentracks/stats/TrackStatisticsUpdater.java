@@ -49,8 +49,6 @@ public class TrackStatisticsUpdater {
     // Current segment's last trackPoint
     private TrackPoint lastTrackPoint;
 
-    private boolean idle;
-
     public TrackStatisticsUpdater() {
         this(new TrackStatistics());
     }
@@ -72,7 +70,6 @@ public class TrackStatisticsUpdater {
         this.trackStatistics = new TrackStatistics(toCopy.trackStatistics);
 
         this.lastTrackPoint = toCopy.lastTrackPoint;
-        this.idle = toCopy.idle;
         resetAverageHeartRate();
     }
 
@@ -140,18 +137,18 @@ public class TrackStatisticsUpdater {
                 movingDistance = trackPoint.distanceToPrevious(lastTrackPoint);
             }
             if (movingDistance != null) {
-                idle = false;
+                currentSegment.setIdle(false);
                 currentSegment.addTotalDistance(movingDistance);
             }
 
-            if (!idle && !trackPoint.isSegmentManualStart()) {
+            if (!currentSegment.isIdle() && !trackPoint.isSegmentManualStart()) {
                 if (lastTrackPoint != null) {
                     currentSegment.addMovingTime(trackPoint, lastTrackPoint);
                 }
             }
 
             if (trackPoint.getType() == TrackPoint.Type.IDLE) {
-                idle = true;
+                currentSegment.setIdle(true);
             }
 
             if (trackPoint.hasSpeed()) {
@@ -174,7 +171,6 @@ public class TrackStatisticsUpdater {
         currentSegment.reset(trackPoint.getTime());
 
         lastTrackPoint = null;
-        idle = false;
         resetAverageHeartRate();
     }
 

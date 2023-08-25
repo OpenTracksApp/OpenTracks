@@ -61,6 +61,8 @@ public class TrackStatistics {
     // The average heart rate seen on this track
     private HeartRate avgHeartRate = null;
 
+    private boolean isIdle;
+
     public TrackStatistics() {
         reset();
     }
@@ -81,6 +83,7 @@ public class TrackStatistics {
         totalAltitudeGain_m = other.totalAltitudeGain_m;
         totalAltitudeLoss_m = other.totalAltitudeLoss_m;
         avgHeartRate = other.avgHeartRate;
+        isIdle = other.isIdle;
     }
 
     @VisibleForTesting
@@ -168,6 +171,8 @@ public class TrackStatistics {
         setMaxSpeed(Speed.zero());
         setTotalAltitudeGain(null);
         setTotalAltitudeLoss(null);
+
+        isIdle = false;
     }
 
     public void reset(Instant startTime) {
@@ -246,6 +251,14 @@ public class TrackStatistics {
 
     public Duration getStoppedTime() {
         return totalTime.minus(movingTime);
+    }
+
+    public boolean isIdle() {
+        return isIdle;
+    }
+
+    public void setIdle(boolean idle) {
+        isIdle = idle;
     }
 
     public boolean hasAverageHeartRate() {
