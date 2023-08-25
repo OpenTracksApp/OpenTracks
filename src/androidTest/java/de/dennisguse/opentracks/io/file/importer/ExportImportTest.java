@@ -35,6 +35,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -185,8 +186,103 @@ public class ExportImportTest {
         track = contentProviderUtils.getTrack(trackId);
         trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         markers = contentProviderUtils.getMarkers(trackId);
-        assertEquals(12, trackPoints.size());
-        assertEquals(2, markers.size());
+    }
+
+    @LargeTest
+    @Test
+    public void track() throws TimeoutException {
+        setUp();
+
+        Track track = contentProviderUtils.getTrack(trackId);
+        TrackStatistics trackStatistics = track.getTrackStatistics();
+
+        assertEquals(ZoneOffset.of("+01:00"), track.getZoneOffset());
+        assertEquals(Instant.parse("2020-02-02T02:02:02Z"), trackStatistics.getStartTime());
+        assertEquals(Instant.parse("2020-02-02T02:04:00Z"), trackStatistics.getStopTime());
+
+        assertEquals(Duration.ofSeconds(56), trackStatistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(26), trackStatistics.getMovingTime()); //TODO Likely too low
+
+        // Distance
+        assertEquals(222125.53125, trackStatistics.getTotalDistance().toM(), 0.01); //TODO Too low
+
+        // Speed
+        assertEquals(8543.29, trackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(3966.52, trackStatistics.getAverageSpeed().toMPS(), 0.01);
+        assertEquals(8543.28, trackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
+
+        // Altitude
+        assertEquals(10, trackStatistics.getMinAltitude(), 0.01);
+        assertEquals(10, trackStatistics.getMaxAltitude(), 0.01);
+
+        assertEquals(2, trackStatistics.getTotalAltitudeGain(), 0.01);
+        assertEquals(2, trackStatistics.getTotalAltitudeLoss(), 0.01);
+
+        List<TrackPoint> actual = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2020-02-02T02:02:02Z")),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:03Z"))
+                        .setLatitude(3)
+                        .setLongitude(14)
+                        .setAltitude(10)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeLoss(1f)
+                        .setAltitudeGain(1f)
+                        .setHorizontalAccuracy(Distance.of(10)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:04Z"))
+                        .setSensorDistance(Distance.of(10))
+                        .setSpeed(Speed.of(15))
+                        .setHeartRate(HeartRate.of(66))
+                        .setCadence(3)
+                        .setPower(50)
+                        .setAltitudeLoss(1f)
+                        .setAltitudeGain(1f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:15Z"))
+                        .setHeartRate(HeartRate.of(68))
+                        .setCadence(3)
+                        .setPower(50),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:17Z"))
+                        .setLatitude(3)
+                        .setLongitude(14.001)
+                        .setAltitude(10)
+                        .setSensorDistance(Distance.of(2))
+                        .setSpeed(Speed.of(5))
+                        .setAltitudeLoss(0f)
+                        .setAltitudeGain(0f)
+                        .setHorizontalAccuracy(Distance.of(10))
+                        .setHeartRate(HeartRate.of(69))
+                        .setCadence(3)
+                        .setPower(50),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse("2020-02-02T02:02:18Z")),
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2020-02-02T02:03:20Z")),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:03:21Z"))
+                        .setLatitude(3)
+                        .setLongitude(14.002)
+                        .setAltitude(10)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeLoss(0f)
+                        .setAltitudeGain(0f)
+                        .setHorizontalAccuracy(Distance.of(10)),
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2020-02-02T02:03:22Z"))
+                        .setLatitude(3)
+                        .setLongitude(16)
+                        .setAltitude(10)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeLoss(0f)
+                        .setAltitudeGain(0f)
+                        .setHorizontalAccuracy(Distance.of(10)),
+                new TrackPoint(TrackPoint.Type.IDLE, Instant.parse("2020-02-02T02:03:30Z")),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:03:50Z"))
+                        .setLatitude(3)
+                        .setLongitude(16.001)
+                        .setAltitude(10)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeLoss(0f)
+                        .setAltitudeGain(0f)
+                        .setHorizontalAccuracy(Distance.of(10)),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse("2020-02-02T02:04:00Z"))
+
+        ), actual);
     }
 
     //TODO Does not test marker images
@@ -228,43 +324,7 @@ public class ExportImportTest {
 
         // Time
         assertEquals(track.getZoneOffset(), importedTrack.getZoneOffset());
-        assertEquals(Instant.parse("2020-02-02T02:02:02Z"), importedTrackStatistics.getStartTime());
-        assertEquals(Instant.parse("2020-02-02T02:04:00Z"), importedTrackStatistics.getStopTime());
-
-        TrackStatistics originalTrackStatistics = track.getTrackStatistics();
-
-        assertEquals(originalTrackStatistics.getTotalTime(), importedTrackStatistics.getTotalTime());
-        assertEquals(Duration.ofSeconds(56), importedTrackStatistics.getTotalTime());
-
-        assertEquals(originalTrackStatistics.getMovingTime(), importedTrackStatistics.getMovingTime());
-        assertEquals(Duration.ofSeconds(26), importedTrackStatistics.getMovingTime()); //TODO Likely too low
-
-        // Distance
-        assertEquals(originalTrackStatistics.getTotalDistance(), importedTrackStatistics.getTotalDistance());
-        assertEquals(222125.53125, importedTrackStatistics.getTotalDistance().toM(), 0.01); //TODO Too low
-
-        // Speed
-        assertEquals(originalTrackStatistics.getMaxSpeed(), importedTrackStatistics.getMaxSpeed());
-        assertEquals(8543.29, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
-
-        assertEquals(originalTrackStatistics.getAverageSpeed(), importedTrackStatistics.getAverageSpeed());
-        assertEquals(3966.52, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
-
-        assertEquals(originalTrackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed());
-        assertEquals(8543.28, importedTrackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
-
-        // Altitude
-        assertEquals(originalTrackStatistics.getMinAltitude(), importedTrackStatistics.getMinAltitude(), 0.01);
-        assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);
-
-        assertEquals(originalTrackStatistics.getMaxAltitude(), importedTrackStatistics.getMaxAltitude(), 0.01);
-        assertEquals(10, importedTrackStatistics.getMaxAltitude(), 0.01);
-
-        assertEquals(originalTrackStatistics.getTotalAltitudeGain(), importedTrackStatistics.getTotalAltitudeGain(), 0.01);
-        assertEquals(2, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
-
-        assertEquals(originalTrackStatistics.getTotalAltitudeLoss(), importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
-        assertEquals(2, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
+        assertEquals(track.getTrackStatistics(), importedTrackStatistics);
 
         // 4. markers
         assertMarkers();
@@ -489,14 +549,14 @@ public class ExportImportTest {
 
     private void mockBLESensorData(TrackPointCreator trackPointCreator, Float speed, Distance distance, float heartRate, float cadence, Float power) {
 
-            SensorDataSet sensorDataSet = new SensorDataSet();
-            sensorDataSet.set(new SensorDataCyclingPower("power", "power", Power.of(power)));
-            sensorDataSet.set(new SensorDataHeartRate("heartRate", "heartRate", HeartRate.of(heartRate)));
+        SensorDataSet sensorDataSet = new SensorDataSet();
+        sensorDataSet.set(new SensorDataCyclingPower("power", "power", Power.of(power)));
+        sensorDataSet.set(new SensorDataHeartRate("heartRate", "heartRate", HeartRate.of(heartRate)));
 
-            SensorDataCyclingCadence cyclingCadence = Mockito.mock(SensorDataCyclingCadence.class);
-            Mockito.when(cyclingCadence.hasValue()).thenReturn(true);
-            Mockito.when(cyclingCadence.getValue()).thenReturn(Cadence.of(cadence));
-            sensorDataSet.set(cyclingCadence);
+        SensorDataCyclingCadence cyclingCadence = Mockito.mock(SensorDataCyclingCadence.class);
+        Mockito.when(cyclingCadence.hasValue()).thenReturn(true);
+        Mockito.when(cyclingCadence.getValue()).thenReturn(Cadence.of(cadence));
+        sensorDataSet.set(cyclingCadence);
 
         if (distance != null && speed != null) {
             SensorDataCyclingDistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCyclingDistanceSpeed.Data.class);

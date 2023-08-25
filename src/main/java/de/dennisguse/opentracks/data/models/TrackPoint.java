@@ -444,13 +444,14 @@ public class TrackPoint {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", horizontalAccuracy=" + horizontalAccuracy +
+                ", verticalAccuracy=" + verticalAccuracy +
                 ", altitude=" + altitude +
                 ", speed=" + speed +
                 ", bearing=" + bearing +
                 ", sensorDistance=" + sensorDistance +
                 ", type=" + type +
-                ", heartRate_bpm=" + heartRate +
-                ", cadence_rpm=" + cadence +
+                ", heartRate=" + heartRate +
+                ", cadence=" + cadence +
                 ", power=" + power +
                 ", altitudeGain_m=" + altitudeGain_m +
                 ", altitudeLoss_m=" + altitudeLoss_m +
