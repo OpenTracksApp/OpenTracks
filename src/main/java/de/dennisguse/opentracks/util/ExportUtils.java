@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.documentfile.provider.DocumentFile;
 
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
@@ -40,17 +38,12 @@ public class ExportUtils {
             TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat();
             DocumentFile directory = IntentUtils.toDocumentFile(context, PreferencesUtils.getDefaultExportDirectoryUri());
 
-            if (directory == null || !directory.canWrite()) {
-                Toast.makeText(context, R.string.export_cannot_write_to_dir, Toast.LENGTH_LONG).show();
-                return;
-            }
-
             ExportServiceResultReceiver resultReceiver = new ExportServiceResultReceiver(new Handler(), new ExportServiceResultReceiver.Receiver() {
                 @Override
-                public void onExportError(ExportTask unused) {
+                public void onExportError(ExportTask unused, String errorMessage) {
                     Intent intent = new Intent(context, SettingsActivity.class);
-                    intent.putExtra(SettingsActivity.EXTRAS_CHECK_EXPORT_DIRECTORY, true);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra(SettingsActivity.EXTRAS_EXPORT_ERROR_MESSAGE, errorMessage);
                     context.startActivity(intent);
                 }
             });
@@ -59,7 +52,7 @@ public class ExportUtils {
         }
     }
 
-    public static boolean exportTrack(Context context, DocumentFile directory, ExportTask exportTask) {
+    public static void exportTrack(Context context, DocumentFile directory, ExportTask exportTask) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
         List<Track> tracks = exportTask.getTrackIds().stream().map(contentProviderUtils::getTrack).collect(Collectors.toList());
         Uri exportDocumentFileUri;
@@ -71,27 +64,21 @@ public class ExportUtils {
         }
 
         if (exportDocumentFileUri == null) {
-            Log.e(TAG, "Couldn't create document file for export");
-            return false;
+            throw new RuntimeException("Couldn't create document file for export");
         }
 
         TrackExporter trackExporter = exportTask.getTrackFileFormat().createTrackExporter(context, contentProviderUtils);
         try (OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFileUri)) {
-            if (trackExporter.writeTrack(tracks, outputStream)) {
-                return true;
-            } else {
+            if (!trackExporter.writeTrack(tracks, outputStream)) {
                 if (!DocumentFile.fromSingleUri(context, exportDocumentFileUri).delete()) {
-                    Log.e(TAG, "Unable to delete exportDocumentFile");
+                    throw new RuntimeException("Unable to delete exportDocumentFile");
                 }
-                Log.e(TAG, "Unable to export track");
-                return false;
+                throw new RuntimeException("Unable to export track");
             }
         } catch (FileNotFoundException e) {
-            Log.e(TAG, "Unable to open exportDocumentFile " + exportDocumentFileUri, e);
-            return false;
+            throw new RuntimeException("Unable to open exportDocumentFile " + exportDocumentFileUri, e);
         } catch (IOException e) {
-            Log.e(TAG, "Unable to close exportDocumentFile output stream", e);
-            return false;
+            throw new RuntimeException("Unable to close exportDocumentFile output stream", e);
         }
     }
 
