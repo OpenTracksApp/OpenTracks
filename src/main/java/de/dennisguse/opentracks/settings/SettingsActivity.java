@@ -16,8 +16,9 @@ import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 
 public class SettingsActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
-    public static final String EXTRAS_CHECK_EXPORT_DIRECTORY = "Check Export Directory";
-    private boolean checkExportDirectory = false;
+    public static final String EXTRAS_EXPORT_ERROR_MESSAGE = "Export error message";
+
+    private String exportErrorMessage = null;
 
     public static final String FRAGMENT_KEY = "fragmentKey";
 
@@ -30,8 +31,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(EXTRAS_CHECK_EXPORT_DIRECTORY)) {
-            checkExportDirectory = true;
+        if (intent != null) {
+            exportErrorMessage = intent.getStringExtra(EXTRAS_EXPORT_ERROR_MESSAGE);
         }
 
         if (savedInstanceState != null) {
@@ -48,15 +49,15 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
     @Override
     protected void onResume() {
-        if (checkExportDirectory) {
-            checkExportDirectory = false;
+        if (exportErrorMessage != null) {
             new AlertDialog.Builder(this)
                     .setIcon(R.drawable.ic_logo_24dp)
                     .setTitle(R.string.app_name)
-                    .setMessage(R.string.export_error_post_workout)
+                    .setMessage(getString(R.string.export_error_post_workout) + "\n" + exportErrorMessage)
                     .setNeutralButton(android.R.string.ok, null)
                     .create()
                     .show();
+            exportErrorMessage = null;
         }
 
         super.onResume();

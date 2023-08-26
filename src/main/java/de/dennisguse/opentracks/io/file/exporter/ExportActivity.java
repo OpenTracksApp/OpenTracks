@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.io.file.exporter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -340,7 +341,7 @@ public class ExportActivity extends FragmentActivity implements ExportService.Ex
     }
 
     @Override
-    public void onExportError(ExportTask exportTask) {
+    public void onExportError(ExportTask exportTask, String errorMessage) {
         trackExportErrorCount++;
         String name;
         if (exportTask.isMultiExport()) {
@@ -348,6 +349,7 @@ public class ExportActivity extends FragmentActivity implements ExportService.Ex
         } else {
             name = contentProviderUtils.getTrack(exportTask.getTrackIds().get(0)).getName();
         }
+        Log.e(TAG, "Error exporting " + name + ": " + errorMessage);
         trackErrors.add(name);
 
         nextExport(exportTask);

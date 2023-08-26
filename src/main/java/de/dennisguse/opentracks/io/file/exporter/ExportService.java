@@ -7,12 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 import androidx.documentfile.provider.DocumentFile;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.ExportUtils;
 
 public class ExportService extends JobIntentService {
@@ -22,7 +22,6 @@ public class ExportService extends JobIntentService {
     private static final String EXTRA_RECEIVER = "extra_receiver";
     private static final String EXTRA_EXPORT_TASK = "export_task";
     private static final String EXTRA_DIRECTORY_URI = "extra_directory_uri";
-    private static final String TAG = ExportService.class.getSimpleName();
 
     public static void enqueue(Context context, ExportServiceResultReceiver receiver, ExportTask exportTask, Uri directoryUri) {
         Intent intent = new Intent(context, JobService.class);
@@ -46,17 +45,19 @@ public class ExportService extends JobIntentService {
         // Build directory file.
         DocumentFile directoryFile = DocumentFile.fromTreeUri(this, directoryUri);
         if (directoryFile == null || !directoryFile.canWrite()) {
-            Log.e(TAG, "Can't write to directory: " + directoryFile);
+            bundle.putString(ExportServiceResultReceiver.EXTRA_EXPORT_ERROR_MESSAGE, getString(R.string.export_cannot_write_to_dir) + ": " + directoryFile);
             resultReceiver.send(ExportServiceResultReceiver.RESULT_CODE_ERROR, bundle);
             return;
         }
 
-        // Export.
-        boolean success = ExportUtils.exportTrack(this, directoryFile, exportTask);
-
-        // Send result to the receiver.
-        int resultCode = success ? ExportServiceResultReceiver.RESULT_CODE_SUCCESS : ExportServiceResultReceiver.RESULT_CODE_ERROR;
-        resultReceiver.send(resultCode, bundle);
+        // Export and send result
+        try {
+            ExportUtils.exportTrack(this, directoryFile, exportTask);
+            resultReceiver.send(ExportServiceResultReceiver.RESULT_CODE_SUCCESS, bundle);
+        } catch (Exception e) {
+            bundle.putString(ExportServiceResultReceiver.EXTRA_EXPORT_ERROR_MESSAGE, e.getMessage());
+            resultReceiver.send(ExportServiceResultReceiver.RESULT_CODE_ERROR, bundle);
+        }
     }
 
     public static class ExportServiceResultReceiver extends ResultReceiver {
@@ -65,6 +66,8 @@ public class ExportService extends JobIntentService {
         public static final int RESULT_CODE_ERROR = 0;
 
         public static final String RESULT_EXTRA_EXPORT_TASK = "result_extra_export_task";
+
+        public static final String EXTRA_EXPORT_ERROR_MESSAGE = "extra_export_error_message";
 
         private final Receiver receiver;
 
@@ -75,10 +78,10 @@ public class ExportService extends JobIntentService {
 
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
-            ExportTask exportTask = resultData.getParcelable(ExportServiceResultReceiver.RESULT_EXTRA_EXPORT_TASK);
+            ExportTask exportTask = resultData.getParcelable(RESULT_EXTRA_EXPORT_TASK);
             switch (resultCode) {
                 case RESULT_CODE_SUCCESS -> receiver.onExportSuccess(exportTask);
-                case RESULT_CODE_ERROR -> receiver.onExportError(exportTask);
+                case RESULT_CODE_ERROR -> receiver.onExportError(exportTask, resultData.getString(EXTRA_EXPORT_ERROR_MESSAGE));
                 default -> throw new RuntimeException("Unknown resultCode.");
             }
         }
@@ -87,7 +90,7 @@ public class ExportService extends JobIntentService {
             default void onExportSuccess(ExportTask exportTask) {
             }
 
-            default void onExportError(ExportTask exportTask) {
+            default void onExportError(ExportTask exportTask, String errorMessage) {
             }
         }
     }
