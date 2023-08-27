@@ -1,0 +1,5 @@
+v4.8.2: OpenTracks
+
+Changes:
+- After recording export: show error message if unsuccessful
+
