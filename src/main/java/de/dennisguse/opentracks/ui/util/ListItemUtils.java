@@ -24,7 +24,9 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 import de.dennisguse.opentracks.R;
@@ -179,5 +181,18 @@ public class ListItemUtils {
         } else {
             textView.setShadowLayer(0, 0, 0, 0);
         }
+    }
+
+    public static void setDateAndTime(Context context, TextView dateView, TextView timeView, Instant time, ZoneOffset timeZone) {
+        OffsetDateTime offsetDateTime = OffsetDateTime.ofInstant(time, timeZone);
+        String dateContent = StringUtils.formatDateTodayRelative(context, offsetDateTime);
+        String pattern = "HH:mm";
+        if (!offsetDateTime.getOffset().equals(OffsetDateTime.now().getOffset())) {
+            pattern = "HH:mm x";
+        }
+        String timeContent = offsetDateTime.format(DateTimeFormatter.ofPattern(pattern));
+
+        dateView.setText(dateContent);
+        timeView.setText(timeContent);
     }
 }

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/activated_background"
+    android:padding="8dp">
+
+    <!-- Photo -->
+    <ImageView
+        android:id="@+id/marker_list_item_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/image_photo_marker"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/marker_list_item_bottom_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <!-- A gradient on top of the text -->
+    <ImageView
+        android:id="@+id/marker_list_item_text_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".6"
+        android:contentDescription="@string/image_photo_marker"
+        android:src="@drawable/text_gradient"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/marker_list_item_bottom_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <!-- Name -->
+    <TextView
+        android:id="@+id/marker_list_item_name"
+        style="?attr/textAppearanceBody1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Main text" />
+
+    <!-- Date -->
+    <TextView
+        android:id="@+id/marker_list_item_date"
+        style="?attr/textAppearanceBodySmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2022-02-17" />
+
+    <!-- Total time and distance -->
+    <TextView
+        android:id="@+id/marker_list_item_time_distance"
+        style='?attr/textAppearanceBodySmall'
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/marker_list_item_name"
+        app:layout_constraintTop_toBottomOf="@+id/marker_list_item_name"
+        tools:text="50:43 (50.00km)" />
+
+    <!-- Time -->
+    <TextView
+        android:id="@+id/marker_list_item_time"
+        style="?attr/textAppearanceBodySmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/marker_list_item_name"
+        tools:text="10:10:10" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/marker_list_item_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="marker_list_item_photo,marker_list_item_text_gradient,marker_list_item_name,marker_list_item_date,marker_list_item_time_distance,marker_list_item_time" />
+
+    <!-- Bottom Line -->
+    <View
+        android:id="@+id/marker_list_item_bottom_line"
+        style="@style/HorizontalLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/marker_list_item_barrier" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
