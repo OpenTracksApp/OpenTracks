@@ -35,7 +35,7 @@ public class TrackFilenameGenerator2Test {
         // given
         Track track = new Track();
         track.setName("Best Track");
-        track.setUuid(UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb"));
+        track.setUuid(UUID.fromString("f81d4fae-7dec-11d0-a765-00a0c91e6bf6"));
         track.getTrackStatistics().setStartTime(Instant.parse("2020-02-02T02:02:02Z"));
 
         // when

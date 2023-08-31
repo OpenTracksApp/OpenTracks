@@ -93,7 +93,7 @@ public class TrackFilenameGenerator {
     public String getExample() {
         Track track = new Track();
         track.setName("Berlin");
-        track.setUuid(UUID.fromString("fefefefefe-0000-1000-8000-00805f9b34fb"));
+        track.setUuid(UUID.fromString("f81d4fae-7dec-11d0-a765-00a0c91e6bf6"));
         track.getTrackStatistics().setStartTime(Instant.ofEpochMilli(0));
 
         return format(track, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES);
