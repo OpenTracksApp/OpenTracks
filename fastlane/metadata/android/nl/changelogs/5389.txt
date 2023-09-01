@@ -1,0 +1,7 @@
+v4.8.3: OpenTracks
+
+Bugfix :
+- Android 14: crash voorkomen t.g.v. misvormde UUID (voorbeeld voor bestandsnaam sjabloon)
+
+Ontwikkelaar:
+- Markeringslijst is nu een RecyclerView
