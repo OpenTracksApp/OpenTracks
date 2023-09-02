@@ -1,0 +1,8 @@
+v4.8.3: OpenTracks
+
+
+Arranxos:
+- Android 14: evitar o peche da app debido a un UUID mal formado (ex. no modelo do nome de ficheiro)
+
+Desenvolvemento:
+- A lista Marker agora usa RecyclerView
