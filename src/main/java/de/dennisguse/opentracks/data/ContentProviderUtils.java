@@ -228,6 +228,31 @@ public class ContentProviderUtils {
         return tracks;
     }
 
+    public Cursor searchTracks(String searchQuery) {
+        // Needed, because MARKER_COUNT is a virtual column and has to be explicitly requested.
+        final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.UUID, TracksColumns.NAME,
+                TracksColumns.DESCRIPTION, TracksColumns.ACTIVITY_TYPE_LOCALIZED, TracksColumns.STARTTIME,
+                TracksColumns.STARTTIME_OFFSET, TracksColumns.STOPTIME, TracksColumns.MARKER_COUNT,
+                TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.MOVINGTIME,
+                TracksColumns.AVGSPEED, TracksColumns.AVGMOVINGSPEED, TracksColumns.MAXSPEED,
+                TracksColumns.MIN_ALTITUDE, TracksColumns.MAX_ALTITUDE, TracksColumns.ALTITUDE_GAIN,
+                TracksColumns.ALTITUDE_LOSS, TracksColumns.ICON
+        };
+
+        String selection = null;
+        String[] selectionArgs = null;
+        final String sortOrder = TracksColumns.STARTTIME + " DESC";
+
+        if (searchQuery != null) {
+            selection = TracksColumns.NAME + " LIKE ? OR " +
+                    TracksColumns.DESCRIPTION + " LIKE ? OR " +
+                    TracksColumns.ACTIVITY_TYPE_LOCALIZED + " LIKE ?";
+            selectionArgs = new String[]{"%" + searchQuery + "%", "%" + searchQuery + "%", "%" + searchQuery + "%"};
+        }
+
+        return contentResolver.query(TracksColumns.CONTENT_URI, PROJECTION, selection, selectionArgs, sortOrder);
+    }
+
     public Track getTrack(@NonNull Track.Id trackId) {
         try (Cursor cursor = getTrackCursor(TracksColumns._ID + "=?", new String[]{Long.toString(trackId.id())}, null)) {
             if (cursor != null && cursor.moveToNext()) {
