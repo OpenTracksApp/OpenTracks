@@ -125,14 +125,14 @@ For testing via adb: `adb shell am start -e someParameter someValue -n "package/
 The Public API is disabled by default to protect the user's privacy, but it can easily be enabled in the settings.
 
 ## File formats compatibility with open-source software
-
-|                                                      | [GPX 1.1](https://www.topografix.com/GPX/1/1/) | [KML 2.3](https://docs.opengeospatial.org/is/12-007r2/12-007r2.html) | [KMZ 2.3](https://docs.opengeospatial.org/is/12-007r2/12-007r2.html) |
-|------------------------------------------------------|------------------------------------------------|----------------------------------------------------------------------|----------------------------------------------------------------------|
-| [OpenLayers 7.1.0](https://openlayers.org/)          | ?                                              | [no](https://github.com/openlayers/openlayers/issues/14104)          | [no](https://github.com/openlayers/openlayers/issues/14104)          |
-| [Golden Cheetah 3.5](https://www.goldencheetah.org/) | ?                                              | [no](https://github.com/GoldenCheetah/GoldenCheetah/issues/4271)     | [no](https://github.com/GoldenCheetah/GoldenCheetah/issues/4271)     |
-| [GpxPod](https://apps.nextcloud.com/apps/gpxpod)     | ?                                              | ?                                                                    | ?                                                                    |
-| [OsmAnd](https://github.com/osmandapp/OsmAnd)        | ?                                              | [no](https://github.com/osmandapp/OsmAnd/issues/15271)               | [no](https://github.com/osmandapp/OsmAnd/issues/15271)               |
-| [FitTrackee](https://github.com/SamR1/FitTrackee)    | yes                                            | n/a                                                                  | n/a                                                                  |
+|                                                           | [GPX 1.1](https://www.topografix.com/GPX/1/1/)                                 | [KML 2.3](https://docs.opengeospatial.org/is/12-007r2/12-007r2.html) | [KMZ 2.3](https://docs.opengeospatial.org/is/12-007r2/12-007r2.html) |
+|-----------------------------------------------------------|--------------------------------------------------------------------------------|----------------------------------------------------------------------|----------------------------------------------------------------------|
+| [OpenLayers 7.1.0](https://openlayers.org/)               | ?                                                                              | [no](https://github.com/openlayers/openlayers/issues/14104)          | [no](https://github.com/openlayers/openlayers/issues/14104)          |
+| [Golden Cheetah 3.5](https://www.goldencheetah.org/)      | ?                                                                              | [no](https://github.com/GoldenCheetah/GoldenCheetah/issues/4271)     | [no](https://github.com/GoldenCheetah/GoldenCheetah/issues/4271)     |
+| [GpxPod](https://apps.nextcloud.com/apps/gpxpod)          | ?                                                                              | ?                                                                    | ?                                                                    |
+| [OsmAnd](https://github.com/osmandapp/OsmAnd)             | ?                                                                              | [no](https://github.com/osmandapp/OsmAnd/issues/15271)               | [no](https://github.com/osmandapp/OsmAnd/issues/15271)               |
+| [FitTrackee](https://github.com/SamR1/FitTrackee)         | yes                                                                            | n/a                                                                  | n/a                                                                  |
+| [SportsTracker](https://github.com/ssaring/sportstracker) | yes, [single tracks only](https://github.com/ssaring/sportstracker/issues/260) | no                                                                   | no                                                                   |
 
 ## Dashboard API (incl. map)
 
