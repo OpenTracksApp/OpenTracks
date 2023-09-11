@@ -336,6 +336,7 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Power</string>
     <string name="sensor_state_power_avg">Avg Power</string>
+    <string name="sensor_state_power_max">Max Power</string>
     <string name="sensor_state_power_unit">W</string>
     <string name="sensor_could_not_scan">Could not scan for Bluetooth devices (error %1$i).</string>
     <string name="bluetooth_disabled">Please enable Bluetooth.</string>

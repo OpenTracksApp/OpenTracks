@@ -9,13 +9,15 @@ public class SensorStatistics {
     private final HeartRate avgHr;
     private final Cadence maxCadence;
     private final Cadence avgCadence;
+    private final Power maxPower;
     private final Power avgPower;
 
-    public SensorStatistics(HeartRate maxHr, HeartRate avgHr, Cadence maxCadence, Cadence avgCadence, Power avgPower) {
+    public SensorStatistics(HeartRate maxHr, HeartRate avgHr, Cadence maxCadence, Cadence avgCadence, Power maxPower, Power avgPower) {
         this.maxHr = maxHr;
         this.avgHr = avgHr;
         this.maxCadence = maxCadence;
         this.avgCadence = avgCadence;
+        this.maxPower = maxPower;
         this.avgPower = avgPower;
     }
 
@@ -45,6 +47,10 @@ public class SensorStatistics {
 
     public boolean hasPower() {
         return avgPower != null;
+    }
+
+    public Power getMaxPower() {
+        return maxPower;
     }
 
     public Power getAvgPower() {

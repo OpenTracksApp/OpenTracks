@@ -270,10 +270,12 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsAvgCadenceValue.setText(avgRPM);
         }
         if (sensorStatistics.hasPower()) {
-            String W = String.valueOf(Math.round(sensorStatistics.getAvgPower().getW()));
+            String maxW = String.valueOf(Math.round(sensorStatistics.getMaxPower().getW()));
+            String avgW = String.valueOf(Math.round(sensorStatistics.getAvgPower().getW()));
 
             viewBinding.statsPowerGroup.setVisibility(View.VISIBLE);
-            viewBinding.statsPowerValue.setText(W);
+            viewBinding.statsMaxPowerValue.setText(maxW);
+            viewBinding.statsAvgPowerValue.setText(avgW);
         }
     }
 }
