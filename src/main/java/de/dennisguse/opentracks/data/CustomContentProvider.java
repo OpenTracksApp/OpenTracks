@@ -62,7 +62,7 @@ public class CustomContentProvider extends ContentProvider {
 
     /**
      * The string representing the query that compute sensor stats from trackpoints table.
-     * It computes the average for heart rate, cadence, and power (duration-based average) and the maximum for heart rate and cadence.
+     * It computes the average for heart rate, cadence and power (duration-based average) and the maximum for heart rate, cadence and power.
      * Finally, it ignores manual pause (SEGMENT_START_MANUAL).
      */
     private final String SENSOR_STATS_QUERY =
@@ -86,7 +86,9 @@ public class CustomContentProvider extends ContentProvider {
 
                 "SUM(t." + TrackPointsColumns.SENSOR_POWER + " * (COALESCE(MAX(t." + TrackPointsColumns.TIME + ", (SELECT time_value FROM time_select)), t." + TrackPointsColumns.TIME + ") - t." + TrackPointsColumns.TIME + ")) " +
                 "/ " +
-                "SUM(COALESCE(MAX(t." + TrackPointsColumns.TIME + ", (SELECT time_value FROM time_select)), t." + TrackPointsColumns.TIME + ") - t." + TrackPointsColumns.TIME + ") " + TrackPointsColumns.ALIAS_AVG_POWER + " " +
+                "SUM(COALESCE(MAX(t." + TrackPointsColumns.TIME + ", (SELECT time_value FROM time_select)), t." + TrackPointsColumns.TIME + ") - t." + TrackPointsColumns.TIME + ") " + TrackPointsColumns.ALIAS_AVG_POWER + ", " +
+
+                "MAX(t." + TrackPointsColumns.SENSOR_POWER + ") " + TrackPointsColumns.ALIAS_MAX_POWER + " " +
 
             "FROM " + TrackPointsColumns.TABLE_NAME + " t " +
             "WHERE t." + TrackPointsColumns.TRACKID + " = ? " +

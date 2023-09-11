@@ -62,6 +62,7 @@ public interface TrackPointsColumns extends BaseColumns {
     String ALIAS_AVG_CADENCE = "avg_cadence";
     String ALIAS_MAX_CADENCE = "max_cadence";
     String ALIAS_AVG_POWER = "avg_power";
+    String ALIAS_MAX_POWER = "max_power";
 
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "

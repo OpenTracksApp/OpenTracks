@@ -869,12 +869,14 @@ public class ContentProviderUtils {
                 final int AVG_HR_INDEX = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_HR);
                 final int MAX_CADENCE_INDEX = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_MAX_CADENCE);
                 final int AVG_CADENCE_INDEX = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_CADENCE);
+                final int MAX_POWER_INDEX = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_MAX_POWER);
                 final int AVG_POWER_INDEX = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_POWER);
                 sensorStatistics = new SensorStatistics(
                         !cursor.isNull(MAX_HR_INDEX) ? HeartRate.of(cursor.getFloat(MAX_HR_INDEX)) : null,
                         !cursor.isNull(AVG_HR_INDEX) ? HeartRate.of(cursor.getFloat(AVG_HR_INDEX)) : null,
                         !cursor.isNull(MAX_CADENCE_INDEX) ? Cadence.of(cursor.getFloat(MAX_CADENCE_INDEX)) : null,
                         !cursor.isNull(AVG_CADENCE_INDEX) ? Cadence.of(cursor.getFloat(AVG_CADENCE_INDEX)) : null,
+                        !cursor.isNull(MAX_POWER_INDEX) ? Power.of(cursor.getFloat(MAX_POWER_INDEX)) : null,
                         !cursor.isNull(AVG_POWER_INDEX) ? Power.of(cursor.getFloat(AVG_POWER_INDEX)) : null
                 );
             }
