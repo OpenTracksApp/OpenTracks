@@ -225,7 +225,7 @@ limitations under the License.
     <!-- Sensor State -->
     <string name="sensor_state_heart_rate">Srdeční frekvence</string>
     <string name="sensor_state_heart_rate_value">%1$d úderů/min</string>
-    <string name="sensor_state_power">Napájení</string>
+    <string name="sensor_state_power">Výkon</string>
     <string name="sensor_could_not_scan">Nelze vyhledat zařízení Bluetooth (chyba %1$i).</string>
     <string name="bluetooth_disabled">Aktivujte prosím Bluetooth.</string>
     <!-- Settings Advanced -->
@@ -433,7 +433,7 @@ limitations under the License.
     <string name="import_progress_summary_exists_msg">Existovat</string>
     <string name="import_progress_summary_ok_msg">Importované soubory</string>
     <string name="generic_open_track">Otevřená trať</string>
-    <string name="sensor_state_power_avg">Výkon Avg</string>
+    <string name="sensor_state_power_avg">Prům. výkon</string>
     <string name="sensor_state_heart_rate_max">Maximální srdeční frekvence</string>
     <string name="sensor_state_heart_rate_avg">Avg srdeční frekvence</string>
     <string name="sensor_state_cadence_max">Max kadence</string>
@@ -591,4 +591,5 @@ limitations under the License.
     <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometr za hodinu} few {{n,number,#.0} kilometry za hodinu} other {{n,number,#.0} kilometrů za hodinu} }</string>
     <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 míle za hodinu} few {{n,number,#.0} míle za hodinu} other {{n,number,#.0} mil za hodinu} }</string>
     <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometr} few {{n,number,#.0} kilometry} other {{n,number,#.0} kilometrů} }</string>
+    <string name="sensor_state_power_max">Maximální výkon</string>
 </resources>
