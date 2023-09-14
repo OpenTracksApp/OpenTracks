@@ -404,7 +404,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     </plurals>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Tijdens opname, aanwezig in volledig scherm.</string>
     <string name="settings_default_trackfileformat">Bestandsformaat exporteren/delen</string>
-    <string name="sensor_state_power_avg">Gem. Vermogen</string>
+    <string name="sensor_state_power_avg">Gem. vermogen</string>
     <string name="sensor_state_heart_rate_max">Max. Hartslag</string>
     <string name="sensor_state_heart_rate_avg">Gem. Hartslag</string>
     <string name="sensor_state_cadence_avg">Avg cadans</string>
@@ -488,7 +488,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="lap_speed">Ronde snelheid</string>
     <string name="speed">Snelheid</string>
     <string name="total_distance">Totale afstand</string>
-
     <string name="average_heart_rate">Gemiddelde hartslag</string>
     <string name="current_heart_rate">Actuele hartslag</string>
     <string name="settings_cycling_sensor">Fietsen</string>
@@ -593,4 +592,5 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="voiceSecondsPlural">{n, plural, =1 {1 seconde} other {{n,number} seconden} }</string>
     <string name="voiceMinutesPlural">{n, plural, =1 {1 minuut} other {{n,number} minuten} }</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth-apparaten filteren</string>
+    <string name="sensor_state_power_max">Max. vermogen</string>
 </resources>
