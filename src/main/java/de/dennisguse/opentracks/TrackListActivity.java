@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks;
 
-import android.app.ActivityOptions;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -26,37 +25,27 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
-import androidx.cursoradapter.widget.ResourceCursorAdapter;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.button.MaterialButton;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
-import de.dennisguse.opentracks.data.models.ActivityType;
-import de.dennisguse.opentracks.data.models.Distance;
-import de.dennisguse.opentracks.data.models.DistanceFormatter;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.databinding.TrackListBinding;
 import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
@@ -66,15 +55,14 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.share.ShareUtils;
+import de.dennisguse.opentracks.ui.TrackListAdapter;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.AggregatedStatisticsActivity;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.ui.markers.MarkerListActivity;
 import de.dennisguse.opentracks.ui.util.ActivityUtils;
-import de.dennisguse.opentracks.ui.util.ListItemUtils;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
-import de.dennisguse.opentracks.util.StringUtils;
 
 /**
  * An activity displaying a list of tracks.
@@ -87,11 +75,9 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
     // The following are set in onCreate
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
-    private ResourceCursorAdapter resourceCursorAdapter;
+    private TrackListAdapter adapter;
 
     private TrackListBinding viewBinding;
-
-    private final TrackLoaderCallBack loaderCallbacks = new TrackLoaderCallBack();
 
     // Preferences
     private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
@@ -128,17 +114,22 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
             unitSystem = PreferencesUtils.getUnitSystem();
+            if (adapter != null) {
+                adapter.updateUnitSystem(unitSystem);
+            }
         }
         if (key != null) {
             runOnUiThread(() -> {
                 TrackListActivity.this.invalidateOptionsMenu();
-                loaderCallbacks.restart();
+                loadData();
             });
         }
     };
 
     // Menu items
     private MenuItem searchMenuItem;
+
+    private String searchQuery;
 
     private final TrackRecordingServiceConnection.Callback bindChangedCallback = (service, unused) -> {
         service.getRecordingStatusObservable()
@@ -180,63 +171,10 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             }
         });
 
-        viewBinding.trackList.setEmptyView(viewBinding.trackListEmptyView);
-        viewBinding.trackList.setOnItemClickListener((parent, view, position, trackIdId) -> {
-            Track.Id trackId = new Track.Id(trackIdId);
-            if (recordingStatus.isRecording() && trackId.equals(recordingStatus.getTrackId())) {
-                // Is recording -> open record activity.
-                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
-                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
-                startActivity(newIntent);
-            } else {
-                // Not recording -> open detail activity.
-                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
-                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
-                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(
-                        this,
-                        new Pair<>(view.findViewById(R.id.list_item_icon), TrackRecordedActivity.VIEW_TRACK_ICON));
-                startActivity(newIntent, activityOptions.toBundle());
-            }
-        });
-
-        resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
-            @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-                int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
-                int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
-                int nameIndex = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
-                int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
-                int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
-                int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
-                int startTimeOffsetIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME_OFFSET);
-                int activityTypeIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE_LOCALIZED);
-                int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
-                int markerCountIndex = cursor.getColumnIndexOrThrow(TracksColumns.MARKER_COUNT);
-
-                Track.Id trackId = new Track.Id(cursor.getLong(idIndex));
-                boolean isRecording = trackId.equals(recordingStatus.getTrackId());
-                String icon = cursor.getString(iconIndex);
-                int iconId = ActivityType.findBy(icon)
-                        .getIconDrawableId();
-                String name = cursor.getString(nameIndex);
-                String totalTime = StringUtils.formatElapsedTime(Duration.ofMillis(cursor.getLong(totalTimeIndex)));
-                String totalDistance = DistanceFormatter.Builder()
-                        .setUnit(unitSystem)
-                        .build(TrackListActivity.this).formatDistance(Distance.of(cursor.getDouble(totalDistanceIndex)));
-                int markerCount = cursor.getInt(markerCountIndex);
-                long startTime = cursor.getLong(startTimeIndex);
-                int startTimeOffset = cursor.getInt(startTimeOffsetIndex);
-                String activityType = icon != null && !icon.equals("") ? null : cursor.getString(activityTypeIndex);
-                String description = cursor.getString(descriptionIndex);
-
-                ListItemUtils.setListItem(TrackListActivity.this, view, isRecording,
-                        iconId, R.string.image_track, name, totalTime, totalDistance, markerCount,
-                        OffsetDateTime.ofInstant(Instant.ofEpochMilli(startTime), ZoneOffset.ofTotalSeconds(startTimeOffset)),
-                        activityType, description, false);
-            }
-        };
-        viewBinding.trackList.setAdapter(resourceCursorAdapter);
-        ActivityUtils.configureListViewContextualMenu(viewBinding.trackList, contextualActionModeCallback);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        adapter = new TrackListAdapter(this, viewBinding.trackList, recordingStatus, unitSystem);
+        viewBinding.trackList.setLayoutManager(layoutManager);
+        viewBinding.trackList.setAdapter(adapter);
 
         viewBinding.trackListFabAction.setOnClickListener((view) -> {
             if (recordingStatus.isRecording()) {
@@ -271,8 +209,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         });
 
         setSupportActionBar(viewBinding.trackListToolbar);
-
-        loadData(getIntent());
+        adapter.setActionModeCallback(contextualActionModeCallback);
     }
 
     private void requestRequiredPermissions() {
@@ -293,7 +230,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
         // Update UI
         this.invalidateOptionsMenu();
-        LoaderManager.getInstance(this).restartLoader(0, null, loaderCallbacks);
+        loadData();
 
         // Float button
         setFloatButton();
@@ -312,6 +249,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         super.onDestroy();
         viewBinding = null;
         trackRecordingServiceConnection = null;
+        adapter = null;
     }
 
     @Override
@@ -333,10 +271,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         updateGpsMenuItem(gpsStatusValue.isGpsStarted(), recordingStatus.isRecording());
-
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        searchView.setQuery("", false);
-
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -376,19 +310,15 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     @Override
-    public void overridePendingTransition(int enterAnim, int exitAnim) {
-        //Disable animations as it is weird going into searchMode; looks okay for SplashScreen.
-    }
-
-    @Override
     public void onBackPressed() {
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
         if (!searchView.isIconified()) {
             searchView.setIconified(true);
         }
 
-        if (loaderCallbacks.getSearchQuery() != null) {
-            loaderCallbacks.setSearch(null);
+        if (searchQuery != null) {
+            searchQuery = null;
+            loadData();
             return;
         }
 
@@ -396,19 +326,30 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     @Override
-    public void onNewIntent(Intent intent) {
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        setIntent(intent);
-        loadData(intent);
-    }
 
-    private void loadData(Intent intent) {
-        String searchQuery = null;
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             searchQuery = intent.getStringExtra(SearchManager.QUERY);
+        } else {
+            searchQuery = null;
         }
+    }
 
-        loaderCallbacks.setSearch(searchQuery);
+    private void loadData() {
+        viewBinding.trackListToolbar.setTitle(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.app_name)));
+
+        Cursor tracks = new ContentProviderUtils(this).searchTracks(searchQuery);
+
+        adapter.swapData(tracks);
+
+        if (tracks.getCount() == 0) {
+            viewBinding.trackListEmptyView.setVisibility(View.VISIBLE);
+            viewBinding.trackList.setVisibility(View.GONE);
+        } else {
+            viewBinding.trackListEmptyView.setVisibility(View.GONE);
+            viewBinding.trackList.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -490,62 +431,11 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         }
 
         if (itemId == R.id.list_context_menu_select_all) {
-            for (int i = 0; i < viewBinding.trackList.getCount(); i++) {
-                viewBinding.trackList.setItemChecked(i, true);
-            }
+            adapter.setAllSelected(true);
             return false;
         }
 
         return false;
-    }
-
-    private class TrackLoaderCallBack implements LoaderManager.LoaderCallbacks<Cursor> {
-
-        private String searchQuery = null;
-
-        public String getSearchQuery() {
-            return searchQuery;
-        }
-
-        public void setSearch(String searchQuery) {
-            this.searchQuery = searchQuery;
-            restart();
-            viewBinding.trackListToolbar.setTitle(searchQuery == null ? getString(R.string.app_name) : searchQuery);
-        }
-
-        public void restart() {
-            LoaderManager.getInstance(TrackListActivity.this).restartLoader(0, null, loaderCallbacks);
-        }
-
-        @NonNull
-        @Override
-        public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-            final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
-                    TracksColumns.DESCRIPTION, TracksColumns.ACTIVITY_TYPE_LOCALIZED, TracksColumns.STARTTIME, TracksColumns.STARTTIME_OFFSET,
-                    TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON, TracksColumns.MARKER_COUNT};
-
-            final String sortOrder = TracksColumns.STARTTIME + " DESC";
-
-            if (searchQuery == null) {
-                return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null, null, sortOrder);
-            } else {
-                final String SEARCH_QUERY = TracksColumns.NAME + " LIKE ? OR " +
-                        TracksColumns.DESCRIPTION + " LIKE ? OR " +
-                        TracksColumns.ACTIVITY_TYPE_LOCALIZED + " LIKE ?";
-                final String[] selectionArgs = new String[]{"%" + searchQuery + "%", "%" + searchQuery + "%", "%" + searchQuery + "%"};
-                return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, SEARCH_QUERY, selectionArgs, sortOrder);
-            }
-        }
-
-        @Override
-        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-            resourceCursorAdapter.swapCursor(cursor);
-        }
-
-        @Override
-        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-            resourceCursorAdapter.swapCursor(null);
-        }
     }
 
     public void onGpsStatusChanged(GpsStatusValue newStatus) {
@@ -561,5 +451,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     private void onRecordingStatusChanged(RecordingStatus status) {
         recordingStatus = status;
         setFloatButton();
+        adapter.updateRecordingStatus(recordingStatus);
     }
 }
