@@ -593,4 +593,5 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="sensor_state_heart_rate_unit">lpm</string>
     <string name="sensor_state_power_unit">W</string>
     <string name="show_on_dashboard">Taboleiro da API OpenTracks</string>
+    <string name="sensor_state_power_max">Potencia Máx</string>
 </resources>
