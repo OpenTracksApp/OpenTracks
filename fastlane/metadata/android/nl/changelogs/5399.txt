@@ -1,0 +1,7 @@
+v4.8.4: OpenTracks
+
+Veranderingen:
+- Toon maximale vermogen voor opgenomen tracks
+
+Ontwikkelaar:
+- TrackList gebruikt nu RecyclerView
