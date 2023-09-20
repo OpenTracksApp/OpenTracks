@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import io.github.pixee.security.ZipSecurity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -84,7 +85,7 @@ public class KmzTrackImporter {
      */
     private boolean copyKmzImages(Uri uri, Track.Id trackId) throws IOException {
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri);
-             ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
+             ZipInputStream zipInputStream = ZipSecurity.createHardenedInputStream(inputStream)) {
             ZipEntry zipEntry;
 
             while ((zipEntry = zipInputStream.getNextEntry()) != null) {
@@ -145,7 +146,7 @@ public class KmzTrackImporter {
 
     private List<Track.Id> findAndParseKmlFile(Uri uri) throws IOException {
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri);
-             ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
+             ZipInputStream zipInputStream = ZipSecurity.createHardenedInputStream(inputStream)) {
             ZipEntry zipEntry;
             ArrayList<Track.Id> trackIds = new ArrayList<>();
 
