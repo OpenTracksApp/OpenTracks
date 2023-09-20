@@ -15,6 +15,7 @@
  */
 package de.dennisguse.opentracks.data;
 
+import java.security.SecureRandom;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -1212,7 +1213,7 @@ public class CustomContentProviderUtilsTest {
         // given
         Instant start = Instant.now();
         TestSensorDataUtil sensorDataUtil = new TestSensorDataUtil();
-        Random random = new Random();
+        Random random = new SecureRandom();
         for (int i = 0; i < totalPoints; i++) {
             int randomNum = withStartSegments ? random.nextInt(50) - 2 : 0;
             TrackPoint.Type type = randomNum >= 0 ? TrackPoint.Type.TRACKPOINT : TrackPoint.Type.getById(randomNum);
