@@ -506,9 +506,9 @@ limitations under the License.
     <string name="export_cannot_write_to_dir">Не вдається виконати запис до каталогу експорту.</string>
     <string name="export_dir_not_writable">" (недоступно для запису!)"</string>
     <string name="location_coordinate">%1$s°</string>
-    <string name="value_float_mile_hour_recommended">%1$.1f миль / год (рекомендується)%1$.1f</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f миль / год (рекомендовано)</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
-    <string name="value_float_kilometer_hour_recommended">%1$.1f F км / год (рекомендується)%1$.1f%1$.1f</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f км / год (рекомендовано)</string>
     <string name="value_float_mile_hour">%1$.1f km/h</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
@@ -577,4 +577,5 @@ limitations under the License.
     <string name="introduction_osm_dashboard">Сам OpenTracks не надає карти. Установіть OSMDashboard, щоб переглядати свої записи на карті.</string>
     <string name="show_on_dashboard_not_installed">Не встановлено програму, що підтримує OpenTracks Dashboard API.</string>
     <string name="value_float_knots_recommended">%1$.1f вузлів (рекомендовано)</string>
+    <string name="sensor_state_power_max">Макс. потужність</string>
 </resources>
