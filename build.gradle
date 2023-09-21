@@ -134,7 +134,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.core:core-splashscreen:1.0.1'
-    implementation 'androidx.mediarouter:mediarouter:1.4.0'
+    implementation 'androidx.mediarouter:mediarouter:1.6.0'
 
     androidTestImplementation 'androidx.test:core:1.5.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
