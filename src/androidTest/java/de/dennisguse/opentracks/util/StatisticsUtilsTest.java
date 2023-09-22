@@ -57,12 +57,12 @@ public class StatisticsUtilsTest extends TestCase {
 
         // then
         assertEquals(resultTrue.getFields().size(), 3);
-        assertTrue(resultTrue.getFields().stream().anyMatch(f -> f.getKey().equals("key1")));
-        assertTrue(resultTrue.getFields().stream().anyMatch(f -> f.getKey().equals("key3")));
-        assertTrue(resultTrue.getFields().stream().anyMatch(f -> f.getKey().equals("key5")));
+        assertTrue(resultTrue.getFields().stream().anyMatch(f -> "key1".equals(f.getKey())));
+        assertTrue(resultTrue.getFields().stream().anyMatch(f -> "key3".equals(f.getKey())));
+        assertTrue(resultTrue.getFields().stream().anyMatch(f -> "key5".equals(f.getKey())));
 
         assertEquals(resultFalse.getFields().size(), 2);
-        assertTrue(resultFalse.getFields().stream().anyMatch(f -> f.getKey().equals("key2")));
-        assertTrue(resultFalse.getFields().stream().anyMatch(f -> f.getKey().equals("key4")));
+        assertTrue(resultFalse.getFields().stream().anyMatch(f -> "key2".equals(f.getKey())));
+        assertTrue(resultFalse.getFields().stream().anyMatch(f -> "key4".equals(f.getKey())));
     }
 }

@@ -44,8 +44,8 @@ public class RecordingLayoutIO {
     private static DataField fromCSV(String[] fieldParts, @NonNull Resources resources) {
         return new DataField(
                 fieldParts[0],
-                fieldParts[1].equals(YES_VALUE),
-                fieldParts[2].equals(YES_VALUE),
+                YES_VALUE.equals(fieldParts[1]),
+                YES_VALUE.equals(fieldParts[2]),
                 fieldParts[0].equals(resources.getString(R.string.stats_custom_layout_coordinates_key)));
     }
 

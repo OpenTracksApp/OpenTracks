@@ -494,7 +494,7 @@ public class KMLTrackExporter implements TrackExporter {
     }
 
     private void writeActivityType(String activityTypeLocalized) {
-        if (activityTypeLocalized == null || activityTypeLocalized.equals("")) {
+        if (activityTypeLocalized == null || "".equals(activityTypeLocalized)) {
             return;
         }
         printWriter.println("<ExtendedData>");
