@@ -244,7 +244,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             String category = activityType == null ? activityTypeLocalized : null;
             String categoryDescription = StringUtils.getCategoryDescription(category, description);
             viewBinding.trackListItemCategoryDescription.setText(categoryDescription);
-            viewBinding.trackListItemCategoryDescription.setVisibility(categoryDescription.equals("") ? View.GONE : View.VISIBLE);
+            viewBinding.trackListItemCategoryDescription.setVisibility("".equals(categoryDescription) ? View.GONE : View.VISIBLE);
 
             setSelected(selection.get(getLayoutPosition()));
         }

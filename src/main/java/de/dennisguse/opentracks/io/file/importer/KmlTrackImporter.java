@@ -402,7 +402,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
         Float value = null;
         if (content != null) {
             content = content.trim();
-            if (!content.equals("")) {
+            if (!"".equals(content)) {
                 try {
                     value = Float.parseFloat(content);
                 } catch (NumberFormatException e) {

@@ -231,7 +231,7 @@ public class KmzTrackImporter {
      */
     @Deprecated //TODO Use JDK9's inputStream.transferTo() instead of manual buffer
     private void readAndSaveImageFile(ZipInputStream zipInputStream, Track.Id trackId, String fileName) throws IOException {
-        if (trackId == null || fileName.equals("")) {
+        if (trackId == null || "".equals(fileName)) {
             return;
         }
 
