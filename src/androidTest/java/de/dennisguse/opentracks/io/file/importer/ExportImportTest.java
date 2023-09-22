@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks.io.file.importer;
 
+import java.nio.file.Files;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -112,7 +113,7 @@ public class ExportImportTest {
 
     @Before
     public void fileSetup() throws IOException {
-        tmpFile = File.createTempFile("test", "test", context.getFilesDir());
+        tmpFile = Files.createTempFile(context.getFilesDir().toPath(), "test", "test");
         tmpFileUri = Uri.fromFile(tmpFile);
 
         trackImporter = new TrackImporter(context, contentProviderUtils, Distance.of(200), true);
