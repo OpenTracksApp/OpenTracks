@@ -477,7 +477,7 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (gomendatua)</string>
     <string name="settings_sensors_title">Bluetooth</string>
     <string name="settings_gps_summary">Denbora-tartea, Distantzia-tartea, Gehienezko Distantzia, Zehaztasuna</string>
-    <string name="settings_announcements_title">Ahots Iragarkiak</string>
+    <string name="settings_announcements_statistics_title">Ahots Iragarkiak</string>
     <string name="settings_announcements_summary">Denbora, Distantzia, Ahotsaren Abiadura</string>
     <string name="settings_import_export_title">Inportatu/Esportatu</string>
     <string name="settings_import_export_summary">Inportatu, Esportatu, Auto-Export</string>

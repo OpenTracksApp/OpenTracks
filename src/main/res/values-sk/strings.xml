@@ -483,7 +483,7 @@ limitations under the License.
     <string name="settings_defaults_summary">Predvolené jednotky, predvolená aktivita, predvolený názov skladby</string>
     <string name="settings_ui_title">Používateľské rozhranie</string>
     <string name="settings_ui_summary">Vzhľad, Rozloženie nahrávania, Téma</string>
-    <string name="settings_announcements_title">Hlasové oznámenia</string>
+    <string name="settings_announcements_statistics_title">Hlasové oznámenia</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_sensors_title">Senzory Bluetooth</string>
     <string name="settings_sensors_summary">Cyklistické snímače, obvod kolies, snímače behu</string>

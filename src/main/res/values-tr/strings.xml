@@ -365,7 +365,7 @@ limitations under the License.
     <string name="settings_gps_title">GPS</string>
     <string name="settings_defaults_summary">Tercih Edilen Birimler, Varsayılan Etkinlik, Varsayılan Parça Adı</string>
     <string name="settings_gps_summary">Zaman aralığı, Mesafe aralığı, Maks. Mesafe, Hassasiyet</string>
-    <string name="settings_announcements_title">Sesli Anonslar</string>
+    <string name="settings_announcements_statistics_title">Sesli Anonslar</string>
     <string name="settings_announcements_summary">Zaman, Mesafe, Ses Hızı</string>
     <string name="help_data_storage_content"> Sensör verileri, kaydedilen konum başına saklanır. Kalp atış hızı sensörü açısından bu, konum başına yalnızca <i>bir</i> kalp atış hızı ölçümünün depolandığı anlamına gelir. Hareketsiz duruyorsanız veya içerideyseniz, hiçbir sensör verisi kaydedilmeyecektir (ancak gösterilecektir). </string>
     <string name="help_support_content"> Yapabileceklerin:

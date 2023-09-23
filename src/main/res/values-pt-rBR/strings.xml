@@ -428,7 +428,7 @@
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (Recomendado)</string>
     <string name="stats_clock">Relógio</string>
-    <string name="settings_announcements_title">Anúncios de voz</string>
+    <string name="settings_announcements_statistics_title">Anúncios de voz</string>
     <string name="settings_sensors_summary">Voice announcements</string>
     <string name="settings_sensors_title">Sensores Bluetooth</string>
     <string name="settings_gps_summary">Intervalo de tempo, Intervalo de distância, Distância máxima, Precisão</string>

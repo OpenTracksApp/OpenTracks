@@ -488,7 +488,7 @@ limitations under the License.
     <string name="settings_ui_title">Інтерфейс користувача</string>
     <string name="settings_ui_summary">Зовнішній вигляд, Макет запису, Тема</string>
     <string name="settings_sensors_title">Датчики Bluetooth</string>
-    <string name="settings_announcements_title">Голосові оголошення</string>
+    <string name="settings_announcements_statistics_title">Голосові оголошення</string>
     <string name="settings_gps_summary">Інтервал часу, інтервал відстані, Максимальна відстань, точність</string>
     <string name="settings_sensors_summary">Датчики Їзди На Велосипеді, Окружність Колеса, Датчики Ходу</string>
     <string name="settings_cycling_sensor">Їзда на велосипеді</string>

@@ -237,12 +237,22 @@
     </string-array>
     <string name="voice_on_device_speaker_key" translatable="false">voiceOnDeviceSpeaker</string>
     <bool name="voice_on_device_speaker_default" translatable="false">true</bool>
+    <string name="voice_announce_idle_key" translatable="false">voice_announce_idle_key</string>
+    <bool name="voice_announce_idle_default" translatable="false">false</bool>
+
     <string name="voice_announce_total_distance_key" translatable="false">voiceAnnounceTotalDistance</string>
+    <bool name="voice_announce_total_distance_default" translatable="false">true</bool>
     <string name="voice_announce_moving_time_key" translatable="false">voiceAnnounceMovingTime</string>
+    <bool name="voice_announce_moving_time_default" translatable="false">true</bool>
     <string name="voice_announce_average_speed_pace_key" translatable="false">voiceAnnounceAverageSpeedPace</string>
+    <bool name="voice_announce_average_speed_pace_default" translatable="false">true</bool>
     <string name="voice_announce_lap_speed_pace_key" translatable="false">voiceAnnounceLapSpeedPace</string>
+    <bool name="voice_announce_lap_speed_pace_default" translatable="false">true</bool>
+
     <string name="voice_announce_average_heart_rate_key" translatable="false">voiceAnnounceAverageHeartRate</string>
+    <bool name="voice_announce_average_heart_rate_default" translatable="false">false</bool>
     <string name="voice_announce_lap_heart_rate_key" translatable="false">voiceAnnounceLapHeartRate</string>
+    <bool name="voice_announce_lap_heart_rate_default" translatable="false">false</bool>
 
     <string name="export_trackfileformat_key" translatable="false">exportTrackFileFormat</string>
     <!-- See TrackFileFormat -->

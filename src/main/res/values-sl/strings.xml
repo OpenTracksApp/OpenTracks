@@ -401,7 +401,7 @@ limitations under the License.
     <string name="export_with_photos">s fotografijami</string>
     <string name="export_track_errors">Skladbe niso izvožene</string>
     <string name="settings_layout_reset">Ponastavitev postavitve po meri</string>
-    <string name="settings_announcements_title">Glasovna obvestila</string>
+    <string name="settings_announcements_statistics_title">Glasovna obvestila</string>
     <string name="settings_announcements_summary">Čas, razdalja, hitrost glasu</string>
     <string name="settings_import_export_title">Uvoz/izvoz</string>
     <string name="settings_activity_defaults_category">Privzete vrednosti dejavnosti</string>

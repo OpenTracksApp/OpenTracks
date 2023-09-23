@@ -539,7 +539,7 @@ limitations under the License.
     <string name="settings_defaults_summary">Suositeltavat yksiköt, Oletusaktiviteetti, Seurannan oletusnimi</string>
     <string name="select_show_on_map_behavior">Valitse\" Näytä kartalla\"käyttäytyminen</string>
     <string name="settings_sensors_summary">Pyöräilyanturit, Pyörän ympärysmitta, Juoksuanturit</string>
-    <string name="settings_announcements_title">Ääni-ilmoitukset</string>
+    <string name="settings_announcements_statistics_title">Ääni-ilmoitukset</string>
     <string name="settings_announcements_summary">Aika, etäisyys, äänennopeus</string>
     <string name="settings_gps_summary">Aikaväli, etäisyysväli, maksimietäisyys, tarkkuus</string>
 </resources>

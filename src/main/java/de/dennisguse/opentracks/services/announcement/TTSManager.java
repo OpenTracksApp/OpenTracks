@@ -32,36 +32,18 @@ import java.util.List;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.data.ContentProviderUtils;
-import de.dennisguse.opentracks.data.TrackPointIterator;
-import de.dennisguse.opentracks.data.models.Distance;
-import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.stats.SensorStatistics;
-import de.dennisguse.opentracks.stats.TrackStatistics;
-import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
 
-/**
- * This class will announce the user's {@link TrackStatistics}.
- *
- * @author Sandor Dornbush
- */
-public class VoiceAnnouncement {
+
+public class TTSManager {
 
     public final static int AUDIO_STREAM = TextToSpeech.Engine.DEFAULT_STREAM;
 
-    private static final String TAG = VoiceAnnouncement.class.getSimpleName();
+    private static final String TAG = TTSManager.class.getSimpleName();
 
     private final Context context;
 
     private final AudioManager audioManager;
-
-    private final ContentProviderUtils contentProviderUtils;
-    private TrackPoint.Id startTrackPointId = null;
-
-    private IntervalStatistics intervalStatistics;
-    private Distance intervalDistance;
 
     private final AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
@@ -109,12 +91,9 @@ public class VoiceAnnouncement {
 
     private MediaPlayer ttsFallback;
 
-    VoiceAnnouncement(Context context) {
+    TTSManager(Context context) {
         this.context = context;
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        contentProviderUtils = new ContentProviderUtils(context);
-        intervalDistance = PreferencesUtils.getVoiceAnnouncementDistance();
-        intervalStatistics = new IntervalStatistics(intervalDistance);
     }
 
     public void start() {
@@ -140,7 +119,7 @@ public class VoiceAnnouncement {
         }
     }
 
-    public void announce(@NonNull Track track) {
+    public void announce(@NonNull Spannable announcement) {
         synchronized (this) {
             if (!ttsReady) {
                 ttsReady = ttsInitStatus == TextToSpeech.SUCCESS;
@@ -166,23 +145,6 @@ public class VoiceAnnouncement {
             }
             return;
         }
-
-        Distance currentIntervalDistance = PreferencesUtils.getVoiceAnnouncementDistance();
-        if (currentIntervalDistance != intervalDistance) {
-            intervalStatistics = new IntervalStatistics(currentIntervalDistance);
-            intervalDistance = currentIntervalDistance;
-            startTrackPointId = null;
-        }
-
-        TrackPointIterator trackPointIterator = new TrackPointIterator(contentProviderUtils, track.getId(), startTrackPointId);
-        startTrackPointId = intervalStatistics.addTrackPoints(trackPointIterator);
-        IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
-        SensorStatistics sensorStatistics = null;
-        if (track.getId() != null) {
-            sensorStatistics = contentProviderUtils.getSensorStats(track.getId());
-        }
-
-        Spannable announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), PreferencesUtils.getUnitSystem(), PreferencesUtils.isReportSpeed(track), lastInterval, sensorStatistics);
 
         if (announcement.length() > 0) {
             // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.

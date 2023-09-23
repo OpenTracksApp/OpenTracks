@@ -40,6 +40,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
 
     private final ContentProviderUtils contentProviderUtils;
     private final Context context;
+    private final IdleObserver idleObserver;
 
     private final Handler handler;
 
@@ -59,8 +60,9 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
     private TrackPoint lastStoredTrackPoint;
     private TrackPoint lastStoredTrackPointWithLocation;
 
-    TrackRecordingManager(Context context, TrackPointCreator trackPointCreator, Handler handler) {
+    TrackRecordingManager(Context context, TrackPointCreator trackPointCreator, IdleObserver idleObserver, Handler handler) {
         this.context = context;
+        this.idleObserver = idleObserver;
         this.trackPointCreator = trackPointCreator;
         this.handler = handler;
         contentProviderUtils = new ContentProviderUtils(context);
@@ -165,6 +167,8 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
     public void onIdle() {
         Log.d(TAG, "Becoming idle");
         onNewTrackPoint(trackPointCreator.createIdle());
+
+        idleObserver.onIdle();
     }
 
     /**
@@ -270,6 +274,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
                 lastStoredTrackPointWithLocation = lastStoredTrackPoint;
             }
         } catch (SQLiteException e) {
+            // TODO Remove; if this is a problem; use a synchronized method.
             /*
              * Insert failed, most likely because of SqlLite error code 5 (SQLite_BUSY).
              * This is expected to happen extremely rarely (if our listener gets invoked twice at about the same time).
@@ -298,5 +303,9 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         if (PreferencesUtils.isKey(R.string.idle_duration_key, key)) {
             idleDuration = PreferencesUtils.getIdleDurationTimeout();
         }
+    }
+
+    public interface IdleObserver {
+        void onIdle();
     }
 }
