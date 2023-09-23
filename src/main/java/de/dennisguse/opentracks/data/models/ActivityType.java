@@ -58,6 +58,7 @@ public enum ActivityType {
     ROWING("rowing", R.string.activity_type_rowing, ActivityIcon.UNKNOWN, true),
     RUNNING("running", R.string.activity_type_running, ActivityIcon.RUN, false),
     SAILING("sailing", R.string.activity_type_sailing, ActivityIcon.SAILING, true),
+    KICKSCOOTER("kickscooter", R.string.activity_type_kickscooter, ActivityIcon.KICKSCOOTER, true),
     SEAPLANE("seaplane", R.string.activity_type_seaplane, ActivityIcon.AIRPLANE, true),
     SKATE_BOARDING("skate boarding", R.string.activity_type_skate_boarding, ActivityIcon.SKATE_BOARDING, true),
     SKATING("skating", R.string.activity_type_skating, ActivityIcon.UNKNOWN, true),

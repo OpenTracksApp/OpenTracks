@@ -47,6 +47,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
             ActivityType.SNOW_BOARDING,
             ActivityType.SKIING,
             ActivityType.WALKING,
+            ActivityType.KICKSCOOTER,
             ActivityType.ESCOOTER,
             ActivityType.INLINE_SKATING,
             ActivityType.SKATE_BOARDING,

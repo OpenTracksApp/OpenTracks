@@ -17,6 +17,7 @@ public enum ActivityIcon {
     UNKNOWN("UNKNOWN", R.drawable.ic_logo_24dp),
     WALK("WALK", R.drawable.ic_activity_walk_24dp),
     ESCOOTER("ESCOOTER", R.drawable.ic_activity_escooter_24dp),
+    KICKSCOOTER("KICKSCOOTER", R.drawable.ic_activity_scooter_24dp),
     INLINE_SKATING("INLINES_SKATING", R.drawable.ic_activity_inline_skating_24dp),
     SKATE_BOARDING("SKATE_BOARDING", R.drawable.ic_activity_skateboarding_24dp),
     CLIMBING("CLIMBING", R.drawable.ic_activity_climbing_24dp),
