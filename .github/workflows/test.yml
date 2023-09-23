@@ -1,6 +1,3 @@
-# We have flaky test results due to performance limitations in Github Actions.
-# Happens too often nowadays; See https://github.com/OpenTracksApp/OpenTracks/issues/1409
-
 #https://github.com/marketplace/actions/android-emulator-runner
 name: Test
 on:
