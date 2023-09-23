@@ -312,7 +312,7 @@ public class VoiceAnnouncementUtilsTest {
             lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
         }
 
-        SensorStatistics sensorStatistics = new SensorStatistics(HeartRate.of(180f), HeartRate.of(180f), null, null, null);
+        SensorStatistics sensorStatistics = new SensorStatistics(HeartRate.of(180f), HeartRate.of(180f), null, null, null, null);
 
         // when
         String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, lastInterval, sensorStatistics).toString();
@@ -342,7 +342,7 @@ public class VoiceAnnouncementUtilsTest {
             lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
         }
 
-        SensorStatistics sensorStatistics = new SensorStatistics(HeartRate.of(180f), HeartRate.of(180f), null, null, null);
+        SensorStatistics sensorStatistics = new SensorStatistics(HeartRate.of(180f), HeartRate.of(180f), null, null, null, null);
 
         // when
         String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, lastInterval, sensorStatistics).toString();
