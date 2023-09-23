@@ -27,7 +27,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -150,7 +149,7 @@ public class VoiceAnnouncement {
             }
         }
 
-        if (Arrays.asList(AudioManager.MODE_IN_CALL, AudioManager.MODE_IN_COMMUNICATION)
+        if (List.of(AudioManager.MODE_IN_CALL, AudioManager.MODE_IN_COMMUNICATION)
                 .contains(audioManager.getMode())) {
             Log.i(TAG, "Announcement is not allowed at this time.");
             return;

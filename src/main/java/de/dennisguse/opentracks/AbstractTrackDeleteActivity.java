@@ -45,8 +45,8 @@ public abstract class AbstractTrackDeleteActivity extends AbstractActivity imple
 
     @Override
     public void onConfirmDeleteDone(Track.Id... trackIds) {
-        ArrayList<Track.Id> trackIdList = new ArrayList<>(Arrays.asList(trackIds))
-                .stream().filter(trackId -> !trackId.equals(getRecordingTrackId())).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Track.Id> trackIdList = Arrays.stream(trackIds)
+                .filter(trackId -> !trackId.equals(getRecordingTrackId())).collect(Collectors.toCollection(ArrayList::new));
 
         onDeleteConfirmed();
 

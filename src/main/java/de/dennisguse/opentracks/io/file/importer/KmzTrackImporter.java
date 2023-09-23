@@ -28,7 +28,6 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -49,7 +48,7 @@ public class KmzTrackImporter {
 
     private static final String TAG = KmzTrackImporter.class.getSimpleName();
 
-    private static final List<String> KMZ_IMAGES_EXT = Arrays.asList("jpeg", "jpg", "png");
+    private static final List<String> KMZ_IMAGES_EXT = List.of("jpeg", "jpg", "png");
 
     private final Context context;
     private final TrackImporter trackImporter;

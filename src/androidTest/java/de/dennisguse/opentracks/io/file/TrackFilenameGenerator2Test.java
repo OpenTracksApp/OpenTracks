@@ -5,8 +5,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.data.models.Track;
@@ -18,7 +18,7 @@ public class TrackFilenameGenerator2Test {
 
     @Parameterized.Parameters
     public static Collection<String> data() {
-        return Arrays.asList(
+        return List.of(
                 "{name}_{starime}",
                 "{name",
                 "name}");
