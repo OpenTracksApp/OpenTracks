@@ -356,7 +356,11 @@ limitations under the License.
     <string name="settings_sensors_title">Bluetooth Sensors</string>
     <string name="settings_sensors_summary">Cycling Sensors, Wheel Circumference, Running Sensors</string>
 
-    <string name="settings_announcements_title">Voice Announcements</string>
+
+    <string name="settings_announcements_idle_category_title">Idle Announcements</string>
+    <string name="settings_announcements_idle_title">Idle</string>
+
+    <string name="settings_announcements_statistics_title">Statistics Announcements</string>
     <string name="settings_announcements_summary">Time, Distance, Voice Speed</string>
 
     <string name="settings_import_export_title">Import/Export</string>
@@ -558,6 +562,7 @@ limitations under the License.
     <string name="value_off">Off</string>
     <string name="value_smallest_recommended">Smallest (recommended)</string>
     <string name="value_int_seconds">%1$d s (recommended)</string>
+    <string name="voiceIdle">Becoming idle.</string>
     <string name="voiceHoursPlural">
         {n, plural,
         =1 {1 hour}

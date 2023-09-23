@@ -17,7 +17,7 @@ public class AnnouncementsSettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onStart() {
         super.onStart();
-        ((SettingsActivity) getActivity()).getSupportActionBar().setTitle(R.string.settings_announcements_title);
+        ((SettingsActivity) getActivity()).getSupportActionBar().setTitle(R.string.settings_announcements_statistics_title);
     }
 
     @Override

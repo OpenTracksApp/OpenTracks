@@ -31,7 +31,7 @@
         android:icon="@drawable/ic_baseline_volume_up_24"
         android:key="@string/settings_announcements_key"
         android:summary="@string/settings_announcements_summary"
-        android:title="@string/settings_announcements_title" />
+        android:title="@string/settings_announcements_statistics_title" />
 
     <Preference
         android:icon="@drawable/ic_baseline_import_export_24"

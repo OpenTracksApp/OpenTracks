@@ -425,7 +425,7 @@
     <string name="generic_filter">Filtrar</string>
     <string name="menu_select_layout">Seleccionar diseño</string>
     <string name="settings_import_export_title">Importar/Exportar</string>
-    <string name="settings_announcements_title">Avisos de voz</string>
+    <string name="settings_announcements_statistics_title">Avisos de voz</string>
     <string name="settings_announcements_summary">Tiempo, Distancia, Velocidad de la voz</string>
     <string name="settings_import_export_summary">Importar, Exportar, Autoexportar</string>
     <string name="settings_units_category">Unidades</string>

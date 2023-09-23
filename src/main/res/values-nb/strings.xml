@@ -484,7 +484,7 @@ limitations under the License.
     <string name="settings_gps_title">GPS</string>
     <string name="settings_gps_summary">Tidsintervall, distanseintervall, maks, distanse, nøyaktighet</string>
     <string name="settings_sensors_title">Blåtannssensorer</string>
-    <string name="settings_announcements_title">Talemeldinger</string>
+    <string name="settings_announcements_statistics_title">Talemeldinger</string>
     <string name="settings_announcements_summary">Tid, distanse, talehastighet</string>
     <string name="settings_import_export_title">Import/eksport</string>
     <string name="settings_import_export_summary">Import, eksport, auto-eksport</string>

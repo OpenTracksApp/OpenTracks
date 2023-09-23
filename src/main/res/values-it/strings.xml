@@ -489,7 +489,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_gps_title">GPS</string>
     <string name="settings_gps_summary">Intervallo di tempo, Intervallo di distanza, Massima Distanza, Precisione</string>
     <string name="settings_sensors_title">Sensori Bluetooth</string>
-    <string name="settings_announcements_title">Annunci Vocali</string>
+    <string name="settings_announcements_statistics_title">Annunci Vocali</string>
     <string name="settings_announcements_summary">Tempo, Distanza, Velocità della Voce</string>
     <string name="settings_import_export_title">Importa/Esporta</string>
     <string name="settings_import_export_summary">Importa, Esporta, Auto Esporta</string>

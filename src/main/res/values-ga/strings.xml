@@ -352,7 +352,7 @@
     <string name="settings_reset_summary">Athshocraigh Socruithe go Luachanna Réamhshocraithe</string>
     <string name="settings_announcements_totaltime_frequency">Eatramh ama</string>
     <string name="settings_layout_reset_confirm_message">Cuirfear gach socrú leagan amach ar ais chuig na luachanna réamhshocraithe. Ní scriosfaidh sé seo aon rianta ar an bhfeiste.</string>
-    <string name="settings_announcements_title">Fógraí Gutha</string>
+    <string name="settings_announcements_statistics_title">Fógraí Gutha</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Taispeáin staitisticí ar an scáileán glas</string>
     <string name="settings_announcements_average_heart_rate">Meánráta croí</string>
     <string name="settings_layout_reset_confirm_title">Athshocraigh do leagan amach\?</string>

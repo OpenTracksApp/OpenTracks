@@ -525,7 +525,7 @@ limitations under the License.
     <string name="settings_ui_title">Interfaz de usuario</string>
     <string name="settings_ui_summary">Apariencia, Diseño de grabación, Tema</string>
     <string name="settings_gps_title">GPS</string>
-    <string name="settings_announcements_title">Avisos de voz</string>
+    <string name="settings_announcements_statistics_title">Avisos de voz</string>
     <string name="settings_units_category">Unidades</string>
     <string name="settings_import_export_title">Importar/Exportar</string>
     <string name="stats_custom_layout_default_layout">Diseño predeterminado</string>

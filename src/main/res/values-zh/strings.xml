@@ -558,7 +558,7 @@ limitations under the License.
     <string name="settings_defaults_title">默认的单位和活动类型</string>
     <string name="settings_sensors_title">蓝牙传感器</string>
     <string name="settings_sensors_summary">自行车传感器，车轮周长，跑步传感器</string>
-    <string name="settings_announcements_title">语音播报</string>
+    <string name="settings_announcements_statistics_title">语音播报</string>
     <string name="settings_reset_summary">将设置重置为默认值</string>
     <string name="settings_layout_reset">重置自定义布局</string>
     <string name="description_pace_nautical">配速（分钟/海里）</string>

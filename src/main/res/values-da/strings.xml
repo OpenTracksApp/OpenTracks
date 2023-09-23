@@ -458,7 +458,7 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="settings_defaults_summary">Foretrukne enheder, standardaktivitet, spor standardnavn</string>
     <string name="settings_gps_summary">Tidsinterval, Distanceinterval, Maksimal afstand, Nøjagtighed</string>
     <string name="settings_sensors_summary">Cykelsensorer, Hjulomkreds, Løbesensorer</string>
-    <string name="settings_announcements_title">Stemmemeddelelser</string>
+    <string name="settings_announcements_statistics_title">Stemmemeddelelser</string>
     <string name="settings_announcements_summary">Tid, afstand, stemmehastighed</string>
     <string name="settings_import_export_title">Import/eksport</string>
     <string name="settings_import_export_summary">Import, eksport, automatisk eksport</string>

@@ -17,6 +17,7 @@ package de.dennisguse.opentracks.services.announcement;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.Spannable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -27,11 +28,15 @@ import androidx.mediarouter.media.MediaRouter;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
 
 /**
  * Execute a periodic task on a time or distance schedule.
@@ -42,9 +47,9 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
 
     private static final String TAG = VoiceAnnouncementManager.class.getSimpleName();
 
-    private final TrackRecordingService trackRecordingService;
+    private final Context context;
 
-    private VoiceAnnouncement voiceAnnouncement;
+    private TTSManager voiceAnnouncement;
 
     private TrackStatistics trackStatistics;
 
@@ -58,12 +63,22 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
     @NonNull
     private Duration nextTotalTime = TOTALTIME_OFF;
 
-    public VoiceAnnouncementManager(@NonNull TrackRecordingService trackRecordingService) {
-        this.trackRecordingService = trackRecordingService;
+
+    private final ContentProviderUtils contentProviderUtils;
+    private TrackPoint.Id startTrackPointId = null;
+
+    private IntervalStatistics intervalStatistics;
+    private Distance intervalDistance;
+
+    public VoiceAnnouncementManager(@NonNull Context context) {
+        this.context = context;
+        contentProviderUtils = new ContentProviderUtils(context);
+        intervalDistance = PreferencesUtils.getVoiceAnnouncementDistance();
+        intervalStatistics = new IntervalStatistics(intervalDistance);
     }
 
     public void start(@Nullable TrackStatistics trackStatistics) {
-        voiceAnnouncement = new VoiceAnnouncement(trackRecordingService);
+        voiceAnnouncement = new TTSManager(context);
         voiceAnnouncement.start();
         update(trackStatistics);
     }
@@ -74,10 +89,10 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         updateNextTaskDistance();
     }
 
-    public void update(@NonNull Context context, @NonNull Track track) {
+    private boolean shouldNotAnnounce() {
         if (voiceAnnouncement == null) {
             Log.e(TAG, "Cannot update when in status shutdown.");
-            return;
+            return true;
         }
 
         if (!PreferencesUtils.shouldVoiceAnnouncementOnDeviceSpeaker()
@@ -85,6 +100,26 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
                 .getSelectedRoute()
                 .isDeviceSpeaker()) {
             Log.i(TAG, "No voice announcement on device speaker.");
+            return true;
+        }
+
+        return false;
+    }
+
+    public void announceIdle() {
+        if (shouldNotAnnounce()) {
+            return;
+        }
+
+        if (!PreferencesUtils.shouldVoiceAnnouncementIdle()) {
+            return;
+        }
+
+        voiceAnnouncement.announce(VoiceAnnouncementUtils.createIdle(context));
+    }
+
+    public void announceStatisticsIfNeeded(@NonNull Track track) {
+        if (shouldNotAnnounce()) {
             return;
         }
 
@@ -100,8 +135,27 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         }
 
         if (announce) {
-            voiceAnnouncement.announce(track);
+            voiceAnnouncement.announce(createAnnouncement(track));
         }
+    }
+
+    private Spannable createAnnouncement(Track track) {
+        Distance currentIntervalDistance = PreferencesUtils.getVoiceAnnouncementDistance();
+        if (currentIntervalDistance != intervalDistance) {
+            intervalStatistics = new IntervalStatistics(currentIntervalDistance);
+            intervalDistance = currentIntervalDistance;
+            startTrackPointId = null;
+        }
+
+        TrackPointIterator trackPointIterator = new TrackPointIterator(contentProviderUtils, track.getId(), startTrackPointId);
+        startTrackPointId = intervalStatistics.addTrackPoints(trackPointIterator);
+        IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
+        SensorStatistics sensorStatistics = null;
+        if (track.getId() != null) {
+            sensorStatistics = contentProviderUtils.getSensorStats(track.getId());
+        }
+
+        return VoiceAnnouncementUtils.createStatistics(context, track.getTrackStatistics(), PreferencesUtils.getUnitSystem(), PreferencesUtils.isReportSpeed(track), lastInterval, sensorStatistics);
     }
 
     public void stop() {

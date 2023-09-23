@@ -492,7 +492,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_gps_summary">Intervalo de tempo, Distancia intervalo, Max Distancia, Precisión</string>
     <string name="settings_sensors_title">Sensores Bluetooth</string>
     <string name="settings_sensors_summary">Sensores de ciclismo, Circunferencia da roda, Sensores de carreira</string>
-    <string name="settings_announcements_title">Indicacións por Voz</string>
+    <string name="settings_announcements_statistics_title">Indicacións por Voz</string>
     <string name="settings_import_export_title">Importación/Exportación</string>
     <string name="settings_import_export_summary">Importación, Exportación, Auto Exportación</string>
     <string name="settings_units_category">Unidades</string>

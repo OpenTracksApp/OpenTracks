@@ -500,7 +500,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_import_export_title">Import/Export</string>
     <string name="settings_sensors_title">Bluetooth Sensoren</string>
     <string name="settings_sensors_summary">Fahrradsensoren, Radumfang und Lauf-Sensoren</string>
-    <string name="settings_announcements_title">Sprachansagen</string>
+    <string name="settings_announcements_statistics_title">Sprachansagen</string>
     <string name="generic_undo">Rückgängig</string>
     <string name="generic_today">Heute</string>
     <string name="generic_yesterday">Gestern</string>

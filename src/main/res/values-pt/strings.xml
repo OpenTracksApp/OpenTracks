@@ -460,7 +460,7 @@ limitations under the License.
     <string name="settings_sensors_summary">Voice announcements</string>
     <string name="settings_ui_summary">Aparência, Layout de gravação, Tema</string>
     <string name="settings_gps_title">GPS</string>
-    <string name="settings_announcements_title">Anúncios de voz</string>
+    <string name="settings_announcements_statistics_title">Anúncios de voz</string>
     <string name="settings_announcements_summary">Tempo, distância, velocidade da voz</string>
     <string name="settings_import_export_title">Importar/Exportar</string>
     <string name="settings_import_export_summary">Importar, Exportar, Auto Export</string>

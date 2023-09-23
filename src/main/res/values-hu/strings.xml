@@ -466,7 +466,7 @@ limitations under the License.
     <string name="settings_sensors_title">Bluetooth Érzékelők</string>
     <string name="generic_dismiss">Elbocsátás</string>
     <string name="settings_sensors_summary">Kerékpáros Érzékelők, Kerék Kerülete, Futásérzékelők</string>
-    <string name="settings_announcements_title">Voice Közlemények</string>
+    <string name="settings_announcements_statistics_title">Voice Közlemények</string>
     <string name="settings_export_filename_title">A fájlnév formátuma</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">A rögzített adatokat nem osztják meg automatikusan más alkalmazásokkal.</string>
     <string name="field_remove_from_layout">Eltávolítás</string>
