@@ -592,4 +592,10 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="voiceMinutesPlural">{n, plural, =1 {1 minuut} other {{n,number} minuten} }</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth-apparaten filteren</string>
     <string name="sensor_state_power_max">Max. vermogen</string>
+    <string name="settings_announcements_idle_category_title">Meldingen bij rust</string>
+    <string name="activity_type_kickscooter">step</string>
+    <string name="voiceIdle">Ruststand.</string>
+    <string name="settings_announcements_idle_title">Rust</string>
+    <string name="settings_recording_idle_timeout_title">Drempelwaarde rust</string>
+    <string name="value_int_seconds">%1$d s (aanbevolen)</string>
 </resources>
