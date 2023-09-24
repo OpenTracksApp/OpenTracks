@@ -8,6 +8,8 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withParentIndex;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static de.dennisguse.opentracks.util.EspressoUtils.selectTabAtIndex;
@@ -95,6 +97,6 @@ public class EspressoUITest {
     @Test
     public void selectAndDeleteTrack() {
         onView(withId(R.id.track_list)).check(matches(isDisplayed()));
-        onData(anything()).inAdapterView(withId(R.id.track_list)).atPosition(0).perform(longClick());
+        onView(allOf(withParent(withId(R.id.track_list)), withParentIndex(0))).perform(longClick());
     }
 }
