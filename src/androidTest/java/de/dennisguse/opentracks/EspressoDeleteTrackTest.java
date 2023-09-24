@@ -8,6 +8,8 @@ import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
+import static androidx.test.espresso.matcher.ViewMatchers.withParentIndex;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
@@ -49,7 +51,7 @@ public class EspressoDeleteTrackTest {
         onView(withId(R.id.finish_button)).perform(click());
 
         // select track
-        onData(anything()).inAdapterView(withId(R.id.track_list)).atPosition(0).perform(longClick());
+        onView(allOf(withParent(withId(R.id.track_list)), withParentIndex(0))).perform(longClick());
 
         // open menu and delete selected track
         //TODO openActionBarOverflowOrOptionsMenu(); doesn't work
