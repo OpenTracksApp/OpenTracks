@@ -456,7 +456,6 @@ limitations under the License.
     <string name="stats_sensors_heart_rate">Częstość akcji serca</string>
     <string name="stats_clock">Zegar</string>
     <string name="settings_announcements_distance_frequency">Przedział dystansu</string>
-    <string name="settings_recording_idle_speed_title">Próg prędkości bezobciążeń</string>
     <string name="settings_layout_reset_confirm_title">Zresetować twoje układy\?</string>
     <string name="settings_cycling_sensor">Kolarstwo</string>
     <string name="settings_running_sensor">Bieganie</string>
@@ -475,7 +474,7 @@ limitations under the License.
     <string name="settings_gps_title">GPS</string>
     <string name="settings_sensors_title">Czujnik Bluetooth</string>
     <string name="settings_sensors_summary">Czujniki rowerowe, Obwód koła, Czujniki biegowe</string>
-    <string name="settings_announcements_title">Wiadomości głosowe</string>
+    <string name="settings_announcements_statistics_title">Wiadomości głosowe</string>
     <string name="settings_announcements_summary">Czas, Dystans, Głos prędkości</string>
     <string name="settings_import_export_title">Import/Eksport</string>
     <string name="settings_units_category">Jednostki</string>

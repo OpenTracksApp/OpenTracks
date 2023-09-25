@@ -83,35 +83,17 @@ public class TrackStatisticsUpdaterTest {
         TrackStatistics statistics = subject.getTrackStatistics();
         assertEquals(142.26, statistics.getTotalDistance().toM(), 0.01);
         assertEquals(Duration.ofSeconds(12), statistics.getTotalTime());
-        assertEquals(Duration.ofSeconds(10), statistics.getMovingTime());
+        assertEquals(Duration.ofSeconds(12), statistics.getMovingTime());
 
         assertEquals(2.5, statistics.getMinAltitude(), 0.01);
         assertEquals(32.5, statistics.getMaxAltitude(), 0.01);
         assertEquals(36, statistics.getTotalAltitudeGain(), 0.01);
         assertEquals(36, statistics.getTotalAltitudeLoss(), 0.01);
 
-        assertEquals(14.226, statistics.getMaxSpeed().toMPS(), 0.01);
-        assertEquals(14.226, statistics.getAverageMovingSpeed().toMPS(), 0.01);
+        assertEquals(11.85, statistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(11.85, statistics.getAverageMovingSpeed().toMPS(), 0.01);
         assertEquals(11.85, statistics.getAverageSpeed().toMPS(), 0.01);
-        assertEquals(106.64f, statistics.getAverageHeartRate().getBPM(), 0.01);
-    }
-
-    @Test
-    public void addTrackPoint_distance_from_GPS_not_moving() {
-        // given
-        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
-
-        TrackPoint tp1 = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochMilli(1000));
-        TrackPoint tp2 = new TrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
-        TrackPoint tp3 = new TrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
-
-        // when
-        subject.addTrackPoint(tp1);
-        subject.addTrackPoint(tp2);
-        subject.addTrackPoint(tp3);
-
-        // then
-        assertEquals(0, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
+        assertEquals(106.834f, statistics.getAverageHeartRate().getBPM(), 0.01);
     }
 
     @Test
@@ -166,35 +148,6 @@ public class TrackStatisticsUpdaterTest {
     }
 
     @Test
-    public void addTrackPoint_distance_from_GPS_not_moving_and_sensor_moving() {
-        // given
-        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
-
-        TrackPoint tp1 = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochMilli(1000));
-        TrackPoint tp2 = new TrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
-        TrackPoint tp3 = new TrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
-        TrackPoint tp4 = new TrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(4000));
-        tp4.setSensorDistance(Distance.of(5f));
-        TrackPoint tp5 = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochMilli(5000));
-        tp5.setSensorDistance(Distance.of(10f));
-
-        // when
-        subject.addTrackPoint(tp1);
-        subject.addTrackPoint(tp2);
-        subject.addTrackPoint(tp3);
-
-        // then
-        assertEquals(0, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
-
-        // when
-        subject.addTrackPoint(tp4);
-        subject.addTrackPoint(tp5);
-
-        // then
-        assertEquals(15, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
-    }
-
-    @Test
     public void addTrackPoint_distance_from_GPS_moving_and_sensor_disconnecting() {
         // given
         TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
@@ -223,42 +176,6 @@ public class TrackStatisticsUpdaterTest {
 
         // then
         assertEquals(59.18, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
-    }
-
-
-    @Test
-    public void addTrackPoint_maxSpeed_ignore_above_acceleration() {
-        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
-        assertEquals(Speed.of(0f), subject.getTrackStatistics().getMaxSpeed());
-
-        subject.addTrackPoint(new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0)));
-        assertEquals(Speed.of(0f), subject.getTrackStatistics().getMaxSpeed());
-
-        // Ignore as we set max speed if two consecutive trackpoints were considered moving
-        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
-                .setSpeed(Speed.of(1f)));
-        assertEquals(Speed.of(0f), subject.getTrackStatistics().getMaxSpeed());
-
-        // Update max speed
-        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
-                .setSpeed(Speed.of(1f)));
-        assertEquals(Speed.of(1f), subject.getTrackStatistics().getMaxSpeed());
-
-        // Update max speed
-        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(12))
-                .setSpeed(Speed.of(50f)));
-        assertEquals(Speed.of(50f), subject.getTrackStatistics().getMaxSpeed());
-
-        // Ignore; we were getting slower
-        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(13))
-                .setSpeed(Speed.of(5f)));
-        assertEquals(Speed.of(50f), subject.getTrackStatistics().getMaxSpeed());
-
-        // Ignore acceleration above 2g
-        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(14))
-                .setSpeed(Speed.of(500f)));
-        assertEquals(Speed.of(50f), subject.getTrackStatistics().getMaxSpeed());
-
     }
 
     @Test
@@ -291,6 +208,64 @@ public class TrackStatisticsUpdaterTest {
     }
 
     @Test
+    public void addTrackPoint_idle_withoutDistance() {
+        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
+
+        // when
+        subject.addTrackPoints(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0)),
+                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
+                        .setSpeed(Speed.of(2f)),
+                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
+                        .setSpeed(Speed.of(2f)),
+
+                new TrackPoint(TrackPoint.Type.IDLE, Instant.ofEpochSecond(30)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(40))
+                        .setHeartRate(50),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(45))
+                        .setHeartRate(50),
+                new TrackPoint(0, 1, Altitude.WGS84.of(0), Instant.ofEpochSecond(50)),
+                new TrackPoint(0, 2, Altitude.WGS84.of(0), Instant.ofEpochSecond(55)),
+
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochSecond(60))
+        ));
+
+        // then
+        assertEquals(Duration.ofSeconds(40), subject.getTrackStatistics().getMovingTime());
+    }
+
+    @Test
+    public void addTrackPoint_idle_withDistance() {
+        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
+
+        // when
+        subject.addTrackPoints(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0)),
+                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
+                        .setSensorDistance(Distance.of(10)),
+                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
+                        .setSensorDistance(Distance.of(10)),
+
+                new TrackPoint(TrackPoint.Type.IDLE, Instant.ofEpochSecond(30))
+                        .setSensorDistance(Distance.ofKilometer(1)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(40))
+                        .setHeartRate(50),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(45))
+                        .setHeartRate(50),
+                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(50))
+                        .setSensorDistance(Distance.of(10)),
+                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(55))
+                        .setSensorDistance(Distance.of(10)),
+
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochSecond(60))
+        ));
+
+        // then
+        assertEquals(Duration.ofSeconds(45), subject.getTrackStatistics().getMovingTime());
+        assertEquals(Distance.of(1040), subject.getTrackStatistics().getTotalDistance());
+    }
+
+    @Test
     public void copy_constructor() {
         // given
         TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
@@ -313,7 +288,6 @@ public class TrackStatisticsUpdaterTest {
         TrackStatisticsUpdater copy = new TrackStatisticsUpdater(subject);
         subject.addTrackPoint(tp5);
         copy.addTrackPoint(tp5);
-
 
         // then
         assertEquals(55.287, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);

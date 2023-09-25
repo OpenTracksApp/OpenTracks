@@ -521,7 +521,6 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_title">Automaattinen tiedonsiirto</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Tallennuksen aloittanut sovellus voi myös käyttää tallennettuja tietoja.</string>
     <string name="menu_filter">Suodatin</string>
-    <string name="settings_recording_idle_speed_title">Joutokäyntinopeuden kynnysarvo</string>
     <string name="stats_sensors_cadence">Kadenssi</string>
     <string name="stats_clock">Kello</string>
     <string name="current_heart_rate">Nykyinen syke</string>
@@ -540,7 +539,7 @@ limitations under the License.
     <string name="settings_defaults_summary">Suositeltavat yksiköt, Oletusaktiviteetti, Seurannan oletusnimi</string>
     <string name="select_show_on_map_behavior">Valitse\" Näytä kartalla\"käyttäytyminen</string>
     <string name="settings_sensors_summary">Pyöräilyanturit, Pyörän ympärysmitta, Juoksuanturit</string>
-    <string name="settings_announcements_title">Ääni-ilmoitukset</string>
+    <string name="settings_announcements_statistics_title">Ääni-ilmoitukset</string>
     <string name="settings_announcements_summary">Aika, etäisyys, äänennopeus</string>
     <string name="settings_gps_summary">Aikaväli, etäisyysväli, maksimietäisyys, tarkkuus</string>
 </resources>

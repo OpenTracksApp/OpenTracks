@@ -332,7 +332,7 @@ limitations under the License.
     <string name="settings_gps_summary">時間間隔、距離間隔、最大距離、精度</string>
     <string name="settings_sensors_title">藍芽感測器</string>
     <string name="settings_sensors_summary">自行車感測器、輪周、跑步感測器</string>
-    <string name="settings_announcements_title">語音播報</string>
+    <string name="settings_announcements_statistics_title">語音播報</string>
     <string name="settings_announcements_summary">時間、距離、語速</string>
     <string name="settings_import_export_title">匯入/匯出</string>
     <string name="settings_import_export_summary">匯入、匯出、自動匯出</string>
@@ -366,7 +366,6 @@ limitations under the License.
     <string name="settings_recording_track_name_date_local_option">日期 (當地)</string>
     <string name="settings_recording_track_name_number_option">數字</string>
     <string name="settings_recording_track_name_title">預設蹤跡名稱</string>
-    <string name="settings_recording_idle_speed_title">怠速閾值</string>
     <string name="settings_night_mode_title">界面主題</string>
     <string name="settings_night_mode_option_system">系統</string>
     <string name="settings_night_mode_option_day">日</string>

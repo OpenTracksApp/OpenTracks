@@ -460,7 +460,7 @@ limitations under the License.
     <string name="settings_gps_summary">Интервал времени и дистанции, Максимальная дистанция, Точность</string>
     <string name="settings_sensors_title">Bluetooth-датчики</string>
     <string name="settings_sensors_summary">Датчики велосипеда, Оборот колеса, Датчики бега</string>
-    <string name="settings_announcements_title">Голосовые подсказки</string>
+    <string name="settings_announcements_statistics_title">Голосовые подсказки</string>
     <string name="settings_import_export_title">Импорт/Экспорт</string>
     <string name="settings_import_export_summary">Импорт, Экспорт, Автоэкспорт</string>
     <string name="settings_units_category">Единицы</string>
@@ -490,7 +490,6 @@ limitations under the License.
     <string name="stats_clock">Часы</string>
     <string name="settings_activity_defaults_category">Настройки активности</string>
     <string name="settings_reset_summary">Сбросить настройки</string>
-    <string name="settings_recording_idle_speed_title">Порог скорости холостого хода</string>
     <string name="settings_generic_sensor">Обычные</string>
     <string name="custom_layout_select_layout">Выбрать раскладку</string>
     <string name="stats_custom_layout_default_layout">Раскладка по умолчанию</string>

@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
 import java.time.ZoneOffset;
@@ -28,19 +30,25 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.TrackNameUtils;
 
-class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = TrackRecordingManager.class.getSimpleName();
 
     private static final AltitudeCorrectionManager ALTITUDE_CORRECTION_MANAGER = new AltitudeCorrectionManager();
 
+    private final Runnable ON_IDLE = this::onIdle;
+
     private final ContentProviderUtils contentProviderUtils;
     private final Context context;
+    private final IdleObserver idleObserver;
+
+    private final Handler handler;
 
     private final TrackPointCreator trackPointCreator;
 
     private Distance recordingDistanceInterval;
     private Distance maxRecordingDistance;
+    private Duration idleDuration;
 
     private Track.Id trackId;
     private TrackStatisticsUpdater trackStatisticsUpdater;
@@ -52,15 +60,17 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
     private TrackPoint lastStoredTrackPoint;
     private TrackPoint lastStoredTrackPointWithLocation;
 
-    TrackRecordingManager(Context context, TrackPointCreator trackPointCreator) {
+    TrackRecordingManager(Context context, TrackPointCreator trackPointCreator, IdleObserver idleObserver, Handler handler) {
         this.context = context;
+        this.idleObserver = idleObserver;
         this.trackPointCreator = trackPointCreator;
+        this.handler = handler;
         contentProviderUtils = new ContentProviderUtils(context);
     }
 
     Track.Id startNewTrack() {
         TrackPoint segmentStartTrackPoint = trackPointCreator.createSegmentStartManual();
-        // Create new track
+
         ZoneOffset zoneOffset = ZoneOffset.systemDefault().getRules().getOffset(segmentStartTrackPoint.getTime());
         Track track = new Track(zoneOffset);
         trackId = contentProviderUtils.insertTrack(track);
@@ -74,7 +84,6 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         track.setActivityTypeLocalized(activityTypeLocalized);
         track.setActivityType(ActivityType.findByLocalizedString(context, activityTypeLocalized));
         track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
-        //TODO Pass TrackPoint
         track.setName(TrackNameUtils.getTrackName(context, trackId, track.getStartTime()));
         contentProviderUtils.updateTrack(track);
 
@@ -100,7 +109,7 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         return true;
     }
 
-    void end() {
+    void endCurrentTrack() {
         TrackPoint segmentEnd = trackPointCreator.createSegmentEnd();
         insertTrackPoint(segmentEnd, true);
 
@@ -154,15 +163,29 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         return new Marker.Id(ContentUris.parseId(uri));
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    public void onIdle() {
+        Log.d(TAG, "Becoming idle");
+        onNewTrackPoint(trackPointCreator.createIdle());
+
+        idleObserver.onIdle();
+    }
+
     /**
      * @return TrackPoint was stored?
      */
-    boolean onNewTrackPoint(@NonNull TrackPoint trackPoint) {
+    synchronized boolean onNewTrackPoint(@NonNull TrackPoint trackPoint) {
         if (trackPoint.hasSpeed()) {
             lastTrackPointUIWithSpeed = trackPoint;
         }
         if (trackPoint.hasAltitude()) {
             lastTrackPointUIWithAltitude = trackPoint;
+        }
+
+        if (trackPoint.getType() == TrackPoint.Type.IDLE) {
+            insertTrackPoint(trackPoint, true);
+            handler.removeCallbacks(ON_IDLE);
+            return true;
         }
         //Storing trackPoint
 
@@ -184,10 +207,10 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
             if (!shouldStore) {
                 Log.d(TAG, "Ignoring TrackPoint as it has no distance (and sensor data is not new enough).");
                 return false;
-            } else {
-                insertTrackPoint(trackPoint, true);
-                return true;
             }
+
+            insertTrackPoint(trackPoint, true);
+            return true;
         }
 
         Distance distanceToLastStoredTrackPoint;
@@ -200,18 +223,17 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         if (distanceToLastStoredTrackPoint.greaterThan(maxRecordingDistance)) {
             trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
             insertTrackPoint(trackPoint, true);
+
+            handler.removeCallbacks(ON_IDLE);
+            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
             return true;
         }
 
-        if (distanceToLastStoredTrackPoint.greaterOrEqualThan(recordingDistanceInterval)
-                && trackPoint.isMoving()) {
+        if (distanceToLastStoredTrackPoint.greaterOrEqualThan(recordingDistanceInterval)) {
             insertTrackPoint(trackPoint, false);
-            return true;
-        }
 
-        if (trackPoint.isMoving() != lastStoredTrackPoint.isMoving()) {
-            // Moving from non-moving to moving or vice versa; required to compute moving time correctly.
-            insertTrackPoint(trackPoint, true);
+            handler.removeCallbacks(ON_IDLE);
+            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
             return true;
         }
 
@@ -252,6 +274,7 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
                 lastStoredTrackPointWithLocation = lastStoredTrackPoint;
             }
         } catch (SQLiteException e) {
+            // TODO Remove; if this is a problem; use a synchronized method.
             /*
              * Insert failed, most likely because of SqlLite error code 5 (SQLite_BUSY).
              * This is expected to happen extremely rarely (if our listener gets invoked twice at about the same time).
@@ -277,5 +300,12 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         if (PreferencesUtils.isKey(R.string.max_recording_distance_key, key)) {
             maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance();
         }
+        if (PreferencesUtils.isKey(R.string.idle_duration_key, key)) {
+            idleDuration = PreferencesUtils.getIdleDurationTimeout();
+        }
+    }
+
+    public interface IdleObserver {
+        void onIdle();
     }
 }

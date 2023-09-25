@@ -66,6 +66,7 @@ public class TrackPoint {
 
         public final int type_db;
 
+
         Type(int type_db) {
             this.type_db = type_db;
         }
@@ -287,11 +288,6 @@ public class TrackPoint {
         this.speed = speed;
         return this;
     }
-
-    public boolean isMoving() {
-        return hasSpeed() && getSpeed().isMoving();
-    }
-
     public boolean hasBearing() {
         return bearing != null;
     }
@@ -352,9 +348,8 @@ public class TrackPoint {
         return hasHorizontalAccuracy() && horizontalAccuracy.lessThan(thresholdHorizontalAccuracy);
     }
 
-    //TODO Bearing requires a location; what do we do if we don't have any?
     public float bearingTo(@NonNull TrackPoint dest) {
-        return getLocation().bearingTo(dest.getLocation());
+        return bearingTo(dest.getLocation());
     }
 
     //TODO Bearing requires a location; what do we do if we don't have any?
@@ -449,13 +444,14 @@ public class TrackPoint {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", horizontalAccuracy=" + horizontalAccuracy +
+                ", verticalAccuracy=" + verticalAccuracy +
                 ", altitude=" + altitude +
                 ", speed=" + speed +
                 ", bearing=" + bearing +
                 ", sensorDistance=" + sensorDistance +
                 ", type=" + type +
-                ", heartRate_bpm=" + heartRate +
-                ", cadence_rpm=" + cadence +
+                ", heartRate=" + heartRate +
+                ", cadence=" + cadence +
                 ", power=" + power +
                 ", altitudeGain_m=" + altitudeGain_m +
                 ", altitudeLoss_m=" + altitudeLoss_m +

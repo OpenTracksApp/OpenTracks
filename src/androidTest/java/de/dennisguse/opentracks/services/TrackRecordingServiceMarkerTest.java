@@ -146,6 +146,7 @@ public class TrackRecordingServiceMarkerTest {
         assertEquals(0.0, wpt.getLength().toM(), 0.01);
         assertNotNull(wpt.getLocation());
 
+        trackPointCreator.setClock("2020-02-02T02:02:04Z");
         service.endCurrentTrack();
     }
 }

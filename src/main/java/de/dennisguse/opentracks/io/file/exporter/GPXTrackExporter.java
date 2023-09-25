@@ -171,6 +171,9 @@ public class GPXTrackExporter implements TrackExporter {
                             sensorPoints.add(trackPoint);
                         }
                     }
+                    case IDLE -> {
+                        // Not supported as IDLE-TrackPoints have no location.
+                    }
                     default ->
                             throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
                 }

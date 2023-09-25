@@ -477,7 +477,6 @@ limitations under the License.
     <string name="permission_bluetooth_failed_rejected">V nastavení systému je třeba ručně povolit aplikaci OpenTracks přístup k blízkým zařízením.</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mil/h (doporučeno)</string>
-    <string name="settings_recording_idle_speed_title">Rychlost pro autopausu</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (doporučeno)</string>
     <string name="stats_clock">Hodiny</string>
@@ -489,7 +488,7 @@ limitations under the License.
     <string name="settings_import_export_summary">Import, export, automatický export</string>
     <string name="settings_import_export_title">Import/Export</string>
     <string name="settings_announcements_summary">Čas, vzdálenost, rychlost hlasu</string>
-    <string name="settings_announcements_title">Hlasová oznámení</string>
+    <string name="settings_announcements_statistics_title">Hlasová oznámení</string>
     <string name="settings_sensors_title">Bluetooth senzory</string>
     <string name="settings_gps_summary">Časový interval, Interval vzdálenosti, Maximální vzdálenost, Přesnost</string>
     <string name="settings_ui_summary">Vzhled, Rozložení záznamu, Téma</string>

@@ -94,7 +94,9 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private final ArrayList<Instant> whenList = new ArrayList<>();
     private final ArrayList<Location> locationList = new ArrayList<>();
 
-    private String dataType;
+    private String dataType; //Could be converted to an ENUM
+
+    private final ArrayList<String> trackpointTypeList = new ArrayList<>();
     private final ArrayList<Float> sensorSpeedList = new ArrayList<>();
     private final ArrayList<Float> sensorDistanceList = new ArrayList<>();
     private final ArrayList<Float> sensorCadenceList = new ArrayList<>();
@@ -287,6 +289,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
         locationList.clear();
         whenList.clear();
 
+        trackpointTypeList.clear();
         sensorSpeedList.clear();
         sensorDistanceList.clear();
         sensorHeartRateList.clear();
@@ -311,6 +314,12 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, time);
             if (location != null) {
                 trackPoint.setLocation(location);
+            }
+
+            if (i < trackpointTypeList.size() && trackpointTypeList.get(i) != null) {
+
+                TrackPoint.Type type = TrackPoint.Type.valueOf(trackpointTypeList.get(i));
+                trackPoint.setType(type);
             }
 
             if (i < sensorSpeedList.size() && sensorSpeedList.get(i) != null) {
@@ -399,6 +408,10 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     }
 
     private void onExtendedDataValueEnd() throws SAXException {
+        if (dataType.equals(KMLTrackExporter.EXTENDED_DATA_TYPE_TRACKPOINT)) {
+            trackpointTypeList.add(content != null ? content.trim() : null);
+            return;
+        }
         Float value = null;
         if (content != null) {
             content = content.trim();

@@ -472,7 +472,6 @@ limitations under the License.
     <string name="settings_export_section">Eksport</string>
     <string name="value_float_kilometer_hour">%1$.1f km/t</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/t (anbefales)</string>
-    <string name="settings_recording_idle_speed_title">Terskel for tomgangshastighet</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (anbefales)</string>
     <string name="stats_clock">Klokke</string>
@@ -485,7 +484,7 @@ limitations under the License.
     <string name="settings_gps_title">GPS</string>
     <string name="settings_gps_summary">Tidsintervall, distanseintervall, maks, distanse, nøyaktighet</string>
     <string name="settings_sensors_title">Blåtannssensorer</string>
-    <string name="settings_announcements_title">Talemeldinger</string>
+    <string name="settings_announcements_statistics_title">Talemeldinger</string>
     <string name="settings_announcements_summary">Tid, distanse, talehastighet</string>
     <string name="settings_import_export_title">Import/eksport</string>
     <string name="settings_import_export_summary">Import, eksport, auto-eksport</string>

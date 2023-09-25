@@ -36,14 +36,9 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
     private Clock clock = new MonotonicClock();
     private SensorManager sensorManager;
 
-    public TrackPointCreator(Callback service, Context context, Handler handler) {
+    public TrackPointCreator(Callback service) {
         this.service = service;
         this.sensorManager = new SensorManager(this);
-    }
-
-    @VisibleForTesting
-    TrackPointCreator(Callback service) {
-        this.service = service;
     }
 
     public synchronized void start(@NonNull Context context, @NonNull Handler handler) {
@@ -104,6 +99,13 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
         addSensorData(segmentEnd);
         reset();
         return segmentEnd;
+    }
+
+    public synchronized TrackPoint createIdle() {
+        TrackPoint idle = new TrackPoint(TrackPoint.Type.IDLE, createNow());
+        addSensorData(idle);
+        reset();
+        return idle;
     }
 
     public Pair<TrackPoint, SensorDataSet> createCurrentTrackPoint(@Nullable TrackPoint lastTrackPointUISpeed, @Nullable TrackPoint lastTrackPointUIAltitude, @Nullable TrackPoint lastStoredTrackPointWithLocation) {

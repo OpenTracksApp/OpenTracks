@@ -511,7 +511,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (recommandé)</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (recommandé)</string>
-    <string name="settings_recording_idle_speed_title">Seuil de vitesse au ralenti</string>
     <string name="stats_clock">Horloge</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="settings_generic_sensor">Générique</string>
@@ -527,7 +526,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_import_export_summary">Importez, Exportez, Auto Export</string>
     <string name="settings_import_export_title">Importez/Exportez</string>
     <string name="settings_announcements_summary">Temps, distance, vitesse de la voix</string>
-    <string name="settings_announcements_title">Annonces vocales</string>
+    <string name="settings_announcements_statistics_title">Annonces vocales</string>
     <string name="settings_sensors_title">Capteurs Bluetooth</string>
     <string name="settings_gps_summary">Intervalle de temps, Intervalle de distance, Distance maximale, Précision</string>
     <string name="settings_gps_title">GPS</string>

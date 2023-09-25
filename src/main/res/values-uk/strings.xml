@@ -475,7 +475,6 @@ limitations under the License.
     <string name="custom_layout_list_edit_name">Введіть ім\'я макета для додавання</string>
     <string name="settings_announcements_distance_frequency">Інтервал відстаней</string>
     <string name="settings_announcements_totaltime_frequency">Часовий інтервал</string>
-    <string name="settings_recording_idle_speed_title">Поріг холостого ходу</string>
     <string name="settings_running_sensor">Рухомий</string>
     <string name="settings_generic_sensor">Загальний</string>
     <string name="settings_layout_reset_confirm_title">Скинути ваші макети\?</string>
@@ -489,7 +488,7 @@ limitations under the License.
     <string name="settings_ui_title">Інтерфейс користувача</string>
     <string name="settings_ui_summary">Зовнішній вигляд, Макет запису, Тема</string>
     <string name="settings_sensors_title">Датчики Bluetooth</string>
-    <string name="settings_announcements_title">Голосові оголошення</string>
+    <string name="settings_announcements_statistics_title">Голосові оголошення</string>
     <string name="settings_gps_summary">Інтервал часу, інтервал відстані, Максимальна відстань, точність</string>
     <string name="settings_sensors_summary">Датчики Їзди На Велосипеді, Окружність Колеса, Датчики Ходу</string>
     <string name="settings_cycling_sensor">Їзда на велосипеді</string>

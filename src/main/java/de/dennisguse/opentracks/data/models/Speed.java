@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.data.models;
 
 import java.time.Duration;
 
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
 
 public record Speed(double speed_mps) {
@@ -54,10 +53,6 @@ public record Speed(double speed_mps) {
 
     public boolean isInvalid() {
         return Double.isNaN(speed_mps) || Double.isInfinite(speed_mps);
-    }
-
-    public boolean isMoving() {
-        return !isInvalid() && greaterThan(PreferencesUtils.getIdleSpeed());
     }
 
     public boolean lessThan(Speed speed) {

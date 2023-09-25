@@ -428,7 +428,7 @@
     <string name="settings_gps_summary">Intervalo de tempo, Intervalo de distância, Distância máxima, Precisão</string>
     <string name="settings_sensors_title">Sensores Bluetooth</string>
     <string name="settings_sensors_summary">Voice announcements</string>
-    <string name="settings_announcements_title">Anúncios de voz</string>
+    <string name="settings_announcements_statistics_title">Anúncios de voz</string>
     <string name="settings_announcements_summary">Tempo, distância, velocidade da voz</string>
     <string name="settings_import_export_title">Importar/Exportar</string>
     <string name="settings_import_export_summary">Importar, Exportar, Auto Export</string>
@@ -438,7 +438,6 @@
     <string name="settings_recording_keep_screen_on_while_recording_title">Mantenha o ecrã ligada</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Durante a gravação, apresente em ecrã inteiro.</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Durante a gravação, mantenha o ecrã ligado.</string>
-    <string name="settings_recording_idle_speed_title">Limite de velocidade de marcha lenta</string>
     <string name="settings_night_mode_title">Tema UI</string>
     <string name="settings_night_mode_option_system">Sistema</string>
     <string name="settings_night_mode_option_night">Noite</string>

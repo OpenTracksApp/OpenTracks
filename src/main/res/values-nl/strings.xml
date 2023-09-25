@@ -458,7 +458,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_ui_title">User Interface</string>
     <string name="stats_coordinates">Coördinaten</string>
     <string name="settings_announcements_distance_frequency">Afstandsinterval</string>
-    <string name="settings_recording_idle_speed_title">Drempelwaarde stationair</string>
     <string name="value_float_kilometer_hour">%1$.1f km/u</string>
     <string name="settings_api_title">Publieke API</string>
     <string name="settings_public_api_enabled_title">Public API</string>
@@ -533,7 +532,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_gps_summary">Tijdsinterval, afstandsinterval, maximale afstand, nauwkeurigheid</string>
     <string name="settings_sensors_title">Bluetooth sensoren</string>
     <string name="settings_sensors_summary">Fiets sensoren, wielomtrek, loop sensoren</string>
-    <string name="settings_announcements_title">Gesproken berichten</string>
+    <string name="settings_announcements_statistics_title">Gesproken berichten</string>
     <string name="custom_layout_list_title">Lay-outs</string>
     <string name="custom_layout_list_edit_name">Voer de naam van de lay-out in</string>
     <string name="custom_layout_list_edit_already_exists">Lay-out naam bestaat al</string>

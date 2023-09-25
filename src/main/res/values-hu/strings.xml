@@ -466,7 +466,7 @@ limitations under the License.
     <string name="settings_sensors_title">Bluetooth Érzékelők</string>
     <string name="generic_dismiss">Elbocsátás</string>
     <string name="settings_sensors_summary">Kerékpáros Érzékelők, Kerék Kerülete, Futásérzékelők</string>
-    <string name="settings_announcements_title">Voice Közlemények</string>
+    <string name="settings_announcements_statistics_title">Voice Közlemények</string>
     <string name="settings_export_filename_title">A fájlnév formátuma</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">A rögzített adatokat nem osztják meg automatikusan más alkalmazásokkal.</string>
     <string name="field_remove_from_layout">Eltávolítás</string>
@@ -474,7 +474,6 @@ limitations under the License.
     <string name="stats_sensors_cadence">Ütem</string>
     <string name="settings_all_reset">Visszaállítás</string>
     <string name="settings_layout_reset_confirm_message">Minden elrendezési beállítás visszaáll az alapértelmezett értékekre. Ez nem törli az eszközön lévő zeneszámokat.</string>
-    <string name="settings_recording_idle_speed_title">Alapjárati fordulatszám-küszöbérték</string>
     <string name="custom_layout_list_title">Elrendezések</string>
     <string name="custom_layout_list_edit_name">Írja be az elrendezés nevét a hozzáadáshoz</string>
     <string name="aggregated_stats_filter_no_results">A megadott szűrőhöz nincsenek tevékenységek</string>

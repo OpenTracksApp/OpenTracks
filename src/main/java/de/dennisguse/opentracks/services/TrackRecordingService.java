@@ -47,7 +47,7 @@ import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 
-public class TrackRecordingService extends Service implements TrackPointCreator.Callback, SharedPreferences.OnSharedPreferenceChangeListener {
+public class TrackRecordingService extends Service implements TrackPointCreator.Callback, SharedPreferences.OnSharedPreferenceChangeListener, TrackRecordingManager.IdleObserver {
 
     private static final String TAG = TrackRecordingService.class.getSimpleName();
 
@@ -107,8 +107,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         gpsStatusObservable = new MutableLiveData<>(STATUS_GPS_DEFAULT);
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
-        trackPointCreator = new TrackPointCreator(this, this, handler);
-        trackRecordingManager = new TrackRecordingManager(this, trackPointCreator);
+        trackPointCreator = new TrackPointCreator(this);
+        trackRecordingManager = new TrackRecordingManager(this, trackPointCreator, this , handler);
 
         voiceAnnouncementManager = new VoiceAnnouncementManager(this);
         notificationManager = new TrackRecordingServiceNotificationManager(this);
@@ -214,7 +214,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Set recording status
         updateRecordingStatus(STATUS_DEFAULT);
 
-        trackRecordingManager.end();
+        trackRecordingManager.endCurrentTrack();
 
         stopUpdateRecordingData();
 
@@ -296,9 +296,13 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Compute temporary track statistics using sensorData and update time.
         Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
 
-        voiceAnnouncementManager.update(this, data.first);
+        voiceAnnouncementManager.announceStatisticsIfNeeded(data.first);
 
         recordingDataObservable.postValue(new RecordingData(data.first, data.second.first, data.second.second));
+    }
+
+    public void onIdle() {
+        voiceAnnouncementManager.announceIdle();
     }
 
     @VisibleForTesting

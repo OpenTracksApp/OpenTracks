@@ -21,7 +21,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import de.dennisguse.opentracks.services.announcement.VoiceAnnouncement;
+import de.dennisguse.opentracks.services.announcement.TTSManager;
 
 /**
  * @author Jimmy Shih
@@ -33,7 +33,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Set volume control stream for text to speech
-        setVolumeControlStream(VoiceAnnouncement.AUDIO_STREAM);
+        setVolumeControlStream(TTSManager.AUDIO_STREAM);
 
         setContentView(getRootView());
     }
