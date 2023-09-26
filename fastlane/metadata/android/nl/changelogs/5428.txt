@@ -1,0 +1,23 @@
+v4.9.0: OpenTracks
+
+OPMERKING: BREAKING CHANGE
+
+Deze release verandert hoe OpenTracks beweging van geen beweging onderscheidt.
+Tot nu toe werd de snelheid (GPS of sensor) gebruikt door een drempel toe te passen (bijv., minder dan 0,3 m/s).
+Dit kan echter erg lawaai zijn.
+Vanaf nu wordt een time-outduur gebruikt (d.w.z., geen significante positieverandering in de laatste X seconden).
+Deze duur is door de gebruiker configureerbaar.
+De gebeurtenissen om inactief te worden, worden opgeslagen in de database incl. een tijdstempel, zodat statistieken opnieuw kunnen worden berekend.
+
+Een downgrade van deze versie is niet geïmplementeerd.
+Maak een back-up van alles voordat u gaat upgraden.
+
+Veranderingen:
+- Inactieve detectie gebruikt de duur van "geen beweging" in plaats van te laag
+- Scooteractiviteit toegevoegd
+
+Bugfix :
+- Tijdens het opnemen toonde TrackList alle nummers als opname
+
+Ontwikkelaar:
+- Github-actie opnieuw ingeschakeld die tests uitvoert
