@@ -484,7 +484,7 @@ limitations under the License.
     <string name="settings_gps_title">GPS</string>
     <string name="settings_gps_summary">Tidsintervall, distanseintervall, maks, distanse, nøyaktighet</string>
     <string name="settings_sensors_title">Blåtannssensorer</string>
-    <string name="settings_announcements_statistics_title">Talemeldinger</string>
+    <string name="settings_announcements_statistics_title">Statistikkmeldinger</string>
     <string name="settings_announcements_summary">Tid, distanse, talehastighet</string>
     <string name="settings_import_export_title">Import/eksport</string>
     <string name="settings_import_export_summary">Import, eksport, auto-eksport</string>
@@ -580,4 +580,6 @@ limitations under the License.
     <string name="sensor_state_cadence_unit">o/min</string>
     <string name="sensor_state_heart_rate_unit">slag/min</string>
     <string name="average_heart_rate">Gjennomsnittlig puls</string>
+    <string name="sensor_state_power_max">Maks. kraft</string>
+    <string name="value_int_seconds">%1$d s (anbefalt)</string>
 </resources>
