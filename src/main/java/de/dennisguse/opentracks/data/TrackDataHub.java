@@ -201,7 +201,7 @@ public class TrackDataHub {
      * Returns true if the selected track is recording.
      */
     public boolean isSelectedTrackRecording() {
-        return selectedTrackId != null && selectedTrackId.equals(recordingStatus.getTrackId());
+        return selectedTrackId != null && selectedTrackId.equals(recordingStatus.trackId());
     }
 
     /**

@@ -267,7 +267,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 return;
             }
 
-            if (recordingStatus.isRecording() && trackId.equals(recordingStatus.getTrackId())) {
+            if (recordingStatus.isRecording() && trackId.equals(recordingStatus.trackId())) {
                 // Is recording -> open record activity.
                 Intent newIntent = IntentUtils.newIntent(context, TrackRecordingActivity.class)
                         .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);

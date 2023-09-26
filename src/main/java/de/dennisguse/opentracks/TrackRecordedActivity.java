@@ -226,7 +226,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     @Nullable
     @Override
     protected Track.Id getRecordingTrackId() {
-        return recordingStatus.getTrackId();
+        return recordingStatus.trackId();
     }
 
     @Override

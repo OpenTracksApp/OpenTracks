@@ -1,13 +1,14 @@
 package de.dennisguse.opentracks.services;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import de.dennisguse.opentracks.data.models.Track;
 
-public record RecordingStatus(Track.Id trackId) {
+public record RecordingStatus(@Nullable Track.Id trackId) {
 
-    public Track.Id getTrackId() {
-        return trackId;
+    static RecordingStatus record(@NonNull Track.Id trackId) {
+        return new RecordingStatus(trackId);
     }
 
     public boolean isRecording() {
@@ -16,10 +17,6 @@ public record RecordingStatus(Track.Id trackId) {
 
     static RecordingStatus notRecording() {
         return new RecordingStatus(null);
-    }
-
-    static RecordingStatus record(@NonNull Track.Id trackId) {
-        return new RecordingStatus(trackId);
     }
 
     public RecordingStatus stop() {

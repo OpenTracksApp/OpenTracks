@@ -41,7 +41,6 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -365,7 +364,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     @Nullable
     @Override
     protected Track.Id getRecordingTrackId() {
-        return recordingStatus.getTrackId();
+        return recordingStatus.trackId();
     }
 
     /**

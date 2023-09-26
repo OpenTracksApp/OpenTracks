@@ -164,7 +164,7 @@ public class MarkerListActivity extends AbstractActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        insertMarkerMenuItem.setVisible(trackId != null && trackId.equals(recordingStatus.getTrackId()));
+        insertMarkerMenuItem.setVisible(trackId != null && trackId.equals(recordingStatus.trackId()));
         return super.onPrepareOptionsMenu(menu);
     }
 
