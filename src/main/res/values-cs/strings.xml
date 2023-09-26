@@ -591,4 +591,10 @@ limitations under the License.
     <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 míle za hodinu} few {{n,number,#.0} míle za hodinu} other {{n,number,#.0} mil za hodinu} }</string>
     <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometr} few {{n,number,#.0} kilometry} other {{n,number,#.0} kilometrů} }</string>
     <string name="sensor_state_power_max">Maximální výkon</string>
+    <string name="settings_announcements_idle_category_title">Oznámení o nečinnosti</string>
+    <string name="activity_type_kickscooter">skútr</string>
+    <string name="voiceIdle">Vstupujete do režimu nečinnosti.</string>
+    <string name="settings_announcements_idle_title">Nečinnost</string>
+    <string name="settings_recording_idle_timeout_title">Hranice nečinnosti</string>
+    <string name="value_int_seconds">%1$d s (doporučeno)</string>
 </resources>
