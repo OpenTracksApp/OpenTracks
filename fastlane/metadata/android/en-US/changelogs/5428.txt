@@ -1,0 +1,23 @@
+v4.9.0: OpenTracks
+
+NOTE: BREAKING CHANGE
+
+This release changes how OpenTracks determines moving and not moving.
+Until now, the speed (GPS or sensor) was used by a applying a threshold (e.g., less than 0.3 m/s).
+However, this may be very noise.
+From now on, a timeout duration is used (i.e., no significant change of position in the last X seconds).
+This duration is user configurable.
+The events of becoming idle are stored in the database incl. a timestamp, so statistics can be re-computed.
+
+A downgrade from this version is not implemented.
+Please backup all before upgrading.
+
+Changes:
+- Idle detection uses "no movement" duration rather than speed too low
+- Added scooter activity
+
+Bugfix:
+- While recording, TrackList showed all tracks as recording
+
+Developer:
+- Re-enabled Github action executing tests
