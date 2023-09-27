@@ -588,10 +588,15 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="voiceSecondsPlural">{n, plural, =1 {1 segundo} other {{n,number} segundos} }</string>
     <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 milla por hora} other {{n,number,#.0} millas por hora} }</string>
     <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 milla náutica} other {{n,number,#.0} millas náuticas} }</string>
-    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="sensor_state_cadence_unit">ppm</string>
     <string name="sensor_state_heart_rate_unit">lpm</string>
     <string name="sensor_state_power_unit">W</string>
     <string name="show_on_dashboard">Taboleiro da API OpenTracks</string>
     <string name="sensor_state_power_max">Potencia Máx</string>
     <string name="activity_type_kickscooter">vespino</string>
+    <string name="settings_announcements_idle_category_title">Anuncios de Parada</string>
+    <string name="voiceIdle">Deterse.</string>
+    <string name="settings_announcements_idle_title">Parada</string>
+    <string name="settings_recording_idle_timeout_title">Límite da parada</string>
+    <string name="value_int_seconds">%1$d s (recomendado)</string>
 </resources>
