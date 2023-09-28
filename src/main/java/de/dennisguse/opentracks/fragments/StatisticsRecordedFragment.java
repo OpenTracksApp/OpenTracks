@@ -254,24 +254,24 @@ public class StatisticsRecordedFragment extends Fragment {
         }
 
         if (sensorStatistics.hasHeartRate()) {
-            String maxBPM = String.valueOf(Math.round(sensorStatistics.getMaxHeartRate().getBPM()));
-            String avgBPM = String.valueOf(Math.round(sensorStatistics.getAvgHeartRate().getBPM()));
+            String maxBPM = String.valueOf(Math.round(sensorStatistics.maxHeartRate().getBPM()));
+            String avgBPM = String.valueOf(Math.round(sensorStatistics.avgHeartRate().getBPM()));
 
             viewBinding.statsHeartRateGroup.setVisibility(View.VISIBLE);
             viewBinding.statsMaxHeartRateValue.setText(maxBPM);
             viewBinding.statsAvgHeartRateValue.setText(avgBPM);
         }
         if (sensorStatistics.hasCadence()) {
-            String maxRPM = String.valueOf(Math.round(sensorStatistics.getMaxCadence().getRPM()));
-            String avgRPM = String.valueOf(Math.round(sensorStatistics.getAvgCadence().getRPM()));
+            String maxRPM = String.valueOf(Math.round(sensorStatistics.maxCadence().getRPM()));
+            String avgRPM = String.valueOf(Math.round(sensorStatistics.avgCadence().getRPM()));
 
             viewBinding.statsCadenceGroup.setVisibility(View.VISIBLE);
             viewBinding.statsMaxCadenceValue.setText(maxRPM);
             viewBinding.statsAvgCadenceValue.setText(avgRPM);
         }
         if (sensorStatistics.hasPower()) {
-            String maxW = String.valueOf(Math.round(sensorStatistics.getMaxPower().getW()));
-            String avgW = String.valueOf(Math.round(sensorStatistics.getAvgPower().getW()));
+            String maxW = String.valueOf(Math.round(sensorStatistics.maxPower().getW()));
+            String avgW = String.valueOf(Math.round(sensorStatistics.avgPower().getW()));
 
             viewBinding.statsPowerGroup.setVisibility(View.VISIBLE);
             viewBinding.statsMaxPowerValue.setText(maxW);
