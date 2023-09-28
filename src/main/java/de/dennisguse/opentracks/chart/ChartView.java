@@ -210,7 +210,7 @@ public class ChartView extends View {
                 fontSizeMedium) {
             @Override
             protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
-                return chartPoint.getAltitude();
+                return chartPoint.altitude();
             }
 
             @Override
@@ -232,7 +232,7 @@ public class ChartView extends View {
                 fontSizeMedium) {
             @Override
             protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
-                return chartPoint.getSpeed();
+                return chartPoint.speed();
             }
 
             @Override
@@ -255,7 +255,7 @@ public class ChartView extends View {
                 fontSizeMedium) {
             @Override
             protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
-                return chartPoint.getPace();
+                return chartPoint.pace();
             }
 
             @Override
@@ -278,7 +278,7 @@ public class ChartView extends View {
                 fontSizeMedium) {
             @Override
             protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
-                return chartPoint.getHeartRate();
+                return chartPoint.heartRate();
             }
 
             @Override
@@ -300,7 +300,7 @@ public class ChartView extends View {
                 fontSizeMedium) {
             @Override
             protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
-                return chartPoint.getCadence();
+                return chartPoint.cadence();
             }
 
             @Override
@@ -321,7 +321,7 @@ public class ChartView extends View {
                 fontSizeMedium) {
             @Override
             protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
-                return chartPoint.getPower();
+                return chartPoint.power();
             }
 
             @Override
@@ -425,7 +425,7 @@ public class ChartView extends View {
         synchronized (chartPoints) {
             chartPoints.addAll(dataPoints);
             for (ChartPoint dataPoint : dataPoints) {
-                xExtremityMonitor.update(dataPoint.getTimeOrDistance());
+                xExtremityMonitor.update(dataPoint.timeOrDistance());
                 for (ChartValueSeries i : seriesList) {
                     i.update(dataPoint);
                 }
@@ -887,7 +887,7 @@ public class ChartView extends View {
             }
 
             double value = series.extractDataFromChartPoint(point);
-            int x = getX(point.getTimeOrDistance());
+            int x = getX(point.timeOrDistance());
             int y = getY(series, value);
 
             // start from lower left corner

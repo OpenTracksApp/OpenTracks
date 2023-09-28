@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.chart;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
@@ -9,81 +8,43 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
-public class ChartPoint {
-    //X-axis
-    private double timeOrDistance;
+public record ChartPoint(
+        //X-axis
+        double timeOrDistance,
 
-    //Y-axis
-    private Double altitude;
-    private Double speed;
-    private Double pace;
-    private Double heartRate;
-    private Double cadence;
-    private Double power;
+        //Y-axis
+        Double altitude,
+        Double speed,
+        Double pace,
+        Double heartRate,
+        Double cadence,
+        Double power
+) {
 
-    @Deprecated
-    @VisibleForTesting
-    ChartPoint(double altitude) {
-        this.altitude = altitude;
-    }
 
-    public ChartPoint(@NonNull TrackStatistics trackStatistics, @NonNull TrackPoint trackPoint, Speed smoothedSpeed, boolean chartByDistance, UnitSystem unitSystem) {
-        if (chartByDistance) {
-            timeOrDistance = trackStatistics.getTotalDistance().toKM_Miles(unitSystem);
-        } else {
-            timeOrDistance = trackStatistics.getTotalTime().toMillis();
-        }
-
-        if (trackPoint.hasAltitude()) {
-            altitude = Distance.of(trackPoint.getAltitude().toM()).toM_FT(unitSystem);
-        }
-
-        if (smoothedSpeed != null) {
-            speed = smoothedSpeed.to(unitSystem);
-            pace = smoothedSpeed.toPace(unitSystem).toSeconds() / 60d;
-        }
-        if (trackPoint.hasHeartRate()) {
-            heartRate = (double) trackPoint.getHeartRate().getBPM();
-        }
-        if (trackPoint.hasCadence()) {
-            cadence = (double) trackPoint.getCadence().getRPM();
-        }
-        if (trackPoint.hasPower()) {
-            power = (double) trackPoint.getPower().getW();
-        }
-    }
-
-    public double getTimeOrDistance() {
-        return timeOrDistance;
-    }
-
-    public Double getAltitude() {
-        return altitude;
-    }
-
-    public Double getSpeed() {
-        return speed;
-    }
-
-    public Double getPace() {
-        return pace;
-    }
-
-    public Double getHeartRate() {
-        return heartRate;
-    }
-
-    public Double getCadence() {
-        return cadence;
-    }
-
-    public Double getPower() {
-        return power;
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return "ChartPoint{" + "timeOrDistance=" + timeOrDistance + '}';
+    public static ChartPoint create(@NonNull TrackStatistics trackStatistics, @NonNull TrackPoint trackPoint, Speed smoothedSpeed, boolean chartByDistance, UnitSystem unitSystem) {
+        return new ChartPoint(
+                chartByDistance
+                        ? trackStatistics.getTotalDistance().toKM_Miles(unitSystem)
+                        : trackStatistics.getTotalTime().toMillis(),
+                trackPoint.hasAltitude()
+                        ? Distance.of(trackPoint.getAltitude().toM()).toM_FT(unitSystem)
+                        : null,
+                smoothedSpeed != null
+                        ? smoothedSpeed.to(unitSystem)
+                        : null,
+                smoothedSpeed != null
+                        ? smoothedSpeed.toPace(unitSystem).toSeconds() / 60d
+                        : null,
+                trackPoint.hasHeartRate()
+                        ? (double) trackPoint.getHeartRate().getBPM()
+                        : null,
+                trackPoint.hasCadence()
+                        ? (double) trackPoint.getCadence().getRPM()
+                        : null,
+                trackPoint.hasPower()
+                        ? (double) trackPoint.getPower().getW()
+                        : null
+        );
     }
 }

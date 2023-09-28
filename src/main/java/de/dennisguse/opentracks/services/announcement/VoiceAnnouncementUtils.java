@@ -138,7 +138,7 @@ class VoiceAnnouncementUtils {
         }
 
         if (shouldVoiceAnnounceAverageHeartRate() && sensorStatistics != null && sensorStatistics.hasHeartRate()) {
-            int averageHeartRate = Math.round(sensorStatistics.getAvgHeartRate().getBPM());
+            int averageHeartRate = Math.round(sensorStatistics.avgHeartRate().getBPM());
 
             builder.append(" ")
                     .append(context.getString(R.string.average_heart_rate));

@@ -85,7 +85,7 @@ public class KMLTrackExporter implements TrackExporter {
 
     private PrintWriter printWriter;
 
-    private ArrayList<TrackPoint.Type> trackpointTypeList = new ArrayList<>();
+    private final ArrayList<TrackPoint.Type> trackpointTypeList = new ArrayList<>();
 
     private final List<Float> speedList = new ArrayList<>();
     private final List<Float> distanceList = new ArrayList<>();

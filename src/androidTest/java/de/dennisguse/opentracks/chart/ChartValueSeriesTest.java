@@ -54,7 +54,7 @@ public class ChartValueSeriesTest {
                 18) {
             @Override
             Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
-                return chartPoint.getAltitude();
+                return chartPoint.altitude();
             }
 
             @Override
@@ -80,9 +80,9 @@ public class ChartValueSeriesTest {
 
     @Test
     public void testVerySmallUpdates() {
-        series.update(new ChartPoint(1f));
-        series.update(new ChartPoint(2f));
-        series.update(new ChartPoint(3f));
+        series.update(withAltitude(1f));
+        series.update(withAltitude(2f));
+        series.update(withAltitude(3f));
         series.updateDimension();
         assertEquals(1, series.getInterval());
         assertEquals(1, series.getMinMarkerValue());
@@ -91,8 +91,8 @@ public class ChartValueSeriesTest {
 
     @Test
     public void testSmallUpdates() {
-        series.update(new ChartPoint(0));
-        series.update(new ChartPoint(10));
+        series.update(withAltitude(0));
+        series.update(withAltitude(10));
         series.updateDimension();
         assertEquals(100, series.getInterval());
         assertEquals(0, series.getMinMarkerValue());
@@ -101,8 +101,8 @@ public class ChartValueSeriesTest {
 
     @Test
     public void testBigUpdates() {
-        series.update(new ChartPoint(0));
-        series.update(new ChartPoint(901));
+        series.update(withAltitude(0));
+        series.update(withAltitude(901));
         series.updateDimension();
         assertEquals(1000, series.getInterval());
         assertEquals(0, series.getMinMarkerValue());
@@ -111,11 +111,23 @@ public class ChartValueSeriesTest {
 
     @Test
     public void testNotZeroBasedUpdates() {
-        series.update(new ChartPoint(220));
-        series.update(new ChartPoint(250));
+        series.update(withAltitude(220));
+        series.update(withAltitude(250));
         series.updateDimension();
         assertEquals(100, series.getInterval());
         assertEquals(200, series.getMinMarkerValue());
         assertEquals(700, series.getMaxMarkerValue());
+    }
+
+    static ChartPoint withAltitude(double altitude) {
+        return new ChartPoint(
+                0,
+                altitude,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
     }
 }

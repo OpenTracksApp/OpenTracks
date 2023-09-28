@@ -249,7 +249,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         if (notificationManager == null) {
 
             StringWriter writer = new StringWriter();
-            Exception e = new RuntimeException("TrackRecording.newGpsStatus() called after onDestroy(); objectID: " + this + " with thread: " + Thread.currentThread().toString());
+            Exception e = new RuntimeException("TrackRecording.newGpsStatus() called after onDestroy(); objectID: " + this + " with thread: " + Thread.currentThread());
             e.printStackTrace(new PrintWriter(writer));
 
             Log.e(TAG, e.getMessage() + " " + writer);

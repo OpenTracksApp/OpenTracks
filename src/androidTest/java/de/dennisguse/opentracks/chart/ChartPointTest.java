@@ -27,10 +27,10 @@ public class ChartPointTest {
         statistics.setTotalTime(Duration.ofSeconds(1000));
 
         // when
-        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(0), false, UnitSystem.IMPERIAL_FEET);
+        ChartPoint point = ChartPoint.create(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(0), false, UnitSystem.IMPERIAL_FEET);
 
         // then
-        assertEquals(1000000, (long) point.getTimeOrDistance());
+        assertEquals(1000000, (long) point.timeOrDistance());
     }
 
     @Test
@@ -40,10 +40,10 @@ public class ChartPointTest {
         statistics.setTotalDistance(Distance.of(1000));
 
         // when
-        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(0), true, UnitSystem.METRIC);
+        ChartPoint point = ChartPoint.create(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(0), true, UnitSystem.METRIC);
 
         // then
-        assertEquals(1, (long) point.getTimeOrDistance());
+        assertEquals(1, (long) point.timeOrDistance());
     }
 
     @Test
@@ -54,12 +54,12 @@ public class ChartPointTest {
                 .setAltitude(Altitude.EGM2008.of(50));
 
         // when
-        ChartPoint point = new ChartPoint(statistics, trackPoint, Speed.of(10), false, UnitSystem.METRIC);
+        ChartPoint point = ChartPoint.create(statistics, trackPoint, Speed.of(10), false, UnitSystem.METRIC);
 
         // then
-        assertEquals(50, point.getAltitude(), 0.01);
-        assertEquals(36, point.getSpeed(), 0.01);
-        assertEquals(1.66, point.getPace(), 0.01);
+        assertEquals(50, point.altitude(), 0.01);
+        assertEquals(36, point.speed(), 0.01);
+        assertEquals(1.66, point.pace(), 0.01);
     }
 
     @Test
@@ -69,12 +69,12 @@ public class ChartPointTest {
         TrackPoint trackPoint = TrackStubUtils.createDefaultTrackPoint()
                 .setAltitude(Altitude.EGM2008.of(50));
         // when
-        ChartPoint point = new ChartPoint(statistics, trackPoint, Speed.of(10), false, UnitSystem.METRIC);
+        ChartPoint point = ChartPoint.create(statistics, trackPoint, Speed.of(10), false, UnitSystem.METRIC);
 
         // then
-        assertNull(point.getHeartRate());
-        assertNull(point.getCadence());
-        assertNull(point.getPower());
+        assertNull(point.heartRate());
+        assertNull(point.cadence());
+        assertNull(point.power());
     }
 
     @Test
@@ -89,11 +89,11 @@ public class ChartPointTest {
         TrackStatistics statistics = new TrackStatistics();
 
         // when
-        ChartPoint point = new ChartPoint(statistics, trackPoint, Speed.of(10), false, UnitSystem.METRIC);
+        ChartPoint point = ChartPoint.create(statistics, trackPoint, Speed.of(10), false, UnitSystem.METRIC);
 
         // then
-        assertEquals(100.0, point.getHeartRate(), 0.01);
-        assertEquals(101.0, point.getCadence(), 0.01);
-        assertEquals(102.0, point.getPower(), 0.01);
+        assertEquals(100.0, point.heartRate(), 0.01);
+        assertEquals(101.0, point.cadence(), 0.01);
+        assertEquals(102.0, point.power(), 0.01);
     }
 }
