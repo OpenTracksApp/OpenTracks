@@ -216,7 +216,7 @@ public class ContentProviderUtils {
     public List<Track> getTracks(ContentProviderSelectionInterface selection) {
         SelectionData selectionData = selection.buildSelection();
         ArrayList<Track> tracks = new ArrayList<>();
-        try (Cursor cursor = getTrackCursor(selectionData.getSelection(), selectionData.getSelectionArgs(), TracksColumns._ID)) {
+        try (Cursor cursor = getTrackCursor(selectionData.selection(), selectionData.selectionArgs(), TracksColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
                 tracks.ensureCapacity(cursor.getCount());
                 do {
