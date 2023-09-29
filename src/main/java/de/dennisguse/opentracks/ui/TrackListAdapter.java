@@ -132,7 +132,9 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void setAllSelected(boolean isSelected) {
         for (int i = 0; i < getItemCount(); i++) {
             ViewHolder holder = (ViewHolder) recyclerView.findViewHolderForLayoutPosition(i);
-            holder.setSelected(isSelected);
+            if (holder != null) {
+                holder.setSelected(isSelected);
+            }
         }
     }
 
@@ -154,7 +156,9 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         for (int i = 0; i < selection.size(); i++) {
             if (selection.valueAt(i)) {
                 ViewHolder holder = (ViewHolder) recyclerView.findViewHolderForLayoutPosition(selection.keyAt(i));
-                ids.add(holder.getId());
+                if (holder != null) {
+                    ids.add(holder.getId());
+                }
             }
         }
 
@@ -286,6 +290,10 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         @Override
         public boolean onLongClick(View v) {
+            if (selectionMode) {
+                onClick(v);
+                return true;
+            }
             actionMode = context.startSupportActionMode(TrackListAdapter.this);
             setSelected(true);
             return true;
