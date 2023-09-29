@@ -582,4 +582,8 @@ limitations under the License.
     <string name="average_heart_rate">Gjennomsnittlig puls</string>
     <string name="sensor_state_power_max">Maks. kraft</string>
     <string name="value_int_seconds">%1$d s (anbefalt)</string>
+    <string name="settings_announcements_idle_category_title">Inaktivitetsmeldinger</string>
+    <string name="voiceIdle">Blir inaktiv.</string>
+    <string name="settings_announcements_idle_title">Inaktivitet</string>
+    <string name="settings_recording_idle_timeout_title">Inaktivitetsterskel</string>
 </resources>
