@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -223,7 +222,7 @@ public class TrackImporter {
     private void matchMarkers2TrackPoints(Track.Id trackId) {
         List<TrackPoint> trackPointsWithLocation = trackPoints.stream()
                 .filter(TrackPoint::hasLocation)
-                .collect(Collectors.toList());
+                .toList();
 
         List<Marker> todoMarkers = new LinkedList<>(markers);
         List<Marker> doneMarkers = new LinkedList<>();
@@ -241,7 +240,7 @@ public class TrackImporter {
                             && trackPoint.getLongitude() == it.getLongitude()
                             && trackPoint.getTime().equals(it.getTime())
                     )
-                    .collect(Collectors.toList());
+                    .toList();
 
             TrackStatistics statistics = updater.getTrackStatistics();
             for (Marker marker : matchedMarkers) {

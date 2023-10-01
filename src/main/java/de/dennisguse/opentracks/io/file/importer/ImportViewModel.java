@@ -12,7 +12,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Track;
@@ -50,7 +49,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
         List<ArrayList<DocumentFile>> nestedFileList = documentFiles.stream()
                 .map(FileUtils::getFiles)
                 // TODO flatMap(Collection::stream) fails with ClassCastException; try in the future again
-                .collect(Collectors.toList());
+                .toList();
 
         List<DocumentFile> fileList = new ArrayList<>();
         nestedFileList.forEach(fileList::addAll);
