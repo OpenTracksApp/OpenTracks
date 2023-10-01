@@ -109,7 +109,7 @@ public class TrackImporter {
 
         ActivityType activityType;
         if (activityTypeId == null) {
-            activityType = ActivityType.findByLocalizedString(context, activityTypeId);
+            activityType = ActivityType.findByLocalizedString(context, activityTypeLocalized);
         } else {
             activityType = ActivityType.findBy(activityTypeId);
         }
