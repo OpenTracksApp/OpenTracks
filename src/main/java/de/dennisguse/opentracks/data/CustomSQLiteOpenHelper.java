@@ -12,9 +12,11 @@ import androidx.annotation.VisibleForTesting;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.zone.ZoneRules;
+import java.util.Map;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.Startup;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
@@ -28,7 +30,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String TAG = CustomSQLiteOpenHelper.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 36;
+    private static final int DATABASE_VERSION = 37;
+
+    private final Context context;
 
     public CustomSQLiteOpenHelper(Context context) {
         this(context, ((Startup) context.getApplicationContext()).getDatabaseName());
@@ -37,11 +41,13 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
     @VisibleForTesting
     public CustomSQLiteOpenHelper(Context context, String databaseName) {
         super(context, databaseName, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @VisibleForTesting
     public CustomSQLiteOpenHelper(Context context, String databaseName, int databaseVersion) {
         super(context, databaseName, null, databaseVersion);
+        this.context = context;
     }
 
     @Override
@@ -75,6 +81,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                 case 34 -> upgradeFrom33to34(db);
                 case 35 -> upgradeFrom34to35(db);
                 case 36 -> upgradeFrom35to36(db);
+                case 37 -> upgradeFrom36to37(db);
                 default -> throw new RuntimeException("Not implemented: upgrade to " + toVersion);
             }
         }
@@ -98,6 +105,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                 case 33 -> downgradeFrom34to33(db);
                 case 34 -> downgradeFrom35to34(db);
                 case 35 -> downgradeFrom36to35(db);
+                case 36 -> downgradeFrom37to36(db);
                 default -> throw new RuntimeException("Not implemented: downgrade to " + toVersion);
             }
         }
@@ -170,7 +178,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.beginTransaction();
 
         db.execSQL("ALTER TABLE tracks ADD COLUMN uuid BLOB");
-        try (Cursor cursor = db.query("tracks", new String[]{"_id" }, null, null, null, null, null)) {
+        try (Cursor cursor = db.query("tracks", new String[]{"_id"}, null, null, null, null, null)) {
             if (cursor.moveToFirst()) {
                 int trackIdIndex = cursor.getColumnIndexOrThrow("_id");
                 do {
@@ -445,7 +453,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
         ZoneRules zoneRules = ZoneOffset.systemDefault().getRules();
 
-        try (Cursor cursor = db.query("tracks", new String[]{"_id", "starttime" }, null, null, null, null, null)) {
+        try (Cursor cursor = db.query("tracks", new String[]{"_id", "starttime"}, null, null, null, null, null)) {
             if (cursor.moveToFirst()) {
                 int trackIdIndex = cursor.getColumnIndexOrThrow("_id");
                 int startTimeIndex = cursor.getColumnIndexOrThrow("starttime");
@@ -564,4 +572,77 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.setTransactionSuccessful();
         db.endTransaction();
     }
+
+    private void upgradeFrom36to37(SQLiteDatabase db) {
+        Map<String, String> activityIcon2ActivityTypeId = Map.ofEntries(
+                Map.entry("AIRPLANE", "airplane"),
+                Map.entry("BIKE", "biking"),
+                Map.entry("MOUNTAIN_BIKE", "mountain biking"),
+                Map.entry("MOTOR_BIKE", "motor bike"),
+                Map.entry("KAYAK", "kayaking"),
+                Map.entry("BOAT", "boat"),
+                Map.entry("SAILING", "sailing"),
+                Map.entry("DRIVE", "driving"),
+                Map.entry("RUN", "running"),
+                Map.entry("SKI", "skiing"),
+                Map.entry("SNOW_BOARDING", "snowboarding"),
+                Map.entry("WALK", "walking"),
+                Map.entry("ESCOOTER", "escooter"),
+                Map.entry("KICKSCOOTER", "kickscooter"),
+                Map.entry("INLINES_SKATING", "inline skating"),
+                Map.entry("SKATE_BOARDING", "skateboarding"),
+                Map.entry("CLIMBING", "climbing"),
+                Map.entry("SWIMMING", "swimming"),
+                Map.entry("SWIMMING_OPEN", "swimming in open water"),
+                Map.entry("WORKOUT", "workout"),
+                Map.entry("UNKNOWN", "unknown")
+                );
+
+        db.beginTransaction();
+
+        db.execSQL("ALTER TABLE tracks ADD COLUMN activity_type TEXT");
+
+        try (Cursor cursor = db.query("tracks", new String[]{"_id", "icon", "category"}, null, null, null, null, null)) {
+            if (cursor.moveToFirst()) {
+                int trackIdIndex = cursor.getColumnIndexOrThrow("_id");
+                int iconIndex = cursor.getColumnIndexOrThrow("icon");
+                int activityTypeLocalizedIndex = cursor.getColumnIndexOrThrow("category");
+                do {
+                    Track.Id trackId = new Track.Id(cursor.getLong(trackIdIndex));
+                    String iconId = cursor.getString(iconIndex);
+                    String activityTypeLocalized = cursor.getString(activityTypeLocalizedIndex);
+
+                    ActivityType activityType = ActivityType.findByLocalizedString(context, activityTypeLocalized);
+                    if (activityType.equals(ActivityType.UNKNOWN)) {
+                        String activityTypeId = activityIcon2ActivityTypeId.get(iconId);
+                        activityType = ActivityType.findBy(activityTypeId);
+                    }
+
+                    ContentValues cv = new ContentValues();
+                    cv.put("activity_type", activityType.getId());
+                    db.update("tracks", cv, "_id = ?", new String[]{String.valueOf(trackId.id())});
+                } while (cursor.moveToNext());
+            }
+        }
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    private void downgradeFrom37to36(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        db.execSQL("DROP INDEX tracks_uuid_index");
+
+        db.execSQL("ALTER TABLE tracks RENAME TO tracks_old");
+        db.execSQL("CREATE TABLE tracks (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, category TEXT, starttime INTEGER, stoptime INTEGER, numpoints INTEGER, totaldistance FLOAT, totaltime INTEGER, movingtime INTEGER, avgspeed FLOAT, avgmovingspeed FLOAT, maxspeed FLOAT, minelevation FLOAT, maxelevation FLOAT, elevationgain FLOAT, icon TEXT, uuid BLOB, elevationloss FLOAT, starttime_offset INTEGER)");
+        db.execSQL("INSERT INTO tracks SELECT _id, name, description, category, starttime, stoptime, numpoints, totaldistance, totaltime, movingtime, avgspeed, avgmovingspeed, maxspeed, minelevation, maxelevation, elevationgain, icon, uuid, elevationloss, starttime_offset FROM tracks_old");
+        db.execSQL("DROP TABLE tracks_old");
+
+        db.execSQL("CREATE UNIQUE INDEX tracks_uuid_index ON tracks(uuid)");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
 }

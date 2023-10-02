@@ -101,6 +101,7 @@ public class ContentProviderUtils {
         int uuidIndex = cursor.getColumnIndexOrThrow(TracksColumns.UUID);
         int nameIndex = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
         int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
+        int activityTypeIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE);
         int activityTypeLocalizedIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE_LOCALIZED);
         int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
         int startTimeOffsetIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME_OFFSET);
@@ -113,7 +114,6 @@ public class ContentProviderUtils {
         int maxAltitudeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAX_ALTITUDE);
         int altitudeGainIndex = cursor.getColumnIndexOrThrow(TracksColumns.ALTITUDE_GAIN);
         int altitudeLossIndex = cursor.getColumnIndexOrThrow(TracksColumns.ALTITUDE_LOSS);
-        int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
 
         Track track = new Track(ZoneOffset.ofTotalSeconds(cursor.getInt(startTimeOffsetIndex)));
         TrackStatistics trackStatistics = track.getTrackStatistics();
@@ -128,6 +128,9 @@ public class ContentProviderUtils {
         }
         if (!cursor.isNull(descriptionIndex)) {
             track.setDescription(cursor.getString(descriptionIndex));
+        }
+        if (!cursor.isNull(activityTypeIndex)) {
+            track.setActivityType(ActivityType.findBy(cursor.getString(activityTypeIndex)));
         }
         if (!cursor.isNull(activityTypeLocalizedIndex)) {
             track.setActivityTypeLocalized(cursor.getString(activityTypeLocalizedIndex));
@@ -163,9 +166,7 @@ public class ContentProviderUtils {
         if (!cursor.isNull(altitudeLossIndex)) {
             trackStatistics.setTotalAltitudeLoss(cursor.getFloat(altitudeLossIndex));
         }
-        if (!cursor.isNull(iconIndex)) {
-            track.setActivityType(ActivityType.findBy(cursor.getString(iconIndex)));
-        }
+
         return track;
     }
 
@@ -230,13 +231,18 @@ public class ContentProviderUtils {
 
     public Cursor searchTracks(String searchQuery) {
         // Needed, because MARKER_COUNT is a virtual column and has to be explicitly requested.
-        final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.UUID, TracksColumns.NAME,
-                TracksColumns.DESCRIPTION, TracksColumns.ACTIVITY_TYPE_LOCALIZED, TracksColumns.STARTTIME,
-                TracksColumns.STARTTIME_OFFSET, TracksColumns.STOPTIME, TracksColumns.MARKER_COUNT,
-                TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.MOVINGTIME,
-                TracksColumns.AVGSPEED, TracksColumns.AVGMOVINGSPEED, TracksColumns.MAXSPEED,
-                TracksColumns.MIN_ALTITUDE, TracksColumns.MAX_ALTITUDE, TracksColumns.ALTITUDE_GAIN,
-                TracksColumns.ALTITUDE_LOSS, TracksColumns.ICON
+        // Used only be TrackListAdapter
+        final String[] PROJECTION = new String[]{
+                TracksColumns._ID,
+                TracksColumns.NAME,
+                TracksColumns.DESCRIPTION, //TODO Needed?
+                TracksColumns.ACTIVITY_TYPE,
+                TracksColumns.ACTIVITY_TYPE_LOCALIZED,
+                TracksColumns.STARTTIME,
+                TracksColumns.STARTTIME_OFFSET,
+                TracksColumns.TOTALDISTANCE,
+                TracksColumns.TOTALTIME,
+                TracksColumns.MARKER_COUNT,
         };
 
         String selection = null;
@@ -316,6 +322,7 @@ public class ContentProviderUtils {
         values.put(TracksColumns.UUID, UUIDUtils.toBytes(track.getUuid()));
         values.put(TracksColumns.NAME, track.getName());
         values.put(TracksColumns.DESCRIPTION, track.getDescription());
+        values.put(TracksColumns.ACTIVITY_TYPE, track.getActivityType() != null ? track.getActivityType().getId() : null);
         values.put(TracksColumns.ACTIVITY_TYPE_LOCALIZED, track.getActivityTypeLocalized());
         values.put(TracksColumns.STARTTIME_OFFSET, track.getZoneOffset().getTotalSeconds());
         if (trackStatistics.getStartTime() != null) {
@@ -334,7 +341,6 @@ public class ContentProviderUtils {
         values.put(TracksColumns.MAX_ALTITUDE, trackStatistics.getMaxAltitude());
         values.put(TracksColumns.ALTITUDE_GAIN, trackStatistics.getTotalAltitudeGain());
         values.put(TracksColumns.ALTITUDE_LOSS, trackStatistics.getTotalAltitudeLoss());
-        values.put(TracksColumns.ICON, track.getActivityType() != null ? track.getActivityType().getIconId() : "");
 
         return values;
     }
