@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Väntar på GPS-signal</string>
     <!-- Image -->
     <string name="image_arrow">Pil</string>
-    <string name="image_marker">Markör</string>
     <string name="image_marker_count">Antal markörer</string>
     <string name="image_photo_marker">Fotomarkör</string>
     <string name="image_record">Spela in</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Inställningar</string>
     <string name="menu_share">Dela</string>
     <string name="menu_show_on_map">Visa på karta</string>
-    <string name="menu_start_gps">Starta GPS</string>
-    <string name="menu_stop_gps">Stoppa GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Inspelningstjänst</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Återställ nu?</string>
     <string name="settings_reset_done">Alla inställningar har återställts till standardvärdena</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Föredragen mätning</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
@@ -345,14 +341,12 @@ limitations under the License.
     <string name="hold_to_stop">Håll för att stoppa</string>
     <string name="settings_night_mode_option_system">Systemet</string>
     <string name="menu_voice_rate">Rösthastighet</string>
-    <string name="delete_service">Raderingstjäns</string>
     <string name="track_delete_not_recording">Det här spåret kan inte tas bort eftersom det för närvarande spelas in.</string>
     <string name="settings_night_mode_title">UI tema</string>
     <string name="about_third_party_data">Uppgifter om tredje part</string>
     <string name="import_parser_error">Tolkningsfel: %1$s</string>
     <string name="export_without_photos">utan foton</string>
     <string name="export_with_photos">med bilder</string>
-    <string name="open_track_as_KML">Öppna som KML</string>
     <string name="permission_gps_failed">OpenTracks kräver tillstånd att använda GPS.</string>
     <string name="sensor_state_cadence_avg">Avg Kadens</string>
     <string name="generic_open_track">Öppna Spår</string>
@@ -374,7 +368,6 @@ limitations under the License.
     <string name="settings_recording_keep_screen_on_while_recording_title">Håll skärmen på</string>
     <string name="track_speed_notification">Hastighet: %1$s</string>
     <string name="settings_prevent_reimport_tracks_title">Förhindra återimport av spår</string>
-    <string name="open_track_as_GPX">Öppna som GPX</string>
     <string name="track_recording_notification_accuracy">Plats noggrannhet: %1$s</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="help_gps_troubleshooting_title">Opentracks spelar inte in platser\?</string>

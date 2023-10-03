@@ -63,8 +63,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
 \n e) kaufen in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) spenden, und
 \n g) das tun, was Deiner Meinung nach OpenTracks hilft </string>
-    <string name="open_track_as_KML">Als KML öffnen</string>
-    <string name="open_track_as_GPX">Als GPX öffnen</string>
     <string name="open_track_as_trackfileformat">Als %1$s öffnen</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">Flugzeug</string>
@@ -181,7 +179,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="gps_wait_for_signal">Warten auf GPS-Signal</string>
     <!-- Image -->
     <string name="image_arrow">Pfeil</string>
-    <string name="image_marker">Markierung</string>
     <string name="image_marker_count">Anzahl der Markierungen</string>
     <string name="image_photo_marker">Fotomarkierung</string>
     <string name="image_record">Aufzeichnen</string>
@@ -220,8 +217,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_share">Teilen</string>
     <string name="menu_show_on_map">Auf Karte anzeigen</string>
-    <string name="menu_start_gps">GPS aktivieren</string>
-    <string name="menu_stop_gps">GPS deaktivieren</string>
     <string name="menu_resume_track">Track fortsetzen</string>
     <!-- OpenTracks -->
     <string name="recording_service">Dienst für Aufzeichnung</string>
@@ -263,7 +258,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_reset_confirm_title">Jetzt zurücksetzen?</string>
     <string name="settings_reset_done">Alle Einstellungen wurden auf ihre Standardwerte zurückgesetzt</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Bevorzugtes Maß</string>
     <string name="settings_stats_units_imperial">Imperiales Maß (mi, ft)</string>
@@ -480,7 +474,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="import_no_kml_file_found">Keine doc.kml Datei im KMZ gefunden</string>
     <string name="import_thread_interrupted">Thread unterbrochen</string>
     <string name="import_unable_to_import_file">Importieren der Datei gescheitert: %1$s</string>
-    <string name="delete_service">Löschdienst</string>
     <string name="settings_sensor_cycling_cadence">Trittfrequenz</string>
     <string name="settings_sensor_cycling_distance_speed">Entfernung und Geschwindigkeit</string>
     <string name="generic_filter">Filter</string>

@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">GPS sinyali bekleniyor</string>
     <!-- Image -->
     <string name="image_arrow">Ok</string>
-    <string name="image_marker">İşaretçi</string>
     <string name="image_marker_count">İşaretçi sayısı</string>
     <string name="image_photo_marker">Fotoğraf işaretçisi</string>
     <string name="image_record">Kaydet</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Ayarlar</string>
     <string name="menu_share">Paylaş</string>
     <string name="menu_show_on_map">Haritada göster</string>
-    <string name="menu_start_gps">GPS\'i aç</string>
-    <string name="menu_stop_gps">GPS\'i kapat</string>
     <!-- OpenTracks -->
     <string name="recording_service">Kayıt hizmeti</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Şimdi sıfırlansın mı?</string>
     <string name="settings_reset_done">Tüm ayarlar varsayılan değerlere döndürüldü</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Tercih edilen oran</string>
     <string name="settings_stats_units_imperial">İngiliz (mil, fit)</string>
@@ -385,7 +381,6 @@ limitations under the License.
     <string name="menu_insert_gallery_img">Galeri resmi ekle</string>
     <string name="settings_sensors_title">Bluetooth Sensörleri</string>
     <string name="settings_sensors_summary">Bisiklet Sensörleri, Tekerlek Çevresi, Koşu Sensörleri</string>
-    <string name="delete_service">Silme hizmeti</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Bir hatayla tamamlandı</item>
         <item quantity="other">%1$d hatayla tamamlandı</item>
@@ -417,8 +412,6 @@ limitations under the License.
 \n d) pil tasarrufunu devre dışı bırakın.
 \n
 \n Her şey yardımcı olmazsa, lütfen bir hata bildirin. </string>
-    <string name="open_track_as_KML">KML olarak aç</string>
-    <string name="open_track_as_GPX">GPX olarak aç</string>
     <string name="help_recording_content">OpenTracks, konumu devamlı olarak kaydetmek için cihazın GPS sensörünü kullanır. GPS cihazı yanlış veriler bildirirse (ör. konum, hız, yükseklik) OpenTracks bu konuda bir şey yapamaz.</string>
     <string name="help_data_storage_title">OpenTracks sensör verilerini nasıl depolar\?</string>
     <string name="export_dir_not_writable">" (yazılabilir değil!)"</string>

@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">GPS信号を待機しています</string>
     <!-- Image -->
     <string name="image_arrow">矢印</string>
-    <string name="image_marker">マーカー</string>
     <string name="image_marker_count">マーカー数</string>
     <string name="image_photo_marker">写真マーカー</string>
     <string name="image_record">記録</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">設定</string>
     <string name="menu_share">共有</string>
     <string name="menu_show_on_map">地図で見る</string>
-    <string name="menu_start_gps">GPSを開始</string>
-    <string name="menu_stop_gps">GPSを停止</string>
     <!-- OpenTracks -->
     <string name="recording_service">記録サービス</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">リセットしますか？</string>
     <string name="settings_reset_done">すべての設定をデフォルト値に戻しました</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">計測方法</string>
     <string name="settings_stats_units_imperial">ヤード･ポンド法（マイル、フィート）</string>

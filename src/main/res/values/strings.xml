@@ -97,8 +97,6 @@ limitations under the License.
         g) do whatever you think helps OpenTracks.
     </string>
 
-    <string name="open_track_as_KML">Open as KML</string>
-    <string name="open_track_as_GPX">Open as GPX</string>
     <string name="open_track_as_trackfileformat">Open as %1$s</string>
 
     <!-- Activity Type -->
@@ -258,7 +256,6 @@ limitations under the License.
     <string name="gps_recording_without_signal">OpenTracks is recording without GPS data.</string>
     <!-- Image -->
     <string name="image_arrow">Arrow</string>
-    <string name="image_marker">Marker</string>
     <string name="image_marker_count">Marker count</string>
     <string name="image_photo_marker">Photo marker</string>
     <string name="image_record">Record</string>
@@ -312,15 +309,12 @@ limitations under the License.
     <string name="menu_share">Share</string>
     <string name="menu_select_layout">Select Layout</string>
     <string name="menu_show_on_map">Show on map</string>
-    <string name="menu_start_gps">Start GPS</string>
-    <string name="menu_stop_gps">Stop GPS</string>
     <string name="menu_voice_rate">Voice speed</string>
     <string name="menu_resume_track">Resume track</string>
     <string name="menu_add_custom_layout">New Layout</string>
     <string name="menu_filter">Filter</string>
     <!-- OpenTracks -->
     <string name="recording_service">Recording service</string>
-    <string name="delete_service">Deletion service</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks requires permission to use GPS.</string>
     <string name="permission_bluetooth_failed">OpenTracks requires permission to use Bluetooth.</string>
@@ -433,8 +427,6 @@ limitations under the License.
     <string name="settings_generic_sensor">Generic</string>
     <string name="settings_cycling_sensor">Cycling</string>
     <string name="settings_running_sensor">Running</string>
-
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
 
     <string name="settings_sensor_cycling_distance_speed">Distance and Speed</string>
     <string name="settings_sensor_cycling_cadence">Cadence</string>

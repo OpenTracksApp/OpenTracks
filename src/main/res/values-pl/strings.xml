@@ -136,7 +136,6 @@ limitations under the License.
     <string name="gps_fixed_and_ready">Pozycja GPS ustalona</string>
     <!-- Image -->
     <string name="image_arrow">Strzałka</string>
-    <string name="image_marker">Znacznik</string>
     <string name="image_marker_count">Liczba znaczników</string>
     <string name="image_photo_marker">Znacznik zdjęcia</string>
     <string name="image_record">Rejestruj</string>
@@ -174,8 +173,6 @@ limitations under the License.
     <string name="menu_settings">Ustawienia</string>
     <string name="menu_share">Udostępnij</string>
     <string name="menu_show_on_map">Pokaż na mapie</string>
-    <string name="menu_start_gps">Uruchom GPS</string>
-    <string name="menu_stop_gps">Zatrzymaj GPS</string>
     <string name="menu_resume_track">Kontynuuj trasę</string>
     <!-- OpenTracks -->
     <string name="recording_service">Usługa rejestrowania</string>
@@ -217,7 +214,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Zresetować teraz?</string>
     <string name="settings_reset_done">Wszystkie ustawienia wróciły do wartości domyślnych</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_wheel_circumference">Obwód Koła (mm)</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Wybór tempo/prędkość</string>
@@ -350,8 +346,6 @@ limitations under the License.
     <string name="about_libraries">Biblioteki</string>
     <string name="help_feature_title">OpenTracks posiada następujące funkcje:</string>
     <string name="help_track_map_title">Jak pokazywać trasę na mapie\?</string>
-    <string name="open_track_as_KML">Otwórz jako KML</string>
-    <string name="open_track_as_GPX">Otwórz jako GPX</string>
     <string name="open_track_as_trackfileformat">Otwórz jako %1$s</string>
     <string name="about_description"><i>OpenTracks</i> to aplikacja do śledzenia aktywności sportowej która całkowicie respektuje Twoją prywatność.</string>
     <string name="hold_to_stop">Przytrzymaj, aby zatrzymać</string>
@@ -443,7 +437,6 @@ limitations under the License.
     <string name="track_speed_notification">Szybkość: %1$s</string>
     <string name="track_distance_notification">Odległość: %1$s</string>
     <string name="about_third_party_data">Dane osób trzecich</string>
-    <string name="delete_service">Usługa usuwania</string>
     <string name="menu_voice_rate">Szybkość głosu</string>
     <string name="track_delete_not_recording">Tej ścieżki nie można usunąć, ponieważ jest ona aktualnie nagrywana.</string>
     <string name="settings_sensor_cycling_distance_speed">Dystans i Prędkość</string>

@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Menunggu isyarat GPS</string>
     <!-- Image -->
     <string name="image_arrow">Anak panah</string>
-    <string name="image_marker">Penanda</string>
     <string name="image_marker_count">Kiraan penanda</string>
     <string name="image_photo_marker">Penanda foto</string>
     <string name="image_record">Rakam</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Tetapan</string>
     <string name="menu_share">Kongsi</string>
     <string name="menu_show_on_map">Tunjukkan pada peta</string>
-    <string name="menu_start_gps">Mulakan GPS</string>
-    <string name="menu_stop_gps">Hentikan GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Khidmat rakaman</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Tetapkan semula sekarang?</string>
     <string name="settings_reset_done">Semua tetapan telah dikembalikan kepada nilai tetapan asal</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Kadar pilihan</string>
     <string name="settings_stats_units_imperial">Imperial (bt, kaki)</string>

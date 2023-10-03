@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">في انتظار إشارة نظام تحديد المواقع العالمي (GPS)‬</string>
     <!-- Image -->
     <string name="image_arrow">سهم</string>
-    <string name="image_marker">علامة</string>
     <string name="image_marker_count">عدد العلامات</string>
     <string name="image_photo_marker">علامة الصورة</string>
     <string name="image_record">تسجيل</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">الإعدادات</string>
     <string name="menu_share">مشاركة</string>
     <string name="menu_show_on_map">إظهار على الخريطة</string>
-    <string name="menu_start_gps">بدء GPS</string>
-    <string name="menu_stop_gps">إيقاف GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">خدمة التسجيل</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">إعادة التعيين الآن؟</string>
     <string name="settings_reset_done">لقد تمت إعادة جميع الإعدادات إلى القيم الافتراضية</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">البلوتوث</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">المعدل المفضل</string>
     <string name="settings_stats_units_imperial">وحدات القياس البريطانية (ميل، قدم)</string>

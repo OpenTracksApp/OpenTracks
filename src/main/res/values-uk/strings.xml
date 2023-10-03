@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Очікується GPS-сигнал</string>
     <!-- Image -->
     <string name="image_arrow">Стрілка</string>
-    <string name="image_marker">Маркер</string>
     <string name="image_marker_count">Кількість маркерів</string>
     <string name="image_photo_marker">Фотомаркер</string>
     <string name="image_record">Записати</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Налаштування</string>
     <string name="menu_share">Поділитись</string>
     <string name="menu_show_on_map">Показати на карті</string>
-    <string name="menu_start_gps">Увімкнути GPS</string>
-    <string name="menu_stop_gps">Вимкнути GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Служба запису</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Скинути зараз?</string>
     <string name="settings_reset_done">Для всіх налаштувань відновлено значення за умовчанням</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Система вимірювання</string>
     <string name="settings_stats_units_imperial">Британська (милі, фути)</string>
@@ -346,8 +342,6 @@ limitations under the License.
     <string name="settings_night_mode_title">Тема UI</string>
     <string name="help_gps_troubleshooting_title">OpenTracks не записує моє місцеположення\?</string>
     <string name="help_support_title">Як я можу підтримати OpenTracks\?</string>
-    <string name="open_track_as_KML">Відкрити як KML</string>
-    <string name="open_track_as_GPX">Відкрити як GPX</string>
     <string name="open_track_as_trackfileformat">Відкрити як %1$s</string>
     <string name="activity_type_escooter">електро-байк</string>
     <string name="settings_sensor_wheel_circumference">Окружність колеса (мм)</string>
@@ -439,7 +433,6 @@ limitations under the License.
     <string name="track_speed_notification">Швидкість: %1$s</string>
     <string name="track_pace_notification">Темп: %1$s</string>
     <string name="about_third_party_data">Дані третіх сторін</string>
-    <string name="delete_service">Служба видалення</string>
     <string name="track_delete_not_recording">Цей трек не може бути видалений в тому вигляді, в якому він записаний в даний момент.</string>
     <string name="menu_voice_rate">Швидкість передачі голосу</string>
     <string name="settings_sensor_cycling_cadence">Велоспорт: частота обертання педалей</string>

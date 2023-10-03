@@ -104,7 +104,6 @@
     <string name="gps_wait_for_better_signal">Esperando una mejor señal de GPS</string>
     <string name="gps_wait_for_signal">Esperando señal de GPS</string>
     <string name="image_arrow">Flecha</string>
-    <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Recuento de marcadores</string>
     <string name="image_photo_marker">Marcador de foto</string>
     <string name="image_record">Grabar</string>
@@ -136,8 +135,6 @@
     <string name="menu_settings">Configuración</string>
     <string name="menu_share">Compartir</string>
     <string name="menu_show_on_map">Mostrar en el mapa</string>
-    <string name="menu_start_gps">Iniciar GPS</string>
-    <string name="menu_stop_gps">Detener GPS</string>
     <string name="menu_resume_track">Reanudar recorrido</string>
     <string name="recording_service">Servicio de grabación</string>
     <string name="sensor_state_heart_rate">Frecuencia cardíaca</string>
@@ -160,7 +157,6 @@
     <string name="settings_reset_confirm_message">Todos las configuraciones se restablecerán a los valores predeterminados. Esto no eliminará ningún recorrido en el dispositivo.</string>
     <string name="settings_reset_confirm_title">¿Restablecer ahora?</string>
     <string name="settings_reset_done">Se restablecieron los valores predeterminados de todas las configuraciones</string>
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_stats_rate_title">Tasa preferida</string>
     <string name="settings_stats_units_imperial">Imperiales (millas, pies)</string>
     <string name="settings_stats_units_metric">Métricas (km, m)</string>
@@ -331,7 +327,6 @@
 \na) (actualizaciones en vivo) Instale <a href="https://github.com/OpenTracksApp/OSMDashboard"> OSMDashboard </a>. Proporciona mapas en línea o fuera de línea a través de <a href="https://www.openstreetmap.org"> OpenStreetMap </a>.
 \nEn realidad, OSMDashboard es una aplicación separada que solo puede acceder (temporalmente) a los datos de los recorridos que se mostrarán.
 \nb) A través de una aplicación de mapas normal (p. ej., <a href="http://osmand.net/"> OsmAnd </a> y <a href="https://maps.me/"> MAPS.ME </a>). Estas aplicaciones deben admitir el formato de archivo KMZ (solo ubicaciones y marcas de tiempo). De hecho, una aplicación debe admitir <i> ACTION_VIEW </i> con MIME <i> application / vnd.google-earth.kmz</i>. </string>
-    <string name="delete_service">Borrar servicio</string>
     <string name="about_third_party_data">Datos de terceros</string>
     <string name="about_libraries">Bibliotecas</string>
     <string name="help_feature_title">OpenTracks tiene las siguientes características:</string>
@@ -352,8 +347,6 @@
     <string name="help_data_storage_title">¿Cómo almacena OpenTracks los datos de los sensores\?</string>
     <string name="help_gps_troubleshooting_title">¿OpenTracks no registra ubicaciones\?</string>
     <string name="help_support_title">¿Cómo puedo ayudar a OpenTracks\?</string>
-    <string name="open_track_as_KML">Abrir como KML</string>
-    <string name="open_track_as_GPX">Abrir como GPX</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <string name="activity_type_escooter">moto</string>
     <string name="description_speed_ms">Velocidad (m/s)</string>

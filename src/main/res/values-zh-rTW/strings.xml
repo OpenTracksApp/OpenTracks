@@ -86,8 +86,6 @@ limitations under the License.
         f) 贊助，以及\n
         g) 做任何您認為對 OpenTracks 有幫助的事情。
     </string>
-    <string name="open_track_as_KML">開啟為 KML</string>
-    <string name="open_track_as_GPX">開啟為 GPX</string>
     <string name="open_track_as_trackfileformat">開啟為 %1$s</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">飛機</string>
@@ -245,7 +243,6 @@ limitations under the License.
     <string name="gps_recording_without_signal">OpenTracks 紀錄中，不包含 GPS 資料。</string>
     <!-- Image -->
     <string name="image_arrow">箭頭</string>
-    <string name="image_marker">標記</string>
     <string name="image_marker_count">標記數</string>
     <string name="image_photo_marker">相片標記</string>
     <string name="image_record">記錄</string>
@@ -298,15 +295,12 @@ limitations under the License.
     <string name="menu_share">分享</string>
     <string name="menu_select_layout">選擇布局</string>
     <string name="menu_show_on_map">在地圖上顯示</string>
-    <string name="menu_start_gps">啟動 GPS</string>
-    <string name="menu_stop_gps">關閉 GPS</string>
     <string name="menu_voice_rate">語速</string>
     <string name="menu_resume_track">還原蹤跡</string>
     <string name="menu_add_custom_layout">新布局</string>
     <string name="menu_filter">篩選</string>
     <!-- OpenTracks -->
     <string name="recording_service">記錄服務</string>
-    <string name="delete_service">刪除服務</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks 需要授權使用 GPS。</string>
     <string name="permission_bluetooth_failed">OpenTracks 需要授權使用藍芽。</string>
@@ -397,7 +391,6 @@ limitations under the License.
     <string name="settings_generic_sensor">通用</string>
     <string name="settings_cycling_sensor">騎自行車</string>
     <string name="settings_running_sensor">跑步</string>
-    <string name="settings_sensor_bluetooth">藍牙</string>
     <string name="settings_sensor_cycling_distance_speed">距離與速度</string>
     <string name="settings_sensor_cycling_cadence">踏頻</string>
     <string name="settings_sensor_running_speed_and_cadence">距離、速度與踏頻</string>

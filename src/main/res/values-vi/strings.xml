@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Đang chờ tín hiệu GPS</string>
     <!-- Image -->
     <string name="image_arrow">Mũi tên</string>
-    <string name="image_marker">Điểm đánh dấu</string>
     <string name="image_marker_count">Số lượng điểm đánh dấu</string>
     <string name="image_photo_marker">Điểm đánh dấu ảnh</string>
     <string name="image_record">Ghi</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Cài đặt</string>
     <string name="menu_share">Chia sẻ</string>
     <string name="menu_show_on_map">Hiển thị trên bản đồ</string>
-    <string name="menu_start_gps">Bắt đầu GPS</string>
-    <string name="menu_stop_gps">Dừng GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Dịch vụ ghi</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Đặt lại bây giờ?</string>
     <string name="settings_reset_done">Tất cả cài đặt đã được hoàn nguyên về giá trị mặc định</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Tốc độ ưa thích</string>
     <string name="settings_stats_units_imperial">Hệ đo lường Anh (mi, ft)</string>
@@ -334,11 +330,9 @@ limitations under the License.
     <string name="generic_show_errors">Hiện lỗi</string>
     <string name="open_track_as_trackfileformat">Mở dưới dạng %1$s</string>
     <string name="export_track_errors">Tuyến đường không được xuất</string>
-    <string name="delete_service">Dịch vụ xóa</string>
     <string name="export_progress_summary_new_msg">Đã xuất tuyến đường mới</string>
     <string name="generic_overwrite">Ghi đè</string>
     <string name="menu_voice_rate">Tốc độ giọng nói</string>
-    <string name="open_track_as_GPX">Mở dưới dạng GPX</string>
     <string name="help_recording_content">Mở bài Hát sử dụng các bộ cảm biến GPS của điện thoại để ghi lại vị trí liên tục. Nếu các thiết bị GPS báo cáo dữ liệu không chính xác (ví dụ như, vị trí, tốc độ, độ cao), OpenTracks không thể làm bất cứ điều gì về nó.</string>
     <string name="gps_fixed_and_ready">GPS đã xác định và sẵn sàng</string>
     <string name="generic_skip">Bỏ qua</string>
@@ -354,7 +348,6 @@ limitations under the License.
 \n Nếu mọi thứ đều không được, vui lòng báo cáo lỗi. </string>
     <string name="export_with_photos">có ảnh</string>
     <string name="import_unable_to_import_file">Không thể nhập tệp: %1$s</string>
-    <string name="open_track_as_KML">Mở dưới dạng KML</string>
     <string name="generic_separator_done_total">/</string>
     <string name="menu_insert_gallery_img">Chèn ảnh thư viện</string>
     <string name="import_progress_summary_errors_msg">Lỗi</string>

@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Aguardando sinal de GPS</string>
     <!-- Image -->
     <string name="image_arrow">Seta</string>
-    <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Contagem do marcador</string>
     <string name="image_photo_marker">Marcador de foto</string>
     <string name="image_record">Gravar</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Configurações</string>
     <string name="menu_share">Compartilhar</string>
     <string name="menu_show_on_map">Mostrar no mapa</string>
-    <string name="menu_start_gps">Iniciar GPS</string>
-    <string name="menu_stop_gps">Parar GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Serviço de gravação</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Redefinir agora?</string>
     <string name="settings_reset_done">Todas as configurações foram revertidas para os valores padrão</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Taxa preferencial</string>
     <string name="settings_stats_units_imperial">Imperial (milhas, pés)</string>
@@ -388,8 +384,6 @@ limitations under the License.
     <string name="help_data_google_play_services_content">Não</string>
     <string name="help_gps_troubleshooting_title">OpenTracks não está gravando locais\?</string>
     <string name="help_support_title">Como posso oferecer suporte a OpenTracks\?</string>
-    <string name="open_track_as_KML">Abrir como KML</string>
-    <string name="open_track_as_GPX">Abrir como GPX</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <string name="activity_type_escooter">escolta</string>
     <string name="activity_type_swimming">natação</string>
@@ -444,7 +438,6 @@ limitations under the License.
     <string name="menu_resume_track">Retomar trilha</string>
     <string name="menu_add_custom_layout">Novo Layout</string>
     <string name="menu_filter">Filtro</string>
-    <string name="delete_service">Serviço de exclusão</string>
     <string name="permission_gps_failed">OpenTracks requer permissão para usar GPS.</string>
     <string name="sensor_state_cadence_avg">Avg Cadência</string>
     <string name="sensor_state_cadence_max">Ritmo cardíaco médio</string>

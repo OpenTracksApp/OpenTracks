@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Várakozás GPS-jelre</string>
     <!-- Image -->
     <string name="image_arrow">Nyíl</string>
-    <string name="image_marker">Jelölő</string>
     <string name="image_marker_count">Jelölőszámláló</string>
     <string name="image_photo_marker">Fényképjelölő</string>
     <string name="image_record">Rögzítés</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Beállítások</string>
     <string name="menu_share">Megosztás</string>
     <string name="menu_show_on_map">Megjelenítés a térképen</string>
-    <string name="menu_start_gps">GPS indítása</string>
-    <string name="menu_stop_gps">GPS leállítása</string>
     <!-- OpenTracks -->
     <string name="recording_service">Rögzítőszolgáltatás</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Visszaállítja most?</string>
     <string name="settings_reset_done">Minden beállítás visszaállt az alapértelmezett értékre</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Mérték választása</string>
     <string name="settings_stats_units_imperial">Angolszász (mérföld, láb)</string>
@@ -327,8 +323,6 @@ limitations under the License.
     <string name="help_track_map_title">Hogyan jelenítsünk meg egy pályát a térképen\?</string>
     <string name="help_gps_troubleshooting_title">Az OpenTracks nem rögzíti a helyszíneket\?</string>
     <string name="help_support_title">Hogyan tudom támogatni az OpenTracks-t\?</string>
-    <string name="open_track_as_KML">Megnyitás KML-ként</string>
-    <string name="open_track_as_GPX">Megnyitás GPX-ként</string>
     <string name="open_track_as_trackfileformat">Megnyitás %1$s néven</string>
     <string name="activity_type_escooter">eszkoter</string>
     <string name="help_recording_content">Az OpenTracks a készülék GPS-érzékelőjét használja a hely folyamatos rögzítésére. Ha a GPS-eszköz pontatlan adatokat (pl. hely, sebesség, magasság) jelent, az OpenTracks nem tud mit tenni.</string>
@@ -437,7 +431,6 @@ limitations under the License.
 \n * teljesen offline működik
 \n * pályák megjelenítése térképen (lásd alább)</string>
     <string name="about_third_party_data">Harmadik féltől származó adatok</string>
-    <string name="delete_service">Törlési szolgáltatás</string>
     <string name="menu_voice_rate">Hang sebesség</string>
     <string name="track_delete_not_recording">Ez a sáv nem törölhető, mivel jelenleg is rögzítve van.</string>
     <string name="settings_sensor_cycling_cadence">Kerékpározás: lépésszám</string>

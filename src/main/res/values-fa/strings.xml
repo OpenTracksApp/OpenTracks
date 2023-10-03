@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">در انتظار سیگنال GPS</string>
     <!-- Image -->
     <string name="image_arrow">پیکان</string>
-    <string name="image_marker">نشانگر</string>
     <string name="image_marker_count">تعداد نشانگر</string>
     <string name="image_photo_marker">نشانگر عکس</string>
     <string name="image_record">ضبط</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">تنظیمات</string>
     <string name="menu_share">اشتراک‌گذاری</string>
     <string name="menu_show_on_map">نمایش روی نقشه</string>
-    <string name="menu_start_gps">شروع GPS</string>
-    <string name="menu_stop_gps">توقف GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">خدمات ضبط</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">اکنون بازنشانی شود؟</string>
     <string name="settings_reset_done">تمام تنظیمات به مقادیر پیش‌فرض برگردانده شدند</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">بلوتوث</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">اولویت سنجه سرعت</string>
     <string name="settings_stats_units_imperial">انگلیسی (مایل، فوت)</string>

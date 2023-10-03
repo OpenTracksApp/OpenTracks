@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Venter på GPS-signal</string>
     <!-- Image -->
     <string name="image_arrow">Pil</string>
-    <string name="image_marker">Markør</string>
     <string name="image_marker_count">Markørantall</string>
     <string name="image_photo_marker">Bildemarkør</string>
     <string name="image_record">Ta opp</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Innstillinger</string>
     <string name="menu_share">Del</string>
     <string name="menu_show_on_map">Vis på kart</string>
-    <string name="menu_start_gps">Start GPS</string>
-    <string name="menu_stop_gps">Stopp GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Opptakstjeneste</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Tilbakestill nå\?</string>
     <string name="settings_reset_done">Alle innstillinger tilbakestilt til forvalg</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Blåtann</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Foretrukket måling</string>
     <string name="settings_stats_units_imperial">Britiske (mi, ft)</string>
@@ -311,7 +307,6 @@ limitations under the License.
     <string name="waypoint_type_waterfall">foss</string>
     <string name="waypoint_type_water_fountain">vannfontene</string>
     <string name="waypoint_type_waypoint">rutepunkt</string>
-    <string name="open_track_as_KML">Åpne som KML</string>
     <string name="description_default_speed_or_pace">Etter aktivitetstype</string>
     <string name="export_without_photos">uten bilder</string>
     <string name="export_all_do_it_for_all">gjør det for alle konflikter</string>
@@ -352,7 +347,6 @@ limitations under the License.
     <string name="settings_default_export_uri_title">Mappe for sporeksport</string>
     <string name="share_image_body">Jeg tror du kan være interessert i dette bildet.</string>
     <string name="about_preference_title">Om OpenTracks</string>
-    <string name="open_track_as_GPX">Åpne som GPX</string>
     <string name="open_track_as_trackfileformat">Åpne som %1$s</string>
     <string name="export_with_photos">med bilder</string>
     <string name="export_track_already_exists_msg">Filen %1$s finnes allerede i målmappen.</string>
@@ -437,7 +431,6 @@ limitations under the License.
     <string name="track_speed_notification">Hastighet: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
     <string name="about_third_party_data">Tredjepartsdata</string>
-    <string name="delete_service">Slettingstjeneste</string>
     <string name="menu_voice_rate">Talehastighet</string>
     <string name="track_delete_not_recording">Dette sporet kan ikke slettes siden det tas opp nå.</string>
     <string name="settings_sensor_cycling_cadence">Kadens</string>

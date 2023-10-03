@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Ожидание сигнала GPS</string>
     <!-- Image -->
     <string name="image_arrow">Стрелка</string>
-    <string name="image_marker">Маркер</string>
     <string name="image_marker_count">Количество маркеров</string>
     <string name="image_photo_marker">Фотомаркер</string>
     <string name="image_record">Запись</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Настройки</string>
     <string name="menu_share">Опубликовать</string>
     <string name="menu_show_on_map">Показать на карте</string>
-    <string name="menu_start_gps">Включить GPS</string>
-    <string name="menu_stop_gps">Отключить GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Служба записи треков</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Сбросить настройки?</string>
     <string name="settings_reset_done">Настройки по умолчанию восстановлены</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Предпочтение</string>
     <string name="settings_stats_units_imperial">Британская (мили, футы)</string>
@@ -369,8 +365,6 @@ limitations under the License.
     <string name="menu_resume_track">Возобновить трек</string>
     <string name="settings_night_mode_title">Тема интерфейса</string>
     <string name="open_track_as_trackfileformat">Открыть как %1$s</string>
-    <string name="open_track_as_GPX">Открыть как GPX</string>
-    <string name="open_track_as_KML">Открыть как KML</string>
     <string name="help_support_title">Как поддержать OpenTracks\?</string>
     <string name="help_gps_troubleshooting_title">OpenTracks не регистрирует местоположения\?</string>
     <string name="activity_type_escooter">Электросамокат</string>
@@ -432,7 +426,6 @@ limitations under the License.
     <string name="import_progress_summary_errors_msg">Ошибки</string>
     <string name="generic_overwrite">Перезаписать</string>
     <string name="import_prevent_reimport">Вы запретили повторный импорт трека</string>
-    <string name="delete_service">Услуга удаления</string>
     <string name="about_third_party_data">Сторонние данные</string>
     <string name="menu_voice_rate">Скорость голоса</string>
     <string name="track_delete_not_recording">Этот трек нельзя удалить, так как он записывается в данный момент.</string>

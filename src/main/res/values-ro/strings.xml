@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Se așteaptă semnal GPS</string>
     <!-- Image -->
     <string name="image_arrow">Săgeată</string>
-    <string name="image_marker">Marcator</string>
     <string name="image_marker_count">Număr marcator</string>
     <string name="image_photo_marker">Marcator fotografie</string>
     <string name="image_record">Înregistrați</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Setări</string>
     <string name="menu_share">Distribuiți</string>
     <string name="menu_show_on_map">Afișați pe hartă</string>
-    <string name="menu_start_gps">Porniți GPS</string>
-    <string name="menu_stop_gps">Opriți GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Serviciu de înregistrare</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Resetați acum?</string>
     <string name="settings_reset_done">Toate setările au revenit la valorile prestabilite</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Rata de preferat</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
@@ -312,7 +308,6 @@ limitations under the License.
     <string name="waypoint_type_water_fountain">fântână arteziană</string>
     <string name="waypoint_type_waypoint">punct de traseu</string>
     <string name="export_all_do_it_for_all">faceți-o pentru toate conflictele</string>
-    <string name="open_track_as_KML">Deschideți ca KML</string>
     <string name="about_libraries">Biblioteci</string>
     <string name="help_recording_content">OpenTracks utilizează senzorul GPS al dispozitivului pentru a înregistra permanent locația. În cazul în care dispozitivul GPS raportează date inexacte (de exemplu, locația, viteza, altitudinea), OpenTracks nu poate face nimic în acest sens.</string>
     <string name="help_data_storage_content"> Datele senzorilor sunt stocate pentru fiecare locație înregistrată. În ceea ce privește un senzor de ritm cardiac, acest lucru înseamnă că este stocată doar <i>o singură măsurătoare a ritmului cardiac</i> pe locație. Dacă stați nemișcat sau sunteți în interior, nu vor fi înregistrate date ale senzorului (dar vor fi afișate). </string>
@@ -358,7 +353,6 @@ limitations under the License.
     <string name="generic_click_twice_cancel">Faceți clic din nou pentru a anula</string>
     <string name="help_track_export_title">Cum pot exporta/partaja piesele înregistrate\?</string>
     <string name="help_track_map_title">Cum se poate afișa o pistă pe o hartă\?</string>
-    <string name="open_track_as_GPX">Deschideți ca GPX</string>
     <string name="help_storage_pictures_title">Cum stochează OpenTracks imaginile care au fost făcute ca marcaje\?</string>
     <string name="export_error_post_workout">Exportul post-antrenament a eșuat, vă rugăm să verificați directorul de export.</string>
     <string name="export_progress_summary_overwrite_msg">Piese suprascrise</string>
@@ -393,7 +387,6 @@ limitations under the License.
     <string name="settings_sensor_cycling_cadence">Ciclism: cadența</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Afișați statisticile pe ecranul de blocare</string>
     <string name="sensor_state_heart_rate_avg">Avg Ritmul cardiac</string>
-    <string name="delete_service">Serviciu de ștergere</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Mențineți ecranul pornit</string>
     <string name="import_prevent_reimport">Ați setat să împiedicați reimportul pistei</string>
     <string name="import_progress_summary_exists_msg">Există deja</string>

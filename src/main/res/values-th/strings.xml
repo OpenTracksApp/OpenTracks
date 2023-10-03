@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">กำลังรอสัญญาณ GPS</string>
     <!-- Image -->
     <string name="image_arrow">ลูกศร</string>
-    <string name="image_marker">เครื่องหมาย</string>
     <string name="image_marker_count">จำนวนเครื่องหมาย</string>
     <string name="image_photo_marker">เครื่องหมายรูปภาพ</string>
     <string name="image_record">บันทึก</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">การตั้งค่า</string>
     <string name="menu_share">แบ่งปัน</string>
     <string name="menu_show_on_map">แสดงบนแผนที่</string>
-    <string name="menu_start_gps">เริ่ม GPS</string>
-    <string name="menu_stop_gps">หยุด GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">บริการการบันทึก</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">รีเซ็ตเลยไหม</string>
     <string name="settings_reset_done">การตั้งค่าทั้งหมดถูกเปลี่ยนกลับไปเป็นค่าเริ่มต้นแล้ว</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">บลูทูธ</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">อัตราที่ต้องการ</string>
     <string name="settings_stats_units_imperial">หน่วยอังกฤษ (ไมล์, ฟุต)</string>

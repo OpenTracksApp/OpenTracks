@@ -63,8 +63,6 @@ limitations under the License.
 \ne) osta <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Google Play -kaupasta </a>,
 \nf) lahjoittaa ja
 \ng) tee mitä tahansa mielestäsi auttaa OpenTracksia. </string>
-    <string name="open_track_as_KML">Avaa KML-muodossa</string>
-    <string name="open_track_as_GPX">Avaa GPX-muodossa</string>
     <string name="open_track_as_trackfileformat">Avaa %1$s-muodossa</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">lentokone</string>
@@ -181,7 +179,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Odotetaan GPS-signaalia</string>
     <!-- Image -->
     <string name="image_arrow">Nuoli</string>
-    <string name="image_marker">Merkki</string>
     <string name="image_marker_count">Merkkien määrä</string>
     <string name="image_photo_marker">Kuvamerkki</string>
     <string name="image_record">Tallenna</string>
@@ -220,8 +217,6 @@ limitations under the License.
     <string name="menu_settings">Asetukset</string>
     <string name="menu_share">Jaa</string>
     <string name="menu_show_on_map">Näytä kartalta</string>
-    <string name="menu_start_gps">Käynnistä GPS</string>
-    <string name="menu_stop_gps">Pysäytä GPS</string>
     <string name="menu_resume_track">Jatka reittiä</string>
     <!-- OpenTracks -->
     <string name="recording_service">Tallennuspalvelu</string>
@@ -261,7 +256,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Palautetaanko oletukset nyt?</string>
     <string name="settings_reset_done">Kaikki asetukset on palautettu oletusarvoisiksi</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Haluttu nopeus</string>
     <string name="settings_stats_units_imperial">Brittiläinen järj.
@@ -446,7 +440,6 @@ limitations under the License.
     <string name="track_pace_notification">Vauhti: %1$s</string>
     <string name="track_speed_notification">Nopeus: %1$s</string>
     <string name="about_third_party_data">Kolmannen osapuolen tiedot</string>
-    <string name="delete_service">Poistopalvelu</string>
     <string name="menu_voice_rate">Äänen nopeus</string>
     <string name="track_delete_not_recording">Tätä reittiä ei voi poistaa koska sitä tallennetaan parhaillaan.</string>
     <string name="settings_sensor_cycling_cadence">Pyöräily: tahtiaika</string>

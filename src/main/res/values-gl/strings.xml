@@ -62,8 +62,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
 \n e) mercar a app na <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) facer unha doazón, e
 \n g) calquera cousa que estimes axuda a OpenTracks. </string>
-    <string name="open_track_as_KML">Abrir como KML</string>
-    <string name="open_track_as_GPX">Abrir como GPX</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">avión</string>
@@ -183,7 +181,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="gps_fixed_and_ready">GPS fixado e preparado</string>
     <!-- Image -->
     <string name="image_arrow">Frecha</string>
-    <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Reconto de marcadores</string>
     <string name="image_photo_marker">Marcador de fotos</string>
     <string name="image_record">Gravar</string>
@@ -222,8 +219,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="menu_settings">Configuración</string>
     <string name="menu_share">Compartir</string>
     <string name="menu_show_on_map">Amosar no mapa</string>
-    <string name="menu_start_gps">Iniciar GPS</string>
-    <string name="menu_stop_gps">Desactivar GPS</string>
     <string name="menu_resume_track">Retomar gravación</string>
     <!-- OpenTracks -->
     <string name="recording_service">Servizo de gravación</string>
@@ -265,7 +260,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_reset_confirm_title">Restablecer agora?</string>
     <string name="settings_reset_done">Restableceuse a configuración aos valores por defecto</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_wheel_circumference">Circunferencia da roda (mm)</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Indicador preferido</string>
@@ -444,7 +438,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="track_pace_notification">Ritmo: %1$s</string>
     <string name="track_speed_notification">Velocidade: %1$s</string>
     <string name="about_third_party_data">Datos de terceiros alleos</string>
-    <string name="delete_service">Eliminación de servizo</string>
     <string name="menu_voice_rate">Velocidade da voz</string>
     <string name="track_delete_not_recording">Esta pista non se pode eliminar porque está a funcionar a gravación.</string>
     <string name="settings_sensor_cycling_distance_speed">Distancia e Velocidade</string>

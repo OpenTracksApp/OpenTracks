@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">正在等待 GPS 信号</string>
     <!-- Image -->
     <string name="image_arrow">箭头</string>
-    <string name="image_marker">标记</string>
     <string name="image_marker_count">标记数</string>
     <string name="image_photo_marker">照片标记</string>
     <string name="image_record">记录</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">设置</string>
     <string name="menu_share">分享</string>
     <string name="menu_show_on_map">在地图上显示</string>
-    <string name="menu_start_gps">启动 GPS</string>
-    <string name="menu_stop_gps">关闭 GPS</string>
     <string name="menu_voice_rate">语音提示速率</string>
     <string name="menu_resume_track">继续</string>
     <!-- OpenTracks -->
@@ -207,7 +204,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">是否立即重置？</string>
     <string name="settings_reset_done">所有设置都已恢复为默认值</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">蓝牙</string>
     <string name="settings_sensor_wheel_circumference">车轮周长 (mm)</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">首选速率</string>
@@ -356,14 +352,12 @@ limitations under the License.
     <string name="waypoint_type_waypoint">路标</string>
     <string name="about_url">项目主页：<a href="%1$s">%1$s</a></string>
     <string name="about_history">OpenTracks 是 <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a>（终止于 2016 年）的一个分支版本。</string>
-    <string name="open_track_as_KML">作为 KML 文件打开</string>
     <string name="open_track_as_trackfileformat">作为 %1$s 文件打开</string>
     <string name="about_preference_title">关于 OpenTracks</string>
     <string name="about_version_name">版本名称：%1$s</string>
     <string name="about_version_code">版本号：%1$d</string>
     <string name="about_libraries">库</string>
     <string name="help_feature_title">OpenTracks 支持以下特性：</string>
-    <string name="open_track_as_GPX">作为 GPX 文件打开</string>
     <string name="activity_type_escooter">电动车</string>
     <string name="description_altitude_loss">海拔降低：%1$d 米（%2$d 英尺）</string>
     <string name="description_default_speed_or_pace">按活动类型</string>
@@ -409,7 +403,6 @@ limitations under the License.
     <string name="export_progress_summary_skip_msg">已跳过的文件</string>
     <string name="generic_overwrite">覆盖</string>
     <string name="import_progress_summary_ok_msg">文件已导入</string>
-    <string name="delete_service">删除服务</string>
     <string name="settings_open_tracks_summary">关于 OpenTracks 项目的一切</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f 公里/小时（推荐）</string>
     <string name="permission_bluetooth_failed">OpenTracks 需要使用蓝牙的权限。</string>

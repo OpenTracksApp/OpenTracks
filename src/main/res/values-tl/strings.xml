@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Naghihintay para sa signal ng GPS</string>
     <!-- Image -->
     <string name="image_arrow">Arrow</string>
-    <string name="image_marker">Marker</string>
     <string name="image_marker_count">Bilang ng marker</string>
     <string name="image_photo_marker">Marker ng larawan</string>
     <string name="image_record">Mag-record</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Mga Setting</string>
     <string name="menu_share">Ibahagi</string>
     <string name="menu_show_on_map">Ipakita sa mapa</string>
-    <string name="menu_start_gps">Simulan ang GPS</string>
-    <string name="menu_stop_gps">Itigil ang GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Serbisyo ng pagrerekord</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">I-reset ngayon?</string>
     <string name="settings_reset_done">Ibinalik ang lahat ng setting sa mga default na value</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Gustong rate</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>

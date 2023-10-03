@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Čakanje na signal GPS</string>
     <!-- Image -->
     <string name="image_arrow">Puščica</string>
-    <string name="image_marker">Oznaka</string>
     <string name="image_marker_count">Število oznak</string>
     <string name="image_photo_marker">Oznaka fotografije</string>
     <string name="image_record">Snemaj</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Nastavitve</string>
     <string name="menu_share">Daj v skupno rabo</string>
     <string name="menu_show_on_map">Pokaži na zemljevidu</string>
-    <string name="menu_start_gps">Zaženi GPS</string>
-    <string name="menu_stop_gps">Ustavi GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Storitev snemanja</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Ponastavi zdaj?</string>
     <string name="settings_reset_done">Vse nastavitve so bile povrnjene na privzete vrednosti</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Pred. enot. za hitr.</string>
     <string name="settings_stats_units_imperial">Imperialni sistem (mi, ft)</string>
@@ -375,7 +371,6 @@ limitations under the License.
     <string name="custom_layout_list_edit_already_exists">Ime postavitve že obstaja</string>
     <string name="custom_layout_list_layout_removed">Postavitev je bila odstranjena</string>
     <string name="instant_export_enabled_title">Takojšen izvoz po vadbi</string>
-    <string name="delete_service">Storitev brisanja</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Posneti podatki se ne bodo samodejno delili z drugimi aplikacijami.</string>
     <string name="settings_public_api_dashboard_enabled_title">Samodejni prenos podatkov</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Do posnetih podatkov lahko dostopa tudi aplikacija, ki je začela snemanje.</string>
@@ -417,12 +412,10 @@ limitations under the License.
     <string name="help_data_google_play_services_title">Ali OpenTracks zahteva/uporablja storitev Google Play\?</string>
     <string name="help_data_storage_title">Kako OpenTracks shranjuje podatke o senzorjih\?</string>
     <string name="help_gps_troubleshooting_title">OpenTracks ne beleži lokacij\?</string>
-    <string name="open_track_as_KML">Odprite kot KML</string>
     <string name="description_default_speed_or_pace">Po vrsti dejavnosti</string>
     <string name="about_version_code">Koda različice: %1$d</string>
     <string name="help_storage_pictures_content">Ti so shranjeni v notranjem pomnilniku aplikacije (tj. dostopni so samo v aplikaciji OpenTracks).</string>
     <string name="help_recording_title">Kako OpenTracks beleži podatke\?</string>
-    <string name="open_track_as_GPX">Odprite kot GPX</string>
     <string name="open_track_as_trackfileformat">Odpri kot %1$s</string>
     <string name="about_description"><i>OpenTracks</i> je aplikacija za sledenje športu, ki popolnoma spoštuje vašo zasebnost.</string>
     <string name="help_feature_title">OpenTracks ima naslednje funkcije:</string>

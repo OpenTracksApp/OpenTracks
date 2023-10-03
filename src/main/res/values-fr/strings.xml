@@ -177,7 +177,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="gps_wait_for_signal">En attente du signal GPS</string>
     <!-- Image -->
     <string name="image_arrow">Flèche</string>
-    <string name="image_marker">Repère</string>
     <string name="image_marker_count">Nombre de repères</string>
     <string name="image_photo_marker">Repère de photo</string>
     <string name="image_record">Enregistrer</string>
@@ -216,8 +215,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="menu_settings">Paramètres</string>
     <string name="menu_share">Partager</string>
     <string name="menu_show_on_map">Afficher sur la carte</string>
-    <string name="menu_start_gps">Démarrer le GPS</string>
-    <string name="menu_stop_gps">Arrêter le GPS</string>
     <string name="menu_resume_track">Reprendre le tracé</string>
     <!-- OpenTracks -->
     <string name="recording_service">Service enregistrement</string>
@@ -256,7 +253,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_reset_confirm_title">Réinitialiser maintenant ?</string>
     <string name="settings_reset_done">Les valeurs par défaut de tous les paramètres ont bien été rétablies</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Mode de calcul souhaité</string>
     <string name="settings_stats_units_imperial">Unités impériales (miles, pieds)</string>
@@ -430,8 +426,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="instant_export_enabled_summary">Exportation du tracé dans le stockage à la fin de l\'enregistrement</string>
     <string name="hold_to_stop">Maintenir pour arrêter</string>
     <string name="track_distance_notification">Distance : %1$s</string>
-    <string name="open_track_as_KML">Ouvert comme KML</string>
-    <string name="open_track_as_GPX">Ouvert en tant que GPX</string>
     <string name="open_track_as_trackfileformat">Ouvrir comme %1$s</string>
     <string name="activity_type_escooter">éscooter</string>
     <string name="settings_sensor_wheel_circumference">Circonférence de la roue (mm)</string>
@@ -480,7 +474,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="export_track_already_exists_msg">Le fichier %1$s existe déjà dans le répertoire de destination.</string>
     <string name="export_progress_summary_overwrite_msg">Fichiers écrasés</string>
     <string name="about_third_party_data">Données de tiers</string>
-    <string name="delete_service">Service de suppression</string>
     <string name="menu_voice_rate">Vitesse vocale</string>
     <string name="track_delete_not_recording">Cette piste ne peut pas être supprimée car elle est en cours d\'enregistrement.</string>
     <string name="settings_sensor_cycling_distance_speed">Distance et vitesse</string>

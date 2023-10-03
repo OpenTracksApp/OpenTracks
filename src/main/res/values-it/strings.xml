@@ -51,8 +51,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="help_data_storage_title">In che modo OpenTracks memorizza i dati dei sensori?</string>
     <string name="help_gps_troubleshooting_title">OpenTracks non registra la posizione\?</string>
     <string name="help_support_title">Come posso supportare OpenTracks?</string>
-    <string name="open_track_as_KML">Apri come KML</string>
-    <string name="open_track_as_GPX">Apri come GPX</string>
     <string name="open_track_as_trackfileformat">Apri come %1$s</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">aereo</string>
@@ -166,7 +164,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="gps_wait_for_signal">In attesa del segnale GPS</string>
     <!-- Image -->
     <string name="image_arrow">Freccia</string>
-    <string name="image_marker">Indicatore</string>
     <string name="image_marker_count">Contatore indicatori</string>
     <string name="image_photo_marker">Indicatore fotografico</string>
     <string name="image_record">Registra</string>
@@ -203,8 +200,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="menu_settings">Impostazioni</string>
     <string name="menu_share">Condividi</string>
     <string name="menu_show_on_map">Visualizza su mappa</string>
-    <string name="menu_start_gps">Accendi GPS</string>
-    <string name="menu_stop_gps">Spegni GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Servizio di registrazione</string>
     <!-- Search -->
@@ -234,7 +229,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_reset_confirm_title">Reimpostare ora?</string>
     <string name="settings_reset_done">Tutte le impostazioni sono ripristinate sui valori predefiniti</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Unità di misura preferita</string>
     <string name="settings_stats_units_imperial">Imperiale (mi, ft)</string>
@@ -448,7 +442,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="track_speed_notification">Velocità: %1$s</string>
     <string name="track_pace_notification">Ritmo: %1$s</string>
     <string name="about_third_party_data">Dati di terzi</string>
-    <string name="delete_service">Servizio di eliminazione</string>
     <string name="menu_voice_rate">Velocità della voce</string>
     <string name="track_delete_not_recording">Questa traccia non può essere cancellata perché è attualmente in registrazione.</string>
     <string name="settings_sensor_cycling_cadence">Cadenza</string>

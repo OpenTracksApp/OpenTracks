@@ -63,8 +63,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
 \n e) køb i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Google Play Store </a>,
 \n f) donere, og
 \n g) gør hvad du synes hjælper OpenTracks. </string>
-    <string name="open_track_as_KML">Åben som KML</string>
-    <string name="open_track_as_GPX">Åben som GPX</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">fly</string>
     <string name="activity_type_atv">Terrængående køretøj</string>
@@ -180,7 +178,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="gps_wait_for_signal">Venter på GPS-signal</string>
     <!-- Image -->
     <string name="image_arrow">Pil</string>
-    <string name="image_marker">Markør</string>
     <string name="image_marker_count">Antal markører</string>
     <string name="image_photo_marker">Billedmarkør</string>
     <string name="image_record">Registrer</string>
@@ -219,8 +216,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="menu_settings">Indstillinger</string>
     <string name="menu_share">Del</string>
     <string name="menu_show_on_map">Vis på kort</string>
-    <string name="menu_start_gps">Start GPS</string>
-    <string name="menu_stop_gps">Stop GPS</string>
     <string name="menu_resume_track">Genoptag sporet</string>
     <!-- OpenTracks -->
     <string name="recording_service">Registreringstjeneste</string>
@@ -259,7 +254,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="settings_reset_confirm_title">Vil du nulstille nu?</string>
     <string name="settings_reset_done">Alle indstillinger er blevet gendannet til standardværdierne</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Foretrukkenfartenhed</string>
     <string name="settings_stats_units_imperial">Britisk (mil, ft)</string>
@@ -444,7 +438,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="track_distance_notification">Afstand: %1$s</string>
     <string name="track_speed_notification">Hastighed: %1$s</string>
     <string name="about_third_party_data">Data fra tredjeparter</string>
-    <string name="delete_service">Tjeneste til sletning</string>
     <string name="menu_voice_rate">Stemmehastighed</string>
     <string name="track_delete_not_recording">Dette spor kan ikke slettes, da det er optaget i øjeblikket.</string>
     <string name="settings_sensor_cycling_distance_speed">Afstand og hastighed</string>

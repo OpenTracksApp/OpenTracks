@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Čeka se signal GPS-a</string>
     <!-- Image -->
     <string name="image_arrow">Strelica</string>
-    <string name="image_marker">Oznaka</string>
     <string name="image_marker_count">Broj oznaka</string>
     <string name="image_photo_marker">Oznaka fotografije</string>
     <string name="image_record">Snimanje</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Postavke</string>
     <string name="menu_share">Dijeli</string>
     <string name="menu_show_on_map">Prikaži na karti</string>
-    <string name="menu_start_gps">Pokreni GPS</string>
-    <string name="menu_stop_gps">Zaustavi GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Usluga snimanja</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Želite li sada vratiti na zadano?</string>
     <string name="settings_reset_done">Sve su postavke vraćene na zadane vrijednosti</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Preferirana stopa</string>
     <string name="settings_stats_units_imperial">Imperijalne (milje, stope)</string>
@@ -326,7 +322,6 @@ limitations under the License.
     <string name="menu_add_custom_layout">Novi raspored</string>
     <string name="settings_sensors_title">Bluetooth senzori</string>
     <string name="menu_filter">Filtar</string>
-    <string name="delete_service">Usluga brisanja</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Tijekom snimanja ostavi ekran uključenim.</string>
     <string name="settings_import_export_summary">Uvoz, Izvoz, Automatski izvoz</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Cjeloekranski prikaz</string>

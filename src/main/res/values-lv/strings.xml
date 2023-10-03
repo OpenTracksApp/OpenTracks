@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Gaida GPS signālu</string>
     <!-- Image -->
     <string name="image_arrow">Bultiņa</string>
-    <string name="image_marker">Atzīme</string>
     <string name="image_marker_count">Atzīmju numerācija</string>
     <string name="image_photo_marker">Fotoattēlu atzīme</string>
     <string name="image_record">Ierakstīt</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Iestatījumi</string>
     <string name="menu_share">Kopīgot</string>
     <string name="menu_show_on_map">Rādīt kartē</string>
-    <string name="menu_start_gps">Palaist GPS</string>
-    <string name="menu_stop_gps">Apturēt GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Ierakstīšanas pakalpojums</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Vai atiestatīt tagad?</string>
     <string name="settings_reset_done">Visos iestatījumos atjaunotas to noklusējuma vērtības</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Vēlamais rādītājs</string>
     <string name="settings_stats_units_imperial">Standarta (jūdzes, pēdas)</string>
@@ -322,7 +318,6 @@ limitations under the License.
     <string name="export_error_post_workout">Pēc treniņa eksportēšana neizdevās, lūdzu, pārbaudiet eksporta direktoriju.</string>
     <string name="settings_sensor_running_speed_and_cadence">Skriešana: distance, ātrums un kadence</string>
     <string name="help_support_title">Kā atbalstīt OpenTracks\?</string>
-    <string name="open_track_as_KML">Atvērts kā KML</string>
     <string name="import_parser_error">Kļūda parserī: %1$s</string>
     <string name="export_progress_summary_skip_msg">Izlaistie celiņi</string>
     <string name="help_storage_pictures_title">Kā OpenTracks saglabā attēlus, kas uzņemti kā marķieri\?</string>
@@ -393,7 +388,6 @@ limitations under the License.
     <string name="about_libraries">Bibliotēkas</string>
     <string name="description_default_speed_or_pace">Pēc aktivitātes veida</string>
     <string name="import_progress_summary_exists_msg">Jau eksistē</string>
-    <string name="delete_service">Dzēšanas pakalpojuma</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Ierakstīšanas laikā rādiet statistiku, neatbloķējot ierīci.</string>
     <string name="import_file_imported">Failu %1$s importēšana</string>
     <string name="track_recording_notification_accuracy">Atrašanās vietas precizitāte: %1$s</string>
@@ -410,7 +404,6 @@ limitations under the License.
     <string name="help_data_storage_content"> Sensoru dati tiek saglabāti katrai reģistrētajai vietai. Runājot par sirdsdarbības sensoru, tas nozīmē, ka tikai <i>viens</i> sirdsdarbības frekvences mērījums tiek saglabāts katrā atrašanās vietā. Ja stāvat nekustīgi vai atrodaties iekštelpās, sensora dati netiks ierakstīti (bet tie tiks parādīti). </string>
     <string name="export_progress_summary_errors_msg">Kļūdas</string>
     <string name="settings_night_mode_option_day">Diena</string>
-    <string name="open_track_as_GPX">Atvērts kā GPX</string>
     <string name="description_altitude_loss">Augstuma zudums: %1$d m (%2$d ft)</string>
     <string name="sensor_state_cadence_avg">Vidējā kadence</string>
     <string name="settings_night_mode_option_system">Sistēmas</string>

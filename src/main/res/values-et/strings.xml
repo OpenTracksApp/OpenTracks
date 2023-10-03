@@ -175,7 +175,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Oodatakse GPS-signaali</string>
     <!-- Image -->
     <string name="image_arrow">Nool</string>
-    <string name="image_marker">Märgis</string>
     <string name="image_marker_count">Märgistuste arv</string>
     <string name="image_photo_marker">Fotomärgis</string>
     <string name="image_record">Salvesta</string>
@@ -214,8 +213,6 @@ limitations under the License.
     <string name="menu_settings">Seaded</string>
     <string name="menu_share">Jaga</string>
     <string name="menu_show_on_map">Kuva kaardil</string>
-    <string name="menu_start_gps">Käivita GPS</string>
-    <string name="menu_stop_gps">Peata GPS</string>
     <string name="menu_resume_track">Jätka rada</string>
     <!-- OpenTracks -->
     <string name="recording_service">Salvestamisteenus</string>
@@ -254,7 +251,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Kas lähtestada kohe?</string>
     <string name="settings_reset_done">Kõik seaded on taastatud vaikeväärtustena</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Eelistatud määr</string>
     <string name="settings_stats_units_imperial">Inglise mõõtühikud (miili, jalga)</string>
@@ -378,8 +374,6 @@ limitations under the License.
     <string name="share_image_body">Ma arvan, et see pilt võiks teid huvitada.</string>
     <string name="open_track_as_trackfileformat">Ava kui %1$s</string>
     <string name="activity_type_escooter">elektritõukeratas</string>
-    <string name="open_track_as_GPX">Ava kui GPX</string>
-    <string name="open_track_as_KML">Ava kui KML</string>
     <string name="description_altitude_loss">Kõrguse langus: %1$d m (%2$d jalga)</string>
     <string name="export_all_do_it_for_all">tehke seda iga konfilkti puhul</string>
     <string name="export_error_post_workout">Treeningujärgne eksport nurjus, palun kontrolli ekspordikataloogi.</string>
@@ -441,7 +435,6 @@ limitations under the License.
     <string name="track_speed_notification">Kiirus: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
     <string name="about_third_party_data">Kolmanda osapoole andmed</string>
-    <string name="delete_service">Kustutamise teenus</string>
     <string name="menu_voice_rate">Hääle kiirus</string>
     <string name="track_delete_not_recording">Seda pala ei saa kustutada, kuna see on praegu salvestatud.</string>
     <string name="settings_sensor_cycling_cadence">Rütm</string>

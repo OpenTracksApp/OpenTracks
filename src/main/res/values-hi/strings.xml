@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">GPS सिग्नल की प्रतीक्षा की जा रही है</string>
     <!-- Image -->
     <string name="image_arrow">तीर</string>
-    <string name="image_marker">मार्कर</string>
     <string name="image_marker_count">मार्कर गणना</string>
     <string name="image_photo_marker">फ़ोटो मार्कर</string>
     <string name="image_record">रिकॉर्ड करें</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">सेटिंग</string>
     <string name="menu_share">साझा करें</string>
     <string name="menu_show_on_map">नक्शे पर दिखाएं</string>
-    <string name="menu_start_gps">GPS प्रारंभ करें</string>
-    <string name="menu_stop_gps">GPS बंद करें</string>
     <!-- OpenTracks -->
     <string name="recording_service">रिकॉर्डिंग सेवा</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">अभी रीसेट करें?</string>
     <string name="settings_reset_done">सभी सेटिंग को सामान्य मानों में उलट दिया गया है</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">पसंदीदा दर</string>
     <string name="settings_stats_units_imperial">इंपीरियल (मील, फुट)</string>

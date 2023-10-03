@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Изчаква се сигнал за GPS</string>
     <!-- Image -->
     <string name="image_arrow">Стрелка</string>
-    <string name="image_marker">Маркер</string>
     <string name="image_marker_count">Брой маркери</string>
     <string name="image_photo_marker">Маркер за снимки</string>
     <string name="image_record">Запис</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Настройки</string>
     <string name="menu_share">Споделяне</string>
     <string name="menu_show_on_map">Показване на картата</string>
-    <string name="menu_start_gps">Стартиране на GPS</string>
-    <string name="menu_stop_gps">Спиране на GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Услуга за запис</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Да се зададе ли повторно сега?</string>
     <string name="settings_reset_done">Всички настройки са възстановени до стойностите по подразбиране</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Предпочитана мярка</string>
     <string name="settings_stats_units_imperial">Имперски (мил, фт)</string>
@@ -312,7 +308,6 @@ limitations under the License.
     <string name="waypoint_type_water_fountain">чешма</string>
     <string name="waypoint_type_waypoint">пътна точка</string>
     <string name="generic_completed">Завършен</string>
-    <string name="open_track_as_GPX">Отваряне като GPX</string>
     <string name="sensor_state_heart_rate_max">Максимален пулс</string>
     <string name="help_gps_troubleshooting_title">OpenTracks не записва локации\?</string>
     <string name="track_pace_notification">Темп: %1$s</string>
@@ -352,7 +347,6 @@ limitations under the License.
 \n б) Чрез нормално приложение за карти (напр. чрез <a href="http://osmand.net/">OsmAnd</a> и <a href="https://maps.me/">MAPS.ME</a>). Тези приложения трябва да поддържат файловия формат KMZ (само местоположения и времеви марки). Всъщност едно приложение трябва да поддържа <i>ACTION_VIEW</i> с MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_data_storage_title">Как OpenTracks съхранява данните от сензорите\?</string>
     <string name="help_data_storage_content"> Данните от сензора се съхраняват за всяко записано място. По отношение на сензора за сърдечен ритъм това означава, че само <i>едно</i> измерване на сърдечния ритъм се съхранява за всяко местоположение. Ако стоите неподвижно или се намирате на закрито, няма да бъдат записани данни от сензора (но те ще бъдат </string>
-    <string name="open_track_as_KML">Отваряне като KML</string>
     <string name="open_track_as_trackfileformat">Отворете като %1$s</string>
     <string name="description_altitude_loss">Загуба на височина: %1$d m (%2$d ft)</string>
     <string name="help_recording_content">OpenTracks използва GPS сензора на устройството, за да записва непрекъснато местоположението. Ако GPS устройството съобщи неточни данни (напр. местоположение, скорост, надморска височина), OpenTracks не може да направи нищо по въпроса.</string>
@@ -400,7 +394,6 @@ limitations under the License.
     <string name="permission_gps_failed">OpenTracks изисква разрешение за използване на GPS.</string>
     <string name="sensor_state_power_avg">Средна мощност</string>
     <string name="help_feature_title">OpenTracks има следните функции:</string>
-    <string name="delete_service">Услуга за изтриване</string>
     <string name="settings_night_mode_option_system">Система</string>
     <string name="settings_prevent_reimport_tracks_title">Забрана за повторно импортиране на песни</string>
     <string name="export_progress_summary_skip_msg">Пропуснати писти</string>

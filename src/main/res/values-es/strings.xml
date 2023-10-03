@@ -175,7 +175,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Esperando señal de GPS</string>
     <!-- Image -->
     <string name="image_arrow">Flecha</string>
-    <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Recuento de marcadores</string>
     <string name="image_photo_marker">Marcador de foto</string>
     <string name="image_record">Grabar</string>
@@ -214,8 +213,6 @@ limitations under the License.
     <string name="menu_settings">Configuración</string>
     <string name="menu_share">Compartir</string>
     <string name="menu_show_on_map">Mostrar en el mapa</string>
-    <string name="menu_start_gps">Iniciar GPS</string>
-    <string name="menu_stop_gps">Detener GPS</string>
     <string name="menu_resume_track">Reanudar recorrido</string>
     <!-- OpenTracks -->
     <string name="recording_service">Servicio de grabación</string>
@@ -254,7 +251,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">¿Restablecer ahora?</string>
     <string name="settings_reset_done">Se restablecieron los valores predeterminados de todas las configuraciones</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Tasa preferida</string>
     <string name="settings_stats_units_imperial">Imperiales (millas, pies)</string>
@@ -412,8 +408,6 @@ limitations under the License.
     <!-- Share image -->
     <string name="share_image_subject">Me gustaría compartir una imagen contigo</string>
     <string name="share_image_body">Creo que esta imagen podría interesarte.</string>
-    <string name="open_track_as_KML">Abrir como KML</string>
-    <string name="open_track_as_GPX">Abrir como GPX</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <string name="activity_type_escooter">moto</string>
     <string name="export_all_do_it_for_all">hacerlo para todos los conflictos</string>
@@ -478,7 +472,6 @@ limitations under the License.
     <string name="track_speed_notification">Velocidad: %1$s</string>
     <string name="track_pace_notification">Ritmo: %1$s</string>
     <string name="about_third_party_data">Datos de terceros</string>
-    <string name="delete_service">Borrar servicio</string>
     <string name="menu_voice_rate">Velocidad de la voz</string>
     <string name="track_delete_not_recording">Este recorrido no puede ser eliminado porque se está grabando actualmente.</string>
     <string name="settings_sensor_running_speed_and_cadence">Distancia, velocidad y cadencia</string>

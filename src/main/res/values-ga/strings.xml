@@ -22,8 +22,6 @@
 \n d) díchumasaigh coigilt cumhachta.
 \n
 \n Mura gcabhraíonn gach rud le do thoil tuairiscigh fabht. </string>
-    <string name="open_track_as_GPX">Oscail mar GPX</string>
-    <string name="open_track_as_KML">Oscail mar KML</string>
     <string name="open_track_as_trackfileformat">Oscail mar %1$s</string>
     <string name="activity_type_airplane">eitleán</string>
     <string name="activity_type_biking">rothaíocht</string>
@@ -160,7 +158,6 @@
     <string name="import_unable_to_import_file">Ní féidir an comhad a iompórtáil: %1$s</string>
     <string name="import_no_kml_file_found">Níor aimsíodh aon chomhad doc.kml i KMZ</string>
     <string name="import_error_info">%1$s: %2$s</string>
-    <string name="image_marker">Marcóir</string>
     <string name="import_progress_summary_exists_msg">Atá ann cheana</string>
     <string name="import_progress_summary_errors_msg">Earráidí</string>
     <string name="import_error_list_dialog_title">Comhaid nár iompórtáladh</string>
@@ -188,15 +185,12 @@
     <string name="menu_select_all">Roghnú go léir</string>
     <string name="menu_settings">Socruithe</string>
     <string name="menu_share">Comhroinn</string>
-    <string name="menu_start_gps">Tosaigh GPS</string>
-    <string name="menu_stop_gps">Stop a chur le GPS</string>
     <string name="menu_voice_rate">Luas gutha</string>
     <string name="menu_resume_track">Lean an rian</string>
     <string name="menu_filter">Scagaire</string>
     <string name="permission_gps_failed">Teastaíonn cead ó OpenTracks chun GPS a úsáid.</string>
     <string name="permission_bluetooth_failed">Teastaíonn cead ó OpenTracks chun Bluetooth a úsáid.</string>
     <string name="recording_service">Seirbhís taifeadta</string>
-    <string name="delete_service">Seirbhís scriosta</string>
     <string name="sensor_state_heart_rate">Bualadh croí</string>
     <string name="sensor_state_cadence_avg">Meán Fómhair</string>
     <string name="sensor_state_cadence_max">Cadence Max</string>
@@ -392,7 +386,6 @@
     <string name="description_speed_source_gps">GPS</string>
     <string name="image_stop">Stad</string>
     <string name="settings_gps_title">GPS</string>
-    <string name="settings_sensor_bluetooth">Bluetoothname</string>
     <string name="settings_api_title">API Poiblí</string>
     <string name="settings_public_api_package_title">Ainm an phacáiste don API Poiblí</string>
     <string name="settings_public_api_enabled_title">API Poiblí</string>

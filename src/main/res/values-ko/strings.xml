@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">GPS 신호 대기 중</string>
     <!-- Image -->
     <string name="image_arrow">화살표</string>
-    <string name="image_marker">마커</string>
     <string name="image_marker_count">마커 수</string>
     <string name="image_photo_marker">사진 마커</string>
     <string name="image_record">기록</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">설정</string>
     <string name="menu_share">공유</string>
     <string name="menu_show_on_map">지도에 표시</string>
-    <string name="menu_start_gps">GPS 시작</string>
-    <string name="menu_stop_gps">GPS 중지</string>
     <!-- OpenTracks -->
     <string name="recording_service">기록 서비스</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">지금 재설정하시겠습니까?</string>
     <string name="settings_reset_done">모든 설정을 기본값으로 되돌렸습니다.</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">블루투스</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">선호하는 속도</string>
     <string name="settings_stats_units_imperial">야드파운드법(마일, 피트)</string>

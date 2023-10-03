@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">S\'està esperant el senyal GPS.</string>
     <!-- Image -->
     <string name="image_arrow">Fletxa</string>
-    <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Recompte de marcadors</string>
     <string name="image_photo_marker">Marcador de fotos</string>
     <string name="image_record">Enregistra</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Configuració</string>
     <string name="menu_share">Comparteix</string>
     <string name="menu_show_on_map">Mostra-ho al mapa</string>
-    <string name="menu_start_gps">Activa el GPS</string>
-    <string name="menu_stop_gps">Desactiva el GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Servei d\'enregistrament</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Voleu restablir-ho ara?</string>
     <string name="settings_reset_done">S\'ha recuperat la configuració predeterminada.</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Mesura preferida</string>
     <string name="settings_stats_units_imperial">Sistema anglosaxó (milles, peus)</string>

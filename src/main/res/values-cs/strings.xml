@@ -175,7 +175,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Čekání na signál GPS</string>
     <!-- Image -->
     <string name="image_arrow">Šipka</string>
-    <string name="image_marker">Značka</string>
     <string name="image_marker_count">Počet značek</string>
     <string name="image_photo_marker">Fotografická značka</string>
     <string name="image_record">Zaznamenat</string>
@@ -214,8 +213,6 @@ limitations under the License.
     <string name="menu_settings">Nastavení</string>
     <string name="menu_share">Sdílet</string>
     <string name="menu_show_on_map">Zobrazit na mapě</string>
-    <string name="menu_start_gps">Spustit GPS</string>
-    <string name="menu_stop_gps">Ukončit GPS</string>
     <string name="menu_resume_track">Obnovit měření</string>
     <!-- OpenTracks -->
     <string name="recording_service">Služba pro záznam</string>
@@ -254,7 +251,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Resetovat nyní?</string>
     <string name="settings_reset_done">Všechna nastavení byla obnovena na výchozí hodnoty</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Preferovaná rychlost</string>
     <string name="settings_stats_units_imperial">Imperiální jednotky (míle, stopy)</string>
@@ -376,8 +372,6 @@ limitations under the License.
     <!-- Share image -->
     <string name="share_image_subject">Chtěl bych s vámi sdílet obrázek</string>
     <string name="share_image_body">Myslím, že by vás mohl tento obrázek zajímat.</string>
-    <string name="open_track_as_KML">Otevřít jako KML</string>
-    <string name="open_track_as_GPX">Otevřít jako GPX</string>
     <string name="open_track_as_trackfileformat">Otevřít jako %1$s</string>
     <string name="export_all_do_it_for_all">provést pro všechny konflikty</string>
     <string name="export_track_errors">Soubory nebyly exportovány</string>
@@ -442,7 +436,6 @@ limitations under the License.
     <string name="track_speed_notification">Rychlost: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
     <string name="about_third_party_data">Údaje třetích stran</string>
-    <string name="delete_service">Služba mazání</string>
     <string name="menu_voice_rate">Rychlost hlasových oznámení</string>
     <string name="track_delete_not_recording">Není možno vymazat aktuálně zaznamenávanou trasu.</string>
     <string name="settings_sensor_cycling_distance_speed">Vzdálenost a rychlost</string>

@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Čaká sa na signál systému GPS</string>
     <!-- Image -->
     <string name="image_arrow">Šípka</string>
-    <string name="image_marker">Značka</string>
     <string name="image_marker_count">Počet značiek</string>
     <string name="image_photo_marker">Fotografická značka</string>
     <string name="image_record">Zaznamenať</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Nastavenia</string>
     <string name="menu_share">Zdieľať</string>
     <string name="menu_show_on_map">Zobraziť na mape</string>
-    <string name="menu_start_gps">Aktivovať GPS</string>
-    <string name="menu_stop_gps">Deaktivovať GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Služba na záznam</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Obnoviť?</string>
     <string name="settings_reset_done">Boli vrátené predvolené hodnoty všetkých nastavení</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Preferovaná hodnota</string>
     <string name="settings_stats_units_imperial">Imperiálne jednotky (mi, ft)</string>
@@ -352,9 +348,7 @@ limitations under the License.
     <string name="about_libraries">Knižnice</string>
     <string name="help_storage_pictures_content">Tie sú uložené v internom úložisku aplikácie (t. j. prístupné len v rámci OpenTracks).</string>
     <string name="help_data_storage_title">Ako služba OpenTracks ukladá údaje zo senzorov\?</string>
-    <string name="open_track_as_KML">Otvoriť ako KML</string>
     <string name="help_track_map_title">Ako zobraziť trať na mape\?</string>
-    <string name="open_track_as_GPX">Otvoriť ako GPX</string>
     <string name="about_third_party_data">Údaje tretích strán</string>
     <string name="help_feature_content">* vytvárať stopy GPS
 \n * používať snímač srdcového tepu (iba Bluetooth LE)
@@ -374,7 +368,6 @@ limitations under the License.
     <string name="generic_today">Dnes</string>
     <string name="generic_yesterday">Včera</string>
     <string name="menu_resume_track">Obnoviť stopu</string>
-    <string name="delete_service">Služba vymazania</string>
     <string name="permission_bluetooth_failed_rejected">V nastaveniach systému musíte ručne udeliť službe OpenTracks prístup k blízkym zariadeniam.</string>
     <string name="sensor_state_heart_rate_avg">Priemerný srdcový tep</string>
     <string name="sensor_state_heart_rate_max">Maximálna tepovka</string>

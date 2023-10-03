@@ -177,7 +177,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="gps_wait_for_signal">Wachten op GPS-signaal</string>
     <!-- Image -->
     <string name="image_arrow">Pijl</string>
-    <string name="image_marker">Markering</string>
     <string name="image_marker_count">Aantal markeringen</string>
     <string name="image_photo_marker">Fotomarkering</string>
     <string name="image_record">Opnemen</string>
@@ -216,8 +215,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="menu_settings">Instellingen</string>
     <string name="menu_share">Delen</string>
     <string name="menu_show_on_map">Weergeven op kaart</string>
-    <string name="menu_start_gps">GPS starten</string>
-    <string name="menu_stop_gps">GPS stoppen</string>
     <string name="menu_resume_track">Hervat spoor</string>
     <!-- OpenTracks -->
     <string name="recording_service">Opnameservice</string>
@@ -256,7 +253,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_reset_confirm_title">Nu opnieuw instellen?</string>
     <string name="settings_reset_done">Voor alle instellingen zijn de standaardwaarden teruggezet</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Voorkeursverhouding</string>
     <string name="settings_stats_units_imperial">Engels (mi, ft)</string>
@@ -382,8 +378,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="export_track_errors">Bestanden niet geëxporteerd</string>
     <string name="description_altitude_loss">Hoogteverlies: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Uitvoer na de training mislukt, controleer de uitvoermap.</string>
-    <string name="open_track_as_KML">Als KML openen</string>
-    <string name="open_track_as_GPX">Als GPX openen</string>
     <string name="open_track_as_trackfileformat">Als %1$s openen</string>
     <string name="activity_type_escooter">scooter</string>
     <string name="export_all_do_it_for_all">doe het voor alle conflicten</string>
@@ -443,7 +437,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="track_distance_notification">Afstand: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
     <string name="about_third_party_data">Gegevens van derden</string>
-    <string name="delete_service">Dienst verwijdering</string>
     <string name="menu_voice_rate">Spraak snelheid</string>
     <string name="track_delete_not_recording">Dit fragment kan niet worden gewist omdat het momenteel is opgenomen.</string>
     <string name="settings_sensor_cycling_cadence">Cadans</string>

@@ -49,7 +49,7 @@
         <SwitchPreferenceCompat
             android:defaultValue="@bool/settings_sensor_bluetooth_service_filter_enabled_default"
             android:key="@string/settings_sensor_bluetooth_service_filter_enabled_key"
-            android:title="Filter Bluetooth Devices"
+            android:title="@string/settings_sensor_bluetooth_service_filter_title"
             android:summaryOn="@string/settings_sensor_bluetooth_service_filter_on"
             android:summaryOff="@string/settings_sensor_bluetooth_service_filter_off" />
     </PreferenceCategory>

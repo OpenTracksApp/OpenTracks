@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Чека се GPS сигнал</string>
     <!-- Image -->
     <string name="image_arrow">Стрелица</string>
-    <string name="image_marker">Означивач</string>
     <string name="image_marker_count">Број означивача</string>
     <string name="image_photo_marker">Означивач слика</string>
     <string name="image_record">Снимите</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Подешавања</string>
     <string name="menu_share">Дели</string>
     <string name="menu_show_on_map">Прикажи на мапи</string>
-    <string name="menu_start_gps">Покрени GPS</string>
-    <string name="menu_stop_gps">Заустави GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Услуга бележења</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Желите да ресетујете?</string>
     <string name="settings_reset_done">Сва подешавања су враћена на подразумеване вредности</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Жељени темпо</string>
     <string name="settings_stats_units_imperial">Империјалне (ми, ст)</string>

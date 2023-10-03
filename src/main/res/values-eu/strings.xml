@@ -178,7 +178,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="gps_wait_for_signal">GPS seinalearen zain</string>
     <!-- Image -->
     <string name="image_arrow">Gezia</string>
-    <string name="image_marker">Markatzailea</string>
     <string name="image_marker_count">Markatzaile kopurua</string>
     <string name="image_photo_marker">Argazki-markatzailea</string>
     <string name="image_record">Grabatu</string>
@@ -217,8 +216,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="menu_settings">Ezarpenak</string>
     <string name="menu_share">Partekatu</string>
     <string name="menu_show_on_map">Erakutsi mapan</string>
-    <string name="menu_start_gps">Hasi GPSa</string>
-    <string name="menu_stop_gps">Gelditu GPSa</string>
     <string name="menu_resume_track">Jarraitu pista</string>
     <!-- OpenTracks -->
     <string name="recording_service">Grabaketa-zerbitzua</string>
@@ -257,7 +254,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="settings_reset_confirm_title">Berrezarri egin nahi duzu?</string>
     <string name="settings_reset_done">Ezarpen guztiak balio lehenetsietara leheneratu dira</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetootha</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Erritmo hobetsia</string>
     <string name="settings_stats_units_imperial">Inperiala (mi, ft)</string>
@@ -379,7 +375,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <!-- Share image -->
     <string name="share_image_subject">Irudi bat zurekin partekatu nahi nuke</string>
     <string name="share_image_body">Irudi hau interesatuko zaizuela uste dut.</string>
-    <string name="open_track_as_KML">Ireki gisa KML</string>
     <string name="open_track_as_trackfileformat">Ireki gisa %1$s</string>
     <string name="activity_type_escooter">eskooterra</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Grabatzen ari zaren bitartean, pantaila osoan ikusi.</string>
@@ -389,7 +384,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="instant_export_enabled_summary">Esportazio-pista biltegiratze ondoren grabaketa amaitu da</string>
     <string name="interval_list_empty_message">Ez dira edozein tarte oraindik</string>
     <string name="aggregated_stats_empty_message">Grabatu zure lehen pista ikusteko batzen estatistikak</string>
-    <string name="open_track_as_GPX">Ireki gisa GPX</string>
     <string name="description_altitude_loss">Kota galera: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Post-entrenamendu esportazio huts egin du, mesedez, egiaztatu esportazio direktorioa.</string>
     <string name="export_progress_summary_new_msg">Pista berriak esportatutako</string>
@@ -444,7 +438,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="track_speed_notification">Abiadura: %1$s</string>
     <string name="track_pace_notification">Erritmoa: %1$s</string>
     <string name="about_third_party_data">Hirugarrenen datuak</string>
-    <string name="delete_service">Ezabatzeko zerbitzua</string>
     <string name="menu_voice_rate">Ahots abiadura</string>
     <string name="track_delete_not_recording">Pista hau ezin da ezabatu da gaur egun grabatzen.</string>
     <string name="settings_sensor_cycling_cadence">Kadentzia</string>

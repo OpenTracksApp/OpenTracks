@@ -126,7 +126,6 @@ limitations under the License.
     <string name="gps_wait_for_signal">Laukiama GPS signalo</string>
     <!-- Image -->
     <string name="image_arrow">Rodyklė</string>
-    <string name="image_marker">Žymeklis</string>
     <string name="image_marker_count">Žymeklių skaičius</string>
     <string name="image_photo_marker">Nuotraukos žymeklis</string>
     <string name="image_record">Įrašyti</string>
@@ -163,8 +162,6 @@ limitations under the License.
     <string name="menu_settings">Nustatymai</string>
     <string name="menu_share">Bendrinti</string>
     <string name="menu_show_on_map">Rodyti žemėlapyje</string>
-    <string name="menu_start_gps">Įjungti GPS</string>
-    <string name="menu_stop_gps">Išjungti GPS</string>
     <!-- OpenTracks -->
     <string name="recording_service">Įrašymo paslauga</string>
     <!-- Search -->
@@ -193,7 +190,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Nustatyti iš naujo dabar?</string>
     <string name="settings_reset_done">Visi nustatymai buvo grąžinti į numatytąsias reikšmes</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Pageidaujamas greitis</string>
     <string name="settings_stats_units_imperial">Imperinės (myl., pėdos)</string>
@@ -330,7 +326,6 @@ limitations under the License.
     <string name="sensor_could_not_scan">Nepavyko nuskaityti „Bluetooth“ įrenginių (klaida %1$i).</string>
     <string name="settings_night_mode_option_night">Naktis</string>
     <string name="track_pace_notification">Tempas %1$s</string>
-    <string name="open_track_as_KML">Atidaryti kaip KML</string>
     <string name="share_image_subject">Norėčiau pasidalinti vaizdu su jumis</string>
     <string name="track_detail_intervals_tab">Intervalai</string>
     <string name="generic_click_twice_cancel">Spustelėkite dar kartą, kad atšauktumėte</string>
@@ -374,7 +369,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate_avg">Vidutinis širdies ritmas</string>
     <string name="help_track_export_title">Kaip eksportuoti / bendrinti įrašytus takelius\?</string>
     <string name="track_speed_notification">Greitis %1$s</string>
-    <string name="delete_service">Ištrynimo paslauga</string>
     <string name="about_third_party_data">Trečiųjų šalių duomenys</string>
     <string name="export_with_photos">su nuotraukomis</string>
     <string name="help_track_export_content"> Takelius galima eksportuoti iš nustatymų kaip KMZ, KML ar GPX. KMZ / KML visi duomenys; Tik GPX vietos. Takeliai, bendrinami naudojant <i> bendrinimo piktogramą </i>, bendrinami kaip KMZ. </string>
@@ -415,7 +409,6 @@ limitations under the License.
     <string name="help_recording_content">OpenTracks naudoja prietaiso GPS jutiklį, kad nuolat įrašytų vietą. Jei GPS įrenginys praneša apie netikslius duomenis (pvz., Vietą, greitį, aukštį), OpenTracks negali nieko padaryti.</string>
     <string name="generic_open_track">Atidaryti takelį</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Įrašydami palaikykite ekraną įjungtą.</string>
-    <string name="open_track_as_GPX">Atidaryti kaip GPX</string>
     <string name="help_gps_troubleshooting_title">OpenTracks nefiksuoja vietų\?</string>
     <string name="generic_overwrite">Perrašyti</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Laikyti ekraną</string>
