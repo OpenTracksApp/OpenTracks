@@ -55,7 +55,6 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private static final String TAG = GpxTrackImporter.class.getSimpleName();
 
     private static final String TAG_DESCRIPTION = "desc";
-    private static final String TAG_COMMENT = "cmt";
     private static final String TAG_ALTITUDE = "ele";
     private static final String TAG_GPX = "gpx";
     private static final String TAG_NAME = "name";
@@ -64,6 +63,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private static final String TAG_TRACK_POINT = "trkpt";
     private static final String TAG_TRACK_SEGMENT = "trkseg";
     private static final String TAG_TYPE = "type";
+    private static final String TAG_TYPE_LOCALIZED = "opentracks:typeTranslated";
     private static final String TAG_MARKER = "wpt";
     private static final String TAG_ID = "opentracks:trackid";
 
@@ -99,6 +99,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private String name;
     private String description;
     private String activityType;
+    private String activityTypeLocalized;
     private String latitude;
     private String longitude;
     private String altitude;
@@ -159,7 +160,11 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
             case TAG_GPX -> onFileEnd();
             case TAG_MARKER -> onMarkerEnd();
             case TAG_TRACK -> {
-                trackImporter.setTrack(context, name, uuid, description, activityType, null, zoneOffset);
+                if (activityTypeLocalized == null ) {
+                    // Backward compatibility: up v4.9.1 as <type> contained localized content.
+                    activityTypeLocalized = activityType;
+                }
+                trackImporter.setTrack(context, name, uuid, description, activityTypeLocalized, activityType, zoneOffset);
                 zoneOffset = null;
             }
             case TAG_TRACK_SEGMENT -> onTrackSegmentEnd();
@@ -174,9 +179,16 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
                     description = content.trim();
                 }
             }
-            case TAG_TYPE -> {
+            case TAG_TYPE -> { //Track or Marker/WPT
                 if (content != null) {
+                    // In older  version this might be localized content.
                     activityType = content.trim();
+                    markerType = content.trim();
+                }
+            }
+            case TAG_TYPE_LOCALIZED -> {
+                if (content != null) {
+                    activityTypeLocalized = content.trim();
                 }
             }
             case TAG_TIME -> {
@@ -187,11 +199,6 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
             case TAG_ALTITUDE -> {
                 if (content != null) {
                     altitude = content.trim();
-                }
-            }
-            case TAG_COMMENT -> {
-                if (content != null) {
-                    markerType = content.trim();
                 }
             }
             case TAG_EXTENSION_SPEED, TAG_EXTENSION_SPEED_COMPAT -> {
@@ -385,7 +392,6 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private void onMarkerStart(Attributes attributes) {
         name = null;
         description = null;
-        activityType = null;
         photoUrl = null;
         latitude = attributes.getValue(ATTRIBUTE_LAT);
         longitude = attributes.getValue(ATTRIBUTE_LON);
@@ -415,8 +421,8 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
         if (description != null) {
             marker.setDescription(description);
         }
-        if (activityType != null) {
-            marker.setCategory(activityType);
+        if (markerType != null) {
+            marker.setCategory(markerType);
         }
 
         if (photoUrl != null) {

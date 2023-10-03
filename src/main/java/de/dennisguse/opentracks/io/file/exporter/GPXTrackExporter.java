@@ -261,7 +261,7 @@ public class GPXTrackExporter implements TrackExporter {
         printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(marker.getTime(), zoneOffset) + "</time>");
         printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
         printWriter.println("<desc>" + StringUtils.formatCData(marker.getDescription()) + "</desc>");
-        printWriter.println("<type>" + StringUtils.formatCData(marker.getCategory()) + "</type>");
+        printWriter.println("<type>" + StringUtils.formatCData(marker.getCategory()) + "</type>"); //TODO This is localized; may be better to export in English only. See #1608
         printWriter.println("</wpt>");
     }
 
@@ -269,11 +269,15 @@ public class GPXTrackExporter implements TrackExporter {
         printWriter.println("<trk>");
         printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
         printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
-        printWriter.println("<type>" + StringUtils.formatCData(track.getActivityTypeLocalized()) + "</type>");
+        printWriter.println("<type>" + StringUtils.formatCData(track.getActivityType().getId()) + "</type>");
 
         printWriter.println("<extensions>");
         printWriter.println("<topografix:color>c0c0c0</topografix:color>");
         printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
+
+        if (track.getActivityTypeLocalized() != null || !track.getActivityTypeLocalized().isBlank()) {
+            printWriter.println("<opentracks:typeTranslated>" + StringUtils.formatCData(track.getActivityTypeLocalized()) + "</opentracks:typeTranslated>");
+        }
 
         TrackStatistics trackStatistics = track.getTrackStatistics();
         printWriter.println("<gpxtrkx:TrackStatsExtension>");

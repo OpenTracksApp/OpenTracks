@@ -80,6 +80,7 @@ public class GPXTrackImporterTest {
         // 2. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
+        assertEquals(ActivityType.UNKNOWN, importedTrack.getActivityType());
         assertEquals("the category", importedTrack.getActivityTypeLocalized());
         assertEquals("the description", importedTrack.getDescription());
         assertEquals("2021-01-07 22:51", importedTrack.getName());

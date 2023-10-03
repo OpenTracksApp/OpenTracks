@@ -309,10 +309,10 @@ public class ExportImportTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
+        assertEquals(track.getActivityType(), importedTrack.getActivityType());
         assertEquals(track.getActivityTypeLocalized(), importedTrack.getActivityTypeLocalized());
         assertEquals(track.getDescription(), importedTrack.getDescription());
         assertEquals(track.getName(), importedTrack.getName());
-        assertEquals(track.getActivityType(), importedTrack.getActivityType());
 
         // 2. trackpoints
         TrackPointAssert a = new TrackPointAssert();
@@ -380,12 +380,10 @@ public class ExportImportTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
+        assertEquals(track.getActivityType(), importedTrack.getActivityType());
         assertEquals(track.getActivityTypeLocalized(), importedTrack.getActivityTypeLocalized());
         assertEquals(track.getDescription(), importedTrack.getDescription());
         assertEquals(track.getName(), importedTrack.getName());
-
-        //TODO exporting and importing a track icon is not yet supported by GpxTrackWriter.
-        //assertEquals(track.getIcon(), importedTrack.getIcon());
 
         // 2. trackpoints
         // The GPX exporter does not support exporting TrackPoints without lat/lng.

@@ -105,7 +105,6 @@ public class TrackImporter {
         if (activityTypeLocalized != null) {
             track.setActivityTypeLocalized(activityTypeLocalized);
         }
-
         ActivityType activityType;
         if (activityTypeId == null) {
             activityType = ActivityType.findByLocalizedString(context, activityTypeLocalized);
