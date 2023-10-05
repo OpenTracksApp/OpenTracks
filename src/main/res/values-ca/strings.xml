@@ -30,7 +30,7 @@ limitations under the License.
     <string name="activity_type_driving_bus">conducció d\'autobús</string>
     <string name="activity_type_driving_car">conducció de cotxe</string>
     <string name="activity_type_ferry">ferri</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_frisbee">el frisbee</string>
     <string name="activity_type_gliding">ala delta</string>
     <string name="activity_type_hang_gliding">vol amb ala delta</string>
     <string name="activity_type_helicopter">helicòpter</string>
@@ -75,7 +75,7 @@ limitations under the License.
     <string name="activity_type_trail_hiking">ruta de senderisme</string>
     <string name="activity_type_trail_running">cursa de muntanya</string>
     <string name="activity_type_train">tren</string>
-    <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
+    <string name="activity_type_ultimate_frisbee">frisbee definitiu</string>
     <string name="activity_type_unknown">desconegut</string>
     <string name="activity_type_wakeboarding">esquí-surf</string>
     <string name="activity_type_walking">caminar</string>
@@ -121,9 +121,9 @@ limitations under the License.
     <string name="generic_save">Desa</string>
     <string name="generic_tracks">Rutes</string>
     <!-- Gps -->
-    <string name="gps_starting">El GPS s\'està iniciant.</string>
-    <string name="gps_wait_for_better_signal">S\'està esperant un senyal GPS de millor qualitat.</string>
-    <string name="gps_wait_for_signal">S\'està esperant el senyal GPS.</string>
+    <string name="gps_starting">S \' està iniciant EL GPS</string>
+    <string name="gps_wait_for_better_signal">Esperant un millor senyal GPS</string>
+    <string name="gps_wait_for_signal">Esperant el senyal GPS</string>
     <!-- Image -->
     <string name="image_arrow">Fletxa</string>
     <string name="image_marker_count">Recompte de marcadors</string>
@@ -135,23 +135,23 @@ limitations under the License.
     <string name="import_progress_message">S\'està important des de %1$s…</string>
     <!-- Marker -->
     <string name="marker_add_error">No es pot inserir un marcador. No hi ha senyal del GPS. Torneu-ho a provar.</string>
-    <string name="marker_add_success">S\'ha inserit un marcador.</string>
-    <string name="marker_add_canceled">L\'acció s\'ha cancel·lat. No s\'ha afegit cap marcador.</string>
-    <string name="marker_delete_one_confirm_message">El marcador se suprimirà definitivament del dispositiu.</string>
+    <string name="marker_add_success">S\'ha inserit un marcador</string>
+    <string name="marker_add_canceled">Cancelat, no s \' ha afegit cap marcador</string>
+    <string name="marker_delete_one_confirm_message">El marcador se suprimirà permanentment del dispositiu</string>
     <string name="marker_delete_one_confirm_title">Voleu suprimir el marcador?</string>
-    <string name="marker_delete_multiple_confirm_message">Els marcadors seleccionats se suprimiran definitivament del dispositiu.</string>
+    <string name="marker_delete_multiple_confirm_message">Els marcadors seleccionats se suprimiran permanentment del dispositiu</string>
     <string name="marker_name_format">Marcador %1$d</string>
     <string name="marker_title">%1$d de %2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipus de marcador (p. ex. cascada)</string>
     <!-- Marker List -->
-    <string name="marker_list_empty_message">No teniu cap marcador.</string>
+    <string name="marker_list_empty_message">No teniu cap marcador</string>
     <!-- Menu -->
     <string name="menu_aggregated_statistics">Estadístiques globals</string>
     <string name="menu_delete">Suprimeix</string>
     <string name="menu_edit">Edita</string>
-    <string name="menu_export_all">Exporta-ho tot</string>
+    <string name="menu_export_all">Exporta-ho tot (un fitxer per pista)</string>
     <string name="menu_help">ajuda</string>
     <string name="menu_import_all">Importa-ho tot</string>
     <string name="menu_insert_marker">Insereix un marcador</string>
@@ -176,7 +176,7 @@ limitations under the License.
     <string name="settings_chart_by_time">Per temps</string>
     <string name="settings_recording_default_activity_title">Activitat predeterminada</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre ubicacions registrades</string>
-    <string name="settings_recording_max_recording_distance_summary">Es crea un tram si la distància entre dues ubicacions és superior a %1$s.</string>
+    <string name="settings_recording_max_recording_distance_summary">Es crea un segment nou si la distància entre dues ubicacions és més gran que %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Distància màxima</string>
     <string name="settings_recording_min_recording_distance_title">Interval de distàncies</string>
     <string name="settings_recording_min_recording_interval_title">Interval de temps</string>
@@ -188,7 +188,7 @@ limitations under the License.
     <!-- Settings Reset -->
     <string name="settings_reset_confirm_message">Es tornaran a definir els valors predeterminats de la configuració.</string>
     <string name="settings_reset_confirm_title">Voleu restablir-ho ara?</string>
-    <string name="settings_reset_done">S\'ha recuperat la configuració predeterminada.</string>
+    <string name="settings_reset_done">Tots els paràmetres s\'han revertit als valors predeterminats</string>
     <!-- Settings Sensor -->
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Mesura preferida</string>
@@ -196,7 +196,9 @@ limitations under the License.
     <string name="settings_stats_units_metric">Sistema mètric (km, m)</string>
     <string name="settings_stats_units_title">Unitats preferides</string>
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Crec que aquesta ruta et podria interessar.\n\nLa pots veure amb Google Earth o qualsevol altre programari de mapatge.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Crec que aquesta ruta et podria interessar.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Vull compartir una ruta amb tu</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Ritme de moviment mitjà</string>
@@ -228,7 +230,7 @@ limitations under the License.
     <string name="track_edit_activity_type">Tipus d\'activitat (p. ex. senderisme)</string>
     <string name="track_edit_activity_type_hint">Tipus d\'activitat</string>
     <!-- Track List -->
-    <string name="track_list_empty_message">Comenceu a enregistrar aquí la vostra pròxima aventura.</string>
+    <string name="track_list_empty_message">Comença a gravar la teva propera aventura aquí</string>
     <!-- Track Widget -->
     <!-- Tracks -->
     <!-- Unit -->
@@ -308,4 +310,18 @@ limitations under the License.
     <!-- Share image -->
     <string name="share_image_subject">Vull compartir una imatge amb tu</string>
     <string name="share_image_body">Crec que aquesta imatge et podria interessar.</string>
+    <string name="about_libraries">Biblioteques</string>
+    <string name="help_feature_content">* crear pistes GPS
+\n * utilitzeu un sensor de freqüència cardíaca (Només Bluetooth le)
+\n * anuncis de veu (per temps o distància)
+\n * creeu marcadors (incl. imatges)
+\n * funciona completament fora de línia
+\n * mostra les pistes en un mapa (vegeu més avall)</string>
+    <string name="about_version_name">Nom de la versió: %1$s</string>
+    <string name="about_preference_title">Sobre OpenTracks</string>
+    <string name="help_track_export_title">Com puc exportar/compartir pistes gravades\?</string>
+    <string name="help_feature_title">OpenTracks té les següents característiques:</string>
+    <string name="help_track_map_title">Com mostrar una pista en un mapa\?</string>
+    <string name="about_version_code">Codi de versió: %1$d</string>
+    <string name="about_third_party_data">Dades de tercers</string>
 </resources>
