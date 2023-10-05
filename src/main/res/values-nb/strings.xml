@@ -579,4 +579,5 @@ limitations under the License.
     <string name="voiceIdle">Blir inaktiv.</string>
     <string name="settings_announcements_idle_title">Inaktivitet</string>
     <string name="settings_recording_idle_timeout_title">Inaktivitetsterskel</string>
+    <string name="activity_type_kickscooter">sparkesykkel</string>
 </resources>
