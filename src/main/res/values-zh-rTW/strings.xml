@@ -312,7 +312,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate">心率</string>
     <string name="sensor_state_heart_rate_avg">平均心率</string>
     <string name="sensor_state_heart_rate_max">最大心率</string>
-    <string name="sensor_state_heart_rate_value"></string>
     <string name="sensor_state_power">功率</string>
     <string name="sensor_state_power_avg">平均功率</string>
     <string name="sensor_could_not_scan">無法掃描藍牙裝置 (錯誤 %1$i).</string>
@@ -601,18 +600,15 @@ limitations under the License.
     <string name="no_compatible_camera_installed">沒有安裝相容的攝影機應用程式</string>
     <string name="settings_sensor_bluetooth_service_filter_title">篩選藍芽裝置</string>
     <string name="settings_sensor_bluetooth_service_filter_off">顯示所有可發現的藍芽裝置</string>
-    <string name="sensor_state_heart_rate_unit"></string>
     <string name="voiceDistanceNauticalMilesPlural">{ n, plural, other {{n,number,#.0} 海里} }</string>
     <string name="voiceMinutesPlural">{ n, plural, other {{n} 分鐘} }</string>
     <string name="settings_announcements_idle_category_title">閒置播報</string>
-    <string name="sensor_state_power_unit"></string>
     <string name="voiceSpeedMilesPerHourPlural">{ n, plural, other {每小時 {n,number,#.0} 英里} }</string>
     <string name="voiceDistanceMilesPlural">{ n, plural, other {{n,number,#.0} 英里} }</string>
     <string name="voiceSpeedKilometersPerHourPlural">{ n, plural, other {每小時 {n,number,#.0} 公里} }</string>
     <string name="sensor_state_power_max">最大功率</string>
     <string name="activity_type_kickscooter">速克達</string>
     <string name="voiceSecondsPlural">{ n, plural, other {{n} 秒} }</string>
-    <string name="sensor_state_cadence_unit"></string>
     <string name="voiceIdle">正在閒置。</string>
     <string name="voiceHoursPlural">{ n, plural, other {{n} 小時} }</string>
     <string name="settings_announcements_idle_title">閒置</string>
