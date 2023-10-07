@@ -535,4 +535,26 @@ limitations under the License.
     <string name="settings_announcements_statistics_title">Ääni-ilmoitukset</string>
     <string name="settings_announcements_summary">Aika, etäisyys, äänennopeus</string>
     <string name="settings_gps_summary">Aikaväli, etäisyysväli, maksimietäisyys, tarkkuus</string>
+    <string name="activity_type_workout">treeni</string>
+    <string name="help_data_google_play_services_content">Ei</string>
+    <string name="settings_public_api_package_title">Julkisen API:n paketin nimi</string>
+    <string name="voice_on_device_speaker_title">Käytä laitteen kaiutinta</string>
+    <string name="settings_announcements_average_heart_rate">Keskimääräinen syke</string>
+    <string name="description_pace_nautical">Tahti (min/NM)</string>
+    <string name="settings_stats_units_nautical">Merenkulku (NM, ft)</string>
+    <string name="settings_announcements_lap_heart_rate">Kierroksen syke</string>
+    <string name="no_compatible_camera_installed">Yhteensopivaa kamerasovellusta ei ole asennettu</string>
+    <string name="settings_api_summary">Kaukosäädin ja tilastosovellusliittymä muille sovelluksille</string>
+    <string name="no_compatible_gallery_installed">Yhteensopivaa kuvagalleriasovellusta ei ole asennettu</string>
+    <string name="show_on_dashboard_not_installed">OpenTracks Dashboard API -sovellusliittymää tukevia sovelluksia ei ole asennettu.</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Näytä kaikki löydettävissä olevat Bluetooth-laitteet</string>
+    <string name="settings_api_title">Julkinen API</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f mi/h (suositus)</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (suositus)</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="introduction_osm_dashboard">OpenTracks itsessään ei tarjoa karttaa. Asenna OSMDashboard nähdäksesi tallenteet kartalla.</string>
+    <string name="permission_bluetooth_failed_rejected">Sinun on manuaalisesti myönnettävä OpenTracks-käyttöoikeus lähellä oleville laitteille järjestelmäasetuksissa.</string>
+    <string name="settings_recording_min_required_accuracy_summary">Sijainti ohitetaan, jos sen tarkkuus on suurempi kuin %1$s</string>
+    <string name="value_int_seconds">%1$d s (suositus)</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Suodata Bluetooth-laitteet</string>
 </resources>
