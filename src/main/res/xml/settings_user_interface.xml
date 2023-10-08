@@ -12,6 +12,12 @@
         android:title="@string/settings_night_mode_title"
         app:useSimpleSummaryProvider="true" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/settings_ui_dynamic_colors_default"
+        android:key="@string/settings_ui_dynamic_colors_key"
+        android:summary="@string/settings_ui_dynamic_colors_summary"
+        android:title="@string/settings_ui_dynamic_colors_title" />
+
     <ListPreference
         android:defaultValue="@string/show_on_map_format_ask"
         android:key="@string/show_on_map_format_key"

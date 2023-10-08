@@ -7,6 +7,8 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.google.android.material.color.DynamicColors;
+
 import java.lang.reflect.Method;
 
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -28,6 +30,11 @@ public class Startup extends Application {
 
         // Include version information into stack traces.
         Log.i(TAG, BuildConfig.APPLICATION_ID + "; BuildType: " + BuildConfig.BUILD_TYPE + "; VersionName: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_NAME_FULL + " VersionCode: " + BuildConfig.VERSION_CODE);
+        // In debug builds: show thread and VM warnings.
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "Enabling strict mode");
+            StrictMode.enableDefaults();
+        }
 
         PreferencesUtils.initPreferences(this, getResources());
         // Set default values of preferences on first start.
@@ -35,11 +42,8 @@ public class Startup extends Application {
         PreferencesUtils.applyDefaultUnit();
         PreferencesUtils.applyNightMode();
 
-
-        // In debug builds: show thread and VM warnings.
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, "Enabling strict mode");
-            StrictMode.enableDefaults();
+        if (PreferencesUtils.shouldUseDynamicColors()) {
+            DynamicColors.applyToActivitiesIfAvailable(this);
         }
     }
 

@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.settings;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -33,6 +34,9 @@ public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
             startActivity(intent);
             return true;
         });
+
+        Preference dynamicColors = findPreference(getString(R.string.settings_ui_dynamic_colors_key));
+        dynamicColors.setEnabled(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU);
 
         setShowOnMapFormatOptions();
     }
