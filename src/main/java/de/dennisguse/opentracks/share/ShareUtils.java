@@ -91,10 +91,11 @@ public class ShareUtils {
             Marker marker = contentProviderUtils.getMarker(markerId);
             if (marker == null) {
                 Log.e(TAG, "MarkerId " + markerId.id() + " could not be resolved.");
-
+                continue;
             }
             if (marker.getPhotoURI() == null) {
                 Log.e(TAG, "MarkerId " + markerId.id() + " has no picture.");
+
 
             }
 
