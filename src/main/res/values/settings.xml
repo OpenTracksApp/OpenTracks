@@ -271,6 +271,9 @@
     <string name="show_introduction_screen_key" translatable="false">showIntroduction</string>
     <bool name="show_introduction_screen_default">true</bool>
 
+    <string name="settings_ui_dynamic_colors_key" translatable="false">uiDynamicColors</string>
+    <bool name="settings_ui_dynamic_colors_default" translatable="false">false</bool>
+
     <!-- androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode() -->
     <string name="night_mode_key" translatable="false">nightMode</string>
     <string name="night_mode_default" translatable="false">@string/night_mode_system_value</string>

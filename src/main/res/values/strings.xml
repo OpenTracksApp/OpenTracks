@@ -374,6 +374,8 @@ limitations under the License.
     <string name="settings_chart_by_time">By time</string>
     <!-- Settings Recording -->
     <string name="settings_recording_title">Recording</string>
+    <string name="settings_ui_dynamic_colors_title">Dynamic Colors</string>
+    <string name="settings_ui_dynamic_colors_summary">Use user-defined Dynamic Colors (requires Android 12+)</string>
     <string name="settings_recording_customize_layout_title">Customize your recording layout</string>
     <string name="settings_recording_customize_layout_select_columns">Data fields per row</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Show statistics on lockscreen</string>

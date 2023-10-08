@@ -307,6 +307,11 @@ public class PreferencesUtils {
         return getBoolean(R.string.stats_fullscreen_while_recording_key, DEFAULT);
     }
 
+    public static boolean shouldUseDynamicColors() {
+        final boolean DEFAULT = resources.getBoolean(R.bool.settings_ui_dynamic_colors_default);
+        return getBoolean(R.string.settings_ui_dynamic_colors_key, DEFAULT);
+    }
+
     public static boolean shouldVoiceAnnouncementOnDeviceSpeaker() {
         final boolean DEFAULT = resources.getBoolean(R.bool.voice_on_device_speaker_default);
         return getBoolean(R.string.voice_on_device_speaker_key, DEFAULT);
