@@ -9,76 +9,15 @@ import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
-import android.util.SparseBooleanArray;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AbsListView;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 
-import java.util.ArrayList;
-
-import de.dennisguse.opentracks.R;
-
 public class ActivityUtils {
 
     private static final String TAG = ActivityUtils.class.getSimpleName();
-
-    public static void configureListViewContextualMenu(final ListView listView, final ContextualActionModeCallback contextualActionModeCallback) {
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                mode.getMenuInflater().inflate(R.menu.list_context_menu, menu);
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                contextualActionModeCallback.onPrepare(menu, getCheckedPositions(listView), listView.getCheckedItemIds(), true);
-                return true;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-                contextualActionModeCallback.onDestroy();
-            }
-
-            @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-                mode.invalidate();
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                if (contextualActionModeCallback.onClick(item.getItemId(), getCheckedPositions(listView), listView.getCheckedItemIds())) {
-                    mode.finish();
-                }
-                return true;
-            }
-
-            /**
-             * Gets the checked positions in a list view.
-             *
-             * @param list the list view
-             */
-            private int[] getCheckedPositions(ListView list) {
-                SparseBooleanArray positions = list.getCheckedItemPositions();
-                ArrayList<Integer> arrayList = new ArrayList<>();
-                for (int i = 0; i < positions.size(); i++) {
-                    int key = positions.keyAt(i);
-                    if (positions.valueAt(i)) {
-                        arrayList.add(key);
-                    }
-                }
-                return arrayList.stream().mapToInt(i -> i).toArray();
-            }
-        });
-    }
 
     public static SearchView configureSearchWidget(Activity activity, final MenuItem menuItem) {
         final SearchView searchView = (SearchView) menuItem.getActionView();
