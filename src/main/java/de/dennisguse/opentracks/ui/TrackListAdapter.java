@@ -245,7 +245,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             viewBinding.trackListItemCategoryDescription.setText(categoryDescription);
             viewBinding.trackListItemCategoryDescription.setVisibility("".equals(categoryDescription) ? View.GONE : View.VISIBLE);
 
-            setSelected(selection.get(getLayoutPosition()));
+            setSelected(selection.get((int) getId()));
         }
 
         public void setSelected(boolean isSelected) {
