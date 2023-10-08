@@ -107,13 +107,14 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
         selectionMode = true;
-        actionModeCallback.onPrepare(menu, getCheckedPositions(), getCheckedIds(), true);
+
+        actionModeCallback.onPrepare(menu, null, getCheckedIds(), true);
         return true;
     }
 
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-        if (actionModeCallback.onClick(item.getItemId(), getCheckedPositions(), getCheckedIds())) {
+        if (actionModeCallback.onClick(item.getItemId(), null, getCheckedIds())) {
             mode.finish();
         }
         return true;
@@ -124,28 +125,26 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         selectionMode = false;
 
         setAllSelected(false);
-        selection.clear();
 
         actionModeCallback.onDestroy();
     }
 
     public void setAllSelected(boolean isSelected) {
-        for (int i = 0; i < getItemCount(); i++) {
-            ViewHolder holder = (ViewHolder) recyclerView.findViewHolderForLayoutPosition(i);
+        if (isSelected) {
+            final int idIndex = tracks.getColumnIndexOrThrow(TracksColumns._ID);
+
+            tracks.moveToFirst();
+            do {
+                selection.put((int) tracks.getLong(idIndex), true);
+            } while (tracks.moveToNext());
+        } else {
+            selection.clear();
+        }
+
+        for (int i = 0; i < recyclerView.getChildCount(); i++) {
+            ViewHolder holder = (ViewHolder) recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
             holder.setSelected(isSelected);
         }
-    }
-
-    private int[] getCheckedPositions() {
-        List<Integer> positions = new ArrayList<>();
-
-        for (int i = 0; i < selection.size(); i++) {
-            if (selection.valueAt(i)) {
-                positions.add(selection.keyAt(i));
-            }
-        }
-
-        return positions.stream().mapToInt(i -> i).toArray();
     }
 
     private long[] getCheckedIds() {
@@ -153,8 +152,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         for (int i = 0; i < selection.size(); i++) {
             if (selection.valueAt(i)) {
-                ViewHolder holder = (ViewHolder) recyclerView.findViewHolderForLayoutPosition(selection.keyAt(i));
-                ids.add(holder.getId());
+                ids.add((long) selection.keyAt(i));
             }
         }
 
@@ -251,7 +249,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         public void setSelected(boolean isSelected) {
-            selection.put(getLayoutPosition(), isSelected);
+            selection.put((int) getId(), isSelected);
             view.setActivated(isSelected);
         }
 
@@ -286,8 +284,12 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         @Override
         public boolean onLongClick(View v) {
-            actionMode = context.startSupportActionMode(TrackListAdapter.this);
-            setSelected(true);
+            setSelected(!view.isActivated());
+            if (!selectionMode) {
+                actionMode = context.startSupportActionMode(TrackListAdapter.this);
+            } else {
+                actionMode.invalidate();
+            }
             return true;
         }
     }
