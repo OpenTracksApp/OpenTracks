@@ -113,13 +113,13 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
         selectionMode = true;
-        actionModeCallback.onPrepare(menu, getCheckedPositions(), getCheckedIds(), true);
+        actionModeCallback.onPrepare(menu, null, getCheckedIds(), true);
         return true;
     }
 
     @Override
     public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-        if (actionModeCallback.onClick(menuItem.getItemId(), getCheckedPositions(), getCheckedIds())) {
+        if (actionModeCallback.onClick(menuItem.getItemId(), null, getCheckedIds())) {
             actionMode.finish();
         }
         return true;
@@ -130,28 +130,23 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         selectionMode = false;
 
         setAllSelected(false);
-        selection.clear();
 
         actionModeCallback.onDestroy();
     }
 
     public void setAllSelected(boolean isSelected) {
-        for (int i = 0; i < getItemCount(); i++) {
-            ViewHolder holder = (ViewHolder) recyclerView.findViewHolderForLayoutPosition(i);
+        if (isSelected) {
+            for (Marker marker : markers) {
+                selection.put((int) marker.getId().id(), true);
+            }
+        } else {
+            selection.clear();
+        }
+
+        for (int i = 0; i < recyclerView.getChildCount(); i++) {
+            ViewHolder holder = (ViewHolder) recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
             holder.setSelected(isSelected);
         }
-    }
-
-    private int[] getCheckedPositions() {
-        List<Integer> positions = new ArrayList<>();
-
-        for (int i = 0; i < selection.size(); i++) {
-            if (selection.valueAt(i)) {
-                positions.add(selection.keyAt(i));
-            }
-        }
-
-        return positions.stream().mapToInt(i -> i).toArray();
     }
 
     private long[] getCheckedIds() {
@@ -159,8 +154,7 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         for (int i = 0; i < selection.size(); i++) {
             if (selection.valueAt(i)) {
-                ViewHolder holder = (ViewHolder) recyclerView.findViewHolderForLayoutPosition(selection.keyAt(i));
-                ids.add(holder.getId());
+                ids.add((long) selection.keyAt(i));
             }
         }
 
@@ -209,11 +203,11 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             String categoryDescription = StringUtils.getCategoryDescription(marker.getCategory(), marker.getDescription());
             viewBinding.markerListItemTimeDistance.setText(categoryDescription);
 
-            setSelected(selection.get(getLayoutPosition()));
+            setSelected(selection.get((int) getId()));
         }
 
         public void setSelected(boolean isSelected) {
-            selection.put(getLayoutPosition(), isSelected);
+            selection.put((int) getId(), isSelected);
             view.setActivated(isSelected);
         }
 
@@ -235,8 +229,12 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         @Override
         public boolean onLongClick(View view) {
-            actionMode = context.startSupportActionMode(MarkerListAdapter.this);
-            setSelected(true);
+            setSelected(!view.isActivated());
+            if (!selectionMode) {
+                actionMode = context.startSupportActionMode(MarkerListAdapter.this);
+            } else {
+                actionMode.invalidate();
+            }
             return true;
         }
     }
