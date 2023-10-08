@@ -69,6 +69,7 @@ limitations under the License.
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_rules_30_lower"
         android:dataExtractionRules="@xml/backup_rules_31_higher"
+        android:enableOnBackInvokedCallback="true"
         android:hardwareAccelerated="true"
         android:hasFragileUserData="false"
         android:icon="@drawable/ic_launcher"
