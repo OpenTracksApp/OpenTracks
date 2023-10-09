@@ -17,7 +17,16 @@ import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-
+class NoTracksToShareException extends RuntimeException{
+    public NoTracksToShareException()
+    {
+        super("Did not find any tracks to share.");
+    }
+    public NoTracksToShareException(String message)
+    {
+        super(message);
+    }
+}
 public class ShareUtils {
 
     private static final String TAG = ShareUtils.class.getSimpleName();
@@ -34,7 +43,7 @@ public class ShareUtils {
      */
     public static Intent newShareFileIntent(Context context, Track.Id... trackIds) {
         if (trackIds.length == 0) {
-            throw new RuntimeException("Need to share at least one track.");
+            throw new NoTracksToShareException("Need to share at least one track.");
         }
 
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
