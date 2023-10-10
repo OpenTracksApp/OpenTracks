@@ -373,6 +373,7 @@ limitations under the License.
     <string name="settings_chart_by_distance">By distance</string>
     <string name="settings_chart_by_time">By time</string>
     <!-- Settings Recording -->
+    <string name="settings_recording_title">Recording</string>
     <string name="settings_recording_customize_layout_title">Customize your recording layout</string>
     <string name="settings_recording_customize_layout_select_columns">Data fields per row</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Show statistics on lockscreen</string>
@@ -407,6 +408,8 @@ limitations under the License.
     <string name="settings_announcements_lap_speed_pace">Lap speed/pace</string>
 
     <!-- Custom Layout -->
+
+
     <string name="custom_layout_list_title">Layouts</string>
     <string name="custom_layout_list_edit_name">Type layout\'s name to add</string>
     <string name="custom_layout_list_edit_already_exists">Layout\'s name already exists</string>
