@@ -147,7 +147,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         });
         viewBinding.trackRecordingFabAction.setOnClickListener((view) -> Toast.makeText(TrackRecordingActivity.this, getString(R.string.hold_to_stop), Toast.LENGTH_LONG).show());
 
-        viewBinding.bottomAppBar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
         setSupportActionBar(viewBinding.bottomAppBar);
     }
 

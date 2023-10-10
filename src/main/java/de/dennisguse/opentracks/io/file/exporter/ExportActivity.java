@@ -25,9 +25,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
-import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  *    So, for this check actually a different file name might be used than in the ExportService.
  * * Saved state as an object instead of individual values.
  */
-public class ExportActivity extends FragmentActivity implements ExportService.ExportServiceResultReceiver.Receiver {
+public class ExportActivity extends AppCompatActivity implements ExportService.ExportServiceResultReceiver.Receiver {
 
     private static final String TAG = ExportActivity.class.getSimpleName();
 
@@ -152,6 +152,8 @@ public class ExportActivity extends FragmentActivity implements ExportService.Ex
         viewBinding = ExportActivityBinding.inflate(getLayoutInflater());
         setContentView(viewBinding.getRoot());
 
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
+
         directoryUri = getIntent().getParcelableExtra(EXTRA_DIRECTORY_URI_KEY);
         trackFileFormat = (TrackFileFormat) getIntent().getSerializableExtra(EXTRA_TRACKFILEFORMAT_KEY);
         boolean allInOneFile = getIntent().getBooleanExtra(EXTRA_ONE_FILE_KEY, false);
@@ -188,7 +190,6 @@ public class ExportActivity extends FragmentActivity implements ExportService.Ex
         }
 
         viewBinding.exportActivityToolbar.setTitle(getString(R.string.export_progress_message, directoryDisplayName));
-        viewBinding.bottomAppBarLayout.bottomAppBar.setNavigationIcon(R.drawable.ic_logo_color_24dp);
     }
 
     @Override
