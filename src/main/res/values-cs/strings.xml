@@ -590,4 +590,7 @@ limitations under the License.
     <string name="settings_announcements_idle_title">Nečinnost</string>
     <string name="settings_recording_idle_timeout_title">Hranice nečinnosti</string>
     <string name="value_int_seconds">%1$d s (doporučeno)</string>
+    <string name="settings_ui_dynamic_colors_title">Dynamické barvy</string>
+    <string name="settings_recording_title">Záznam</string>
+    <string name="settings_ui_dynamic_colors_summary">Používat dynamické barvy definované uživatelem (pouze Android 12+; vyžaduje ruční restart)</string>
 </resources>
