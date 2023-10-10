@@ -40,9 +40,9 @@
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreference
-            android:defaultValue="@bool/voice_announce_idle_default"
-            android:key="@string/voice_announce_idle_key"
-            android:title="@string/settings_announcements_idle_title" />
+            android:defaultValue="@bool/voice_announce_total_distance_default"
+            android:key="@string/voice_announce_total_distance_key"
+            android:title="@string/total_distance" />
 
         <SwitchPreference
             android:defaultValue="@bool/voice_announce_moving_time_default"
