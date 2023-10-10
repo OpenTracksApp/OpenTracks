@@ -51,4 +51,13 @@
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
+    <xsd:element name="typeTranslated"
+        type="xsd:string">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                User-defined translation of GPX's <![CDATA[<type>]]>.
+                Only used in GPX.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
 </xsd:schema>

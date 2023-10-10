@@ -37,6 +37,7 @@ import java.util.Objects;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackPointIterator;
+import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -59,7 +60,8 @@ public class KMLTrackExporter implements TrackExporter {
     private static final String TRACK_STYLE = "track";
     private static final String SCHEMA_ID = "schema";
 
-    public static final String EXTENDED_DATA_TYPE_ACTIVITYTYPE = "type";
+    public static final String EXTENDED_DATA_TYPE_LOCALIZED = "type";
+    public static final String EXTENDED_DATA_ACTIVITY_TYPE = "activityType";
 
     public static final String EXTENDED_DATA_TYPE_TRACKPOINT = "trackpoint_type";
     public static final String EXTENDED_DATA_TYPE_SPEED = "speed";
@@ -295,16 +297,15 @@ public class KMLTrackExporter implements TrackExporter {
 
         printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
         printWriter.println("<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
-        printWriter.println("<icon>" + StringUtils.formatCData(track.getActivityType().getIconId()) + "</icon>");
         printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
 
         printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");
-        writeActivityType(track.getActivityTypeLocalized());
+        writeActivityType(track.getActivityType());
+        writeTypeLocalized(track.getActivityTypeLocalized());
         printWriter.println("<MultiTrack>");
         printWriter.println("<altitudeMode>absolute</altitudeMode>");
         printWriter.println("<interpolate>1</interpolate>");
     }
-
 
     private void writeEndTrack() {
         printWriter.println("</MultiTrack>");
@@ -417,7 +418,7 @@ public class KMLTrackExporter implements TrackExporter {
             printWriter.println("<description>" + StringUtils.formatCData(description) + "</description>");
             printWriter.println("<TimeStamp><when>" + getTime(zoneOffset, location) + "</when></TimeStamp>");
             printWriter.println("<styleUrl>#" + KMLTrackExporter.MARKER_STYLE + "</styleUrl>");
-            writeActivityType(activityType);
+            writeTypeLocalized(activityType);
             printWriter.println("<Point>");
             printWriter.println("<coordinates>" + getCoordinates(location, ",") + "</coordinates>");
             printWriter.println("</Point>");
@@ -438,7 +439,7 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.println("</Camera>");
         printWriter.println("<TimeStamp><when>" + getTime(zoneOffset, marker.getLocation()) + "</when></TimeStamp>");
         printWriter.println("<styleUrl>#" + MARKER_STYLE + "</styleUrl>");
-        writeActivityType(marker.getCategory());
+        writeTypeLocalized(marker.getCategory());
 
         if (exportPhotos) {
             printWriter.println("<Icon><href>" + KmzTrackExporter.buildKmzImageFilePath(marker) + "</href></Icon>");
@@ -493,12 +494,21 @@ public class KMLTrackExporter implements TrackExporter {
         return result;
     }
 
-    private void writeActivityType(String activityTypeLocalized) {
-        if (activityTypeLocalized == null || "".equals(activityTypeLocalized)) {
+    private void writeTypeLocalized(String localizedValue) {
+        if (localizedValue == null || localizedValue.equals("")) {
             return;
         }
         printWriter.println("<ExtendedData>");
-        printWriter.println("<Data name=\"" + EXTENDED_DATA_TYPE_ACTIVITYTYPE + "\"><value>" + StringUtils.formatCData(activityTypeLocalized) + "</value></Data>");
+        printWriter.println("<Data name=\"" + EXTENDED_DATA_TYPE_LOCALIZED + "\"><value>" + StringUtils.formatCData(localizedValue) + "</value></Data>");
+        printWriter.println("</ExtendedData>");
+    }
+
+    private void writeActivityType(ActivityType value) {
+        if (value == null) {
+            return;
+        }
+        printWriter.println("<ExtendedData>");
+        printWriter.println("<Data name=\"" + EXTENDED_DATA_ACTIVITY_TYPE + "\"><value>" + StringUtils.formatCData(value.getId()) + "</value></Data>");
         printWriter.println("</ExtendedData>");
     }
 

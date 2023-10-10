@@ -21,10 +21,11 @@ xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/
 <trk>
 <name><![CDATA[2021-01-07 22:51]]></name>
 <desc><![CDATA[the description]]></desc>
-<type><![CDATA[the category]]></type>
+<type><![CDATA[unknown]]></type>
 <extensions>
 <topografix:color>c0c0c0</topografix:color>
 <opentracks:trackid>7002101e-4198-4613-8c24-544e01ca3981</opentracks:trackid>
+<opentracks:typeTranslated><![CDATA[unknown]]></opentracks:typeTranslated>
 <gpxtrkx:TrackStatsExtension>
 <gpxtrkx:Distance>0.0</gpxtrkx:Distance>
 <gpxtrkx:TimerTime>0</gpxtrkx:TimerTime>

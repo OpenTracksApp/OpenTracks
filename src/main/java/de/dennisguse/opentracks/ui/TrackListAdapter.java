@@ -46,7 +46,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private final SparseBooleanArray selection = new SparseBooleanArray();
     private RecordingStatus recordingStatus;
     private UnitSystem unitSystem;
-    private Cursor tracks;
+    private Cursor cursor;
     private boolean selectionMode = false;
     private ActivityUtils.ContextualActionModeCallback actionModeCallback;
     private ActionMode actionMode;
@@ -73,20 +73,20 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
 
-        tracks.moveToPosition(position);
-        viewHolder.bind(tracks);
+        cursor.moveToPosition(position);
+        viewHolder.bind(cursor);
     }
 
     @Override
     public int getItemCount() {
-        if (tracks == null) {
+        if (cursor == null) {
             return 0;
         }
-        return tracks.getCount();
+        return cursor.getCount();
     }
 
-    public void swapData(Cursor tracks) {
-        this.tracks = tracks;
+    public void swapData(Cursor cursor) {
+        this.cursor = cursor;
         this.notifyDataSetChanged();
     }
 
@@ -131,12 +131,12 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void setAllSelected(boolean isSelected) {
         if (isSelected) {
-            final int idIndex = tracks.getColumnIndexOrThrow(TracksColumns._ID);
+            final int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
 
-            tracks.moveToFirst();
+            cursor.moveToFirst();
             do {
-                selection.put((int) tracks.getLong(idIndex), true);
-            } while (tracks.moveToNext());
+                selection.put((int) cursor.getLong(idIndex), true);
+            } while (cursor.moveToNext());
         } else {
             selection.clear();
         }
@@ -164,15 +164,6 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private final TrackListItemBinding viewBinding;
         private final View view;
 
-        private ActivityType activityType;
-        private String name;
-        private int markerCount;
-        private Duration totalTime;
-        private Distance totalDistance;
-        private Instant startTime;
-        private ZoneOffset zoneOffset;
-        private String activityTypeLocalized;
-        private String description;
         private Track.Id trackId;
 
         public ViewHolder(@NonNull View itemView) {
@@ -185,33 +176,29 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             view.setOnLongClickListener(this);
         }
 
-        private void getData(Cursor track) {
-            final int idIndex = track.getColumnIndexOrThrow(TracksColumns._ID);
-            final int nameIndex = track.getColumnIndexOrThrow(TracksColumns.NAME);
-            final int descriptionIndex = track.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
-            final int activityTypeLocalizedIndex = track.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE_LOCALIZED);
-            final int startTimeIndex = track.getColumnIndexOrThrow(TracksColumns.STARTTIME);
-            final int startTimeOffsetIndex = track.getColumnIndexOrThrow(TracksColumns.STARTTIME_OFFSET);
-            final int totalDistanceIndex = track.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
-            final int totalTimeIndex = track.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
-            final int iconIndex = track.getColumnIndexOrThrow(TracksColumns.ICON);
-            final int markerCountIndex = track.getColumnIndexOrThrow(TracksColumns.MARKER_COUNT);
 
-            activityType = ActivityType.findBy(track.getString(iconIndex));
-            name = track.getString(nameIndex);
-            markerCount = track.getInt(markerCountIndex);
-            totalTime = Duration.ofMillis(track.getLong(totalTimeIndex));
-            totalDistance = Distance.of(track.getFloat(totalDistanceIndex));
-            startTime = Instant.ofEpochMilli(track.getLong(startTimeIndex));
-            zoneOffset = ZoneOffset.ofTotalSeconds(track.getInt(startTimeOffsetIndex));
-            activityTypeLocalized = track.getString(activityTypeLocalizedIndex);
-            description = track.getString(descriptionIndex);
-            trackId = new Track.Id(track.getLong(idIndex));
-        }
+        public void bind(Cursor cursor) {
+            final int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
+            final int nameIndex = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
+            final int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
+            final int activityTypeIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE);
+            final int activityTypeLocalizedIndex = cursor.getColumnIndexOrThrow(TracksColumns.ACTIVITY_TYPE_LOCALIZED);
+            final int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
+            final int startTimeOffsetIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME_OFFSET);
+            final int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
+            final int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
+            final int markerCountIndex = cursor.getColumnIndexOrThrow(TracksColumns.MARKER_COUNT);
 
-        public void bind(Cursor track) {
-
-            getData(track);
+            ActivityType activityType = ActivityType.findBy(cursor.getString(activityTypeIndex));
+            String name = cursor.getString(nameIndex);
+            int markerCount = cursor.getInt(markerCountIndex);
+            Duration totalTime = Duration.ofMillis(cursor.getLong(totalTimeIndex));
+            Distance totalDistance = Distance.of(cursor.getFloat(totalDistanceIndex));
+            Instant startTime = Instant.ofEpochMilli(cursor.getLong(startTimeIndex));
+            ZoneOffset zoneOffset = ZoneOffset.ofTotalSeconds(cursor.getInt(startTimeOffsetIndex));
+            String activityTypeLocalized = cursor.getString(activityTypeLocalizedIndex);
+            String description = cursor.getString(descriptionIndex);
+            trackId = new Track.Id(cursor.getLong(idIndex));
 
             int iconId = activityType.getIconDrawableId();
             int iconDesc = R.string.image_track;
@@ -240,6 +227,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 viewBinding.trackListItemTime.setText(null);
             }
 
+            //TODO Check if this is needed or a leftover from the MarkerList migration
             String category = activityType == null ? activityTypeLocalized : null;
             String categoryDescription = StringUtils.getCategoryDescription(category, description);
             viewBinding.trackListItemCategoryDescription.setText(categoryDescription);

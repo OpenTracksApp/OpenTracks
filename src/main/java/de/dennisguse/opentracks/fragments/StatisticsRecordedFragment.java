@@ -188,10 +188,9 @@ public class StatisticsRecordedFragment extends Fragment {
         {
             Context context = getContext();
             String localizedActivityType = track.getActivityTypeLocalized();
-            String trackIconValue = ActivityType.findByLocalizedString(context, localizedActivityType)
-                    .getIconId();
-            viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), ActivityType.findBy(trackIconValue)
-                    .getIconDrawableId()));
+            int iconDrawableId = ActivityType.findByLocalizedString(context, localizedActivityType)
+                    .getIconDrawableId();
+            viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), iconDrawableId));
         }
 
         // Set time and start datetime

@@ -39,7 +39,11 @@ public interface TracksColumns extends BaseColumns {
     String UUID = "uuid"; // identifier to make tracks globally unique (prevent re-import)
     String NAME = "name"; // track name
     String DESCRIPTION = "description"; // track description
+    /** see {@link de.dennisguse.opentracks.data.models.ActivityType}.id */
+    String ACTIVITY_TYPE = "activity_type";
     String ACTIVITY_TYPE_LOCALIZED = "category"; // track activity type
+    @Deprecated
+    String ICON = "icon"; // track activity type icon
     String STARTTIME = "starttime"; // track start time
     String STARTTIME_OFFSET = "starttime_offset"; // in plus/minus in seconds
     String STOPTIME = "stoptime"; // track stop time
@@ -57,7 +61,6 @@ public interface TracksColumns extends BaseColumns {
     String MAX_ALTITUDE = "maxelevation"; // maximum altitude //TODO RENAME column
     String ALTITUDE_GAIN = "elevationgain"; // altitude gain //TODO RENAME column
     String ALTITUDE_LOSS = "elevationloss"; // altitude loss //TODO RENAME column
-    String ICON = "icon"; // track activity type icon //TODO DEPRECATED
 
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -79,7 +82,8 @@ public interface TracksColumns extends BaseColumns {
             + ICON + " TEXT, "
             + UUID + " BLOB, "
             + ALTITUDE_LOSS + " FLOAT, "
-            + STARTTIME_OFFSET + " INTEGER)";
+            + STARTTIME_OFFSET + " INTEGER, "
+            + ACTIVITY_TYPE + " TEXT)";
 
     String CREATE_TABLE_INDEX = "CREATE UNIQUE INDEX " + TABLE_NAME + "_" + UUID + "_index ON " + TABLE_NAME + "(" + UUID + ")";
 

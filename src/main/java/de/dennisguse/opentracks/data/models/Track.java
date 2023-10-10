@@ -101,8 +101,8 @@ public class Track {
         return activityTypeLocalized;
     }
 
-    public void setActivityTypeLocalized(String activityType) {
-        this.activityTypeLocalized = activityType;
+    public void setActivityTypeLocalized(String activityTypeLocalized) {
+        this.activityTypeLocalized = activityTypeLocalized;
     }
 
     public ActivityType getActivityType() {

@@ -53,7 +53,6 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
     private static final String TAG_COORDINATES = "coordinates";
     private static final String TAG_DESCRIPTION = "description";
-    private static final String TAG_ICON = "icon";
 
     private static final String TAG_COORD = "coord";
     private static final String TAG_KML22_COORD = "gx:coord";
@@ -61,7 +60,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private static final String TAG_MULTI_TRACK = "MultiTrack";
     private static final String TAG_KML22_MULTI_TRACK = "gx:MultiTrack";
 
-    private static final String TAG_DATA_ACTIVITYTYPE = "Data";
+    private static final String TAG_EXTENDED_DATA = "Data";
 
     private static final String TAG_SIMPLE_ARRAY_DATA = "SimpleArrayData";
     private static final String TAG_KML22_SIMPLE_ARRAY_DATA = "gx:SimpleArrayData";
@@ -94,7 +93,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private final ArrayList<Instant> whenList = new ArrayList<>();
     private final ArrayList<Location> locationList = new ArrayList<>();
 
-    private String dataType; //Could be converted to an ENUM
+    private String dataType;
 
     private final ArrayList<String> trackpointTypeList = new ArrayList<>();
     private final ArrayList<Float> sensorSpeedList = new ArrayList<>();
@@ -112,10 +111,10 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     // The current element content
     private String content = "";
 
-    private String icon;
     private String name;
     private String description;
     private String activityType;
+    private String activityTypeLocalized;
     private String latitude;
     private String longitude;
     private String altitude;
@@ -148,7 +147,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 }
                 onTrackSegmentStart();
             }
-            case TAG_DATA_ACTIVITYTYPE, TAG_SIMPLE_ARRAY_DATA, TAG_KML22_SIMPLE_ARRAY_DATA ->
+            case TAG_EXTENDED_DATA, TAG_SIMPLE_ARRAY_DATA, TAG_KML22_SIMPLE_ARRAY_DATA ->
                     dataType = attributes.getValue(ATTRIBUTE_NAME);
         }
     }
@@ -167,18 +166,24 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                     onMarkerEnd();
             case TAG_COORDINATES -> onMarkerLocationEnd();
             case TAG_MULTI_TRACK, TAG_KML22_MULTI_TRACK -> {
-                trackImporter.setTrack(context, name, uuid, description, activityType, icon, zoneOffset);
+                trackImporter.setTrack(context, name, uuid, description, activityTypeLocalized, activityType, zoneOffset);
                 zoneOffset = null;
             }
             case TAG_TRACK, TAG_KML22_TRACK -> onTrackSegmentEnd();
             case TAG_COORD, TAG_KML22_COORD -> onCoordEnded();
             case TAG_VALUE, TAG_KML22_VALUE -> {
-                if (KMLTrackExporter.EXTENDED_DATA_TYPE_ACTIVITYTYPE.equals(dataType)) {
-                    if (content != null) {
-                        activityType = content.trim();
+                switch (dataType) {
+                    case KMLTrackExporter.EXTENDED_DATA_ACTIVITY_TYPE -> {
+                        if (content != null) {
+                            activityType = content.trim();
+                        }
                     }
-                } else {
-                    onExtendedDataValueEnd();
+                    case KMLTrackExporter.EXTENDED_DATA_TYPE_LOCALIZED -> {
+                        if (content != null) {
+                            activityTypeLocalized = content.trim();
+                        }
+                    }
+                    default -> onExtendedDataValueEnd();
                 }
             }
             case TAG_NAME -> {
@@ -194,11 +199,6 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             case TAG_DESCRIPTION -> {
                 if (content != null) {
                     description = content.trim();
-                }
-            }
-            case TAG_ICON -> {
-                if (content != null) {
-                    icon = content.trim();
                 }
             }
             case TAG_WHEN -> {
@@ -233,9 +233,8 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private void onMarkerStart() {
         // Reset all Placemark variables
         name = null;
-        icon = null;
         description = null;
-        activityType = null;
+        activityTypeLocalized = null;
         photoUrl = null;
         latitude = null;
         longitude = null;
@@ -262,13 +261,13 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
         Marker marker = new Marker(null, new TrackPoint(TrackPoint.Type.TRACKPOINT, location, whenList.get(0))); //TODO Creating marker without need
         marker.setName(name != null ? name : "");
         marker.setDescription(description != null ? description : "");
-        marker.setCategory(activityType != null ? activityType : "");
+        marker.setCategory(activityTypeLocalized != null ? activityTypeLocalized : "");
         marker.setPhotoUrl(photoUrl);
         markers.add(marker);
 
         name = null;
         description = null;
-        activityType = null;
+        activityTypeLocalized = null;
         photoUrl = null;
         whenList.clear();
     }

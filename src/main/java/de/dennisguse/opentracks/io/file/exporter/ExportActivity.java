@@ -32,7 +32,6 @@ import androidx.fragment.app.FragmentActivity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -231,9 +230,9 @@ public class ExportActivity extends FragmentActivity implements ExportService.Ex
         exportTasks = new ArrayList<>();
         if (allInOneFile) {
             String filename = "OpenTracks-Backup";
-            exportTasks.add(new ExportTask(filename, trackFileFormat, tracks.stream().map(Track::getId).collect(Collectors.toList())));
+            exportTasks.add(new ExportTask(filename, trackFileFormat, tracks.stream().map(Track::getId).toList()));
         } else {
-            exportTasks.addAll(tracks.stream().map(it -> new ExportTask(null, trackFileFormat, List.of(it.getId()))).collect(Collectors.toList()));
+            exportTasks.addAll(tracks.stream().map(it -> new ExportTask(null, trackFileFormat, List.of(it.getId()))).toList());
         }
         trackExportTotalCount = exportTasks.size();
     }
