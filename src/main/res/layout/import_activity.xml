@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
-        android:paddingBottom="?attr/actionBarSize"
+        android:layout_marginBottom="@dimen/m3_bottom_nav_min_height"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.core.widget.NestedScrollView
