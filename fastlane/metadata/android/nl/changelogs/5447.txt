@@ -1,0 +1,4 @@
+v4.9.1: OpenTracks
+
+Bugfix :
+- Crash bij het uitvoeren van multi-select in tracklijst
