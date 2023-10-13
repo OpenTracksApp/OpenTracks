@@ -2,19 +2,17 @@ package de.dennisguse.opentracks.ui.intervals;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
+import de.dennisguse.opentracks.databinding.IntervalStatsListItemBinding;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.util.StringUtils;
 
@@ -36,8 +34,7 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.interval_stats_list_item, parent, false);
-        return new IntervalStatisticsAdapter.ViewHolder(view);
+        return new IntervalStatisticsAdapter.ViewHolder(IntervalStatsListItemBinding.inflate(LayoutInflater.from(parent.getContext())));
     }
 
     @Override
@@ -57,16 +54,15 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
         } else {
             sumDistance = interval.getDistance().multipliedBy(nextPosition);
         }
-        viewHolder.distance.setText(DistanceFormatter.Builder()
+        viewHolder.viewBinding.intervalItemDistance.setText(DistanceFormatter.Builder()
                 .setUnit(unitSystem)
                 .build(context).formatDistance(sumDistance));
 
         SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(isReportSpeed).build(context);
-        viewHolder.rate.setText(formatter.formatSpeed(interval.getSpeed()));
+        viewHolder.viewBinding.intervalItemRate.setText(formatter.formatSpeed(interval.getSpeed()));
 
-        viewHolder.gain.setText(StringUtils.formatAltitude(context, interval.getGain_m(), unitSystem));
-        viewHolder.loss.setText(StringUtils.formatAltitude(context, interval.getLoss_m(), unitSystem));
-
+        viewHolder.viewBinding.intervalItemGain.setText(StringUtils.formatAltitude(context, interval.getGain_m(), unitSystem));
+        viewHolder.viewBinding.intervalItemLoss.setText(StringUtils.formatAltitude(context, interval.getLoss_m(), unitSystem));
     }
 
     @Override
@@ -98,17 +94,11 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     private static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView distance;
-        final TextView rate;
-        final TextView gain;
-        final TextView loss;
+        final IntervalStatsListItemBinding viewBinding;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            distance = itemView.findViewById(R.id.interval_item_distance);
-            rate = itemView.findViewById(R.id.interval_item_rate);
-            gain = itemView.findViewById(R.id.interval_item_gain);
-            loss = itemView.findViewById(R.id.interval_item_loss);
+        public ViewHolder(@NonNull IntervalStatsListItemBinding viewBinding) {
+            super(viewBinding.getRoot());
+            this.viewBinding = viewBinding;
         }
     }
 }
