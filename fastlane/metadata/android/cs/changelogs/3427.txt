@@ -1,0 +1,11 @@
+v3.7.5: OpenTracks
+
+Changes:
+- Added aggregated statistics summary (from main the screen's menu)
+- Dashboard API: pass "show on lock screen"- and "keep screen on"-setting
+- Updated translations
+- Import: be lenient with ISO8601 date format
+- Show track on map: file format can be selected and opening dashboard works on Android R (API 30+)
+
+Bugfix:
+- App icon now correctly implemented

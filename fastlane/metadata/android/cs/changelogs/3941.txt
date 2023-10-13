@@ -1,0 +1,13 @@
+v3.16.0: OpenTracks
+
+Changes:
+- Cycling: get distance from BLE speed sensor
+- Reworked UI presented while recording
+- UI performance optimizations
+- Exported filenames: <First 32bits UUID>_<track's name>.<extension> 
+- Import multiple files via Intent (e.g., from Gadgetbridge)
+- GPX: export power data
+- Updated translations
+
+Bugfix:
+- Voice announcement use minutes correctly

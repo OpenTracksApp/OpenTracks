@@ -1,0 +1,4 @@
+v4.6.1: OpenTracks
+
+Bugfix:
+- Re-added aggregated statistics per selected tracks

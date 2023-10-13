@@ -1,0 +1,15 @@
+v3.19.0: OpenTracks
+
+Changes:
+- Support for Running Speed and Cadence (RCS) sensors implemented
+- When sharing a track: a share picture is created
+- No vibration when starting a recording
+- While recording: UI shows most recently received altitude, speed, and bearing (even if not stored)
+
+Bugfix:
+- Computation of total duration should not include paused durations (requires re-import)
+- (again) Use custom summaries if present
+
+Developer:
+- Upgrade to SDK31 and AGP7.0.0 (requires JDK11)
+- TrackRec

@@ -1,0 +1,12 @@
+v4.6.0: OpenTracks
+
+Changes:
+- Voice announcements use ICU plural format (en, es, pt, zh, dr, de) due to fractional quanitites #1584
+- Requires Android 7.0 / SDK24+ due to ICU plurals
+- On Android 14+: use Android's AltitudeConverter instead of internal EGM2008
+
+Bugfix:
+- Android 13 couldn't select images from gallery
+
+Developer:
+- Split ActivityType and ActivityIcon

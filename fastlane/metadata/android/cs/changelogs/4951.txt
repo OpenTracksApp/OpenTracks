@@ -1,0 +1,8 @@
+v4.0.3: OpenTracks
+
+Changes:
+- Max. speed as reported by sensor (GPS or BLE)
+
+Bugfix:
+- Prevent crash if OSM Dashboard is not installed
+- GPX track export: do not export empty track segments

@@ -1,0 +1,10 @@
+v3.10.0: OpenTracks
+
+Changes:
+- Elevation gain via barometer
+- Add splash screen
+- Android 11/F-Droid: downgrade to targetSDK 29 (v1 signature)
+  see https://gitlab.com/fdroid/fdroidserver/-/issues/827
+
+Bugfix:
+- Several fixes due to trackId refactoring

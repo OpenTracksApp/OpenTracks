@@ -1,0 +1,11 @@
+v4.1.2: OpenTracks
+
+Changes:
+- Voice announcements only use on decimal for distance
+
+Bugfix:
+- Crash when stopping (race condition)
+
+Developer:
+- Github actions: disabled instrumentation testing (too slow)
+- Tests are done with only fake GPS data

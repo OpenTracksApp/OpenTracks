@@ -1,0 +1,13 @@
+v3.2.2: OpenTracks
+
+Changes:
+- Removed aggregated stats
+- Migrated to Material Design
+
+Bugfix:
+- Fixed export of sensor data
+- Fixed import of incomplete sensor data
+
+Developer:
+- Replaced actionbar with toolbar
+- Migrated to androidx appcompat (incl. Material Design)

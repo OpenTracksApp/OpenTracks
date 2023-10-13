@@ -1,0 +1,7 @@
+v3.20.0: OpenTracks
+
+Changes:
+- While recording: statistics UI is now configurable
+
+Bugfix:
+- Changing track name/ category while recording was ignored (introduced in v3.19.0)

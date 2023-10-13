@@ -1,0 +1,15 @@
+v4.0.0: OpenTracks
+
+Changes:
+- UI refactoring with a Bottom App Bar.
+- Public API: implemented STOP properly.
+- Cleanup: use explicit preference identifiers for TrackFileFormat.
+- Improvements on BLE handler.
+- Add exception handler and show error activity so users can send reports about bugs.
+- Android 13: launcher icon, provide a themed icon.
+- Change track title capitalization to sentences.
+- Translations updated.
+
+Bugfix:
+- Sharing track added file suffix twice.
+- Unit system not loaded corr

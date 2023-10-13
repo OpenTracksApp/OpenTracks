@@ -1,0 +1,8 @@
+v3.8.1: OpenTracks
+
+Changes:
+- While recording: add option for fullscreen
+- Dashboard is started on the same task
+
+Bugfixes:
+- Intent filters for importing files were far too optimistic
