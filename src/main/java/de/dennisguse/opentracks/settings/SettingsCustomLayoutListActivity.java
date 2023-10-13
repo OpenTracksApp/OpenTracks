@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -17,8 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
@@ -31,49 +28,38 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
 
     private ActivitySettingsCustomLayoutListBinding viewBinding;
     private SettingsCustomLayoutListAdapter adapter;
-    private RecyclerView recyclerView;
-    private View addProfileLayout;
-    private TextInputEditText addProfileEditText;
-    private TextInputLayout addProfileInputLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         adapter = new SettingsCustomLayoutListAdapter(this, this);
-        recyclerView = viewBinding.recyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        viewBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        viewBinding.recyclerView.setAdapter(adapter);
 
-        Button cancelButton = findViewById(R.id.custom_layout_list_cancel_button);
-        Button okButton = findViewById(R.id.custom_layout_list_ok_button);
+        viewBinding.customLayoutListCancelButton.setOnClickListener(view -> clearAndHideEditLayout());
 
-        cancelButton.setOnClickListener(view -> clearAndHideEditLayout());
-
-        okButton.setEnabled(false);
-        okButton.setOnClickListener(view -> {
-            PreferencesUtils.addCustomLayout(addProfileEditText.getText().toString());
+        viewBinding.customLayoutListOkButton.setEnabled(false);
+        viewBinding.customLayoutListOkButton.setOnClickListener(view -> {
+            PreferencesUtils.addCustomLayout(viewBinding.customLayoutListEditName.getText().toString());
             clearAndHideEditLayout();
             adapter.reloadLayouts();
         });
 
-        addProfileLayout = findViewById(R.id.custom_layout_list_add_linear_layout);
-        addProfileInputLayout = findViewById(R.id.custom_layout_list_input_layout);
-        addProfileEditText = findViewById(R.id.custom_layout_list_edit_name);
-        addProfileEditText.addTextChangedListener(new TextWatcher() {
+        viewBinding.customLayoutListEditName.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s == null || s.toString().isEmpty()) {
-                    okButton.setEnabled(false);
+                    viewBinding.customLayoutListOkButton.setEnabled(false);
                     return;
                 }
 
                 if (adapter.getLayouts().stream().anyMatch(layout -> layout.sameName(s.toString()))) {
-                    okButton.setEnabled(false);
-                    addProfileInputLayout.setError(getString(R.string.custom_layout_list_edit_already_exists));
+                    viewBinding.customLayoutListOkButton.setEnabled(false);
+                    viewBinding.customLayoutListInputLayout.setError(getString(R.string.custom_layout_list_edit_already_exists));
                 } else {
-                    okButton.setEnabled(true);
-                    addProfileInputLayout.setError("");
+                    viewBinding.customLayoutListOkButton.setEnabled(true);
+                    viewBinding.customLayoutListInputLayout.setError("");
                 }
             }
 
@@ -100,10 +86,10 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
 
                 adapter.removeLayout(position);
 
-                Snackbar snackbar = Snackbar.make(recyclerView, getString(R.string.custom_layout_list_layout_removed), Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(viewBinding.recyclerView, getString(R.string.custom_layout_list_layout_removed), Snackbar.LENGTH_LONG);
                 snackbar.setAction(getString(R.string.generic_undo).toUpperCase(), view -> {
                     adapter.restoreItem(item, position);
-                    recyclerView.scrollToPosition(position);
+                    viewBinding.recyclerView.scrollToPosition(position);
                 });
 
                 snackbar.show();
@@ -111,7 +97,7 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
         };
 
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(recyclerViewSwipeDeleteCallback);
-        itemTouchhelper.attachToRecyclerView(recyclerView);
+        itemTouchhelper.attachToRecyclerView(viewBinding.recyclerView);
 
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
@@ -138,10 +124,10 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.custom_layout_edit_add_profile) {
-            addProfileLayout.setVisibility(View.VISIBLE);
-            addProfileEditText.requestFocus();
+            viewBinding.customLayoutListAddLinearLayout.setVisibility(View.VISIBLE);
+            viewBinding.customLayoutListEditName.requestFocus();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(addProfileEditText, InputMethodManager.SHOW_IMPLICIT);
+            imm.showSoftInput(viewBinding.customLayoutListEditName, InputMethodManager.SHOW_IMPLICIT);
             return true;
         }
 
@@ -156,8 +142,8 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
     }
 
     private void clearAndHideEditLayout() {
-        addProfileEditText.setText("");
-        addProfileInputLayout.setError("");
-        addProfileLayout.setVisibility(View.GONE);
+        viewBinding.customLayoutListEditName.setText("");
+        viewBinding.customLayoutListInputLayout.setError("");
+        viewBinding.customLayoutListAddLinearLayout.setVisibility(View.GONE);
     }
 }
