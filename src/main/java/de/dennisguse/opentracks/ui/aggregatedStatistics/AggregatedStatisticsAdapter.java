@@ -3,10 +3,7 @@ package de.dennisguse.opentracks.ui.aggregatedStatistics;
 import android.content.Context;
 import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +15,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
+import de.dennisguse.opentracks.databinding.AggregatedStatsListItemBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -35,8 +33,7 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.aggregated_stats_list_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(AggregatedStatsListItemBinding.inflate(LayoutInflater.from(parent.getContext())));
     }
 
     @Override
@@ -75,38 +72,13 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView sportIcon;
-        private final TextView typeLabel;
-        private final TextView numTracks;
-        private final TextView distance;
-        private final TextView distanceUnit;
-        private final TextView time;
-
-        private final TextView avgSpeed;
-        private final TextView avgSpeedUnit;
-        private final TextView avgSpeedLabel;
-        private final TextView maxSpeed;
-        private final TextView maxSpeedUnit;
-        private final TextView maxSpeedLabel;
-
+        private final AggregatedStatsListItemBinding viewBinding;
         private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
         private boolean reportSpeed;
 
-        public ViewHolder(View view) {
-            super(view);
-            sportIcon = view.findViewById(R.id.aggregated_stats_sport_icon);
-            typeLabel = view.findViewById(R.id.aggregated_stats_type_label);
-            numTracks = view.findViewById(R.id.aggregated_stats_num_tracks);
-            distance = view.findViewById(R.id.aggregated_stats_distance);
-            distanceUnit = view.findViewById(R.id.aggregated_stats_distance_unit);
-            time = view.findViewById(R.id.aggregated_stats_time);
-
-            avgSpeed = view.findViewById(R.id.aggregated_stats_avg_rate);
-            avgSpeedUnit = view.findViewById(R.id.aggregated_stats_avg_rate_unit);
-            avgSpeedLabel = view.findViewById(R.id.aggregated_stats_avg_rate_label);
-            maxSpeed = view.findViewById(R.id.aggregated_stats_max_rate);
-            maxSpeedUnit = view.findViewById(R.id.aggregated_stats_max_rate_unit);
-            maxSpeedLabel = view.findViewById(R.id.aggregated_stats_max_rate_label);
+        public ViewHolder(AggregatedStatsListItemBinding viewBinding) {
+            super(viewBinding.getRoot());
+            this.viewBinding = viewBinding;
         }
 
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
@@ -115,16 +87,16 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
             SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
             {
                 Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
-                avgSpeed.setText(parts.first);
-                avgSpeedUnit.setText(parts.second);
-                avgSpeedLabel.setText(context.getString(R.string.stats_average_moving_speed));
+                viewBinding.aggregatedStatsAvgRate.setText(parts.first);
+                viewBinding.aggregatedStatsAvgRateUnit.setText(parts.second);
+                viewBinding.aggregatedStatsAvgRateLabel.setText(context.getString(R.string.stats_average_moving_speed));
             }
 
             {
                 Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getMaxSpeed());
-                maxSpeed.setText(parts.first);
-                maxSpeedUnit.setText(parts.second);
-                maxSpeedLabel.setText(context.getString(R.string.stats_max_speed));
+                viewBinding.aggregatedStatsMaxRate.setText(parts.first);
+                viewBinding.aggregatedStatsMaxRateUnit.setText(parts.second);
+                viewBinding.aggregatedStatsMaxRateLabel.setText(context.getString(R.string.stats_max_speed));
             }
         }
 
@@ -134,16 +106,16 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
             SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
             {
                 Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
-                avgSpeed.setText(parts.first);
-                avgSpeedUnit.setText(parts.second);
-                avgSpeedLabel.setText(context.getString(R.string.stats_average_moving_pace));
+                viewBinding.aggregatedStatsAvgRate.setText(parts.first);
+                viewBinding.aggregatedStatsAvgRateUnit.setText(parts.second);
+                viewBinding.aggregatedStatsAvgRateLabel.setText(context.getString(R.string.stats_average_moving_pace));
             }
 
             {
                 Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getMaxSpeed());
-                maxSpeed.setText(parts.first);
-                maxSpeedUnit.setText(parts.second);
-                maxSpeedLabel.setText(R.string.stats_fastest_pace);
+                viewBinding.aggregatedStatsMaxRate.setText(parts.first);
+                viewBinding.aggregatedStatsMaxRateUnit.setText(parts.second);
+                viewBinding.aggregatedStatsMaxRateLabel.setText(R.string.stats_fastest_pace);
             }
         }
 
@@ -154,17 +126,17 @@ public class AggregatedStatisticsAdapter extends RecyclerView.Adapter<RecyclerVi
             reportSpeed = PreferencesUtils.isReportSpeed(activityType);
             unitSystem = PreferencesUtils.getUnitSystem();
 
-            sportIcon.setImageResource(getIcon(aggregatedStatistic));
-            typeLabel.setText(activityType);
-            numTracks.setText(StringUtils.valueInParentheses(String.valueOf(aggregatedStatistic.getCountTracks())));
+            viewBinding.activityIcon.setImageResource(getIcon(aggregatedStatistic));
+            viewBinding.aggregatedStatsTypeLabel.setText(activityType);
+            viewBinding.aggregatedStatsNumTracks.setText(StringUtils.valueInParentheses(String.valueOf(aggregatedStatistic.getCountTracks())));
 
             Pair<String, String> parts = DistanceFormatter.Builder()
                     .setUnit(unitSystem)
                     .build(context).getDistanceParts(aggregatedStatistic.getTrackStatistics().getTotalDistance());
-            distance.setText(parts.first);
-            distanceUnit.setText(parts.second);
+            viewBinding.aggregatedStatsDistance.setText(parts.first);
+            viewBinding.aggregatedStatsDistanceUnit.setText(parts.second);
 
-            time.setText(StringUtils.formatElapsedTime(aggregatedStatistic.getTrackStatistics().getMovingTime()));
+            viewBinding.aggregatedStatsTime.setText(StringUtils.formatElapsedTime(aggregatedStatistic.getTrackStatistics().getMovingTime()));
         }
 
         private int getIcon(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
