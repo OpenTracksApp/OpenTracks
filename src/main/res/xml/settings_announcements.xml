@@ -18,7 +18,7 @@
         app:useSimpleSummaryProvider="true" />
 
     <PreferenceCategory android:title="@string/settings_announcements_idle_category_title">
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_total_distance_default"
             android:key="@string/voice_announce_total_distance_key"
             android:title="@string/settings_announcements_idle_title" />
@@ -39,32 +39,32 @@
             android:title="@string/settings_announcements_distance_frequency"
             app:useSimpleSummaryProvider="true" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_total_distance_default"
             android:key="@string/voice_announce_total_distance_key"
             android:title="@string/total_distance" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_moving_time_default"
             android:key="@string/voice_announce_moving_time_key"
             android:title="@string/stats_moving_time" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_average_speed_pace_default"
             android:key="@string/voice_announce_average_speed_pace_key"
             android:title="@string/settings_announcements_average_speed_pace" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_lap_speed_pace_default"
             android:key="@string/voice_announce_lap_speed_pace_key"
             android:title="@string/settings_announcements_lap_speed_pace" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_average_heart_rate_default"
             android:key="@string/voice_announce_average_heart_rate_key"
             android:title="@string/settings_announcements_average_heart_rate" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_lap_heart_rate_default"
             android:key="@string/voice_announce_lap_heart_rate_key"
             android:title="@string/settings_announcements_lap_heart_rate" />
