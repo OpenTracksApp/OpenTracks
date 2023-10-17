@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 
@@ -117,7 +118,7 @@ public enum ActivityType {
         return Arrays.stream(values())
                 .map(ActivityType::getLocalizedStringId)
                 .map(context::getString)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @NonNull

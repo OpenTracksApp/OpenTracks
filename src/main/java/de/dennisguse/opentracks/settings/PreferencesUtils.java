@@ -729,7 +729,7 @@ public class PreferencesUtils {
                 R.array.stats_custom_layout_fields_default_value_16,
                 R.array.stats_custom_layout_fields_default_value_17,
                 R.array.stats_custom_layout_fields_default_value_18
-        ).map(id -> resources.obtainTypedArray(id)).toList();
+        ).map(id -> resources.obtainTypedArray(id)).collect(Collectors.toList());
     }
 
     @SuppressLint("ResourceType")
@@ -804,7 +804,7 @@ public class PreferencesUtils {
     }
 
     public static List<String> getAllCustomLayoutNames() {
-        return getAllCustomLayouts().stream().map(RecordingLayout::getName).toList();
+        return getAllCustomLayouts().stream().map(RecordingLayout::getName).collect(Collectors.toList());
     }
 
     public static void resetCustomLayoutPreferences() {

@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.TestSensorDataUtil;
@@ -859,7 +860,7 @@ public class CustomContentProviderUtilsTest {
 
         List<TrackPoint.Id> trackpointIds = track.second.stream()
                 .map(it -> ContentUris.parseId(contentProviderUtils.insertTrackPoint(it, track.first.getId())))
-                .map(TrackPoint.Id::new).toList();
+                .map(TrackPoint.Id::new).collect(Collectors.toList());
 
         // when
         try (Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackpointIds.get(8))) {
@@ -877,7 +878,7 @@ public class CustomContentProviderUtilsTest {
 
         List<TrackPoint.Id> trackpointIds = track.second.stream()
                 .map(it -> ContentUris.parseId(contentProviderUtils.insertTrackPoint(it, track.first.getId())))
-                .map(TrackPoint.Id::new).toList();
+                .map(TrackPoint.Id::new).collect(Collectors.toList());
 
         TrackPoint.Id startTrackPointId = trackpointIds.get(0);
 

@@ -32,6 +32,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
@@ -99,7 +100,7 @@ public class ImportActivity extends FragmentActivity {
             documentFiles = new ArrayList<>();
             documentFiles.add(DocumentFile.fromTreeUri(this, documentUris.get(0)));
         } else {
-            documentFiles = documentUris.stream().map(it -> DocumentFile.fromSingleUri(this, it)).toList();
+            documentFiles = documentUris.stream().map(it -> DocumentFile.fromSingleUri(this, it)).collect(Collectors.toList());
         }
 
         initViews();

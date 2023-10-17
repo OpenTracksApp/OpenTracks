@@ -32,6 +32,7 @@ import androidx.documentfile.provider.DocumentFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -231,9 +232,9 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
         exportTasks = new ArrayList<>();
         if (allInOneFile) {
             String filename = "OpenTracks-Backup";
-            exportTasks.add(new ExportTask(filename, trackFileFormat, tracks.stream().map(Track::getId).toList()));
+            exportTasks.add(new ExportTask(filename, trackFileFormat, tracks.stream().map(Track::getId).collect(Collectors.toList())));
         } else {
-            exportTasks.addAll(tracks.stream().map(it -> new ExportTask(null, trackFileFormat, List.of(it.getId()))).toList());
+            exportTasks.addAll(tracks.stream().map(it -> new ExportTask(null, trackFileFormat, List.of(it.getId()))).collect(Collectors.toList()));
         }
         trackExportTotalCount = exportTasks.size();
     }

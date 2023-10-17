@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
@@ -53,7 +54,7 @@ public class ExportUtils {
 
     public static void exportTrack(Context context, DocumentFile directory, ExportTask exportTask) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-        List<Track> tracks = exportTask.getTrackIds().stream().map(contentProviderUtils::getTrack).toList();
+        List<Track> tracks = exportTask.getTrackIds().stream().map(contentProviderUtils::getTrack).collect(Collectors.toList());
         Uri exportDocumentFileUri;
         if (tracks.size() == 1) {
             exportDocumentFileUri = getExportDocumentFileUri(context, tracks.get(0), exportTask.getTrackFileFormat(), directory);
