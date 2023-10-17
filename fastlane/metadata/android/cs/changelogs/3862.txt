@@ -1,0 +1,7 @@
+v3.15.1: OpenTracks
+
+Changes:
+- After recording show sensor statistics (e.g., avg HR)
+
+Bugfix:
+- Crash on recording start with show latitude/longitude enabled

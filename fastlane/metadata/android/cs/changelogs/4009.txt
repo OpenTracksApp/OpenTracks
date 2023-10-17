@@ -1,0 +1,10 @@
+v3.17.3: OpenTracks
+
+WARNING: The v3.17.0+ releases contain a memory leak.
+This issues is NOT FIXED by this release.
+It is recommended to not upgrade if you still use a release before v3.17.0
+
+Bugfix:
+- Crash if using pace for voice announcements (introduced in v3.17.0)
+- Statistics showed pace initially (introduced in v3.17.0)
+- Rare crash when deleting tracks

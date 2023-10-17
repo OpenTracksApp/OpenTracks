@@ -1,0 +1,5 @@
+v3.2.4: OpenTracks
+
+Bugfix:
+- Settings activity crashes
+  Removed possibility to change voice/split frequency from the context menu

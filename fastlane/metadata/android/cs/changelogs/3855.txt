@@ -1,0 +1,13 @@
+v3.15.0: OpenTracks
+
+WARNING: 
+This release applies database changes that CANNOT BE REVERTED.
+As KMZ/KML export/import behaviour changes as well, it is recommended to (A) take a backup BEFORE upgrading and (B) afterwards.
+Recommended format: KMZ.
+
+BREAKING CHANGES:
+- Internal storage of track segments is changed
+  (user generated events are now considered trackpoints without a location but with timestamp)
+- Device time instead of GPS time is stored 
+  (existing data is not modified)
+- Dashboard

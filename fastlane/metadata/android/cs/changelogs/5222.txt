@@ -1,0 +1,4 @@
+v4.4.0: OpenTracks
+
+Changes:
+- Export all tracks as one file

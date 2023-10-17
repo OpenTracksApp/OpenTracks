@@ -1,0 +1,10 @@
+v4.0.7: OpenTracks
+
+Changes:
+- GPS signal lost timeout: 30s
+- Android13: request permission to show notifications
+- Faster deletion of tracks (vacuum database only if needed)
+
+Bugfix:
+- PublicAPI stop command resulted in crash (introduced in v4.0.6)
+- Permissions: request all permissions during on startup

@@ -1,0 +1,10 @@
+v3.2.7: OpenTracks
+
+Changes:
+- Notification show GPS accuracy
+- Show heads-up notification if GPS accuracy drops beyond threshold
+- Always show chart by time as well as by distance
+- Added help (in Settings)
+
+Bugfix:
+- TrackDetailActivity: disabled non-working landscape mode (temporary)

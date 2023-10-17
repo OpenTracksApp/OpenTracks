@@ -591,4 +591,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_announcements_idle_title">Rust</string>
     <string name="settings_recording_idle_timeout_title">Drempelwaarde rust</string>
     <string name="value_int_seconds">%1$d s (aanbevolen)</string>
+    <string name="settings_ui_dynamic_colors_title">Dynamische kleuren</string>
+    <string name="settings_recording_title">Opname</string>
+    <string name="settings_ui_dynamic_colors_summary">Gebruik door de gebruiker gedefinieerde dynamische kleuren (alleen Android 12+; vereist een handmatige herstart)</string>
 </resources>

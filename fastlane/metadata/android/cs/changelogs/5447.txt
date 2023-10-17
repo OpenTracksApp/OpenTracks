@@ -1,0 +1,4 @@
+v4.9.1: OpenTracks
+
+Bugfix:
+- Crash when doing multi select in track list

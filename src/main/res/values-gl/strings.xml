@@ -592,4 +592,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_announcements_idle_title">Parada</string>
     <string name="settings_recording_idle_timeout_title">Límite da parada</string>
     <string name="value_int_seconds">%1$d s (recomendado)</string>
+    <string name="settings_ui_dynamic_colors_title">Cores Dinámicas</string>
+    <string name="settings_recording_title">Ao gravar</string>
+    <string name="settings_ui_dynamic_colors_summary">Usar Cores Dinámicas definidas pola usuaria (Só Android 12+; require reiniciar)</string>
 </resources>

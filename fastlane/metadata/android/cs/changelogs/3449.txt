@@ -1,0 +1,11 @@
+v3.7.6: OpenTracks
+
+Changes:
+- Landscape mode
+- Track deletion UI is now only a spinner
+- Speed is exported and imported (GPX/KML/KMZ)
+- Default export format is KMZ incl. all data and pictures
+
+Developer:
+- Replaced AsyncTasks with Threads
+- Synchronization: UUID is generated per track (not yet exported)

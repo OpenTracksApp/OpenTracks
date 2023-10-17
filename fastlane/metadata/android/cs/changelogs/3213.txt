@@ -1,0 +1,12 @@
+v3.2.11: OpenTracks
+
+Bug:
+- Max speed is identical to avg speed
+
+Bugfix:
+- Crash on heart rate sensor selection
+
+Developer:
+- Replaced TabHost by TabsLayout
+- Removed special first waypoint
+- Removed duplicate translations
