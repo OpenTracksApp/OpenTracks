@@ -290,4 +290,27 @@
     <string name="about_preference_title">Tentang OpenTracks</string>
     <string name="about_url">Halaman web projek: <a href="%1$s">%1$s</a></string>
     <string name="about_description"><i>OpenTracks</i> adalah aplikasi pelacakan olahraga yang benar-benar menghormati privasi Anda.</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="bluetooth_disabled">Silahkan aktifkan Bluetooth.</string>
+    <string name="sensor_state_heart_rate_avg">Detak Jantung rata-rata</string>
+    <string name="settings_open_tracks_summary">Semua Tentang Proyek OpenTracks</string>
+    <string name="sensor_could_not_scan">Tidak dapat memindai perangkat Bluetooth (error %1$i).</string>
+    <string name="settings_announcements_idle_category_title">Pengumuman Idle</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="settings_defaults_title">Unit dan Aktivitas Default</string>
+    <string name="settings_import_export_title">Impor/Ekspor</string>
+    <string name="settings_import_export_summary">Impor, Ekspor, Ekspor Otomatis</string>
+    <string name="sensor_state_power_max">Tenaga Maks</string>
+    <string name="settings_ui_title">Antarmuka Pengguna</string>
+    <string name="settings_sensors_title">Sensor Bluetooth</string>
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_activity_defaults_category">Default Aktivitas</string>
+    <string name="settings_ui_summary">Penampilan, Tata letak perekaman, Tema</string>
+    <string name="settings_announcements_statistics_title">Pengumuman Statistik</string>
+    <string name="sensor_state_power_avg">Tenaga Rata-rata</string>
+    <string name="settings_announcements_summary">Waktu, Jarak, Kecepatan Suara</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="settings_gps_summary">Interval waktu, interval jarak, jarak maks, akurasi</string>
+    <string name="settings_units_category">Unit</string>
+    <string name="settings_announcements_idle_title">Siaga</string>
 </resources>
