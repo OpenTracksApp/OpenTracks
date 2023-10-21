@@ -541,7 +541,6 @@ limitations under the License.
     <string name="settings_announcements_lap_speed_pace">Rundens hastighed/tempo</string>
     <string name="track_discarding">Kasserer Spor</string>
     <string name="settings_public_api_enabled_title">Offentlig API</string>
-    <string name="sensor_state_cadence_unit"></string>
     <string name="settings_public_api_enabled_summary_off">Kun OpenTracks kan starte og stoppe registreringen.</string>
     <string name="voiceIdle">Går til stilstand.</string>
     <string name="generic_dismiss">Afvis</string>
