@@ -97,7 +97,7 @@ limitations under the License.
     <string name="description_moving_time">Vrijeme kretanja: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
-    <string name="description_recorded_time">Zabilježeno: %1$s</string>
+    <string name="description_recorded_time">Snimljeno: %1$s</string>
     <string name="description_speed_ms">Brzina (m/s)</string>
     <string name="description_sensor_cadence">Ritam (okretaja/min)</string>
     <string name="description_sensor_heart_rate">Puls (otkucaja/min)</string>
@@ -108,16 +108,16 @@ limitations under the License.
     <string name="description_total_distance">Ukupna udaljenost: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Ukupno vrijeme: %1$s</string>
     <!-- Export -->
-    <string name="export_progress_message">Izvoz u direktorij %1$s…</string>
+    <string name="export_progress_message">Izvoz u %1$s …</string>
     <!-- External Storage -->
     <!-- Generic -->
     <string name="generic_add">Dodaj</string>
-    <string name="generic_delete_selected_confirm_title">Želite li izbrisati odabrano?</string>
+    <string name="generic_delete_selected_confirm_title">Izbrisati odabrane\?</string>
     <string name="generic_description">Opis</string>
     <string name="generic_description_line">Opis: %1$s</string>
     <string name="generic_name">Ime</string>
     <string name="generic_name_line">Ime: %1$s</string>
-    <string name="generic_recording">Snimanje…</string>
+    <string name="generic_recording">Snimanje …</string>
     <string name="generic_save">Spremi</string>
     <string name="generic_tracks">Rute</string>
     <!-- Gps -->
@@ -128,7 +128,7 @@ limitations under the License.
     <string name="image_arrow">Strelica</string>
     <string name="image_marker_count">Broj oznaka</string>
     <string name="image_photo_marker">Oznaka fotografije</string>
-    <string name="image_record">Snimaj</string>
+    <string name="image_record">Snimi</string>
     <string name="image_stop">Prekini</string>
     <string name="image_track">Ruta</string>
     <!-- Import -->
@@ -223,7 +223,7 @@ limitations under the License.
     <string name="track_delete_one_confirm_message">Ruta i njezine oznake će se trajno izbrisati s uređaja.</string>
     <string name="track_delete_one_confirm_title">Izbrisati rutu\?</string>
     <string name="track_delete_multiple_confirm_message">Odabrane rute i njihove oznake će se trajno izbrisati s uređaja.</string>
-    <string name="track_delete_progress_message">Brisanje…</string>
+    <string name="track_delete_progress_message">Brisanje …</string>
     <!-- Track Detail -->
     <string name="track_detail_stats_tab">Statistika</string>
     <!-- Track Edit -->
@@ -326,7 +326,7 @@ limitations under the License.
     <string name="settings_import_export_summary">Uvoz, Izvoz, Automatski izvoz</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Cjeloekranski prikaz</string>
     <string name="settings_import_export_title">Uvoz/Izvoz</string>
-    <string name="settings_recording_fullscreen_on_while_recording_summary">Tijekom snimanja prikaži cjeloekranski prikaz.</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Tijekom snimanja prikaži u cjeloekranskom prikazu.</string>
     <string name="sensor_state_cadence_max">Maks. ritam</string>
     <string name="settings_units_category">Jedinice</string>
     <string name="settings_open_tracks_summary">Sve o projektu OpenTracks</string>
@@ -465,7 +465,7 @@ limitations under the License.
     <string name="unit_nautical_mile">NM</string>
     <string name="field_set_secondary">Sekundarno</string>
     <string name="stats_loss">Smanjenje</string>
-    <string name="help_recording_content">OpenTracks koristi GPS senzor uređaja za kontinuirano zapisivanje lokacije. Ako GPS uređaj prijavi netočne podatke (npr. lokaciju, brzinu, visinu), OpenTracks ne može učiniti ništa u vezi s tim.</string>
+    <string name="help_recording_content">OpenTracks koristi GPS senzor uređaja za kontinuirano snimanje lokacije. Ako GPS uređaj prijavi netočne podatke (npr. lokaciju, brzinu, visinu), OpenTracks ne može učiniti ništa u vezi s tim.</string>
     <string name="help_feature_title">OpenTracks značajke:</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="settings_announcements_statistics_title">Statistika najava</string>
@@ -523,7 +523,7 @@ limitations under the License.
     <string name="unit_knots">čv</string>
     <string name="stats_sensors_cadence">Ritam</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
-    <string name="help_data_storage_content"> Podaci senzora se spremaju za svaku zapisanu lokaciju. U smislu senzora pulsa, to znači da se za svaku lokaciju sprema samo <i>jedno</i> mjerenje pulsa. Ako se ne krećeš ili ako si u zatvorenom prostoru, podaci senzora se neće snimati (ali će se prikazati). </string>
+    <string name="help_data_storage_content"> Podaci senzora se spremaju za svaku snimljenu lokaciju. U smislu senzora pulsa, to znači da se za svaku lokaciju sprema samo <i>jedno</i> mjerenje pulsa. Ako se ne krećeš ili ako si u zatvorenom prostoru, podaci senzora se neće snimati (ali će se prikazati). </string>
     <string name="generic_choose_an_option">Odaberi jednu opciju</string>
     <string name="custom_layout_list_layout_removed">Raspored je uklonjen</string>
     <string name="settings_announcements_average_speed_pace">Prosječna brzina/tempo</string>
@@ -553,4 +553,40 @@ limitations under the License.
     <string name="generic_separator_done_total">/</string>
     <string name="total_distance">Ukupna udaljenost</string>
     <string name="settings_running_sensor">Trčanje</string>
+    <string name="import_thread_interrupted">Komponenta procesa prekinuta</string>
+    <string name="help_track_map_content"> Koristi malu ikonu karte.
+\n a) (aktualiziranje uživo) Instaliraj <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Omogućuje online ili offline karte putem <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n Zapravo, OSMDashboard je zasebna aplikacija koja može samo (privremeno) pristupiti podacima ruta koje će se prikazati.
+\n b) Putem uobičajene aplikacije za karte (npr. <a href="http://osmand.net/">OsmAnd</a> i <a href="https://maps.me/">MAPS.ME</a>). Ove aplikacije moraju podržavati datotečni format KMZ (samo lokacije i vremenske oznake). Zapravo, aplikacija mora podržavati <i>ACTION_VIEW</i> s MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="export_dir_not_writable">" (zabranjeno pisanje!)"</string>
+    <string name="export_progress_summary_overwrite_msg">Datoteke su prepisane</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Snimljeni podaci se neće automatski dijeliti s drugim aplikacijama.</string>
+    <string name="select_show_on_map_behavior">Odaberi „Prikaži na karti”</string>
+    <string name="export_progress_summary_skip_msg">Datoteke su preskočene</string>
+    <string name="activity_type_kickscooter">skuter</string>
+    <string name="help_gps_troubleshooting_content"> Što možeš učiniti:
+\n a) provjeri je li GPS uključen,
+\n b) poboljšaj GPS prijem (npr. izađi van),
+\n c) provjeri pomoću aplikacije <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> i
+\n d) deaktiviraj štednju energije.
+\n
+\n Ako ništa od navedenog ne pomogne, prijavi grešku. </string>
+    <string name="export_all_do_it_for_all">učini to za sve konflikte</string>
+    <string name="share_crash_report">Dijeli izvještaj o prekidu rada</string>
+    <string name="error_crash_title">%1$s je prekinuo rad</string>
+    <string name="voiceIdle">Prelazi u stanje neaktivnosti.</string>
+    <string name="export_error_post_workout">Izvoz nakon treninga nije uspio. Provjeri direktorij za izvoz.</string>
+    <string name="activity_type_escooter">e-skuter</string>
+    <string name="help_support_content"> Možeš:
+\n a) širiti glas o OpenTracksu,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">predložiti funkcije</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">prijaviti greške</a>,
+\n d) pomoći u razvoju softvera,
+\n e) kupiti na stranici <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Trgovina Google Play</a>,
+\n f) donirati
+\n g) učiniti sve što misliš da pomaže OpenTracksu. </string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Aplikacija koja je pokrenula snimanje također može pristupiti snimljenim podacima.</string>
+    <string name="export_progress_summary_new_msg">Nove datoteke su izvezene</string>
+    <string name="settings_recording_idle_timeout_title">Prag neaktivnosti</string>
+    <string name="export_cannot_write_to_dir">Nije moguće pisati u direktorij izvoza.</string>
 </resources>
