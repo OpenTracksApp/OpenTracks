@@ -151,7 +151,7 @@ limitations under the License.
     <string name="menu_aggregated_statistics">Số liệu thống kê tổng hợp</string>
     <string name="menu_delete">Xóa</string>
     <string name="menu_edit">Chỉnh sửa</string>
-    <string name="menu_export_all">Xuất tất cả</string>
+    <string name="menu_export_all">Xuất tất cả (một tệp cho mỗi tuyến)</string>
     <string name="menu_help">Trợ giúp</string>
     <string name="menu_import_all">Nhập tất cả</string>
     <string name="menu_insert_marker">Chèn điểm đánh dấu</string>
@@ -186,15 +186,15 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Số</string>
     <string name="settings_recording_track_name_title">Tên mặc định của tuyến đường</string>
     <!-- Settings Reset -->
-    <string name="settings_reset_confirm_message">Tất cả cài đặt của bạn sẽ được hoàn nguyên về giá trị mặc định.</string>
+    <string name="settings_reset_confirm_message">Tất cả các cài đặt sẽ được trả về các giá trị mặc định. Thao tác này sẽ không xóa bất kỳ tuyến đường nào trên thiết bị.</string>
     <string name="settings_reset_confirm_title">Đặt lại bây giờ?</string>
     <string name="settings_reset_done">Tất cả cài đặt đã được hoàn nguyên về giá trị mặc định</string>
     <!-- Settings Sensor -->
     <!-- Settings Stats -->
-    <string name="settings_stats_rate_title">Tốc độ ưa thích</string>
-    <string name="settings_stats_units_imperial">Hệ đo lường Anh (mi, ft)</string>
+    <string name="settings_stats_rate_title">Nhịp độ ưa thích</string>
+    <string name="settings_stats_units_imperial">Hệ Anh (dặm, foot)</string>
     <string name="settings_stats_units_metric">Hệ mét (km, m)</string>
-    <string name="settings_stats_units_title">Đơn vị ưa thích</string>
+    <string name="settings_stats_units_title">Hệ đo lường ưu tiên</string>
     <!-- Share Track -->
     <string name="share_track_share_file_body">Tôi nghĩ bạn có thể sẽ quan tâm đến tuyến đường này.
 \n
@@ -258,10 +258,10 @@ limitations under the License.
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">ngân hàng</string>
-    <string name="waypoint_type_bar">bar</string>
+    <string name="waypoint_type_bar">vũ trường</string>
     <string name="waypoint_type_barbecue">món nướng</string>
     <string name="waypoint_type_building">tòa nhà</string>
-    <string name="waypoint_type_bus_stop">điểm dừng xe buýt</string>
+    <string name="waypoint_type_bus_stop">trạm xe buýt</string>
     <string name="waypoint_type_cafe">quán cà phê</string>
     <string name="waypoint_type_campfire">lửa trại</string>
     <string name="waypoint_type_campground">khu cắm trại</string>
@@ -315,25 +315,25 @@ limitations under the License.
     <string name="help_storage_pictures_content">Chúng được lưu trữ trong bộ nhớ trong của ứng dụng (vd: chỉ truy cập được từ trong OpenTracks).</string>
     <string name="help_data_google_play_services_title">OpenTracks có yêu cầu/sử dụng Dịch vụ Google Play không\?</string>
     <string name="help_recording_title">OpenTracks ghi lại dữ liệu như thế nào\?</string>
-    <string name="about_description"><i>OpenTracks</i> là một ứng dụng theo dõi thể thao hoàn toàn tôn trọng sự riêng tư của bạn.</string>
+    <string name="about_description"><i>OpenTracks</i> là một ứng dụng theo dõi thể thao hoàn toàn tôn trọng quyền riêng tư của bạn.</string>
     <string name="about_url">Trang web của dự án: <a href="%1$s">%1$s</a></string>
-    <string name="about_history">OpenTracks là một fork của <a href="https://code.google.com/archive/p/mytracks/"><i>MyTracks của Google</i></a> (bị ngừng tiếp tục vào năm 2016).</string>
+    <string name="about_history">OpenTracks là một phân nhánh của <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (ngừng phát triển vào năm 2016).</string>
     <string name="help_feature_content">* tạo các tuyến đường GPS
 \n* sử dụng cảm biến nhịp tim (chỉ Bluetooth LE)
-\n* tuyên bố bằng giọng nói (thời gian hoặc khoảng cách)
+\n* thông báo bằng giọng nói (thời gian hoặc khoảng cách)
 \n* tạo đánh dấu (bao gồm hình ảnh)
 \n* hoạt động hoàn toàn ngoại tuyến
 \n* hiện đường đi trên bản đồ (xem bên dưới)</string>
     <string name="help_track_map_title">Hiện tuyến đường trên bản đồ như thế nào\?</string>
     <string name="about_third_party_data">Dữ liệu bên thứ ba</string>
-    <string name="help_storage_pictures_title">OpenTracks lưu trữ các ảnh được chụp làm đánh dấu như thế nào\?</string>
+    <string name="help_storage_pictures_title">OpenTracks lưu trữ ảnh được chụp làm điểm đánh dấu như thế nào\?</string>
     <string name="generic_show_errors">Hiện lỗi</string>
     <string name="open_track_as_trackfileformat">Mở dưới dạng %1$s</string>
-    <string name="export_track_errors">Tuyến đường không được xuất</string>
-    <string name="export_progress_summary_new_msg">Đã xuất tuyến đường mới</string>
+    <string name="export_track_errors">Tệp không được xuất</string>
+    <string name="export_progress_summary_new_msg">Đã xuất tệp mới</string>
     <string name="generic_overwrite">Ghi đè</string>
     <string name="menu_voice_rate">Tốc độ giọng nói</string>
-    <string name="help_recording_content">Mở bài Hát sử dụng các bộ cảm biến GPS của điện thoại để ghi lại vị trí liên tục. Nếu các thiết bị GPS báo cáo dữ liệu không chính xác (ví dụ như, vị trí, tốc độ, độ cao), OpenTracks không thể làm bất cứ điều gì về nó.</string>
+    <string name="help_recording_content">OpenTracks sử dụng cảm biến GPS của thiết bị để ghi lại vị trí liên tục. Nếu thiết bị GPS báo cáo dữ liệu không chính xác (ví dụ: vị trí, tốc độ, độ cao), OpenTracks không thể làm bất cứ điều gì về điều đó.</string>
     <string name="gps_fixed_and_ready">GPS đã xác định và sẵn sàng</string>
     <string name="generic_skip">Bỏ qua</string>
     <string name="import_unsupported_format">Định dạng tệp không được hỗ trợ</string>
@@ -374,15 +374,15 @@ limitations under the License.
 \n g) làm những gì bạn nghĩ là sẽ giúp đỡ OpenTracks. </string>
     <string name="description_altitude_loss">Giảm độ cao: %1$d m (%2$d ft)</string>
     <string name="generic_click_twice_cancel">Nhấn quay lại lần nữa để hủy</string>
-    <string name="export_progress_summary_skip_msg">Đã bỏ qua tuyến đường</string>
+    <string name="export_progress_summary_skip_msg">Đã bỏ qua tệp</string>
     <string name="help_data_storage_title">OpenTracks lưu trữ dữ liệu cảm biến như thế nào\?</string>
     <string name="export_all_do_it_for_all">thực hiện cho tất cả xung đột</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="description_default_speed_or_pace">Theo loại hoạt động</string>
     <string name="export_error_post_workout">Xuất sau thể dục thất bại, vui lòng kiểm tra thư mục xuất.</string>
     <string name="import_progress_summary_exists_msg">Đã tồn tại</string>
-    <string name="export_progress_summary_overwrite_msg">Đã ghi đè tuyến đường</string>
-    <string name="export_track_already_exists_msg">Tuyến đường %1$s đã tồn tại trong thư mục đích.</string>
+    <string name="export_progress_summary_overwrite_msg">Đã ghi đè tệp</string>
+    <string name="export_track_already_exists_msg">Tệp %1$s đã tồn tại trong thư mục đích.</string>
     <string name="export_without_photos">không có ảnh</string>
     <string name="help_support_title">Tôi có thể hỗ trợ OpenTracks như thế nào\?</string>
     <string name="permission_gps_failed">OpenTracks yêu cầu quyền sử dụng GPS.</string>
@@ -401,10 +401,10 @@ limitations under the License.
     <string name="field_set_secondary">Thứ</string>
     <string name="instant_export_enabled_title">Ngay lập tức sau tập luyện khẩu</string>
     <string name="share_image_body">Tôi nghĩ bạn có thể quan tâm đến hình ảnh này.</string>
-    <string name="track_delete_not_recording">Này, không thể theo dõi được xóa như nó đang ghi lại.</string>
+    <string name="track_delete_not_recording">Tuyến đường này không thể bị xóa vì nó hiện đang được ghi lại.</string>
     <string name="generic_choose_an_option">Chọn một lựa chọn</string>
-    <string name="field_remove_from_layout">Bỏ</string>
-    <string name="settings_default_trackfileformat">Xuất/chia sẻ định dạng tập tin</string>
+    <string name="field_remove_from_layout">Loại bỏ</string>
+    <string name="settings_default_trackfileformat">Định dạng tệp xuất/chia sẻ</string>
     <string name="sensor_state_power_avg">Bình Quyền Lực</string>
     <string name="settings_night_mode_title">UI</string>
     <string name="settings_night_mode_option_system">Hệ thống</string>
@@ -417,35 +417,35 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Trong khi quay show thống kê mà không mở các thiết bị.</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Số liệu thống kê cho thấy trên màn hình khóa</string>
     <string name="settings_recording_customize_layout_select_columns">Trường dữ liệu mỗi hàng</string>
-    <string name="settings_recording_customize_layout_title">Tuỳ ghi âm của bố trí</string>
+    <string name="settings_recording_customize_layout_title">Tùy chỉnh bố cục bản ghi của bạn</string>
     <string name="settings_announcements_distance_frequency">Khoảng cách</string>
-    <string name="settings_layout_reset">Thiết Lập Lại Bố Trí Tùy Chỉnh</string>
-    <string name="settings_layout_reset_confirm_message">Tất cả bố trí cài đặt sẽ trở lại là việc định giá trị. Điều này sẽ không xóa bất kỳ bài hát trên thiết bị.</string>
-    <string name="settings_layout_reset_confirm_title">Thiết lập lại bố trí của bạn\?</string>
-    <string name="settings_layout_reset_done">Tất cả bố trí cài đặt đã trở lại là việc định giá trị</string>
+    <string name="settings_layout_reset">Đặt lại bố cục tùy chỉnh</string>
+    <string name="settings_layout_reset_confirm_message">Tất cả các cài đặt bố cục sẽ được trả về các giá trị mặc định. Thao tác này sẽ không xóa bất kỳ tuyến đường nào trên thiết bị.</string>
+    <string name="settings_layout_reset_confirm_title">Đặt lại bố cục của bạn\?</string>
+    <string name="settings_layout_reset_done">Tất cả các cài đặt bố cục đã được trả về các giá trị mặc định</string>
     <string name="settings_all_reset">Đặt lại</string>
     <string name="settings_sensor_cycling_distance_speed">Khoảng cách và tốc độ</string>
     <string name="settings_sensor_cycling_cadence">Nhịp</string>
     <string name="settings_sensor_running_speed_and_cadence">Khoảng cách, tốc độ và nhịp</string>
-    <string name="settings_prevent_reimport_tracks_title">Ngăn chặn lại nhập của bài hát</string>
+    <string name="settings_prevent_reimport_tracks_title">Ngăn chặn việc nhập lại các tuyến đường</string>
     <string name="stats_loss">Mất</string>
     <string name="stats_coordinates">Vĩ Độ Và Kinh Độ</string>
     <string name="stats_split_interval">Chia khoảng thời gian</string>
-    <string name="stats_sensors_heart_rate">Nhịp Tim</string>
+    <string name="stats_sensors_heart_rate">Nhịp tim</string>
     <string name="stats_sensors_cadence">Nhịp</string>
     <string name="stats_sensors_power">Sức mạnh</string>
     <string name="track_distance_notification">Khoảng cách: %1$s</string>
     <string name="track_speed_notification">Tốc độ: %1$s</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="location_coordinate">%1$s°</string>
-    <string name="track_pace_notification">Tốc độ: %1$s</string>
-    <string name="instant_export_enabled_summary">Xuất khẩu theo dõi lưu trữ sau khi ghi được hoàn thành</string>
+    <string name="track_pace_notification">Nhịp độ: %1$s</string>
+    <string name="instant_export_enabled_summary">Xuất tuyến đường vào bộ nhớ sau khi ghi xong</string>
     <string name="hold_to_stop">Giữ để dừng lại</string>
     <string name="share_image_subject">Tôi muốn chia sẻ hình ảnh với bạn</string>
     <string name="field_set_primary">Chính</string>
-    <string name="settings_default_export_uri_title">Theo dõi xuất khẩu, xuất khẩu</string>
+    <string name="settings_default_export_uri_title">Thư mục xuất tuyến đường</string>
     <string name="interval_list_empty_message">Không có bất kỳ khoảng thời gian sơ</string>
-    <string name="aggregated_stats_empty_message">Hồ sơ của đua đầu tiên, để xem tổng thống kê</string>
+    <string name="aggregated_stats_empty_message">Ghi lại tuyến đường đầu tiên của bạn để xem số liệu thống kê tổng hợp</string>
     <string name="track_detail_intervals_tab">Khoảng thời gian</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Giữ trên màn hình</string>
     <string name="bluetooth_disabled">Xin vui lòng cho phép Bluetooth.</string>
@@ -469,27 +469,27 @@ limitations under the License.
     <string name="stats_clock">Cái đồng hồ</string>
     <string name="settings_reset_summary">Thiết lập lại các thiết Lập để mặc Định giá Trị</string>
     <string name="settings_activity_defaults_category">Hoạt động của Mặc định</string>
-    <string name="settings_units_category">Đơn vị</string>
-    <string name="settings_gps_summary">Khoảng thời gian, khoảng Cách, Max khoảng Cách, chính Xác</string>
-    <string name="settings_import_export_summary">Nhập Khẩu, Xuất Khẩu, Xuất Khẩu Tự Động</string>
+    <string name="settings_units_category">Đơn vị đo</string>
+    <string name="settings_gps_summary">Khoảng thời gian, Khoảng cách, Khoảng cách tối đa, Độ chính xác</string>
+    <string name="settings_import_export_summary">Nhập, Xuất, Tự động xuất</string>
     <string name="settings_open_tracks_summary">Tất Cả Về Dự Án OpenTracks</string>
     <string name="settings_defaults_title">Định Vị và các Hoạt động</string>
-    <string name="settings_defaults_summary">Các Đơn Vị Ưa Thích Định Hoạt Động Theo Dõi Tên Mặc Định</string>
-    <string name="settings_ui_title">Dùng Diện</string>
-    <string name="settings_ui_summary">Xuất Hiện, Ghi Lại Bố Trí Chủ Đề</string>
+    <string name="settings_defaults_summary">Đơn vị ưu tiên, Hoạt động mặc định, Tên mặc định tuyến đường</string>
+    <string name="settings_ui_title">Giao diện người dùng</string>
+    <string name="settings_ui_summary">Vẻ ngoài, Bố cục ghi, Chủ đề</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_sensors_title">Cảm Biến Bluetooth</string>
     <string name="settings_sensors_summary">Đi Xe Đạp Cảm Biến, Bánh Vòng, Chạy Bộ Cảm Biến</string>
-    <string name="settings_announcements_statistics_title">Giọng Nói Thông Báo</string>
+    <string name="settings_announcements_statistics_title">Thông báo thống kê</string>
     <string name="settings_announcements_summary">Thời Gian, Khoảng Cách, Tốc Độ Giọng Nói</string>
-    <string name="settings_import_export_title">Xuất Nhập Khẩu</string>
+    <string name="settings_import_export_title">Nhập/Xuất</string>
     <string name="generic_undo">Hoàn tác</string>
     <string name="menu_select_layout">Chọn bố cục</string>
     <string name="menu_add_custom_layout">Bố cục mới</string>
     <string name="custom_layout_list_title">Bố cục</string>
     <string name="custom_layout_list_edit_name">Nhập tên bố cục để thêm</string>
     <string name="custom_layout_list_edit_already_exists">Tên bố cục đã tồn tại</string>
-    <string name="custom_layout_list_layout_removed">Bố cục đã bị xoá</string>
+    <string name="custom_layout_list_layout_removed">Bố cục đã bị loại bỏ</string>
     <string name="custom_layout_select_layout">Chọn bố cục</string>
     <string name="stats_custom_layout_default_layout">Bố cục mặc định</string>
     <string name="generic_from">Từ</string>
@@ -515,7 +515,7 @@ limitations under the License.
     <string name="activity_type_swimming_open">bơi trong mở nước</string>
     <string name="voice_per_kilometer">mỗi km</string>
     <string name="total_distance">Tổng khoảng cách</string>
-    <string name="settings_public_api_disabled_toast">Mở bài Hát Công cộng API là vô hiệu hóa nó có thể được kích hoạt trong các thiết lập.</string>
+    <string name="settings_public_api_disabled_toast">API công khai OpenTracks bị tắt: nó có thể được bật trong cài đặt.</string>
     <string name="voice_per_mile">mỗi dặm</string>
     <string name="lap_time">Thời gian lòng</string>
     <string name="pace">Tốc độ</string>
@@ -527,7 +527,7 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_summary_off">Ghi lại dữ liệu sẽ không được miễn phí tự động với các ứng dụng khác.</string>
     <string name="settings_public_api_dashboard_enabled_title">Chuyển dữ liệu tự động</string>
     <string name="settings_export_filename_title">Định dạng tên tệp</string>
-    <string name="show_on_dashboard_not_installed">Không có ứng dụng hỗ trợ API OpenTracks Dashboard nào được cài đặt.</string>
+    <string name="show_on_dashboard_not_installed">Không có ứng dụng nào hỗ trợ API Bảng điều khiển OpenTracks được cài đặt.</string>
     <string name="description_pace_nautical">Nhịp độ (phút/dặm hải lý)</string>
     <string name="image_discard">Bỏ</string>
     <string name="settings_announcements_average_heart_rate">Nhịp tim trung bình</string>
@@ -550,7 +550,41 @@ limitations under the License.
     <string name="share_crash_report">Chia sẻ báo cáo dừng đột ngột</string>
     <string name="report_bug">Báo cáo lỗi</string>
     <string name="show_on_map_format_ask">Hỏi</string>
-    <string name="show_on_dashboard">API OpenTracks Dashboard</string>
+    <string name="show_on_dashboard">API Bảng điều khiển OpenTracks</string>
     <string name="always">Luôn luôn</string>
-    <string name="track_delete_number_of_tracks">%1$d tracks</string>
+    <string name="track_delete_number_of_tracks">%1$d tuyến đường</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="voiceDistanceNauticalMilesPlural">{n, số nhiều, =1 {1 hải lý} khác {{n,số,#.0} hải lý} }</string>
+    <string name="voiceMinutesPlural">{n, số nhiều, =1 {1 phút} khác {{n,số} phút} }</string>
+    <string name="help_data_google_play_services_content">Không</string>
+    <string name="menu_export_all_one_file">Xuất tất cả (một tệp cho tất cả các tuyến)</string>
+    <string name="settings_announcements_idle_category_title">Thông báo nhàn rỗi</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="settings_stats_units_imperial_meter">Hệ Anh (dặm, mét)</string>
+    <string name="voiceSpeedMilesPerHourPlural">{n, số nhiều, =1 {1 dặm trên giờ} khác {{n, số,#.0} dặm trên giờ} }</string>
+    <string name="voiceDistanceMilesPlural">{n, số nhiều, =1 {1 dặm} khác {{n,số,#.0} dặm} }</string>
+    <string name="voiceSpeedKilometersPerHourPlural">{n, số nhiều, =1 {1 kilômet trên giờ} khác {{n, số,#.0} kilômet trên giờ} }</string>
+    <string name="voice_on_device_speaker_title">Sử dụng loa của thiết bị</string>
+    <string name="settings_ui_dynamic_colors_title">Màu sắc linh động</string>
+    <string name="settings_sensor_heart_rate_max">Vùng: Nhịp tim tối đa (bpm)</string>
+    <string name="settings_recording_title">Đang ghi</string>
+    <string name="settings_ui_dynamic_colors_summary">Sử dụng Màu linh động do người dùng xác định (chỉ dành cho Android 12+; yêu cầu khởi động lại thủ công)</string>
+    <string name="sensor_state_power_max">Công suất tối đa</string>
+    <string name="activity_type_kickscooter">xe xcutơ</string>
+    <string name="no_compatible_camera_installed">Chưa cài đặt ứng dụng máy ảnh tương thích</string>
+    <string name="voiceSecondsPlural">{n, số nhiều, =1 {1 giây} khác {{n,số} giây} }</string>
+    <string name="settings_api_summary">API thống kê và điều khiển từ xa cho các ứng dụng khác</string>
+    <string name="no_compatible_gallery_installed">Chưa cài đặt ứng dụng thư viện hình ảnh tương thích</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Hiển thị tất cả các thiết bị Bluetooth có thể khám phá</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="voiceIdle">Trở nên nhàn rỗi.</string>
+    <string name="introduction_osm_dashboard">Bản thân OpenTracks không cung cấp bản đồ. Vui lòng cài đặt OSMDashboard để xem các bản ghi của bạn trên bản đồ.</string>
+    <string name="voiceHoursPlural">{n, số nhiều, =1 {1 giờ} khác {{n,số} giờ} }</string>
+    <string name="settings_announcements_idle_title">Nhàn rỗi</string>
+    <string name="settings_recording_idle_timeout_title">Ngưỡng nhàn rỗi</string>
+    <string name="settings_recording_min_required_accuracy_summary">Vị trí bị bỏ qua nếu độ chính xác của nó lớn hơn %1$s</string>
+    <string name="voiceSpeedMKnotsPlural">{n, số nhiều, =1 {1 nút} khác {{n,số,#.0} các nút} }</string>
+    <string name="value_int_seconds">%1$d s (khuyến khích)</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Lọc thiết bị Bluetooth</string>
+    <string name="voiceDistanceKilometersPlural">{n, số nhiều, =1 {1 kilômet} khác {{n,số,#.0} kilômet} }</string>
 </resources>
