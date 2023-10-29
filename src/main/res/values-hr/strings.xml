@@ -443,7 +443,7 @@ limitations under the License.
     <string name="voiceSecondsPlural">{n, plural, =1 {1 sekunda} few {{n,number} sekunde} other {{n,number} sekunda} }</string>
     <string name="field_remove_from_layout">Ukloni</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">Završeno s jednom greškom</item>
+        <item quantity="one">Završeno %1$d jednom greškom</item>
         <item quantity="few">Završeno s %1$d greške</item>
         <item quantity="other">Završeno s %1$d grešaka</item>
     </plurals>
