@@ -1,0 +1,8 @@
+v4.9.2: OpenTracks
+
+Thay đổi:
+- Tùy chọn sử dụng Màu động (Material Design) của Android 12
+- Quay lại dự đoán của Android 14 cho một số hoạt động
+
+Sửa lỗi:
+- Cài đặt cho thông báo bằng giọng nói tổng khoảng cách đã vô tình bị xóa

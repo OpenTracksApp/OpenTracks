@@ -1,0 +1,4 @@
+v4.9.3: OpenTracks
+
+Sửa lỗi:
+- Ngăn chặn sự cố vì toList() không phải lúc nào cũng có sẵn
