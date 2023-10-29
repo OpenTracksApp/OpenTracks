@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
     <!-- Activity Type -->
-    <string name="activity_type_airplane">zrakoplov</string>
+    <string name="activity_type_airplane">avion</string>
     <string name="activity_type_atv">ATV</string>
     <string name="activity_type_biking">biciklizam</string>
     <string name="activity_type_blimp">balon</string>
     <string name="activity_type_boat">brod</string>
     <string name="activity_type_climbing">penjanje</string>
-    <string name="activity_type_commercial_airplane">komercijalni zrakoplov</string>
+    <string name="activity_type_commercial_airplane">komercijalni avion</string>
     <string name="activity_type_cross_country_skiing">skijaško trčanje</string>
     <string name="activity_type_cycling">biciklizam</string>
     <string name="activity_type_dirt_bike">motocikli za brdsku vožnju</string>
@@ -50,7 +50,7 @@ limitations under the License.
     <string name="activity_type_other">ostalo</string>
     <string name="activity_type_paddling">veslanje</string>
     <string name="activity_type_para_gliding">letenje zmajem</string>
-    <string name="activity_type_rc_airplane">daljinski upravljani zrakoplov</string>
+    <string name="activity_type_rc_airplane">avion na daljinsko upravljanje</string>
     <string name="activity_type_rc_boat">daljinski upravljani čamac</string>
     <string name="activity_type_rc_helicopter">daljinski upravljani helikopter</string>
     <string name="activity_type_riding">jahanje</string>
@@ -70,8 +70,8 @@ limitations under the License.
     <string name="activity_type_speed_walking">brzo hodanje</string>
     <string name="activity_type_street_running">ulično trčanje</string>
     <string name="activity_type_surfing">surfanje</string>
-    <string name="activity_type_track_cycling">vožnja biciklom na stazi</string>
-    <string name="activity_type_track_running">trčanje na stazi</string>
+    <string name="activity_type_track_cycling">biciklizam u velodromu</string>
+    <string name="activity_type_track_running">trčanje u odvojenim stazama</string>
     <string name="activity_type_trail_hiking">pješačenje u prirodi</string>
     <string name="activity_type_trail_running">trčanje u prirodi</string>
     <string name="activity_type_train">vlak</string>
@@ -82,25 +82,25 @@ limitations under the License.
     <string name="activity_type_water_skiing">skijanje na vodi</string>
     <string name="activity_type_wind_surfing">jedrenje na dasci</string>
     <!-- Description -->
-    <string name="description_activity_type">Aktivnost: %1$s</string>
-    <string name="description_average_moving_pace_in_minute">Prosječan tempo kretanja: %1$s min/km (%2$s min/mi)</string>
+    <string name="description_activity_type">Vrsta aktivnosti: %1$s</string>
+    <string name="description_average_moving_pace_in_minute">Prosječni tempo kretanja: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_moving_speed">Prosječna brzina kretanja: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_average_pace_in_minute">Prosječan tempo: %1$s min/km (%2$s min/mi)</string>
+    <string name="description_average_pace_in_minute">Prosječni tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Prosječna brzina: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_altitude_gain">Povećanje nadmorske visine: %1$d m (%2$d ft)</string>
-    <string name="description_altitude_imperial">Nadmorska visina (stope)</string>
-    <string name="description_altitude_metric">Nadmorska visina (m)</string>
+    <string name="description_altitude_gain">Povećanje visine: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_imperial">Visina (ft)</string>
+    <string name="description_altitude_metric">Visina (m)</string>
     <string name="description_fastest_pace_in_minute">Najbrži tempo: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_max_altitude">Najveće povećanje visine: %1$d m (%2$d ft)</string>
-    <string name="description_max_speed">Najveća brzina: %1$.2f km/h (%2$.1f mi/h)</string>
+    <string name="description_max_altitude">Maks. visina: %1$d m (%2$d ft)</string>
+    <string name="description_max_speed">Maks. brzina: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Najmanje povećanje visine: %1$d m (%2$d ft)</string>
     <string name="description_moving_time">Vrijeme kretanja: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
-    <string name="description_recorded_time">Zabilježeno: %1$s</string>
+    <string name="description_recorded_time">Snimljeno: %1$s</string>
     <string name="description_speed_ms">Brzina (m/s)</string>
-    <string name="description_sensor_cadence">Ritam (min)</string>
-    <string name="description_sensor_heart_rate">Brzina otkucaja srca (o/min)</string>
+    <string name="description_sensor_cadence">Ritam (okretaja/min)</string>
+    <string name="description_sensor_heart_rate">Puls (otkucaja/min)</string>
     <string name="description_sensor_power">Snaga (W)</string>
     <string name="description_speed_imperial">Brzina (mi/h)</string>
     <string name="description_speed_metric">Brzina (km/h)</string>
@@ -108,35 +108,35 @@ limitations under the License.
     <string name="description_total_distance">Ukupna udaljenost: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Ukupno vrijeme: %1$s</string>
     <!-- Export -->
-    <string name="export_progress_message">Izvoz u direktorij %1$s…</string>
+    <string name="export_progress_message">Izvoz u %1$s …</string>
     <!-- External Storage -->
     <!-- Generic -->
     <string name="generic_add">Dodaj</string>
-    <string name="generic_delete_selected_confirm_title">Želite li izbrisati odabrano?</string>
+    <string name="generic_delete_selected_confirm_title">Izbrisati odabrane\?</string>
     <string name="generic_description">Opis</string>
     <string name="generic_description_line">Opis: %1$s</string>
     <string name="generic_name">Ime</string>
     <string name="generic_name_line">Ime: %1$s</string>
-    <string name="generic_recording">Snimanje…</string>
+    <string name="generic_recording">Snimanje …</string>
     <string name="generic_save">Spremi</string>
-    <string name="generic_tracks">Trase</string>
+    <string name="generic_tracks">Rute</string>
     <!-- Gps -->
     <string name="gps_starting">Pokretanje GPS-a</string>
-    <string name="gps_wait_for_better_signal">Čeka se bolji signal GPS-a</string>
-    <string name="gps_wait_for_signal">Čeka se signal GPS-a</string>
+    <string name="gps_wait_for_better_signal">Čeka se bolji GPS signal</string>
+    <string name="gps_wait_for_signal">Čeka se GPS signal</string>
     <!-- Image -->
     <string name="image_arrow">Strelica</string>
     <string name="image_marker_count">Broj oznaka</string>
     <string name="image_photo_marker">Oznaka fotografije</string>
-    <string name="image_record">Snimanje</string>
-    <string name="image_stop">Stop</string>
-    <string name="image_track">Trasa</string>
+    <string name="image_record">Snimi</string>
+    <string name="image_stop">Prekini</string>
+    <string name="image_track">Ruta</string>
     <!-- Import -->
-    <string name="import_progress_message">Uvoz iz direktorija %1$s…</string>
+    <string name="import_progress_message">Uvoz iz %1$s …</string>
     <!-- Marker -->
-    <string name="marker_add_error">Nije moguće umetnuti oznaku. Nema signala GPS-a. Pokušajte ponovo.</string>
+    <string name="marker_add_error">Nije moguće umetnuti oznaku. Nema GPS signala. Pokušaj ponovo.</string>
     <string name="marker_add_success">Oznaka je umetnuta</string>
-    <string name="marker_add_canceled">Otkazano, oznaka nije dodana</string>
+    <string name="marker_add_canceled">Prekinuto, nije dodana nijedna oznaka</string>
     <string name="marker_delete_one_confirm_message">Oznaka će se trajno izbrisati s uređaja</string>
     <string name="marker_delete_one_confirm_title">Želite li izbrisati oznaku?</string>
     <string name="marker_delete_multiple_confirm_message">Odabrane oznake trajno će se izbrisati s uređaja</string>
@@ -151,7 +151,7 @@ limitations under the License.
     <string name="menu_aggregated_statistics">Skupna statistika</string>
     <string name="menu_delete">Izbriši</string>
     <string name="menu_edit">Uredi</string>
-    <string name="menu_export_all">Izvezi sve (jedna datoteka za pojediečanu pjesmu)</string>
+    <string name="menu_export_all">Izvezi sve (jedna datoteka po ruti)</string>
     <string name="menu_help">Pomoć</string>
     <string name="menu_import_all">Uvezi sve</string>
     <string name="menu_insert_marker">Umetni oznaku</string>
@@ -166,71 +166,71 @@ limitations under the License.
     <string name="recording_service">Usluga snimanja</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_heart_rate">Brzina otkucaja srca</string>
-    <string name="sensor_state_heart_rate_value">%1$d bpm</string>
-    <string name="sensor_state_power">Napajanje</string>
+    <string name="sensor_state_heart_rate">Puls</string>
+    <string name="sensor_state_heart_rate_value">%1$d otkucaja/min</string>
+    <string name="sensor_state_power">Snaga</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Napredno</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Prema udaljenosti</string>
     <string name="settings_chart_by_time">Prema vremenu</string>
-    <string name="settings_recording_default_activity_title">Zadana vrsta aktivnosti</string>
+    <string name="settings_recording_default_activity_title">Standardna vrsta aktivnosti</string>
     <string name="settings_recording_location_frequency_summary">%1$s između snimljenih lokacija</string>
     <string name="settings_recording_max_recording_distance_summary">Novi segment izrađuje se ako je udaljenost između dviju lokacija veća od %1$s</string>
-    <string name="settings_recording_max_recording_distance_title">Najveća udaljenost</string>
-    <string name="settings_recording_min_recording_distance_title">Interval udaljenosti</string>
-    <string name="settings_recording_min_recording_interval_title">Vremenski interval</string>
+    <string name="settings_recording_max_recording_distance_title">Maks. udaljenost</string>
+    <string name="settings_recording_min_recording_distance_title">Snimanje intervala udaljenosti</string>
+    <string name="settings_recording_min_recording_interval_title">Snimanje vremenskog intervala</string>
     <string name="settings_recording_min_required_accuracy_title">Točnost GPS-a</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Datum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Datum (lokalno)</string>
     <string name="settings_recording_track_name_number_option">Broj</string>
-    <string name="settings_recording_track_name_title">Zadani naziv staze</string>
+    <string name="settings_recording_track_name_title">Standardno ime rute</string>
     <!-- Settings Reset -->
-    <string name="settings_reset_confirm_message">Sve će se postavke vratiti na zadane vrijednosti.</string>
+    <string name="settings_reset_confirm_message">Sve će se postavke vratiti na zadane vrijednosti. To neće izbrisati nijednu rutu na uređaju.</string>
     <string name="settings_reset_confirm_title">Želite li sada vratiti na zadano?</string>
-    <string name="settings_reset_done">Sve su postavke vraćene na zadane vrijednosti</string>
+    <string name="settings_reset_done">Sve su postavke vraćene na standardne vrijednosti</string>
     <!-- Settings Sensor -->
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Preferirana stopa</string>
-    <string name="settings_stats_units_imperial">Imperijalne (milje, stope)</string>
+    <string name="settings_stats_units_imperial">Imperijalne (mi, ft)</string>
     <string name="settings_stats_units_metric">Metričke (km, m)</string>
     <string name="settings_stats_units_title">Preferirane jedinice</string>
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Mislim da bi te ova pjesma mogla zanimati.
+    <string name="share_track_share_file_body">Mislim da bi te ova ruta mogla zanimati.
 \n
 \n%1$s</string>
-    <string name="share_track_subject">Želim podijeliti pjesmu s tobom</string>
+    <string name="share_track_subject">Želim podijeliti rutu s tobom</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Prosj. tempo kretanja</string>
     <string name="stats_average_moving_speed">Prosj. brzina kretanja</string>
     <string name="stats_average_pace">Prosj. tempo</string>
     <string name="stats_average_speed">Prosj. brzina</string>
-    <string name="stats_altitude">Nadmorska visina</string>
+    <string name="stats_altitude">Visina</string>
     <string name="stats_fastest_pace">Najbrži tempo</string>
-    <string name="stats_gain">Porast</string>
+    <string name="stats_gain">Povećanje</string>
     <string name="stats_latitude">Geografska širina</string>
     <string name="stats_longitude">Geografska duljina</string>
-    <string name="stats_max_speed">Maksimalna brzina</string>
+    <string name="stats_max_speed">Maks. brzina</string>
     <string name="stats_moving_time">Vrijeme kretanja</string>
     <string name="stats_pace">Tempo</string>
     <string name="stats_speed">Brzina</string>
     <string name="stats_distance">Udaljenost</string>
     <string name="stats_total_time">Ukupno vrijeme</string>
     <!-- Track -->
-    <string name="track_name_format">Staza %1$d</string>
-    <string name="track_markers">%1$s: oznake</string>
+    <string name="track_name_format">Ruta %1$d</string>
+    <string name="track_markers">%1$s oznake</string>
     <!-- Track Delete -->
-    <string name="track_delete_one_confirm_message">Staza i njezine oznake trajno će se izbrisati s uređaja.</string>
-    <string name="track_delete_one_confirm_title">Želite li izbrisati trasu?</string>
-    <string name="track_delete_multiple_confirm_message">Odabrane staze i njihove oznake trajno će se izbrisati s uređaja.</string>
-    <string name="track_delete_progress_message">Brisanje…</string>
+    <string name="track_delete_one_confirm_message">Ruta i njezine oznake će se trajno izbrisati s uređaja.</string>
+    <string name="track_delete_one_confirm_title">Izbrisati rutu\?</string>
+    <string name="track_delete_multiple_confirm_message">Odabrane rute i njihove oznake će se trajno izbrisati s uređaja.</string>
+    <string name="track_delete_progress_message">Brisanje …</string>
     <!-- Track Detail -->
-    <string name="track_detail_stats_tab">Statistički podaci</string>
+    <string name="track_detail_stats_tab">Statistika</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Vrsta aktivnosti (npr. pješačenje)</string>
     <string name="track_edit_activity_type_hint">Vrsta aktivnosti</string>
     <!-- Track List -->
-    <string name="track_list_empty_message">Počnite snimati svoju sljedeću avanturu ovdje</string>
+    <string name="track_list_empty_message">Počni snimati svoju sljedeću avanturu ovdje</string>
     <!-- Track Widget -->
     <!-- Tracks -->
     <!-- Unit -->
@@ -254,7 +254,7 @@ limitations under the License.
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Ništa</string>
     <string name="value_off">Isključeno</string>
-    <string name="value_smallest_recommended">Najmanji (preporučeno)</string>
+    <string name="value_smallest_recommended">Najmanja (preporučeno)</string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bankomat</string>
     <string name="waypoint_type_bank">banka</string>
@@ -262,14 +262,14 @@ limitations under the License.
     <string name="waypoint_type_barbecue">roštilj</string>
     <string name="waypoint_type_building">zgrada</string>
     <string name="waypoint_type_bus_stop">autobusna stanica</string>
-    <string name="waypoint_type_cafe">kafići</string>
+    <string name="waypoint_type_cafe">kavana</string>
     <string name="waypoint_type_campfire">logorska vatra</string>
     <string name="waypoint_type_campground">kamp</string>
     <string name="waypoint_type_church">crkva</string>
-    <string name="waypoint_type_coffee_house">kafići</string>
-    <string name="waypoint_type_convenience_store">mala prodavaonica</string>
+    <string name="waypoint_type_coffee_house">kafić</string>
+    <string name="waypoint_type_convenience_store">minimarket</string>
     <string name="waypoint_type_drinking_water">pitka voda</string>
-    <string name="waypoint_type_falling_rocks">padajuće stijene</string>
+    <string name="waypoint_type_falling_rocks">odroni</string>
     <string name="waypoint_type_ferry">trajekt</string>
     <string name="waypoint_type_fire_place">kamin</string>
     <string name="waypoint_type_fire_station">vatrogasna postaja</string>
@@ -279,13 +279,13 @@ limitations under the License.
     <string name="waypoint_type_grocery_store">prodavaonica mješovite robe</string>
     <string name="waypoint_type_hair_dresser">frizerski salon</string>
     <string name="waypoint_type_harbor">luka</string>
-    <string name="waypoint_type_hiking_path">ruta za pješačenje</string>
+    <string name="waypoint_type_hiking_path">pješačka staza</string>
     <string name="waypoint_type_hotel">hotel</string>
     <string name="waypoint_type_house">kuća</string>
     <string name="waypoint_type_information">informacije</string>
     <string name="waypoint_type_intersection">raskrižje</string>
     <string name="waypoint_type_mail_box">poštanski pretinac</string>
-    <string name="waypoint_type_market">tržište</string>
+    <string name="waypoint_type_market">tržnica</string>
     <string name="waypoint_type_meeting_point">sastajalište</string>
     <string name="waypoint_type_opera">opera</string>
     <string name="waypoint_type_parking">parkiranje</string>
@@ -294,8 +294,8 @@ limitations under the License.
     <string name="waypoint_type_pothole">jama</string>
     <string name="waypoint_type_railway_crossing">željeznički prijelaz</string>
     <string name="waypoint_type_restaurant">restoran</string>
-    <string name="waypoint_type_shopping">kupnja</string>
-    <string name="waypoint_type_sight">vid</string>
+    <string name="waypoint_type_shopping">šoping</string>
+    <string name="waypoint_type_sight">znamenitost</string>
     <string name="waypoint_type_store">trgovina</string>
     <string name="waypoint_type_swimming_pool">bazen</string>
     <string name="waypoint_type_telephone">telefon</string>
@@ -306,17 +306,17 @@ limitations under the License.
     <string name="waypoint_type_tunnel">tunel</string>
     <string name="waypoint_type_waterfall">vodopad</string>
     <string name="waypoint_type_water_fountain">fontana</string>
-    <string name="waypoint_type_waypoint">točka rute</string>
+    <string name="waypoint_type_waypoint">točka na ruti</string>
     <string name="settings_import_section">Uvoz</string>
     <string name="settings_export_section">Izvoz</string>
-    <string name="settings_prevent_reimport_tracks_title">Spriječi ponovni uvoz pjesama</string>
-    <string name="menu_export_all_one_file">Izvezi sve (jedna datoteka za sve pjesme)</string>
+    <string name="settings_prevent_reimport_tracks_title">Spriječi ponovni uvoz ruta</string>
+    <string name="menu_export_all_one_file">Izvezi sve (jedna datoteka za sve rute)</string>
     <string name="menu_select_layout">Odaberi raspored</string>
-    <string name="sensor_state_heart_rate_max">Maksimalna brzina otkucaja srca</string>
+    <string name="sensor_state_heart_rate_max">Maks. puls</string>
     <string name="menu_voice_rate">Brzina glasa</string>
-    <string name="sensor_state_heart_rate_avg">Prosječna brzina otkucaja srca</string>
+    <string name="sensor_state_heart_rate_avg">Prosj. puls</string>
     <string name="permission_gps_failed">OpenTracks zahtijeva dozvolu za korištenje GPS-a.</string>
-    <string name="sensor_state_cadence_avg">Prosječna kadenca</string>
+    <string name="sensor_state_cadence_avg">Prosj. ritam</string>
     <string name="permission_bluetooth_failed">OpenTracks zahtijeva dozvolu za korištenje Bluetootha.</string>
     <string name="permission_bluetooth_failed_rejected">OpenTracksu moraš ručno dozvoliti pristup obližnjim uređajima u postavkama sustava.</string>
     <string name="menu_add_custom_layout">Novi raspored</string>
@@ -326,21 +326,267 @@ limitations under the License.
     <string name="settings_import_export_summary">Uvoz, Izvoz, Automatski izvoz</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Cjeloekranski prikaz</string>
     <string name="settings_import_export_title">Uvoz/Izvoz</string>
-    <string name="settings_recording_fullscreen_on_while_recording_summary">Tijekom snimanja prikaži cjeloekranski prikaz.</string>
-    <string name="sensor_state_cadence_max">Maksimalna kadenca</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Tijekom snimanja prikaži u cjeloekranskom prikazu.</string>
+    <string name="sensor_state_cadence_max">Maks. ritam</string>
     <string name="settings_units_category">Jedinice</string>
     <string name="settings_open_tracks_summary">Sve o projektu OpenTracks</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_announcements_summary">Vrijeme, udaljenost, brzina glasa</string>
-    <string name="menu_resume_track">Nastavi svirati pjesmu</string>
+    <string name="menu_resume_track">Nastavi rutu</string>
     <string name="settings_ui_summary">Izgled, raspored snimanja, tema</string>
     <string name="settings_defaults_title">Standardne jedinice i aktivnost</string>
     <string name="settings_ui_title">Korisničko sučelje</string>
     <string name="settings_export_filename_title">Format imena datoteke</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Tijekom snimanja prikaži statistiku bez otključavanja uređaja.</string>
     <string name="menu_insert_gallery_img">Umetni sliku galerije</string>
-    <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="sensor_state_heart_rate_unit">otkucaja/min</string>
     <string name="bluetooth_disabled">Aktiviraj Bluetooth.</string>
-    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="sensor_state_cadence_unit">okretaja/min</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Ostavi ekran uključenim</string>
+    <string name="help_data_google_play_services_title">Da li OpenTracks zahtijeva/koristi uslugu Google Play\?</string>
+    <string name="unit_minute_per_nautical_mile">min/NM</string>
+    <string name="activity_type_workout">treniranje</string>
+    <string name="export_progress_summary_errors_msg">Greške</string>
+    <string name="about_libraries">Biblioteke</string>
+    <string name="hold_to_stop">Pritisni za prekidanje</string>
+    <string name="about_history">OpenTracks je kopija aplikacije <a href="https://code.google.com/archive/p/mytracks/"><i>Googleovog MyTracksa</i></a> (ukinuta 2016.).</string>
+    <string name="help_feature_content">* stvori GPS rute
+\n * koristi senzor pulsa (samo Bluetooth LE)
+\n * glasovne najave (po vremenu ili udaljenosti)
+\n * stvori oznake (uključujući slike)
+\n * radi bez internetske veze
+\n * prikaži rute na karti (vidi dolje)</string>
+    <string name="settings_announcements_totaltime_frequency">Vremenski interval</string>
+    <string name="value_integer_knots">%1$d čvorova</string>
+    <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 nautička milja} few {{n,number,#.0} nautičke milje} other {{n,number,#.0} nautičkih milja} }</string>
+    <string name="voiceMinutesPlural">{n, plural, =1 {1 minuta} few {{n,number} minute} other {{n,number} minuta} }</string>
+    <string name="settings_defaults_summary">Preferirane jedinice, standardne aktivnost, standardno ime trake</string>
+    <string name="about_description"><i>OpenTracks</i> je aplikacija za praćenje sportskih aktivnosti koja u potpunosti poštuje tvoju privatnost.</string>
+    <string name="description_default_speed_or_pace">Prema vrsti aktivnosti</string>
+    <string name="aggregated_stats_filter_no_results">Nema aktivnosti za određeni filtar</string>
+    <string name="settings_default_trackfileformat">Datotečni format za izvoz/dijeljenje</string>
+    <string name="help_data_google_play_services_content">Ne</string>
+    <string name="help_support_title">Kako mogu podržati OpenTracks\?</string>
+    <string name="about_version_name">Ime verzije: %1$s</string>
+    <string name="instant_export_enabled_summary">Izvezi rutu u memoriju nakon završavanja snimanja</string>
+    <string name="custom_layout_list_title">Rasporedi</string>
+    <string name="import_progress_summary_errors_msg">Greške</string>
+    <string name="settings_sensors_summary">Senzori za vožnju bicikla, opseg kotača, senzori za trčanje</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="track_delete_number_of_tracks">%1$d ruta</string>
+    <string name="show_on_dashboard">API OpenTracks kontrolne ploče</string>
+    <string name="stats_coordinates">Geografska duljina/širina</string>
+    <string name="settings_public_api_package_title">Ime paketa za javni API</string>
+    <string name="sensor_could_not_scan">Neuspjelo traženje Bluetooth uređaja (greška %1$i).</string>
+    <string name="help_storage_pictures_content">One se spremaju u internoj memoriji aplikacije (dostupne su samo unutar OpenTracksa).</string>
+    <string name="import_no_kml_file_found">U KMZ-u nije pronađena datoteka doc.kml</string>
+    <string name="settings_announcements_idle_category_title">Najave o neaktivnosti</string>
+    <string name="generic_open_track">Otvori rutu</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="settings_stats_units_imperial_meter">Imperijalne (mi, m)</string>
+    <string name="about_preference_title">OpenTracks informacije</string>
+    <string name="export_track_errors">Datoteke nisu izvezene</string>
+    <string name="settings_night_mode_option_day">Dan</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Prikaži statistiku pri zaključanom ekranu</string>
+    <string name="track_distance_notification">Udaljenost: %1$s</string>
+    <string name="settings_public_api_disabled_toast">Javni OpenTracks API je deaktiviran: može se aktivirati u postavkama.</string>
+    <string name="aggregated_stats_empty_message">Snimi svoju prvu rutu za prikaz zbrojene statistike</string>
+    <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 milja na sat} few {{n,number} milje na sat} other {{n,number} milja na sat} }</string>
+    <string name="settings_layout_reset_confirm_message">Sve postavke rasporeda će se vratiti na standardne vrijednosti. To neće izbrisati nijednu rutu na uređaju.</string>
+    <string name="stats_split_interval">Podjela intervala</string>
+    <string name="gps_disabled_msg">GPS deaktiviran</string>
+    <string name="voiceDistanceMilesPlural">{n, plural, =1 {1 milja} few {{n,number,#.0} milje} other {{n,number,#.0} milja} }</string>
+    <string name="settings_night_mode_title">Tema sučelja</string>
+    <string name="image_discard">Odbaci</string>
+    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometar na sat} few {{n,number} kilometra na sat} other {{n,number} kilometara na sat} }</string>
+    <string name="generic_completed">Završeno</string>
+    <string name="generic_filter">Filtar</string>
+    <string name="import_file_imported">Datoteka %1$s je uvezena</string>
+    <string name="current_heart_rate">Trenutačni puls</string>
+    <string name="about_url">Web stranica projekta: <a href="%1$s">%1$s</a></string>
+    <string name="no_compatible_file_manager_installed">Nije instaliran nijedan kompatibilni upravljač datoteka</string>
+    <string name="settings_public_api_enabled_summary_on">Druge instalirane aplikacije mogu pokrenuti ili prekinuti snimanja.</string>
+    <string name="help_track_export_title">Kako mogu izvesti/dijeliti snimljene rute\?</string>
+    <string name="voice_on_device_speaker_title">Koristi zvučnik uređaja</string>
+    <string name="show_on_map_format_ask">Pitaj</string>
+    <string name="generic_today">Danas</string>
+    <string name="marker_add_photo_canceled">Prekinuto, nije dodana nijedna oznaka za slike</string>
+    <string name="value_float_kilometer_hour">%1$.1f km/h</string>
+    <string name="settings_ui_dynamic_colors_title">Dinamičke boje</string>
+    <string name="voice_per_nautical_mile">po nautičkoj milji</string>
+    <string name="track_speed_notification">Brzina: %1$s</string>
+    <string name="help_storage_pictures_title">Kako OpenTracks sprema slike koje su snimljene kao oznake\?</string>
+    <string name="voice_per_mile">po milji</string>
+    <string name="custom_layout_list_edit_already_exists">Ime rasporeda već postoji</string>
+    <string name="description_speed_nautical">Brzina (čvorovi)</string>
+    <string name="settings_sensor_heart_rate_max">Zone: maksimalni puls (otkucaja/min)</string>
+    <string name="settings_recording_customize_layout_select_columns">Broj polja podataka po retku</string>
+    <string name="import_prevent_reimport">Postavio/la si onemogućavanje ponovnog uvoza rute</string>
+    <string name="settings_announcements_average_heart_rate">Prosječni puls</string>
+    <string name="track_recording_notification_accuracy">Točnost lokacije: %1$s</string>
+    <string name="settings_recording_title">Snimanje</string>
+    <string name="settings_sensor_running_speed_and_cadence">Udaljenost, brzina i ritam</string>
+    <string name="settings_ui_dynamic_colors_summary">Koristi korisnički definirane dinamičke boje (samo Android 12+; zahtijeva ručno ponovno pokretanje)</string>
+    <string name="settings_generic_sensor">Opće</string>
+    <string name="description_pace_nautical">Tempo (min/NM)</string>
+    <string name="export_track_already_exists_msg">Datoteka %1$s već postoji u odredišnom direktoriju.</string>
+    <string name="help_recording_title">Kako OpenTracks snima podatke\?</string>
+    <string name="stats_clock">Sat</string>
+    <string name="track_delete_not_recording">Ova se ruta ne može izbrisati jer se trenutačno snima.</string>
+    <string name="settings_stats_units_nautical">Nautičke (NM, ft)</string>
+    <string name="activity_type_swimming_open">plivanje na otvorenom</string>
+    <string name="sensor_state_power_max">Maks. snaga</string>
+    <string name="description_altitude_loss">Smanjenje visine: %1$d m (%2$d ft)</string>
+    <string name="settings_announcements_lap_heart_rate">Puls kruga</string>
+    <string name="settings_layout_reset_confirm_title">Resetirati tvoje rasporede\?</string>
+    <string name="no_compatible_camera_installed">Nije instalirana nijedna kompatibilna aplikacija kamere</string>
+    <string name="voiceSecondsPlural">{n, plural, =1 {1 sekunda} few {{n,number} sekunde} other {{n,number} sekunda} }</string>
+    <string name="field_remove_from_layout">Ukloni</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Završeno %1$d jednom greškom</item>
+        <item quantity="few">Završeno s %1$d greške</item>
+        <item quantity="other">Završeno s %1$d grešaka</item>
+    </plurals>
+    <string name="settings_public_api_dashboard_enabled_title">Automatski prijenos podataka</string>
+    <string name="export_without_photos">bez slika</string>
+    <string name="stats_sensors_heart_rate">Puls</string>
+    <string name="settings_api_summary">API za daljinsko upravljanje i statistiku za druge aplikacije</string>
+    <string name="no_compatible_gallery_installed">Nije instalirana nijedna kompatibilna aplikacija galerije slika</string>
+    <string name="generic_show_errors">Pokaži greške</string>
+    <string name="show_on_dashboard_not_installed">Nije instalirana nijedna aplikacija koja podržava API OpenTracks kontrolne ploče.</string>
+    <string name="location_coordinate">%1$s°</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Prikaži sve dostupne Bluetooth uređaje</string>
+    <string name="custom_layout_select_layout">Odaberi raspored</string>
+    <string name="settings_activity_defaults_category">Standardne vrijednosti aktivnosti</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Prikaži samo Bluetooth uređaje koji najavljuju potrebne usluge</string>
+    <string name="open_track_as_trackfileformat">Otvori kao %1$s</string>
+    <string name="settings_api_title">Javni API</string>
+    <string name="settings_announcements_distance_frequency">Interval udaljenosti</string>
+    <string name="unit_nautical_mile">NM</string>
+    <string name="field_set_secondary">Sekundarno</string>
+    <string name="stats_loss">Smanjenje</string>
+    <string name="help_recording_content">OpenTracks koristi GPS senzor uređaja za kontinuirano snimanje lokacije. Ako GPS uređaj prijavi netočne podatke (npr. lokaciju, brzinu, visinu), OpenTracks ne može učiniti ništa u vezi s tim.</string>
+    <string name="help_feature_title">OpenTracks značajke:</string>
+    <string name="value_float_mile_hour">%1$.1f mi/h</string>
+    <string name="settings_announcements_statistics_title">Statistika najava</string>
+    <string name="import_progress_summary_ok_msg">Datoteke su uvezene</string>
+    <string name="generic_from">Od</string>
+    <string name="settings_night_mode_option_night">Noć</string>
+    <string name="settings_layout_reset_done">Sve postavke rasporeda su vraćene na standardne vrijednosti</string>
+    <string name="settings_announcements_lap_speed_pace">Brzina/tempo kruga</string>
+    <string name="sensor_state_power_avg">Prosj. snaga</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f mi/h (preporučeno)</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (preporučeno)</string>
+    <string name="import_parser_error">Greška u obradi: %1$s</string>
+    <string name="lap_speed">Brzina kruga</string>
+    <string name="always">Uvijek</string>
+    <string name="settings_sensor_wheel_circumference">Opseg kotača (mm)</string>
+    <string name="location_latitude_longitude">%1$s, %2$s</string>
+    <string name="lap_time">Vrijeme kruga</string>
+    <string name="help_track_map_title">Kako prikazati rutu na karti\?</string>
+    <string name="track_discarding">Odbacivanje rute</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="generic_yesterday">Jučer</string>
+    <string name="about_version_code">Kôd verzije: %1$d</string>
+    <string name="generic_undo">Poništi</string>
+    <string name="settings_night_mode_option_system">Sustav</string>
+    <string name="share_image_body">Mislim da bi te ova slika mogla zanimati.</string>
+    <string name="settings_default_export_uri_title">Direktorij izvoza ruta</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks ne snima lokacije\?</string>
+    <string name="settings_sensor_cycling_distance_speed">Udaljenost i brzina</string>
+    <string name="settings_layout_reset">Resetiraj prilagođeni raspored</string>
+    <string name="settings_public_api_enabled_title">Javni API</string>
+    <string name="help_data_storage_title">Kako OpenTracks sprema podatke senzora\?</string>
+    <string name="generic_click_twice_cancel">Za prekid, ponovo pritisni natrag</string>
+    <string name="average_heart_rate">Prosječni puls</string>
+    <string name="settings_gps_summary">Vremenski interval, interval udaljenosti, maksimalna udaljenost, točnost</string>
+    <string name="settings_public_api_enabled_summary_off">Samo OpenTracks može pokrenuti i prekinuti snimanja.</string>
+    <string name="generic_skip">Preskoči</string>
+    <string name="interval_list_empty_message">Još nema intervala</string>
+    <string name="generic_dismiss">Odbaci</string>
+    <string name="pace">Tempo</string>
+    <string name="instant_export_enabled_title">Direktan izvoz nakon treninga</string>
+    <string name="introduction_osm_dashboard">OpenTracks sam po sebi ne nudi kartu. Instaliraj OSMDashboard za prikaz tvojih snimki na karti.</string>
+    <string name="report_bug">Prijavi grešku</string>
+    <string name="value_float_knots">%1$.1f čvorova</string>
+    <string name="stats_custom_layout_default_layout">Standardni raspored</string>
+    <string name="custom_layout_list_edit_name">Upiši ime rasporeda</string>
+    <string name="share_image_subject">Želim dijeliti sliku s tobom</string>
+    <string name="gps_fixed_and_ready">GPS popravljen i spreman</string>
+    <string name="voiceHoursPlural">{n, plural, =1 {1 sat} few {{n,number} sata} other {{n,number} sati} }</string>
+    <string name="generic_to">Do</string>
+    <string name="settings_announcements_idle_title">Neaktivnost</string>
+    <string name="settings_reset_summary">Resetiraj postavke na standardne vrijednosti</string>
+    <string name="description_speed_source_gps">GPS</string>
+    <string name="voice_per_kilometer">po kilometru</string>
+    <string name="settings_recording_customize_layout_title">Prilagodi raspored snimanja</string>
+    <string name="unit_knots">čv</string>
+    <string name="stats_sensors_cadence">Ritam</string>
+    <string name="track_pace_notification">Tempo: %1$s</string>
+    <string name="help_data_storage_content"> Podaci senzora se spremaju za svaku snimljenu lokaciju. U smislu senzora pulsa, to znači da se za svaku lokaciju sprema samo <i>jedno</i> mjerenje pulsa. Ako se ne krećeš ili ako si u zatvorenom prostoru, podaci senzora se neće snimati (ali će se prikazati). </string>
+    <string name="generic_choose_an_option">Odaberi jednu opciju</string>
+    <string name="custom_layout_list_layout_removed">Raspored je uklonjen</string>
+    <string name="settings_announcements_average_speed_pace">Prosječna brzina/tempo</string>
+    <string name="value_float_knots_recommended">%1$.1f čvorova (preporučeno)</string>
+    <string name="settings_sensor_cycling_cadence">Ritam</string>
+    <string name="activity_type_swimming">plivanje</string>
+    <string name="field_set_primary">Primarno</string>
+    <string name="settings_recording_min_required_accuracy_summary">Lokacija se zanemaruje ako je njezina točnost veća od %1$s</string>
+    <string name="settings_cycling_sensor">Biciklizam</string>
+    <string name="import_unsupported_format">Nepodržan datotečni format</string>
+    <string name="gps_recording_without_signal">OpenTracks snima bez GPS podataka.</string>
+    <string name="settings_all_reset">Resetiraj</string>
+    <string name="about_third_party_data">Podaci trećih strana</string>
+    <string name="speed">Prosječna brzina kretanja</string>
+    <string name="help_track_export_content"> Rute se mogu izvesti iz postavki kao KMZ, KML ili GPX. KMZ/KML svi podaci; GPX samo lokacije. Rute koje se dijele putem <i>ikone dijeljenja</i> dijele se kao KMZ. </string>
+    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 čvor} few {{n,number} čvora} other {{n,number} čvorova} }</string>
+    <string name="value_int_seconds">%1$d s (preporučeno)</string>
+    <string name="track_detail_intervals_tab">Intervali</string>
+    <string name="import_error_list_dialog_title">Datoteke nisu uvezene</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Filtar za Bluetooth uređaje</string>
+    <string name="export_with_photos">sa slikama</string>
+    <string name="generic_overwrite">Prepiši</string>
+    <string name="import_unable_to_import_file">Nije moguće uvesti datoteku: %1$s</string>
+    <string name="stats_sensors_power">Snaga</string>
+    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometar} few {{n,number,#.0} kilometra} other {{n,number,#.0} kilometara} }</string>
+    <string name="import_progress_summary_exists_msg">Već postoji</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="total_distance">Ukupna udaljenost</string>
+    <string name="settings_running_sensor">Trčanje</string>
+    <string name="import_thread_interrupted">Komponenta procesa prekinuta</string>
+    <string name="help_track_map_content"> Koristi malu ikonu karte.
+\n a) (aktualiziranje uživo) Instaliraj <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Omogućuje online ili offline karte putem <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n Zapravo, OSMDashboard je zasebna aplikacija koja može samo (privremeno) pristupiti podacima ruta koje će se prikazati.
+\n b) Putem uobičajene aplikacije za karte (npr. <a href="http://osmand.net/">OsmAnd</a> i <a href="https://maps.me/">MAPS.ME</a>). Ove aplikacije moraju podržavati datotečni format KMZ (samo lokacije i vremenske oznake). Zapravo, aplikacija mora podržavati <i>ACTION_VIEW</i> s MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="export_dir_not_writable">" (zabranjeno pisanje!)"</string>
+    <string name="export_progress_summary_overwrite_msg">Datoteke su prepisane</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Snimljeni podaci se neće automatski dijeliti s drugim aplikacijama.</string>
+    <string name="select_show_on_map_behavior">Odaberi „Prikaži na karti”</string>
+    <string name="export_progress_summary_skip_msg">Datoteke su preskočene</string>
+    <string name="activity_type_kickscooter">skuter</string>
+    <string name="help_gps_troubleshooting_content"> Što možeš učiniti:
+\n a) provjeri je li GPS uključen,
+\n b) poboljšaj GPS prijem (npr. izađi van),
+\n c) provjeri pomoću aplikacije <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> i
+\n d) deaktiviraj štednju energije.
+\n
+\n Ako ništa od navedenog ne pomogne, prijavi grešku. </string>
+    <string name="export_all_do_it_for_all">učini to za sve konflikte</string>
+    <string name="share_crash_report">Dijeli izvještaj o prekidu rada</string>
+    <string name="error_crash_title">%1$s je prekinuo rad</string>
+    <string name="voiceIdle">Prelazi u stanje neaktivnosti.</string>
+    <string name="export_error_post_workout">Izvoz nakon treninga nije uspio. Provjeri direktorij za izvoz.</string>
+    <string name="activity_type_escooter">e-skuter</string>
+    <string name="help_support_content"> Možeš:
+\n a) širiti glas o OpenTracksu,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">predložiti funkcije</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">prijaviti greške</a>,
+\n d) pomoći u razvoju softvera,
+\n e) kupiti na stranici <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Trgovina Google Play</a>,
+\n f) donirati
+\n g) učiniti sve što misliš da pomaže OpenTracksu. </string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Aplikacija koja je pokrenula snimanje također može pristupiti snimljenim podacima.</string>
+    <string name="export_progress_summary_new_msg">Nove datoteke su izvezene</string>
+    <string name="settings_recording_idle_timeout_title">Prag neaktivnosti</string>
+    <string name="export_cannot_write_to_dir">Nije moguće pisati u direktorij izvoza.</string>
 </resources>

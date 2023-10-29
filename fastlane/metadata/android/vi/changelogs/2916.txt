@@ -1,0 +1,15 @@
+v3.0.0: OpenTracks
+
+Phát hành lần đầu của OpenTracks (tức là rẻ nhánh từ MyTracks)
+
+Thay đổi:
+- Đổi nhãn hiệu từ MyTracks thành OpenTracks
+- Thêm cảm biến nhịp tim Bluetooth LE
+- Loại bỏ mọi tính năng cần truy cập Internet
+- Xóa tích hợp Google Maps
+- Xóa việc sử dụng các dịch vụ của Google Play
+- Đã loại bỏ cảm biến ANT +
+- Loại bỏ cảm biến Bluetooth cổ điển
+- Loại bỏ Protobuf
+- Loại bỏ ước tính calo và ước tính hoạt động
+- Xóa API dịch vụ MyTracks (tức là không tích hợp với các ứng dụng khác)
