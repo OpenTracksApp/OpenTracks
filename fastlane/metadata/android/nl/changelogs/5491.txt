@@ -1,0 +1,4 @@
+v4.9.3: OpenTracks
+
+Bugfix :
+- Voorkom crash omdat toList() niet altijd beschikbaar is
