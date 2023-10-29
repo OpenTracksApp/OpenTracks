@@ -26,6 +26,7 @@ import android.os.Looper;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.util.Pair;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -36,6 +37,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Duration;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
@@ -45,6 +47,7 @@ import de.dennisguse.opentracks.services.announcement.VoiceAnnouncementManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.util.PermissionRequester;
 import de.dennisguse.opentracks.util.SystemUtils;
 
 public class TrackRecordingService extends Service implements TrackPointCreator.Callback, SharedPreferences.OnSharedPreferenceChangeListener, TrackRecordingManager.IdleObserver {
@@ -199,6 +202,14 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         trackPointCreator.start(this, handler);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                if (!PermissionRequester.RECORDING.hasPermission(this)) {
+                    Toast.makeText(this, R.string.permission_recording_failed, Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+
             startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this), ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION + ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
         } else {
             startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this));

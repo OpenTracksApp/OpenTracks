@@ -89,13 +89,17 @@ public class PermissionRequester {
     }
 
     private static final List<String> ALL_PERMISSIONS;
+    private static final List<String> RECORDING_PERMISSIONS;
 
     static {
-        ArrayList<String> all = new ArrayList<>(GPS_PERMISSION);
-        all.addAll(BLUETOOTH_PERMISSIONS);
-        all.addAll(NOTIFICATION_PERMISSIONS);
+        ArrayList<String> recording = new ArrayList<>(GPS_PERMISSION);
+        recording.addAll(BLUETOOTH_PERMISSIONS);
 
-        ALL_PERMISSIONS = Collections.unmodifiableList(all);
+        RECORDING_PERMISSIONS = Collections.unmodifiableList(recording);
+
+        recording.addAll(NOTIFICATION_PERMISSIONS);
+
+        ALL_PERMISSIONS = Collections.unmodifiableList(recording);
     }
 
     public final static PermissionRequester GPS = new PermissionRequester(GPS_PERMISSION);
@@ -103,6 +107,7 @@ public class PermissionRequester {
     public final static PermissionRequester NOTIFICATION = new PermissionRequester(NOTIFICATION_PERMISSIONS);
 
     public final static PermissionRequester ALL = new PermissionRequester(ALL_PERMISSIONS);
+    public final static PermissionRequester RECORDING = new PermissionRequester(RECORDING_PERMISSIONS);
 
     public interface RejectedCallback {
         void rejected(PermissionRequester permissionRequester);
