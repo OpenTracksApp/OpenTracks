@@ -594,4 +594,5 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_ui_dynamic_colors_title">Dynamische kleuren</string>
     <string name="settings_recording_title">Opname</string>
     <string name="settings_ui_dynamic_colors_summary">Gebruik door de gebruiker gedefinieerde dynamische kleuren (alleen Android 12+; vereist een handmatige herstart)</string>
+    <string name="permission_recording_failed">OpenTracks heeft toestemming nodig om toegang te krijgen tot zowel uw locatie als nabijgelegen apparaten.</string>
 </resources>
