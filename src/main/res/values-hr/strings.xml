@@ -589,4 +589,5 @@ limitations under the License.
     <string name="export_progress_summary_new_msg">Nove datoteke su izvezene</string>
     <string name="settings_recording_idle_timeout_title">Prag neaktivnosti</string>
     <string name="export_cannot_write_to_dir">Nije moguće pisati u direktorij izvoza.</string>
+    <string name="permission_recording_failed">OpenTracks zahtijeva dozvolu za pristup tvojoj lokaciji kao i uređajima u blizini.</string>
 </resources>
