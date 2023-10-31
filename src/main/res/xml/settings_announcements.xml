@@ -19,8 +19,8 @@
 
     <PreferenceCategory android:title="@string/settings_announcements_idle_category_title">
         <SwitchPreferenceCompat
-            android:defaultValue="@bool/voice_announce_total_distance_default"
-            android:key="@string/voice_announce_total_distance_key"
+            android:defaultValue="@bool/voice_announce_idle_default"
+            android:key="@string/voice_announce_idle_key"
             android:title="@string/settings_announcements_idle_title" />
     </PreferenceCategory>
 
