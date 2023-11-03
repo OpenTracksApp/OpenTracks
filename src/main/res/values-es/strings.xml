@@ -645,4 +645,8 @@ limitations under the License.
     <string name="settings_announcements_idle_title">Inactivo</string>
     <string name="settings_recording_idle_timeout_title">Umbral de inactividad</string>
     <string name="value_int_seconds">%1$d s (recomendado)</string>
+    <string name="settings_ui_dynamic_colors_title">Colores dinámicos</string>
+    <string name="settings_recording_title">Grabando</string>
+    <string name="settings_ui_dynamic_colors_summary">Utilizar colores dinámicos definidos por el usuario (sólo Android 12+; requiere un reinicio manual)</string>
+    <string name="permission_recording_failed">OpenTracks requiere permiso para acceder a su ubicación y a los dispositivos cercanos.</string>
 </resources>
