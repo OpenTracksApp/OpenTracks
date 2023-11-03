@@ -587,4 +587,5 @@ limitations under the License.
     <string name="value_int_seconds">%1$d s (khuyến khích)</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Lọc thiết bị Bluetooth</string>
     <string name="voiceDistanceKilometersPlural">{n, số nhiều, =1 {1 kilômet} khác {{n,số,#.0} kilômet} }</string>
+    <string name="permission_recording_failed">OpenTracks yêu cầu quyền truy cập vào vị trí của bạn cũng như các thiết bị lân cận.</string>
 </resources>
