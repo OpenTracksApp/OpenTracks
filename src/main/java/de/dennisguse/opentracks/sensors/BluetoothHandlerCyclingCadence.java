@@ -14,8 +14,8 @@ public class BluetoothHandlerCyclingCadence implements SensorHandlerInterface {
     private static final String TAG = BluetoothHandlerCyclingCadence.class.getSimpleName();
 
     public static final List<ServiceMeasurementUUID> CYCLING_CADENCE = List.of(
-            BluetoothConnectionManagerCyclingPower.CYCLING_POWER,
-            BluetoothConnectionManagerCyclingDistanceSpeed.CYCLING_SPEED_CADENCE
+            BluetoothHandlerManagerCyclingPower.CYCLING_POWER,
+            BluetoothHandlerCyclingDistanceSpeed.CYCLING_SPEED_CADENCE
     );
 
     @Override
@@ -32,13 +32,13 @@ public class BluetoothHandlerCyclingCadence implements SensorHandlerInterface {
     public void handlePayload(SensorManager.SensorDataChangedObserver observer, ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
 
         //TODO Implement to ServiceMeasurement.parse()?
-        if (serviceMeasurementUUID.equals(BluetoothConnectionManagerCyclingPower.CYCLING_POWER)) {
-            SensorDataCyclingPower.Data data = BluetoothConnectionManagerCyclingPower.parseCyclingPower(address, sensorName, characteristic);
+        if (serviceMeasurementUUID.equals(BluetoothHandlerManagerCyclingPower.CYCLING_POWER)) {
+            SensorDataCyclingPower.Data data = BluetoothHandlerManagerCyclingPower.parseCyclingPower(address, sensorName, characteristic);
             if (data!= null) {
                 observer.onChange(data.cadence());
             }
-        } else if (serviceMeasurementUUID.equals(BluetoothConnectionManagerCyclingDistanceSpeed.CYCLING_SPEED_CADENCE)) {
-            SensorDataCyclingCadenceAndDistanceSpeed cadenceAndSpeed = BluetoothConnectionManagerCyclingDistanceSpeed.parseCyclingCrankAndWheel(address, sensorName, characteristic);
+        } else if (serviceMeasurementUUID.equals(BluetoothHandlerCyclingDistanceSpeed.CYCLING_SPEED_CADENCE)) {
+            SensorDataCyclingCadenceAndDistanceSpeed cadenceAndSpeed = BluetoothHandlerCyclingDistanceSpeed.parseCyclingCrankAndWheel(address, sensorName, characteristic);
             if (cadenceAndSpeed == null) {
                 return;
             }

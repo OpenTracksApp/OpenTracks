@@ -13,7 +13,7 @@ import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
-public class BluetoothConnectionManagerCyclingPower  implements SensorHandlerInterface {
+public class BluetoothHandlerManagerCyclingPower implements SensorHandlerInterface {
 
     public static final ServiceMeasurementUUID CYCLING_POWER = new ServiceMeasurementUUID(
             new UUID(0x181800001000L, 0x800000805f9b34fbL),

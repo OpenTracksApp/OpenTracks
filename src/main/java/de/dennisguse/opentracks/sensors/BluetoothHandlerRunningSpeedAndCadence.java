@@ -14,7 +14,7 @@ import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
-public class BluetoothConnectionRunningSpeedAndCadence implements SensorHandlerInterface {
+public class BluetoothHandlerRunningSpeedAndCadence implements SensorHandlerInterface {
 
 
     public static final ServiceMeasurementUUID RUNNING_SPEED_CADENCE = new ServiceMeasurementUUID(

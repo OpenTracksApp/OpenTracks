@@ -13,7 +13,7 @@ import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadenceAndDi
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
-public class BluetoothConnectionManagerCyclingDistanceSpeed  implements SensorHandlerInterface {
+public class BluetoothHandlerCyclingDistanceSpeed implements SensorHandlerInterface {
 
     public static final ServiceMeasurementUUID CYCLING_SPEED_CADENCE = new ServiceMeasurementUUID(
             new UUID(0x181600001000L, 0x800000805f9b34fbL),

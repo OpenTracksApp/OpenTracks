@@ -68,11 +68,11 @@ public class BluetoothRemoteSensorManager implements SensorConnector, SharedPref
         this.handler = handler;
         bluetoothAdapter = BluetoothUtils.getAdapter(context);
 
-        this.heartRate = new BluetoothConnectionManager(observer, new BluetoothConnectionManagerHeartRate());
-        this.cyclingCadence = new BluetoothConnectionManager(observer, new BluetoothConnectionManagerCyclingDistanceSpeed());
-        this.cyclingSpeed = new BluetoothConnectionManager(observer, new BluetoothConnectionManagerCyclingDistanceSpeed());
-        this.cyclingPower = new BluetoothConnectionManager(observer, new BluetoothConnectionManagerCyclingPower());
-        this.runningSpeedAndCadence = new BluetoothConnectionManager(observer, new BluetoothConnectionRunningSpeedAndCadence());
+        this.heartRate = new BluetoothConnectionManager(observer, new BluetoothHandlerManagerHeartRate());
+        this.cyclingCadence = new BluetoothConnectionManager(observer, new BluetoothHandlerCyclingDistanceSpeed());
+        this.cyclingSpeed = new BluetoothConnectionManager(observer, new BluetoothHandlerCyclingDistanceSpeed());
+        this.cyclingPower = new BluetoothConnectionManager(observer, new BluetoothHandlerManagerCyclingPower());
+        this.runningSpeedAndCadence = new BluetoothConnectionManager(observer, new BluetoothHandlerRunningSpeedAndCadence());
 
     }
 
