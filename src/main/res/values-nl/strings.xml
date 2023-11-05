@@ -200,7 +200,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <!-- Marker List -->
     <string name="marker_list_empty_message">Er zijn geen markeringen</string>
     <!-- Menu -->
-    <string name="menu_aggregated_statistics">Statistieken</string>
+    <string name="menu_aggregated_statistics">Statistiek</string>
     <string name="menu_delete">Verwijderen</string>
     <string name="menu_edit">Bewerken</string>
     <string name="menu_export_all">Exporteer alle (een track per bestand</string>
@@ -237,7 +237,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Toon tijdens de opname de statistieken zonder het apparaat te ontgrendelen.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Houd het scherm aan</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Houd tijdens de opname het scherm aan.</string>
-    <string name="settings_recording_default_activity_title">Standaardtype activiteit</string>
+    <string name="settings_recording_default_activity_title">Activiteittype</string>
     <string name="settings_recording_location_frequency_summary">%1$s tussen opgenomen locaties</string>
     <string name="settings_recording_max_recording_distance_summary">Er wordt een nieuw segment gemaakt als de afstand tussen twee locaties groter is dan %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Maximale afstand</string>
@@ -247,17 +247,17 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_track_name_date_iso_8601_option">Datum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Datum (lokaal)</string>
     <string name="settings_recording_track_name_number_option">Nummer</string>
-    <string name="settings_recording_track_name_title">Standaardroutenaam</string>
+    <string name="settings_recording_track_name_title">Routenaam</string>
     <!-- Settings Reset -->
-    <string name="settings_reset_confirm_message">Alle instellingen worden teruggezet op de standaardwaarden.</string>
+    <string name="settings_reset_confirm_message">Alle instellingen worden hersteld naar standaardwaarden.</string>
     <string name="settings_reset_confirm_title">Nu opnieuw instellen?</string>
-    <string name="settings_reset_done">Voor alle instellingen zijn de standaardwaarden teruggezet</string>
+    <string name="settings_reset_done">Alle instellingen zijn naar standaardwaarden teruggezet</string>
     <!-- Settings Sensor -->
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Voorkeursverhouding</string>
     <string name="settings_stats_units_imperial">Engels (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>
-    <string name="settings_stats_units_title">Voorkeurseenheden</string>
+    <string name="settings_stats_units_title">Lengtemaat</string>
     <!-- Share Track -->
     <string name="share_track_share_file_body">Misschien ben je geïnteresseerd in deze route.
 \n
@@ -469,7 +469,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="stats_sensors_cadence">Ritme</string>
     <string name="stats_sensors_heart_rate">Hartslag</string>
     <string name="settings_layout_reset">Aangepaste lay-out terugzetten</string>
-    <string name="settings_layout_reset_confirm_message">Alle lay-out instellingen worden teruggezet naar de standaardwaarden. Tracks worden niet gewist.</string>
+    <string name="settings_layout_reset_confirm_message">Alle lay-out instellingen worden hrrsteld naar de standaardwaarden. Routes worden niet gewist.</string>
     <string name="settings_public_api_enabled_summary_on">Andere geïnstalleerde apps kunnen opnames starten of stoppen.</string>
     <string name="stats_sensors_power">Vermogen</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Opgenomen gegevens worden niet automatisch met andere apps gedeeld.</string>
@@ -503,7 +503,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="no_compatible_file_manager_installed">Geen geschikte bestandsbeheerder geïnstalleerd</string>
     <string name="generic_undo">Terugzetten</string>
     <string name="settings_sensor_bluetooth_service_filter_on">Alleen Bluetooth-apparaten tonen die gevraagde diensten melden</string>
-    <string name="settings_activity_defaults_category">Standaardinstellingen van een activiteit</string>
+    <string name="settings_activity_defaults_category">Standaardinstellingen activiteit</string>
     <string name="settings_import_export_summary">Invoer, uitvoer, automatische uitvoer</string>
     <string name="settings_units_category">Eenheden</string>
     <string name="settings_reset_summary">Instellingen terugzetten op standaardwaarden</string>
@@ -514,14 +514,14 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_open_tracks_summary">Alles over het OpenTracks Project</string>
     <string name="activity_type_workout">training</string>
     <string name="settings_layout_reset_confirm_title">Lay-outs terugzetten\?</string>
-    <string name="settings_layout_reset_done">Alle lay-out instellingen zijn teruggezet naar de standaardwaarden</string>
+    <string name="settings_layout_reset_done">Alle lay-out instellingen zijn hersteld naar standaardwaarden</string>
     <string name="field_set_primary">Primair</string>
     <string name="gps_recording_status">%1$s: %2$s</string>
     <string name="gps_recording_without_signal">OpenTracks neemt op zonder GPS gegevens.</string>
     <string name="generic_dismiss">Afwijzen</string>
     <string name="menu_select_layout">Lay-out kiezen</string>
     <string name="settings_defaults_title">Standaard Eenheden en Activiteit</string>
-    <string name="settings_defaults_summary">Voorkeurseenheden, standaardactiviteit, standaardtracknaam</string>
+    <string name="settings_defaults_summary">Voorkeurslengtemaat, standaardactiviteit, standaardroutenaam</string>
     <string name="settings_gps_summary">Tijdsinterval, afstandsinterval, maximale afstand, nauwkeurigheid</string>
     <string name="settings_sensors_title">Bluetooth sensoren</string>
     <string name="settings_sensors_summary">Fiets sensoren, wielomtrek, loop sensoren</string>
@@ -532,7 +532,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="custom_layout_list_layout_removed">Lay-out verwijderd</string>
     <string name="custom_layout_select_layout">Lay-out kiezen</string>
     <string name="stats_custom_layout_default_layout">Standaard lay-out</string>
-    <string name="settings_all_reset">Teruggezet</string>
+    <string name="settings_all_reset">Herstellen</string>
     <string name="settings_export_filename_title">Format van de bestandsnaam</string>
     <string name="error_crash_title">%1$s gecrasht</string>
     <string name="report_bug">Bug rapporteren</string>
