@@ -23,7 +23,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.List;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.data.models.AtmosphericPressure;
@@ -53,45 +52,10 @@ public class BluetoothUtils {
             new UUID(0x2A1900001000L, 0x800000805f9b34fbL)
     );
 
-    public static final ServiceMeasurementUUID HEARTRATE = new ServiceMeasurementUUID(
-            new UUID(0x180D00001000L, 0x800000805f9b34fbL),
-            new UUID(0x2A3700001000L, 0x800000805f9b34fbL)
-    );
-
-    // Used for device discovery in preferences
-    public static final List<ServiceMeasurementUUID> HEART_RATE_SUPPORTING_DEVICES = List.of(
-            HEARTRATE,
-            //Devices that support HEART_RATE_SERVICE_UUID, but do not announce HEART_RATE_SERVICE_UUID in there BLE announcement messages (during device discovery).
-            new ServiceMeasurementUUID(
-                    UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb"), //Miband3
-                    HEARTRATE.measurementUUID()
-            )
-    );
-
     private static final UUID ENVIRONMENTAL_SENSING_SERVICE = new UUID(0x181A00001000L, 0x800000805f9b34fbL);
     public static final ServiceMeasurementUUID BAROMETRIC_PRESSURE = new ServiceMeasurementUUID(
             ENVIRONMENTAL_SENSING_SERVICE,
             new UUID(0x2A6D00001000L, 0x800000805f9b34fbL)
-    );
-
-    public static final ServiceMeasurementUUID CYCLING_POWER = new ServiceMeasurementUUID(
-            new UUID(0x181800001000L, 0x800000805f9b34fbL),
-            new UUID(0x2A6300001000L, 0x800000805f9b34fbL)
-    );
-
-    public static final ServiceMeasurementUUID CYCLING_SPEED_CADENCE = new ServiceMeasurementUUID(
-            new UUID(0x181600001000L, 0x800000805f9b34fbL),
-            new UUID(0x2A5B00001000L, 0x800000805f9b34fbL)
-    );
-
-    public static final List<ServiceMeasurementUUID> CYCLING_CADENCE = List.of(
-            CYCLING_POWER,
-            CYCLING_SPEED_CADENCE
-    );
-
-    public static final ServiceMeasurementUUID RUNNING_SPEED_CADENCE = new ServiceMeasurementUUID(
-            new UUID(0x181400001000L, 0x800000805f9b34fbL),
-            new UUID(0x2A5300001000L, 0x800000805f9b34fbL)
     );
 
     private static final String TAG = BluetoothUtils.class.getSimpleName();

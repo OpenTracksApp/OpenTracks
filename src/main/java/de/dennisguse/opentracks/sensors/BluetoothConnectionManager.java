@@ -30,23 +30,23 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
+import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
 /**
  * Manages connection to a Bluetooth LE sensor and subscribes for onChange-notifications.
  */
 @SuppressLint("MissingPermission")
-public abstract class AbstractBluetoothConnectionManager<DataType> {
+public class BluetoothConnectionManager {
 
-    private static final String TAG = AbstractBluetoothConnectionManager.class.getSimpleName();
+    private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
     private final SensorManager.SensorDataChangedObserver observer;
 
-    private final List<ServiceMeasurementUUID> serviceMeasurementUUIDs;
+    private final SensorHandlerInterface sensorHandler;
     private BluetoothGatt bluetoothGatt;
 
     private final BluetoothGattCallback connectCallback = new BluetoothGattCallback() {
@@ -76,7 +76,7 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
         public void onServicesDiscovered(@NonNull BluetoothGatt gatt, int status) {
             BluetoothGattService gattService = null;
             ServiceMeasurementUUID serviceMeasurement = null;
-            for (ServiceMeasurementUUID s : serviceMeasurementUUIDs) {
+            for (ServiceMeasurementUUID s : sensorHandler.getServices()) {
                 gattService = gatt.getService(s.serviceUUID());
                 if (gattService != null) {
                     serviceMeasurement = s;
@@ -112,24 +112,22 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
         public void onCharacteristicChanged(BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic) {
             UUID serviceUUID = characteristic.getService().getUuid();
             Log.d(TAG, "Received data from " + gatt.getDevice().getAddress() + " with service " + serviceUUID + " and characteristics " + characteristic.getUuid());
-            Optional<ServiceMeasurementUUID> serviceMeasurementUUID = serviceMeasurementUUIDs.stream()
-                    .filter(s -> s.serviceUUID().equals(characteristic.getService().getUuid())).findFirst();
+            Optional<ServiceMeasurementUUID> serviceMeasurementUUID = sensorHandler.getServices()
+                    .stream()
+                    .filter(s -> s.serviceUUID().equals(characteristic.getService().getUuid()))
+                    .findFirst();
             if (serviceMeasurementUUID.isEmpty()) {
                 Log.e(TAG, "Unknown service UUID; not supported?");
                 return;
             }
 
-            SensorData<DataType> sensorData = parsePayload(serviceMeasurementUUID.get(), gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
-            if (sensorData != null) {
-                Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
-                observer.onChange(sensorData);
-            }
+            sensorHandler.handlePayload(observer, serviceMeasurementUUID.get(), gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
         }
     };
 
-    AbstractBluetoothConnectionManager(List<ServiceMeasurementUUID> serviceUUUID, SensorManager.SensorDataChangedObserver observer) {
-        this.serviceMeasurementUUIDs = serviceUUUID;
+    BluetoothConnectionManager(SensorManager.SensorDataChangedObserver observer, SensorHandlerInterface sensorHandler) {
         this.observer = observer;
+        this.sensorHandler = sensorHandler;
     }
 
     synchronized void connect(Context context, Handler handler, @NonNull BluetoothDevice device) {
@@ -142,12 +140,12 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
 
         bluetoothGatt = device.connectGatt(context, false, connectCallback, BluetoothDevice.TRANSPORT_AUTO, 0, handler);
 
-        SensorData<?> sensorData = createEmptySensorData(bluetoothGatt.getDevice().getAddress());
+        SensorData<?> sensorData = sensorHandler.createEmptySensorData(bluetoothGatt.getDevice().getAddress());
         observer.onChange(sensorData);
     }
 
     private synchronized void clearData() {
-        observer.onDisconnect(createEmptySensorData(bluetoothGatt.getDevice().getAddress()));
+        observer.onDisconnect(sensorHandler.createEmptySensorData(bluetoothGatt.getDevice().getAddress()));
     }
 
     synchronized void disconnect() {
@@ -167,11 +165,4 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
 
         return address.equals(bluetoothGatt.getDevice().getAddress());
     }
-
-    protected abstract SensorData<DataType> createEmptySensorData(String address);
-
-    /**
-     * @return null if data could not be parsed.
-     */
-    protected abstract SensorData<DataType> parsePayload(@NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, @NonNull BluetoothGattCharacteristic characteristic);
 }

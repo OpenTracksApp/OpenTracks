@@ -57,22 +57,22 @@ public class BluetoothRemoteSensorManager implements SensorConnector, SharedPref
     private final Handler handler;
     private boolean started = false;
 
-    private final BluetoothConnectionManagerHeartRate heartRate;
-    private final BluetoothConnectionManagerCyclingCadence cyclingCadence;
-    private final BluetoothConnectionManagerCyclingDistanceSpeed cyclingSpeed;
-    private final BluetoothConnectionManagerCyclingPower cyclingPower;
-    private final BluetoothConnectionRunningSpeedAndCadence runningSpeedAndCadence;
+    private final BluetoothConnectionManager heartRate;
+    private final BluetoothConnectionManager cyclingCadence;
+    private final BluetoothConnectionManager cyclingSpeed;
+    private final BluetoothConnectionManager cyclingPower;
+    private final BluetoothConnectionManager runningSpeedAndCadence;
 
     public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull Handler handler, @Nullable SensorManager.SensorDataChangedObserver observer) {
         this.context = context;
         this.handler = handler;
         bluetoothAdapter = BluetoothUtils.getAdapter(context);
 
-        this.heartRate = new BluetoothConnectionManagerHeartRate(observer);
-        this.cyclingCadence = new BluetoothConnectionManagerCyclingCadence(observer);
-        this.cyclingSpeed = new BluetoothConnectionManagerCyclingDistanceSpeed(observer);
-        this.cyclingPower = new BluetoothConnectionManagerCyclingPower(observer);
-        this.runningSpeedAndCadence = new BluetoothConnectionRunningSpeedAndCadence(observer);
+        this.heartRate = new BluetoothConnectionManager(observer, new BluetoothConnectionManagerHeartRate());
+        this.cyclingCadence = new BluetoothConnectionManager(observer, new BluetoothConnectionManagerCyclingDistanceSpeed());
+        this.cyclingSpeed = new BluetoothConnectionManager(observer, new BluetoothConnectionManagerCyclingDistanceSpeed());
+        this.cyclingPower = new BluetoothConnectionManager(observer, new BluetoothConnectionManagerCyclingPower());
+        this.runningSpeedAndCadence = new BluetoothConnectionManager(observer, new BluetoothConnectionRunningSpeedAndCadence());
 
     }
 
@@ -99,7 +99,7 @@ public class BluetoothRemoteSensorManager implements SensorConnector, SharedPref
         return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
     }
 
-    private synchronized void connect(AbstractBluetoothConnectionManager<?> connectionManager, String address) {
+    private synchronized void connect(BluetoothConnectionManager connectionManager, String address) {
         if (!isEnabled()) {
             Log.w(TAG, "Bluetooth not enabled.");
             return;

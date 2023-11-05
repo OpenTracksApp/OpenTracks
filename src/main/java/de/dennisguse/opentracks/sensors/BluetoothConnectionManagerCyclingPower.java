@@ -5,25 +5,34 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import androidx.annotation.NonNull;
 
 import java.util.List;
+import java.util.UUID;
 
-import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
+import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
-public class BluetoothConnectionManagerCyclingPower extends AbstractBluetoothConnectionManager<Power> {
+public class BluetoothConnectionManagerCyclingPower  implements SensorHandlerInterface {
 
-    BluetoothConnectionManagerCyclingPower(@NonNull SensorManager.SensorDataChangedObserver observer) {
-        super(List.of(BluetoothUtils.CYCLING_POWER), observer);
+    public static final ServiceMeasurementUUID CYCLING_POWER = new ServiceMeasurementUUID(
+            new UUID(0x181800001000L, 0x800000805f9b34fbL),
+            new UUID(0x2A6300001000L, 0x800000805f9b34fbL)
+    );
+
+    @Override
+    public List<ServiceMeasurementUUID> getServices() {
+        return List.of(CYCLING_POWER);
     }
 
     @Override
-    protected SensorDataCyclingPower createEmptySensorData(String address) {
+    public SensorDataCyclingPower createEmptySensorData(String address) {
         return new SensorDataCyclingPower(address);
     }
 
     @Override
-    protected SensorDataCyclingPower parsePayload(@NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+    public void handlePayload(SensorManager.SensorDataChangedObserver observer, @NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
         SensorDataCyclingPower.Data cyclingPower = BluetoothUtils.parseCyclingPower(address, sensorName, characteristic);
 
-        return cyclingPower != null ? cyclingPower.power() : null;
+        if (cyclingPower != null) {
+            observer.onChange(cyclingPower.power());
+        }
     }
 }

@@ -3,32 +3,38 @@ package de.dennisguse.opentracks.sensors;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import java.util.List;
+import java.util.UUID;
 
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadenceAndDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
+import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
-public class BluetoothConnectionManagerCyclingDistanceSpeed extends AbstractBluetoothConnectionManager<SensorDataCyclingDistanceSpeed.Data> {
+public class BluetoothConnectionManagerCyclingDistanceSpeed  implements SensorHandlerInterface {
 
-    BluetoothConnectionManagerCyclingDistanceSpeed(SensorManager.SensorDataChangedObserver observer) {
-        super(List.of(BluetoothUtils.CYCLING_SPEED_CADENCE), observer);
+    public static final ServiceMeasurementUUID CYCLING_SPEED_CADENCE = new ServiceMeasurementUUID(
+            new UUID(0x181600001000L, 0x800000805f9b34fbL),
+            new UUID(0x2A5B00001000L, 0x800000805f9b34fbL)
+    );
+
+    @Override
+    public List<ServiceMeasurementUUID> getServices() {
+        return List.of(CYCLING_SPEED_CADENCE);
     }
 
     @Override
-    protected SensorDataCyclingDistanceSpeed createEmptySensorData(String address) {
+    public SensorDataCyclingDistanceSpeed createEmptySensorData(String address) {
         return new SensorDataCyclingDistanceSpeed(address);
     }
 
     @Override
-    protected SensorDataCyclingDistanceSpeed parsePayload(ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+    public void handlePayload(SensorManager.SensorDataChangedObserver observer, ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
         SensorDataCyclingCadenceAndDistanceSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
         if (cadenceAndSpeed == null) {
-            return null;
+            return;
         }
 
         if (cadenceAndSpeed.getDistanceSpeed() != null) {
-            return cadenceAndSpeed.getDistanceSpeed();
+            observer.onChange(cadenceAndSpeed.getDistanceSpeed());
         }
-
-        return null;
     }
 }
