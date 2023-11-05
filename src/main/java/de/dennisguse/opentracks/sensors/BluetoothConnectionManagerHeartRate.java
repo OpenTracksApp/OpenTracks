@@ -4,13 +4,15 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 import androidx.annotation.NonNull;
 
+import java.util.List;
+
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
 
 public class BluetoothConnectionManagerHeartRate extends AbstractBluetoothConnectionManager<HeartRate> {
 
-    BluetoothConnectionManagerHeartRate(@NonNull SensorDataObserver observer) {
-        super(BluetoothUtils.HEARTRATE, observer);
+    BluetoothConnectionManagerHeartRate(@NonNull SensorManager.SensorDataChangedObserver observer) {
+        super(List.of(BluetoothUtils.HEARTRATE), observer);
     }
 
     @Override

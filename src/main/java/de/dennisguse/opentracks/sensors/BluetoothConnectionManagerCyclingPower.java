@@ -4,13 +4,15 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 import androidx.annotation.NonNull;
 
+import java.util.List;
+
 import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 
 public class BluetoothConnectionManagerCyclingPower extends AbstractBluetoothConnectionManager<Power> {
 
-    BluetoothConnectionManagerCyclingPower(@NonNull SensorDataObserver observer) {
-        super(BluetoothUtils.CYCLING_POWER, observer);
+    BluetoothConnectionManagerCyclingPower(@NonNull SensorManager.SensorDataChangedObserver observer) {
+        super(List.of(BluetoothUtils.CYCLING_POWER), observer);
     }
 
     @Override

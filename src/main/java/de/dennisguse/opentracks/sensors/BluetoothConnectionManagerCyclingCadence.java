@@ -12,7 +12,7 @@ public class BluetoothConnectionManagerCyclingCadence extends AbstractBluetoothC
 
     private static final String TAG = BluetoothConnectionManagerCyclingCadence.class.getSimpleName();
 
-    BluetoothConnectionManagerCyclingCadence(SensorDataObserver observer) {
+    BluetoothConnectionManagerCyclingCadence(SensorManager.SensorDataChangedObserver observer) {
         super(BluetoothUtils.CYCLING_CADENCE, observer);
     }
 

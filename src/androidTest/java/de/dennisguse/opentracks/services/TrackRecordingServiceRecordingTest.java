@@ -35,7 +35,7 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
 import de.dennisguse.opentracks.sensors.AltitudeSumManager;
-import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
+import de.dennisguse.opentracks.sensors.SensorManager;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
@@ -252,17 +252,17 @@ public class TrackRecordingServiceRecordingTest {
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
         trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
-        BluetoothRemoteSensorManager remoteSensorManager = trackPointCreator.getSensorManager().getBluetoothSensorManager();
+        SensorManager sensorManager = trackPointCreator.getSensorManager();
 
         // when
         String sensor1 = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(sensor1);
 
-        remoteSensorManager.onChanged(new SensorDataHeartRate("", "", HeartRate.of(5))); //Should be ignored
+        sensorManager.onChanged(new SensorDataHeartRate("", "", HeartRate.of(5))); //Should be ignored
 
         String sensor3 = "2020-02-02T02:02:13Z";
         trackPointCreator.setClock(sensor3);
-        remoteSensorManager.onChanged(new SensorDataHeartRate("", "", HeartRate.of(7)));
+        sensorManager.onChanged(new SensorDataHeartRate("", "", HeartRate.of(7)));
 
         String stopTime = "2020-02-02T02:02:15Z";
         trackPointCreator.setClock(stopTime);
@@ -589,17 +589,17 @@ public class TrackRecordingServiceRecordingTest {
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
         trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
-        BluetoothRemoteSensorManager remoteSensorManager = trackPointCreator.getSensorManager().getBluetoothSensorManager();
+        SensorManager sensorManager = trackPointCreator.getSensorManager();
 
         // when
         String sensor1 = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(sensor1);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(0))); //Should be ignored
+        sensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(0))); //Should be ignored
 
         // when
         String sensor2 = "2020-02-02T02:02:04Z";
         trackPointCreator.setClock(sensor2);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(2)));
+        sensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(2)));
 
         // when
         String gps1 = "2020-02-02T02:02:05Z";
@@ -608,12 +608,12 @@ public class TrackRecordingServiceRecordingTest {
         // when
         String sensor3 = "2020-02-02T02:02:06Z";
         trackPointCreator.setClock(sensor3);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(12)));
+        sensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(12)));
 
         // when
         String sensor4 = "2020-02-02T02:02:07Z";
         trackPointCreator.setClock(sensor4);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(14))); //Should be ignored
+        sensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(14))); //Should be ignored
 
         // when
         String gps2 = "2020-02-02T02:02:08Z";
@@ -622,7 +622,7 @@ public class TrackRecordingServiceRecordingTest {
         // when
         String sensor5 = "2020-02-02T02:02:10Z";
         trackPointCreator.setClock(sensor5);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(16))); //Should be ignored
+        sensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(16))); //Should be ignored
 
         // when
         String gps3 = "2020-02-02T02:02:12Z";

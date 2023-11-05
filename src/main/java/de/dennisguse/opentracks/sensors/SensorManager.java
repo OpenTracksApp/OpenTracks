@@ -91,8 +91,8 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     @Deprecated
     @VisibleForTesting
-    public BluetoothRemoteSensorManager getBluetoothSensorManager() {
-        return bluetoothSensorManager;
+    public void onChanged(SensorData<?> data) {
+        listener.onChange(data);
     }
 
     public GPSManager getGpsManager() {

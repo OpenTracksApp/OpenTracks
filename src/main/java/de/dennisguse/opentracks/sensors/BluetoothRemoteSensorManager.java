@@ -29,7 +29,6 @@ import androidx.annotation.Nullable;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.sensors.sensorData.SensorData;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
 
@@ -47,7 +46,7 @@ import de.dennisguse.opentracks.util.PermissionRequester;
  *
  * @author Sandor Dornbush
  */
-public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBluetoothConnectionManager.SensorDataObserver, SharedPreferences.OnSharedPreferenceChangeListener {
+public class BluetoothRemoteSensorManager implements SensorConnector, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = BluetoothRemoteSensorManager.class.getSimpleName();
 
@@ -56,20 +55,25 @@ public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBl
     private final BluetoothAdapter bluetoothAdapter;
     private final Context context;
     private final Handler handler;
-    private final SensorManager.SensorDataChangedObserver observer;
     private boolean started = false;
 
-    private final BluetoothConnectionManagerHeartRate heartRate = new BluetoothConnectionManagerHeartRate(this);
-    private final BluetoothConnectionManagerCyclingCadence cyclingCadence = new BluetoothConnectionManagerCyclingCadence(this);
-    private final BluetoothConnectionManagerCyclingDistanceSpeed cyclingSpeed = new BluetoothConnectionManagerCyclingDistanceSpeed(this);
-    private final BluetoothConnectionManagerCyclingPower cyclingPower = new BluetoothConnectionManagerCyclingPower(this);
-    private final BluetoothConnectionRunningSpeedAndCadence runningSpeedAndCadence = new BluetoothConnectionRunningSpeedAndCadence(this);
+    private final BluetoothConnectionManagerHeartRate heartRate;
+    private final BluetoothConnectionManagerCyclingCadence cyclingCadence;
+    private final BluetoothConnectionManagerCyclingDistanceSpeed cyclingSpeed;
+    private final BluetoothConnectionManagerCyclingPower cyclingPower;
+    private final BluetoothConnectionRunningSpeedAndCadence runningSpeedAndCadence;
 
     public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull Handler handler, @Nullable SensorManager.SensorDataChangedObserver observer) {
         this.context = context;
         this.handler = handler;
-        this.observer = observer;
         bluetoothAdapter = BluetoothUtils.getAdapter(context);
+
+        this.heartRate = new BluetoothConnectionManagerHeartRate(observer);
+        this.cyclingCadence = new BluetoothConnectionManagerCyclingCadence(observer);
+        this.cyclingSpeed = new BluetoothConnectionManagerCyclingDistanceSpeed(observer);
+        this.cyclingPower = new BluetoothConnectionManagerCyclingPower(observer);
+        this.runningSpeedAndCadence = new BluetoothConnectionRunningSpeedAndCadence(observer);
+
     }
 
     @Override
@@ -120,26 +124,10 @@ public class BluetoothRemoteSensorManager implements SensorConnector, AbstractBl
         Log.i(TAG, "Connecting to bluetooth address: " + address);
         try {
             BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
-            connectionManager.connect(context, device);
+            connectionManager.connect(context, handler, device);
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Unable to get remote device for: " + address, e);
         }
-    }
-
-    @Override
-    public synchronized void onChanged(SensorData<?> sensorData) {
-        observer.onChange(sensorData);
-    }
-
-    @Override
-    public void onDisconnecting(SensorData<?> sensorData) {
-        observer.onDisconnect(sensorData);
-    }
-
-    @NonNull
-    @Override
-    public Handler getHandler() {
-        return handler;
     }
 
     @Override

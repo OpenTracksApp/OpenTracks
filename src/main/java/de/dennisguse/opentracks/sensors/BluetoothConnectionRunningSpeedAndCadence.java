@@ -4,12 +4,14 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 import androidx.annotation.NonNull;
 
+import java.util.List;
+
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 
 public class BluetoothConnectionRunningSpeedAndCadence extends AbstractBluetoothConnectionManager<SensorDataRunning.Data> {
 
-    BluetoothConnectionRunningSpeedAndCadence(@NonNull SensorDataObserver observer) {
-        super(BluetoothUtils.RUNNING_SPEED_CADENCE, observer);
+    BluetoothConnectionRunningSpeedAndCadence(@NonNull SensorManager.SensorDataChangedObserver observer) {
+        super(List.of(BluetoothUtils.RUNNING_SPEED_CADENCE), observer);
     }
 
     @Override
