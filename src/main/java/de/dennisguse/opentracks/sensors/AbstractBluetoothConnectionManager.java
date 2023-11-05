@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.sensors;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -24,7 +25,6 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
-import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 
@@ -40,6 +40,7 @@ import de.dennisguse.opentracks.sensors.sensorData.SensorData;
  * Manages connection to a Bluetooth LE sensor and subscribes for onChange-notifications.
  * Also parses the transferred data into {@link SensorDataObserver}.
  */
+@SuppressLint("MissingPermission")
 public abstract class AbstractBluetoothConnectionManager<DataType> {
 
     private static final String TAG = AbstractBluetoothConnectionManager.class.getSimpleName();
@@ -122,12 +123,7 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
             SensorData<DataType> sensorData = parsePayload(serviceMeasurementUUID.get(), gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
             if (sensorData != null) {
                 Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    observer.onChanged(sensorData);
-                } else {
-                    //TODO This might lead to NPEs in case of race conditions due to shutdown.
-                    observer.getHandler().post(() -> observer.onChanged(sensorData));
-                }
+                observer.onChanged(sensorData);
             }
         }
     };
@@ -150,11 +146,8 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
 
         Log.d(TAG, "Connecting to: " + device);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            bluetoothGatt = device.connectGatt(context, false, connectCallback, BluetoothDevice.TRANSPORT_AUTO, 0, this.observer.getHandler());
-        } else {
-            bluetoothGatt = device.connectGatt(context, false, connectCallback);
-        }
+        bluetoothGatt = device.connectGatt(context, false, connectCallback, BluetoothDevice.TRANSPORT_AUTO, 0, this.observer.getHandler());
+
         SensorData<?> sensorData = createEmptySensorData(bluetoothGatt.getDevice().getAddress());
         observer.onChanged(sensorData);
     }
@@ -162,7 +155,6 @@ public abstract class AbstractBluetoothConnectionManager<DataType> {
     private synchronized void clearData() {
         observer.onDisconnecting(createEmptySensorData(bluetoothGatt.getDevice().getAddress()));
     }
-
 
     synchronized void disconnect() {
         if (bluetoothGatt == null) {
