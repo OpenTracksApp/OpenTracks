@@ -3,6 +3,7 @@ package de.dennisguse.opentracks.sensors;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import java.util.List;
 import java.util.UUID;
@@ -40,10 +41,29 @@ public class BluetoothConnectionManagerHeartRate implements SensorHandlerInterfa
 
     @Override
     public void handlePayload(SensorManager.SensorDataChangedObserver observer, @NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-        HeartRate heartRate = BluetoothUtils.parseHeartRate(characteristic);
+        HeartRate heartRate = parseHeartRate(characteristic);
 
         if (heartRate != null) {
             observer.onChange(new SensorDataHeartRate(address, sensorName, heartRate));
         }
+    }
+
+    @VisibleForTesting
+    public static HeartRate parseHeartRate(BluetoothGattCharacteristic characteristic) {
+        //DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.heart_rate_measurement.xml
+        byte[] raw = characteristic.getValue();
+        if (raw.length == 0) {
+            return null;
+        }
+
+        boolean formatUINT16 = ((raw[0] & 0x1) == 1);
+        if (formatUINT16 && raw.length >= 3) {
+            return HeartRate.of(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 1));
+        }
+        if (!formatUINT16 && raw.length >= 2) {
+            return HeartRate.of(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 1));
+        }
+
+        return null;
     }
 }

@@ -33,12 +33,12 @@ public class BluetoothHandlerCyclingCadence implements SensorHandlerInterface {
 
         //TODO Implement to ServiceMeasurement.parse()?
         if (serviceMeasurementUUID.equals(BluetoothConnectionManagerCyclingPower.CYCLING_POWER)) {
-            SensorDataCyclingPower.Data data = BluetoothUtils.parseCyclingPower(address, sensorName, characteristic);
+            SensorDataCyclingPower.Data data = BluetoothConnectionManagerCyclingPower.parseCyclingPower(address, sensorName, characteristic);
             if (data!= null) {
                 observer.onChange(data.cadence());
             }
         } else if (serviceMeasurementUUID.equals(BluetoothConnectionManagerCyclingDistanceSpeed.CYCLING_SPEED_CADENCE)) {
-            SensorDataCyclingCadenceAndDistanceSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
+            SensorDataCyclingCadenceAndDistanceSpeed cadenceAndSpeed = BluetoothConnectionManagerCyclingDistanceSpeed.parseCyclingCrankAndWheel(address, sensorName, characteristic);
             if (cadenceAndSpeed == null) {
                 return;
             }

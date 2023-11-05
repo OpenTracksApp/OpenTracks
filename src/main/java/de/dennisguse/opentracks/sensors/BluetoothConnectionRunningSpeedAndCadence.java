@@ -3,10 +3,14 @@ package de.dennisguse.opentracks.sensors;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import java.util.List;
 import java.util.UUID;
 
+import de.dennisguse.opentracks.data.models.Cadence;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
@@ -30,6 +34,51 @@ public class BluetoothConnectionRunningSpeedAndCadence implements SensorHandlerI
 
     @Override
     public void handlePayload(SensorManager.SensorDataChangedObserver observer, @NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-        observer.onChange(BluetoothUtils.parseRunningSpeedAndCadence(address, sensorName, characteristic));
+        observer.onChange(parseRunningSpeedAndCadence(address, sensorName, characteristic));
+    }
+
+    @VisibleForTesting
+    public static SensorDataRunning parseRunningSpeedAndCadence(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {
+        // DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.rsc_measurement.xml
+        int valueLength = characteristic.getValue().length;
+        if (valueLength == 0) {
+            return null;
+        }
+
+        int flags = characteristic.getValue()[0];
+        boolean hasStrideLength = (flags & 0x01) > 0;
+        boolean hasTotalDistance = (flags & 0x02) > 0;
+        boolean hasStatus = (flags & 0x03) > 0; // walking vs running
+
+        Speed speed = null;
+        Cadence cadence = null;
+        Distance totalDistance = null;
+
+        int index = 1;
+        if (valueLength - index >= 2) {
+            speed = Speed.of(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index) / 256f);
+        }
+
+        index = 3;
+        if (valueLength - index >= 1) {
+            cadence = Cadence.of(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, index));
+
+            // Hacky workaround as the Wahoo Tickr X provides cadence in SPM (steps per minute) in violation to the standard.
+            if (sensorName != null && sensorName.startsWith("TICKR X")) {
+                cadence = Cadence.of(cadence.getRPM() / 2);
+            }
+        }
+
+        index = 4;
+        if (hasStrideLength && valueLength - index >= 2) {
+            Distance strideDistance = Distance.ofCM(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index));
+            index += 2;
+        }
+
+        if (hasTotalDistance && valueLength - index >= 4) {
+            totalDistance = Distance.ofDM(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, index));
+        }
+
+        return new SensorDataRunning(address, sensorName, speed, cadence, totalDistance);
     }
 }
