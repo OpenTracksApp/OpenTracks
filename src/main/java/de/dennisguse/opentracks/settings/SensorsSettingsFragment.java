@@ -52,9 +52,9 @@ public class SensorsSettingsFragment extends PreferenceFragmentCompat {
     private void setWheelCircumferenceInputFilter() {
         EditTextPreference wheelPreference = findPreference(getString(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key));
         wheelPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-            if (newValue instanceof String) {
+            if (newValue instanceof String newValueString) {
                 try {
-                    int newValueInt = Integer.parseInt((String) newValue);
+                    int newValueInt = Integer.parseInt(newValueString);
                     return newValueInt >= 100 && newValueInt < 4000;
                 } catch (NumberFormatException e) {
                     Log.w(TAG, "Entered string is no number.");
