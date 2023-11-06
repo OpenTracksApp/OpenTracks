@@ -49,8 +49,8 @@ public class ResetDialogPreference extends DialogPreference {
                 Toast.makeText(activity, R.string.settings_layout_reset_done, Toast.LENGTH_SHORT).show();
             }
 
-            if (activity instanceof ResetCallback) {
-                ((ResetCallback) activity).onReset();
+            if (activity instanceof ResetCallback resetCallback) {
+                resetCallback.onReset();
             }
         }
     }

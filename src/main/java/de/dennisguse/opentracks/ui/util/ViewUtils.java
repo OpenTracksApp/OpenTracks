@@ -20,10 +20,10 @@ public class ViewUtils {
 
         for (int i = 0; i < view.getChildCount(); i++) {
             final View child = view.getChildAt(i);
-            if (child instanceof ViewGroup) {
-                makeClickableLinks((ViewGroup) child);
-            } else if (child instanceof TextView) {
-                ((TextView) child).setMovementMethod(LinkMovementMethod.getInstance());
+            if (child instanceof ViewGroup childVg) {
+                makeClickableLinks(childVg);
+            } else if (child instanceof TextView childTv) {
+                childTv.setMovementMethod(LinkMovementMethod.getInstance());
             }
         }
     }

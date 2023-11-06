@@ -379,8 +379,8 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         startGpsMenuItem.setVisibility(!isRecording ? View.VISIBLE : View.INVISIBLE);
         if (!isRecording) {
             startGpsMenuItem.setIcon(AppCompatResources.getDrawable(this, isGpsStarted ? gpsStatusValue.icon : R.drawable.ic_gps_off_24dp));
-            if (startGpsMenuItem.getIcon() instanceof AnimatedVectorDrawable) {
-                ((AnimatedVectorDrawable) startGpsMenuItem.getIcon()).start();
+            if (startGpsMenuItem.getIcon() instanceof AnimatedVectorDrawable animatedVectorDrawable) {
+                animatedVectorDrawable.start();
             }
         }
     }

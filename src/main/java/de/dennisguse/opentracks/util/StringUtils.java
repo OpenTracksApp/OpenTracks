@@ -240,9 +240,9 @@ public class StringUtils {
     public static OffsetDateTime parseTime(String xmlDateTime) {
         try {
             TemporalAccessor t = DateTimeFormatter.ISO_DATE_TIME.parseBest(xmlDateTime, ZonedDateTime::from, LocalDateTime::from);
-            if (t instanceof LocalDateTime) {
+            if (t instanceof LocalDateTime localDateTime) {
                 Log.w(TAG, "Date does not contain timezone information: using UTC.");
-                t = ((LocalDateTime) t).atZone(ZoneOffset.UTC);
+                t = localDateTime.atZone(ZoneOffset.UTC);
             }
             return OffsetDateTime.from(t);
         } catch (Exception e) {
