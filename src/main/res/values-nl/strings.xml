@@ -473,7 +473,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_public_api_enabled_summary_on">Andere geïnstalleerde apps kunnen opnames starten of stoppen.</string>
     <string name="stats_sensors_power">Vermogen</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Opgenomen gegevens worden niet automatisch met andere apps gedeeld.</string>
-    <string name="voice_per_kilometer"></string>
     <string name="voice_per_mile">per mijl</string>
     <string name="lap_time">Rondetijd</string>
     <string name="pace">Tempo</string>
@@ -575,8 +574,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 nautisch mijl} other {{n,number,#.0} nautische mijlen} }</string>
     <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometer} other {{n,number,#.0} kilometers} }</string>
     <string name="sensor_state_power_unit">W</string>
-    <string name="sensor_state_heart_rate_unit"></string>
-    <string name="sensor_state_cadence_unit"></string>
     <string name="settings_sensor_bluetooth_service_filter_off">Alle ontdekbare Bluetooth-apparaten weergeven</string>
     <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 knoop} other {{n,number,#.0} knopen} }</string>
     <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 mijl per uur} other {{n,number,#.0} mijlen per uur} }</string>
