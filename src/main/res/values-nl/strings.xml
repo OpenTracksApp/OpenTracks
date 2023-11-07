@@ -223,7 +223,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <!-- Search -->
     <!-- Sensor State -->
     <string name="sensor_state_heart_rate">Hartslag</string>
-    <string name="sensor_state_heart_rate_value">%1$d spm</string>
+    <string name="sensor_state_heart_rate_value">%1$d /min</string>
     <string name="sensor_state_power">Vermogen</string>
     <string name="sensor_could_not_scan">Kon niet scannen naar Bluetooth-apparaten (fout %1$i).</string>
     <string name="bluetooth_disabled">Schakel Bluetooth in.</string>
@@ -473,7 +473,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_public_api_enabled_summary_on">Andere geïnstalleerde apps kunnen opnames starten of stoppen.</string>
     <string name="stats_sensors_power">Vermogen</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Opgenomen gegevens worden niet automatisch met andere apps gedeeld.</string>
-    <string name="voice_per_mile">per mijl</string>
+    <string name="voice_per_mile">/mijl</string>
     <string name="lap_time">Rondetijd</string>
     <string name="pace">Tempo</string>
     <string name="lap_speed">Ronde snelheid</string>
@@ -551,7 +551,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="introduction_osm_dashboard">OpenTracks zelf biedt geen kaart. Installeer OSMDashboard om uw opnames op een kaart te bekijken.</string>
     <string name="unit_nautical_mile">NM</string>
     <string name="value_integer_knots">%1$d knopen</string>
-    <string name="voice_per_nautical_mile">per zeemijl</string>
+    <string name="voice_per_nautical_mile">/NM</string>
     <string name="track_delete_number_of_tracks">%1$d routes</string>
     <string name="voice_on_device_speaker_title">Gebruik toestelspeaker</string>
     <string name="settings_public_api_package_title">Pakketnaam voor openbare API</string>
@@ -592,4 +592,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_title">Opname</string>
     <string name="settings_ui_dynamic_colors_summary">Gebruik door de gebruiker gedefinieerde dynamische kleuren (alleen Android 12+; vereist een handmatige herstart)</string>
     <string name="permission_recording_failed">OpenTracks heeft toestemming nodig om toegang te krijgen tot zowel uw locatie als nabijgelegen apparaten.</string>
+    <string name="sensor_state_heart_rate_unit">/min</string>
+    <string name="sensor_state_cadence_unit">/min</string>
+    <string name="voice_per_kilometer">/km</string>
 </resources>
