@@ -604,4 +604,5 @@ limitations under the License.
     <string name="settings_ui_dynamic_colors_title">動態色彩</string>
     <string name="settings_recording_title">紀錄</string>
     <string name="settings_ui_dynamic_colors_summary">使用使用者自訂的動態色彩（僅限 Android 12+；需要手動重新啟動）</string>
+    <string name="permission_recording_failed">OpenTracks 需要授權以存取您的位置以及附近的裝置。</string>
 </resources>
