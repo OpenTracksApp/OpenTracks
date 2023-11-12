@@ -65,7 +65,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <!-- Activity Type -->
     <string name="activity_type_airplane">vliegtuig</string>
     <string name="activity_type_atv">quad</string>
-    <string name="activity_type_biking">fietsen</string>
+    <string name="activity_type_biking">motorfietsen</string>
     <string name="activity_type_blimp">luchtballon</string>
     <string name="activity_type_boat">boot</string>
     <string name="activity_type_climbing">klimmen</string>
