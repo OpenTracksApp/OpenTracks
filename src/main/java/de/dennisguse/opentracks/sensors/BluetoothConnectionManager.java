@@ -33,7 +33,6 @@ import androidx.annotation.NonNull;
 import java.util.Optional;
 import java.util.UUID;
 
-import de.dennisguse.opentracks.sensors.sensorData.SensorData;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
 /**
@@ -140,8 +139,7 @@ public class BluetoothConnectionManager {
 
         bluetoothGatt = device.connectGatt(context, false, connectCallback, BluetoothDevice.TRANSPORT_AUTO, 0, handler);
 
-        SensorData<?> sensorData = sensorHandler.createEmptySensorData(bluetoothGatt.getDevice().getAddress());
-        observer.onChange(sensorData);
+        observer.onConnect(sensorHandler.createEmptySensorData(bluetoothGatt.getDevice().getAddress()));
     }
 
     private synchronized void clearData() {

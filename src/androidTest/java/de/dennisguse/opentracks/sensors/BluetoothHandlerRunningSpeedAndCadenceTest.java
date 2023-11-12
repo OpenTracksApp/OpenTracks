@@ -9,7 +9,6 @@ import org.junit.Test;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 
 public class BluetoothHandlerRunningSpeedAndCadenceTest {
 
@@ -19,11 +18,11 @@ public class BluetoothHandlerRunningSpeedAndCadenceTest {
         characteristic.setValue(new byte[]{2, 0, 5, 80, (byte) 0xFF, (byte) 0xFF, 0, 1});
 
         // when
-        SensorDataRunning sensor = BluetoothHandlerRunningSpeedAndCadence.parseRunningSpeedAndCadence("address", "sensorName", characteristic);
+        BluetoothHandlerRunningSpeedAndCadence.Data sensor = BluetoothHandlerRunningSpeedAndCadence.parseRunningSpeedAndCadence("sensorName", characteristic);
 
         // then
-        assertEquals(Speed.of(5), sensor.getSpeed());
-        assertEquals(Cadence.of(80), sensor.getCadence());
-        assertEquals(Distance.of(6553.5 + 1677721.6), sensor.getTotalDistance());
+        assertEquals(Speed.of(5), sensor.speed());
+        assertEquals(Cadence.of(80), sensor.cadence());
+        assertEquals(Distance.of(6553.5 + 1677721.6), sensor.totalDistance());
     }
 }

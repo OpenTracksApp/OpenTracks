@@ -548,22 +548,28 @@ public class ExportImportTest {
     private void mockBLESensorData(TrackPointCreator trackPointCreator, Float speed, Distance distance, float heartRate, float cadence, Float power) {
 
         SensorDataSet sensorDataSet = new SensorDataSet();
-        sensorDataSet.set(new SensorDataCyclingPower("power", "power", Power.of(power)));
-        sensorDataSet.set(new SensorDataHeartRate("heartRate", "heartRate", HeartRate.of(heartRate)));
+
+        sensorDataSet.cyclingPower = Mockito.mock(SensorDataCyclingPower.class);
+        Mockito.when( sensorDataSet.cyclingPower.hasValue()).thenReturn(true);
+        Mockito.when(sensorDataSet.cyclingPower.getValue()).thenReturn(Power.of(power));
+
+        sensorDataSet.heartRate = Mockito.mock(SensorDataHeartRate.class);
+        Mockito.when(sensorDataSet.heartRate.getValue()).thenReturn(HeartRate.of(heartRate));
 
         SensorDataCyclingCadence cyclingCadence = Mockito.mock(SensorDataCyclingCadence.class);
         Mockito.when(cyclingCadence.hasValue()).thenReturn(true);
         Mockito.when(cyclingCadence.getValue()).thenReturn(Cadence.of(cadence));
-        sensorDataSet.set(cyclingCadence);
+        sensorDataSet.cyclingCadence = cyclingCadence;
 
         if (distance != null && speed != null) {
             SensorDataCyclingDistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCyclingDistanceSpeed.Data.class);
             Mockito.when(distanceSpeedData.getDistanceOverall()).thenReturn(distance);
             Mockito.when(distanceSpeedData.getSpeed()).thenReturn(Speed.of(speed));
+
             SensorDataCyclingDistanceSpeed distanceSpeed = Mockito.mock(SensorDataCyclingDistanceSpeed.class);
             Mockito.when(distanceSpeed.hasValue()).thenReturn(true);
             Mockito.when(distanceSpeed.getValue()).thenReturn(distanceSpeedData);
-            sensorDataSet.set(distanceSpeed);
+            sensorDataSet.cyclingDistanceSpeed = distanceSpeed;
         }
 
         trackPointCreator.getSensorManager().sensorDataSet = sensorDataSet;

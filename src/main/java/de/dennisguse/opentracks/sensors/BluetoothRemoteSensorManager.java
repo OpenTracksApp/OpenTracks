@@ -50,7 +50,7 @@ public class BluetoothRemoteSensorManager implements SensorConnector, SharedPref
 
     private static final String TAG = BluetoothRemoteSensorManager.class.getSimpleName();
 
-    public static final Duration MAX_SENSOR_DATE_SET_AGE = Duration.ofSeconds(5);
+    public static final Duration MAX_SENSOR_DATE_SET_AGE = Duration.ofSeconds(50); //TODO
 
     private final BluetoothAdapter bluetoothAdapter;
     private final Context context;

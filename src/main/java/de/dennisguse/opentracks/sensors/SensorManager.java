@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.handlers.GPSManager;
@@ -27,13 +28,19 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
     private final SensorDataChangedObserver listener = new SensorDataChangedObserver() {
 
         @Override
-        public void onChange(SensorData<?> sensorData) {
-            sensorDataSet.set(sensorData);
+        public void onConnect(SensorData<?, ?> sensorData) {
+            sensorDataSet.add(sensorData);
             observer.onChange(new SensorDataSet(sensorDataSet));
         }
 
         @Override
-        public void onDisconnect(SensorData<?> sensorData) {
+        public void onChange(Raw<?> sensorData) {
+            sensorDataSet.update(sensorData);
+            observer.onChange(new SensorDataSet(sensorDataSet));
+        }
+
+        @Override
+        public void onDisconnect(SensorData<?, ?> sensorData) {
             sensorDataSet.remove(sensorData);
             observer.onChange(new SensorDataSet(sensorDataSet));
         }
@@ -91,7 +98,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     @Deprecated
     @VisibleForTesting
-    public void onChanged(SensorData<?> data) {
+    public void onChanged(Raw<?> data) {
         listener.onChange(data);
     }
 
@@ -120,8 +127,10 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
     }
 
     public interface SensorDataChangedObserver {
-        void onChange(SensorData<?> sensorData);
 
-        void onDisconnect(SensorData<?> sensorData);
+        void onConnect(SensorData<?, ?> sensorData);
+        void onChange(Raw<?> sensorData);
+
+        void onDisconnect(SensorData<?, ?> sensorData);
     }
 }

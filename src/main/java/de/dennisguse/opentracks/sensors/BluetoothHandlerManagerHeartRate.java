@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
@@ -44,7 +45,7 @@ public class BluetoothHandlerManagerHeartRate implements SensorHandlerInterface 
         HeartRate heartRate = parseHeartRate(characteristic);
 
         if (heartRate != null) {
-            observer.onChange(new SensorDataHeartRate(address, sensorName, heartRate));
+            observer.onChange(new Raw<>(heartRate));
         }
     }
 

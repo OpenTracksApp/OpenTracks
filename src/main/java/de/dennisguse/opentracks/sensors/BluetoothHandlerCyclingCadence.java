@@ -2,12 +2,12 @@ package de.dennisguse.opentracks.sensors;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.util.Log;
+import android.util.Pair;
 
 import java.util.List;
 
+import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadenceAndDistanceSpeed;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
 public class BluetoothHandlerCyclingCadence implements SensorHandlerInterface {
@@ -30,24 +30,28 @@ public class BluetoothHandlerCyclingCadence implements SensorHandlerInterface {
 
     @Override
     public void handlePayload(SensorManager.SensorDataChangedObserver observer, ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-
-        //TODO Implement to ServiceMeasurement.parse()?
         if (serviceMeasurementUUID.equals(BluetoothHandlerManagerCyclingPower.CYCLING_POWER)) {
-            SensorDataCyclingPower.Data data = BluetoothHandlerManagerCyclingPower.parseCyclingPower(address, sensorName, characteristic);
-            if (data!= null) {
-                observer.onChange(data.cadence());
+            BluetoothHandlerManagerCyclingPower.Data data = BluetoothHandlerManagerCyclingPower.parseCyclingPower(characteristic);
+            if (data != null && data.crank() != null) {
+                observer.onChange(new Raw<>(data.crank()));
             }
-        } else if (serviceMeasurementUUID.equals(BluetoothHandlerCyclingDistanceSpeed.CYCLING_SPEED_CADENCE)) {
-            SensorDataCyclingCadenceAndDistanceSpeed cadenceAndSpeed = BluetoothHandlerCyclingDistanceSpeed.parseCyclingCrankAndWheel(address, sensorName, characteristic);
-            if (cadenceAndSpeed == null) {
-                return;
-            }
+            return;
+        }
 
-            if (cadenceAndSpeed.getCadence() != null) {
-                observer.onChange(cadenceAndSpeed.getCadence());
+        if (serviceMeasurementUUID.equals(BluetoothHandlerCyclingDistanceSpeed.CYCLING_SPEED_CADENCE)) {
+            Pair<BluetoothHandlerCyclingDistanceSpeed.WheelData, CrankData> data = BluetoothHandlerCyclingDistanceSpeed.parseCyclingCrankAndWheel(address, sensorName, characteristic);
+
+            if (data != null && data.second != null) {
+                observer.onChange(new Raw<>(data.second));
             }
+            return;
         }
 
         Log.e(TAG, "Don't know how to decode this payload.");
     }
+
+    public record CrankData(
+            long crankRevolutionsCount, // UINT32
+            int crankRevolutionsTime // UINT16; 1/1024s
+     ) {}
 }

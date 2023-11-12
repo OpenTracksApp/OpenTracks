@@ -1,31 +1,40 @@
 package de.dennisguse.opentracks.sensors.sensorData;
 
-import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.data.models.Cadence;
-import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.sensors.BluetoothHandlerCyclingCadence;
+import de.dennisguse.opentracks.sensors.BluetoothHandlerCyclingDistanceSpeed;
+import de.dennisguse.opentracks.sensors.BluetoothHandlerManagerCyclingPower;
+import de.dennisguse.opentracks.sensors.BluetoothHandlerRunningSpeedAndCadence;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public final class SensorDataSet {
 
     private static final String TAG = SensorDataSet.class.getSimpleName();
 
-    private SensorDataHeartRate heartRate;
+    @VisibleForTesting
+    public SensorDataHeartRate heartRate;
 
-    private SensorDataCyclingCadence cyclingCadence;
+    @VisibleForTesting
+    public SensorDataCyclingCadence cyclingCadence;
 
-    private SensorDataCyclingDistanceSpeed cyclingDistanceSpeed;
+    @VisibleForTesting
+    public SensorDataCyclingDistanceSpeed cyclingDistanceSpeed;
 
-    private SensorDataCyclingPower cyclingPower;
+    @VisibleForTesting
+    public SensorDataCyclingPower cyclingPower;
 
-    private SensorDataRunning runningDistanceSpeedCadence;
+    @VisibleForTesting
+    public SensorDataRunning runningDistanceSpeedCadence;
 
     public SensorDataSet() {
     }
@@ -51,8 +60,8 @@ public final class SensorDataSet {
             return new Pair<>(cyclingCadence.getValue(), cyclingCadence.getSensorNameOrAddress());
         }
 
-        if (runningDistanceSpeedCadence != null) {
-            return new Pair<>(runningDistanceSpeedCadence.getCadence(), runningDistanceSpeedCadence.getSensorNameOrAddress());
+        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue() && runningDistanceSpeedCadence.value.cadence() != null) {
+            return new Pair<>(runningDistanceSpeedCadence.value.cadence(), runningDistanceSpeedCadence.getSensorNameOrAddress());
         }
 
         return null;
@@ -64,33 +73,51 @@ public final class SensorDataSet {
         }
 
         if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue() && runningDistanceSpeedCadence.getValue().speed() != null) {
-            return new Pair<>(runningDistanceSpeedCadence.getSpeed(), runningDistanceSpeedCadence.getSensorNameOrAddress());
+            return new Pair<>(runningDistanceSpeedCadence.value.speed(), runningDistanceSpeedCadence.getSensorNameOrAddress());
         }
 
         return null;
-    }
-
-    public SensorDataCyclingCadence getCyclingCadence() {
-        return cyclingCadence;
-    }
-
-    public SensorDataCyclingDistanceSpeed getCyclingDistanceSpeed() {
-        return cyclingDistanceSpeed;
     }
 
     public SensorDataCyclingPower getCyclingPower() {
         return cyclingPower;
     }
 
-    public SensorDataRunning getRunningDistanceSpeedCadence() {
-        return runningDistanceSpeedCadence;
-    }
-
-    public void set(SensorData<?> data) {
+    public void add(@NonNull SensorData<?, ?> data) {
         set(data, data);
     }
 
-    public void remove(SensorData<?> type) {
+    public void update(@NonNull Raw<?> data) {
+        Record value = data.value();
+
+        if (value instanceof HeartRate) {
+            this.heartRate.add((Raw<HeartRate>) data);
+            return;
+        }
+
+        if (value instanceof BluetoothHandlerCyclingCadence.CrankData) {
+            this.cyclingCadence.add((Raw<BluetoothHandlerCyclingCadence.CrankData>) data);
+            return;
+        }
+        if (value instanceof BluetoothHandlerCyclingDistanceSpeed.WheelData ) {
+            this.cyclingDistanceSpeed.setWheelCircumference(PreferencesUtils.getWheelCircumference()); //TODO Fetch once and then listen for changes.
+            this.cyclingDistanceSpeed.add((Raw<BluetoothHandlerCyclingDistanceSpeed.WheelData>) data);
+            return;
+        }
+        if (value instanceof BluetoothHandlerRunningSpeedAndCadence.Data) {
+            this.runningDistanceSpeedCadence.add((Raw<BluetoothHandlerRunningSpeedAndCadence.Data>) data);
+
+            return;
+        }
+        if (value instanceof BluetoothHandlerManagerCyclingPower.Data) {
+            this.cyclingPower.add((Raw<Power>) data);
+            return;
+        }
+
+        throw new UnsupportedOperationException(data.getClass().getCanonicalName());
+    }
+
+    public void remove(@NonNull SensorData<?, ?> type) {
         set(type, null);
     }
 
@@ -136,71 +163,25 @@ public final class SensorDataSet {
         if (runningDistanceSpeedCadence != null) runningDistanceSpeedCadence.reset();
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return (heartRate != null ? "" + heartRate : "")
-                + (cyclingCadence != null ? " " + cyclingCadence : "")
-                + (cyclingDistanceSpeed != null ? " " + cyclingDistanceSpeed : "")
-                + (cyclingPower != null ? " " + cyclingPower : "")
-                + (runningDistanceSpeedCadence != null ? " " + runningDistanceSpeedCadence : "");
-    }
-
-    private void set(@NonNull SensorData<?> type, @Nullable SensorData<?> sensorData) {
-        if (type instanceof SensorDataHeartRate) {
-            this.heartRate = (SensorDataHeartRate) sensorData;
+    private void set(@NonNull SensorData<?, ?> type, @Nullable SensorData<?, ?> sensorData) {
+        if (type instanceof SensorDataHeartRate hr) {
+            heartRate = hr;
             return;
         }
-
-        if (type instanceof SensorDataCyclingCadence) {
-            SensorDataCyclingCadence previous = getCyclingCadence();
-            Log.d(TAG, "Previous: " + previous + "; current: " + sensorData);
-
-            if (sensorData != null && sensorData.equals(previous)) {
-                Log.d(TAG, "onChanged: cadence data repeated.");
-                return;
-            }
-
-            this.cyclingCadence = (SensorDataCyclingCadence) sensorData;
-            if (this.cyclingCadence != null) {
-                this.cyclingCadence.compute(previous);
-            }
+        if (type instanceof SensorDataCyclingCadence cc) {
+            cyclingCadence = cc;
             return;
         }
-
-        if (type instanceof SensorDataCyclingDistanceSpeed) {
-            SensorDataCyclingDistanceSpeed previous = getCyclingDistanceSpeed();
-            Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
-            if (sensorData != null && sensorData.equals(previous)) {
-                Log.d(TAG, "onChanged: cycling speed data repeated.");
-                return;
-            }
-            Distance preferenceWheelCircumference = PreferencesUtils.getWheelCircumference(); //TODO Fetch once and then listen for changes.
-
-            this.cyclingDistanceSpeed = (SensorDataCyclingDistanceSpeed) sensorData;
-            if (this.cyclingDistanceSpeed != null) {
-                this.cyclingDistanceSpeed.compute(previous, preferenceWheelCircumference);
-            }
+        if (type instanceof SensorDataCyclingDistanceSpeed ds) {
+            cyclingDistanceSpeed = ds;
             return;
         }
-
-        if (type instanceof SensorDataCyclingPower) {
-            this.cyclingPower = (SensorDataCyclingPower) sensorData;
+        if (type instanceof SensorDataCyclingPower cp) {
+            cyclingPower = cp;
             return;
         }
-
-        if (type instanceof SensorDataRunning) {
-            SensorDataRunning previous = getRunningDistanceSpeedCadence();
-            Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
-            if (sensorData != null && sensorData.equals(previous)) {
-                Log.d(TAG, "onChanged: running speed data repeated.");
-                return;
-            }
-
-            this.runningDistanceSpeedCadence = (SensorDataRunning) sensorData;
-            if (this.runningDistanceSpeedCadence != null) {
-                this.runningDistanceSpeedCadence.compute(previous);
-            }
+        if (type instanceof SensorDataRunning rr) {
+            runningDistanceSpeedCadence = rr;
             return;
         }
 

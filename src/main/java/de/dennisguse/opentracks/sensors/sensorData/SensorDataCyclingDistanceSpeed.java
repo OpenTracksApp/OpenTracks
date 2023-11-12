@@ -3,58 +3,32 @@ package de.dennisguse.opentracks.sensors.sensorData;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.time.Duration;
 
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.sensors.BluetoothHandlerCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.UintUtils;
 
-public class SensorDataCyclingDistanceSpeed extends SensorData<SensorDataCyclingDistanceSpeed.Data> {
+public class SensorDataCyclingDistanceSpeed extends SensorData<BluetoothHandlerCyclingDistanceSpeed.WheelData, SensorDataCyclingDistanceSpeed.Data> {
 
     private final String TAG = SensorDataCyclingDistanceSpeed.class.getSimpleName();
 
-    private final Long wheelRevolutionsCount; // UINT32
-    private final Integer wheelRevolutionsTime; // UINT16; 1/1024s
+    private Distance wheelCircumference;
 
     public SensorDataCyclingDistanceSpeed(String sensorAddress) {
         super(sensorAddress);
-        this.wheelRevolutionsCount = null;
-        this.wheelRevolutionsTime = null;
     }
 
-    public SensorDataCyclingDistanceSpeed(String sensorAddress, String sensorName, long wheelRevolutionsCount, int wheelRevolutionsTime) {
+    public SensorDataCyclingDistanceSpeed(String sensorAddress, String sensorName) {
         super(sensorAddress, sensorName);
-        this.wheelRevolutionsCount = wheelRevolutionsCount;
-        this.wheelRevolutionsTime = wheelRevolutionsTime;
     }
 
-    public boolean hasData() {
-        return wheelRevolutionsCount != null && wheelRevolutionsTime != null;
-    }
-
-    public long getWheelRevolutionsCount() {
-        return wheelRevolutionsCount;
-    }
-
-    public int getWheelRevolutionsTime() {
-        return wheelRevolutionsTime;
-    }
-
-    @NonNull
     @Override
-    protected Data getNoneValue() {
-        if (value != null) {
-            return new Data(value.distance, value.distanceOverall, Speed.zero());
-        } else {
-            return new Data(Distance.of(0), Distance.of(0), Speed.zero());
-        }
-    }
-
-    public void compute(SensorDataCyclingDistanceSpeed previous, Distance wheelCircumference) {
-        if (hasData() && previous != null && previous.hasData()) {
-            float timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * 1000;
+    protected void computeValue(Raw<BluetoothHandlerCyclingDistanceSpeed.WheelData> current) {
+        if (previous != null) {
+            float timeDiff_ms = UintUtils.diff(current.value().wheelRevolutionsTime(), previous.value().wheelRevolutionsTime(), UintUtils.UINT16_MAX) / 1024f * 1000;
             Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
             if (timeDiff.isZero() || timeDiff.isNegative()) {
                 Log.e(TAG, "Timestamps difference is invalid: cannot compute speed.");
@@ -62,16 +36,16 @@ public class SensorDataCyclingDistanceSpeed extends SensorData<SensorDataCycling
                 return;
             }
 
-            if (wheelRevolutionsCount < previous.wheelRevolutionsCount) {
+            if (current.value().wheelRevolutionsCount() < previous.value().wheelRevolutionsCount()) {
                 Log.e(TAG, "Wheel revolutions count difference is invalid: cannot compute speed.");
                 return;
             }
-            long wheelDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT32_MAX);
+            long wheelDiff = UintUtils.diff(current.value().wheelRevolutionsCount(), previous.value().wheelRevolutionsCount(), UintUtils.UINT32_MAX);
 
             Distance distance = wheelCircumference.multipliedBy(wheelDiff);
             Distance distanceOverall = distance;
-            if (previous.hasValue()) {
-                distanceOverall = distance.plus(previous.getValue().distanceOverall);
+            if (value != null) {
+                distanceOverall = distance.plus(value.distanceOverall);
             }
             Speed speed_mps = Speed.of(distance, timeDiff);
             value = new Data(distance, distanceOverall, speed_mps);
@@ -87,21 +61,19 @@ public class SensorDataCyclingDistanceSpeed extends SensorData<SensorDataCycling
 
     @NonNull
     @Override
-    public String toString() {
-        return super.toString() + " data=" + value + " time=" + wheelRevolutionsTime + " count=" + wheelRevolutionsCount;
-    }
-
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (!(obj instanceof SensorDataCyclingDistanceSpeed comp)) return false;
-
-        if (!(hasData() && comp.hasData())) {
-            return false;
+    protected Data getNoneValue() {
+        if (value != null) {
+            return new Data(value.distance, value.distanceOverall, Speed.zero());
+        } else {
+            return new Data(Distance.of(0), Distance.of(0), Speed.zero());
         }
-
-        return getWheelRevolutionsCount() == comp.getWheelRevolutionsCount() && getWheelRevolutionsTime() == comp.getWheelRevolutionsTime();
     }
 
+    public void setWheelCircumference(Distance wheelCircumference) {
+        this.wheelCircumference = wheelCircumference;
+    }
+
+    // TODO Make record
     public static class Data {
         private final Distance distance;
         private final Distance distanceOverall;

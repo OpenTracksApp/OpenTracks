@@ -1,56 +1,48 @@
 package de.dennisguse.opentracks.sensors.sensorData;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.sensors.BluetoothHandlerRunningSpeedAndCadence;
 
 /**
  * Provides cadence in rpm and speed in milliseconds from Bluetooth LE Running Speed and Cadence sensors.
  */
-public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> {
+public final class SensorDataRunning extends SensorData<BluetoothHandlerRunningSpeedAndCadence.Data, SensorDataRunning.Data> {
 
     private static final String TAG = SensorDataRunning.class.getSimpleName();
 
-    private final Speed speed;
-
-    private final Cadence cadence;
-
-    private final Distance totalDistance;
-
     public SensorDataRunning(String sensorAddress) {
         super(sensorAddress);
-        this.speed = null;
-        this.cadence = null;
-        this.totalDistance = null;
     }
 
-    public SensorDataRunning(String sensorAddress, String sensorName, Speed speed, Cadence cadence, Distance totalDistance) {
+    public SensorDataRunning(String sensorAddress, String sensorName) {
         super(sensorAddress, sensorName);
-        this.speed = speed;
-        this.cadence = cadence;
-        this.totalDistance = totalDistance;
     }
 
-    private boolean hasTotalDistance() {
-        return totalDistance != null;
+    @Override
+    public void computeValue(Raw<BluetoothHandlerRunningSpeedAndCadence.Data> current) {
+        if (previous != null) {
+
+            Distance distance = null;
+            if (previous.value().totalDistance() != null && current.value().totalDistance() != null) {
+                distance = current.value().totalDistance().minus(previous.value().totalDistance());
+                if (value != null) {
+                    distance = distance.plus(value.distance);
+                }
+            }
+
+            value = new Data(current.value().speed(), current.value().cadence(), distance);
+        }
     }
 
-
-    public Cadence getCadence() {
-        return cadence;
-    }
-
-    public Speed getSpeed() {
-        return speed;
-    }
-
-    @VisibleForTesting
-    public Distance getTotalDistance() {
-        return totalDistance;
+    @Override
+    public void reset() {
+        if (value != null) {
+            value = new Data(value.speed, value.cadence, Distance.of(0));
+        }
     }
 
     @NonNull
@@ -63,27 +55,7 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
         }
     }
 
-    public void compute(SensorDataRunning previous) {
-        if (speed != null && hasTotalDistance()) {
-            Distance overallDistance = null;
-            if (previous != null && previous.hasTotalDistance()) {
-                overallDistance = this.totalDistance.minus(previous.totalDistance);
-                if (previous.hasValue() && previous.getValue().distance() != null) {
-                    overallDistance = overallDistance.plus(previous.getValue().distance());
-                }
-            }
-
-            value = new Data(speed, cadence, overallDistance);
-        }
+    public record Data(Speed speed, Cadence cadence, @NonNull Distance distance) {
     }
-
-    @Override
-    public void reset() {
-        if (value != null) {
-            value = new Data(value.speed, value.cadence, Distance.of(0));
-        }
-    }
-
-    public record Data(Speed speed, Cadence cadence, @Nullable Distance distance) {}
 }
 

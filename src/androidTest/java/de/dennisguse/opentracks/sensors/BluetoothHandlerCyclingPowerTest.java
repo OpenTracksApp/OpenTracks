@@ -6,8 +6,6 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 import org.junit.Test;
 
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
-
 public class BluetoothHandlerCyclingPowerTest {
 
     @Test
@@ -16,10 +14,10 @@ public class BluetoothHandlerCyclingPowerTest {
         characteristic.setValue(new byte[]{0, 0, 40, 0});
 
         // when
-        SensorDataCyclingPower.Data powerCadence = BluetoothHandlerManagerCyclingPower.parseCyclingPower("", "", characteristic);
+        BluetoothHandlerManagerCyclingPower.Data powerCadence = BluetoothHandlerManagerCyclingPower.parseCyclingPower(characteristic);
 
         // then
-        assertEquals(40, powerCadence.power().getValue().getW(), 0.01);
+        assertEquals(40, powerCadence.power().getW(), 0.01);
     }
 
     @Test
@@ -28,13 +26,13 @@ public class BluetoothHandlerCyclingPowerTest {
         characteristic.setValue(new byte[]{0x2C, 0x00, 0x00, 0x00, (byte) 0x9F, 0x00, 0x0C, 0x00, (byte) 0xE5, 0x42});
 
         // when
-        SensorDataCyclingPower.Data powerCadence = BluetoothHandlerManagerCyclingPower.parseCyclingPower("", "", characteristic);
+        BluetoothHandlerManagerCyclingPower.Data powerCadence = BluetoothHandlerManagerCyclingPower.parseCyclingPower(characteristic);
 
         // then
-        assertEquals(0, powerCadence.power().getValue().getW(), 0.01);
+        assertEquals(0, powerCadence.power().getW(), 0.01);
 
-        assertEquals(12, powerCadence.cadence().getCrankRevolutionsCount());
-        assertEquals(17125, powerCadence.cadence().getCrankRevolutionsTime());
+        assertEquals(12, powerCadence.crank().crankRevolutionsCount());
+        assertEquals(17125, powerCadence.crank().crankRevolutionsTime());
     }
 
 }

@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.sensors;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -8,8 +9,7 @@ import androidx.annotation.VisibleForTesting;
 import java.util.List;
 import java.util.UUID;
 
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadenceAndDistanceSpeed;
+import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
@@ -32,19 +32,15 @@ public class BluetoothHandlerCyclingDistanceSpeed implements SensorHandlerInterf
 
     @Override
     public void handlePayload(SensorManager.SensorDataChangedObserver observer, ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-        SensorDataCyclingCadenceAndDistanceSpeed cadenceAndSpeed = parseCyclingCrankAndWheel(address, sensorName, characteristic);
-        if (cadenceAndSpeed == null) {
-            return;
-        }
-
-        if (cadenceAndSpeed.getDistanceSpeed() != null) {
-            observer.onChange(cadenceAndSpeed.getDistanceSpeed());
+        Pair<WheelData, BluetoothHandlerCyclingCadence.CrankData> data = parseCyclingCrankAndWheel(address, sensorName, characteristic);
+        if (data.first != null) {
+            observer.onChange(new Raw<>(data.first));
         }
     }
 
 
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-    public static SensorDataCyclingCadenceAndDistanceSpeed parseCyclingCrankAndWheel(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {
+    public static Pair<WheelData, BluetoothHandlerCyclingCadence.CrankData> parseCyclingCrankAndWheel(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {
         // DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.csc_measurement.xml
         int valueLength = characteristic.getValue().length;
         if (valueLength == 0) {
@@ -56,24 +52,31 @@ public class BluetoothHandlerCyclingDistanceSpeed implements SensorHandlerInterf
         boolean hasCrank = (flags & 0x02) > 0;
 
         int index = 1;
-        SensorDataCyclingDistanceSpeed speed = null;
+        WheelData wheelData = null;
         if (hasWheel && valueLength - index >= 6) {
-            int wheelTotalRevolutionCount = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, index);
+            long wheelTotalRevolutionCount = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, index);
             index += 4;
             int wheelTime = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index); // 1/1024s
-            speed = new SensorDataCyclingDistanceSpeed(address, sensorName, wheelTotalRevolutionCount, wheelTime);
+            wheelData = new WheelData(wheelTotalRevolutionCount, wheelTime);
             index += 2;
         }
 
-        SensorDataCyclingCadence cadence = null;
+        BluetoothHandlerCyclingCadence.CrankData crankData = null;
         if (hasCrank && valueLength - index >= 4) {
             long crankCount = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index);
             index += 2;
 
             int crankTime = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index); // 1/1024s
-            cadence = new SensorDataCyclingCadence(address, sensorName, crankCount, crankTime);
+            crankData = new BluetoothHandlerCyclingCadence.CrankData(crankCount, crankTime);
         }
 
-        return new SensorDataCyclingCadenceAndDistanceSpeed(address, sensorName, cadence, speed);
+        return new Pair<>(wheelData, crankData);
     }
+
+    public record WheelData(
+
+            long wheelRevolutionsCount, // UINT32
+
+            int wheelRevolutionsTime // UINT16; 1/1024s
+    ) {}
 }

@@ -11,6 +11,7 @@ import java.util.UUID;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
@@ -34,11 +35,12 @@ public class BluetoothHandlerRunningSpeedAndCadence implements SensorHandlerInte
 
     @Override
     public void handlePayload(SensorManager.SensorDataChangedObserver observer, @NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-        observer.onChange(parseRunningSpeedAndCadence(address, sensorName, characteristic));
+        Data data = parseRunningSpeedAndCadence(sensorName, characteristic);
+        observer.onChange(new Raw<>(data));
     }
 
     @VisibleForTesting
-    public static SensorDataRunning parseRunningSpeedAndCadence(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {
+    public static Data parseRunningSpeedAndCadence(String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {
         // DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.rsc_measurement.xml
         int valueLength = characteristic.getValue().length;
         if (valueLength == 0) {
@@ -79,6 +81,8 @@ public class BluetoothHandlerRunningSpeedAndCadence implements SensorHandlerInte
             totalDistance = Distance.ofDM(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, index));
         }
 
-        return new SensorDataRunning(address, sensorName, speed, cadence, totalDistance);
+        return new Data(speed, cadence, totalDistance);
     }
+
+    public record Data(Speed speed, Cadence cadence, Distance totalDistance) {}
 }
