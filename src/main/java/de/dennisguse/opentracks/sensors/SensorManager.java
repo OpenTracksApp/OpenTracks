@@ -48,7 +48,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     private BluetoothRemoteSensorManager bluetoothSensorManager;
 
-    private AltitudeSumManager altitudeSumManager;
+    private GainManager altitudeSumManager;
 
     private GPSManager gpsManager;
 
@@ -58,7 +58,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     public void start(Context context, Handler handler) {
         gpsManager = new GPSManager(observer); //TODO Pass listener
-        altitudeSumManager = new AltitudeSumManager();
+        altitudeSumManager = new GainManager(listener);
         bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
 
         onSharedPreferenceChanged(null, null);
@@ -82,7 +82,6 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
     }
 
     public SensorDataSet fill(TrackPoint trackPoint) {
-        altitudeSumManager.fill(trackPoint);
         sensorDataSet.fillTrackPoint(trackPoint);
         return new SensorDataSet(sensorDataSet);
     }
@@ -93,7 +92,6 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
             return;
         }
         sensorDataSet.reset();
-        altitudeSumManager.reset();
     }
 
     @Deprecated
@@ -108,13 +106,13 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     @Deprecated
     @VisibleForTesting
-    public AltitudeSumManager getAltitudeSumManager() {
+    public GainManager getAltitudeSumManager() {
         return altitudeSumManager;
     }
 
     @Deprecated
     @VisibleForTesting
-    public void setAltitudeSumManager(AltitudeSumManager altitudeSumManager) {
+    public void setAltitudeSumManager(GainManager altitudeSumManager) {
         this.altitudeSumManager = altitudeSumManager;
     }
 

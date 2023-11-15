@@ -1,11 +1,13 @@
 package de.dennisguse.opentracks.sensors.sensorData;
 
+import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.data.models.AtmosphericPressure;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Power;
@@ -36,6 +38,9 @@ public final class SensorDataSet {
     @VisibleForTesting
     public AggregatorRunning runningDistanceSpeedCadence;
 
+    @VisibleForTesting
+    public AggregatorBarometer barometer;
+
     public SensorDataSet() {
     }
 
@@ -45,6 +50,7 @@ public final class SensorDataSet {
         this.cyclingDistanceSpeed = toCopy.cyclingDistanceSpeed;
         this.cyclingPower = toCopy.cyclingPower;
         this.runningDistanceSpeedCadence = toCopy.runningDistanceSpeedCadence;
+        this.barometer = toCopy.barometer;
     }
 
     public Pair<HeartRate, String> getHeartRate() {
@@ -113,8 +119,12 @@ public final class SensorDataSet {
             this.cyclingPower.add((Raw<Power>) data);
             return;
         }
+        if (value instanceof AtmosphericPressure) {
+            this.barometer.add((Raw<AtmosphericPressure>) data);
+            return;
+        }
 
-        throw new UnsupportedOperationException(data.getClass().getCanonicalName());
+        throw new UnsupportedOperationException(data.getClass().getCanonicalName() + " " + data.value().getClass().getCanonicalName());
     }
 
     public void remove(@NonNull Aggregator<?, ?> type) {
@@ -122,11 +132,13 @@ public final class SensorDataSet {
     }
 
     public void clear() {
+        Log.i(TAG, "Removing all aggregators");
         this.heartRate = null;
         this.cyclingCadence = null;
         this.cyclingDistanceSpeed = null;
         this.cyclingPower = null;
         this.runningDistanceSpeedCadence = null;
+        this.barometer = null;
     }
 
     public void fillTrackPoint(TrackPoint trackPoint) {
@@ -153,17 +165,27 @@ public final class SensorDataSet {
         if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue()) {
             trackPoint.setSensorDistance(runningDistanceSpeedCadence.getValue().distance());
         }
+
+        if (barometer != null && barometer.hasValue()) {
+            trackPoint.setAltitudeGain(barometer.getValue().gain_m());
+            trackPoint.setAltitudeLoss(barometer.getValue().loss_m());
+        }
     }
 
     public void reset() {
+        Log.i(TAG, "Resetting data");
+
         if (heartRate != null) heartRate.reset();
         if (cyclingCadence != null) cyclingCadence.reset();
         if (cyclingDistanceSpeed != null) cyclingDistanceSpeed.reset();
         if (cyclingPower != null) cyclingPower.reset();
         if (runningDistanceSpeedCadence != null) runningDistanceSpeedCadence.reset();
+        if (barometer != null) barometer.reset();
     }
 
     private void set(@NonNull Aggregator<?, ?> type, @Nullable Aggregator<?, ?> sensorData) {
+        Log.i(TAG, "Setting aggregator " + type.getClass().getCanonicalName());
+
         if (type instanceof AggregatorHeartRate) {
             heartRate = (AggregatorHeartRate) sensorData;
             return;
@@ -182,6 +204,10 @@ public final class SensorDataSet {
         }
         if (type instanceof AggregatorRunning) {
             runningDistanceSpeedCadence = (AggregatorRunning) sensorData;
+            return;
+        }
+        if (type instanceof AggregatorBarometer) {
+            barometer = (AggregatorBarometer) sensorData;
             return;
         }
 
