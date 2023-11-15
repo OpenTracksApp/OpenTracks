@@ -9,8 +9,8 @@ import androidx.annotation.VisibleForTesting;
 import java.util.List;
 import java.util.UUID;
 
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.Raw;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
 public class BluetoothHandlerCyclingDistanceSpeed implements SensorHandlerInterface {
@@ -26,8 +26,8 @@ public class BluetoothHandlerCyclingDistanceSpeed implements SensorHandlerInterf
     }
 
     @Override
-    public SensorDataCyclingDistanceSpeed createEmptySensorData(String address) {
-        return new SensorDataCyclingDistanceSpeed(address);
+    public AggregatorCyclingDistanceSpeed createEmptySensorData(String address) {
+        return new AggregatorCyclingDistanceSpeed(address);
     }
 
     @Override

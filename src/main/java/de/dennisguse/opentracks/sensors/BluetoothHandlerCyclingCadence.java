@@ -6,8 +6,8 @@ import android.util.Pair;
 
 import java.util.List;
 
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingCadence;
 import de.dennisguse.opentracks.sensors.sensorData.Raw;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
 public class BluetoothHandlerCyclingCadence implements SensorHandlerInterface {
@@ -24,8 +24,8 @@ public class BluetoothHandlerCyclingCadence implements SensorHandlerInterface {
     }
 
     @Override
-    public SensorDataCyclingCadence createEmptySensorData(String address) {
-        return new SensorDataCyclingCadence(address);
+    public AggregatorCyclingCadence createEmptySensorData(String address) {
+        return new AggregatorCyclingCadence(address);
     }
 
     @Override

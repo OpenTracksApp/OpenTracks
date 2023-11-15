@@ -9,8 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.sensors.sensorData.Aggregator;
 import de.dennisguse.opentracks.sensors.sensorData.Raw;
-import de.dennisguse.opentracks.sensors.sensorData.SensorData;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.handlers.GPSManager;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
@@ -28,7 +28,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
     private final SensorDataChangedObserver listener = new SensorDataChangedObserver() {
 
         @Override
-        public void onConnect(SensorData<?, ?> sensorData) {
+        public void onConnect(Aggregator<?, ?> sensorData) {
             sensorDataSet.add(sensorData);
             observer.onChange(new SensorDataSet(sensorDataSet));
         }
@@ -40,7 +40,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
         }
 
         @Override
-        public void onDisconnect(SensorData<?, ?> sensorData) {
+        public void onDisconnect(Aggregator<?, ?> sensorData) {
             sensorDataSet.remove(sensorData);
             observer.onChange(new SensorDataSet(sensorDataSet));
         }
@@ -128,9 +128,9 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     public interface SensorDataChangedObserver {
 
-        void onConnect(SensorData<?, ?> sensorData);
+        void onConnect(Aggregator<?, ?> sensorData);
         void onChange(Raw<?> sensorData);
 
-        void onDisconnect(SensorData<?, ?> sensorData);
+        void onDisconnect(Aggregator<?, ?> sensorData);
     }
 }

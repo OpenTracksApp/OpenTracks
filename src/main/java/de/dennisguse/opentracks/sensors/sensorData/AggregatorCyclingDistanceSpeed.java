@@ -11,17 +11,17 @@ import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.sensors.BluetoothHandlerCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.UintUtils;
 
-public class SensorDataCyclingDistanceSpeed extends SensorData<BluetoothHandlerCyclingDistanceSpeed.WheelData, SensorDataCyclingDistanceSpeed.Data> {
+public class AggregatorCyclingDistanceSpeed extends Aggregator<BluetoothHandlerCyclingDistanceSpeed.WheelData, AggregatorCyclingDistanceSpeed.Data> {
 
-    private final String TAG = SensorDataCyclingDistanceSpeed.class.getSimpleName();
+    private final String TAG = AggregatorCyclingDistanceSpeed.class.getSimpleName();
 
     private Distance wheelCircumference;
 
-    public SensorDataCyclingDistanceSpeed(String sensorAddress) {
+    public AggregatorCyclingDistanceSpeed(String sensorAddress) {
         super(sensorAddress);
     }
 
-    public SensorDataCyclingDistanceSpeed(String sensorAddress, String sensorName) {
+    public AggregatorCyclingDistanceSpeed(String sensorAddress, String sensorName) {
         super(sensorAddress, sensorName);
     }
 

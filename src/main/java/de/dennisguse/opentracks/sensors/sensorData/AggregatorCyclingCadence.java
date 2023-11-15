@@ -10,15 +10,15 @@ import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.sensors.BluetoothHandlerCyclingCadence;
 import de.dennisguse.opentracks.sensors.UintUtils;
 
-public class SensorDataCyclingCadence extends SensorData<BluetoothHandlerCyclingCadence.CrankData, Cadence> {
+public class AggregatorCyclingCadence extends Aggregator<BluetoothHandlerCyclingCadence.CrankData, Cadence> {
 
-    private final String TAG = SensorDataCyclingCadence.class.getSimpleName();
+    private final String TAG = AggregatorCyclingCadence.class.getSimpleName();
 
-    public SensorDataCyclingCadence(String sensorAddress) {
+    public AggregatorCyclingCadence(String sensorAddress) {
         super(sensorAddress);
     }
 
-    public SensorDataCyclingCadence(String sensorAddress, String sensorName) {
+    public AggregatorCyclingCadence(String sensorAddress, String sensorName) {
         super(sensorAddress, sensorName);
     }
 

@@ -6,7 +6,7 @@ import java.time.Instant;
 
 import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
 
-public abstract class SensorData<Input extends Record, Output> {
+public abstract class Aggregator<Input extends Record, Output> {
 
     protected Raw<Input> previous;
 
@@ -15,11 +15,11 @@ public abstract class SensorData<Input extends Record, Output> {
     private final String sensorAddress;
     private final String sensorName;
 
-    SensorData(String sensorAddress) {
+    Aggregator(String sensorAddress) {
         this(sensorAddress, null);
     }
 
-    SensorData(String sensorAddress, String sensorName) {
+    Aggregator(String sensorAddress, String sensorName) {
         this.sensorAddress = sensorAddress;
         this.sensorName = sensorName;
     }

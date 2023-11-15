@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.data.models.AtmosphericPressure;
-import de.dennisguse.opentracks.sensors.sensorData.SensorData;
+import de.dennisguse.opentracks.sensors.sensorData.Aggregator;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
 public class BluetoothHandlerBarometricPressure implements SensorHandlerInterface {
@@ -22,7 +22,7 @@ public class BluetoothHandlerBarometricPressure implements SensorHandlerInterfac
     }
 
     @Override
-    public SensorData<?, ?> createEmptySensorData(String address) {
+    public Aggregator<?, ?> createEmptySensorData(String address) {
         return null; //TODO
     }
 

@@ -22,19 +22,19 @@ public final class SensorDataSet {
     private static final String TAG = SensorDataSet.class.getSimpleName();
 
     @VisibleForTesting
-    public SensorDataHeartRate heartRate;
+    public AggregatorHeartRate heartRate;
 
     @VisibleForTesting
-    public SensorDataCyclingCadence cyclingCadence;
+    public AggregatorCyclingCadence cyclingCadence;
 
     @VisibleForTesting
-    public SensorDataCyclingDistanceSpeed cyclingDistanceSpeed;
+    public AggregatorCyclingDistanceSpeed cyclingDistanceSpeed;
 
     @VisibleForTesting
-    public SensorDataCyclingPower cyclingPower;
+    public AggregatorCyclingPower cyclingPower;
 
     @VisibleForTesting
-    public SensorDataRunning runningDistanceSpeedCadence;
+    public AggregatorRunning runningDistanceSpeedCadence;
 
     public SensorDataSet() {
     }
@@ -79,11 +79,11 @@ public final class SensorDataSet {
         return null;
     }
 
-    public SensorDataCyclingPower getCyclingPower() {
+    public AggregatorCyclingPower getCyclingPower() {
         return cyclingPower;
     }
 
-    public void add(@NonNull SensorData<?, ?> data) {
+    public void add(@NonNull Aggregator<?, ?> data) {
         set(data, data);
     }
 
@@ -117,7 +117,7 @@ public final class SensorDataSet {
         throw new UnsupportedOperationException(data.getClass().getCanonicalName());
     }
 
-    public void remove(@NonNull SensorData<?, ?> type) {
+    public void remove(@NonNull Aggregator<?, ?> type) {
         set(type, null);
     }
 
@@ -163,24 +163,24 @@ public final class SensorDataSet {
         if (runningDistanceSpeedCadence != null) runningDistanceSpeedCadence.reset();
     }
 
-    private void set(@NonNull SensorData<?, ?> type, @Nullable SensorData<?, ?> sensorData) {
-        if (type instanceof SensorDataHeartRate hr) {
+    private void set(@NonNull Aggregator<?, ?> type, @Nullable Aggregator<?, ?> sensorData) {
+        if (type instanceof AggregatorHeartRate hr) {
             heartRate = hr;
             return;
         }
-        if (type instanceof SensorDataCyclingCadence cc) {
+        if (type instanceof AggregatorCyclingCadence cc) {
             cyclingCadence = cc;
             return;
         }
-        if (type instanceof SensorDataCyclingDistanceSpeed ds) {
+        if (type instanceof AggregatorCyclingDistanceSpeed ds) {
             cyclingDistanceSpeed = ds;
             return;
         }
-        if (type instanceof SensorDataCyclingPower cp) {
+        if (type instanceof AggregatorCyclingPower cp) {
             cyclingPower = cp;
             return;
         }
-        if (type instanceof SensorDataRunning rr) {
+        if (type instanceof AggregatorRunning rr) {
             runningDistanceSpeedCadence = rr;
             return;
         }

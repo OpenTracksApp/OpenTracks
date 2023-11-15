@@ -11,8 +11,8 @@ import java.util.UUID;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorRunning;
 import de.dennisguse.opentracks.sensors.sensorData.Raw;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
 public class BluetoothHandlerRunningSpeedAndCadence implements SensorHandlerInterface {
@@ -29,8 +29,8 @@ public class BluetoothHandlerRunningSpeedAndCadence implements SensorHandlerInte
     }
 
     @Override
-    public SensorDataRunning createEmptySensorData(String address) {
-        return new SensorDataRunning(address);
+    public AggregatorRunning createEmptySensorData(String address) {
+        return new AggregatorRunning(address);
     }
 
     @Override

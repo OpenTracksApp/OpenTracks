@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorHeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.Raw;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
 public class BluetoothHandlerManagerHeartRate implements SensorHandlerInterface {
@@ -36,8 +36,8 @@ public class BluetoothHandlerManagerHeartRate implements SensorHandlerInterface 
     }
 
     @Override
-    public SensorDataHeartRate createEmptySensorData(String address) {
-        return new SensorDataHeartRate(address);
+    public AggregatorHeartRate createEmptySensorData(String address) {
+        return new AggregatorHeartRate(address);
     }
 
     @Override

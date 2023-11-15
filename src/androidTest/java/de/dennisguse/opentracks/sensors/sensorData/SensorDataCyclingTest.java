@@ -20,7 +20,7 @@ public class SensorDataCyclingTest {
 
     @Test
     public void compute_cadence_1() {
-        SensorDataCyclingCadence current = new SensorDataCyclingCadence("", "");
+        AggregatorCyclingCadence current = new AggregatorCyclingCadence("", "");
 
         // when
         current.add(new Raw<>(new BluetoothHandlerCyclingCadence.CrankData(1, 1024)));
@@ -32,7 +32,7 @@ public class SensorDataCyclingTest {
 
     @Test
     public void compute_cadence_2() {
-        SensorDataCyclingCadence current = new SensorDataCyclingCadence("", "");
+        AggregatorCyclingCadence current = new AggregatorCyclingCadence("", "");
 
         // when
         current.add(new Raw<>(new BluetoothHandlerCyclingCadence.CrankData(1, 6184)));
@@ -44,7 +44,7 @@ public class SensorDataCyclingTest {
 
     @Test
     public void compute_cadence_sameCount() {
-        SensorDataCyclingCadence current = new SensorDataCyclingCadence("", "");
+        AggregatorCyclingCadence current = new AggregatorCyclingCadence("", "");
 
         // when
         current.add(new Raw<>(new BluetoothHandlerCyclingCadence.CrankData(1, 1024)));
@@ -57,7 +57,7 @@ public class SensorDataCyclingTest {
 
     @Test
     public void compute_cadence_sameTime() {
-        SensorDataCyclingCadence current = new SensorDataCyclingCadence("", "");
+        AggregatorCyclingCadence current = new AggregatorCyclingCadence("", "");
 
         // when
         current.add(new Raw<>(new BluetoothHandlerCyclingCadence.CrankData(1, 1024)));
@@ -69,7 +69,7 @@ public class SensorDataCyclingTest {
 
     @Test
     public void compute_cadence_rollOverTime() {
-        SensorDataCyclingCadence current = new SensorDataCyclingCadence("", "");
+        AggregatorCyclingCadence current = new AggregatorCyclingCadence("", "");
 
         // when
         current.add(new Raw<>(new BluetoothHandlerCyclingCadence.CrankData(1, UintUtils.UINT16_MAX - 1024)));
@@ -82,7 +82,7 @@ public class SensorDataCyclingTest {
     @Test
     @Deprecated
     public void compute_cadence_rollOverCount() {
-        SensorDataCyclingCadence current = new SensorDataCyclingCadence("", "");
+        AggregatorCyclingCadence current = new AggregatorCyclingCadence("", "");
 
         // when
         current.add(new Raw<>(new BluetoothHandlerCyclingCadence.CrankData(UintUtils.UINT32_MAX - 1, 1024)));
@@ -96,7 +96,7 @@ public class SensorDataCyclingTest {
 
     @Test
     public void compute_speed() {
-        SensorDataCyclingDistanceSpeed current = new SensorDataCyclingDistanceSpeed("", "");
+        AggregatorCyclingDistanceSpeed current = new AggregatorCyclingDistanceSpeed("", "");
         current.setWheelCircumference(Distance.ofMM(2150));
 
         // when
@@ -111,7 +111,7 @@ public class SensorDataCyclingTest {
     @Test
     @Deprecated
     public void compute_speed_rollOverCount() {
-        SensorDataCyclingDistanceSpeed current = new SensorDataCyclingDistanceSpeed("", "");
+        AggregatorCyclingDistanceSpeed current = new AggregatorCyclingDistanceSpeed("", "");
         current.setWheelCircumference(Distance.ofMM(2000));
 
         // when

@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.data.models.Power;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.Raw;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
 public class BluetoothHandlerManagerCyclingPower implements SensorHandlerInterface {
@@ -26,8 +26,8 @@ public class BluetoothHandlerManagerCyclingPower implements SensorHandlerInterfa
     }
 
     @Override
-    public SensorDataCyclingPower createEmptySensorData(String address) {
-        return new SensorDataCyclingPower(address);
+    public AggregatorCyclingPower createEmptySensorData(String address) {
+        return new AggregatorCyclingPower(address);
     }
 
     @Override

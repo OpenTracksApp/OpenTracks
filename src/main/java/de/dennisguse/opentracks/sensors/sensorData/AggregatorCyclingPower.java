@@ -4,13 +4,13 @@ import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.data.models.Power;
 
-public class SensorDataCyclingPower extends SensorData<Power, Power> {
+public class AggregatorCyclingPower extends Aggregator<Power, Power> {
 
-    public SensorDataCyclingPower(String address) {
+    public AggregatorCyclingPower(String address) {
         super(address);
     }
 
-    public SensorDataCyclingPower(String name, String address) {
+    public AggregatorCyclingPower(String name, String address) {
         super(name, address);
     }
 

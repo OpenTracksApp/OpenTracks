@@ -59,10 +59,11 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.sensors.AltitudeSumManager;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
+import de.dennisguse.opentracks.sensors.sensorData.Aggregator;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingCadence;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingDistanceSpeed;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingPower;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorHeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
@@ -71,7 +72,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 /**
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
  * <p>
- * Note: those tests are affected by {@link de.dennisguse.opentracks.sensors.sensorData.SensorData}.isRecent().
+ * Note: those tests are affected by {@link Aggregator}.isRecent().
  * If the test device is too slow (like in a CI) these are likely to fail as the sensor data will be omitted from actual.
  */
 @RunWith(AndroidJUnit4.class)
@@ -549,22 +550,22 @@ public class ExportImportTest {
 
         SensorDataSet sensorDataSet = new SensorDataSet();
 
-        sensorDataSet.cyclingPower = Mockito.mock(SensorDataCyclingPower.class);
+        sensorDataSet.cyclingPower = Mockito.mock(AggregatorCyclingPower.class);
         Mockito.when( sensorDataSet.cyclingPower.hasValue()).thenReturn(true);
         Mockito.when(sensorDataSet.cyclingPower.getValue()).thenReturn(Power.of(power));
 
-        sensorDataSet.heartRate = Mockito.mock(SensorDataHeartRate.class);
+        sensorDataSet.heartRate = Mockito.mock(AggregatorHeartRate.class);
         Mockito.when(sensorDataSet.heartRate.getValue()).thenReturn(HeartRate.of(heartRate));
 
-        SensorDataCyclingCadence cyclingCadence = Mockito.mock(SensorDataCyclingCadence.class);
+        AggregatorCyclingCadence cyclingCadence = Mockito.mock(AggregatorCyclingCadence.class);
         Mockito.when(cyclingCadence.hasValue()).thenReturn(true);
         Mockito.when(cyclingCadence.getValue()).thenReturn(Cadence.of(cadence));
         sensorDataSet.cyclingCadence = cyclingCadence;
 
         if (distance != null && speed != null) {
-            SensorDataCyclingDistanceSpeed distanceSpeed = Mockito.mock(SensorDataCyclingDistanceSpeed.class);
+            AggregatorCyclingDistanceSpeed distanceSpeed = Mockito.mock(AggregatorCyclingDistanceSpeed.class);
             Mockito.when(distanceSpeed.hasValue()).thenReturn(true);
-            Mockito.when(distanceSpeed.getValue()).thenReturn(new SensorDataCyclingDistanceSpeed.Data(null, distance, Speed.of(speed)));
+            Mockito.when(distanceSpeed.getValue()).thenReturn(new AggregatorCyclingDistanceSpeed.Data(null, distance, Speed.of(speed)));
             sensorDataSet.cyclingDistanceSpeed = distanceSpeed;
         }
 

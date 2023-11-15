@@ -11,7 +11,7 @@ public interface SensorHandlerInterface {
 
     List<ServiceMeasurementUUID> getServices();
 
-    SensorData<?, ?> createEmptySensorData(String address);
+    Aggregator<?, ?> createEmptySensorData(String address);
 
     void handlePayload(SensorManager.SensorDataChangedObserver observer, ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic);
 }

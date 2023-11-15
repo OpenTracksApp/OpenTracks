@@ -10,15 +10,15 @@ import de.dennisguse.opentracks.sensors.BluetoothHandlerRunningSpeedAndCadence;
 /**
  * Provides cadence in rpm and speed in milliseconds from Bluetooth LE Running Speed and Cadence sensors.
  */
-public final class SensorDataRunning extends SensorData<BluetoothHandlerRunningSpeedAndCadence.Data, SensorDataRunning.Data> {
+public final class AggregatorRunning extends Aggregator<BluetoothHandlerRunningSpeedAndCadence.Data, AggregatorRunning.Data> {
 
-    private static final String TAG = SensorDataRunning.class.getSimpleName();
+    private static final String TAG = AggregatorRunning.class.getSimpleName();
 
-    public SensorDataRunning(String sensorAddress) {
+    public AggregatorRunning(String sensorAddress) {
         super(sensorAddress);
     }
 
-    public SensorDataRunning(String sensorAddress, String sensorName) {
+    public AggregatorRunning(String sensorAddress, String sensorName) {
         super(sensorAddress, sensorName);
     }
 

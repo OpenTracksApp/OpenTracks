@@ -37,9 +37,9 @@ import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
 import de.dennisguse.opentracks.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.sensors.BluetoothHandlerRunningSpeedAndCadence;
 import de.dennisguse.opentracks.sensors.SensorManager;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorHeartRate;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorRunning;
 import de.dennisguse.opentracks.sensors.sensorData.Raw;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -255,7 +255,7 @@ public class TrackRecordingServiceRecordingTest {
         Track.Id trackId = service.startNewTrack();
         trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
         SensorManager sensorManager = trackPointCreator.getSensorManager();
-        sensorManager.sensorDataSet.add(new SensorDataHeartRate("", ""));
+        sensorManager.sensorDataSet.add(new AggregatorHeartRate("", ""));
         // when
         String sensor1 = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(sensor1);
@@ -592,7 +592,7 @@ public class TrackRecordingServiceRecordingTest {
         Track.Id trackId = service.startNewTrack();
         trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
         SensorManager sensorManager = trackPointCreator.getSensorManager();
-        sensorManager.sensorDataSet.add(new SensorDataRunning("", ""));
+        sensorManager.sensorDataSet.add(new AggregatorRunning("", ""));
 
         // when
         String sensor1 = "2020-02-02T02:02:03Z";
