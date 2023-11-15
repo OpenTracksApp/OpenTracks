@@ -562,13 +562,9 @@ public class ExportImportTest {
         sensorDataSet.cyclingCadence = cyclingCadence;
 
         if (distance != null && speed != null) {
-            SensorDataCyclingDistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCyclingDistanceSpeed.Data.class);
-            Mockito.when(distanceSpeedData.getDistanceOverall()).thenReturn(distance);
-            Mockito.when(distanceSpeedData.getSpeed()).thenReturn(Speed.of(speed));
-
             SensorDataCyclingDistanceSpeed distanceSpeed = Mockito.mock(SensorDataCyclingDistanceSpeed.class);
             Mockito.when(distanceSpeed.hasValue()).thenReturn(true);
-            Mockito.when(distanceSpeed.getValue()).thenReturn(distanceSpeedData);
+            Mockito.when(distanceSpeed.getValue()).thenReturn(new SensorDataCyclingDistanceSpeed.Data(null, distance, Speed.of(speed)));
             sensorDataSet.cyclingDistanceSpeed = distanceSpeed;
         }
 

@@ -73,38 +73,5 @@ public class SensorDataCyclingDistanceSpeed extends SensorData<BluetoothHandlerC
         this.wheelCircumference = wheelCircumference;
     }
 
-    // TODO Make record
-    public static class Data {
-        private final Distance distance;
-        private final Distance distanceOverall;
-        private final Speed speed;
-
-        private Data(Distance distance, Distance distanceOverall, Speed speed) {
-            this.distance = distance;
-            this.distanceOverall = distanceOverall;
-            this.speed = speed;
-        }
-
-        public Distance getDistance() {
-            return distance;
-        }
-
-        public Distance getDistanceOverall() {
-            return distanceOverall;
-        }
-
-        public Speed getSpeed() {
-            return speed;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return "Data{" +
-                    "distance=" + getDistance() +
-                    ", distance_overall=" + getDistanceOverall() +
-                    ", speed=" + getSpeed() +
-                    '}';
-        }
-    }
+    public record Data(Distance distance, Distance distanceOverall, Speed speed) {}
 }
