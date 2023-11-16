@@ -164,24 +164,24 @@ public final class SensorDataSet {
     }
 
     private void set(@NonNull Aggregator<?, ?> type, @Nullable Aggregator<?, ?> sensorData) {
-        if (type instanceof AggregatorHeartRate hr) {
-            heartRate = hr;
+        if (type instanceof AggregatorHeartRate) {
+            heartRate = (AggregatorHeartRate) sensorData;
             return;
         }
-        if (type instanceof AggregatorCyclingCadence cc) {
-            cyclingCadence = cc;
+        if (type instanceof AggregatorCyclingCadence) {
+            cyclingCadence = (AggregatorCyclingCadence) sensorData;
             return;
         }
-        if (type instanceof AggregatorCyclingDistanceSpeed ds) {
-            cyclingDistanceSpeed = ds;
+        if (type instanceof AggregatorCyclingDistanceSpeed) {
+            cyclingDistanceSpeed = (AggregatorCyclingDistanceSpeed) sensorData;
             return;
         }
-        if (type instanceof AggregatorCyclingPower cp) {
-            cyclingPower = cp;
+        if (type instanceof AggregatorCyclingPower) {
+            cyclingPower = (AggregatorCyclingPower) sensorData;
             return;
         }
-        if (type instanceof AggregatorRunning rr) {
-            runningDistanceSpeedCadence = rr;
+        if (type instanceof AggregatorRunning) {
+            runningDistanceSpeedCadence = (AggregatorRunning) sensorData;
             return;
         }
 
