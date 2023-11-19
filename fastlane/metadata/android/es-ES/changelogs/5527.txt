@@ -1,0 +1,4 @@
+v4.9.5: OpenTracks
+
+Corrección de errores:
+- La configuración del anuncio inactivo vuelve a funcionar
