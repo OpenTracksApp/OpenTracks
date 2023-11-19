@@ -260,16 +260,16 @@
     <string name="waypoint_type_water_fountain">fonte de água</string>
     <string name="waypoint_type_waypoint">ponto de referência</string>
     <string name="about_preference_title">Sobre o OpenTracks</string>
-    <string name="about_description"><i>OpenTracks</i> é uma aplicação de rastreamento de desportes que respeita totalmente a sua privacidade.</string>
+    <string name="about_description"><i>OpenTracks</i> é uma aplicação de rastreamento de desportos que respeita integralmente a sua privacidade.</string>
     <string name="about_url">Página do projeto: <a href="%1$s">%1$s</a></string>
     <string name="about_third_party_data">Dados de terceiros</string>
-    <string name="help_track_map_title">Como mostrar uma pista num mapa\?</string>
+    <string name="help_track_map_title">Como mostrar uma trilho num mapa?</string>
     <string name="help_storage_pictures_title">Como o OpenTracks armazena fotos tiradas como marcadores\?</string>
-    <string name="help_storage_pictures_content">Eles são armazenados no armazenamento interno da app (ou seja, acessíveis apenas no OpenTracks).</string>
+    <string name="help_storage_pictures_content">Estes são armazenados no armazenamento interno da app (ou seja, acessíveis apenas pelo OpenTracks).</string>
     <string name="help_data_google_play_services_title">O OpenTracks requer/usa o Google Play Services\?</string>
     <string name="help_data_google_play_services_content">Não</string>
-    <string name="help_recording_title">Como o OpenTracks regista dados\?</string>
-    <string name="help_support_title">Como posso oferecer suporte a OpenTracks\?</string>
+    <string name="help_recording_title">Como guarda o OpenTracks dados?</string>
+    <string name="help_support_title">Como posso suportar o OpenTracks?</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <string name="activity_type_escooter">escolta</string>
     <string name="activity_type_swimming_open">nadando em águas abertas</string>
@@ -311,32 +311,32 @@
     <string name="field_remove_from_layout">Remover</string>
     <string name="about_libraries">Bibliotecas</string>
     <string name="help_feature_title">OpenTracks tem os seguintes recursos:</string>
-    <string name="help_feature_content">* criar pistas GPS
+    <string name="help_feature_content">* criar trilhos GPS
 \n * utilizar um sensor do ritmo cardíaco (apenas Bluetooth LE)
 \n * anúncios de voz (por tempo ou distância)
 \n * criar marcadores (incl. imagens)
 \n * funciona completamente offline
-\n * mostrar pistas num mapa (ver abaixo)</string>
+\n * mostrar trilhos num mapa (ver abaixo)</string>
     <string name="about_version_name">Nome da versão: %1$s</string>
     <string name="about_version_code">Código da versão: %1$d</string>
     <string name="about_history">OpenTracks é um fork do <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (descontinuado em 2016).</string>
-    <string name="help_track_export_title">Como posso exportar/compartilhar trilhas gravadas\?</string>
-    <string name="help_track_export_content"> As trilhas podem ser exportadas das configurações como KMZ, KML ou GPX. KMZ/KML todos os dados; Localizações apenas GPX. As trilhas compartilhadas por meio do <i>ícone de compartilhamento</i> são compartilhadas como KMZ. </string>
+    <string name="help_track_export_title">Como posso exportar/compartilhar trilhos gravados?</string>
+    <string name="help_track_export_content"> Os trilhos podem ser exportados como configurações nos formatos KMZ, KML ou GPX. KMZ/KML exporta todos os dados; GPX exporta apenas localizações. Os trilhos partilhados por meio do <i>ícone de partilha</i> são partilhados como KMZ. </string>
     <string name="help_track_map_content"> Utilize o pequeno ícone do mapa.
 \n a) (actualizações ao vivo) Instalar <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Fornece mapas online ou offline através de <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
-\n Na verdade, o OSMDashboard é uma aplicação separada que só pode aceder (temporariamente) aos dados da(s) faixa(s) que vão ser mostrados.
+\n Na verdade, o OSMDashboard é uma aplicação separada que só pode aceder (temporariamente) aos dados do(s) trilho(s) que vão ser mostrados.
 \n b) Através de uma aplicação de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAnd</a> e <a href="https://maps.me/">MAPS.ME</a>). Estas aplicações precisam de suportar o formato de ficheiro KMZ (apenas locais e timestamps). De facto, uma aplicação precisa de suportar <i>ACTION_VIEW</i> com MIME <i>application/vnd.google-earth.kmz</i>. </string>
-    <string name="help_recording_content">OpenTracks usa o sensor GPS do aparelho para registar a localização continuamente. Se o aparelho GPS relatar dados imprecisos (por exemplo, localização, velocidade, elevação), o OpenTracks não pode fazer nada a respeito.</string>
-    <string name="help_data_storage_title">Como o OpenTracks armazena dados do sensor\?</string>
-    <string name="help_data_storage_content"> Os dados do sensor são armazenados por local registado. Em termos de sensor de frequência cardíaca, isso significa que apenas <i>uma</i> medição de frequência cardíaca é armazenada por local. Se estiver parado ou dentro de casa, nenhum dado do sensor será registrdo (mas será mostrado). </string>
+    <string name="help_recording_content">OpenTracks usa o sensor GPS do aparelho para registar continuamente a localização. Se o aparelho GPS apresentar dados imprecisos (por exemplo, localização, velocidade, elevação), o OpenTracks não pode fazer nada a esse respeito.</string>
+    <string name="help_data_storage_title">Como armazena o OpenTracks os dados dos sensores?</string>
+    <string name="help_data_storage_content"> Os dados do sensor são armazenados por local registado. Relativamente ao sensor de frequência cardíaca, isso significa que apenas <i>uma</i> medição de frequência cardíaca é armazenada por local. Se estiver parado ou dentro de casa, nenhum dado do sensor será registado (mas será mostrado). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks não está gravando locais\?</string>
-    <string name="help_gps_troubleshooting_content"> O que se pode fazer:
-\n a) verificar se o GPS está activado,
+    <string name="help_gps_troubleshooting_content"> O que pode fazer:
+\n a) verificar se o GPS está activo,
 \n b) melhorar a recepção GPS (por exemplo, ir para o exterior),
 \n c) verificar com <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, e
 \n d) desactivar a poupança de energia.
 \n
-\n Se tudo isto não ajudar, por favor, informe um erro. </string>
+\n Se tudo isto não ajudar, por favor, abra um bug. </string>
     <string name="help_support_content"> Pode:
 \n a) espalhar a palavra sobre OpenTracks,
 \n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propose features</a>,
