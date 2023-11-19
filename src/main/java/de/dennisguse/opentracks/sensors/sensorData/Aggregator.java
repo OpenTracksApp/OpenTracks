@@ -6,7 +6,7 @@ import java.time.Instant;
 
 import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
 
-public abstract class Aggregator<Input extends Record, Output> {
+public abstract class Aggregator<Input, Output> {
 
     protected Raw<Input> previous;
 

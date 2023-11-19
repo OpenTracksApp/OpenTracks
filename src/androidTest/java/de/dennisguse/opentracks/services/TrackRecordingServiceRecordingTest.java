@@ -415,6 +415,10 @@ public class TrackRecordingServiceRecordingTest {
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
+                        .setLatitude(45.00002)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setSpeed(Speed.of(15))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f)
         ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
@@ -667,6 +671,9 @@ public class TrackRecordingServiceRecordingTest {
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(0)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
+                        .setLatitude(45.001)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
                         .setSensorDistance(Distance.of(11))
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(0))

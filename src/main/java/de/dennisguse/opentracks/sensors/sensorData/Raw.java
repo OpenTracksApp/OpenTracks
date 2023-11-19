@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 
 import java.time.Instant;
 
-public record Raw<T extends Record>(
+public record Raw<T>(
         @NonNull T value,
 
         @NonNull Instant time

@@ -65,6 +65,7 @@ import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingCadence;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorHeartRate;
+import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
@@ -604,6 +605,6 @@ public class ExportImportTest {
         mockAltitudeChange(trackPointCreator, altitudeGain);
 
         trackPointCreator.setClock(time);
-        trackPointCreator.onChange(location);
+        trackPointCreator.getSensorManager().onChanged(new Raw<>(location));
     }
 }

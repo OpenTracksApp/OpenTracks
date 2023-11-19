@@ -30,7 +30,6 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
         @Override
         public void onConnect(Aggregator<?, ?> aggregator) {
             sensorDataSet.add(aggregator);
-            observer.onChange(new SensorDataSet(sensorDataSet));
         }
 
         @Override
@@ -42,13 +41,11 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
         @Override
         public void onDisconnect(Aggregator<?, ?> aggregator) {
             sensorDataSet.add(aggregator);
-            observer.onChange(new SensorDataSet(sensorDataSet));
         }
 
         @Override
         public void onRemove(Aggregator<?, ?> aggregator) {
             sensorDataSet.remove(aggregator);
-            observer.onChange(new SensorDataSet(sensorDataSet));
         }
     };
 
@@ -67,7 +64,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
             throw new RuntimeException("SensorManager cannot be started twice; stop first.");
         }
 
-        gpsManager = new GPSManager(observer); //TODO Pass listener
+        gpsManager = new GPSManager(observer, listener);
         altitudeSumManager = new GainManager(listener);
         bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
 
@@ -104,7 +101,6 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
         sensorDataSet.reset();
     }
 
-    @Deprecated
     @VisibleForTesting
     public void onChanged(Raw<?> data) {
         listener.onChange(data);

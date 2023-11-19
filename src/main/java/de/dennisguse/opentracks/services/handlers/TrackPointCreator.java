@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
@@ -67,10 +66,6 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
     public void stop() {
         sensorManager.stop(context);
         this.context = null;
-    }
-
-    public synchronized void onChange(@NonNull Location location) {
-        onNewTrackPoint(new TrackPoint(location, createNow()));
     }
 
     /**

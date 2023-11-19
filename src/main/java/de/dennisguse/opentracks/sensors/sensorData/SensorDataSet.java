@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks.sensors.sensorData;
 
+import android.location.Location;
 import android.util.Log;
 import android.util.Pair;
 
@@ -40,16 +41,20 @@ public final class SensorDataSet {
     @VisibleForTesting
     public AggregatorBarometer barometer;
 
+    public AggregatorGPS gps;
+
     public SensorDataSet() {
     }
 
     public SensorDataSet(SensorDataSet toCopy) {
+        //TODO This is not a copy constructor anymore, but it should be - aggregators are no value objects
         this.heartRate = toCopy.heartRate;
         this.cyclingCadence = toCopy.cyclingCadence;
         this.cyclingDistanceSpeed = toCopy.cyclingDistanceSpeed;
         this.cyclingPower = toCopy.cyclingPower;
         this.runningDistanceSpeedCadence = toCopy.runningDistanceSpeedCadence;
         this.barometer = toCopy.barometer;
+        this.gps = toCopy.gps;
     }
 
     public Pair<HeartRate, String> getHeartRate() {
@@ -93,7 +98,7 @@ public final class SensorDataSet {
     }
 
     public void update(@NonNull Raw<?> data) {
-        Record value = data.value();
+        Object value = data.value();
 
         if (value instanceof HeartRate) {
             this.heartRate.add((Raw<HeartRate>) data);
@@ -122,6 +127,10 @@ public final class SensorDataSet {
             this.barometer.add((Raw<AtmosphericPressure>) data);
             return;
         }
+        if (value instanceof Location) {
+            this.gps.add((Raw<Location>) data);
+            return;
+        }
 
         throw new UnsupportedOperationException(data.getClass().getCanonicalName() + " " + data.value().getClass().getCanonicalName());
     }
@@ -138,9 +147,14 @@ public final class SensorDataSet {
         this.cyclingPower = null;
         this.runningDistanceSpeedCadence = null;
         this.barometer = null;
+        this.gps = null;
     }
 
     public void fillTrackPoint(TrackPoint trackPoint) {
+        if (gps != null && gps.hasValue()) {
+            trackPoint.setLocation(gps.getValue());
+        }
+
         if (getHeartRate() != null) {
             trackPoint.setHeartRate(getHeartRate().first);
         }
@@ -180,6 +194,7 @@ public final class SensorDataSet {
         if (cyclingPower != null) cyclingPower.reset();
         if (runningDistanceSpeedCadence != null) runningDistanceSpeedCadence.reset();
         if (barometer != null) barometer.reset();
+        if (gps != null) gps.reset();
     }
 
     private void set(@NonNull Aggregator<?, ?> type, @Nullable Aggregator<?, ?> sensorData) {
@@ -207,6 +222,10 @@ public final class SensorDataSet {
         }
         if (type instanceof AggregatorBarometer) {
             barometer = (AggregatorBarometer) sensorData;
+            return;
+        }
+        if (type instanceof AggregatorGPS) {
+            gps = (AggregatorGPS) sensorData;
             return;
         }
 
