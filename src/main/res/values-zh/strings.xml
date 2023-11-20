@@ -616,4 +616,15 @@ limitations under the License.
     <string name="sensor_state_power_unit">瓦</string>
     <string name="settings_sensor_bluetooth_service_filter_off">显示所有可发现的蓝牙设备</string>
     <string name="help_data_google_play_services_content">否</string>
+    <string name="settings_announcements_idle_category_title">空闲公告</string>
+    <string name="settings_ui_dynamic_colors_title">动态颜色</string>
+    <string name="settings_recording_title">记录</string>
+    <string name="settings_ui_dynamic_colors_summary">用户自定动态颜色（需要安卓12或更高版本，需要手动重启App）</string>
+    <string name="sensor_state_power_max">最大功率</string>
+    <string name="activity_type_kickscooter">滑板车</string>
+    <string name="permission_recording_failed">OpenTracks 需要获取定位和查找附近设备权限。</string>
+    <string name="voiceIdle">即将进入空闲状态。</string>
+    <string name="settings_announcements_idle_title">空闲</string>
+    <string name="settings_recording_idle_timeout_title">空闲阈值</string>
+    <string name="value_int_seconds">%1$d 秒（推荐）</string>
 </resources>
