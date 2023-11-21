@@ -39,7 +39,6 @@ public class BarometerInternal {
     };
 
     public void connect(Context context, Handler handler, GainManager observer) {
-        this.observer = observer;
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         Sensor pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
         if (pressureSensor == null) {
@@ -58,6 +57,7 @@ public class BarometerInternal {
     public void disconnect(Context context) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         sensorManager.unregisterListener(listener);
+        observer = null;
     }
 
     public boolean isConnected() {
