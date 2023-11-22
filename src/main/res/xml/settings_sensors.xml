@@ -15,6 +15,10 @@
             android:key="@string/settings_sensor_heart_rate_max_key"
             android:title="@string/settings_sensor_heart_rate_max"
             app:useSimpleSummaryProvider="true" />
+        <de.dennisguse.opentracks.settings.bluetooth.BluetoothLePressurePreference
+            android:defaultValue="@string/sensor_type_value_none"
+            android:key="@string/settings_sensor_bluetooth_pressure_key"
+            android:title="@string/sensor_state_pressure" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_cycling_sensor">

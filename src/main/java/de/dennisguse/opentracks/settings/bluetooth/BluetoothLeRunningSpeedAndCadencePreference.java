@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 
 import androidx.preference.PreferenceDialogFragmentCompat;
 
+import java.util.List;
+
 import de.dennisguse.opentracks.sensors.BluetoothHandlerRunningSpeedAndCadence;
 
 public class BluetoothLeRunningSpeedAndCadencePreference extends BluetoothLeSensorPreference {
@@ -27,6 +29,6 @@ public class BluetoothLeRunningSpeedAndCadencePreference extends BluetoothLeSens
 
     @Override
     public PreferenceDialogFragmentCompat createInstance() {
-        return BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(getKey(), BluetoothHandlerRunningSpeedAndCadence.RUNNING_SPEED_CADENCE);
+        return BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(getKey(), List.of(BluetoothHandlerRunningSpeedAndCadence.RUNNING_SPEED_CADENCE));
     }
 }

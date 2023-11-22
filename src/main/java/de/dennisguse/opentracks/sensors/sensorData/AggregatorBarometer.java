@@ -11,8 +11,8 @@ public class AggregatorBarometer extends Aggregator<AtmosphericPressure, Altitud
 
     private AtmosphericPressure lastAcceptedSensorValue;
 
-    public AggregatorBarometer(String sensorAddress) {
-        super(sensorAddress);
+    public AggregatorBarometer(String sensorAddress, String sensorName) {
+        super(sensorAddress, sensorName);
     }
 
     @Override

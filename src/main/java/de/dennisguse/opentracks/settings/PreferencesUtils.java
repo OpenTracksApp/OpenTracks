@@ -256,6 +256,18 @@ public class PreferencesUtils {
         return getBluetoothSensorAddressNone().equals(currentValue);
     }
 
+    private static String getBluetoothSensorAddressInternal() {
+        return resources.getString(R.string.sensor_type_value_internal);
+    }
+
+    public static boolean isBluetoothSensorAddressInternal(String currentValue) {
+        return getBluetoothSensorAddressInternal().equals(currentValue);
+    }
+
+    public static String getBluetoothPressureAddress() {
+        return getString(R.string.settings_sensor_bluetooth_pressure_key, getBluetoothSensorAddressNone());
+    }
+
     public static String getBluetoothHeartRateSensorAddress() {
         return getString(R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothSensorAddressNone());
     }

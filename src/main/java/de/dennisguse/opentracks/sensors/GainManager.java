@@ -29,7 +29,7 @@ public class GainManager implements SensorConnector {
         driver.connect(context, handler, this);
 
         if (driver.isConnected()) {
-            listener.onConnect(new AggregatorBarometer("internal"));
+            listener.onConnect(new AggregatorBarometer("internal", null));
         }
     }
 
@@ -37,7 +37,7 @@ public class GainManager implements SensorConnector {
         Log.d(TAG, "Stop");
 
         driver.disconnect(context);
-        listener.onDisconnect(new AggregatorBarometer("internal"));
+        listener.onDisconnect(new AggregatorBarometer("internal", null));
     }
 
     public void onSensorValueChanged(AtmosphericPressure currentSensorValue) {
