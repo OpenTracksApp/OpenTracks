@@ -48,6 +48,7 @@ import de.dennisguse.opentracks.TimezoneRule;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.ActivityType;
+import de.dennisguse.opentracks.data.models.AltitudeGainLoss;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
@@ -58,11 +59,12 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
-import de.dennisguse.opentracks.sensors.AltitudeSumManager;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
+import de.dennisguse.opentracks.sensors.sensorData.Aggregator;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorBarometer;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingCadence;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingDistanceSpeed;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingPower;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorHeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
@@ -71,13 +73,11 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 /**
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
  * <p>
- * Note: those tests are affected by {@link de.dennisguse.opentracks.sensors.sensorData.SensorData}.isRecent().
+ * Note: those tests are affected by {@link Aggregator}.isRecent().
  * If the test device is too slow (like in a CI) these are likely to fail as the sensor data will be omitted from actual.
  */
 @RunWith(AndroidJUnit4.class)
 public class ExportImportTest {
-
-    private static final String TAG = ExportImportTest.class.getSimpleName();
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
@@ -139,23 +139,22 @@ public class ExportImportTest {
 
         Distance sensorDistance = Distance.of(10); // recording distance interval
 
-        sendLocation(trackPointCreator, "2020-02-02T02:02:03Z", 3, 14, 10, 13, 15, 10, 1);
+        sendLocation(trackPointCreator, "2020-02-02T02:02:03Z", 3, 14, 10, 13, 15, 10, 1f);
         service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
 
         // A sensor-only TrackPoint
         trackPointCreator.setClock("2020-02-02T02:02:04Z");
-        mockAltitudeChange(trackPointCreator, 1);
-        mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
+        mockSensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f, 1f);
 
         trackPointCreator.setClock("2020-02-02T02:02:14Z");
-        mockBLESensorData(trackPointCreator, 15f, null, 67f, 3f, 50f);
+        mockSensorData(trackPointCreator, 15f, null, 67f, 3f, 50f, null);
         trackPointCreator.setClock("2020-02-02T02:02:15Z");
-        mockBLESensorData(trackPointCreator, null, null, 68f, 3f, 50f);
+        mockSensorData(trackPointCreator, null, null, 68f, 3f, 50f, null);
 
         trackPointCreator.setClock("2020-02-02T02:02:16Z");
-        mockBLESensorData(trackPointCreator, 5f, Distance.of(2), 69f, 3f, 50f); // Distance will be added to next TrackPoint
+        mockSensorData(trackPointCreator, 5f, Distance.of(2), 69f, 3f, 50f, null); // Distance will be added to next TrackPoint
 
-        sendLocation(trackPointCreator, "2020-02-02T02:02:17Z", 3, 14.001, 10, 13, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:02:17Z", 3, 14.001, 10, 13, 15, 10, 0f);
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
 
         trackPointCreator.setClock("2020-02-02T02:02:18Z");
@@ -165,15 +164,16 @@ public class ExportImportTest {
         trackPointCreator.setClock("2020-02-02T02:03:20Z");
         service.resumeTrack(trackId);
 
-        sendLocation(trackPointCreator, "2020-02-02T02:03:21Z", 3, 14.002, 10, 13, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:03:21Z", 3, 14.002, 10, 13, 15, 10, 0f);
 
-        sendLocation(trackPointCreator, "2020-02-02T02:03:22Z", 3, 16, 10, 13, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:03:22Z", 3, 16, 10, 13, 15, 10, 0f);
 
         trackPointCreator.setClock("2020-02-02T02:03:30Z");
         service.getTrackRecordingManager().onIdle();
 
-        sendLocation(trackPointCreator, "2020-02-02T02:03:50Z", 3, 16.001, 10, 27, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:03:50Z", 3, 16.001, 10, 27, 15, 10, 0f);
 
+        trackPointCreator.getSensorManager().sensorDataSet = new SensorDataSet();
         trackPointCreator.setClock("2020-02-02T02:04:00Z");
         service.endCurrentTrack();
 
@@ -271,7 +271,9 @@ public class ExportImportTest {
                         .setAltitudeLoss(0f)
                         .setAltitudeGain(0f)
                         .setHorizontalAccuracy(Distance.of(10)),
-                new TrackPoint(TrackPoint.Type.IDLE, Instant.parse("2020-02-02T02:03:30Z")),
+                new TrackPoint(TrackPoint.Type.IDLE, Instant.parse("2020-02-02T02:03:30Z"))
+                        .setAltitudeLoss(0f)
+                        .setAltitudeGain(0f),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:03:50Z"))
                         .setLatitude(3)
                         .setLongitude(16.001)
@@ -281,7 +283,6 @@ public class ExportImportTest {
                         .setAltitudeGain(0f)
                         .setHorizontalAccuracy(Distance.of(10)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse("2020-02-02T02:04:00Z"))
-
         ), actual);
     }
 
@@ -545,40 +546,51 @@ public class ExportImportTest {
         }
     }
 
-    private void mockBLESensorData(TrackPointCreator trackPointCreator, Float speed, Distance distance, float heartRate, float cadence, Float power) {
+    private void mockSensorData(TrackPointCreator trackPointCreator, Float speed, Distance distance, float heartRate, float cadence, Float power, Float altitudeGain) {
+        SensorDataSet sensorDataSet = trackPointCreator.getSensorManager().sensorDataSet;
 
-        SensorDataSet sensorDataSet = new SensorDataSet();
-        sensorDataSet.set(new SensorDataCyclingPower("power", "power", Power.of(power)));
-        sensorDataSet.set(new SensorDataHeartRate("heartRate", "heartRate", HeartRate.of(heartRate)));
+        AggregatorCyclingPower cyclingPower = Mockito.mock(AggregatorCyclingPower.class);
+        Mockito.when(cyclingPower.hasValue()).thenReturn(true);
+        Mockito.when(cyclingPower.getValue()).thenReturn(Power.of(power));
+        sensorDataSet.add(cyclingPower);
 
-        SensorDataCyclingCadence cyclingCadence = Mockito.mock(SensorDataCyclingCadence.class);
+        AggregatorHeartRate agheartRate = Mockito.mock(AggregatorHeartRate.class);
+        Mockito.when(agheartRate.getValue()).thenReturn(HeartRate.of(heartRate));
+        sensorDataSet.add(agheartRate);
+
+        AggregatorCyclingCadence cyclingCadence = Mockito.mock(AggregatorCyclingCadence.class);
         Mockito.when(cyclingCadence.hasValue()).thenReturn(true);
         Mockito.when(cyclingCadence.getValue()).thenReturn(Cadence.of(cadence));
-        sensorDataSet.set(cyclingCadence);
+        sensorDataSet.add(cyclingCadence);
 
         if (distance != null && speed != null) {
-            SensorDataCyclingDistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCyclingDistanceSpeed.Data.class);
-            Mockito.when(distanceSpeedData.getDistanceOverall()).thenReturn(distance);
-            Mockito.when(distanceSpeedData.getSpeed()).thenReturn(Speed.of(speed));
-            SensorDataCyclingDistanceSpeed distanceSpeed = Mockito.mock(SensorDataCyclingDistanceSpeed.class);
+            AggregatorCyclingDistanceSpeed distanceSpeed = Mockito.mock(AggregatorCyclingDistanceSpeed.class);
             Mockito.when(distanceSpeed.hasValue()).thenReturn(true);
-            Mockito.when(distanceSpeed.getValue()).thenReturn(distanceSpeedData);
-            sensorDataSet.set(distanceSpeed);
+            Mockito.when(distanceSpeed.getValue()).thenReturn(new AggregatorCyclingDistanceSpeed.Data(null, distance, Speed.of(speed)));
+            sensorDataSet.add(distanceSpeed);
+        } else {
+            sensorDataSet.add(new AggregatorCyclingDistanceSpeed("", ""));
         }
 
-        trackPointCreator.getSensorManager().sensorDataSet = sensorDataSet;
+        mockAltitudeChange(trackPointCreator, altitudeGain);
+
         trackPointCreator.onChange(sensorDataSet);
-
-        //TODO Might require: getSensorManager().sensorDataSet = new SensorDataSet()
     }
 
-    private void mockAltitudeChange(TrackPointCreator trackPointCreator, float altitudeGain) {
-        AltitudeSumManager altitudeSumManager = trackPointCreator.getSensorManager().getAltitudeSumManager();
-        altitudeSumManager.setAltitudeGain_m(altitudeGain);
-        altitudeSumManager.setAltitudeLoss_m(altitudeGain);
+    private void mockAltitudeChange(TrackPointCreator trackPointCreator, Float altitudeGain) {
+        SensorDataSet sensorDataSet = trackPointCreator.getSensorManager().sensorDataSet;
+
+        if (altitudeGain != null) {
+            AggregatorBarometer barometer = Mockito.mock(AggregatorBarometer.class);
+            Mockito.when(barometer.hasValue()).thenReturn(true);
+            Mockito.when(barometer.getValue()).thenReturn(new AltitudeGainLoss(altitudeGain, altitudeGain));
+            sensorDataSet.add(barometer);
+        }  else {
+            sensorDataSet.add(new AggregatorBarometer(""));
+        }
     }
 
-    private void sendLocation(TrackPointCreator trackPointCreator, String time, double latitude, double longitude, float accuracy, float verticalAccuracy, float speed, float altitude, float altitudeGain) {
+    private void sendLocation(TrackPointCreator trackPointCreator, String time, double latitude, double longitude, float accuracy, float verticalAccuracy, float speed, float altitude, Float altitudeGain) {
         Location location = new Location("mock");
         location.setLatitude(latitude);
         location.setLongitude(longitude);

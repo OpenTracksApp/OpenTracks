@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Looper;
 
-import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
@@ -19,6 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import java.time.Instant;
 import java.util.List;
@@ -28,24 +28,25 @@ import java.util.concurrent.TimeoutException;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.AltitudeGainLoss;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
-import de.dennisguse.opentracks.sensors.AltitudeSumManager;
-import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
+import de.dennisguse.opentracks.sensors.BluetoothHandlerRunningSpeedAndCadence;
+import de.dennisguse.opentracks.sensors.SensorManager;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorBarometer;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorHeartRate;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorRunning;
+import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
  * Tests insert location.
- * Note: on API23, the TrackRecordingService may not be stopped properly before the next test.
- * So, if something fails, subsequent tests may be affected.
  */
 @RunWith(AndroidJUnit4.class)
 public class TrackRecordingServiceRecordingTest {
@@ -57,14 +58,6 @@ public class TrackRecordingServiceRecordingTest {
     private ContentProviderUtils contentProviderUtils;
 
     private TrackRecordingService service;
-
-    private final AltitudeSumManager altitudeSumManager = new AltitudeSumManager() {
-        @Override
-        public void fill(@NonNull TrackPoint trackPoint) {
-            trackPoint.setAltitudeGain(0f);
-            trackPoint.setAltitudeLoss(0f);
-        }
-    };
 
     @BeforeClass
     public static void preSetUp() {
@@ -105,7 +98,8 @@ public class TrackRecordingServiceRecordingTest {
         String startTime = "2020-02-02T02:02:02Z";
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        mockAltitudeChange(trackPointCreator, 0);
+
 
         // then
         assertEquals(new TrackStatistics(startTime, startTime, 0, 0, 0, 0, null, null)
@@ -142,7 +136,8 @@ public class TrackRecordingServiceRecordingTest {
 
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        mockAltitudeChange(trackPointCreator, 0);
+
 
         // when
         String pauseTime = "2020-02-02T02:02:03Z";
@@ -188,7 +183,8 @@ public class TrackRecordingServiceRecordingTest {
         String starTime = "2020-02-02T02:02:02Z";
         trackPointCreator.setClock(starTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        mockAltitudeChange(trackPointCreator, 0);
+
 
         String pauseTime = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(pauseTime);
@@ -220,7 +216,8 @@ public class TrackRecordingServiceRecordingTest {
 
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        mockAltitudeChange(trackPointCreator, 0);
+
 
         String stopTime = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(stopTime);
@@ -230,7 +227,8 @@ public class TrackRecordingServiceRecordingTest {
         String resumeTime = "2020-02-02T02:02:04Z";
         trackPointCreator.setClock(resumeTime);
         service.resumeTrack(trackId);
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        mockAltitudeChange(trackPointCreator, 0);
+
 
         // then
         new TrackPointAssert().assertEquals(List.of(
@@ -251,18 +249,19 @@ public class TrackRecordingServiceRecordingTest {
 
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
-        BluetoothRemoteSensorManager remoteSensorManager = trackPointCreator.getSensorManager().getBluetoothSensorManager();
+        mockAltitudeChange(trackPointCreator, 0);
 
+        SensorManager sensorManager = trackPointCreator.getSensorManager();
+        sensorManager.sensorDataSet.add(new AggregatorHeartRate("", ""));
         // when
         String sensor1 = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(sensor1);
 
-        remoteSensorManager.onChanged(new SensorDataHeartRate("", "", HeartRate.of(5))); //Should be ignored
+        sensorManager.onChanged(new Raw<>(HeartRate.of(5))); //Should be ignored
 
         String sensor3 = "2020-02-02T02:02:13Z";
         trackPointCreator.setClock(sensor3);
-        remoteSensorManager.onChanged(new SensorDataHeartRate("", "", HeartRate.of(7)));
+        sensorManager.onChanged(new Raw<>(HeartRate.of(7)));
 
         String stopTime = "2020-02-02T02:02:15Z";
         trackPointCreator.setClock(stopTime);
@@ -282,7 +281,6 @@ public class TrackRecordingServiceRecordingTest {
         ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
     }
 
-
     @MediumTest
     @Test
     public void testRecording_gpsOnly_recordingDistance_above() {
@@ -291,7 +289,7 @@ public class TrackRecordingServiceRecordingTest {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        mockAltitudeChange(trackPointCreator, 0);
 
 
         // when
@@ -365,7 +363,8 @@ public class TrackRecordingServiceRecordingTest {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        mockAltitudeChange(trackPointCreator, 0);
+
 
         // when
         String gps1 = "2020-02-02T02:02:03Z";
@@ -429,7 +428,8 @@ public class TrackRecordingServiceRecordingTest {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        mockAltitudeChange(trackPointCreator, 0);
+
 
         // when
         String gps1 = "2020-02-02T02:02:03Z";
@@ -479,7 +479,8 @@ public class TrackRecordingServiceRecordingTest {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        mockAltitudeChange(trackPointCreator, 0);
+
 
         // when
         String gps1 = "2020-02-02T02:02:03Z";
@@ -525,7 +526,7 @@ public class TrackRecordingServiceRecordingTest {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
+        mockAltitudeChange(trackPointCreator, 0);
 
         // when
         String gps1 = "2020-02-02T02:02:03Z";
@@ -581,25 +582,25 @@ public class TrackRecordingServiceRecordingTest {
     @Test
     public void testRecording_gpsAndSensor_gpsIdleMoving_sensorMoving() {
         // TODO Check TrackStatistics
-        AltitudeSumManager altitudeSumManager = new AltitudeSumManager();
-
         // given
         String startTime = "2020-02-02T02:02:02Z";
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        trackPointCreator.getSensorManager().setAltitudeSumManager(altitudeSumManager);
-        BluetoothRemoteSensorManager remoteSensorManager = trackPointCreator.getSensorManager().getBluetoothSensorManager();
+
+        SensorManager sensorManager = trackPointCreator.getSensorManager();
+        sensorManager.sensorDataSet.add(new AggregatorRunning("", ""));
+        sensorManager.sensorDataSet.barometer = null;
 
         // when
         String sensor1 = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(sensor1);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(0))); //Should be ignored
+        sensorManager.onChanged(new Raw<>(new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(0)))); //Should be ignored
 
         // when
         String sensor2 = "2020-02-02T02:02:04Z";
         trackPointCreator.setClock(sensor2);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(2)));
+        sensorManager.onChanged(new Raw<>(new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(2))));
 
         // when
         String gps1 = "2020-02-02T02:02:05Z";
@@ -608,12 +609,12 @@ public class TrackRecordingServiceRecordingTest {
         // when
         String sensor3 = "2020-02-02T02:02:06Z";
         trackPointCreator.setClock(sensor3);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(12)));
+        sensorManager.onChanged(new Raw<>(new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(12))));
 
         // when
         String sensor4 = "2020-02-02T02:02:07Z";
         trackPointCreator.setClock(sensor4);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(14))); //Should be ignored
+        sensorManager.onChanged(new Raw<>(new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(14)))); //Should be ignored
 
         // when
         String gps2 = "2020-02-02T02:02:08Z";
@@ -622,7 +623,7 @@ public class TrackRecordingServiceRecordingTest {
         // when
         String sensor5 = "2020-02-02T02:02:10Z";
         trackPointCreator.setClock(sensor5);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(16))); //Should be ignored
+        sensorManager.onChanged(new Raw<>(new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(16)))); //Should be ignored
 
         // when
         String gps3 = "2020-02-02T02:02:12Z";
@@ -670,5 +671,13 @@ public class TrackRecordingServiceRecordingTest {
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(0))
         ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
+    }
+
+    private void mockAltitudeChange(TrackPointCreator trackPointCreator, float altitudeGain) {
+        AggregatorBarometer barometer = Mockito.mock(AggregatorBarometer.class);
+        Mockito.when(barometer.hasValue()).thenReturn(true);
+        Mockito.when(barometer.getValue()).thenReturn(new AltitudeGainLoss(altitudeGain, altitudeGain));
+
+        trackPointCreator.getSensorManager().sensorDataSet.barometer = barometer;
     }
 }

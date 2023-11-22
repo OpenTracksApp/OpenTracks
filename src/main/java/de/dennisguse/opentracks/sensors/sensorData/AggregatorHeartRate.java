@@ -4,21 +4,19 @@ import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.data.models.HeartRate;
 
-public class SensorDataHeartRate extends SensorData<HeartRate> {
+public class AggregatorHeartRate extends Aggregator<HeartRate, HeartRate> {
 
-    public SensorDataHeartRate(String address) {
+    public AggregatorHeartRate(String address) {
         super(address);
     }
 
-    public SensorDataHeartRate(String name, String address, @NonNull HeartRate heartRate) {
+    public AggregatorHeartRate(String name, String address) {
         super(name, address);
-        this.value = heartRate;
     }
 
-    @NonNull
     @Override
-    public String toString() {
-        return super.toString() + " heart=" + value;
+    protected void computeValue(Raw<HeartRate> current) {
+        this.value = current.value();
     }
 
     @NonNull

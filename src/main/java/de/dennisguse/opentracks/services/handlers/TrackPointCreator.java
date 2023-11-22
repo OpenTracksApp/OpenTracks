@@ -34,7 +34,7 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
 
     @NonNull
     private Clock clock = new MonotonicClock();
-    private SensorManager sensorManager;
+    private final SensorManager sensorManager;
 
     public TrackPointCreator(Callback service) {
         this.service = service;
@@ -64,7 +64,7 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
         return sensorManager.fill(trackPoint);
     }
 
-    public synchronized void stop() {
+    public void stop() {
         sensorManager.stop(context);
         this.context = null;
     }
@@ -137,11 +137,6 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
     @VisibleForTesting
     public SensorManager getSensorManager() {
         return sensorManager;
-    }
-
-    @VisibleForTesting
-    public void setSensorManager(SensorManager sensorManager) {
-        this.sensorManager = sensorManager;
     }
 
     @VisibleForTesting

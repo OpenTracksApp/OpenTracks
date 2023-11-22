@@ -11,7 +11,7 @@ import android.util.Log;
 import java.util.concurrent.TimeUnit;
 
 import de.dennisguse.opentracks.data.models.AtmosphericPressure;
-import de.dennisguse.opentracks.sensors.AltitudeSumManager;
+import de.dennisguse.opentracks.sensors.GainManager;
 
 public class BarometerInternal {
 
@@ -19,7 +19,7 @@ public class BarometerInternal {
 
     private static final int SAMPLING_PERIOD = (int) TimeUnit.SECONDS.toMicros(5);
 
-    private AltitudeSumManager observer;
+    private GainManager observer;
 
     private final SensorEventListener listener = new SensorEventListener() {
         @Override
@@ -38,14 +38,12 @@ public class BarometerInternal {
         }
     };
 
-    public void connect(Context context, Handler handler, AltitudeSumManager observer) {
-        this.observer = observer;
+    public void connect(Context context, Handler handler, GainManager observer) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         Sensor pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
         if (pressureSensor == null) {
             Log.w(TAG, "No pressure sensor available.");
             this.observer = null;
-            return;
         }
 
         if (sensorManager.registerListener(listener, pressureSensor, SAMPLING_PERIOD, handler)) {
@@ -59,6 +57,7 @@ public class BarometerInternal {
     public void disconnect(Context context) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         sensorManager.unregisterListener(listener);
+        observer = null;
     }
 
     public boolean isConnected() {

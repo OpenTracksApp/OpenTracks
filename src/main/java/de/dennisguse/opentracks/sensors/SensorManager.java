@@ -9,7 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.data.models.TrackPoint;
-import de.dennisguse.opentracks.sensors.sensorData.SensorData;
+import de.dennisguse.opentracks.sensors.sensorData.Aggregator;
+import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.handlers.GPSManager;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
@@ -27,13 +28,19 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
     private final SensorDataChangedObserver listener = new SensorDataChangedObserver() {
 
         @Override
-        public void onChange(SensorData<?> sensorData) {
-            sensorDataSet.set(sensorData);
+        public void onConnect(Aggregator<?, ?> sensorData) {
+            sensorDataSet.add(sensorData);
             observer.onChange(new SensorDataSet(sensorDataSet));
         }
 
         @Override
-        public void onDisconnect(SensorData<?> sensorData) {
+        public void onChange(Raw<?> sensorData) {
+            sensorDataSet.update(sensorData);
+            observer.onChange(new SensorDataSet(sensorDataSet));
+        }
+
+        @Override
+        public void onDisconnect(Aggregator<?, ?> sensorData) {
             sensorDataSet.remove(sensorData);
             observer.onChange(new SensorDataSet(sensorDataSet));
         }
@@ -41,7 +48,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     private BluetoothRemoteSensorManager bluetoothSensorManager;
 
-    private AltitudeSumManager altitudeSumManager;
+    private GainManager altitudeSumManager;
 
     private GPSManager gpsManager;
 
@@ -51,7 +58,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     public void start(Context context, Handler handler) {
         gpsManager = new GPSManager(observer); //TODO Pass listener
-        altitudeSumManager = new AltitudeSumManager();
+        altitudeSumManager = new GainManager(listener);
         bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
 
         onSharedPreferenceChanged(null, null);
@@ -75,7 +82,6 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
     }
 
     public SensorDataSet fill(TrackPoint trackPoint) {
-        altitudeSumManager.fill(trackPoint);
         sensorDataSet.fillTrackPoint(trackPoint);
         return new SensorDataSet(sensorDataSet);
     }
@@ -86,13 +92,12 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
             return;
         }
         sensorDataSet.reset();
-        altitudeSumManager.reset();
     }
 
     @Deprecated
     @VisibleForTesting
-    public BluetoothRemoteSensorManager getBluetoothSensorManager() {
-        return bluetoothSensorManager;
+    public void onChanged(Raw<?> data) {
+        listener.onChange(data);
     }
 
     public GPSManager getGpsManager() {
@@ -101,13 +106,13 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     @Deprecated
     @VisibleForTesting
-    public AltitudeSumManager getAltitudeSumManager() {
+    public GainManager getAltitudeSumManager() {
         return altitudeSumManager;
     }
 
     @Deprecated
     @VisibleForTesting
-    public void setAltitudeSumManager(AltitudeSumManager altitudeSumManager) {
+    public void setAltitudeSumManager(GainManager altitudeSumManager) {
         this.altitudeSumManager = altitudeSumManager;
     }
 
@@ -120,8 +125,10 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
     }
 
     public interface SensorDataChangedObserver {
-        void onChange(SensorData<?> sensorData);
 
-        void onDisconnect(SensorData<?> sensorData);
+        void onConnect(Aggregator<?, ?> sensorData);
+        void onChange(Raw<?> sensorData);
+
+        void onDisconnect(Aggregator<?, ?> sensorData);
     }
 }
