@@ -75,7 +75,6 @@ public class ListItemUtils {
             // Match list_item_time_distance in list_item.xml
 
             String time = StringUtils.formatElapsedTime(totalTime);
-            // TODO unit system
             String distance = DistanceFormatter.Builder()
                     .setUnit(unitSystem)
                     .build(context)

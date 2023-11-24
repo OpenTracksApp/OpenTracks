@@ -38,15 +38,6 @@ public record Speed(double speed_mps) {
         return speed2;
     }
 
-    public static Speed absDiff(Speed speed1, Speed speed2) {
-        //TODO Why Math.abs? Seems to be a leftover.
-        return Speed.of(Math.abs(speed1.speed_mps - speed2.speed_mps));
-    }
-
-    public Speed mul(double factor) {
-        return new Speed(factor * speed_mps);
-    }
-
     public boolean isZero() {
         return speed_mps == 0;
     }

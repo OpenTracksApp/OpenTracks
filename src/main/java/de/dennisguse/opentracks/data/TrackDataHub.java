@@ -416,8 +416,7 @@ public class TrackDataHub {
          *
          * @param track the track
          */
-        //TODO Could be @NonNull
-        void onTrackUpdated(Track track);
+        void onTrackUpdated(@NonNull Track track);
 
         /**
          * Called to clear previously-sent track points.
