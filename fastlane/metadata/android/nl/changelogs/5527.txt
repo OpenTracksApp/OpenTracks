@@ -1,0 +1,4 @@
+v4.9.5: OpenTracks
+
+Bugfix :
+- inactieve aankondiging werkt weer
