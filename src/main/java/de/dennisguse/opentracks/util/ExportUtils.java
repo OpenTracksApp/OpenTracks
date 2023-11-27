@@ -68,7 +68,7 @@ public class ExportUtils {
         }
 
         TrackExporter trackExporter = exportTask.getTrackFileFormat().createTrackExporter(context, contentProviderUtils);
-        try (OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFileUri)) {
+        try (OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFileUri, "wt")) {
             if (!trackExporter.writeTrack(tracks, outputStream)) {
                 if (!DocumentFile.fromSingleUri(context, exportDocumentFileUri).delete()) {
                     throw new RuntimeException("Unable to delete exportDocumentFile");
