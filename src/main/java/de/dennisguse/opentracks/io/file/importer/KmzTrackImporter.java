@@ -18,6 +18,7 @@ package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -237,7 +238,15 @@ public class KmzTrackImporter {
         File file = new File(dir, fileName);
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            zipInputStream.transferTo(fileOutputStream);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                zipInputStream.transferTo(fileOutputStream);
+            } else {
+                byte[] buffer = new byte[4096];
+                int count;
+                while ((count = zipInputStream.read(buffer)) != -1) {
+                    fileOutputStream.write(buffer, 0, count);
+                }
+            }
         }
     }
 }
