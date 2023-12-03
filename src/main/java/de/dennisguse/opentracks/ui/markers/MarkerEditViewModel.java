@@ -47,6 +47,10 @@ public class MarkerEditViewModel extends AndroidViewModel {
         return markerData;
     }
 
+    protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+        return trackRecordingServiceConnection;
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();

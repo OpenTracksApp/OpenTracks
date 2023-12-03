@@ -121,6 +121,9 @@ public class MarkerEditActivity extends AbstractActivity {
         });
 
         viewModel = new ViewModelProvider(this).get(MarkerEditViewModel.class);
+
+        viewModel.getTrackRecordingServiceConnection().addMarker(getApplication(), null, null,null,null);
+
         viewModel.getMarkerData(trackId, markerId).observe(this, data -> {
             marker = data;
             viewBinding.markerEditName.setText(marker.getName());
