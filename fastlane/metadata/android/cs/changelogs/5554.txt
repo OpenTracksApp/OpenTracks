@@ -1,0 +1,7 @@
+v4.9.6: OpenTracks
+
+Oprava chyby:
+- Export: existující soubory jsou nyní kompletně přepisovány
+
+Vývojář:
+- Předěláno zpracování barometrických dat
