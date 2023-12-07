@@ -1,0 +1,7 @@
+v4.9.6: OpenTracks
+
+Bugfix :
+- Exporteren: bestaande bestanden worden nu volledig overschreven
+
+Ontwikkelaar:
+- Barometrische gegevensverwerking aangepast
