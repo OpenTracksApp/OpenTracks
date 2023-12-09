@@ -120,6 +120,10 @@ public final class SensorDataSet {
             return;
         }
         if (value instanceof AtmosphericPressure) {
+            if (this.barometer == null) {
+                //TODO Quick fix. This shouldn't happen, but it does. May be a race condition?
+                return;
+            }
             this.barometer.add((Raw<AtmosphericPressure>) data);
             return;
         }
