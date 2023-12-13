@@ -1,0 +1,4 @@
+v4.9.7: OpenTracks
+
+Oprava chyby:
+- zabránění pádu při ukončení nahrávání (vzniknuvší ve verzi v4.9.6)
