@@ -77,6 +77,8 @@ public class MarkerEditActivity extends AbstractActivity {
     // UI elements
     private MarkerEditBinding viewBinding;
 
+    private boolean isNewMarker;
+
     @Override
     protected View getRootView() {
         viewBinding = MarkerEditBinding.inflate(getLayoutInflater());
@@ -108,7 +110,7 @@ public class MarkerEditActivity extends AbstractActivity {
             finish();
         });
 
-        boolean isNewMarker = markerId == null;
+        isNewMarker = markerId == null;
         if (!isNewMarker) {
             viewBinding.markerEditToolbar.setTitle(R.string.menu_edit);
         }
@@ -122,7 +124,9 @@ public class MarkerEditActivity extends AbstractActivity {
 
         viewModel = new ViewModelProvider(this).get(MarkerEditViewModel.class);
 
-        viewModel.getTrackRecordingServiceConnection().addMarker(getApplication(), null, null,null,null);
+        if (isNewMarker) {
+            viewModel.getTrackRecordingServiceConnection().addMarker(getApplication(), null, null, null, null);
+        }
 
         viewModel.getMarkerData(trackId, markerId).observe(this, data -> {
             marker = data;
@@ -170,6 +174,15 @@ public class MarkerEditActivity extends AbstractActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        if (isNewMarker) {
+            //Delete the marker of the list
+            //final Marker.Id markerId = marker.getId();
+            //final Context context = this;
+            //final FragmentActivity fragmentActivity = getActivity();
+            //ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
+            //contentProviderUtils.deleteMarker(context, markerId);
+        }
 
         trackId = null;
         viewBinding = null;
