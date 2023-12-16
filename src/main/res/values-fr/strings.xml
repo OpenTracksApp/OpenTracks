@@ -65,7 +65,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <!-- Activity Type -->
     <string name="activity_type_airplane">navigation aérienne</string>
     <string name="activity_type_atv">quad</string>
-    <string name="activity_type_biking">cyclisme</string>
+    <string name="activity_type_biking">vélo</string>
     <string name="activity_type_blimp">dirigeable</string>
     <string name="activity_type_boat">nautisme</string>
     <string name="activity_type_climbing">escalade</string>

@@ -21,12 +21,16 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import de.dennisguse.opentracks.services.announcement.TTSManager;
 
 /**
  * @author Jimmy Shih
  */
 public abstract class AbstractActivity extends AppCompatActivity {
+    public static boolean OLEDFriendly = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,19 @@ public abstract class AbstractActivity extends AppCompatActivity {
         setVolumeControlStream(TTSManager.AUDIO_STREAM);
 
         setContentView(getRootView());
+        this.ThemeUpdate();
     }
+
+   public void ThemeUpdate() {
+
+       if (OLEDFriendly) {
+           this.setTheme(R.style.OledFriendly);
+       }
+       else {
+           this.setTheme(R.style.ThemeCustom);
+       }
+   }
+
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -44,5 +60,11 @@ public abstract class AbstractActivity extends AppCompatActivity {
         return true;
     }
 
+    public static void setOLEDFriendly(boolean bool) {
+        OLEDFriendly = bool;
+    }
+
     protected abstract View getRootView();
 }
+
+

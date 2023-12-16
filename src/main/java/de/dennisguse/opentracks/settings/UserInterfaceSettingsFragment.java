@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -12,12 +13,12 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import java.util.Map;
 
+import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 
 public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
-
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(R.string.night_mode_key, key)) {
             getActivity().runOnUiThread(PreferencesUtils::applyNightMode);
@@ -38,6 +39,18 @@ public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
         Preference dynamicColors = findPreference(getString(R.string.settings_ui_dynamic_colors_key));
         dynamicColors.setEnabled(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU);
 
+        Preference OLEDFriendly = findPreference(getString(R.string.settings_ui_OLEDFriendly_key));
+        OLEDFriendly.setDefaultValue(AbstractActivity.OLEDFriendly);
+
+        OLEDFriendly.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {
+                boolean isEnabled = (boolean) newValue;
+                AbstractActivity.setOLEDFriendly(isEnabled);
+                ((SettingsActivity) getActivity()).recreate();
+                return true;
+            }
+        });
         setShowOnMapFormatOptions();
     }
 

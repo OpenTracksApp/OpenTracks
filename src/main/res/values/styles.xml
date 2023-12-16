@@ -93,4 +93,13 @@ limitations under the License.
         <item name="colorOnSurface">@android:color/holo_red_dark</item>
     </style>
 
+    <style name="AppTheme.Black" parent = "Theme.AppCompat" >
+        <item name="android:windowBackground">@color/yellow </item>
+        <item name="colorPrimary">@color/yellow</item>
+        <item name="colorPrimaryDark">@color/cardview_light_background </item>
+        <item name="colorAccent">@color/white </item>
+
+
+    </style>
+
 </resources>

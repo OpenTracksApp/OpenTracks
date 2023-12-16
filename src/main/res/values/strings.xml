@@ -376,6 +376,8 @@ limitations under the License.
     <string name="settings_recording_title">Recording</string>
     <string name="settings_ui_dynamic_colors_title">Dynamic Colors</string>
     <string name="settings_ui_dynamic_colors_summary">Use user-defined Dynamic Colors (Android 12+ only; requires a manual restart)</string>
+    <string name="settings_ui_OLEDFriendly_title"> OLED Friendly</string>
+    <string name="settings_ui_OLEDFriendly_summary">Adapt the theme of the app to OLED devices</string>
     <string name="settings_recording_customize_layout_title">Customize your recording layout</string>
     <string name="settings_recording_customize_layout_select_columns">Data fields per row</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Show statistics on lockscreen</string>
@@ -401,6 +403,7 @@ limitations under the License.
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Day</string>
     <string name="settings_night_mode_option_night">Night</string>
+    <string name="settings_night_mode_option_yellow"> Yellow </string>
 
     <string name="settings_announcements_totaltime_frequency">Time interval</string>
     <string name="settings_announcements_distance_frequency">Distance interval</string>

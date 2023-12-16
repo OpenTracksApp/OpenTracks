@@ -274,6 +274,9 @@
     <string name="settings_ui_dynamic_colors_key" translatable="false">uiDynamicColors</string>
     <bool name="settings_ui_dynamic_colors_default" translatable="false">false</bool>
 
+    <string name="settings_ui_OLEDFriendly_key" translatable="false">OLEDFriendly</string>
+    <bool name="settings_ui_OLEDFriendly_default" translatable="false">false</bool>
+
     <!-- androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode() -->
     <string name="night_mode_key" translatable="false">nightMode</string>
     <string name="night_mode_default" translatable="false">@string/night_mode_system_value</string>

@@ -18,6 +18,12 @@
         android:summary="@string/settings_ui_dynamic_colors_summary"
         android:title="@string/settings_ui_dynamic_colors_title" />
 
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/settings_ui_OLEDFriendly_default"
+        android:key="@string/settings_ui_OLEDFriendly_key"
+        android:summary="@string/settings_ui_OLEDFriendly_summary"
+        android:title="@string/settings_ui_OLEDFriendly_title" />
+
     <ListPreference
         android:defaultValue="@string/show_on_map_format_ask"
         android:key="@string/show_on_map_format_key"

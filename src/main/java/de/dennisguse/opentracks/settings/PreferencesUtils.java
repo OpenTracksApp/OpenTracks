@@ -816,7 +816,8 @@ public class PreferencesUtils {
     }
 
     public static void applyNightMode() {
-        AppCompatDelegate.setDefaultNightMode(PreferencesUtils.getDefaultNightMode());
+        AppCompatDelegate.setDefaultNightMode(PreferencesUtils.getDefaultNightMode
+                ());
     }
 
     //TODO Check if resetPreferences can be used instead.
