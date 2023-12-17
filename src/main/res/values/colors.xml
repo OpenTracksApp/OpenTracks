@@ -55,8 +55,9 @@ limitations under the License.
 
     <!--Additions  -->
     <color name = "yellow">#FFFF00 </color>
-    <color name = "OFF_white">#C1FDF8FD</color>
+    <color name = "OFF_white">#E4FBEFF1</color>
     <color name = "white">#FFFFFF</color>
+    <color name = "OFF_orange">#C85600</color>
 
 
 </resources>

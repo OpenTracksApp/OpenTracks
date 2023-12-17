@@ -93,13 +93,15 @@ limitations under the License.
         <item name="colorOnSurface">@android:color/holo_red_dark</item>
     </style>
 
-    <style name="AppTheme.Black" parent = "Theme.AppCompat" >
-        <item name="android:windowBackground">@color/yellow </item>
-        <item name="colorPrimary">@color/yellow</item>
-        <item name="colorPrimaryDark">@color/cardview_light_background </item>
-        <item name="colorAccent">@color/white </item>
+    <style name="MaterialSnackbarTextButtonThemeOled" parent="@style/Widget.Material3.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/OFF_white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
-
+    <style name="MaterialSnackbarTextViewThemeOled" parent="@style/Widget.Material3.Snackbar.TextView">
+        <item name="android:textColor">@color/OFF_white</item>
+        <item name="android:textAppearance">?textAppearanceLabelMedium</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 </resources>

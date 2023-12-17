@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.settings;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -40,8 +41,16 @@ public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
         dynamicColors.setEnabled(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU);
 
         Preference OLEDFriendly = findPreference(getString(R.string.settings_ui_OLEDFriendly_key));
-        OLEDFriendly.setDefaultValue(AbstractActivity.OLEDFriendly);
 
+        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        switch (nightModeFlags) {
+            case (Configuration.UI_MODE_NIGHT_YES) :
+                OLEDFriendly.setEnabled(false);
+                break;
+            case (Configuration.UI_MODE_NIGHT_NO) :
+                OLEDFriendly.setEnabled(true);
+                break;
+        }
         OLEDFriendly.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(@NonNull Preference preference, Object newValue) {

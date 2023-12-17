@@ -45,6 +45,10 @@ public class Startup extends Application {
         if (PreferencesUtils.shouldUseDynamicColors()) {
             DynamicColors.applyToActivitiesIfAvailable(this);
         }
+
+        if (PreferencesUtils.shouldApplyOledTheme()) {
+            AbstractActivity.OLEDFriendly = true;
+        }
     }
 
     @Override

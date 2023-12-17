@@ -16,13 +16,11 @@
 
 package de.dennisguse.opentracks;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import de.dennisguse.opentracks.services.announcement.TTSManager;
 
@@ -44,8 +42,8 @@ public abstract class AbstractActivity extends AppCompatActivity {
     }
 
    public void ThemeUpdate() {
-
-       if (OLEDFriendly) {
+       int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+       if (OLEDFriendly && (nightModeFlags == Configuration.UI_MODE_NIGHT_NO)) {
            this.setTheme(R.style.OledFriendly);
        }
        else {

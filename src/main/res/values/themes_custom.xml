@@ -14,14 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="OledFriendly" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/opentracks</item>
-        <item name="colorSecondary">@color/opentracks</item>
+    <style name="OledFriendly" parent="Theme.Material3.Light">
+        <item name="colorPrimary">@color/OFF_orange</item>
+        <item name="colorSecondary">@color/OFF_orange</item>
 
         <item name="android:statusBarColor">@color/OFF_white</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/OFF_white</item>
 
+        <item name="android:buttonBarButtonStyle">@style/BottomButtonBar</item>
+        <item name="android:background">@color/OFF_white</item>
         <!-- Snackbar -->
         <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
         <item name="snackbarButtonStyle">@style/MaterialSnackbarTextButtonTheme</item>
@@ -31,29 +33,6 @@ limitations under the License.
         <item name="floatingActionButtonStyle">@style/Widget.OpenTracks.FloatingActionButton</item>
 
         <item name="windowActionModeOverlay">true</item>
-
-        <!--
-        <item name="colorPrimary">#FF0101</item>
-        <item name="colorSecondary">#FF0101</item>
-
-        <item name="android:statusBarColor">@color/chart_power_border</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:navigationBarColor">@color/chart_power_border</item>
-        <item name="android:background">@drawable/gradient_background</item>
-        <item name="android:windowBackground">#DCFF0000</item>
-        -->
-          <!-- Snackbar -->
-        <!--
-        <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
-        <item name="snackbarButtonStyle">@style/MaterialSnackbarTextButtonTheme</item>
-        <item name="snackbarTextViewStyle">@style/MaterialSnackbarTextViewTheme</item>
-
-
-        <item name="bottomAppBarStyle">@style/Widget.OpenTracks.BottomAppBar</item>
-        <item name="floatingActionButtonStyle">@style/Widget.OpenTracks.FloatingActionButton</item>
-
-        <item name="windowActionModeOverlay">true</item>
-        -->
     </style>
 
     <style name="ThemeCustom" parent="Theme.Material3.DayNight.NoActionBar">

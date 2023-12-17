@@ -312,6 +312,11 @@ public class PreferencesUtils {
         return getBoolean(R.string.settings_ui_dynamic_colors_key, DEFAULT);
     }
 
+    public static boolean shouldApplyOledTheme() {
+        final boolean DEFAULT = resources.getBoolean(R.bool.settings_ui_OLEDFriendly_default);
+        return getBoolean(R.string.settings_ui_OLEDFriendly_key, DEFAULT);
+    }
+
     public static boolean shouldVoiceAnnouncementOnDeviceSpeaker() {
         final boolean DEFAULT = resources.getBoolean(R.bool.voice_on_device_speaker_default);
         return getBoolean(R.string.voice_on_device_speaker_key, DEFAULT);
