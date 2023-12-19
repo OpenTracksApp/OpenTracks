@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">飛行機</string>
     <string name="activity_type_atv">全地形対応車（ATV）</string>
@@ -195,7 +195,6 @@ limitations under the License.
     <string name="settings_stats_units_imperial">ヤード･ポンド法（マイル、フィート）</string>
     <string name="settings_stats_units_metric">メートル法（km、m）</string>
     <string name="settings_stats_units_title">計測単位</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file_body">次のトラックを見てみてください。\n\nトラックを表示するには、Google Earthか他のマッピングソフトウェアを使用してください。\n\n%1$s</string>
     <string name="share_track_subject">トラック共有のお知らせ</string>
@@ -306,4 +305,10 @@ limitations under the License.
     <string name="waypoint_type_waterfall">滝</string>
     <string name="waypoint_type_water_fountain">噴水</string>
     <string name="waypoint_type_waypoint">地点</string>
+    <string name="help_feature_content">"* GPS トラックを作成します
+\n  * 心拍センサーを使用します (Bluetooth LE のみ)
+\n  * 音声アナウンス（時間または距離）
+\n  * マーカーの作成 (写真を含む)
+\n  * 完全にオフラインで動作します
+\n  * 地図上にトラックを表示します (下記を参照)"</string>
 </resources>
