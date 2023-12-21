@@ -1,0 +1,4 @@
+v4.9.7: OpenTracks
+
+Bugfix :
+- voorkoming van crash bij het stoppen van een opname (geïntroduceerd in v4.9.6)
