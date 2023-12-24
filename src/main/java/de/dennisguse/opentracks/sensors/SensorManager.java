@@ -57,6 +57,10 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
     }
 
     public void start(Context context, Handler handler) {
+        if (gpsManager != null) {
+            throw new RuntimeException("SensorManager cannot be started twice; stop first.");
+        }
+
         gpsManager = new GPSManager(observer); //TODO Pass listener
         altitudeSumManager = new GainManager(listener);
         bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
