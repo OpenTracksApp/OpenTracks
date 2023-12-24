@@ -188,7 +188,7 @@ public final class SensorDataSet {
     }
 
     private void set(@NonNull Aggregator<?, ?> type, @Nullable Aggregator<?, ?> sensorData) {
-        Log.i(TAG, "Setting aggregator " + type.getClass().getCanonicalName());
+        Log.i(TAG, "Setting aggregator " + type.getClass().getCanonicalName() + " to " + sensorData);
 
         if (type instanceof AggregatorHeartRate) {
             heartRate = (AggregatorHeartRate) sensorData;

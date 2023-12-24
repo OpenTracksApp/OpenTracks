@@ -255,7 +255,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     @Override
     public void newGpsStatus(GpsStatusValue gpsStatusValue) {
-        Log.e(TAG, "newGpsStatus: " + gpsStatusValue.message);
+        Log.i(TAG, "newGpsStatus: " + gpsStatusValue.message);
 
         if (notificationManager == null) {
 
