@@ -42,13 +42,37 @@ import de.dennisguse.opentracks.data.models.Marker;
  *
  * @author Rodrigo Damazio
  */
-public class TrackRecordingServiceConnection implements ServiceConnection, DeathRecipient {
+public class TrackRecordingServiceConnection {
 
     private static final String TAG = TrackRecordingServiceConnection.class.getSimpleName();
 
     private final Callback callback;
 
     private TrackRecordingService trackRecordingService;
+
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            Log.i(TAG, "Connected to the service: " + service);
+            try {
+                service.linkToDeath(deathRecipient, 0);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Failed to bind a death recipient.", e);
+            }
+            setTrackRecordingService(((TrackRecordingService.Binder) service).getService());
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName className) {
+            Log.i(TAG, "Disconnected from the service.");
+            setTrackRecordingService(null);
+        }
+    };
+
+    private final DeathRecipient deathRecipient = () -> {
+        Log.d(TAG, "Service died.");
+        setTrackRecordingService(null);
+    };
 
     public TrackRecordingServiceConnection() {
         callback = null;
@@ -104,7 +128,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
         Log.i(TAG, "Binding the service.");
         int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
-        context.bindService(new Intent(context, TrackRecordingService.class), this, flags);
+        context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection, flags);
     }
 
     /**
@@ -113,7 +137,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     //TODO This is often called for one-shot operations and should be refactored as unbinding is required.
     public void unbind(Context context) {
         try {
-            context.unbindService(this);
+            context.unbindService(serviceConnection);
         } catch (IllegalArgumentException e) {
             // Means not bound to the service. OK to ignore.
         }
@@ -130,33 +154,8 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         if (callback != null) {
             if (value != null) {
                 callback.onConnected(value, this);
-            } else {
-                callback.onDisconnected();
             }
         }
-    }
-
-    @Override
-    public void onServiceConnected(ComponentName className, IBinder service) {
-        Log.i(TAG, "Connected to the service: " + service);
-        try {
-            service.linkToDeath(this, 0);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Failed to bind a death recipient.", e);
-        }
-        setTrackRecordingService(((TrackRecordingService.Binder) service).getService());
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName className) {
-        Log.i(TAG, "Disconnected from the service.");
-        setTrackRecordingService(null);
-    }
-
-    @Override
-    public void binderDied() {
-        Log.d(TAG, "Service died.");
-        setTrackRecordingService(null);
     }
 
     @Nullable
@@ -191,8 +190,5 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     public interface Callback {
         void onConnected(TrackRecordingService service, TrackRecordingServiceConnection self);
-
-        default void onDisconnected() {
-        }
     }
 }
