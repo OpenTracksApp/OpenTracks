@@ -25,6 +25,7 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -73,7 +74,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     private static final String TAG = TrackListActivity.class.getSimpleName();
 
     // The following are set in onCreate
-    private TrackRecordingServiceConnection trackRecordingServiceConnection;
+    private TrackRecordingServiceConnection recordingStatusConnection;
     private TrackListAdapter adapter;
 
     private TrackListBinding viewBinding;
@@ -138,13 +139,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 .observe(TrackListActivity.this, this::onGpsStatusChanged);
 
         updateGpsMenuItem(true, recordingStatus.isRecording());
-
-        if (service.getGpsStatusObservable().getValue().isGpsStarted()) {
-            return;
-        }
-
-        //TODO Not cool to do this in a callback that might be called more than once!
-        service.tryStartSensors();
     };
 
     @Override
@@ -154,7 +148,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
         requestRequiredPermissions();
 
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
+        recordingStatusConnection = new TrackRecordingServiceConnection(bindChangedCallback);
 
         viewBinding.aggregatedStatsButton.setOnClickListener((view) -> startActivity(IntentUtils.newIntent(this, AggregatedStatisticsActivity.class)));
         viewBinding.sensorStartButton.setOnClickListener((view) -> {
@@ -163,9 +157,13 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             } else {
                 if (gpsStatusValue.isGpsStarted()) {
-                    trackRecordingServiceConnection.unbindAndStop(this);
+                    recordingStatusConnection.unbindAndStop(this);
                 } else {
-                    trackRecordingServiceConnection.startAndBindWithCallback(this);
+                    new TrackRecordingServiceConnection((service, connection) -> {
+                        service.tryStartSensors();
+
+                        connection.unbind(this);
+                    }).startAndBindWithCallback(this);
                 }
             }
         });
@@ -182,6 +180,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             }
 
             // Not Recording -> Recording
+            Log.i(TAG, "Starting recording");
             updateGpsMenuItem(false, true);
             new TrackRecordingServiceConnection((service, connection) -> {
                 Track.Id trackId = service.startNewTrack();
@@ -201,7 +200,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             // Recording -> Stop
             ActivityUtils.vibrate(this, 1000);
             updateGpsMenuItem(false, false);
-            trackRecordingServiceConnection.stopRecording(TrackListActivity.this);
+            recordingStatusConnection.stopRecording(TrackListActivity.this);
             viewBinding.trackListFabAction.setImageResource(R.drawable.ic_baseline_record_24);
             viewBinding.trackListFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.red_dark));
             return true;
@@ -220,7 +219,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         super.onStart();
 
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        trackRecordingServiceConnection.startConnection(this);
+        recordingStatusConnection.startConnection(this);
     }
 
     @Override
@@ -240,14 +239,14 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         super.onStop();
 
         PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        trackRecordingServiceConnection.unbind(this);
+        recordingStatusConnection.unbind(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         viewBinding = null;
-        trackRecordingServiceConnection = null;
+        recordingStatusConnection = null;
         adapter = null;
     }
 

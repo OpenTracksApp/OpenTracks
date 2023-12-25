@@ -127,9 +127,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         setTrackRecordingService(null);
     }
 
-    /**
-     * Unbinds and stops the service.
-     */
     public void unbindAndStop(Context context) {
         unbind(context);
         context.stopService(new Intent(context, TrackRecordingService.class));
@@ -153,7 +150,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     @Override
     public void onServiceConnected(ComponentName className, IBinder service) {
-        Log.i(TAG, "Connected to the service.");
+        Log.i(TAG, "Connected to the service: " + service);
         try {
             service.linkToDeath(this, 0);
         } catch (RemoteException e) {
