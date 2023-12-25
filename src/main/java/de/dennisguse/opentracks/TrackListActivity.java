@@ -158,6 +158,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             } else {
                 if (gpsStatusValue.isGpsStarted()) {
                     recordingStatusConnection.unbindAndStop(this);
+                    recordingStatusConnection.startConnection(this); //TODO We need to stay listening!
                 } else {
                     new TrackRecordingServiceConnection((service, connection) -> {
                         service.tryStartSensors();

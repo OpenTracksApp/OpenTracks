@@ -125,6 +125,9 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         if (isRecording()) {
             endCurrentTrack();
         }
+        if (isSensorStarted()) {
+            stopSensors();
+        }
 
         PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
 
@@ -248,6 +251,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         stopForeground(true);
         notificationManager.cancelNotification();
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
+        gpsStatusObservable.postValue(STATUS_GPS_DEFAULT);
     }
 
     @Override
