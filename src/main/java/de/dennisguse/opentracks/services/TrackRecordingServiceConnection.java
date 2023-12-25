@@ -58,13 +58,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         this.callback = callback;
     }
 
-    public void bind(@NonNull Context context) {
-        if (trackRecordingService != null) {
-            return;
-        }
-        context.bindService(new Intent(context, TrackRecordingService.class), this, 0);
-    }
-
     /**
      * Starts and binds the service.
      *
@@ -132,11 +125,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         context.stopService(new Intent(context, TrackRecordingService.class));
     }
 
-    @Nullable
-    public TrackRecordingService getServiceIfBound() {
-        return trackRecordingService;
-    }
-
     private void setTrackRecordingService(TrackRecordingService value) {
         trackRecordingService = value;
         if (callback != null) {
@@ -173,19 +161,19 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     @Nullable
     public Marker.Id addMarker(Context context, String name, String category, String description, String photoUrl) {
-        TrackRecordingService trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.d(TAG, "Unable to add marker, no track recording service");
-        } else {
-            try {
-                Marker.Id marker = trackRecordingService.insertMarker(name, category, description, photoUrl);
-                if (marker != null) {
-                    Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
-                    return marker;
-                }
-            } catch (IllegalStateException e) {
-                Log.e(TAG, "Unable to add marker.", e);
+            return null;
+        }
+
+        try {
+            Marker.Id marker = trackRecordingService.insertMarker(name, category, description, photoUrl);
+            if (marker != null) {
+                Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
+                return marker;
             }
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "Unable to add marker.", e);
         }
 
         Toast.makeText(context, R.string.marker_add_error, Toast.LENGTH_LONG).show();
@@ -193,7 +181,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     }
 
     public void stopRecording(@NonNull Context context) {
-        TrackRecordingService trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.e(TAG, "TrackRecordingService not connected.");
         } else {
@@ -203,7 +190,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     }
 
     public interface Callback {
-        void onConnected(TrackRecordingService service, TrackRecordingServiceConnection connection);
+        void onConnected(TrackRecordingService service, TrackRecordingServiceConnection self);
 
         default void onDisconnected() {
         }
