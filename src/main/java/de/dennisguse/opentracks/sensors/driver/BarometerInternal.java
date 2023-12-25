@@ -42,6 +42,7 @@ public class BarometerInternal implements SensorEventListener {
         if (pressureSensor == null) {
             Log.w(TAG, "No pressure sensor available.");
             this.observer = null;
+            return;
         }
 
         if (sensorManager.registerListener(this, pressureSensor, SAMPLING_PERIOD, handler)) {
