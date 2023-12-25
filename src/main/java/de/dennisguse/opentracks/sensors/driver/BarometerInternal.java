@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 import de.dennisguse.opentracks.data.models.AtmosphericPressure;
 import de.dennisguse.opentracks.sensors.GainManager;
 
-public class BarometerInternal implements SensorEventListener {
+public class BarometerInternal {
 
     private static final String TAG = BarometerInternal.class.getSimpleName();
 
@@ -21,20 +21,22 @@ public class BarometerInternal implements SensorEventListener {
 
     private GainManager observer;
 
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (!isConnected()) {
-            Log.w(TAG, "Not connected to sensor, cannot process data.");
-            return;
+    private final SensorEventListener listener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            if (!isConnected()) {
+                Log.w(TAG, "Not connected to sensor, cannot process data.");
+                return;
+            }
+
+            observer.onSensorValueChanged(AtmosphericPressure.ofHPA(event.values[0]));
         }
 
-        observer.onSensorValueChanged(AtmosphericPressure.ofHPA(event.values[0]));
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        Log.w(TAG, "Sensor accuracy changes are (currently) ignored.");
-    }
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            Log.w(TAG, "Sensor accuracy changes are (currently) ignored.");
+        }
+    };
 
     public void connect(Context context, Handler handler, GainManager observer) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -45,7 +47,7 @@ public class BarometerInternal implements SensorEventListener {
             return;
         }
 
-        if (sensorManager.registerListener(this, pressureSensor, SAMPLING_PERIOD, handler)) {
+        if (sensorManager.registerListener(listener, pressureSensor, SAMPLING_PERIOD, handler)) {
             this.observer = observer;
             return;
         }
@@ -55,7 +57,7 @@ public class BarometerInternal implements SensorEventListener {
 
     public void disconnect(Context context) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-        sensorManager.unregisterListener(this);
+        sensorManager.unregisterListener(listener);
         observer = null;
     }
 
