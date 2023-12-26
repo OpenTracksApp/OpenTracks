@@ -14,10 +14,6 @@ public class AggregatorCyclingCadence extends Aggregator<BluetoothHandlerCycling
 
     private final String TAG = AggregatorCyclingCadence.class.getSimpleName();
 
-    public AggregatorCyclingCadence(String sensorAddress) {
-        super(sensorAddress);
-    }
-
     public AggregatorCyclingCadence(String sensorAddress, String sensorName) {
         super(sensorAddress, sensorName);
     }

@@ -139,11 +139,11 @@ public class BluetoothConnectionManager {
 
         bluetoothGatt = device.connectGatt(context, false, connectCallback, BluetoothDevice.TRANSPORT_AUTO, 0, handler);
 
-        observer.onConnect(sensorHandler.createEmptySensorData(bluetoothGatt.getDevice().getAddress()));
+        observer.onConnect(sensorHandler.createEmptySensorData(device.getAddress(), device.getName()));
     }
 
     private synchronized void clearData() {
-        observer.onDisconnect(sensorHandler.createEmptySensorData(bluetoothGatt.getDevice().getAddress()));
+        observer.onDisconnect(sensorHandler.createEmptySensorData(bluetoothGatt.getDevice().getAddress(), bluetoothGatt.getDevice().getName()));
     }
 
     synchronized void disconnect() {

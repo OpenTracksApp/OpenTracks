@@ -36,8 +36,8 @@ public class BluetoothHandlerManagerHeartRate implements SensorHandlerInterface 
     }
 
     @Override
-    public AggregatorHeartRate createEmptySensorData(String address) {
-        return new AggregatorHeartRate(address);
+    public AggregatorHeartRate createEmptySensorData(String address, String name) {
+        return new AggregatorHeartRate(address, name);
     }
 
     @Override

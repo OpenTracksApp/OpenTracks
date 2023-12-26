@@ -26,8 +26,8 @@ public class BluetoothHandlerManagerCyclingPower implements SensorHandlerInterfa
     }
 
     @Override
-    public AggregatorCyclingPower createEmptySensorData(String address) {
-        return new AggregatorCyclingPower(address);
+    public AggregatorCyclingPower createEmptySensorData(String address, String name) {
+        return new AggregatorCyclingPower(address, name);
     }
 
     @Override

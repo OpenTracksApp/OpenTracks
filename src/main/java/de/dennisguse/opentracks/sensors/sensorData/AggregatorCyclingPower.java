@@ -6,10 +6,6 @@ import de.dennisguse.opentracks.data.models.Power;
 
 public class AggregatorCyclingPower extends Aggregator<Power, Power> {
 
-    public AggregatorCyclingPower(String address) {
-        super(address);
-    }
-
     public AggregatorCyclingPower(String name, String address) {
         super(name, address);
     }

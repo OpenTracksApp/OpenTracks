@@ -17,10 +17,6 @@ public class AggregatorCyclingDistanceSpeed extends Aggregator<BluetoothHandlerC
 
     private Distance wheelCircumference;
 
-    public AggregatorCyclingDistanceSpeed(String sensorAddress) {
-        super(sensorAddress);
-    }
-
     public AggregatorCyclingDistanceSpeed(String sensorAddress, String sensorName) {
         super(sensorAddress, sensorName);
     }

@@ -24,8 +24,8 @@ public class BluetoothHandlerCyclingCadence implements SensorHandlerInterface {
     }
 
     @Override
-    public AggregatorCyclingCadence createEmptySensorData(String address) {
-        return new AggregatorCyclingCadence(address);
+    public AggregatorCyclingCadence createEmptySensorData(String address, String name) {
+        return new AggregatorCyclingCadence(address, name);
     }
 
     @Override

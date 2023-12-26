@@ -6,10 +6,6 @@ import de.dennisguse.opentracks.data.models.HeartRate;
 
 public class AggregatorHeartRate extends Aggregator<HeartRate, HeartRate> {
 
-    public AggregatorHeartRate(String address) {
-        super(address);
-    }
-
     public AggregatorHeartRate(String name, String address) {
         super(name, address);
     }

@@ -22,7 +22,7 @@ public class BluetoothHandlerBarometricPressure implements SensorHandlerInterfac
     }
 
     @Override
-    public Aggregator<?, ?> createEmptySensorData(String address) {
+    public Aggregator<?, ?> createEmptySensorData(String address, String name) {
         return null; //TODO
     }
 

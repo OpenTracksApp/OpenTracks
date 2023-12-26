@@ -29,8 +29,8 @@ public class BluetoothHandlerRunningSpeedAndCadence implements SensorHandlerInte
     }
 
     @Override
-    public AggregatorRunning createEmptySensorData(String address) {
-        return new AggregatorRunning(address);
+    public AggregatorRunning createEmptySensorData(String address, String name) {
+        return new AggregatorRunning(address, name);
     }
 
     @Override

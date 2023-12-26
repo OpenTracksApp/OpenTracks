@@ -26,8 +26,8 @@ public class BluetoothHandlerCyclingDistanceSpeed implements SensorHandlerInterf
     }
 
     @Override
-    public AggregatorCyclingDistanceSpeed createEmptySensorData(String address) {
-        return new AggregatorCyclingDistanceSpeed(address);
+    public AggregatorCyclingDistanceSpeed createEmptySensorData(String address, String name) {
+        return new AggregatorCyclingDistanceSpeed(address, name);
     }
 
     @Override

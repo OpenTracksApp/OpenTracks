@@ -14,10 +14,6 @@ public final class AggregatorRunning extends Aggregator<BluetoothHandlerRunningS
 
     private static final String TAG = AggregatorRunning.class.getSimpleName();
 
-    public AggregatorRunning(String sensorAddress) {
-        super(sensorAddress);
-    }
-
     public AggregatorRunning(String sensorAddress, String sensorName) {
         super(sensorAddress, sensorName);
     }
