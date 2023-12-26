@@ -125,6 +125,9 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         if (isRecording()) {
             endCurrentTrack();
         }
+        if (isSensorStarted()) {
+            stopSensors();
+        }
 
         PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
 
@@ -163,6 +166,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             Log.w(TAG, "Ignore startNewTrack. Already recording.");
             return null;
         }
+        Log.i(TAG, "startNewTrack");
 
         // Set recording status
         Track.Id trackId = trackRecordingManager.startNewTrack();
@@ -177,6 +181,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             Log.w(TAG, "Cannot resume a non-existing track.");
             return;
         }
+        Log.i(TAG, "resumeTrack");
 
         updateRecordingStatus(RecordingStatus.record(trackId));
 
@@ -193,12 +198,19 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     }
 
     public void tryStartSensors() {
-        if (isRecording()) return;
+        if (isSensorStarted()) return;
+
+        Log.i(TAG, "tryStartSensors");
 
         startSensors();
     }
 
-    private void startSensors() {
+    private synchronized void startSensors() {
+        if (isSensorStarted()) {
+            Log.i(TAG, "sensors already started; skipping");
+            return;
+        }
+        Log.i(TAG, "startSensors");
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         trackPointCreator.start(this, handler);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -239,6 +251,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         stopForeground(true);
         notificationManager.cancelNotification();
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
+        gpsStatusObservable.postValue(STATUS_GPS_DEFAULT);
     }
 
     @Override
@@ -334,6 +347,10 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     @Deprecated //TODO Should be @VisibleForTesting
     public boolean isRecording() {
         return recordingStatus.isRecording();
+    }
+
+    private boolean isSensorStarted() {
+        return wakeLock != null;
     }
 
     @Override
