@@ -136,7 +136,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
     }
 
     private void resumeTrackAndFinish() {
-        new TrackRecordingServiceConnection((service, connection) -> {
+        TrackRecordingServiceConnection.execute(this, (service, connection) -> {
             service.resumeTrack(trackId);
 
             Intent newIntent = IntentUtils.newIntent(TrackStoppedActivity.this, TrackRecordingActivity.class)
@@ -144,9 +144,8 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
             startActivity(newIntent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-            connection.unbind(this);
             finish();
-        }).startAndBind(this);
+        });
     }
 
     @Override

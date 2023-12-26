@@ -159,11 +159,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 if (gpsStatusValue.isGpsStarted()) {
                     recordingStatusConnection.stopService(this);
                 } else {
-                    new TrackRecordingServiceConnection((service, connection) -> {
-                        service.tryStartSensors();
-
-                        connection.unbind(this);
-                    }).startAndBindWithCallback(this);
+                    TrackRecordingServiceConnection.execute(this, (service, connection) -> service.tryStartSensors());
                 }
             }
         });
@@ -182,15 +178,13 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             // Not Recording -> Recording
             Log.i(TAG, "Starting recording");
             updateGpsMenuItem(false, true);
-            new TrackRecordingServiceConnection((service, connection) -> {
+            TrackRecordingServiceConnection.execute(this, (service, connection) -> {
                 Track.Id trackId = service.startNewTrack();
 
                 Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
                 newIntent.putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, trackId);
                 startActivity(newIntent);
-
-                connection.unbind(this);
-            }).startAndBind(this);
+            });
         });
         viewBinding.trackListFabAction.setOnLongClickListener((view) -> {
             if (!recordingStatus.isRecording()) {

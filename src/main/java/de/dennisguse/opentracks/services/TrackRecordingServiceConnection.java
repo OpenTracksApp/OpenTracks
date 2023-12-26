@@ -80,39 +80,13 @@ public class TrackRecordingServiceConnection {
 
     public void bind(@NonNull Context context) {
         if (trackRecordingService != null) {
-            // Service is already started and bound.
+            callback.onConnected(trackRecordingService, this);
             return;
         }
 
         Log.i(TAG, "Binding the service.");
         int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
         context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection, flags);
-    }
-
-    public void startAndBind(Context context) {
-        if (trackRecordingService != null) {
-            // Service is already started and bound.
-            return;
-        }
-
-        ContextCompat.startForegroundService(context, new Intent(context, TrackRecordingService.class));
-
-        bind(context);
-    }
-
-    //TODO There should be a better way to implement this.
-
-    /**
-     * Triggers the onConnected() callback even if already connected.
-     */
-    //TODO Check if this is actually needed as it is used to re-connect from Activities in onResume by using a LiveData; might be obsolete. If not, there should be a better way to implement this.
-    @Deprecated
-    public void startAndBindWithCallback(Context context) {
-        if (trackRecordingService == null) {
-            startAndBind(context);
-            return;
-        }
-        callback.onConnected(trackRecordingService, this);
     }
 
     /**
@@ -177,5 +151,16 @@ public class TrackRecordingServiceConnection {
 
     public interface Callback {
         void onConnected(TrackRecordingService service, TrackRecordingServiceConnection self);
+    }
+
+    public static void execute(Context context, Callback callback) {
+        Callback withUnbind = (service, connection) -> {
+            callback.onConnected(service, connection);
+            connection.unbind(context);
+        };
+        new TrackRecordingServiceConnection(withUnbind)
+                .bind(context);
+
+        ContextCompat.startForegroundService(context, new Intent(context, TrackRecordingService.class));
     }
 }

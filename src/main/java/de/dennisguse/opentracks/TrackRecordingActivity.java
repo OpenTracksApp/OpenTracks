@@ -224,7 +224,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             trackDataHub.setRecordingStatus(recordingStatus);
         }
 
-        trackRecordingServiceConnection.startAndBindWithCallback(this);
+        trackRecordingServiceConnection.bind(this);
     }
 
     @Override
