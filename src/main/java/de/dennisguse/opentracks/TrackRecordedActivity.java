@@ -211,7 +211,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
 
                 connection.unbind(this);
                 finish();
-            }).startAndBind(this, true);
+            }).startAndBind(this);
             return true;
         }
 

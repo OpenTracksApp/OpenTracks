@@ -82,23 +82,13 @@ public class TrackRecordingServiceConnection {
         this.callback = callback;
     }
 
-    /**
-     * Starts and binds the service.
-     *
-     * @param foreground is the service expected to call `startForeground()`?
-     */
-    public void startAndBind(Context context, boolean foreground) {
+    public void startAndBind(Context context) {
         if (trackRecordingService != null) {
             // Service is already started and bound.
             return;
         }
 
-        Log.i(TAG, "Starting the service.");
-        if (foreground) {
-            ContextCompat.startForegroundService(context, new Intent(context, TrackRecordingService.class));
-        } else {
-            context.startService(new Intent(context, TrackRecordingService.class));
-        }
+        ContextCompat.startForegroundService(context, new Intent(context, TrackRecordingService.class));
 
         startConnection(context);
     }
@@ -112,7 +102,7 @@ public class TrackRecordingServiceConnection {
     @Deprecated
     public void startAndBindWithCallback(Context context) {
         if (trackRecordingService == null) {
-            startAndBind(context, false);
+            startAndBind(context);
             return;
         }
         if (callback != null) {
@@ -151,13 +141,12 @@ public class TrackRecordingServiceConnection {
 
     private void setTrackRecordingService(TrackRecordingService value) {
         trackRecordingService = value;
-        if (callback != null) {
-            if (value != null) {
+        if (callback != null && value != null) {
                 callback.onConnected(value, this);
-            }
         }
     }
 
+    //TODO Move to some other place; not needed here.
     @Nullable
     public Marker.Id addMarker(Context context, String name, String category, String description, String photoUrl) {
         if (trackRecordingService == null) {

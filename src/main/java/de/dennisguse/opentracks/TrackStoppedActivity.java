@@ -146,7 +146,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
 
             connection.unbind(this);
             finish();
-        }).startAndBind(this, true);
+        }).startAndBind(this);
     }
 
     @Override

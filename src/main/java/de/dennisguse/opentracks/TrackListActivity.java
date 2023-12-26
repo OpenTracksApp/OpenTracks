@@ -191,7 +191,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 startActivity(newIntent);
 
                 connection.unbind(this);
-            }).startAndBind(this, true);
+            }).startAndBind(this);
         });
         viewBinding.trackListFabAction.setOnLongClickListener((view) -> {
             if (!recordingStatus.isRecording()) {
