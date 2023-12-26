@@ -28,7 +28,6 @@ import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackEditBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
-import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
@@ -44,7 +43,6 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
     private static final String ICON_VALUE_KEY = "icon_value_key";
 
-    private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private ContentProviderUtils contentProviderUtils;
     private Track track;
     private ActivityType activityType;
@@ -55,7 +53,6 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection();
         Track.Id trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
         if (trackId == null) {
             Log.e(TAG, "invalid trackId");
@@ -112,18 +109,6 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         viewBinding.trackEditCancel.setVisibility(View.VISIBLE);
 
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        trackRecordingServiceConnection.startConnection(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        trackRecordingServiceConnection.unbind(this);
     }
 
     @Override
