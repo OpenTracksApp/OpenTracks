@@ -207,7 +207,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
-        trackRecordingServiceConnection.startConnection(this);
+        trackRecordingServiceConnection.bind(this);
         trackDataHub.start();
     }
 

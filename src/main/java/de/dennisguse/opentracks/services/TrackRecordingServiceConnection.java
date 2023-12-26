@@ -74,12 +74,19 @@ public class TrackRecordingServiceConnection {
         setTrackRecordingService(null);
     };
 
-    public TrackRecordingServiceConnection() {
-        callback = null;
-    }
-
     public TrackRecordingServiceConnection(@NonNull Callback callback) {
         this.callback = callback;
+    }
+
+    public void bind(@NonNull Context context) {
+        if (trackRecordingService != null) {
+            // Service is already started and bound.
+            return;
+        }
+
+        Log.i(TAG, "Binding the service.");
+        int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
+        context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection, flags);
     }
 
     public void startAndBind(Context context) {
@@ -90,7 +97,7 @@ public class TrackRecordingServiceConnection {
 
         ContextCompat.startForegroundService(context, new Intent(context, TrackRecordingService.class));
 
-        startConnection(context);
+        bind(context);
     }
 
     //TODO There should be a better way to implement this.
@@ -105,20 +112,7 @@ public class TrackRecordingServiceConnection {
             startAndBind(context);
             return;
         }
-        if (callback != null) {
-            callback.onConnected(trackRecordingService, this);
-        }
-    }
-
-    public void startConnection(@NonNull Context context) {
-        if (trackRecordingService != null) {
-            // Service is already started and bound.
-            return;
-        }
-
-        Log.i(TAG, "Binding the service.");
-        int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
-        context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection, flags);
+        callback.onConnected(trackRecordingService, this);
     }
 
     /**
@@ -134,15 +128,19 @@ public class TrackRecordingServiceConnection {
         setTrackRecordingService(null);
     }
 
+    public void stopService(Context context) {
+        context.stopService(new Intent(context, TrackRecordingService.class));
+    }
+
     public void unbindAndStop(Context context) {
         unbind(context);
-        context.stopService(new Intent(context, TrackRecordingService.class));
+        stopService(context);
     }
 
     private void setTrackRecordingService(TrackRecordingService value) {
         trackRecordingService = value;
-        if (callback != null && value != null) {
-                callback.onConnected(value, this);
+        if (value != null) {
+            callback.onConnected(value, this);
         }
     }
 

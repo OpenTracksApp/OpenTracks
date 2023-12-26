@@ -157,8 +157,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             } else {
                 if (gpsStatusValue.isGpsStarted()) {
-                    recordingStatusConnection.unbindAndStop(this);
-                    recordingStatusConnection.startConnection(this); //TODO We need to stay listening!
+                    recordingStatusConnection.stopService(this);
                 } else {
                     new TrackRecordingServiceConnection((service, connection) -> {
                         service.tryStartSensors();
@@ -220,7 +219,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         super.onStart();
 
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        recordingStatusConnection.startConnection(this);
+        recordingStatusConnection.bind(this);
     }
 
     @Override

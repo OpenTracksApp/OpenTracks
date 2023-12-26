@@ -119,13 +119,13 @@ public class MarkerListActivity extends AbstractActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        trackRecordingServiceConnection.startConnection(this);
+        trackRecordingServiceConnection.bind(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        trackRecordingServiceConnection.startConnection(this);
+        trackRecordingServiceConnection.bind(this);
         this.invalidateOptionsMenu();
         loadData();
     }

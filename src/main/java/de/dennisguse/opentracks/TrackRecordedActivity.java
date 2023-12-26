@@ -126,7 +126,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
             trackDataHub.loadTrack(trackId);
         }
 
-        trackRecordingServiceConnection.startConnection(this);
+        trackRecordingServiceConnection.bind(this);
     }
 
     @Override

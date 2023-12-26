@@ -88,7 +88,7 @@ public class StatisticsRecordingFragment extends Fragment {
 
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
-        trackRecordingServiceConnection.startConnection(getContext());
+        trackRecordingServiceConnection.bind(getContext());
     }
 
     @Override
