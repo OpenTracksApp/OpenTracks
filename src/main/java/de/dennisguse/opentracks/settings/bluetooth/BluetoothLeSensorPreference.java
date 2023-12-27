@@ -1,6 +1,8 @@
 package de.dennisguse.opentracks.settings.bluetooth;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanFilter;
@@ -35,6 +37,7 @@ import de.dennisguse.opentracks.util.PermissionRequester;
  * Preference to select a discoverable Bluetooth LE device.
  * Based upon ListPreference.
  */
+@SuppressLint("MissingPermission")
 public abstract class BluetoothLeSensorPreference extends DialogPreference {
 
     private static final String TAG = BluetoothLeSensorPreference.class.getSimpleName();
@@ -89,6 +92,16 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
             return getContext().getString(DEVICE_NONE_RESOURCEID);
         }
 
+        BluetoothAdapter bluetoothAdapter = BluetoothUtils.getAdapter(getContext());
+        if (bluetoothAdapter == null) {
+            Log.w(TAG, "No Bluetooth adapter present");
+            return getValue();
+        }
+
+        BluetoothDevice device = bluetoothAdapter.getRemoteDevice(getValue());
+        if (device != null && device.getName() != null) {
+            return getContext().getString(R.string.bluetooth_sensor_summary, device.getAddress(),  device.getName());
+        }
         return getValue();
     }
 
