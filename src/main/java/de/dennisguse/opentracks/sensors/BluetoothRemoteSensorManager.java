@@ -105,7 +105,7 @@ public class BluetoothRemoteSensorManager implements SensorConnector, SharedPref
             return;
         }
 
-        if (PreferencesUtils.isBluetoothSensorAddressNone(address)) {
+        if (SensorType.NONE.getPreferenceValue().equals(address)) {
             Log.w(TAG, "No Bluetooth address.");
             connectionManager.disconnect();
             return;

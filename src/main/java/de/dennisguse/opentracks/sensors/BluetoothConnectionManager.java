@@ -101,9 +101,12 @@ public class BluetoothConnectionManager {
                 return;
             }
 
-            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-            gatt.writeDescriptor(descriptor);
-
+            if (!descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
+                Log.e(TAG, "CLIENT_CHARACTERISTIC_CONFIG_UUID could not be set to ENABLE_NOTIFICATION_VALUE");
+            }
+            if (!gatt.writeDescriptor(descriptor)) {
+                Log.e(TAG, "CLIENT_CHARACTERISTIC_CONFIG_UUID descriptor could not be written");
+            }
         }
 
         @Override

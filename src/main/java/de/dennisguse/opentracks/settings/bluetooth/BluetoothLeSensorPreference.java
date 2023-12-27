@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.sensors.BluetoothUtils;
+import de.dennisguse.opentracks.sensors.SensorType;
 import de.dennisguse.opentracks.sensors.ServiceMeasurementUUID;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
@@ -86,10 +87,10 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
 
     @Override
     public CharSequence getSummary() {
-        if (value == null || PreferencesUtils.isBluetoothSensorAddressNone(value)) {
+        if (value == null || SensorType.NONE.getPreferenceValue().equals(value)) {
             return getContext().getString(DEVICE_NONE_RESOURCEID);
         }
-        if (PreferencesUtils.isBluetoothSensorAddressInternal(value)) {
+        if (SensorType.INTERNAL.getPreferenceValue().equals(value)) {
             return getContext().getString(SENSOR_INTERNAL_RESOURCEID);
         }
 
