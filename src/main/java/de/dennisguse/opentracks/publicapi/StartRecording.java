@@ -62,9 +62,4 @@ public class StartRecording extends AbstractAPIActivity {
     protected boolean isPostExecuteStopService() {
         return false;
     }
-
-    @Override
-    protected boolean isStartServiceForeground() {
-        return true;
-    }
 }

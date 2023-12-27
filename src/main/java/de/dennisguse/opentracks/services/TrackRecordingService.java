@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.app.ServiceCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -111,7 +112,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
         trackPointCreator = new TrackPointCreator(this);
-        trackRecordingManager = new TrackRecordingManager(this, trackPointCreator, this , handler);
+        trackRecordingManager = new TrackRecordingManager(this, trackPointCreator, this, handler);
 
         voiceAnnouncementManager = new VoiceAnnouncementManager(this);
         notificationManager = new TrackRecordingServiceNotificationManager(this);
@@ -213,19 +214,15 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         Log.i(TAG, "startSensors");
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         trackPointCreator.start(this, handler);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                if (!PermissionRequester.RECORDING.hasPermission(this)) {
-                    Toast.makeText(this, R.string.permission_recording_failed, Toast.LENGTH_LONG).show();
-                    return;
-                }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            if (!PermissionRequester.RECORDING.hasPermission(this)) {
+                Toast.makeText(this, R.string.permission_recording_failed, Toast.LENGTH_LONG).show();
+                return;
             }
-
-            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this), ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION + ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
-        } else {
-            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this));
         }
+
+        ServiceCompat.startForeground(this, TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this), ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION + ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
     }
 
     public void endCurrentTrack() {

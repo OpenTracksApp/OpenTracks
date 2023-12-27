@@ -157,14 +157,9 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             } else {
                 if (gpsStatusValue.isGpsStarted()) {
-                    recordingStatusConnection.unbindAndStop(this);
-                    recordingStatusConnection.startConnection(this); //TODO We need to stay listening!
+                    recordingStatusConnection.stopService(this);
                 } else {
-                    new TrackRecordingServiceConnection((service, connection) -> {
-                        service.tryStartSensors();
-
-                        connection.unbind(this);
-                    }).startAndBindWithCallback(this);
+                    TrackRecordingServiceConnection.execute(this, (service, connection) -> service.tryStartSensors());
                 }
             }
         });
@@ -183,15 +178,13 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             // Not Recording -> Recording
             Log.i(TAG, "Starting recording");
             updateGpsMenuItem(false, true);
-            new TrackRecordingServiceConnection((service, connection) -> {
+            TrackRecordingServiceConnection.execute(this, (service, connection) -> {
                 Track.Id trackId = service.startNewTrack();
 
                 Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
                 newIntent.putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, trackId);
                 startActivity(newIntent);
-
-                connection.unbind(this);
-            }).startAndBind(this, true);
+            });
         });
         viewBinding.trackListFabAction.setOnLongClickListener((view) -> {
             if (!recordingStatus.isRecording()) {
@@ -220,7 +213,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         super.onStart();
 
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        recordingStatusConnection.startConnection(this);
+        recordingStatusConnection.bind(this);
     }
 
     @Override

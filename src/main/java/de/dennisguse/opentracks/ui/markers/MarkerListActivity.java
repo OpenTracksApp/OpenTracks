@@ -119,7 +119,7 @@ public class MarkerListActivity extends AbstractActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        trackRecordingServiceConnection.startConnection(this);
+        trackRecordingServiceConnection.bind(this);
     }
 
     @Override

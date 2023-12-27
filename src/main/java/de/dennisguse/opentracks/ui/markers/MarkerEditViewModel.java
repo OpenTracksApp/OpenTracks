@@ -32,7 +32,7 @@ public class MarkerEditViewModel extends AndroidViewModel {
     private MutableLiveData<Marker> markerData;
     private boolean isNewMarker;
     private Uri photoOriginalUri;
-    private final TrackRecordingServiceConnection trackRecordingServiceConnection = new TrackRecordingServiceConnection();
+    private final TrackRecordingServiceConnection trackRecordingServiceConnection = new TrackRecordingServiceConnection((service, connection) -> {});
 
     public MarkerEditViewModel(@NonNull Application application) {
         super(application);
@@ -41,7 +41,7 @@ public class MarkerEditViewModel extends AndroidViewModel {
     public LiveData<Marker> getMarkerData(@NonNull Track.Id trackId, @Nullable Marker.Id markerId) {
         if (markerData == null) {
             markerData = new MutableLiveData<>();
-            trackRecordingServiceConnection.startConnection(getApplication());
+            trackRecordingServiceConnection.bind(getApplication());
             loadData(trackId, markerId);
         }
         return markerData;

@@ -42,7 +42,7 @@ import de.dennisguse.opentracks.data.models.Marker;
  *
  * @author Rodrigo Damazio
  */
-public class TrackRecordingServiceConnection implements ServiceConnection, DeathRecipient {
+public class TrackRecordingServiceConnection {
 
     private static final String TAG = TrackRecordingServiceConnection.class.getSimpleName();
 
@@ -50,9 +50,29 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     private TrackRecordingService trackRecordingService;
 
-    public TrackRecordingServiceConnection() {
-        callback = null;
-    }
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            Log.i(TAG, "Connected to the service: " + service);
+            try {
+                service.linkToDeath(deathRecipient, 0);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Failed to bind a death recipient.", e);
+            }
+            setTrackRecordingService(((TrackRecordingService.Binder) service).getService());
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName className) {
+            Log.i(TAG, "Disconnected from the service.");
+            setTrackRecordingService(null);
+        }
+    };
+
+    private final DeathRecipient deathRecipient = () -> {
+        Log.d(TAG, "Service died.");
+        setTrackRecordingService(null);
+    };
 
     public TrackRecordingServiceConnection(@NonNull Callback callback) {
         this.callback = callback;
@@ -60,58 +80,13 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     public void bind(@NonNull Context context) {
         if (trackRecordingService != null) {
-            return;
-        }
-        context.bindService(new Intent(context, TrackRecordingService.class), this, 0);
-    }
-
-    /**
-     * Starts and binds the service.
-     *
-     * @param foreground is the service expected to call `startForeground()`?
-     */
-    public void startAndBind(Context context, boolean foreground) {
-        if (trackRecordingService != null) {
-            // Service is already started and bound.
-            return;
-        }
-
-        Log.i(TAG, "Starting the service.");
-        if (foreground) {
-            ContextCompat.startForegroundService(context, new Intent(context, TrackRecordingService.class));
-        } else {
-            context.startService(new Intent(context, TrackRecordingService.class));
-        }
-
-        startConnection(context);
-    }
-
-    //TODO There should be a better way to implement this.
-
-    /**
-     * Triggers the onConnected() callback even if already connected.
-     */
-    //TODO Check if this is actually needed as it is used to re-connect from Activities in onResume by using a LiveData; might be obsolete. If not, there should be a better way to implement this.
-    @Deprecated
-    public void startAndBindWithCallback(Context context) {
-        if (trackRecordingService == null) {
-            startAndBind(context, false);
-            return;
-        }
-        if (callback != null) {
             callback.onConnected(trackRecordingService, this);
-        }
-    }
-
-    public void startConnection(@NonNull Context context) {
-        if (trackRecordingService != null) {
-            // Service is already started and bound.
             return;
         }
 
         Log.i(TAG, "Binding the service.");
         int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
-        context.bindService(new Intent(context, TrackRecordingService.class), this, flags);
+        context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection, flags);
     }
 
     /**
@@ -120,72 +95,45 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     //TODO This is often called for one-shot operations and should be refactored as unbinding is required.
     public void unbind(Context context) {
         try {
-            context.unbindService(this);
+            context.unbindService(serviceConnection);
         } catch (IllegalArgumentException e) {
             // Means not bound to the service. OK to ignore.
         }
         setTrackRecordingService(null);
     }
 
-    public void unbindAndStop(Context context) {
-        unbind(context);
+    public void stopService(Context context) {
         context.stopService(new Intent(context, TrackRecordingService.class));
     }
 
-    @Nullable
-    public TrackRecordingService getServiceIfBound() {
-        return trackRecordingService;
+    public void unbindAndStop(Context context) {
+        unbind(context);
+        stopService(context);
     }
 
     private void setTrackRecordingService(TrackRecordingService value) {
         trackRecordingService = value;
-        if (callback != null) {
-            if (value != null) {
-                callback.onConnected(value, this);
-            } else {
-                callback.onDisconnected();
-            }
+        if (value != null) {
+            callback.onConnected(value, this);
         }
     }
 
-    @Override
-    public void onServiceConnected(ComponentName className, IBinder service) {
-        Log.i(TAG, "Connected to the service: " + service);
-        try {
-            service.linkToDeath(this, 0);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Failed to bind a death recipient.", e);
-        }
-        setTrackRecordingService(((TrackRecordingService.Binder) service).getService());
-    }
-
-    @Override
-    public void onServiceDisconnected(ComponentName className) {
-        Log.i(TAG, "Disconnected from the service.");
-        setTrackRecordingService(null);
-    }
-
-    @Override
-    public void binderDied() {
-        Log.d(TAG, "Service died.");
-        setTrackRecordingService(null);
-    }
-
+    //TODO Move to some other place; not needed here.
     @Nullable
     public Marker.Id addMarker(Context context, String name, String category, String description, String photoUrl) {
-        TrackRecordingService trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.d(TAG, "Unable to add marker, no track recording service");
-        } else {
-            try {
-                Marker.Id marker = trackRecordingService.insertMarker(name, category, description, photoUrl);
-                if (marker != null) {
-                    Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
-                    return marker;
-                }
-            } catch (IllegalStateException e) {
-                Log.e(TAG, "Unable to add marker.", e);
+            return null;
+        }
+
+        try {
+            Marker.Id marker = trackRecordingService.insertMarker(name, category, description, photoUrl);
+            if (marker != null) {
+                Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
+                return marker;
             }
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "Unable to add marker.", e);
         }
 
         Toast.makeText(context, R.string.marker_add_error, Toast.LENGTH_LONG).show();
@@ -193,7 +141,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     }
 
     public void stopRecording(@NonNull Context context) {
-        TrackRecordingService trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.e(TAG, "TrackRecordingService not connected.");
         } else {
@@ -203,9 +150,17 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     }
 
     public interface Callback {
-        void onConnected(TrackRecordingService service, TrackRecordingServiceConnection connection);
+        void onConnected(TrackRecordingService service, TrackRecordingServiceConnection self);
+    }
 
-        default void onDisconnected() {
-        }
+    public static void execute(Context context, Callback callback) {
+        Callback withUnbind = (service, connection) -> {
+            callback.onConnected(service, connection);
+            connection.unbind(context);
+        };
+        new TrackRecordingServiceConnection(withUnbind)
+                .bind(context);
+
+        ContextCompat.startForegroundService(context, new Intent(context, TrackRecordingService.class));
     }
 }
