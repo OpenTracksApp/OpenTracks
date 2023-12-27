@@ -1,0 +1,6 @@
+v4.9.9: OpenTracks
+
+Bugfix :
+- Crash bij gebruik van een BLE-sensor aan het einde van opname(raceconditie)
+  Reden: het subsysteem sensor is tweemaal gestart en alleen het tweede is uitgeschakeld.
+- Tijdens het opnemen worden namen van BLE-sensoren opnieuw weergegeven
