@@ -253,10 +253,6 @@ public class PreferencesUtils {
         return SensorType.NONE.getPreferenceValue();
     }
 
-    public static boolean isBluetoothSensorAddressNone(String currentValue) {
-        return getBluetoothSensorAddressNone().equals(currentValue);
-    }
-
     public static SensorType getSensorType(String address) {
         return Arrays.stream(SensorType.values())
                 .filter(it -> it.getPreferenceValue().equals(address))

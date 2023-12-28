@@ -102,7 +102,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
 
         BluetoothDevice device = bluetoothAdapter.getRemoteDevice(value);
         if (device != null && device.getName() != null) {
-            return getContext().getString(R.string.bluetooth_sensor_summary, device.getAddress(),  device.getName());
+            return getContext().getString(R.string.bluetooth_sensor_summary, device.getAddress(), device.getName());
         }
         return value;
     }
@@ -121,14 +121,12 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
             @Override
             public void onScanResult(int callbackType, ScanResult result) {
                 Log.d(TAG, "Found device " + result.getDevice().getName() + " " + result);
-                listAdapter.add(result.getDevice());
+                onBatchScanResults(List.of(result));
             }
 
             @Override
             public void onBatchScanResults(List<ScanResult> results) {
-                for (ScanResult result : results) {
-                    onScanResult(-1, result);
-                }
+                listAdapter.addAll(results.stream().map(ScanResult::getDevice).collect(Collectors.toList()));
             }
 
             @Override
@@ -205,24 +203,21 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
                 return;
             }
 
-            String deviceNone = getContext().getString(R.string.sensor_type_value_none);
-            String sensorInternal = getString(R.string.sensor_type_value_internal);
-
-            listAdapter.add(getContext().getString(DEVICE_NONE_RESOURCEID), deviceNone);
+            listAdapter.add(SensorType.NONE.getPreferenceValue(), getContext().getString(DEVICE_NONE_RESOURCEID));
             selectedEntryIndex = 0;
 
             BluetoothLeSensorPreference preference = (BluetoothLeSensorPreference) getPreference();
             String deviceSelected = preference.value;
             if (includeInternalSensor) {
-                listAdapter.add(getString(SENSOR_INTERNAL_RESOURCEID), sensorInternal);
-                if (sensorInternal.equals(deviceSelected)) {
+                listAdapter.add(SensorType.INTERNAL.getPreferenceValue(), getString(SENSOR_INTERNAL_RESOURCEID));
+                if (SensorType.INTERNAL.getPreferenceValue().equals(deviceSelected)) {
                     selectedEntryIndex = 1;
                 }
             }
 
-            if (deviceSelected != null && !deviceNone.equals(deviceSelected) && !sensorInternal.equals(deviceSelected)) {
+            if (deviceSelected != null && SensorType.REMOTE.equals(PreferencesUtils.getSensorType(deviceSelected))) {
                 listAdapter.add(preference.value, preference.value);
-                selectedEntryIndex++;
+                selectedEntryIndex = !includeInternalSensor ? 1 : 2;
             }
 
             List<ScanFilter> scanFilter = null;

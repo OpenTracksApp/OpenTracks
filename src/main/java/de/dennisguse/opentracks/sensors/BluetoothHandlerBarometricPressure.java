@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.sensors;
 
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.util.Log;
 
 import java.util.List;
 import java.util.UUID;
@@ -32,9 +33,15 @@ public class BluetoothHandlerBarometricPressure implements SensorHandlerInterfac
     public void handlePayload(SensorManager.SensorDataChangedObserver observer, ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
         AtmosphericPressure value = parseEnvironmentalSensing(characteristic);
         if (value == null) return;
+        Log.i("ZXCV", "VALUE: " + value);
         observer.onChange(new Raw<>(value));
     }
 
+    /**
+     * Decoding:
+     * org.bluetooth.service.environmental_sensing.xml
+     * org.bluetooth.characteristic.pressure.xml
+     */
     public static AtmosphericPressure parseEnvironmentalSensing(BluetoothGattCharacteristic characteristic) {
         byte[] raw = characteristic.getValue();
 

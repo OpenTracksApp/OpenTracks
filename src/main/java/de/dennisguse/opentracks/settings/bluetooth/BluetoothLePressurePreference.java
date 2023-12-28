@@ -7,7 +7,9 @@ import android.util.AttributeSet;
 
 import androidx.preference.PreferenceDialogFragmentCompat;
 
-import java.util.Collections;
+import java.util.List;
+
+import de.dennisguse.opentracks.sensors.BluetoothHandlerBarometricPressure;
 
 public class BluetoothLePressurePreference extends BluetoothLeSensorPreference {
 
@@ -34,7 +36,6 @@ public class BluetoothLePressurePreference extends BluetoothLeSensorPreference {
         boolean hasInternalSensor = pressureSensor != null;
 
         return BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog
-//                .newInstance(getKey(), List.of(BluetoothHandlerBarometricPressure.BAROMETRIC_PRESSURE), hasInternalSensor); //TODO #1424
-                .newInstance(getKey(), Collections.emptyList(), hasInternalSensor);
+                .newInstance(getKey(), List.of(BluetoothHandlerBarometricPressure.BAROMETRIC_PRESSURE), hasInternalSensor);
     }
 }

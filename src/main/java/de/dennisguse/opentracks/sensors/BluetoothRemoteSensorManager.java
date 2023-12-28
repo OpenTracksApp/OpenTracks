@@ -17,11 +17,9 @@
 package de.dennisguse.opentracks.sensors;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +28,6 @@ import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.util.PermissionRequester;
 
 /**
  * Bluetooth LE sensor manager: manages connections to Bluetooth LE sensors.
@@ -45,7 +42,6 @@ public class BluetoothRemoteSensorManager implements SensorConnector, SharedPref
 
     public static final Duration MAX_SENSOR_DATE_SET_AGE = Duration.ofSeconds(5);
 
-    private final BluetoothAdapter bluetoothAdapter;
     private final Context context;
     private final Handler handler;
     private boolean started = false;
@@ -59,14 +55,13 @@ public class BluetoothRemoteSensorManager implements SensorConnector, SharedPref
     public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull Handler handler, @Nullable SensorManager.SensorDataChangedObserver observer) {
         this.context = context;
         this.handler = handler;
-        bluetoothAdapter = BluetoothUtils.getAdapter(context);
 
-        this.heartRate = new BluetoothConnectionManager(observer, new BluetoothHandlerManagerHeartRate());
-        this.cyclingCadence = new BluetoothConnectionManager(observer, new BluetoothHandlerCyclingCadence());
-        this.cyclingSpeed = new BluetoothConnectionManager(observer, new BluetoothHandlerCyclingDistanceSpeed());
-        this.cyclingPower = new BluetoothConnectionManager(observer, new BluetoothHandlerManagerCyclingPower());
-        this.runningSpeedAndCadence = new BluetoothConnectionManager(observer, new BluetoothHandlerRunningSpeedAndCadence());
-
+        BluetoothAdapter bluetoothAdapter = BluetoothUtils.getAdapter(context);
+        this.heartRate = new BluetoothConnectionManager(bluetoothAdapter, observer, new BluetoothHandlerManagerHeartRate());
+        this.cyclingCadence = new BluetoothConnectionManager(bluetoothAdapter, observer, new BluetoothHandlerCyclingCadence());
+        this.cyclingSpeed = new BluetoothConnectionManager(bluetoothAdapter, observer, new BluetoothHandlerCyclingDistanceSpeed());
+        this.cyclingPower = new BluetoothConnectionManager(bluetoothAdapter, observer, new BluetoothHandlerManagerCyclingPower());
+        this.runningSpeedAndCadence = new BluetoothConnectionManager(bluetoothAdapter, observer, new BluetoothHandlerRunningSpeedAndCadence());
     }
 
     @Override
@@ -88,39 +83,8 @@ public class BluetoothRemoteSensorManager implements SensorConnector, SharedPref
         started = false;
     }
 
-    public boolean isEnabled() {
-        return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
-    }
-
     private synchronized void connect(BluetoothConnectionManager connectionManager, String address) {
-        if (!isEnabled()) {
-            Log.w(TAG, "Bluetooth not enabled.");
-            return;
-        }
-
-        if (SensorType.NONE.getPreferenceValue().equals(address)) {
-            Log.w(TAG, "No Bluetooth address.");
-            connectionManager.disconnect();
-            return;
-        }
-
-        // Check if there is an ongoing connection; if yes, check if the address changed.
-        if (connectionManager.isSameBluetoothDevice(address)) {
-            return;
-        } else {
-            connectionManager.disconnect();
-        }
-        if (!PermissionRequester.BLUETOOTH.hasPermission(context)) {
-            Log.w(TAG, "BLUETOOTH_SCAN and/or BLUETOOTH_CONNECT not granted; not connecting.");
-        }
-
-        Log.i(TAG, "Connecting to bluetooth address: " + address);
-        try {
-            BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
-            connectionManager.connect(context, handler, device);
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Unable to get remote device for: " + address, e);
-        }
+        connectionManager.connect(context, handler, address);
     }
 
     @Override
