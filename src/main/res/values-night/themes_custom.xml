@@ -1,12 +1,18 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="ThemeCustom" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Material3 tech documentation; https://github.com/material-components/material-components-android/blob/master/docs/components/ -->
+
         <item name="colorPrimary">@color/opentracks</item>
         <item name="colorSecondary">@color/opentracks</item>
+
+        <!-- Material3 https://github.com/material-components/material-components-android/issues/2828#issuecomment-1187563903 -->
+        <item name="switchPreferenceCompatStyle">@style/MaterialSwitchPreferenceCompat</item>
 
         <item name="android:statusBarColor">@color/oled_friendly</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:navigationBarColor">@color/oled_friendly</item>
+
 
         <item name="bottomAppBarStyle">@style/Widget.OpenTracks.BottomAppBar</item>
         <item name="floatingActionButtonStyle">@style/Widget.OpenTracks.FloatingActionButton</item>
