@@ -37,14 +37,14 @@ limitations under the License.
     <string name="help_storage_pictures_title">De que xeito garda OpenTracks as fotos tomadas como marcadores\?</string>
     <string name="help_storage_pictures_content">Gárdanse na almacenaxe interna da app (só accesible desde OpenTracks).</string>
     <string name="help_track_export_title">De que xeito exporto/importo as rutas gravadas\?</string>
-    <string name="help_track_export_content"> As rutas pódense exportar desde os Axustes como KMZ, KML ou GPX. KMZ/KML inclúe todos os datos; GPX só localización. As rutas compartidas a través da <i>icona compartir</i> compártense como KMZ. </string>
+    <string name="help_track_export_content"> \u0020As rutas pódense exportar desde os Axustes como KMZ, KML ou GPX. \u0020KMZ/KML inclúe todos os datos; GPX só localización. \u0020As rutas compartidas a través da <i>icona compartir</i> compártense como KMZ. \u0020</string>
     <string name="help_data_google_play_services_title">OpenTracks precisa/utiliza Google Play Service\?</string>
     <string name="help_recording_title">Como grava OpenTracks os datos\?</string>
     <string name="help_recording_content">
 OpenTracks usa o sensor GPS do dispositivo para gravar a localización de xeito contínuo.
 Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, elevación), OpenTracks  non pode facer nada ao respecto.</string>
     <string name="help_data_storage_title">De que xeito garda OpenTracks os datos dos sensores\?</string>
-    <string name="help_data_storage_content"> Os datos dos sensores gárdanse asociados á localización. Respecto do ritmo cardíaco, significa que só se garda <i>unha medida</i> asociada a unha localización. Se te detés ou estás en interiores, non se gardarán datos do sensor (mais serán mostrados). </string>
+    <string name="help_data_storage_content"> \u0020Os datos dos sensores gárdanse asociados á localización. \u0020 Respecto do ritmo cardíaco, significa que só se garda <i>unha medida</i> asociada a unha localización. \u0020 Se te detés ou estás en interiores, non se gardarán datos do sensor (mais serán mostrados). \u0020</string>
     <string name="help_gps_troubleshooting_title">OpenTracks non grava as localizacións\?</string>
     <string name="help_gps_troubleshooting_content"> Podes intentar:
 \n a) mira que o GPS esté activado,
@@ -596,4 +596,5 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_recording_title">Ao gravar</string>
     <string name="settings_ui_dynamic_colors_summary">Usar Cores Dinámicas definidas pola usuaria (Só Android 12+; require reiniciar)</string>
     <string name="permission_recording_failed">OpenTracks precisa permiso para acceder á túa localización así como a dispositivos próximos.</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
 </resources>
