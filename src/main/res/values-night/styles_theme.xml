@@ -1,6 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="ThemeCustom" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="OpenTracksTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Material3 tech documentation; https://github.com/material-components/material-components-android/blob/master/docs/components/ -->
 
         <item name="colorPrimary">@color/opentracks</item>
