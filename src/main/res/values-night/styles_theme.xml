@@ -20,6 +20,13 @@
         <item name="windowActionModeOverlay">true</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splashscreen_background</item>
+
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_color_splashscreen</item>
+        <item name="postSplashScreenTheme">@style/OpenTracksTheme</item>
+    </style>
+
     <style name="Widget.OpenTracks.BottomAppBar" parent="Widget.Material3.BottomAppBar">
         <item name="materialThemeOverlay">@style/ThemeOverlay.OpenTracks.BottomAppBar</item>
     </style>
