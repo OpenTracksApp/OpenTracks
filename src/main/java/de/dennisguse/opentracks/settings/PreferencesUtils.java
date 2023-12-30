@@ -48,6 +48,7 @@ import de.dennisguse.opentracks.data.models.HeartRateZones;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
+import de.dennisguse.opentracks.sensors.SensorType;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
 import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayoutIO;
@@ -249,11 +250,18 @@ public class PreferencesUtils {
     }
 
     private static String getBluetoothSensorAddressNone() {
-        return resources.getString(R.string.sensor_type_value_none);
+        return SensorType.NONE.getPreferenceValue();
     }
 
-    public static boolean isBluetoothSensorAddressNone(String currentValue) {
-        return getBluetoothSensorAddressNone().equals(currentValue);
+    public static SensorType getSensorType(String address) {
+        return Arrays.stream(SensorType.values())
+                .filter(it -> it.getPreferenceValue().equals(address))
+                .findFirst()
+                .orElse(SensorType.REMOTE);
+    }
+
+    public static String getBarometerSensorAddress() {
+        return getString(R.string.settings_sensor_bluetooth_pressure_key, getBluetoothSensorAddressNone());
     }
 
     public static String getBluetoothHeartRateSensorAddress() {

@@ -32,7 +32,9 @@
     <string name="settings_sensor_bluetooth_cycling_speed_key" translatable="false">bluetoothCyclingSpeedSensor</string>
     <string name="settings_sensor_bluetooth_cycling_power_key" translatable="false">bluetoothCyclingPowerSensor</string>
     <string name="settings_sensor_bluetooth_running_speed_and_cadence_key" translatable="false">bluetoothRunningSpeedAndCadenceSensor</string>
+    <string name="settings_sensor_bluetooth_pressure_key" translatable="false">bluetoothPressureSensor</string>
     <string name="sensor_type_value_none" translatable="false">NONE</string>
+    <string name="sensor_type_value_internal" translatable="false">INTERNAL</string>
 
     <string name="settings_sensor_bluetooth_cycling_speed_wheel_circumference_key" translatable="false">bluetoothCyclingSpeedWheelCircumference</string>
     <string name="settings_sensor_bluetooth_cycling_speed_wheel_circumference_default" translatable="false">2135</string>

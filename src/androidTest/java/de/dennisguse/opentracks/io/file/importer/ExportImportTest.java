@@ -586,7 +586,7 @@ public class ExportImportTest {
             Mockito.when(barometer.getValue()).thenReturn(new AltitudeGainLoss(altitudeGain, altitudeGain));
             sensorDataSet.add(barometer);
         }  else {
-            sensorDataSet.add(new AggregatorBarometer(""));
+            sensorDataSet.add(new AggregatorBarometer("test", null));
         }
     }
 

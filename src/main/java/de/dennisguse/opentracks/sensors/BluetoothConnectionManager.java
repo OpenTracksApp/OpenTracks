@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.sensors;
 
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -33,19 +34,22 @@ import androidx.annotation.NonNull;
 import java.util.Optional;
 import java.util.UUID;
 
+import de.dennisguse.opentracks.sensors.driver.Driver;
 import de.dennisguse.opentracks.sensors.sensorData.SensorHandlerInterface;
 
 /**
  * Manages connection to a Bluetooth LE sensor and subscribes for onChange-notifications.
  */
 @SuppressLint("MissingPermission")
-public class BluetoothConnectionManager {
+public class BluetoothConnectionManager implements Driver {
 
     private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
     private final SensorManager.SensorDataChangedObserver observer;
 
     private final SensorHandlerInterface sensorHandler;
+
+    private final BluetoothAdapter bluetoothAdapter;
     private BluetoothGatt bluetoothGatt;
     private final BluetoothGattCallback connectCallback = new BluetoothGattCallback() {
         @Override
@@ -101,9 +105,12 @@ public class BluetoothConnectionManager {
                 return;
             }
 
-            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-            gatt.writeDescriptor(descriptor);
-
+            if (!descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE)) {
+                Log.e(TAG, "CLIENT_CHARACTERISTIC_CONFIG_UUID could not be set to ENABLE_NOTIFICATION_VALUE");
+            }
+            if (!gatt.writeDescriptor(descriptor)) {
+                Log.e(TAG, "CLIENT_CHARACTERISTIC_CONFIG_UUID descriptor could not be written");
+            }
         }
 
         @Override
@@ -124,14 +131,43 @@ public class BluetoothConnectionManager {
         }
     };
 
-    BluetoothConnectionManager(SensorManager.SensorDataChangedObserver observer, SensorHandlerInterface sensorHandler) {
+    BluetoothConnectionManager(BluetoothAdapter bluetoothAdapter, SensorManager.SensorDataChangedObserver observer, SensorHandlerInterface sensorHandler) {
+        this.bluetoothAdapter = bluetoothAdapter;
         this.observer = observer;
         this.sensorHandler = sensorHandler;
     }
 
-    synchronized void connect(Context context, Handler handler, @NonNull BluetoothDevice device) {
-        if (bluetoothGatt != null) {
+    @Override
+    public synchronized void connect(Context context, Handler handler, @NonNull String address) {
+        if (!isBluetoothEnabled()) {
+            Log.w(TAG, "Bluetooth not enabled.");
+            return;
+        }
+
+        if (SensorType.NONE.getPreferenceValue().equals(address)) {
+            Log.w(TAG, "NONE: going to disconnect");
+            if (isConnected()) {
+                disconnect();
+            }
+            return;
+        }
+
+        if (isConnected()) {
             Log.w(TAG, "Already connected; ignoring.");
+            return;
+        }
+
+        if (isSameBluetoothDevice(address)) {
+            return;
+        } else {
+            disconnect();
+        }
+
+        BluetoothDevice device;
+        try {
+            device = bluetoothAdapter.getRemoteDevice(address);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, address + ": Unable to get remote device for", e);
             return;
         }
 
@@ -146,8 +182,10 @@ public class BluetoothConnectionManager {
         observer.onDisconnect(sensorHandler.createEmptySensorData(bluetoothGatt.getDevice().getAddress(), bluetoothGatt.getDevice().getName()));
     }
 
-    synchronized void disconnect() {
-        if (bluetoothGatt == null) {
+    @Override
+    public synchronized void disconnect() {
+        if (!isConnected()) {
+            Log.w(TAG, "Not connected; no need to re-connect.");
             return;
         }
         Log.i(TAG, bluetoothGatt.getDevice() + ": start disconnect");
@@ -158,11 +196,21 @@ public class BluetoothConnectionManager {
         bluetoothGatt = null;
     }
 
-    synchronized boolean isSameBluetoothDevice(String address) {
+    private synchronized boolean isSameBluetoothDevice(String address) {
         if (bluetoothGatt == null) {
             return false;
         }
 
         return address.equals(bluetoothGatt.getDevice().getAddress());
+    }
+
+
+    private boolean isBluetoothEnabled() {
+        return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
+    }
+
+    @Override
+    public boolean isConnected() {
+        return bluetoothGatt != null;
     }
 }

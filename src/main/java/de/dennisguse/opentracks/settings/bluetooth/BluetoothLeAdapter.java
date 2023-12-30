@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks.settings.bluetooth;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,10 +8,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@SuppressLint("MissingPermission")
 public class BluetoothLeAdapter extends BaseAdapter {
 
     /**
@@ -50,22 +54,30 @@ public class BluetoothLeAdapter extends BaseAdapter {
         return currentView;
     }
 
-    public void add(String name, String address) {
-        Device device = new Device(name, address);
+    /**
+     * @return Data changed?
+     */
+    public boolean add(String address, String name) {
+        Device device = new Device(address, name);
         if (!devices.contains(device)) {
-            devices.add(new Device(name, address));
+            devices.add(device);
+            return true;
         } else {
             for (Device currentDevice : devices) {
-                if (currentDevice.getAddress().equals(address)) {
-                    currentDevice.setName(name);
+                if (currentDevice.address.equals(address)) {
+                    currentDevice.name = name;
+                    return true;
                 }
             }
         }
-        notifyDataSetChanged();
+        return false;
     }
 
-    public void add(BluetoothDevice bluetoothDevice) {
-        add(bluetoothDevice.getName(), bluetoothDevice.getAddress());
+    public void addAll(List<BluetoothDevice> bluetoothDevices) {
+        boolean dataSetChanged = bluetoothDevices.stream()
+                .anyMatch(bluetoothDevice -> add(bluetoothDevice.getAddress(), bluetoothDevice.getName()));
+
+        if (dataSetChanged) notifyDataSetChanged();
     }
 
     public Device get(int index) {
@@ -73,19 +85,14 @@ public class BluetoothLeAdapter extends BaseAdapter {
     }
 
     public static class Device {
-        private String name;
+
+        @NonNull
         private final String address;
+        private String name;
 
-        public Device(String name, String address) {
-            this.name = name;
+        Device(@NonNull String address, String name) {
+            Objects.requireNonNull(address);
             this.address = address;
-        }
-
-        public String getNameOrAddress() {
-            return name != null ? name : getAddress();
-        }
-
-        public void setName(String name) {
             this.name = name;
         }
 
@@ -93,16 +100,21 @@ public class BluetoothLeAdapter extends BaseAdapter {
             return address;
         }
 
+        public String getNameOrAddress() {
+            return name != null ? name : address;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (!(o instanceof Device device)) return false;
+
             return address.equals(device.address);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(name, address);
+            return Objects.hash(address);
         }
     }
 }

@@ -331,6 +331,7 @@ limitations under the License.
     <string name="sensor_state_heart_rate_unit">bpm</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Power</string>
+    <string name="sensor_state_pressure">Barometer</string>
     <string name="sensor_state_power_avg">Avg Power</string>
     <string name="sensor_state_power_max">Max Power</string>
     <string name="sensor_state_power_unit">W</string>
@@ -559,6 +560,7 @@ limitations under the License.
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">None</string>
     <string name="value_off">Off</string>
+    <string name="value_internal_sensor">Internal sensor</string>
     <string name="value_smallest_recommended">Smallest (recommended)</string>
     <string name="value_int_seconds">%1$d s (recommended)</string>
     <string name="voiceIdle">Becoming idle.</string>

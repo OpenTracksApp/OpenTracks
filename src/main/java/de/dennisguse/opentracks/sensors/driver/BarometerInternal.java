@@ -4,24 +4,29 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Handler;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import java.util.concurrent.TimeUnit;
 
 import de.dennisguse.opentracks.data.models.AtmosphericPressure;
-import de.dennisguse.opentracks.sensors.GainManager;
+import de.dennisguse.opentracks.sensors.SensorManager;
+import de.dennisguse.opentracks.sensors.sensorData.AggregatorBarometer;
+import de.dennisguse.opentracks.sensors.sensorData.Raw;
 
-public class BarometerInternal {
+public class BarometerInternal implements Driver {
 
     private static final String TAG = BarometerInternal.class.getSimpleName();
 
     private static final int SAMPLING_PERIOD = (int) TimeUnit.SECONDS.toMicros(5);
 
-    private GainManager observer;
+    private final SensorManager.SensorDataChangedObserver listener;
 
-    private final SensorEventListener listener = new SensorEventListener() {
+    private Context context;
+
+    private final SensorEventListener sensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (!isConnected()) {
@@ -29,7 +34,7 @@ public class BarometerInternal {
                 return;
             }
 
-            observer.onSensorValueChanged(AtmosphericPressure.ofHPA(event.values[0]));
+            listener.onChange(new Raw<>(AtmosphericPressure.ofHPA(event.values[0])));
         }
 
         @Override
@@ -38,30 +43,40 @@ public class BarometerInternal {
         }
     };
 
-    public void connect(Context context, Handler handler, GainManager observer) {
-        SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+    public BarometerInternal(@NonNull SensorManager.SensorDataChangedObserver listener) {
+        this.listener = listener;
+
+    }
+
+    @Override
+    public void connect(Context context, Handler handler, String addressIgnored) {
+
+        android.hardware.SensorManager sensorManager = (android.hardware.SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         Sensor pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
         if (pressureSensor == null) {
             Log.w(TAG, "No pressure sensor available.");
-            this.observer = null;
             return;
         }
 
-        if (sensorManager.registerListener(listener, pressureSensor, SAMPLING_PERIOD, handler)) {
-            this.observer = observer;
+        if (sensorManager.registerListener(sensorEventListener, pressureSensor, SAMPLING_PERIOD, handler)) {
+            this.context = context;
+            listener.onConnect(new AggregatorBarometer("internal", null));
             return;
         }
 
-        disconnect(context);
-    }
-
-    public void disconnect(Context context) {
-        SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-        sensorManager.unregisterListener(listener);
-        observer = null;
+        disconnect();
     }
 
     public boolean isConnected() {
-        return observer != null;
+        return context != null;
+    }
+
+    @Override
+    public void disconnect() {
+        if (!isConnected()) return;
+
+        android.hardware.SensorManager sensorManager = (android.hardware.SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        sensorManager.unregisterListener(sensorEventListener);
+        this.context = null;
     }
 }
