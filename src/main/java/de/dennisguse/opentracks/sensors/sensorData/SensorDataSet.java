@@ -10,7 +10,6 @@ import androidx.annotation.VisibleForTesting;
 import de.dennisguse.opentracks.data.models.AtmosphericPressure;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.HeartRate;
-import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.BluetoothHandlerCyclingCadence;
@@ -116,7 +115,7 @@ public final class SensorDataSet {
             return;
         }
         if (value instanceof BluetoothHandlerManagerCyclingPower.Data) {
-            this.cyclingPower.add((Raw<Power>) data);
+            this.cyclingPower.add((Raw<BluetoothHandlerManagerCyclingPower.Data>) data);
             return;
         }
         if (value instanceof AtmosphericPressure) {
