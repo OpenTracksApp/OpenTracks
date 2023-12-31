@@ -44,6 +44,7 @@ For cycling (incl. cadence):
 * QUARQ Red DZero Powermeter
 * Tacx Satori Smart
 * Wahoo Kickr v4.0
+* Magene PES P505
 * Rotor 2INpower DM Road (only supports power measurement, cadence measurement is proprietary @ firmware v1.061)
 
 For running:
