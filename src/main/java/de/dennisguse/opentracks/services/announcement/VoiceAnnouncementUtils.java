@@ -4,6 +4,7 @@ import static android.text.Spanned.SPAN_INCLUSIVE_EXCLUSIVE;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageHeartRate;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageSpeedPace;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapHeartRate;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapPower;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapSpeedPace;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
@@ -23,6 +24,7 @@ import java.util.Map;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.SensorStatistics;
@@ -156,6 +158,19 @@ class VoiceAnnouncementUtils {
             builder.append(" ")
                     .append(context.getString(R.string.current_heart_rate));
             appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, currentHeartRate), currentHeartRate);
+            builder.append(".");
+        }
+
+        if (shouldVoiceAnnounceLapPower() && currentInterval != null && currentInterval.hasAveragePower()) {
+            int currentPower = Math.round(currentInterval.getAveragePower().getW());
+            if(shouldVoiceAnnounceUnit()) {
+                String template = context.getResources().getString(R.string.power_x_watt);
+                builder.append(" ")
+                        .append(MessageFormat.format(template, Map.of("x", currentPower)));
+            } else {
+                builder.append(" ").append(context.getString(R.string.power)).append(" ");
+                builder.append(String.valueOf(currentPower));
+            }
             builder.append(".");
         }
 

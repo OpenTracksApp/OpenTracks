@@ -434,6 +434,10 @@ public class PreferencesUtils {
         return getBoolean(R.string.voice_announce_lap_heart_rate_key, false);
     }
 
+    public static boolean shouldVoiceAnnounceLapPower() {
+        return getBoolean(R.string.voice_announce_lap_power_key, false);
+    }
+
     @VisibleForTesting
     public static void setVoiceAnnounceLapHeartRate(boolean value) {
         setBoolean(R.string.voice_announce_lap_heart_rate_key, value);

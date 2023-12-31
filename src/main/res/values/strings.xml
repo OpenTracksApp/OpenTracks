@@ -728,4 +728,8 @@ limitations under the License.
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
     <string name="settings_recording_min_sampling_interval_title">Sampling time interval</string>
     <string name="settings_recording_location_distance_summary">%1$s between recorded locations</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="settings_announcements_lap_power">Lap power</string>
+    <string name="power_x_watt">Power {x, plural,  =1 {1 watt} other {# watts} }</string>
+    <string name="power">Power</string>
 </resources>

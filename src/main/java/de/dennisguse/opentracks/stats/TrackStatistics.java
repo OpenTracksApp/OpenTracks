@@ -26,6 +26,7 @@ import java.time.Instant;
 import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -60,6 +61,7 @@ public class TrackStatistics {
     private Float totalAltitudeLoss_m = null;
     // The average heart rate seen on this track
     private HeartRate avgHeartRate = null;
+    private Power avgPower = null;
 
     private boolean isIdle;
 
@@ -83,6 +85,7 @@ public class TrackStatistics {
         totalAltitudeGain_m = other.totalAltitudeGain_m;
         totalAltitudeLoss_m = other.totalAltitudeLoss_m;
         avgHeartRate = other.avgHeartRate;
+        avgPower = other.avgPower;
         isIdle = other.isIdle;
     }
 
@@ -124,6 +127,19 @@ public class TrackStatistics {
                 // Important to do this before total time is updated
                 avgHeartRate = HeartRate.of(
                         (totalTime.getSeconds() * avgHeartRate.getBPM() + other.totalTime.getSeconds() * other.avgHeartRate.getBPM())
+                                / (totalTime.getSeconds() + other.totalTime.getSeconds())
+                );
+            }
+        }
+
+        if (avgPower == null) {
+            avgPower = other.avgPower;
+        } else {
+            if (other.avgPower != null) {
+                // Using total time as weights for the averaging.
+                // Important to do this before total time is updated
+                avgPower = Power.of(
+                        (totalTime.getSeconds() * avgPower.getW() + other.totalTime.getSeconds() * other.avgPower.getW())
                                 / (totalTime.getSeconds() + other.totalTime.getSeconds())
                 );
             }
@@ -270,6 +286,15 @@ public class TrackStatistics {
         return avgHeartRate;
     }
 
+    public boolean hasPower() {
+        return avgPower != null;
+    }
+
+    @Nullable
+    public Power getAveragePower() {
+        return avgPower;
+    }
+
     /**
      * Gets the average speed.
      * This calculation only takes into account the displacement until the last point that was accounted for in statistics.
@@ -330,6 +355,12 @@ public class TrackStatistics {
     public void setAverageHeartRate(HeartRate heartRate) {
         if (heartRate != null) {
             avgHeartRate = heartRate;
+        }
+    }
+
+    public void setAveragePower(Power power) {
+        if (power != null) {
+            avgPower = power;
         }
     }
 

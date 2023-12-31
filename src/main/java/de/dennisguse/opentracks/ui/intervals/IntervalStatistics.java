@@ -9,6 +9,7 @@ import java.util.List;
 import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -103,6 +104,7 @@ public class IntervalStatistics {
         private Float gain_m;
         private Float loss_m;
         private HeartRate avgHeartRate;
+        private Power avgPower;
 
         public Interval() {
         }
@@ -118,6 +120,7 @@ public class IntervalStatistics {
             gain_m = i.gain_m;
             loss_m = i.loss_m;
             avgHeartRate = i.avgHeartRate;
+            avgPower = i.avgPower;
         }
 
         public Interval(Interval i) {
@@ -126,6 +129,7 @@ public class IntervalStatistics {
             gain_m = i.gain_m;
             loss_m = i.loss_m;
             avgHeartRate = i.avgHeartRate;
+            avgPower = i.avgPower;
         }
 
         public Distance getDistance() {
@@ -160,12 +164,21 @@ public class IntervalStatistics {
             return avgHeartRate;
         }
 
+        public boolean hasAveragePower() {
+            return avgPower != null;
+        }
+
+        public Power getAveragePower() {
+            return avgPower;
+        }
+
         private void add(TrackStatistics trackStatistics, @Nullable TrackPoint lastTrackPoint) {
             distance = distance.plus(trackStatistics.getTotalDistance());
             time = time.plus(trackStatistics.getTotalTime());
             gain_m = trackStatistics.hasTotalAltitudeGain() ? trackStatistics.getTotalAltitudeGain() : gain_m;
             loss_m = trackStatistics.hasTotalAltitudeLoss() ? trackStatistics.getTotalAltitudeLoss() : loss_m;
             avgHeartRate = trackStatistics.getAverageHeartRate();
+            avgPower = trackStatistics.getAveragePower();
             if (lastTrackPoint == null) {
                 return;
             }
@@ -183,6 +196,7 @@ public class IntervalStatistics {
             gain_m = trackStatistics.hasTotalAltitudeGain() ? trackStatistics.getTotalAltitudeGain() : gain_m;
             loss_m = trackStatistics.hasTotalAltitudeLoss() ? trackStatistics.getTotalAltitudeLoss() : loss_m;
             avgHeartRate = trackStatistics.getAverageHeartRate();
+            avgPower = trackStatistics.getAveragePower();
         }
     }
 }

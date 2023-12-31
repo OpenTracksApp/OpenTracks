@@ -23,6 +23,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 
@@ -43,6 +44,8 @@ public class TrackStatisticsUpdater {
 
     private float averageHeartRateBPM;
     private Duration totalHeartRateDuration = Duration.ZERO;
+    private float averagePowerW;
+    private Duration totalPowerDuration = Duration.ZERO;
 
     // The current segment's statistics
     private final TrackStatistics currentSegment;
@@ -123,6 +126,17 @@ public class TrackStatisticsUpdater {
             totalHeartRateDuration = newTotalDuration;
 
             currentSegment.setAverageHeartRate(HeartRate.of(averageHeartRateBPM));
+        }
+
+        // Update power
+        if (trackPoint.hasPower() && lastTrackPoint != null) {
+            Duration trackPointDuration = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
+            Duration newTotalDuration = totalPowerDuration.plus(trackPointDuration);
+
+            averagePowerW = (totalPowerDuration.toMillis() * averagePowerW + trackPointDuration.toMillis() * trackPoint.getPower().getW()) / newTotalDuration.toMillis();
+            totalPowerDuration = newTotalDuration;
+
+            currentSegment.setAveragePower(Power.of(averagePowerW));
         }
 
         {
