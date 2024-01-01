@@ -595,4 +595,6 @@ limitations under the License.
     <string name="settings_ui_dynamic_colors_summary">Používat dynamické barvy definované uživatelem (pouze Android 12+; vyžaduje ruční restart)</string>
     <string name="permission_recording_failed">Aplikace OpenTrack vyžaduje oprávnění k přístupu k vaší poloze a zařízením poblíž.</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="value_internal_sensor">Vnitřní senzor</string>
+    <string name="sensor_state_pressure">Barometr</string>
 </resources>
