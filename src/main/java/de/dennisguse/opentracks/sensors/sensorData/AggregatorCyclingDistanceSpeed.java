@@ -26,8 +26,12 @@ public class AggregatorCyclingDistanceSpeed extends Aggregator<BluetoothHandlerC
         if (previous != null) {
             float timeDiff_ms = UintUtils.diff(current.value().wheelRevolutionsTime(), previous.value().wheelRevolutionsTime(), UintUtils.UINT16_MAX) / 1024f * 1000;
             Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
-            if (timeDiff.isZero() || timeDiff.isNegative()) {
-                Log.e(TAG, "Timestamps difference is invalid: cannot compute speed.");
+
+            if (timeDiff.isZero()) {
+                return;
+            }
+            if (timeDiff.isNegative()) {
+                Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
                 value = null;
                 return;
             }
