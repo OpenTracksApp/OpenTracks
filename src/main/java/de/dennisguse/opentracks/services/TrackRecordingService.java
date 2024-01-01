@@ -26,7 +26,6 @@ import android.os.Looper;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.util.Pair;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -38,7 +37,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Duration;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
@@ -217,8 +215,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             if (!PermissionRequester.RECORDING.hasPermission(this)) {
-                Toast.makeText(this, R.string.permission_recording_failed, Toast.LENGTH_LONG).show();
-                return;
+                throw new RuntimeException("Android14: Please grant permissions LOCATION and NEARBY DEVICES (manually)");
             }
         }
 
