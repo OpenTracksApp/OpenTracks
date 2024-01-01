@@ -1,0 +1,15 @@
+v4.10.0: OpenTracks
+
+Změny:
+- Podpora zisku/ztráty přes snímání prostředí BLE (barometr)
+- Interní barometr lze vypnout (např. při rozbití)
+- Material3 pro přepínače preferencí
+- Úvodní obrazovka podporuje denní/noční režim
+- Nastavení Bluetooth senzorů: zobrazení názvu vybraného snímače (pokud je uložen v mezipaměti)
+
+Oprava chyb:
+- UI s intervaly bylo špatně zarovnané
+
+Vývojáři:
+- Vyčištění TrackRecordingServiceConnection
+- TrackRecordingService se vždy spouští jako ForegroundService
