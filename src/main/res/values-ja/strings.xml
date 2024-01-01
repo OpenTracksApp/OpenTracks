@@ -311,4 +311,5 @@ limitations under the License.
 \n  * マーカーの作成 (写真を含む)
 \n  * 完全にオフラインで動作します
 \n  * 地図上にトラックを表示します (下記を参照)"</string>
+    <string name="help_data_google_play_services_content">いいえ</string>
 </resources>
