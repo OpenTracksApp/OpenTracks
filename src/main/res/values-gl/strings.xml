@@ -597,4 +597,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_ui_dynamic_colors_summary">Usar Cores Dinámicas definidas pola usuaria (Só Android 12+; require reiniciar)</string>
     <string name="permission_recording_failed">OpenTracks precisa permiso para acceder á túa localización así como a dispositivos próximos.</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="value_internal_sensor">Sensor interno</string>
+    <string name="sensor_state_pressure">Barómetro</string>
 </resources>
