@@ -596,4 +596,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="sensor_state_cadence_unit">/min</string>
     <string name="voice_per_kilometer">/km</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="value_internal_sensor">Interne sensor</string>
+    <string name="sensor_state_pressure">Barometer</string>
 </resources>
