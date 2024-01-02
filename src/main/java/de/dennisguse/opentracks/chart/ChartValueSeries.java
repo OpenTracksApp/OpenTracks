@@ -80,7 +80,7 @@ abstract class ChartValueSeries {
         // Make copies of the stroke paint with the default thickness
         titlePaint = new Paint(strokePaint);
         titlePaint.setTextSize(fontSizeMedium);
-        titlePaint.setTextAlign(Align.CENTER);
+        titlePaint.setTextAlign(Align.LEFT);
         titlePaint.setStyle(Style.FILL_AND_STROKE);
 
         markerPaint = new Paint(strokePaint);
