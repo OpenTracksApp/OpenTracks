@@ -1,0 +1,15 @@
+v4.10.0: OpenTracks
+
+Veranderingen:
+- Ondersteuning voor toename/afname via BLE Environmental Sensing (barometer)
+- Interne barometer kan worden uitgeschakeld (bijv., indien defect)
+- Materiaal 3 voor voorkeursschakelaars
+- Openingsscherm ondersteunt dag/nacht-modus
+- Bluetooth-sensorinstellingen: toon geselecteerde sensornaam (indien gecached door Android)
+
+Bugfix :
+- Interval UI was verkeerd uitgelijnd
+
+Ontwikkelaar:
+- Opruiming van trackRecordingServiceConnection
+- TrackRecordingService begint altijd als ForegroundService
