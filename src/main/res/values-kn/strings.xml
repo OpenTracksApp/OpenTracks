@@ -1,2 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="about_libraries">ಲೈಬ್ರರಿಗಳು</string>
+    <string name="about_history">OpenTracks <a href="https://code.google.com/archive/p/mytracks/"><i>Google ನ MyTracks</i></a> (2016 ರಲ್ಲಿ ಸ್ಥಗಿತಗೊಂಡಿದೆ) ನ ಫೋರ್ಕ್ ಆಗಿದೆ.</string>
+    <string name="help_feature_content">* ಜಿಪಿಎಸ್ ಟ್ರ್ಯಾಕ್‌ಗಳನ್ನು ರಚಿಸಬಹುದು
+\n * ಹೃದಯ ಬಡಿತ ಸಂವೇದಕವನ್ನು ಬಳಸಬಹುದು (ಬ್ಲೂಟೂತ್ LE ಮಾತ್ರ)
+\n * ಧ್ವನಿ ಪ್ರಕಟಣೆಗಳು (ಸಮಯ ಅಥವಾ ಅಂತರದಿಂದ)
+\n * ಗುರುತುಗಳನ್ನು ರಚಿಸಬಹುದು (ಚಿತ್ರಗಳನ್ನು ಒಳಗೊಂಡಂತೆ)
+\n * ಸಂಪೂರ್ಣವಾಗಿ ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ
+\n * ನಕ್ಷೆಯಲ್ಲಿ ಟ್ರ್ಯಾಕ್‌ಗಳನ್ನು ತೋರಿಸಬಹುದು (ಕೆಳಗೆ ನೋಡಿ)</string>
+    <string name="about_description"><i>OpenTracks</i> ಎಂಬುದು ನಿಮ್ಮ ಗೌಪ್ಯತೆಯನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ಗೌರವಿಸುವ ಕ್ರೀಡಾ ಟ್ರ್ಯಾಕಿಂಗ್ ಅಪ್ಲಿಕೇಶನ್ ಆಗಿದೆ.</string>
+    <string name="about_version_name">ಆವೃತ್ತಿಯ ಹೆಸರು: %1$s</string>
+    <string name="help_storage_pictures_content">ಇವುಗಳನ್ನು ಅಪ್ಲಿಕೇಶನ್‌ನ ಆಂತರಿಕ ಸಂಗ್ರಹಣೆಯಲ್ಲಿ ಸಂಗ್ರಹಿಸಲಾಗಿದೆ (ಅಂದರೆ, OpenTracks ನಲ್ಲಿ ಮಾತ್ರ ಪ್ರವೇಶಿಸಬಹುದಾಗಿದೆ).</string>
+    <string name="about_preference_title">OpenTracks ಕುರಿತು</string>
+    <string name="help_track_map_content">"  ಸಣ್ಣ ನಕ್ಷೆ ಐಕಾನ್ ಬಳಸಿ.
+\n   a) (ಲೈವ್ ಅಪ್‌ಡೇಟ್‌ಗಳು) &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt;OSMDashboard&lt;/a&gt; ಅನ್ನು ಸ್ಥಾಪಿಸಿ. ಇದು ಆನ್‌ಲೈನ್ ಅಥವಾ ಆಫ್‌ಲೈನ್ ನಕ್ಷೆಗಳನ್ನು &lt;a href=\"https://www.openstreetmap.org\"&gt;OpenStreetMap&lt;/a&gt; ಮೂಲಕ ಒದಗಿಸುತ್ತದೆ.
+\n   ವಾಸ್ತವವಾಗಿ, OSMDashboard ಒಂದು ಪ್ರತ್ಯೇಕ ಅಪ್ಲಿಕೇಶನ್ ಆಗಿದ್ದು ಅದು ತೋರಿಸಲಿರುವ ಟ್ರ್ಯಾಕ್(ಗಳ) ಡೇಟಾವನ್ನು ಮಾತ್ರ ಪ್ರವೇಶಿಸಬಹುದು (ತಾತ್ಕಾಲಿಕವಾಗಿ).
+\n   ಬಿ) ಸಾಮಾನ್ಯ ನಕ್ಷೆ ಅಪ್ಲಿಕೇಶನ್ ಮೂಲಕ (ಉದಾ., &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; ಮತ್ತು &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). ಈ ಅಪ್ಲಿಕೇಶನ್‌ಗಳು KMZ ಫೈಲ್ ಫಾರ್ಮ್ಯಾಟ್ ಅನ್ನು ಬೆಂಬಲಿಸುವ ಅಗತ್ಯವಿದೆ (ಸ್ಥಳಗಳು ಮತ್ತು ಸಮಯಸ್ಟ್ಯಾಂಪ್‌ಗಳು ಮಾತ್ರ). ವಾಸ್ತವವಾಗಿ, ಒಂದು ಅಪ್ಲಿಕೇಶನ್ MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt; ಜೊತೆಗೆ &lt;i&gt;ACTION_VIEW&lt;/i&gt; ಅನ್ನು ಬೆಂಬಲಿಸುವ ಅಗತ್ಯವಿದೆ.  "</string>
+    <string name="about_url">ಪ್ರಾಜೆಕ್ಟ್ ವೆಬ್ ಪುಟ: <a href="%1$s">%1$s</a></string>
+    <string name="help_track_export_title">ರೆಕಾರ್ಡ್ ಮಾಡಿದ ಟ್ರ್ಯಾಕ್‌ಗಳನ್ನು ನಾನು ಹೇಗೆ ರಫ್ತು ಮಾಡುವುದು/ಹಂಚಿಕೊಳ್ಳಬಹುದು?</string>
+    <string name="help_storage_pictures_title">ಮಾರ್ಕರ್‌ಗಳಾಗಿ ತೆಗೆದ ಚಿತ್ರಗಳನ್ನು OpenTracks ಹೇಗೆ ಸಂಗ್ರಹಿಸುತ್ತದೆ?</string>
+    <string name="help_feature_title">OpenTracks ಈ ಕೆಳಗಿನ ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಹೊಂದಿದೆ:</string>
+    <string name="help_track_map_title">ನಕ್ಷೆಯಲ್ಲಿ ಟ್ರ್ಯಾಕ್ ತೋರಿಸುವುದು ಹೇಗೆ?</string>
+    <string name="about_version_code">ಆವೃತ್ತಿ ಕೋಡ್: %1$d</string>
+    <string name="about_third_party_data">ಥರ್ಡ್ ಪಾರ್ಟಿ ಡೇಟಾ</string>
+</resources>
