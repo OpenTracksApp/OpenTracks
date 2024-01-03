@@ -28,20 +28,26 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
     private final SensorDataChangedObserver listener = new SensorDataChangedObserver() {
 
         @Override
-        public void onConnect(Aggregator<?, ?> sensorData) {
-            sensorDataSet.add(sensorData);
+        public void onConnect(Aggregator<?, ?> aggregator) {
+            sensorDataSet.add(aggregator);
             observer.onChange(new SensorDataSet(sensorDataSet));
         }
 
         @Override
-        public void onChange(Raw<?> sensorData) {
-            sensorDataSet.update(sensorData);
+        public void onChange(Raw<?> data) {
+            sensorDataSet.update(data);
             observer.onChange(new SensorDataSet(sensorDataSet));
         }
 
         @Override
-        public void onDisconnect(Aggregator<?, ?> sensorData) {
-            sensorDataSet.remove(sensorData);
+        public void onDisconnect(Aggregator<?, ?> aggregator) {
+            sensorDataSet.add(aggregator);
+            observer.onChange(new SensorDataSet(sensorDataSet));
+        }
+
+        @Override
+        public void onRemove(Aggregator<?, ?> aggregator) {
+            sensorDataSet.remove(aggregator);
             observer.onChange(new SensorDataSet(sensorDataSet));
         }
     };
@@ -134,5 +140,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
         void onChange(Raw<?> sensorData);
 
         void onDisconnect(Aggregator<?, ?> sensorData);
+
+        void onRemove(Aggregator<?, ?> sensorData);
     }
 }

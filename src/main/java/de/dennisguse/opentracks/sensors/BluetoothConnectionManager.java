@@ -148,6 +148,7 @@ public class BluetoothConnectionManager implements Driver {
             Log.w(TAG, "NONE: going to disconnect");
             if (isConnected()) {
                 disconnect();
+                observer.onRemove(sensorHandler.createEmptySensorData(null, null));
             }
             return;
         }
