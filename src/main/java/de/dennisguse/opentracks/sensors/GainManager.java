@@ -52,7 +52,11 @@ public class GainManager implements SensorConnector {
 
         String address = PreferencesUtils.getBarometerSensorAddress();
         switch (PreferencesUtils.getSensorType(address)) {
-            case NONE -> driver = null;
+            case NONE -> {
+                driver = null;
+                listener.onRemove(new AggregatorBarometer(null, null));
+                return;
+            }
             case INTERNAL -> driver = new BarometerInternal(listener);
             case REMOTE -> driver =
                     new BluetoothConnectionManager(
@@ -63,9 +67,7 @@ public class GainManager implements SensorConnector {
             default -> throw new RuntimeException("Not implemented");
         }
 
-        if (driver != null) {
-            driver.connect(context, handler, address);
-        }
+        driver.connect(context, handler, address);
     }
 
     private void onDisconnect() {

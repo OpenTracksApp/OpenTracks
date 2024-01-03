@@ -30,7 +30,6 @@ public class AltitudeCorrectionManager {
 
     public void correctAltitude(Context context, TrackPoint trackPoint) {
         if (!trackPoint.hasLocation() || !trackPoint.hasAltitude()) {
-            Log.d(TAG, "No altitude correction necessary.");
             return;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && altitudeConverter != null) {
