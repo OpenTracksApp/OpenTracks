@@ -20,6 +20,6 @@ public class BluetoothHandlerBarometricPressureTest {
         AtmosphericPressure pressure = BluetoothHandlerBarometricPressure.parseEnvironmentalSensing(characteristic);
 
         // then
-        assertEquals(AtmosphericPressure.ofPA(100165), pressure);
+        assertEquals(AtmosphericPressure.ofHPA(1001.65f), pressure);
     }
 }
