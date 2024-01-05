@@ -1,0 +1,11 @@
+v4.10.1: OpenTracks
+
+Změny:
+- Android 14: pád při spuštění nahrávání při neudělených oprávněních
+- Názvy grafů jsou kompaktnější
+
+Opravy chyb:
+- Po opětovném připojení senzoru BLE následoval pád (vzniklo ve verzi v4.9.6)
+- Výkon cyklistiky nebyl zpracován (vzniklo ve verzi v4.9.6)
+- Kadence cyklistiky a vzdálenost umožňovaly opakovaná data
+- Data z tlakoměru BLE nebyla správně zpracovávána
