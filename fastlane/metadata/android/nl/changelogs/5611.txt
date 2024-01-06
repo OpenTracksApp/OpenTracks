@@ -1,0 +1,11 @@
+v4.10.1: OpenTracks
+
+Veranderingen:
+- Android 14: crash bij het starten van de opname als er geen rechten worden verleend
+- Kaarttitels zijn compacter
+
+Bugfix :
+- BLE-sensor opnieuw aansluiten resulteerde in een crash (geïntroduceerd in v4.9.6)
+- Fietsvermogen is niet verwerkt (geïntroduceerd in v4.9.6)
+- Zowel de fietscadentie als de afstand maken herhaalde gegevens mogelijk
+- BLE-barometergegevens zijn niet correct verwerkt
