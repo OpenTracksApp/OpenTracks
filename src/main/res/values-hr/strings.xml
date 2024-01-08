@@ -398,11 +398,9 @@ limitations under the License.
     <string name="voiceDistanceMilesPlural">{n, plural, =1 {1 milja} few {{n,number,#.0} milje} other {{n,number,#.0} milja} }</string>
     <string name="settings_night_mode_title">Tema sučelja</string>
     <string name="image_discard">Odbaci</string>
-    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometar na sat} few {{n,number} kilometra na sat} other {{n,number} kilometara na sat} }</string>
     <string name="generic_completed">Završeno</string>
     <string name="generic_filter">Filtar</string>
     <string name="import_file_imported">Datoteka %1$s je uvezena</string>
-    <string name="current_heart_rate">Trenutačni puls</string>
     <string name="about_url">Web stranica projekta: <a href="%1$s">%1$s</a></string>
     <string name="no_compatible_file_manager_installed">Nije instaliran nijedan kompatibilni upravljač datoteka</string>
     <string name="settings_public_api_enabled_summary_on">Druge instalirane aplikacije mogu pokrenuti ili prekinuti snimanja.</string>
@@ -518,7 +516,6 @@ limitations under the License.
     <string name="settings_announcements_idle_title">Neaktivnost</string>
     <string name="settings_reset_summary">Resetiraj postavke na standardne vrijednosti</string>
     <string name="description_speed_source_gps">GPS</string>
-    <string name="voice_per_kilometer">po kilometru</string>
     <string name="settings_recording_customize_layout_title">Prilagodi raspored snimanja</string>
     <string name="unit_knots">čv</string>
     <string name="stats_sensors_cadence">Ritam</string>
@@ -548,7 +545,6 @@ limitations under the License.
     <string name="generic_overwrite">Prepiši</string>
     <string name="import_unable_to_import_file">Nije moguće uvesti datoteku: %1$s</string>
     <string name="stats_sensors_power">Snaga</string>
-    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometar} few {{n,number,#.0} kilometra} other {{n,number,#.0} kilometara} }</string>
     <string name="import_progress_summary_exists_msg">Već postoji</string>
     <string name="generic_separator_done_total">/</string>
     <string name="total_distance">Ukupna udaljenost</string>

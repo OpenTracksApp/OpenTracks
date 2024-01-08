@@ -288,11 +288,6 @@ limitations under the License.
         other {{n} 秒}
         }
     </string>
-    <string name="voiceSpeedKilometersPerHourPlural">
-        { n, plural,
-        other {每小时 {n,number,#.0} 公里}
-        }
-    </string>
     <string name="voiceSpeedMilesPerHourPlural">
         { n, plural,
         other {每小时 {n,number,#.0} 英里}
@@ -430,7 +425,6 @@ limitations under the License.
     <string name="import_parser_error">解析器错误：%1$s</string>
     <string name="import_unable_to_import_file">无法导入文件：%1$s</string>
     <string name="menu_select_layout">选择布局</string>
-    <string name="voice_per_kilometer">每公里</string>
     <string name="track_delete_number_of_tracks">%1$d 条路线</string>
     <string name="stats_clock">时钟</string>
     <string name="export_error_post_workout">健身后导出失败，请检查导出文件夹。</string>
@@ -471,7 +465,6 @@ limitations under the License.
     <string name="value_float_knots">%1$.1f 节</string>
     <string name="value_float_knots_recommended">%1$.1f 节（推荐）</string>
     <string name="total_distance">总距离</string>
-    <string name="current_heart_rate">当前心率</string>
     <string name="sensor_state_cadence_max">最大踏频</string>
     <string name="sensor_state_heart_rate_avg">平均心率</string>
     <string name="sensor_state_heart_rate_max">最大心率</string>
@@ -490,11 +483,6 @@ limitations under the License.
     <string name="track_distance_notification">距离：%1$s</string>
     <string name="value_float_mile_hour_recommended">%1$.1f 英里/小时（推荐）</string>
     <string name="lap_time">单圈用时</string>
-    <string name="voiceDistanceKilometersPlural">
-        { n, plural,
-        other {{n,number,#.0} 公里}
-        }
-    </string>
     <string name="voiceDistanceMilesPlural">
         { n, plural,
         other {{n,number,#.0} 英里}

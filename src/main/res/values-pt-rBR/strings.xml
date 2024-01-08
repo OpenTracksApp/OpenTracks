@@ -475,11 +475,9 @@
     <string name="generic_dismiss">Dispensar</string>
     <string name="settings_api_title">API pública</string>
     <string name="settings_public_api_dashboard_enabled_title">Transferência automática de dados</string>
-    <string name="voice_per_kilometer">por quilômetro</string>
     <string name="voice_per_mile">por milha</string>
     <string name="lap_speed">Velocidade da volta</string>
     <string name="total_distance">Distância total</string>
-    <string name="current_heart_rate">Frequência cardíaca atual</string>
     <string name="settings_export_filename_title">Formato do nome do arquivo</string>
     <string name="settings_announcements_average_heart_rate">Frequência cardíaca média</string>
     <string name="settings_announcements_lap_heart_rate">Frequência cardíaca da volta</string>

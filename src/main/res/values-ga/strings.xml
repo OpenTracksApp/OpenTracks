@@ -479,12 +479,10 @@
     <string name="value_integer_second">%1$d s</string>
     <string name="aggregated_stats_empty_message">Taifead do chéad rian chun staitisticí comhiomlánaithe a fheiceáil</string>
     <string name="value_smallest_recommended">is lú (molta)</string>
-    <string name="voice_per_kilometer">in aghaidh an chiliméadair</string>
     <string name="voice_per_mile">in aghaidh an mhíle</string>
     <string name="voice_per_nautical_mile">in aghaidh an mhuirmhíle</string>
     <string name="speed">Meánluas ag gluaiseacht</string>
     <string name="average_heart_rate">Meánráta croí</string>
-    <string name="current_heart_rate">Ráta croí reatha</string>
     <string name="waypoint_type_barbecue">beárbaiciú</string>
     <string name="waypoint_type_cafe">caifé</string>
     <string name="waypoint_type_fire_station">stáisiún Dóiteáin</string>

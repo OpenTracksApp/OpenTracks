@@ -277,13 +277,6 @@ limitations under the License.
         other {{n} segundos}
         }
     </string>
-    <string name="voiceSpeedKilometersPerHourPlural">
-        { n, plural,
-        one {{n,number,#.0} quilômetro por hora}
-        many {{n,number,#.0} quilómetros por hora}
-        other {{n,number,#.0} quilómetros por hora}
-        }
-    </string>
     <string name="voiceSpeedMilesPerHourPlural">
         { n, plural,
         one {{n,number,#.0} milha por hora}
@@ -493,7 +486,6 @@ limitations under the License.
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="value_float_knots">%1$.1f nós</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (Recomendado)</string>
-    <string name="voice_per_kilometer">por quilômetro</string>
     <string name="voiceSpeedMKnotsPlural">
         { n, plural,
         one {{n,number,#.0} nó}
@@ -516,14 +508,6 @@ limitations under the License.
     </string>
     <string name="total_distance">Distância total</string>
     <string name="average_heart_rate">Frequência cardíaca média</string>
-    <string name="voiceDistanceKilometersPlural">
-        { n, plural,
-        one {{n,number,#.0} quilómetro}
-        many {{n,number,#.0} quilómetros}
-        other {{n,number,#.0} quilómetros}
-        }
-    </string>
-    <string name="current_heart_rate">Frequência cardíaca atual</string>
     <string name="share_image_subject">Gostaria de compartilhar uma imagem consigo</string>
     <string name="share_image_body">Acho que pode estar interessado nesta imagem.</string>
     <string name="hold_to_stop">Segure para parar</string>

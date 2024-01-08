@@ -306,7 +306,6 @@
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="value_integer_knots">%1$d nós</string>
     <string name="average_heart_rate">Frequência cardíaca média</string>
-    <string name="current_heart_rate">Frequência cardíaca atual</string>
     <string name="share_image_subject">Gostaria de compartilhar uma imagem consigo</string>
     <string name="field_remove_from_layout">Remover</string>
     <string name="about_libraries">Bibliotecas</string>
@@ -484,7 +483,6 @@
     <string name="value_float_knots">%1$.1f nós</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (Recomendado)</string>
     <string name="value_float_knots_recommended">%1$.1f nós (recomendado)</string>
-    <string name="voice_per_kilometer">por quilômetro</string>
     <string name="voice_per_mile">por milha</string>
     <string name="voice_per_nautical_mile">por milha náutica</string>
     <string name="lap_time">Tempo da volta</string>

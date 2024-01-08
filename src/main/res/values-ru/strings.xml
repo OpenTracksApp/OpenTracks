@@ -491,7 +491,6 @@ limitations under the License.
     <string name="stats_sensors_heart_rate">Пульс</string>
     <string name="stats_sensors_power">Мощность</string>
     <string name="value_float_mile_hour">%1$.1f миль/ч</string>
-    <string name="voice_per_kilometer">за километр</string>
     <string name="voice_per_mile">за милю</string>
     <string name="lap_time">Время круга</string>
     <string name="pace">Темп</string>
@@ -499,7 +498,6 @@ limitations under the License.
     <string name="speed">Средняя скорость в движении</string>
     <string name="total_distance">Общее расстояние</string>
     <string name="average_heart_rate">Средний пульс</string>
-    <string name="current_heart_rate">Текущий пульс</string>
     <string name="generic_filter">Фильтр</string>
     <string name="generic_from">с</string>
     <string name="settings_export_section">Экспорт</string>
@@ -563,7 +561,6 @@ limitations under the License.
     <string name="settings_stats_units_imperial_meter">Британская система (мили, метры)</string>
     <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 mile per hour} other {{n,number,#.0} miles per hour} }</string>
     <string name="voiceDistanceMilesPlural">{n, plural, =1 {1 mile} other {{n,number,#.0} miles} }</string>
-    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometer per hour} other {{n,number,#.0} kilometers per hour} }</string>
     <string name="voice_on_device_speaker_title">Использовать динамик устройства</string>
     <string name="settings_ui_dynamic_colors_title">Динамические цвета</string>
     <string name="settings_sensor_heart_rate_max">Зоны: макс. пульс (уд/мин)</string>
@@ -590,5 +587,4 @@ limitations under the License.
     <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 knot} other {{n,number,#.0} knots} }</string>
     <string name="value_int_seconds">%1$d сек (рекомендуется)</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Фильтровать устройства Bluetooth</string>
-    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometer} other {{n,number,#.0} kilometers} }</string>
 </resources>

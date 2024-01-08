@@ -518,14 +518,12 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_title">Automatisk dataoverføring</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Et program som startet et opptak kan også få tilgang til de registrerte dataene.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Registrerte data blir ikke delt automatisk med andre programmer.</string>
-    <string name="voice_per_kilometer">per kilometer</string>
     <string name="voice_per_mile">per engelsk mil</string>
     <string name="lap_time">Rundetid</string>
     <string name="pace">Tempo</string>
     <string name="lap_speed">Rundehastighet</string>
     <string name="speed">Gjen. forflytningshastighet</string>
     <string name="total_distance">Total distanse</string>
-    <string name="current_heart_rate">Gjeldende puls</string>
     <string name="settings_export_filename_title">Format på filnavnet</string>
     <string name="error_crash_title">%1$s krasjet</string>
     <string name="share_crash_report">Del krasjrapport</string>
@@ -566,9 +564,7 @@ limitations under the License.
     <string name="voiceHoursPlural">{n, plural, =1 {1 time} other {{n,number} timer} }</string>
     <string name="voiceMinutesPlural">{n, plural, =1 {1 minutt} other {{n,number} minutter} }</string>
     <string name="voiceSecondsPlural">{n, plural, =1 {1 sekund} other {{n,number} sekunder} }</string>
-    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometer i timen} other {{n,number,#.0} kilometer i timen} }</string>
     <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 knop} other {{n,number,#.0} knop} }</string>
-    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometer} other {{n,number,#.0} kilometer} }</string>
     <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 nautisk mil} other {{n,number,#.0} nautiske mil} }</string>
     <string name="sensor_state_cadence_unit">o/min</string>
     <string name="sensor_state_heart_rate_unit">slag/min</string>

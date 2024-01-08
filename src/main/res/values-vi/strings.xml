@@ -513,7 +513,6 @@ limitations under the License.
     <string name="gps_recording_status">%1$s: %2$s</string>
     <string name="gps_recording_without_signal">OpenTracks đang ghi lại mà không có dữ liệu GPS.</string>
     <string name="activity_type_swimming_open">bơi trong mở nước</string>
-    <string name="voice_per_kilometer">mỗi km</string>
     <string name="total_distance">Tổng khoảng cách</string>
     <string name="settings_public_api_disabled_toast">API công khai OpenTracks bị tắt: nó có thể được bật trong cài đặt.</string>
     <string name="voice_per_mile">mỗi dặm</string>
@@ -522,7 +521,6 @@ limitations under the License.
     <string name="lap_speed">Vòng tốc độ</string>
     <string name="speed">Tốc độ di chuyển trung bình</string>
     <string name="average_heart_rate">Nhịp tim trung bình</string>
-    <string name="current_heart_rate">Hiện tại nhịp tim</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Một ứng dụng bắt đầu ghi hình cũng có thể truy cập vào dữ liệu ghi lại.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Ghi lại dữ liệu sẽ không được miễn phí tự động với các ứng dụng khác.</string>
     <string name="settings_public_api_dashboard_enabled_title">Chuyển dữ liệu tự động</string>
@@ -563,7 +561,6 @@ limitations under the License.
     <string name="settings_stats_units_imperial_meter">Hệ Anh (dặm, mét)</string>
     <string name="voiceSpeedMilesPerHourPlural">{n, số nhiều, =1 {1 dặm trên giờ} khác {{n, số,#.0} dặm trên giờ} }</string>
     <string name="voiceDistanceMilesPlural">{n, số nhiều, =1 {1 dặm} khác {{n,số,#.0} dặm} }</string>
-    <string name="voiceSpeedKilometersPerHourPlural">{n, số nhiều, =1 {1 kilômet trên giờ} khác {{n, số,#.0} kilômet trên giờ} }</string>
     <string name="voice_on_device_speaker_title">Sử dụng loa của thiết bị</string>
     <string name="settings_ui_dynamic_colors_title">Màu sắc linh động</string>
     <string name="settings_sensor_heart_rate_max">Vùng: Nhịp tim tối đa (bpm)</string>
@@ -586,6 +583,5 @@ limitations under the License.
     <string name="voiceSpeedMKnotsPlural">{n, số nhiều, =1 {1 nút} khác {{n,số,#.0} các nút} }</string>
     <string name="value_int_seconds">%1$d s (khuyến khích)</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Lọc thiết bị Bluetooth</string>
-    <string name="voiceDistanceKilometersPlural">{n, số nhiều, =1 {1 kilômet} khác {{n,số,#.0} kilômet} }</string>
     <string name="permission_recording_failed">OpenTracks yêu cầu quyền truy cập vào vị trí của bạn cũng như các thiết bị lân cận.</string>
 </resources>

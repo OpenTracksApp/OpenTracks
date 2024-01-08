@@ -494,7 +494,6 @@ limitations under the License.
     <string name="value_off">關閉</string>
     <string name="value_smallest_recommended">最小（建議值）</string>
     <!-- Voice -->
-    <string name="voice_per_kilometer">每公里</string>
     <string name="voice_per_mile">每英里</string>
     <string name="voice_per_nautical_mile">每海里</string>
     <string name="lap_time">單圈時間</string>
@@ -503,7 +502,6 @@ limitations under the License.
     <string name="speed">平均移動速度</string>
     <string name="total_distance">總距離</string>
     <string name="average_heart_rate">平均心率</string>
-    <string name="current_heart_rate">目前心率</string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">提款機</string>
     <string name="waypoint_type_bank">銀行</string>
@@ -590,7 +588,6 @@ limitations under the License.
     <string name="settings_announcements_idle_category_title">閒置播報</string>
     <string name="voiceSpeedMilesPerHourPlural">{ n, plural, other {每小時 {n,number,#.0} 英里} }</string>
     <string name="voiceDistanceMilesPlural">{ n, plural, other {{n,number,#.0} 英里} }</string>
-    <string name="voiceSpeedKilometersPerHourPlural">{ n, plural, other {每小時 {n,number,#.0} 公里} }</string>
     <string name="sensor_state_power_max">最大功率</string>
     <string name="activity_type_kickscooter">速克達</string>
     <string name="voiceSecondsPlural">{ n, plural, other {{n} 秒} }</string>
@@ -600,7 +597,6 @@ limitations under the License.
     <string name="settings_recording_idle_timeout_title">閒置閾值</string>
     <string name="voiceSpeedMKnotsPlural">{ n, plural, other {{n,number,#.0} 節} }</string>
     <string name="value_int_seconds">%1$d 秒（建議值）</string>
-    <string name="voiceDistanceKilometersPlural">{ n, plural, other {{n,number,#.0} 公里} }</string>
     <string name="settings_ui_dynamic_colors_title">動態色彩</string>
     <string name="settings_recording_title">紀錄</string>
     <string name="settings_ui_dynamic_colors_summary">使用使用者自訂的動態色彩（僅限 Android 12+；需要手動重新啟動）</string>

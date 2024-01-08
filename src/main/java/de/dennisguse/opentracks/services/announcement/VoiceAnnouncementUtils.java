@@ -42,48 +42,13 @@ class VoiceAnnouncementUtils {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         Distance totalDistance = trackStatistics.getTotalDistance();
         Speed averageMovingSpeed = trackStatistics.getAverageMovingSpeed();
-        Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
-
-        int perUnitStringId;
-        int distanceId;
-        int speedId;
-        String unitDistanceTTS;
-        String unitSpeedTTS;
-        switch (unitSystem) {
-            case METRIC -> {
-                perUnitStringId = R.string.voice_per_kilometer;
-                distanceId = R.string.voiceDistanceKilometersPlural;
-                speedId = R.string.voiceSpeedKilometersPerHourPlural;
-                unitDistanceTTS = "kilometer";
-                unitSpeedTTS = "kilometer per hour";
-            }
-            case IMPERIAL_FEET, IMPERIAL_METER -> {
-                perUnitStringId = R.string.voice_per_mile;
-                distanceId = R.string.voiceDistanceMilesPlural;
-                speedId = R.string.voiceSpeedMilesPerHourPlural;
-                unitDistanceTTS = "mile";
-                unitSpeedTTS = "mile per hour";
-            }
-            case NAUTICAL_IMPERIAL -> {
-                perUnitStringId = R.string.voice_per_nautical_mile;
-                distanceId = R.string.voiceDistanceNauticalMilesPlural;
-                speedId = R.string.voiceSpeedMKnotsPlural;
-                unitDistanceTTS = "nautical mile";
-                unitSpeedTTS = "knots";
-            }
-            default -> throw new RuntimeException("Not implemented");
-        }
-
-        double distanceInUnit = totalDistance.toKM_Miles(unitSystem);
+        Speed intervalSpeed = currentInterval != null ? currentInterval.getSpeed() : null;
 
         if (shouldVoiceAnnounceTotalDistance()) {
-            builder.append(context.getString(R.string.total_distance));
-            // Units should always be english singular for TTS.
-            // See https://developer.android.com/reference/android/text/style/TtsSpan?hl=en#TYPE_MEASURE
-            String template = context.getResources().getString(distanceId);
-            appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", distanceInUnit)), distanceInUnit, 1, unitDistanceTTS);
+            builder.append(context.getString(R.string.total_distance)).append(" ");
+            builder.append(String.format( "%.1f", totalDistance.toKM_Miles(unitSystem) ));
             // Punctuation helps introduce natural pauses in TTS
-            builder.append(".");
+            builder.append(". ");
         }
         if (totalDistance.isZero()) {
             return builder;
@@ -92,64 +57,52 @@ class VoiceAnnouncementUtils {
         // Announce time
         Duration movingTime = trackStatistics.getMovingTime();
         if (shouldVoiceAnnounceMovingTime() && !movingTime.isZero()) {
+            builder.append(context.getString(R.string.moving_time)).append(" ");
             appendDuration(context, builder, movingTime);
-            builder.append(".");
+            builder.append(". ");
         }
 
         if (isReportSpeed) {
             if (shouldVoiceAnnounceAverageSpeedPace()) {
-                double speedInUnit = averageMovingSpeed.to(unitSystem);
-                builder.append(" ")
-                        .append(context.getString(R.string.speed));
-                String template = context.getResources().getString(speedId);
-                appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", speedInUnit)), speedInUnit, 1, unitSpeedTTS);
-                builder.append(".");
+                builder.append(context.getString(R.string.average_speed)).append(" ");
+                builder.append(String.format( "%.1f", averageMovingSpeed.to(unitSystem) ));
+                builder.append(". ");
             }
-            if (shouldVoiceAnnounceLapSpeedPace() && currentDistancePerTime != null) {
-                double currentDistancePerTimeInUnit = currentDistancePerTime.to(unitSystem);
+            if (shouldVoiceAnnounceLapSpeedPace() && intervalSpeed != null) {
+                double currentDistancePerTimeInUnit = intervalSpeed.to(unitSystem);
                 if (currentDistancePerTimeInUnit > 0) {
-                    builder.append(" ")
-                            .append(context.getString(R.string.lap_speed));
-                    String template = context.getResources().getString(speedId);
-                    appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", currentDistancePerTimeInUnit)), currentDistancePerTimeInUnit, 1, unitSpeedTTS);
-                    builder.append(".");
+                    builder.append(context.getString(R.string.speed)).append(" ");
+                    builder.append(String.format( "%.1f", intervalSpeed.to(unitSystem) ));
+                    builder.append(". ");
                 }
             }
         } else {
             if (shouldVoiceAnnounceAverageSpeedPace()) {
                 Duration time = averageMovingSpeed.toPace(unitSystem);
-                builder.append(" ")
-                        .append(context.getString(R.string.pace));
+                builder.append(context.getString(R.string.average_pace)).append(" ");
                 appendDuration(context, builder, time);
-                builder.append(" ")
-                        .append(context.getString(perUnitStringId))
-                        .append(".");
+                builder.append(". ");
             }
 
-            if (shouldVoiceAnnounceLapSpeedPace() && currentDistancePerTime != null) {
-                Duration currentTime = currentDistancePerTime.toPace(unitSystem);
-                builder.append(" ")
-                        .append(context.getString(R.string.lap_time));
-                appendDuration(context, builder, currentTime);
-                builder.append(" ")
-                        .append(context.getString(perUnitStringId))
-                        .append(".");
+            if (shouldVoiceAnnounceLapSpeedPace() && intervalSpeed != null) {
+                Duration time = intervalSpeed.toPace(unitSystem);
+                builder.append(context.getString(R.string.pace)).append(" ");
+                appendDuration(context, builder, time);
+                builder.append(". ");
             }
         }
 
         if (shouldVoiceAnnounceAverageHeartRate() && sensorStatistics != null && sensorStatistics.hasHeartRate()) {
             int averageHeartRate = Math.round(sensorStatistics.avgHeartRate().getBPM());
 
-            builder.append(" ")
-                    .append(context.getString(R.string.average_heart_rate));
+            builder.append(context.getString(R.string.average_heart_rate)).append(" ");
             appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, averageHeartRate), averageHeartRate);
-            builder.append(".");
+            builder.append(". ");
         }
         if (shouldVoiceAnnounceLapHeartRate() && currentInterval != null && currentInterval.hasAverageHeartRate()) {
             int currentHeartRate = Math.round(currentInterval.getAverageHeartRate().getBPM());
 
-            builder.append(" ")
-                    .append(context.getString(R.string.current_heart_rate));
+            builder.append(context.getString(R.string.heart_rate)).append(" ");
             appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, currentHeartRate), currentHeartRate);
             builder.append(".");
         }

@@ -522,12 +522,10 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_public_api_dashboard_enabled_title">Transferencia automática de datos</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Unha aplicación que inicie unha gravación pode acceder tamén aos datos gravados.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Os datos gravados non serán compartidos automáticamente con outras apps.</string>
-    <string name="voice_per_kilometer">por quilómetro</string>
     <string name="voice_per_mile">por milla</string>
     <string name="pace">Ritmo</string>
     <string name="speed">Vel. media en movemento</string>
     <string name="average_heart_rate">Pulso medio</string>
-    <string name="current_heart_rate">Pulso actual</string>
     <string name="activity_type_swimming">nadando</string>
     <string name="activity_type_swimming_open">nadar en augas abertas</string>
     <string name="activity_type_workout">adestramento</string>
@@ -574,10 +572,8 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_stats_units_imperial_meter">Imperial (mi, m)</string>
     <string name="voiceHoursPlural">{n, plural, =1 {1 hora} other {{n,number} horas} }</string>
     <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 nó} other {{n,number,#.0} nós} }</string>
-    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 quilómetro} other {{n,number,#.0} quilómetros} }</string>
     <string name="voiceDistanceMilesPlural">{n, plural, =1 {1 milla} other {{n,number,#.0} millas} }</string>
     <string name="voiceMinutesPlural">{n, plural, =1 {1 minutos} other {{n,number} minutos} }</string>
-    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 quilómetro por hora} other {{n,number,#.0} quilómetros por hora} }</string>
     <string name="voiceSecondsPlural">{n, plural, =1 {1 segundo} other {{n,number} segundos} }</string>
     <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 milla por hora} other {{n,number,#.0} millas por hora} }</string>
     <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 milla náutica} other {{n,number,#.0} millas náuticas} }</string>

@@ -509,13 +509,11 @@ limitations under the License.
     <string name="export_dir_not_writable">" (nelze zapisovat!)"</string>
     <string name="generic_today">Dnes</string>
     <string name="no_compatible_file_manager_installed">Není nainstalován kompatibilní správce souborů</string>
-    <string name="voice_per_kilometer">za kilometr</string>
     <string name="lap_time">Čas kola</string>
     <string name="lap_speed">Rychlost kola</string>
     <string name="speed">Rychlost</string>
     <string name="total_distance">Celková vzdálenost</string>
     <string name="average_heart_rate">Průměrný srdeční tep</string>
-    <string name="current_heart_rate">Aktuální srdeční tep</string>
     <string name="settings_public_api_enabled_summary_on">Ostatní nainstalované aplikace mohou nahrávání spustit nebo zastavit.</string>
     <string name="voice_per_mile">za míli</string>
     <string name="activity_type_swimming">plavání</string>
@@ -580,9 +578,7 @@ limitations under the License.
     <string name="sensor_state_heart_rate_unit">bpm</string>
     <string name="sensor_state_power_unit">W</string>
     <string name="voiceSecondsPlural">{n, plural, =1 {1 sekunda} few {{n,number} sekundy} other {{n,number} sekund} }</string>
-    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometr za hodinu} few {{n,number,#.0} kilometry za hodinu} other {{n,number,#.0} kilometrů za hodinu} }</string>
     <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 míle za hodinu} few {{n,number,#.0} míle za hodinu} other {{n,number,#.0} mil za hodinu} }</string>
-    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometr} few {{n,number,#.0} kilometry} other {{n,number,#.0} kilometrů} }</string>
     <string name="sensor_state_power_max">Maximální výkon</string>
     <string name="settings_announcements_idle_category_title">Oznámení o nečinnosti</string>
     <string name="activity_type_kickscooter">skútr</string>

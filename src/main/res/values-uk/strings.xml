@@ -545,7 +545,6 @@ limitations under the License.
     <string name="settings_sensor_heart_rate_max">Зони: максимальна частота серцевих скорочень (уд/хв)</string>
     <string name="settings_stats_units_nautical">Морська (морські милі, фут)</string>
     <string name="settings_api_summary">API дистанційного керування та статистики для інших програм</string>
-    <string name="voice_per_kilometer">за кілометр</string>
     <string name="pace">Темп</string>
     <string name="lap_speed">Швидкість за коло</string>
     <string name="speed">Середня швидкість руху</string>
@@ -564,7 +563,6 @@ limitations under the License.
     <string name="value_integer_knots">%1$d вузлів</string>
     <string name="value_float_knots">%1$.1f вузлів</string>
     <string name="total_distance">Загальна відстань</string>
-    <string name="current_heart_rate">Поточний пульс</string>
     <string name="show_on_dashboard">OpenTracks Dashboard API</string>
     <string name="introduction_osm_dashboard">Сам OpenTracks не надає карти. Установіть OSMDashboard, щоб переглядати свої записи на карті.</string>
     <string name="show_on_dashboard_not_installed">Не встановлено програму, що підтримує OpenTracks Dashboard API.</string>

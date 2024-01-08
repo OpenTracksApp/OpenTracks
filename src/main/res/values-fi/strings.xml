@@ -502,7 +502,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth_service_filter_on">Näytä vain Bluetooth-laitteet, jotka ilmoittavat tarvittavat palvelut</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Tallennettuja tietoja ei jaeta automaattisesti muiden sovellusten kanssa.</string>
     <string name="voice_per_mile">per maili</string>
-    <string name="voice_per_kilometer">kilometriä kohti</string>
     <string name="lap_time">Kierrosaika</string>
     <string name="pace">Tahti</string>
     <string name="aggregated_stats_filter_no_results">Määritetylle suodattimelle ei ole toimintoja</string>
@@ -516,7 +515,6 @@ limitations under the License.
     <string name="menu_filter">Suodatin</string>
     <string name="stats_sensors_cadence">Kadenssi</string>
     <string name="stats_clock">Kello</string>
-    <string name="current_heart_rate">Nykyinen syke</string>
     <string name="average_heart_rate">Keskimääräinen syke</string>
     <string name="speed">Nopeus</string>
     <string name="lap_speed">Kierrosnopeus</string>

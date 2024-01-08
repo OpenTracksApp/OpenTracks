@@ -489,7 +489,6 @@ limitations under the License.
     <string name="lap_time">Tur zamanı</string>
     <string name="pace">Tempo</string>
     <string name="lap_speed">Tur hızı</string>
-    <string name="voice_per_kilometer">kilometre başına</string>
     <string name="voice_per_mile">mil başına</string>
     <string name="average_heart_rate">Ortalama kalp atış hızı</string>
     <string name="total_distance">Toplam mesafe</string>
@@ -509,7 +508,6 @@ limitations under the License.
     <string name="value_float_mile_hour_recommended">%1$.1f mi/s (önerilen)</string>
     <string name="speed">Hız</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Tam ekran</string>
-    <string name="current_heart_rate">Şu anki kalp atış hızı</string>
     <string name="field_set_primary">Birincil</string>
     <string name="field_set_secondary">İkincil</string>
     <string name="settings_sensor_bluetooth_service_filter_on">Yalnızca gerekli hizmetleri bildiren Bluetooth cihazlarını göster</string>

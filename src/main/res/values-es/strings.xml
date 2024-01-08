@@ -339,13 +339,6 @@ limitations under the License.
         other {{n} segundos}
         }
     </string>
-    <string name="voiceSpeedKilometersPerHourPlural">
-        { n, plural,
-        one {{n,number,#.0} kilómetro por hora}
-        many {{n,number,#.0} kilómetros por hora}
-        other {{n,number,#.0} kilómetros por hora}
-        }
-    </string>
     <string name="voiceSpeedMilesPerHourPlural">
         { n, plural,
         one {{n,number,#.0} milla por hora}
@@ -559,20 +552,12 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_title">Transferencia automática de datos</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Una aplicación que ha iniciado una grabación puede también acceder a los datos grabados.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Los datos grabados no se compartirán automáticamente con otras aplicaciones.</string>
-    <string name="voice_per_kilometer">por kilometro</string>
     <string name="voice_per_mile">por milla</string>
     <string name="lap_time">Tiempo de vuelta</string>
     <string name="pace">Ritmo</string>
     <string name="lap_speed">Velocidad de vuelta</string>
     <string name="speed">Velocidad</string>
     <string name="total_distance">Distancia total</string>
-    <string name="voiceDistanceKilometersPlural">
-        { n, plural,
-        one {{n,number,#.0} kilomètre}
-        many {{n,number,#.0} kilomètres}
-        other {{n,number,#.0} kilomètres}
-        }
-    </string>
     <string name="voiceDistanceMilesPlural">
         { n, plural,
         one {{n,number,#.0} milla}
@@ -581,7 +566,6 @@ limitations under the License.
         }
     </string>
     <string name="average_heart_rate">Ritmo cardíaco promedio</string>
-    <string name="current_heart_rate">Ritmo cardíaco actual</string>
     <string name="settings_export_filename_title">Formato del nombre del archivo</string>
     <string name="help_data_google_play_services_content">No</string>
     <string name="description_pace_nautical">Ritmo (min/NM)</string>

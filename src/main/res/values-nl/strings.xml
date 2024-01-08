@@ -480,7 +480,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="speed">Snelheid</string>
     <string name="total_distance">Totale afstand</string>
     <string name="average_heart_rate">Gemiddelde hartslag</string>
-    <string name="current_heart_rate">Actuele hartslag</string>
     <string name="settings_cycling_sensor">Fietsen</string>
     <string name="settings_running_sensor">Hardlopen</string>
     <string name="settings_import_section">Invoer</string>
@@ -572,12 +571,10 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="voiceDistanceMilesPlural">{n, plural, =1 {1 mijl} other {{n,number,#.0} mijlen} }</string>
     <string name="voiceHoursPlural">{n, plural, =1 {1 uur} other {{n,number} uren} }</string>
     <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 nautisch mijl} other {{n,number,#.0} nautische mijlen} }</string>
-    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometer} other {{n,number,#.0} kilometers} }</string>
     <string name="sensor_state_power_unit">W</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Alle ontdekbare Bluetooth-apparaten weergeven</string>
     <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 knoop} other {{n,number,#.0} knopen} }</string>
     <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 mijl per uur} other {{n,number,#.0} mijlen per uur} }</string>
-    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometer per uur} other {{n,number,#.0} kilometer per uur} }</string>
     <string name="voiceSecondsPlural">{n, plural, =1 {1 seconde} other {{n,number} seconden} }</string>
     <string name="voiceMinutesPlural">{n, plural, =1 {1 minuut} other {{n,number} minuten} }</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth-apparaten filteren</string>
@@ -594,6 +591,5 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="permission_recording_failed">OpenTracks heeft toestemming nodig om toegang te krijgen tot zowel uw locatie als nabijgelegen apparaten.</string>
     <string name="sensor_state_heart_rate_unit">/min</string>
     <string name="sensor_state_cadence_unit">/min</string>
-    <string name="voice_per_kilometer">/km</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
 </resources>

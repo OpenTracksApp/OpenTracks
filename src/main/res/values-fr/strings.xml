@@ -341,13 +341,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
         other {{n} secondes}
         }
     </string>
-    <string name="voiceSpeedKilometersPerHourPlural">
-        { n, plural,
-        one {{n,number,#.0} kilomètre-heure}
-        many {{n,number,#.0} kilomètres-heure}
-        other {{n,number,#.0} kilomètres-heure}
-        }
-    </string>
     <string name="voiceSpeedMilesPerHourPlural">
         { n, plural,
         one {{n,number,#.0} mile par heure}
@@ -549,7 +542,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="no_compatible_file_manager_installed">Aucun gestionnaire de fichiers compatible n\'est installé</string>
     <string name="settings_public_api_enabled_title">API publique</string>
     <string name="average_heart_rate">Fréquence cardiaque moyenne</string>
-    <string name="current_heart_rate">Fréquence cardiaque actuelle</string>
     <string name="voiceDistanceMilesPlural">
         { n, plural,
         one {{n,number,#.0} mile}
@@ -562,13 +554,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_public_api_dashboard_enabled_summary_off">Les données enregistrées ne seront pas automatiquement partagées avec d\'autres applications.</string>
     <string name="settings_public_api_enabled_summary_on">D\'autres applications installées peuvent démarrer ou arrêter les enregistrements.</string>
     <string name="settings_public_api_enabled_summary_off">Seul OpenTracks peut démarrer et arrêter les enregistrements.</string>
-    <string name="voiceDistanceKilometersPlural">
-        { n, plural,
-        one {{n,number,#.0} kilomètre}
-        many {{n,number,#.0} kilomètres}
-        other {{n,number,#.0} kilomètres}
-        }
-    </string>
     <string name="total_distance">Distance totale</string>
     <string name="activity_type_swimming">natation</string>
     <string name="activity_type_swimming_open">natation en eau libre</string>
@@ -577,7 +562,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="gps_recording_status">%1$s : %2$s</string>
     <string name="settings_api_title">API publique</string>
     <string name="settings_public_api_disabled_toast">L\'API publique d\'OpenTracks est désactivé : Elle peut être activé dans les paramètres.</string>
-    <string name="voice_per_kilometer">par kilomètre</string>
     <string name="voice_per_mile">par mile</string>
     <string name="pace">Rythme</string>
     <string name="lap_speed">Vitesse par tour</string>

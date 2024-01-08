@@ -353,7 +353,6 @@ limitations under the License.
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="track_distance_notification">Razdalja: %1$s</string>
-    <string name="voice_per_kilometer">na kilometer</string>
     <string name="average_heart_rate">Povprečni srčni utrip</string>
     <string name="import_parser_error">Napaka analizatorja: %1$s</string>
     <string name="settings_sensor_cycling_cadence">Kadenca</string>
@@ -443,7 +442,6 @@ limitations under the License.
     <string name="settings_sensor_wheel_circumference">Obod kolesa (mm)</string>
     <string name="settings_night_mode_option_system">Sistem</string>
     <string name="settings_public_api_disabled_toast">OpenTracks Public API je onemogočen: omogočite ga lahko v nastavitvah.</string>
-    <string name="current_heart_rate">Trenutni srčni utrip</string>
     <string name="lap_time">Čas kroga</string>
     <string name="track_detail_intervals_tab">Intervali</string>
     <string name="track_delete_not_recording">Te sledi ni mogoče izbrisati, saj je trenutno posneta.</string>
