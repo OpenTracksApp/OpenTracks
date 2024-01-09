@@ -51,7 +51,7 @@ limitations under the License.
         如果 GPS 裝置回報的資料不准確 (例如，位置、速度、海拔)，OpenTracks 對此無能為力。
     </string>
     <string name="help_data_storage_title">OpenTracks 如何儲存感測器資料？</string>
-    <string name="help_data_storage_content"> 感測器資料儲存在每個記錄的位置。 就心率感測器而言，這意味著只有<i>一個</i>心率測量值被依照位置儲存。 如果您是站著不動或在室內，沒有感測器資料會被記錄（但它會被顯示）。 </string>
+    <string name="help_data_storage_content"> \u0020感測器資料儲存在每個記錄的位置。 就心率感測器而言，這意味著只有<i>一個</i>心率測量值被依照位置儲存。 如果您是站著不動或在室內，沒有感測器資料會被記錄（但它會被顯示）。 \u0020</string>
     <string name="help_gps_troubleshooting_title">OpenTracks 沒有紀錄位置？</string>
     <string name="help_gps_troubleshooting_content"> 您能做什麼：
 \n a) 檢查 GPS 是否啟用，
@@ -605,4 +605,11 @@ limitations under the License.
     <string name="settings_recording_title">紀錄</string>
     <string name="settings_ui_dynamic_colors_summary">使用使用者自訂的動態色彩（僅限 Android 12+；需要手動重新啟動）</string>
     <string name="permission_recording_failed">OpenTracks 需要授權以存取您的位置以及附近的裝置。</string>
+    <string name="sensor_state_pressure">氣壓計</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="value_internal_sensor">內建感測器</string>
+    <string name="sensor_state_heart_rate_value">%1$d bpm</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="sensor_state_power_unit">瓦</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
 </resources>
