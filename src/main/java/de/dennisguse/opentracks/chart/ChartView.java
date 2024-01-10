@@ -631,14 +631,20 @@ public class ChartView extends View {
         synchronized (markers) {
             for (Marker marker : markers) {
                 double xValue = getMarkerXValue(marker);
-                if (xValue > maxX) {
-                    continue;
+                double markerIconSizeInXaxisUnits = maxX*markerWidth/effectiveWidth / zoomLevel;
+                if (xValue > maxX + markerIconSizeInXaxisUnits * (1-MARKER_X_ANCHOR)) {
+                    continue; // there is no chance that this marker will be visible
                 }
                 canvas.save();
                 float x = getX(getMarkerXValue(marker));
                 canvas.drawLine(x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
-                canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
-
+                // if marker is not near the end of the track then draw it normally
+                if (xValue < maxX - markerIconSizeInXaxisUnits*(1-MARKER_X_ANCHOR)) {
+                    canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
+                } else { // marker at the end needs to be drawn mirrored so that it is more visible
+                    canvas.translate(x + (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
+                    canvas.scale(-1, 1);
+                }
                 markerPin.draw(canvas);
                 canvas.restore();
             }
@@ -735,13 +741,13 @@ public class ChartView extends View {
         String label = getXAxisLabel();
         Rect rect = getRect(axisPaint, label);
         int yOffset = rect.height() / 2;
-        canvas.drawText(label, x + effectiveWidth + spacer, y + yOffset, axisPaint);
+        canvas.drawText(label, x + effectiveWidth - rect.width(), y + 3 * yOffset, axisPaint);
 
         double interval = getXAxisInterval();
         NumberFormat numberFormat = interval < 1 ? X_FRACTION_FORMAT : X_NUMBER_FORMAT;
 
         for (double markerPosition : getXAxisMarkerPositions(interval)) {
-            drawXAxisMarker(canvas, markerPosition, numberFormat, spacer + yOffset);
+            drawXAxisMarker(canvas, markerPosition, numberFormat, spacer + rect.width(), spacer + yOffset);
         }
     }
 
@@ -764,12 +770,16 @@ public class ChartView extends View {
      * @param canvas       canvas
      * @param value        value
      * @param numberFormat the number format
-     * @param spacing      the spacing between x axis and marker
+     * @param xRightSpace  the space taken up by the x axis label
+     * @param yBottomSpace the space between x axis and marker
      */
-    private void drawXAxisMarker(Canvas canvas, double value, NumberFormat numberFormat, int spacing) {
+    private void drawXAxisMarker(Canvas canvas, double value, NumberFormat numberFormat, int xRightSpace, int yBottomSpace) {
         String marker = chartByDistance ? numberFormat.format(value) : StringUtils.formatElapsedTime((Duration.ofMillis((long) value)));
         Rect rect = getRect(xAxisMarkerPaint, marker);
-        canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacing + rect.height(), xAxisMarkerPaint);
+        int markerXPos = getX(value);
+        int markerEndXPos = markerXPos + rect.width()/2;
+        if (markerEndXPos > getScrollX() + leftBorder + effectiveWidth - xRightSpace) return;
+        canvas.drawText(marker, markerXPos, topBorder + effectiveHeight + yBottomSpace + rect.height(), xAxisMarkerPaint);
     }
 
     private double getXAxisInterval() {
@@ -952,7 +962,7 @@ public class ChartView extends View {
         Rect xAxisLabelRect = getRect(axisPaint, getXAxisLabel());
         // border + x axis marker + spacer + .5 x axis label
         bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer + (xAxisLabelRect.height() / 2));
-        rightBorder = (int) (density * BORDER + xAxisLabelRect.width() + spacer);
+        rightBorder = (int) (density * BORDER + spacer);
         updateEffectiveDimensions();
     }
 
