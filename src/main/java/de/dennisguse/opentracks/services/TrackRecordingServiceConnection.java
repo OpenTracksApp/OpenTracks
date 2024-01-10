@@ -111,6 +111,13 @@ public class TrackRecordingServiceConnection {
         stopService(context);
     }
 
+    /**
+     * WARNING: Do not keep a reference to this returned value.
+     */
+    public TrackRecordingService getTrackRecordingService() {
+        return trackRecordingService;
+    }
+
     private void setTrackRecordingService(TrackRecordingService value) {
         trackRecordingService = value;
         if (value != null) {
@@ -128,16 +135,16 @@ public class TrackRecordingServiceConnection {
 
         try {
             Marker.Id marker = trackRecordingService.insertMarker(name, category, description, photoUrl);
-            if (marker != null) {
-                Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
-                return marker;
+            if (marker == null) {
+                Toast.makeText(context, R.string.marker_add_error, Toast.LENGTH_LONG).show();
+                return null;
             }
+
+            return marker;
         } catch (IllegalStateException e) {
             Log.e(TAG, "Unable to add marker.", e);
+            return null;
         }
-
-        Toast.makeText(context, R.string.marker_add_error, Toast.LENGTH_LONG).show();
-        return null;
     }
 
     public void stopRecording(@NonNull Context context) {
