@@ -186,12 +186,13 @@ class VoiceAnnouncementUtils {
         TtsSpan.MeasureBuilder measureBuilder = new TtsSpan.MeasureBuilder()
                 .setUnit(unit);
 
-        if (precision == 0) {
+        // Round before extracting integral and decimal parts
+        double roundedNumber = Math.round(Math.pow(10, precision) * number) / Math.pow(10.0, precision);
+        long integerPart = (long) roundedNumber;
+
+        if (precision == 0 || (roundedNumber - integerPart) == 0) {
             measureBuilder.setNumber((long)number);
         } else {
-            // Round before extracting integral and decimal parts
-            double roundedNumber = Math.round(Math.pow(10, precision) * number) / Math.pow(10.0, precision);
-            long integerPart = (long) roundedNumber;
             // Extract the decimal part
             String fractionalPart = String.format("%." + precision + "f", (roundedNumber - integerPart)).substring(2);
             measureBuilder.setIntegerPart(integerPart)
