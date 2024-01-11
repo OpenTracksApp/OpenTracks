@@ -349,7 +349,7 @@ limitations under the License.
     <string name="settings_night_mode_option_day">日</string>
     <string name="settings_night_mode_option_night">夜</string>
     <string name="settings_announcements_totaltime_frequency">時間間隔</string>
-    <string name="settings_announcements_distance_frequency">距離間隔</string>
+    <string name="settings_announcements_distance_frequency">單圈長度</string>
     <string name="settings_announcements_average_heart_rate">平均心率</string>
     <string name="settings_announcements_lap_heart_rate">單圈心率</string>
     <string name="settings_announcements_average_speed_pace">平均速度/配速</string>
@@ -571,7 +571,7 @@ limitations under the License.
     <string name="error_crash_title">%1$s 已崩潰</string>
     <string name="share_crash_report">分享</string>
     <string name="report_bug">回報 bug</string>
-    <string name="select_show_on_map_behavior">選擇 \"在地圖上顯示\" 行為</string>
+    <string name="select_show_on_map_behavior">選擇「在地圖上顯示」行為</string>
     <string name="show_on_map_format_ask">詢問</string>
     <string name="show_on_dashboard">OpenTracks 儀表板 API</string>
     <string name="show_on_dashboard_not_installed">沒有安裝支援 OpenTracks 儀表板 API 的應用程式。</string>
