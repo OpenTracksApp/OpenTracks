@@ -450,7 +450,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="generic_yesterday">Gisteren</string>
     <string name="settings_ui_title">User Interface</string>
     <string name="stats_coordinates">Coördinaten</string>
-    <string name="settings_announcements_distance_frequency">Afstandsinterval</string>
+    <string name="settings_announcements_distance_frequency">Rondelengte</string>
     <string name="value_float_kilometer_hour">%1$.1f km/u</string>
     <string name="settings_api_title">Publieke API</string>
     <string name="settings_public_api_enabled_title">Public API</string>
