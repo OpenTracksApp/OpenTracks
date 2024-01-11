@@ -447,7 +447,7 @@ limitations under the License.
     <string name="field_set_secondary">Druhý</string>
     <string name="field_remove_from_layout">Odstranit</string>
     <string name="settings_announcements_totaltime_frequency">Časový interval</string>
-    <string name="settings_announcements_distance_frequency">Interval vzdálenosti</string>
+    <string name="settings_announcements_distance_frequency">Délka kola</string>
     <string name="settings_all_reset">Obnovení</string>
     <string name="settings_layout_reset">Nastavit výchozí vzhled</string>
     <string name="settings_layout_reset_confirm_message">Všechna nastavení vzhledu se vrátí na výchozí hodnoty. Nebudou tím odstraněny žádné zaznamenané aktivity v zařízení.</string>
