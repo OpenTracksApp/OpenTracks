@@ -47,6 +47,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.MarkerEditBinding;
+import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 
 /**
@@ -158,20 +159,34 @@ public class MarkerEditActivity extends AbstractActivity {
 
 
         if (markerId == null) {
-            new TrackRecordingServiceConnection((service, self) -> {
-                Marker.Id newMarkerId = self.addMarker(MarkerEditActivity.this, "", "", "", null);
+            TrackRecordingServiceConnection.execute(this, (service, self) -> {
+                Marker.Id newMarkerId = createNewMarker(service);
                 if (newMarkerId == null) {
                     finish();
                 } else {
                     loadMarkerData(newMarkerId);
                 }
-                self.unbind(this);
-            }).bind(this);
+            });
         } else {
             loadMarkerData(markerId);
         }
 
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
+    }
+
+    private Marker.Id createNewMarker(TrackRecordingService trackRecordingService) {
+        try {
+            Marker.Id marker = trackRecordingService.insertMarker("", "", "", null);
+            if (marker == null) {
+                Toast.makeText(this, R.string.marker_add_error, Toast.LENGTH_LONG).show();
+                return null;
+            }
+
+            return marker;
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "Unable to add marker.", e);
+            return null;
+        }
     }
 
     private void loadMarkerData(Marker.Id markerId) {

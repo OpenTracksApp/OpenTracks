@@ -24,15 +24,11 @@ import android.os.IBinder;
 import android.os.IBinder.DeathRecipient;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import de.dennisguse.opentracks.BuildConfig;
-import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.data.models.Marker;
 
 /**
  * Wrapper for the track recording service.
@@ -122,28 +118,6 @@ public class TrackRecordingServiceConnection {
         trackRecordingService = value;
         if (value != null) {
             callback.onConnected(value, this);
-        }
-    }
-
-    //TODO Move to some other place; not needed here.
-    @Nullable
-    public Marker.Id addMarker(Context context, String name, String category, String description, String photoUrl) {
-        if (trackRecordingService == null) {
-            Log.d(TAG, "Unable to add marker, no track recording service");
-            return null;
-        }
-
-        try {
-            Marker.Id marker = trackRecordingService.insertMarker(name, category, description, photoUrl);
-            if (marker == null) {
-                Toast.makeText(context, R.string.marker_add_error, Toast.LENGTH_LONG).show();
-                return null;
-            }
-
-            return marker;
-        } catch (IllegalStateException e) {
-            Log.e(TAG, "Unable to add marker.", e);
-            return null;
         }
     }
 
