@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.os.Build;
-import android.os.StrictMode;
 import android.util.Log;
 
 import com.google.android.material.color.DynamicColors;
@@ -30,11 +29,6 @@ public class Startup extends Application {
 
         // Include version information into stack traces.
         Log.i(TAG, BuildConfig.APPLICATION_ID + "; BuildType: " + BuildConfig.BUILD_TYPE + "; VersionName: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_NAME_FULL + " VersionCode: " + BuildConfig.VERSION_CODE);
-        // In debug builds: show thread and VM warnings.
-        if (BuildConfig.DEBUG) {
-            Log.d(TAG, "Enabling strict mode");
-            StrictMode.enableDefaults();
-        }
 
         PreferencesUtils.initPreferences(this, getResources());
         // Set default values of preferences on first start.
