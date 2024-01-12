@@ -144,7 +144,7 @@ limitations under the License.
     <string name="marker_title">%1$d od %2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
-    <string name="marker_edit_marker_type">Vrsta oznake (npr. slap)</string>
+    <string name="marker_edit_marker_type">Vrsta oznake (npr. vodopad)</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Nemate nijednu oznaku</string>
     <!-- Menu -->
@@ -218,7 +218,7 @@ limitations under the License.
     <string name="stats_total_time">Ukupno vrijeme</string>
     <!-- Track -->
     <string name="track_name_format">Ruta %1$d</string>
-    <string name="track_markers">%1$s oznake</string>
+    <string name="track_markers">Oznake za %1$s</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Ruta i njezine oznake će se trajno izbrisati s uređaja.</string>
     <string name="track_delete_one_confirm_title">Izbrisati rutu\?</string>
@@ -373,7 +373,7 @@ limitations under the License.
     <string name="import_progress_summary_errors_msg">Greške</string>
     <string name="settings_sensors_summary">Senzori za vožnju bicikla, opseg kotača, senzori za trčanje</string>
     <string name="gps_recording_status">%1$s: %2$s</string>
-    <string name="track_delete_number_of_tracks">%1$d ruta</string>
+    <string name="track_delete_number_of_tracks">%1$d rute</string>
     <string name="show_on_dashboard">API OpenTracks kontrolne ploče</string>
     <string name="stats_coordinates">Geografska duljina/širina</string>
     <string name="settings_public_api_package_title">Ime paketa za javni API</string>
@@ -437,7 +437,7 @@ limitations under the License.
     <string name="activity_type_swimming_open">plivanje na otvorenom</string>
     <string name="sensor_state_power_max">Maks. snaga</string>
     <string name="description_altitude_loss">Smanjenje visine: %1$d m (%2$d ft)</string>
-    <string name="settings_announcements_lap_heart_rate">Puls kruga</string>
+    <string name="settings_announcements_lap_heart_rate">Puls runde</string>
     <string name="settings_layout_reset_confirm_title">Resetirati tvoje rasporede\?</string>
     <string name="no_compatible_camera_installed">Nije instalirana nijedna kompatibilna aplikacija kamere</string>
     <string name="voiceSecondsPlural">{n, plural, =1 {1 sekunda} few {{n,number} sekunde} other {{n,number} sekunda} }</string>
@@ -461,7 +461,7 @@ limitations under the License.
     <string name="settings_sensor_bluetooth_service_filter_on">Prikaži samo Bluetooth uređaje koji najavljuju potrebne usluge</string>
     <string name="open_track_as_trackfileformat">Otvori kao %1$s</string>
     <string name="settings_api_title">Javni API</string>
-    <string name="settings_announcements_distance_frequency">Interval udaljenosti</string>
+    <string name="settings_announcements_distance_frequency">Duljina runde</string>
     <string name="unit_nautical_mile">NM</string>
     <string name="field_set_secondary">Sekundarno</string>
     <string name="stats_loss">Smanjenje</string>
@@ -473,16 +473,16 @@ limitations under the License.
     <string name="generic_from">Od</string>
     <string name="settings_night_mode_option_night">Noć</string>
     <string name="settings_layout_reset_done">Sve postavke rasporeda su vraćene na standardne vrijednosti</string>
-    <string name="settings_announcements_lap_speed_pace">Brzina/tempo kruga</string>
+    <string name="settings_announcements_lap_speed_pace">Brzina/tempo runde</string>
     <string name="sensor_state_power_avg">Prosj. snaga</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (preporučeno)</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (preporučeno)</string>
     <string name="import_parser_error">Greška u obradi: %1$s</string>
-    <string name="lap_speed">Brzina kruga</string>
+    <string name="lap_speed">Brzina runde</string>
     <string name="always">Uvijek</string>
     <string name="settings_sensor_wheel_circumference">Opseg kotača (mm)</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
-    <string name="lap_time">Vrijeme kruga</string>
+    <string name="lap_time">Vrijeme runde</string>
     <string name="help_track_map_title">Kako prikazati rutu na karti\?</string>
     <string name="track_discarding">Odbacivanje rute</string>
     <string name="import_error_info">%1$s: %2$s</string>
@@ -523,7 +523,7 @@ limitations under the License.
     <string name="unit_knots">čv</string>
     <string name="stats_sensors_cadence">Ritam</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
-    <string name="help_data_storage_content"> Podaci senzora se spremaju za svaku snimljenu lokaciju. U smislu senzora pulsa, to znači da se za svaku lokaciju sprema samo <i>jedno</i> mjerenje pulsa. Ako se ne krećeš ili ako si u zatvorenom prostoru, podaci senzora se neće snimati (ali će se prikazati). </string>
+    <string name="help_data_storage_content"> \u0020Podaci senzora se spremaju za svaku snimljenu lokaciju. \u0020U smislu senzora pulsa, to znači da se za svaku lokaciju sprema samo <i>jedno</i> mjerenje pulsa. \u0020Ako se ne krećeš ili ako si u zatvorenom prostoru, podaci senzora se neće snimati (ali će se prikazati). \u0020</string>
     <string name="generic_choose_an_option">Odaberi jednu opciju</string>
     <string name="custom_layout_list_layout_removed">Raspored je uklonjen</string>
     <string name="settings_announcements_average_speed_pace">Prosječna brzina/tempo</string>
@@ -538,7 +538,7 @@ limitations under the License.
     <string name="settings_all_reset">Resetiraj</string>
     <string name="about_third_party_data">Podaci trećih strana</string>
     <string name="speed">Prosječna brzina kretanja</string>
-    <string name="help_track_export_content"> Rute se mogu izvesti iz postavki kao KMZ, KML ili GPX. KMZ/KML svi podaci; GPX samo lokacije. Rute koje se dijele putem <i>ikone dijeljenja</i> dijele se kao KMZ. </string>
+    <string name="help_track_export_content"> \u0020Rute se mogu izvesti iz postavki kao KMZ, KML ili GPX. \u0020KMZ/KML svi podaci; GPX samo lokacije. \u0020Rute koje se dijele putem <i>ikone dijeljenja</i> dijele se kao KMZ. \u0020</string>
     <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 čvor} few {{n,number} čvora} other {{n,number} čvorova} }</string>
     <string name="value_int_seconds">%1$d s (preporučeno)</string>
     <string name="track_detail_intervals_tab">Intervali</string>
@@ -590,4 +590,7 @@ limitations under the License.
     <string name="settings_recording_idle_timeout_title">Prag neaktivnosti</string>
     <string name="export_cannot_write_to_dir">Nije moguće pisati u direktorij izvoza.</string>
     <string name="permission_recording_failed">OpenTracks zahtijeva dozvolu za pristup tvojoj lokaciji kao i uređajima u blizini.</string>
+    <string name="sensor_state_pressure">Barometer</string>
+    <string name="value_internal_sensor">Interni senzor</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
 </resources>
