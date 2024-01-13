@@ -136,8 +136,10 @@ abstract class ChartValueSeries {
         return path;
     }
 
-    void drawPath(Canvas canvas) {
-        canvas.drawPath(path, fillPaint);
+    void drawPath(Canvas canvas, boolean shouldFillPathArea) {
+        if (shouldFillPathArea) {
+            canvas.drawPath(path, fillPaint);
+        }
         canvas.drawPath(path, strokePaint);
     }
 
