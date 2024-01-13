@@ -51,7 +51,6 @@ public final class Marker {
     @Deprecated //Not needed
     private Distance accuracy;
     private Altitude altitude;
-    private Float bearing;
 
     //TODO It is the distance from the track starting point; rename to something more meaningful
     private Distance length;
@@ -96,9 +95,7 @@ public final class Marker {
     public void setTrackPoint(TrackPoint trackPoint) {
         this.latitude = trackPoint.getLatitude();
         this.longitude = trackPoint.getLongitude();
-        if (trackPoint.hasHorizontalAccuracy()) this.accuracy = trackPoint.getHorizontalAccuracy();
         if (trackPoint.hasAltitude()) this.altitude = trackPoint.getAltitude();
-        if (trackPoint.hasBearing()) this.bearing = trackPoint.getBearing();
     }
 
     /**
@@ -169,12 +166,6 @@ public final class Marker {
             location.setLatitude(latitude);
             location.setLongitude(longitude);
         }
-        if (hasBearing()) {
-            location.setBearing(bearing);
-        }
-        if (hasAccuracy()) {
-            location.setAccuracy((float) accuracy.toM());
-        }
         if (hasAltitude()) {
             location.setAltitude(altitude.toM());
         }
@@ -198,18 +189,6 @@ public final class Marker {
         this.longitude = longitude;
     }
 
-    public boolean hasAccuracy() {
-        return accuracy != null;
-    }
-
-    public Distance getAccuracy() {
-        return accuracy;
-    }
-
-    public void setAccuracy(Distance accuracy) {
-        this.accuracy = accuracy;
-    }
-
     public boolean hasAltitude() {
         return altitude != null;
     }
@@ -220,18 +199,6 @@ public final class Marker {
 
     public void setAltitude(Altitude altitude) {
         this.altitude = altitude;
-    }
-
-    public boolean hasBearing() {
-        return bearing != null;
-    }
-
-    public Float getBearing() {
-        return bearing;
-    }
-
-    public void setBearing(float bearing) {
-        this.bearing = bearing;
     }
 
     public Distance getLength() {

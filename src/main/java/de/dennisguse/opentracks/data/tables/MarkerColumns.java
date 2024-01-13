@@ -29,6 +29,9 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 public interface MarkerColumns extends BaseColumns {
 
     String TABLE_NAME = "markers";
+
+    String TABLE_NAME_JOINED = MarkerColumns.TABLE_NAME + " LEFT JOIN " + TrackPointsColumns.TABLE_NAME + " ON (" + TrackPointsColumns._ID + "=" + MarkerColumns._ID + ")";
+
     Uri CONTENT_URI = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TABLE_NAME);
     Uri CONTENT_URI_BY_TRACKID = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TABLE_NAME + "/trackid");
     String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.de.dennisguse.waypoint";
@@ -41,36 +44,32 @@ public interface MarkerColumns extends BaseColumns {
     String CATEGORY = "category"; // marker category
     String ICON = "icon"; // marker icon
     String TRACKID = "trackid"; // track id
+    String TRACKPOINTID = "trackpointid";
 
     String LENGTH = "length"; // length of the track (without smoothing)
     String DURATION = "duration"; // total duration of the track from the beginning until now
-
-    String LONGITUDE = "longitude"; // longitude
-    String LATITUDE = "latitude"; // latitude
-    String TIME = "time"; // time
-    String ALTITUDE = "elevation"; // altitude //TODO RENAME column
-    String ACCURACY = "accuracy"; // accuracy
-    String BEARING = "bearing"; // bearing
-
     String PHOTOURL = "photoUrl"; // url for the photo
+
+    // Fetched from {@link TrackPointsColumns}.
+    String LONGITUDE = TrackPointsColumns.LONGITUDE;
+    String LATITUDE = TrackPointsColumns.LATITUDE;
+    String TIME = TrackPointsColumns.TIME;
+    String ALTITUDE = TrackPointsColumns.ALTITUDE;
+
 
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + TRACKID + " INTEGER NOT NULL, "
+            + TRACKPOINTID + " INTEGER NOT NULL, "
             + NAME + " TEXT, "
             + DESCRIPTION + " TEXT, "
             + CATEGORY + " TEXT, "
             + ICON + " TEXT, "
-            + TRACKID + " INTEGER NOT NULL, "
             + LENGTH + " FLOAT, "
             + DURATION + " INTEGER, "
-            + LONGITUDE + " INTEGER, "
-            + LATITUDE + " INTEGER, "
-            + TIME + " INTEGER, "
-            + ALTITUDE + " FLOAT, "
-            + ACCURACY + " FLOAT, "
-            + BEARING + " FLOAT, "
             + PHOTOURL + " TEXT, "
-            + "FOREIGN KEY (" + TRACKID + ") REFERENCES " + TracksColumns.TABLE_NAME + "(" + TracksColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
+            + "FOREIGN KEY (" + TRACKID + ") REFERENCES " + TracksColumns.TABLE_NAME + "(" + TracksColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE, "
+            + "FOREIGN KEY (" + TRACKPOINTID + ") REFERENCES " + TrackPointsColumns.TABLE_NAME + "(" + TrackPointsColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
             + ")";
 
     String CREATE_TABLE_INDEX = "CREATE INDEX " + TABLE_NAME + "_" + TRACKID + "_index ON " + TABLE_NAME + "(" + TRACKID + ")";

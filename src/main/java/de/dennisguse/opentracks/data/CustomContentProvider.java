@@ -265,16 +265,16 @@ public class CustomContentProvider extends ContentProvider {
                 return db.rawQuery(SENSOR_STATS_QUERY, new String[]{String.valueOf(trackId), String.valueOf(trackId)});
             }
             case MARKERS -> {
-                queryBuilder.setTables(MarkerColumns.TABLE_NAME);
+                queryBuilder.setTables(MarkerColumns.TABLE_NAME_JOINED);
                 sortOrder = sort != null ? sort : MarkerColumns.DEFAULT_SORT_ORDER;
             }
             case MARKERS_BY_ID -> {
-                queryBuilder.setTables(MarkerColumns.TABLE_NAME);
-                queryBuilder.appendWhere(MarkerColumns._ID + "=" + ContentUris.parseId(url));
+                queryBuilder.setTables(MarkerColumns.TABLE_NAME_JOINED);
+                queryBuilder.appendWhere(MarkerColumns.TABLE_NAME + "." + MarkerColumns._ID + "=" + ContentUris.parseId(url));
             }
             case MARKERS_BY_TRACKID -> {
-                queryBuilder.setTables(MarkerColumns.TABLE_NAME);
-                queryBuilder.appendWhere(MarkerColumns.TRACKID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
+                queryBuilder.setTables(MarkerColumns.TABLE_NAME_JOINED);
+                queryBuilder.appendWhere(MarkerColumns.TABLE_NAME + "." + MarkerColumns.TRACKID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
             }
             default -> throw new IllegalArgumentException("Unknown url " + url);
         }
@@ -317,7 +317,7 @@ public class CustomContentProvider extends ContentProvider {
             }
             case MARKERS_BY_ID -> {
                 table = MarkerColumns.TABLE_NAME;
-                whereClause = MarkerColumns._ID + "=" + ContentUris.parseId(url);
+                whereClause = MarkerColumns.TABLE_NAME + "." + MarkerColumns._ID + "=" + ContentUris.parseId(url);
                 if (!TextUtils.isEmpty(where)) {
                     whereClause += " AND (" + where + ")";
                 }
@@ -366,9 +366,9 @@ public class CustomContentProvider extends ContentProvider {
     private Uri insertTrackPoint(Uri url, ContentValues values) {
         boolean hasTime = values.containsKey(TrackPointsColumns.TIME);
         if (!hasTime) {
-            throw new IllegalArgumentException("Latitude, longitude, and time values are required.");
+            throw new IllegalArgumentException("Time is required.");
         }
-        long rowId = db.insert(TrackPointsColumns.TABLE_NAME, TrackPointsColumns._ID, values);
+        long rowId = db.insertOrThrow(TrackPointsColumns.TABLE_NAME, TrackPointsColumns._ID, values);
         if (rowId >= 0) {
             return ContentUris.appendId(TrackPointsColumns.CONTENT_URI_BY_ID.buildUpon(), rowId).build();
         }
@@ -376,7 +376,7 @@ public class CustomContentProvider extends ContentProvider {
     }
 
     private Uri insertTrack(Uri url, ContentValues contentValues) {
-        long rowId = db.insert(TracksColumns.TABLE_NAME, TracksColumns._ID, contentValues);
+        long rowId = db.insertOrThrow(TracksColumns.TABLE_NAME, TracksColumns._ID, contentValues);
         if (rowId >= 0) {
             return ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), rowId).build();
         }
@@ -384,7 +384,7 @@ public class CustomContentProvider extends ContentProvider {
     }
 
     private Uri insertMarker(Uri url, ContentValues contentValues) {
-        long rowId = db.insert(MarkerColumns.TABLE_NAME, MarkerColumns._ID, contentValues);
+        long rowId = db.insertOrThrow(MarkerColumns.TABLE_NAME, MarkerColumns._ID, contentValues);
         if (rowId >= 0) {
             return ContentUris.appendId(MarkerColumns.CONTENT_URI.buildUpon(), rowId).build();
         }

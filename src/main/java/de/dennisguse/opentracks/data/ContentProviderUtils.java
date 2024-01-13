@@ -379,12 +379,11 @@ public class ContentProviderUtils {
         int trackIdIndex = cursor.getColumnIndexOrThrow(MarkerColumns.TRACKID);
         int lengthIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LENGTH);
         int durationIndex = cursor.getColumnIndexOrThrow(MarkerColumns.DURATION);
+
         int longitudeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LONGITUDE);
         int latitudeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LATITUDE);
         int timeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.TIME);
         int altitudeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.ALTITUDE);
-        int accuracyIndex = cursor.getColumnIndexOrThrow(MarkerColumns.ACCURACY);
-        int bearingIndex = cursor.getColumnIndexOrThrow(MarkerColumns.BEARING);
         int photoUrlIndex = cursor.getColumnIndexOrThrow(MarkerColumns.PHOTOURL);
 
         Track.Id trackId = new Track.Id(cursor.getLong(trackIdIndex));
@@ -397,13 +396,6 @@ public class ContentProviderUtils {
         if (!cursor.isNull(altitudeIndex)) {
             marker.setAltitude(Altitude.WGS84.of(cursor.getFloat(altitudeIndex)));
         }
-        if (!cursor.isNull(accuracyIndex)) {
-            marker.setAccuracy(Distance.of(cursor.getFloat(accuracyIndex)));
-        }
-        if (!cursor.isNull(bearingIndex)) {
-            marker.setBearing(cursor.getFloat(bearingIndex));
-        }
-
         if (!cursor.isNull(idIndex)) {
             marker.setId(new Marker.Id(cursor.getLong(idIndex)));
         }
@@ -542,21 +534,9 @@ public class ContentProviderUtils {
         values.put(MarkerColumns.CATEGORY, marker.getCategory());
         values.put(MarkerColumns.ICON, marker.getIcon());
         values.put(MarkerColumns.TRACKID, marker.getTrackId().id());
+        values.put(MarkerColumns.TRACKPOINTID, marker.getTrackId().id());
         values.put(MarkerColumns.LENGTH, marker.getLength().toM());
         values.put(MarkerColumns.DURATION, marker.getDuration().toMillis());
-
-        values.put(MarkerColumns.LONGITUDE, (int) (marker.getLongitude() * 1E6));
-        values.put(MarkerColumns.LATITUDE, (int) (marker.getLatitude() * 1E6));
-        values.put(MarkerColumns.TIME, marker.getTime().toEpochMilli());
-        if (marker.hasAltitude()) {
-            values.put(MarkerColumns.ALTITUDE, marker.getAltitude().toM());
-        }
-        if (marker.hasAccuracy()) {
-            values.put(MarkerColumns.ACCURACY, marker.getAccuracy().toM());
-        }
-        if (marker.hasBearing()) {
-            values.put(MarkerColumns.BEARING, marker.getBearing());
-        }
 
         values.put(MarkerColumns.PHOTOURL, marker.getPhotoUrl());
         return values;
