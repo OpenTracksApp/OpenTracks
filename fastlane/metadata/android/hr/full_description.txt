@@ -1,0 +1,22 @@
+Aplikacija za praćenje sportova koja poštuje tvoju privatnost.
+
+Sport i vanjske aktivnosti donose sreću, vještinu i samopouzdanje.
+
+Cijeni svoje zdravlje prateći svoj trening.
+Snima dok trčiš ili hodaš i pruža biciklističko računalo s većim ekranom za vožnju bicikla.
+Označi zanimljive lokacije na svom putu.
+Čuvaj vrlo detaljnu statistiku za analiziranje.
+Dijeli samo željene podatke s drugima.
+
+* Glasovne najave.
+* Podržava Bluetooth LE senzore: broj otkucaja srca, brzinu i udaljenost (bicikl), ritam pedaliranja (bicikl) i mjerač snage (bicikl).
+* Povećanje i smanjenje visine: putem barometrijskog senzora.
+* Visina prikazana u EGM2008 modelu (nadmorska visina); izvozi se kao WGS84.
+* Izvezi podatke kao trake ili kao KMZ (uključujući fotografije), KML ili GPX.
+* Bez pristupa internetu ili dodatnih dozvola.
+* Tamna i svijetla tema, poštujući postavke sustava.
+* Bez reklama.
+
+Libre softver / besplatni softver / softver otvorenog koda
+što znači da se izvorni kod može koristiti, proučavati, mijenjati i dijeliti.
+Apache 2.0 licenca
