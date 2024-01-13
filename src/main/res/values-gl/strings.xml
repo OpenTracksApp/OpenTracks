@@ -467,7 +467,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_running_sensor">Correr</string>
     <string name="settings_import_section">Importar</string>
     <string name="settings_export_section">Exportar</string>
-    <string name="settings_announcements_distance_frequency">Intervalo de distancia</string>
+    <string name="settings_announcements_distance_frequency">Lonxitude da volta</string>
     <string name="permission_bluetooth_failed">OpenTracks require permiso para usar o Bluetooth.</string>
     <string name="permission_bluetooth_failed_rejected">Tes que permitirlle a OpenTracks nos axustes do sistema que acceda a Dispositivos Próximos.</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
