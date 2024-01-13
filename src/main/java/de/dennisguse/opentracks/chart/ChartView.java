@@ -117,6 +117,8 @@ public class ChartView extends View {
     private int effectiveWidth = 0;
     private int effectiveHeight = 0;
     private TitleDimensions titleDimensions;
+    private boolean twoLineYaxisNumbers = false;
+    private int maxYaxisNumberHeight = 0;
 
     private boolean chartByDistance = false;
     private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
@@ -815,17 +817,22 @@ public class ChartView extends View {
      * @param canvas the canvas
      */
     private void drawYAxis(Canvas canvas) {
-        int x = getScrollX() + leftBorder;
-        int y = topBorder;
+        final int x = getScrollX() + leftBorder;
+        final int y = topBorder;
         canvas.drawLine(x, y, x, y + effectiveHeight, axisPaint);
 
         //TODO
         int markerXPosition = x - spacer;
-        for (int i = 0; i < seriesList.size(); i++) {
-            int index = seriesList.size() - 1 - i;
-            ChartValueSeries chartValueSeries = seriesList.get(index);
+        int index = titleDimensions.titlePositions.size() - 1; // index only onver the visible chart series
+        final int lastDrawn2ndLineMarkerIndex = getYmarkerCountOn1stLine();
+        for (int i = seriesList.size()-1; i>=0 ;--i) { // draw markers from the last series to achieve right alignment
+            ChartValueSeries chartValueSeries = seriesList.get(i);
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
-                markerXPosition -= drawYAxisMarkers(chartValueSeries, canvas, markerXPosition) + spacer;
+                int yOffset = !twoLineYaxisNumbers ? 0 : (spacer+maxYaxisNumberHeight)/2 * (index >= lastDrawn2ndLineMarkerIndex ? 1 : -1);
+                markerXPosition -= drawYAxisMarkers(chartValueSeries, canvas, markerXPosition, yOffset) + spacer;
+                if (twoLineYaxisNumbers && index == lastDrawn2ndLineMarkerIndex)
+                    markerXPosition = x - spacer;
+                --index;
             }
         }
     }
@@ -836,14 +843,15 @@ public class ChartView extends View {
      * @param chartValueSeries the chart value series
      * @param canvas           the canvas
      * @param xPosition        the right most x position
+     * @param yOffset          offset to apply to y position
      * @return the maximum marker width.
      */
-    private float drawYAxisMarkers(ChartValueSeries chartValueSeries, Canvas canvas, int xPosition) {
+    private float drawYAxisMarkers(ChartValueSeries chartValueSeries, Canvas canvas, int xPosition, int yOffset) {
         int interval = chartValueSeries.getInterval();
         float maxMarkerWidth = 0;
         for (int i = 0; i <= Y_AXIS_INTERVALS; i++) {
             maxMarkerWidth = Math.max(maxMarkerWidth, drawYAxisMarker(chartValueSeries, canvas, xPosition,
-                    i * interval + chartValueSeries.getMinMarkerValue()));
+                    yOffset, i * interval + chartValueSeries.getMinMarkerValue()));
         }
         return maxMarkerWidth;
     }
@@ -854,14 +862,15 @@ public class ChartView extends View {
      * @param chartValueSeries the chart value series
      * @param canvas           the canvas
      * @param xPosition        the right most x position
+     * @parm yOffset           offset to apply to y position
      * @param yValue           the y value
      * @return the marker width.
      */
-    private float drawYAxisMarker(ChartValueSeries chartValueSeries, Canvas canvas, int xPosition, int yValue) {
+    private float drawYAxisMarker(ChartValueSeries chartValueSeries, Canvas canvas, int xPosition, int yOffset, int yValue) {
         String marker = chartValueSeries.formatMarker(yValue);
         Paint paint = chartValueSeries.getMarkerPaint();
         Rect rect = getRect(paint, marker);
-        int yPosition = getY(chartValueSeries, yValue) + (rect.height() / 2);
+        int yPosition = getY(chartValueSeries, yValue) + (rect.height() / 2 + yOffset);
         canvas.drawText(marker, xPosition, yPosition, paint);
         return paint.measureText(marker);
     }
@@ -936,6 +945,10 @@ public class ChartView extends View {
         path.close();
     }
 
+    /// expected number of Y-axis markers on the first line if the Y-axis markers are split to two lines
+    private int getYmarkerCountOn1stLine() {
+        return (int)Math.ceil(titleDimensions.titlePositions.size()/2.0);
+    }
     /**
      * Updates the chart dimensions.
      */
@@ -948,20 +961,34 @@ public class ChartView extends View {
         spacer = (int) (density * SPACER);
         yAxisOffset = (int) (density * Y_AXIS_OFFSET);
 
-        int markerLength = 0;
-        for (ChartValueSeries chartValueSeries : seriesList) {
-            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
-                Rect rect = getRect(chartValueSeries.getMarkerPaint(), chartValueSeries.getLargestMarker());
-                markerLength += rect.width() + spacer;
-            }
-        }
-
-        leftBorder = (int) (density * BORDER + markerLength);
         titleDimensions = getTitleDimensions();
         topBorder = (int) (density * BORDER + titleDimensions.lineCount * (titleDimensions.lineHeight + spacer));
         Rect xAxisLabelRect = getRect(axisPaint, getXAxisLabel());
-        // border + x axis marker + spacer + .5 x axis label
         bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer + (xAxisLabelRect.height() / 2));
+
+        final int markerCountOn1stLine = getYmarkerCountOn1stLine();
+        int allMarkerLength = 0;
+        int firstLineMarkerLength = 0;
+        int secondLineMarkerLength = 0;
+        int currentSeriesIndex = 0;
+        maxYaxisNumberHeight = 0;
+        for (ChartValueSeries chartValueSeries : seriesList) {
+            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
+                Rect rect = getRect(chartValueSeries.getMarkerPaint(), chartValueSeries.getLargestMarker());
+                maxYaxisNumberHeight = Math.max(maxYaxisNumberHeight, rect.height() );
+                int lengthInc = rect.width() + spacer;
+                allMarkerLength += lengthInc;
+                if (currentSeriesIndex < markerCountOn1stLine) firstLineMarkerLength += lengthInc;
+                else secondLineMarkerLength += lengthInc;
+                ++currentSeriesIndex;
+            }
+        }
+        if ( currentSeriesIndex > 1 && height-topBorder-bottomBorder-spacer > (Y_AXIS_INTERVALS+1)*(spacer+maxYaxisNumberHeight*3) ) {
+            allMarkerLength = Math.max(firstLineMarkerLength, secondLineMarkerLength);
+            twoLineYaxisNumbers = true;
+        } else twoLineYaxisNumbers = false;
+
+        leftBorder = (int) (density * BORDER + allMarkerLength);
         rightBorder = (int) (density * BORDER + spacer);
         updateEffectiveDimensions();
     }
