@@ -116,6 +116,7 @@ public class ChartView extends View {
     private int height = 0;
     private int effectiveWidth = 0;
     private int effectiveHeight = 0;
+    private TitleDimensions titleDimensions;
 
     private boolean chartByDistance = false;
     private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
@@ -622,7 +623,7 @@ public class ChartView extends View {
     private void drawDataSeries(Canvas canvas) {
         for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
-                chartValueSeries.drawPath(canvas);
+                chartValueSeries.drawPath(canvas, titleDimensions.titlePositions.size() < 3 );
             }
         }
     }
@@ -689,14 +690,13 @@ public class ChartView extends View {
      * @param canvas the canvas
      */
     private void drawSeriesTitles(Canvas canvas) {
-        TitleDimensions td = getTitleDimensions();
-        Iterator<TitlePosition> tpI = td.titlePositions.iterator();
+        Iterator<TitlePosition> tpI = titleDimensions.titlePositions.iterator();
         for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
                 String title = getContext().getString(chartValueSeries.getTitleId(unitSystem));
                 Paint paint = chartValueSeries.getTitlePaint();
                 TitlePosition tp = tpI.next();
-                int y = topBorder - spacer - (td.lineCount - tp.line) * (td.lineHeight + spacer);
+                int y = topBorder - spacer - (titleDimensions.lineCount - tp.line) * (titleDimensions.lineHeight + spacer);
                 canvas.drawText(title, tp.xPos + getScrollX(), y, paint);
             }
         }
@@ -957,8 +957,8 @@ public class ChartView extends View {
         }
 
         leftBorder = (int) (density * BORDER + markerLength);
-        TitleDimensions td = getTitleDimensions();
-        topBorder = (int) (density * BORDER + td.lineCount * (td.lineHeight + spacer));
+        titleDimensions = getTitleDimensions();
+        topBorder = (int) (density * BORDER + titleDimensions.lineCount * (titleDimensions.lineHeight + spacer));
         Rect xAxisLabelRect = getRect(axisPaint, getXAxisLabel());
         // border + x axis marker + spacer + .5 x axis label
         bottomBorder = (int) (density * BORDER + getRect(xAxisMarkerPaint, "1").height() + spacer + (xAxisLabelRect.height() / 2));
