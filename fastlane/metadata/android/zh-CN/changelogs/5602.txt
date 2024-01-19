@@ -1,0 +1,15 @@
+v4.10.0: OpenTracks
+
+更改：
+- 通过 BLE 环境传感（气压计）支持增益/损耗
+- 可关闭内部气压计（如坏掉时）
+- 用于偏好开关的 Material3
+- 闪屏支持日/夜模式
+- 蓝牙传感器设置：显示所选传感器名称（如果 Android 已缓存）
+
+修正错误：
+- 间隔 UI 未对齐
+
+开发相关：
+- 清理 TrackRecordingServiceConnection
+- TrackRecordingService 总是作为 ForegroundService 启动
