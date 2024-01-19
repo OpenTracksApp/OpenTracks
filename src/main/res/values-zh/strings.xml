@@ -484,7 +484,7 @@ limitations under the License.
     <string name="settings_import_export_title">导入/导出</string>
     <string name="settings_activity_defaults_category">活动默认</string>
     <string name="settings_announcements_totaltime_frequency">时间间隔</string>
-    <string name="settings_announcements_distance_frequency">距离间隔</string>
+    <string name="settings_announcements_distance_frequency">每圈长度</string>
     <string name="custom_layout_list_edit_already_exists">布局名已存在</string>
     <string name="settings_public_api_enabled_title">公共 API</string>
     <string name="track_distance_notification">距离：%1$s</string>
@@ -627,4 +627,7 @@ limitations under the License.
     <string name="settings_announcements_idle_title">空闲</string>
     <string name="settings_recording_idle_timeout_title">空闲阈值</string>
     <string name="value_int_seconds">%1$d 秒（推荐）</string>
+    <string name="sensor_state_pressure">气压计</string>
+    <string name="value_internal_sensor">内部传感器</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
 </resources>
