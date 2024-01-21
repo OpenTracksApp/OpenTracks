@@ -1,0 +1,7 @@
+v4.11.0: OpenTracks
+
+Změny:
+- Uložení značek je převzato při otevření dialogu přidání (dosud bylo u dialogu uložení)
+- Grafy: použití menšího počtu mezer pro osy
+- Grafy: nevyplňují se při zobrazení více než dvou řádků
+- Vylepšena hlasová hlášení (přeskočení desetinné čárky, pokud je ,0)
