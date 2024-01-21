@@ -1,0 +1,7 @@
+v4.11.0: OpenTracks
+
+Veranderingen:
+- Locatie voor markeringen wordt genomen dialoogvenster voor openen toevoegen (was opslaan)
+- Grafieken: minder ruimte voor assen
+- Grafieken: geen vulling bij vertoning van meer dan twee grafieken
+- Spraakaankondigingen verbeterd (decimaal negeren bij .0)
