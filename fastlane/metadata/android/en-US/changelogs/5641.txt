@@ -1,0 +1,7 @@
+v4.11.0: OpenTracks
+
+Changes:
+- Location for Markers is taken opening add dialog (was save)
+- Charts: use less sprace for axes
+- Charts: do not fill when showing more than two lines
+- Voice announcements improved (skip decimal if .0)
