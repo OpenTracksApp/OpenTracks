@@ -28,11 +28,13 @@ However, often only one value is provided.
   * Has updatable firmware that requires an account for garmin.com
 * Wahoo Speed (Model: WFRPMSPD)
 * CooSpo cadence and speed sensor (model: BK467)
+* CYCPLUS S3
 
 ### Cadence only
 
 * Garmin Cadence Sensor 2
 * Wahoo Cadence (Model: WFPODCAD2)
+* CYCPLUS C3
 
 ## 0x1818: Power Measurement
 
