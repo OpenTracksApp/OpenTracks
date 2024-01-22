@@ -31,10 +31,10 @@ limitations under the License.
 \n * 完全離線工作
 \n * 在地圖上顯示蹤跡（見下文）</string>
     <string name="help_track_map_title">如何在地圖顯示一個蹤跡？</string>
-    <string name="help_track_map_content"> 使用小的地圖圖示。
-\n a) （即時更新）安裝 <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. 透過 <a href="https://www.openstreetmap.org">OpenStreetMap</a> 提供線上或離線地圖。
-\n 實際上，OSMDashboard 是一個單獨的應用程式，只能（暫時）存取將要顯示的蹤跡資料。
-\n b) 透過一個 普通的 地圖應用程式（例如，<a href="http://osmand.net/">OsmAnd</a> 與 <a href="https://maps.me/">MAPS.ME</a>）。 這些 APP 需要支援 KMZ 檔案格式（只有位置與時間戳記）。 事實上，APP 需要支援 <i>ACTION_VIEW</i> 與 MIME <i>application/vnd.google-earth.kmz</i>。 </string>
+    <string name="help_track_map_content"> \u0020使用小的地圖圖示。 
+\n \u0020a) （即時更新）安裝 <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>。它透過 <a href="https://www.openstreetmap.org">OpenStreetMap</a> 提供線上或離線地圖。 
+\n \u0020實際上，OSMDashboard 是一個單獨的應用程式，只能（暫時）存取將要顯示的蹤跡資料。 
+\n \u0020b) \u0020透過一個普通的地圖應用程式（例如，<a href="http://osmand.net/">OsmAnd</a> 與 <a href="https://maps.me/">MAPS.ME</a>）。 這些 APP 需要支援 KMZ 檔案格式（只有位置與時間戳記）。 更準確地說，APP 需要支援 <i>ACTION_VIEW</i> 與 MIME <i>application/vnd.google-earth.kmz</i>。 \u0020</string>
     <string name="help_storage_pictures_title">OpenTracks 如何存儲作為標記拍攝的照片？</string>
     <string name="help_storage_pictures_content">這些儲存在應用程序內部儲存區中 (即，只能在 OpenTracks 中存取)。</string>
     <string name="help_track_export_title">如何匯出/分享 紀錄的蹤跡？</string>
