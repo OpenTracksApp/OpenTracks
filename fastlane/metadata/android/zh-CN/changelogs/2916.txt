@@ -1,0 +1,15 @@
+v3.0.0：OpenTracks
+
+OpenTracks 的第一个版本（即从 MyTracks 硬分叉而来）
+
+变更：
+- 从 MyTracks 更名为 OpenTracks
+- 添加蓝牙 LE 心率传感器
+- 删除了所有需要访问互联网的功能
+- 删除了谷歌地图集成
+- 不再使用 Google Play 服务
+- 删除了 ANT+ 传感器
+- 删除了蓝牙经典传感器
+- 删除了 Protobuf
+- 删除了卡路里估算和活动估算功能
+- 删除了 MyTracks 服务应用程序接口（即无法与其他应用程序集成）

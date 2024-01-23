@@ -1,0 +1,4 @@
+v4.9.5: OpenTracks
+
+Bugfix：
+- 空闲通知设置恢复正常
