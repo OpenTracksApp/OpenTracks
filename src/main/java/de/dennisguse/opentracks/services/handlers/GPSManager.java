@@ -79,13 +79,13 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         boolean registerListener = false;
 
-        if (PreferencesUtils.isKey(R.string.min_recording_interval_key, key)) {
+        if (PreferencesUtils.isKey(R.string.min_sampling_interval_key, key)) {
             registerListener = true;
 
-            gpsInterval = PreferencesUtils.getMinRecordingInterval();
+            gpsInterval = PreferencesUtils.getMinSamplingInterval();
 
             if (gpsStatusManager != null) {
-                gpsStatusManager.onMinRecordingIntervalChanged(gpsInterval);
+                gpsStatusManager.onMinSamplingIntervalChanged(gpsInterval);
             }
         }
         if (PreferencesUtils.isKey(R.string.recording_gps_accuracy_key, key)) {

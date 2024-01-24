@@ -5,10 +5,10 @@
     android:title="@string/settings_gps_title">
 
     <ListPreference
-        android:defaultValue="@string/min_recording_interval_default"
-        android:entryValues="@array/min_recording_interval_values"
-        android:key="@string/min_recording_interval_key"
-        android:title="@string/settings_recording_min_recording_interval_title" />
+        android:defaultValue="@string/min_sampling_interval_default"
+        android:entryValues="@array/min_sampling_interval_values"
+        android:key="@string/min_sampling_interval_key"
+        android:title="@string/settings_recording_min_sampling_interval_title" />
 
     <ListPreference
         android:defaultValue="@string/recording_distance_interval_default"

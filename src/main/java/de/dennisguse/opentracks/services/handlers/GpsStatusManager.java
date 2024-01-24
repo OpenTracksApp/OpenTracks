@@ -50,7 +50,7 @@ class GpsStatusManager {
         this.handler = handler;
 
         onRecordingDistanceChanged(PreferencesUtils.getRecordingDistanceInterval());
-        onMinRecordingIntervalChanged(PreferencesUtils.getMinRecordingInterval());
+        onMinSamplingIntervalChanged(PreferencesUtils.getMinSamplingInterval());
     }
 
     public void start() {
@@ -76,7 +76,7 @@ class GpsStatusManager {
         horizontalAccuracyThreshold = value;
     }
 
-    public void onMinRecordingIntervalChanged(Duration value) {
+    public void onMinSamplingIntervalChanged(Duration value) {
         signalLostThreshold = SIGNAL_LOST_THRESHOLD.plus(value); //TODO Reschedule gpsStatusTimer?
     }
 
