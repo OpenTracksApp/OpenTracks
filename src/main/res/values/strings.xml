@@ -388,7 +388,7 @@ limitations under the License.
     <string name="settings_recording_fullscreen_on_while_recording_title">Fullscreen</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">While recording, present in fullscreen.</string>
     <string name="settings_recording_default_activity_title">Default activity type</string>
-    <string name="settings_recording_location_frequency_summary">%1$s between recorded locations</string>
+    <string name="settings_recording_location_frequency_summary">%1$s between location checks</string>
     <string name="settings_recording_max_recording_distance_summary">A new segment is created if the distance between two locations is greater than %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Max distance</string>
     <string name="settings_recording_min_recording_distance_title">Recording distance interval</string>
@@ -709,4 +709,6 @@ limitations under the License.
     <string name="always">Always</string>
 
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
+    <string name="settings_recording_min_sampling_interval_title">Sampling time interval</string>
+    <string name="settings_recording_location_distance_summary">%1$s between recorded locations</string>
 </resources>

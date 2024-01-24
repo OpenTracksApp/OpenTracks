@@ -90,10 +90,10 @@
         <item>5000</item>
     </string-array>
 
-    <string name="min_recording_interval_key" translatable="false">minRecordingIntervalV2</string>
-    <string name="min_recording_interval_default" translatable="false">0</string>
-    <string-array name="min_recording_interval_values">
-        <item>@string/min_recording_interval_default</item>
+    <string name="min_sampling_interval_key" translatable="false">minRecordingIntervalV2</string>
+    <string name="min_sampling_interval_default" translatable="false">0</string>
+    <string-array name="min_sampling_interval_values">
+        <item>@string/min_sampling_interval_default</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>

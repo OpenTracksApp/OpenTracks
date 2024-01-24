@@ -100,7 +100,7 @@ public class GpsStatusTest {
         // given
         GpsStatusManager subject = new GpsStatusManager(context, statusList::add, new Handler());
         subject.onRecordingDistanceChanged(Distance.of(10));
-        subject.onMinRecordingIntervalChanged(GpsStatusManager.SIGNAL_LOST_THRESHOLD.multipliedBy(-1));
+        subject.onMinSamplingIntervalChanged(GpsStatusManager.SIGNAL_LOST_THRESHOLD.multipliedBy(-1));
 
         // when / then
         subject.start();
@@ -124,7 +124,7 @@ public class GpsStatusTest {
         // given
         GpsStatusManager subject = new GpsStatusManager(context, statusList::add, new Handler(handlerThread.getLooper()));
         subject.onRecordingDistanceChanged(Distance.of(10));
-        subject.onMinRecordingIntervalChanged(GpsStatusManager.SIGNAL_LOST_THRESHOLD.multipliedBy(-1).plus(Duration.ofMillis(10)));
+        subject.onMinSamplingIntervalChanged(GpsStatusManager.SIGNAL_LOST_THRESHOLD.multipliedBy(-1).plus(Duration.ofMillis(10)));
 
         // when / then
         subject.start();

@@ -28,7 +28,7 @@ public class GpsSettingsFragment extends PreferenceFragmentCompat {
                 .setSummaryProvider(
                         preference -> {
                             Distance distance = PreferencesUtils.getRecordingDistanceInterval();
-                            return getString(R.string.settings_recording_location_frequency_summary, formatter.formatDistance(distance));
+                            return getString(R.string.settings_recording_location_distance_summary, formatter.formatDistance(distance));
                         }
                 );
 
@@ -48,10 +48,10 @@ public class GpsSettingsFragment extends PreferenceFragmentCompat {
                         }
                 );
 
-        findPreference(getString(R.string.min_recording_interval_key))
+        findPreference(getString(R.string.min_sampling_interval_key))
                 .setSummaryProvider(
                         preference -> {
-                            Duration interval = PreferencesUtils.getMinRecordingInterval();
+                            Duration interval = PreferencesUtils.getMinSamplingInterval();
                             return getString(R.string.settings_recording_location_frequency_summary, getString(R.string.value_integer_second, interval.getSeconds()));
                         }
                 );
@@ -67,8 +67,8 @@ public class GpsSettingsFragment extends PreferenceFragmentCompat {
     public void onResume() {
         super.onResume();
 
-        ListPreference minRecordingInterval = findPreference(getString(R.string.min_recording_interval_key));
-        minRecordingInterval.setEntries(PreferencesUtils.getMinRecordingIntervalEntries());
+        ListPreference minSamplingInterval = findPreference(getString(R.string.min_sampling_interval_key));
+        minSamplingInterval.setEntries(PreferencesUtils.getMinSamplingIntervalEntries());
 
         ListPreference recordingDistanceInterval = findPreference(getString(R.string.recording_distance_interval_key));
         recordingDistanceInterval.setEntries(PreferencesUtils.getRecordingDistanceIntervalEntries());

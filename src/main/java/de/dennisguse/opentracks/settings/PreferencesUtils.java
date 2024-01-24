@@ -535,18 +535,18 @@ public class PreferencesUtils {
         return entries;
     }
 
-    public static Duration getMinRecordingInterval() {
-        final Duration MIN_RECORDING_INTERVAL = getMinRecordingIntervalDefault();
-        return Duration.ofSeconds(getInt(R.string.min_recording_interval_key, (int) MIN_RECORDING_INTERVAL.getSeconds()));
+    public static Duration getMinSamplingInterval() {
+        final Duration MIN_SAMPLING_INTERVAL = getMinSamplingIntervalDefault();
+        return Duration.ofSeconds(getInt(R.string.min_sampling_interval_key, (int) MIN_SAMPLING_INTERVAL.getSeconds()));
     }
 
-    public static Duration getMinRecordingIntervalDefault() {
-        return Duration.ofSeconds(Integer.parseInt(resources.getString(R.string.min_recording_interval_default)));
+    public static Duration getMinSamplingIntervalDefault() {
+        return Duration.ofSeconds(Integer.parseInt(resources.getString(R.string.min_sampling_interval_default)));
     }
 
-    static String[] getMinRecordingIntervalEntries() {
-        String[] entryValues = resources.getStringArray(R.array.min_recording_interval_values);
-        long recommended = PreferencesUtils.getMinRecordingIntervalDefault().getSeconds();
+    static String[] getMinSamplingIntervalEntries() {
+        String[] entryValues = resources.getStringArray(R.array.min_sampling_interval_values);
+        long recommended = PreferencesUtils.getMinSamplingIntervalDefault().getSeconds();
         String[] entries = new String[entryValues.length];
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
