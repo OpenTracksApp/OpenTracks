@@ -389,7 +389,6 @@ limitations under the License.
     <string name="export_track_errors">Не се експортират писти</string>
     <string name="gps_disabled_msg">GPS е изключен</string>
     <string name="share_image_body">Мисля, че тази снимка може да ви заинтересува.</string>
-
     <string name="help_support_title">Как да подкрепя OpenTracks\?</string>
     <string name="permission_gps_failed">OpenTracks изисква разрешение за използване на GPS.</string>
     <string name="sensor_state_power_avg">Средна мощност</string>
