@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">विमान</string>
     <string name="activity_type_atv">ATV</string>
@@ -195,7 +195,6 @@ limitations under the License.
     <string name="settings_stats_units_imperial">इंपीरियल (मील, फुट)</string>
     <string name="settings_stats_units_metric">मेट्रिक (किमी, मी)</string>
     <string name="settings_stats_units_title">पसंदीदा इकाइयां</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file_body">मेरा विचार है कि आपको इस ट्रैक में रुचि हो सकती है.\n\nइस ट्रैक को देखने के लिए Google Earth या अन्य मानचित्रन सॉफ्टवेयर का उपयोग करें.\n\n%1$s</string>
     <string name="share_track_subject">मैं आपके साथ एक ट्रैक साझा करना चाहता/चाहती हूं</string>
