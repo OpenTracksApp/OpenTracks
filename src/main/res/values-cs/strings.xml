@@ -236,7 +236,7 @@ limitations under the License.
     <string name="settings_recording_keep_screen_on_while_recording_title">Nechte obrazovku zapnutou</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Během nahrávání udržovat obrazovku zapnutou.</string>
     <string name="settings_recording_default_activity_title">Výchozí typ aktivity</string>
-    <string name="settings_recording_location_frequency_summary">%1$s mezi zaznamenanými polohami</string>
+    <string name="settings_recording_location_frequency_summary">%1$s mezi kontrolami polohy</string>
     <string name="settings_recording_max_recording_distance_summary">Vytvořit nový segment pokud je vzdálenost mezi dvěma polohami větší než %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Maximální vzdálenost</string>
     <string name="settings_recording_min_recording_distance_title">Vzdál. interval záznamu</string>
@@ -597,4 +597,6 @@ limitations under the License.
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
     <string name="value_internal_sensor">Vnitřní senzor</string>
     <string name="sensor_state_pressure">Barometr</string>
+    <string name="settings_recording_min_sampling_interval_title">Interval vzorkování</string>
+    <string name="settings_recording_location_distance_summary">%1$s mezi zaznamenanými polohami</string>
 </resources>
