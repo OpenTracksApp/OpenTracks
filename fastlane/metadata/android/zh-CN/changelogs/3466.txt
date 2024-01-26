@@ -1,0 +1,16 @@
+v3.8.0: OpenTracks
+
+重大变化：
+- 通过 TrackPointExtension/v2 导入/导出 GPX 速度、步频和心率
+
+更改：
+- 仪表板 API：提供对标记的访问（包括在 OpenTracks 中显示的回调）
+- 新标记图标（橙色推针，SVG）
+- 可通过文件管理器选择要导入的文件
+
+错误修正：
+- 汇总统计用户界面尊重首选率
+- 方向改变时编辑标记失败
+
+开发相关：
+- 重构了 TrackRecordingService

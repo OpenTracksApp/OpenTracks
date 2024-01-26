@@ -1,0 +1,10 @@
+v3.10.0: OpenTracks
+
+更改：
+- 通过气压计增加海拔高度
+- 添加闪屏
+- 安卓 11/F-Droid：降级至 targetSDK 29（V1 签名）
+  参见 https://gitlab.com/fdroid/fdroidserver/-/issues/827
+
+错误修复：
+- 由于 trackId 重构而导致的若干修复

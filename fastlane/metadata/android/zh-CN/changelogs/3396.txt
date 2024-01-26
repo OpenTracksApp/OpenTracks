@@ -1,0 +1,12 @@
+v3.7.4: OpenTracks
+
+更改：
+- 共享/导出格式可配置
+
+错误修正：
+- 车轮直径存储不正确（针对速度传感器）
+- 帮助：链接可点击
+
+开发相关：
+- 拆分 TrackDetailActivity
+- StatsFragement 继承者使用 ConstraintLayout

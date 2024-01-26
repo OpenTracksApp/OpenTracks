@@ -1,0 +1,11 @@
+v3.3.2: OpenTracks
+
+更改：
+- 导出：现在可覆盖文件
+
+Bugfix：
+- 总是删除录音通知
+
+开发相关：
+- 在 API 26+ 中使用 java.time 解析和写入日期
+- 重构 TrackRecordingService
