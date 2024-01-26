@@ -389,7 +389,7 @@ limitations under the License.
 \n 
 \n 如果以上措施都不起作用，请给我们提交 BUG 报告。 </string>
     <string name="help_storage_pictures_title">OpenTracks 是如何存储被用作标记的照片的？</string>
-    <string name="help_track_export_content"> 您可以在设置界面导出路线，支持的格式有 KMZ、KML 和 GPX。KMZ 和 KML 格式包含全部数据；GPX 仅包含位置数据。用<i>分享图标</i>分享出去的路线即为 KMZ 格式。 </string>
+    <string name="help_track_export_content"> \u0020您可以在设置界面导出路线，支持的格式有 KMZ、KML 和 GPX。 \u0020 \u0020KMZ 和 KML 格式包含全部数据；GPX 仅包含位置数据。用<i>分享图标</i>分享出去的路线即为 KMZ 格式。 \u0020</string>
     <string name="help_support_content"> 你可以： 
 \n 一、向别人介绍 OpenTracks， 
 \n 二、<a href="https://github.com/OpenTracksApp/OpenTracks/issues">提交新功能建议</a>， 
