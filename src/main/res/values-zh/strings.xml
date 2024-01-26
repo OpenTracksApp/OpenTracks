@@ -185,7 +185,7 @@ limitations under the License.
     <string name="settings_recording_fullscreen_on_while_recording_title">全屏显示</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">记录时，全屏幕显示。</string>
     <string name="settings_recording_default_activity_title">默认活动类型</string>
-    <string name="settings_recording_location_frequency_summary">每隔%1$s记录一次位置</string>
+    <string name="settings_recording_location_frequency_summary">每隔%1$s检查一次位置</string>
     <string name="settings_recording_max_recording_distance_summary">如果两个位置之间的距离超过%1$s，则创建新的路段</string>
     <string name="settings_recording_max_recording_distance_title">最大距离</string>
     <string name="settings_recording_min_recording_distance_title">记录距离间隔</string>
@@ -381,23 +381,23 @@ limitations under the License.
 \n* 创建标记（可包含图片）
 \n* 完全不需要联网
 \n* 在地图上显示路线（见下方）</string>
-    <string name="help_gps_troubleshooting_content"> 下面是你可以做的事情： 
-\n 一、检查 GPS 是否已经开启， 
-\n 二、改善 GPS 信号（比如走到室外）， 
-\n 三、用譬如 <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> 之类的工具检查 GPS 是否正常，并且
-\n 四、关闭节能模式。 
-\n 
-\n 如果以上措施都不起作用，请给我们提交 BUG 报告。 </string>
+    <string name="help_gps_troubleshooting_content"> \u0020下面是你可以做的事情： \u0020
+\n 一、检查 GPS 是否已经开启， \u0020
+\n 二、改善 GPS 信号（比如走到室外）， \u0020
+\n 三、用譬如 <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> 之类的工具检查 GPS 是否正常，并且 
+\n 四、关闭节能模式。 \u0020
+\n \u0020
+\n 如果以上措施都不起作用，请给我们提交 BUG 报告。 \u0020</string>
     <string name="help_storage_pictures_title">OpenTracks 是如何存储被用作标记的照片的？</string>
     <string name="help_track_export_content"> \u0020您可以在设置界面导出路线，支持的格式有 KMZ、KML 和 GPX。 \u0020 \u0020KMZ 和 KML 格式包含全部数据；GPX 仅包含位置数据。用<i>分享图标</i>分享出去的路线即为 KMZ 格式。 \u0020</string>
-    <string name="help_support_content"> 你可以： 
-\n 一、向别人介绍 OpenTracks， 
-\n 二、<a href="https://github.com/OpenTracksApp/OpenTracks/issues">提交新功能建议</a>， 
-\n 三、<a href="https://github.com/OpenTracksApp/OpenTracks/issues">报告 BUG</a>， 
-\n 四、帮助开发本应用， 
-\n 五、在 <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play 商店</a>购买本应用， 
-\n 六、赞助，或者 
-\n 七、做任何你认为可以帮助到 OpenTracks 的事情。 </string>
+    <string name="help_support_content"> \u0020你可以： \u0020
+\n 一、向别人介绍 OpenTracks， \u0020
+\n 二、<a href="https://github.com/OpenTracksApp/OpenTracks/issues">提交新功能建议</a>， \u0020
+\n 三、<a href="https://github.com/OpenTracksApp/OpenTracks/issues">报告 BUG</a>， \u0020
+\n 四、帮助开发本应用， \u0020
+\n 五、在 <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play 商店</a>购买本应用， \u0020
+\n 六、赞助，或者 \u0020
+\n 七、做任何你认为可以帮助到 OpenTracks 的事情。 \u0020</string>
     <string name="activity_type_swimming">游泳</string>
     <string name="export_with_photos">带照片</string>
     <string name="export_progress_summary_skip_msg">已跳过的文件</string>
@@ -417,10 +417,10 @@ limitations under the License.
     <string name="settings_layout_reset_confirm_message">所有布局设置都会被恢复至默认值。此操作不会删除设备上的路线。</string>
     <string name="settings_public_api_enabled_summary_on">其他应用可以开始或停止记录。</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">开始记录的应用可以访问记录下的数据。</string>
-    <string name="help_track_map_content"> 点击地图图标。 
-\n 方法一（在线地图）：安装 <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>。该应用提供基于 <a href="https://www.openstreetmap.org">OpenStreetMap</a> 的在线或离线地图。 
-\n 事实上，OSMDashboard 是一款独立的应用，它仅能（临时）访问将要被展示的数据。
-\n 方法二：通过一个正常的地图应用（例如 <a href="http://osmand.net/">OsmAnd</a> 和 <a href="https://maps.me/">MAPS.ME</a>）。这些应用需要支持 KMZ 文件格式（只包含位置和时间戳）。事实上，应用需要支持 <i>application/vnd.google-earth.kmz</i> MIME 类型的 <i>ACTION_VIEW</i> 操作。 </string>
+    <string name="help_track_map_content"> \u0020点击地图图标。 \u0020
+\n 方法一（在线地图）：安装 <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>。该应用提供基于 <a href="https://www.openstreetmap.org">OpenStreetMap</a> 的在线或离线地图。 \u0020
+\n 事实上，OSMDashboard 是一款独立的应用，它仅能（临时）访问将要被展示的数据。 
+\n 方法二：通过一个正常的地图应用（例如 <a href="http://osmand.net/">OsmAnd</a> 和 <a href="https://maps.me/">MAPS.ME</a>）。这些应用需要支持 KMZ 文件格式（只包含位置和时间戳）。事实上，应用需要支持 <i>application/vnd.google-earth.kmz</i> MIME 类型的 <i>ACTION_VIEW</i> 操作。 \u0020</string>
     <string name="export_progress_summary_errors_msg">错误</string>
     <string name="permission_gps_failed">OpenTracks 需要使用 GPS 的权限。</string>
     <string name="custom_layout_list_title">布局</string>
@@ -539,7 +539,7 @@ limitations under the License.
     <string name="export_progress_summary_overwrite_msg">已覆盖的文件</string>
     <string name="show_on_dashboard_not_installed">没有安装支持 OpenTracks 仪表盘 API 的应用。</string>
     <string name="help_storage_pictures_content">这些照片被保存在设备内部存储中（也就是说只能在 OpenTracks 内访问）。</string>
-    <string name="help_data_storage_content"> 应用每记录一次位置便同时记录一次传感器数据。以心率传感器为例，这意味着每一个位置仅仅对应<i>一个</i>心率读数。如果你站着不动或者处于室内，心率数据就不会被记录（但会被显示）。 </string>
+    <string name="help_data_storage_content"> \u0020应用每记录一次位置便同时记录一次传感器数据。以心率传感器为例，这意味着每一个位置仅仅对应<i>一个</i>心率读数。如果你站着不动或者处于室内，心率数据就不会被记录（但会被显示）。 \u0020</string>
     <string name="description_speed_nautical">速度（节）</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="export_cannot_write_to_dir">无法写入导出文件夹。</string>
@@ -630,4 +630,6 @@ limitations under the License.
     <string name="sensor_state_pressure">气压计</string>
     <string name="value_internal_sensor">内部传感器</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="settings_recording_min_sampling_interval_title">采样时间间隔</string>
+    <string name="settings_recording_location_distance_summary">每隔%1$s记录地点之间</string>
 </resources>
