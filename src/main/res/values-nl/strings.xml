@@ -238,7 +238,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_keep_screen_on_while_recording_title">Houd het scherm aan</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Houd tijdens de opname het scherm aan.</string>
     <string name="settings_recording_default_activity_title">Activiteittype</string>
-    <string name="settings_recording_location_frequency_summary">%1$s tussen opgenomen locaties</string>
+    <string name="settings_recording_location_frequency_summary">%1$s tussen locatiecontroles</string>
     <string name="settings_recording_max_recording_distance_summary">Er wordt een nieuw segment gemaakt als de afstand tussen twee locaties groter is dan %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Maximale afstand</string>
     <string name="settings_recording_min_recording_distance_title">Afstand tussen opnamen</string>
@@ -598,4 +598,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
     <string name="value_internal_sensor">Interne sensor</string>
     <string name="sensor_state_pressure">Barometer</string>
+    <string name="settings_recording_location_distance_summary">%1$s tussen opgenomen locaties</string>
+    <string name="settings_recording_min_sampling_interval_title">Interval van metingen</string>
 </resources>
