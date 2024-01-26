@@ -1,0 +1,13 @@
+v3.18.1: OpenTracks
+
+更改：
+- 删除轨迹由服务处理
+- 卸载会删除所有数据（即 hasFragileData=false）
+
+错误修正
+- 竞赛条件：录制和将 OpenTracks 切换到后台时崩溃
+- 轨迹列表中的搜索不起作用
+- 自行车速度传感器：距离计算错误（仅影响统计数据）
+
+开发相关
+- ControllerFragment 取代 TrackController

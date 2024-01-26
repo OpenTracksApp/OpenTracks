@@ -1,0 +1,15 @@
+v3.18.0: OpenTracks
+
+更改：
+- 在 EGM2008 中显示高度（存储/导出为 WGS84）
+
+修正错误：
+- 修正内存泄漏（在 v3.17.0 中引入）
+- 图表：高度应以 M/FT 为单位（在 v3.17.1 中引入）
+- 图表：记录时未正确更新（在 v3.17.3 中引入）
+- TrackDataHub 未考虑 recordingDistanceInterval（在 v3.17.2 中引入）
+
+开发相关：
+- 禁用 PNG 压缩（可重复构建）
+- 重构了 TrackImporter 并优化了 KMZ 导入
+- 使用 LiveData 实现 TrackRecordingService 与 UI 的通信（消除内存泄漏）
