@@ -313,4 +313,17 @@
     <string name="settings_gps_summary">Interval waktu, interval jarak, jarak maks, akurasi</string>
     <string name="settings_units_category">Unit</string>
     <string name="settings_announcements_idle_title">Siaga</string>
+    <string name="sensor_state_heart_rate_max">Denyut jantung maksimal</string>
+    <string name="sensor_state_pressure">Barometer</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="menu_add_custom_layout">Tata letak baru</string>
+    <string name="sensor_state_cadence_avg">Rata-rata Irama</string>
+    <string name="menu_resume_track">Melanjutkan trek</string>
+    <string name="menu_voice_rate">Kecepatan suara</string>
+    <string name="menu_filter">Saring</string>
+    <string name="sensor_state_cadence_max">Irama Maks</string>
+    <string name="permission_gps_failed">OpenTracks memerlukan izin untuk menggunakan GPS.</string>
+    <string name="permission_bluetooth_failed">OpenTracks memerlukan izin untuk menggunakan Bluetooth.</string>
+    <string name="permission_recording_failed">OpenTracks memerlukan izin untuk mengakses lokasi Anda serta perangkat terdekat.</string>
+    <string name="permission_bluetooth_failed_rejected">Anda harus memberikan akses OpenTracks ke Perangkat Terdekat secara manual dalam pengaturan sistem.</string>
 </resources>
