@@ -1,0 +1,22 @@
+Teman pelacakan olahraga yang menghormati privasi Anda.
+
+Olahraga dan aktivitas luar ruangan memberikan kebahagiaan, keterampilan, dan kepercayaan diri.
+
+Hargai kesehatan Anda dengan melacak latihan Anda. 
+Merekam saat Anda berlari atau berjalan, dan memberi Anda komputer sepeda dengan layar yang lebih besar untuk bersepeda. 
+Tandai lokasi menarik di sepanjang perjalanan Anda dengan gambar. 
+Menyimpan statistik yang terekam dengan sangat detail untuk dianalisis. 
+Hanya membagikan data yang Anda ingin orang lain memilikinya.
+
+* Notifikasi suara. 
+* Mendukung sensor Bluetooth LE: detak jantung, kecepatan dan jarak (bersepeda), irama (bersepeda), dan pengukur daya (bersepeda). 
+* Kenaikan dan penurunan ketinggian: melalui sensor barometrik. 
+* Ketinggian yang ditampilkan dalam EGM2008 (di atas permukaan laut); diekspor sebagai WGS84. 
+* Mengekspor data sebagai lintasan, baik sebagai KMZ (termasuk foto), KML, atau GPX. 
+* Tidak ada akses Internet atau izin tambahan. 
+* Tema gelap dan terang, dengan memperhatikan pengaturan sistem. 
+* Tanpa iklan.
+
+Perangkat lunak bebas / Perangkat Lunak Bebas / Sumber Terbuka 
+yang berarti Anda dapat menggunakan, mempelajari, mengubah, dan berbagi kode sumber. 
+Berlisensi Apache 2.0
