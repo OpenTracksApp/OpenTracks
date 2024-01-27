@@ -245,7 +245,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_recording_fullscreen_on_while_recording_title">Pantalla completa</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Mentras grava, mostrar a pantalla completa.</string>
     <string name="settings_recording_default_activity_title">Tipo de actividade predeterminada</string>
-    <string name="settings_recording_location_frequency_summary">%1$s entre as posicións gravadas</string>
+    <string name="settings_recording_location_frequency_summary">%1$s entre comprobacións da posición</string>
     <string name="settings_recording_max_recording_distance_summary">Créase un novo segmento se a distancia entre as posicións é superior a %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Distancia máxima</string>
     <string name="settings_recording_min_recording_distance_title">Intervalo da distancia para gravar</string>
@@ -599,4 +599,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
     <string name="value_internal_sensor">Sensor interno</string>
     <string name="sensor_state_pressure">Barómetro</string>
+    <string name="settings_recording_min_sampling_interval_title">Intervalo de tempo entre mostras</string>
+    <string name="settings_recording_location_distance_summary">%1$s entre posicións gravadas</string>
 </resources>
