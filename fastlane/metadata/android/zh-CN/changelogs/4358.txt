@@ -1,0 +1,16 @@
+v3.19.0: OpenTracks
+
+更改：
+- 支持跑步速度和步频（RCS）传感器
+- 共享轨迹时：创建共享图片
+- 开始录音时无振动
+- 录音时： 用户界面显示最近接收到的高度、速度和方位（即使未存储）
+
+错误修正：
+- 总持续时间的计算不应包括暂停的持续时间（需要重新导入）
+- 再次）使用自定义摘要（如果存在
+
+开发相关：
+- 升级至 SDK31 和 AGP7.0.0（需要 JDK11）
+- TrackRecordingService：外接传感器融合（TrackPointCreator）和 TrackPoint 存储（TrackRecordingManager）
+- ExportImportTest 现在是确定性/常数

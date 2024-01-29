@@ -1,0 +1,6 @@
+v3.28.0: OpenTracks
+
+更改：
+- 可配置导出/共享的文件名（默认：{starttime}_{name}.{suffix})
+- 现在可存储垂直 GPS 精度并可导出/导入
+ (API 级别 >= 26）。

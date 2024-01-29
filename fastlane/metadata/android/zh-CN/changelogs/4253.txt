@@ -1,0 +1,16 @@
+v3.18.6: OpenTracks
+
+更改：
+- 通过 KML 而非 KMZ 实现 "在地图上显示 "功能
+- 语音提示不包括应用程序名称
+- 记录时：每秒更新海拔高度增减
+- 存储描述已翻译
+
+Bufixes：
+- 修正了无效的语音播报翻译
+
+开发相关：
+- Android12 权限 (BLUETOOTH_SCAN)
+- Android12 权限（ACCESS_COARSE_LOCATION）
+- 为 TrackPoints 提供断言（测试）
+- 删除了未使用的翻译
