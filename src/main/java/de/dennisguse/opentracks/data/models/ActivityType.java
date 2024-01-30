@@ -38,7 +38,7 @@ public enum ActivityType {
     HOT_AIR_BALLOON("hot air balloon", R.string.activity_type_hot_air_balloon, ActivityIcon.ICON_UNKNOWN, true),
     ICE_SAILING("ice sailing", R.string.activity_type_ice_sailing, ActivityIcon.ICON_UNKNOWN, true),
     INLINE_SKATING("inline skating", R.string.activity_type_inline_skating, R.drawable.ic_activity_inline_skating_24dp, true),
-    KAYAKING("kayaking", R.string.activity_type_kayaking, R.drawable.ic_activity_mtb_24dp, true),
+    KAYAKING("kayaking", R.string.activity_type_kayaking, R.drawable.ic_activity_kayaking_24dp, true),
     KITE_SURFING("kite surfing", R.string.activity_type_kite_surfing, ActivityIcon.ICON_UNKNOWN, true),
     LAND_SAILING("land sailing", R.string.activity_type_land_sailing, ActivityIcon.ICON_UNKNOWN, true),
     MIXED_TYPE("mixed type", R.string.activity_type_mixed_type, ActivityIcon.ICON_UNKNOWN, true),
