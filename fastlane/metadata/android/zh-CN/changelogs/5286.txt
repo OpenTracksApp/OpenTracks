@@ -1,0 +1,12 @@
+v4.6.0: OpenTracks
+
+更改：
+- 语音播报使用 ICU 复数格式（en、es、pt、zh、dr、de），因为使用了小数位 #1584
+- 由于使用 ICU 复数格式，需要安卓 7.0 / SDK24 以上版本
+- 在 Android 14+ 上：使用 Android 的 AltitudeConverter 而非内部 EGM2008
+
+错误修正：
+- 安卓 13 无法从图库中选择图片
+
+开发相关：
+- 拆分 ActivityType 和 ActivityIcon

@@ -1,0 +1,4 @@
+v4.8.1: OpenTracks
+
+错误修正：
+- 由于 ACCESS_LOCATION_BACKGROUND 而未授予位置权限（已删除）

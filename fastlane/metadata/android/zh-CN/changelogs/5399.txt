@@ -1,0 +1,7 @@
+v4.8.4: OpenTracks
+
+更改：
+- 显示已录制轨迹的最大功率
+
+开发相关：
+- TrackList 现在使用 RecyclerView

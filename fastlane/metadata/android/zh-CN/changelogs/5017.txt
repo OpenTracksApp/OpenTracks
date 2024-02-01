@@ -1,0 +1,11 @@
+v4.0.8: OpenTracks
+
+更改：
+- 高度始终以米/英尺为单位显示
+- 如果轨迹时区与设备时区不同，则显示轨迹时区
+- 公共API：支持明确设置轨迹图标
+
+开发相关：
+- 引入距离格式
+- 为 Duration.class 升级到 AGP 7.3/desugar
+- Android12+：通过 Androidx 显示启动屏

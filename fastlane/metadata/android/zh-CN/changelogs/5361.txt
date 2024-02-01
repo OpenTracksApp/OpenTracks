@@ -1,0 +1,10 @@
+v4.8.0: OpenTracks
+
+更改：
+- 权限： 由于 API，需要 ACCESS_BACKGROUND_LOCATION
+- 为基于时间的空闲检测做准备
+- 停止区分存储数据的来源（GPS 与 BLE 传感器
+
+开发相关：
+- 删除了竞赛条件变通方法（TrackRecordingService 和 GpsStatusManager）
+- TrackRecordingServiceConnection 处理服务关闭

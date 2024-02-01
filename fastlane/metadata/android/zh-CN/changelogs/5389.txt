@@ -1,0 +1,8 @@
+v4.8.3: OpenTracks
+
+
+错误修正：
+- Android 14：防止畸形 UUID 导致的崩溃（文件名模板示例）
+
+开发相关：
+- 标记列表现在是循环视图（RecyclerView

@@ -1,0 +1,8 @@
+v4.2.0: OpenTracks
+
+更改：
+- 显示心率区信息
+
+开发相关：
+- 迁移到 hosted.weblate.org
+- 录音用户界面直接使用视图

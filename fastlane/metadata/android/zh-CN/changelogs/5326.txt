@@ -1,0 +1,8 @@
+v4.7.1: OpenTracks
+
+错误修正：
+- Android 14：开始录制时崩溃（权限缺失）
+- Android 14：删除轨迹时崩溃（ForegroundService 无故崩溃）
+
+开发相关：
+- AggregatedStats 现在是一个 RecyclerView

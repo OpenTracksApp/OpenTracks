@@ -1,0 +1,5 @@
+v4.0.6: OpenTracks
+
+错误修正：
+- EGM2008 负经度偏移计算错误
+- 如果 OpenTracks 处于后台，PublicAPI 将崩溃 (API26+)
