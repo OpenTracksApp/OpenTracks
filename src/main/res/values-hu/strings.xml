@@ -314,7 +314,7 @@ limitations under the License.
     <string name="about_version_name">Verzió neve: %1$s</string>
     <string name="about_version_code">Verziókód: %1$d</string>
     <string name="about_preference_title">Az OpenTracks névjegye</string>
-    <string name="help_data_google_play_services_title">Az OpenTracks igényel/használja a Google Play szolgáltatást\?</string>
+    <string name="help_data_google_play_services_title">Az OpenTracks igényli/használja a Google Play szolgáltatást?</string>
     <string name="help_track_export_title">Hogyan tudom exportálni/megosztani a felvett nyomvonalakat?</string>
     <string name="help_storage_pictures_content">Ezeket az alkalmazás belső tárhelyén tárolja (azaz csak az OpenTracks-en belül érhető el).</string>
     <string name="about_libraries">Könyvtárak</string>
@@ -394,14 +394,14 @@ limitations under the License.
     <string name="menu_resume_track">Folytassa a pályát</string>
     <string name="import_parser_error">Parser hiba: %1$s</string>
     <string name="help_data_storage_content"> \u0020Az érzékelőadatokat rögzített helyenként tárolják. A pulzusszám-érzékelőre vonatkoztatva ez azt jelenti, hogy csak <i>egy</i> pulzusszámmérés kerül tárolásra helyenként. Ha mozdulatlanul áll vagy beltérben tartózkodik, akkor nem kerülnek rögzítésre az érzékelő adatai (de megjelenítésre kerülnek). \u0020</string>
-    <string name="help_support_content"> Megteheti:
-\n a) terjesztheti az OpenTracks hírét,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">jellemzőket javasolhat</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">hibákat jelenteni</a>,
-\n d) segíthetsz a szoftverfejlesztésben,
-\n e) vásárolhat a <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>-ban,
-\n f) adományozni, és
-\n g) tegyen bármit, ami Ön szerint segít az OpenTracks-nak. </string>
+    <string name="help_support_content"> \u0020Megteheti:
+\n \u0020a) terjesztheti az OpenTracks hírét,
+\n \u0020b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">jellemzőket javasolhat</a>,
+\n \u0020c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">hibákat jelenteni</a>,
+\n \u0020d) segíthetsz a szoftverfejlesztésben,
+\n \u0020e) vásárolhat a <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>-ban,
+\n \u0020f) adományozni, és
+\n \u0020g) tegyen bármit, ami Ön szerint segít az OpenTracks-nak. \u0020</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Egy hibával befejezve</item>
         <item quantity="other">%1$d hibával befejezve</item>
@@ -418,10 +418,10 @@ limitations under the License.
     <string name="share_image_body">Azt hiszem, ez a kép érdekelheti önöket.</string>
     <string name="help_recording_title">Hogyan rögzíti az OpenTracks az adatokat\?</string>
     <string name="help_track_export_content"> \u0020A nyomvonalak KMZ, KML vagy GPX formátumban exportálhatók a Beállításokból. KMZ/KML minden adat; GPX csak a helyszínek. \u0020A <i>megosztás ikonon</i> keresztül megosztott nyomvonalak KMZ formátumban kerülnek megosztásra. \u0020</string>
-    <string name="help_track_map_content"> Használja a kis térkép ikont.
-\n a) (élő frissítések) Telepítse a <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Ez online vagy offline térképeket biztosít a <a href="https://www.openstreetmap.org">OpenStreetMap</a> segítségével.
-\n Valójában az OSMDashboard egy különálló alkalmazás, amely csak a megjelenítendő pálya(k) adataihoz fér hozzá (ideiglenesen).
-\n b) Egy normál térképalkalmazáson keresztül (pl. <a href="http://osmand.net/">OsmAnd</a> és <a href="https://maps.me/">MAPS.ME</a>). Ezeknek az alkalmazásoknak támogatniuk kell a KMZ fájlformátumot (csak a helyeket és az időbélyegeket). Valójában egy alkalmazásnak támogatnia kell a <i>ACTION_VIEW</i> MIME <i>application/vnd.google-earth.kmz</i> formátumot. </string>
+    <string name="help_track_map_content"> \u0020Használja a kis térkép ikont.
+\n \u0020a) \u0020(élő frissítések) Telepítse a <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. \u0020Ez online vagy offline térképeket biztosít a <a href="https://www.openstreetmap.org">OpenStreetMap</a> segítségével.
+\n \u0020Valójában az OSMDashboard egy különálló alkalmazás, amely csak a megjelenítendő pálya(k) adataihoz fér hozzá (ideiglenesen). \u0020
+\n \u0020b) \u0020Egy normál térképalkalmazáson keresztül (pl. <a href="http://osmand.net/">OsmAnd</a> és <a href="https://maps.me/">MAPS.ME</a>). \u0020Ezeknek az alkalmazásoknak támogatniuk kell a KMZ fájlformátumot (csak a helyeket és az időbélyegeket). \u0020Valójában egy alkalmazásnak támogatnia kell a <i>ACTION_VIEW</i> MIME <i>application/vnd.google-earth.kmz</i> formátumot. \u0020</string>
     <string name="about_description">Az <i>OpenTracks</i> egy sportkövető alkalmazás, amely teljes mértékben tiszteletben tartja az Ön magánéletét.</string>
     <string name="about_history">Az OpenTracks a <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (2016-ban megszűnt) elágazása.</string>
     <string name="help_feature_content">* GPS nyomvonalak létrehozása
@@ -593,4 +593,5 @@ limitations under the License.
     <string name="settings_ui_dynamic_colors_summary">Felhasználó által meghatározott dinamikus színek használata (csak Android 12+ felett; manuális újraindítást igényel)</string>
     <string name="settings_announcements_idle_category_title">Tétlenségi közlemények</string>
     <string name="permission_bluetooth_failed_rejected">A rendszerbeállításokban manuálisan kell engedélyeznie az OpenTracks hozzáférését a Közeli eszközökhöz.</string>
+    <string name="help_data_google_play_services_content">Nem</string>
 </resources>
