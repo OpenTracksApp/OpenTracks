@@ -184,7 +184,7 @@ limitations under the License.
     <string name="settings_recording_track_name_date_iso_8601_option">Dátum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Dátum (helyi)</string>
     <string name="settings_recording_track_name_number_option">Szám</string>
-    <string name="settings_recording_track_name_title">Pálya alapértelmezett neve</string>
+    <string name="settings_recording_track_name_title">Alapértelmezett nyomvonalnév</string>
     <!-- Settings Reset -->
     <string name="settings_reset_confirm_message">Minden beállítás visszaáll az alapértelmezett értékekre.</string>
     <string name="settings_reset_confirm_title">Visszaállítja most?</string>
@@ -196,7 +196,7 @@ limitations under the License.
     <string name="settings_stats_units_metric">Metrikus (km, m)</string>
     <string name="settings_stats_units_title">Mértékegység választása</string>
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Szerintem érdekelni fog ez a pálya.
+    <string name="share_track_share_file_body">Szerintem érdekelni fog ez a nyomvonal.
 \n
 \n%1$s</string>
     <string name="share_track_subject">Szeretnék megosztani veled egy pályát</string>
@@ -217,7 +217,7 @@ limitations under the License.
     <string name="stats_distance">Távolság</string>
     <string name="stats_total_time">Összes idő</string>
     <!-- Track -->
-    <string name="track_name_format">%1$d. pálya</string>
+    <string name="track_name_format">%1$d. nyomvonal</string>
     <string name="track_markers">%1$s jelölői</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Az útvonal és a jelölők véglegesen törlődnek az eszközről.</string>
@@ -336,7 +336,7 @@ limitations under the License.
     <string name="track_speed_notification">Sebesség: %1$s</string>
     <string name="track_detail_intervals_tab">Intervallum</string>
     <string name="interval_list_empty_message">Még nincs intervallum</string>
-    <string name="settings_default_export_uri_title">Pálya export könyvtár</string>
+    <string name="settings_default_export_uri_title">Nyomvonalak export könyvtára</string>
     <string name="instant_export_enabled_summary">Sáv exportálása a tárolóba a felvétel befejezése után</string>
     <string name="hold_to_stop">Tartsa lenyomva a leállításhoz</string>
     <string name="track_distance_notification">Távolság: %1$s</string>
@@ -413,14 +413,14 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Statisztikák megjelenítése a záróképernyőn</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Felvétel közben teljes képernyőn jelenik meg.</string>
     <string name="settings_prevent_reimport_tracks_title">A pályák újraimportálásának megakadályozása</string>
-    <string name="aggregated_stats_empty_message">Az első pálya rögzítése az összesített statisztikák megtekintéséhez</string>
+    <string name="aggregated_stats_empty_message">Az első nyomvonal rögzítése az összesített statisztikák megtekintéséhez</string>
     <string name="share_image_subject">Szeretnék megosztani veletek egy képet</string>
     <string name="share_image_body">Azt hiszem, ez a kép érdekelheti önöket.</string>
     <string name="help_recording_title">Hogyan rögzíti az OpenTracks az adatokat\?</string>
     <string name="help_track_export_content"> \u0020A nyomvonalak KMZ, KML vagy GPX formátumban exportálhatók a Beállításokból. KMZ/KML minden adat; GPX csak a helyszínek. \u0020A <i>megosztás ikonon</i> keresztül megosztott nyomvonalak KMZ formátumban kerülnek megosztásra. \u0020</string>
     <string name="help_track_map_content"> \u0020Használja a kis térkép ikont.
 \n \u0020a) \u0020(élő frissítések) Telepítse a <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. \u0020Ez online vagy offline térképeket biztosít a <a href="https://www.openstreetmap.org">OpenStreetMap</a> segítségével.
-\n \u0020Valójában az OSMDashboard egy különálló alkalmazás, amely csak a megjelenítendő pálya(k) adataihoz fér hozzá (ideiglenesen). \u0020
+\n \u0020Valójában az OSMDashboard egy különálló alkalmazás, amely csak a megjelenítendő nyomvonal(ak) adataihoz fér hozzá (ideiglenesen). \u0020
 \n \u0020b) \u0020Egy normál térképalkalmazáson keresztül (pl. <a href="http://osmand.net/">OsmAnd</a> és <a href="https://maps.me/">MAPS.ME</a>). \u0020Ezeknek az alkalmazásoknak támogatniuk kell a KMZ fájlformátumot (csak a helyeket és az időbélyegeket). \u0020Valójában egy alkalmazásnak támogatnia kell a <i>ACTION_VIEW</i> MIME <i>application/vnd.google-earth.kmz</i> formátumot. \u0020</string>
     <string name="about_description">Az <i>OpenTracks</i> egy sportkövető alkalmazás, amely teljes mértékben tiszteletben tartja az Ön magánéletét.</string>
     <string name="about_history">Az OpenTracks a <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (2016-ban megszűnt) elágazása.</string>
