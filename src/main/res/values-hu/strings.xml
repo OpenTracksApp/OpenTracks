@@ -178,8 +178,8 @@ limitations under the License.
     <string name="settings_recording_location_frequency_summary">%1$s a helyellenőrzések között</string>
     <string name="settings_recording_max_recording_distance_summary">Új szegmens jön létre, ha a két hely közötti távolság nagyobb, mint %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Max. távolság</string>
-    <string name="settings_recording_min_recording_distance_title">Rögz. táv. intervalluma</string>
-    <string name="settings_recording_min_recording_interval_title">Rögz. időintervallum</string>
+    <string name="settings_recording_min_recording_distance_title">Rögzítési távolság intervalluma</string>
+    <string name="settings_recording_min_recording_interval_title">Rögzítési időintervallum</string>
     <string name="settings_recording_min_required_accuracy_title">GPS pontossága</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Dátum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Dátum (helyi)</string>
@@ -191,7 +191,7 @@ limitations under the License.
     <string name="settings_reset_done">Minden beállítás visszaállt az alapértelmezett értékre</string>
     <!-- Settings Sensor -->
     <!-- Settings Stats -->
-    <string name="settings_stats_rate_title">Mérték választása</string>
+    <string name="settings_stats_rate_title">Mértékegység típusa</string>
     <string name="settings_stats_units_imperial">Angolszász (mérföld, láb)</string>
     <string name="settings_stats_units_metric">Metrikus (km, m)</string>
     <string name="settings_stats_units_title">Mértékegység választása</string>
@@ -484,7 +484,7 @@ limitations under the License.
     <string name="stats_clock">Óra</string>
     <string name="current_heart_rate">Jelenlegi pulzusszám</string>
     <string name="average_heart_rate">Átlagos pulzusszám</string>
-    <string name="settings_sensor_bluetooth_service_filter_on">Csak azokat a Bluetooth-eszközöket jelenítse meg, amelyek bejelentik a szükséges szolgáltatásokat</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Csak azokat a Bluetooth-eszközöket jelenítse meg, amelyek szükséges szolgáltatásokat kérnek</string>
     <string name="settings_import_section">Importálás</string>
     <string name="settings_export_section">Kivitel</string>
     <string name="settings_layout_reset_confirm_title">Állítsa vissza az elrendezéseket\?</string>
@@ -529,7 +529,7 @@ limitations under the License.
     <string name="settings_import_export_summary">Importálás, exportálás, automatikus exportálás</string>
     <string name="settings_ui_dynamic_colors_title">Dinamikus színek</string>
     <string name="settings_recording_min_required_accuracy_summary">A hely figyelmen kívül marad, ha a pontossága nagyobb, mint %1$s</string>
-    <string name="introduction_osm_dashboard">Az OpenTracks önmagában nem nyújt térképet. Kérjük, telepítse az OSMDashboard-ot a felvételek térképen történő megjelenítéséhez.</string>
+    <string name="introduction_osm_dashboard">Az OpenTracks önmagában nem szolgáltat térképet. Kérjük, telepítse az OSMDashboard-ot a felvételek térképen történő megjelenítéséhez.</string>
     <string name="settings_recording_idle_timeout_title">Tétlenségi küszöbérték</string>
     <string name="settings_announcements_totaltime_frequency">Időintervallum</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Az összes felderíthető Bluetooth-eszközök megjelenítése</string>
