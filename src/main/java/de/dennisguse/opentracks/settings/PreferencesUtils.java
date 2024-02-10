@@ -75,8 +75,8 @@ public class PreferencesUtils {
     /**
      * Must be called during application startup.
      */
-    public static void initPreferences(final Context context, final Resources resources) {
-        PreferencesUtils.resources = resources;
+    public static void initPreferences(final Context context) {
+        PreferencesUtils.resources = context.getResources();
         PreferencesUtils.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         PreferencesOpenHelper.newInstance(PREFERENCES_VERSION).check();

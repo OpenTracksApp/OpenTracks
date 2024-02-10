@@ -30,7 +30,7 @@ public class Startup extends Application {
         // Include version information into stack traces.
         Log.i(TAG, BuildConfig.APPLICATION_ID + "; BuildType: " + BuildConfig.BUILD_TYPE + "; VersionName: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_NAME_FULL + " VersionCode: " + BuildConfig.VERSION_CODE);
 
-        PreferencesUtils.initPreferences(this, getResources());
+        PreferencesUtils.initPreferences(this);
         // Set default values of preferences on first start.
         PreferencesUtils.resetPreferences(this, false);
         PreferencesUtils.applyDefaultUnit();
