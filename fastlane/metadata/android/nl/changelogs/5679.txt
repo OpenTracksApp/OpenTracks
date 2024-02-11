@@ -1,0 +1,4 @@
+v4.11.1: OpenTracks
+
+Bugfix :
+- PublicAPI crashte bij het stoppen
