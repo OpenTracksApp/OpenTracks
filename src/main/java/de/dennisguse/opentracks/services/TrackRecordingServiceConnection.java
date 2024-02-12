@@ -42,6 +42,8 @@ public class TrackRecordingServiceConnection {
 
     private static final String TAG = TrackRecordingServiceConnection.class.getSimpleName();
 
+    private static final int SERVICE_BIND_FLAG = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
+
     private final Callback callback;
 
     private TrackRecordingService trackRecordingService;
@@ -81,8 +83,19 @@ public class TrackRecordingServiceConnection {
         }
 
         Log.i(TAG, "Binding the service.");
-        int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
-        context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection, flags);
+
+        context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection, SERVICE_BIND_FLAG);
+    }
+
+    public void bindWithStart(@NonNull Context context) {
+        if (trackRecordingService != null) {
+            callback.onConnected(trackRecordingService, this);
+            return;
+        }
+
+        Log.i(TAG, "Binding and starting the service (not in foreground).");
+
+        context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection,  Context.BIND_AUTO_CREATE + SERVICE_BIND_FLAG);
     }
 
     /**
@@ -135,6 +148,15 @@ public class TrackRecordingServiceConnection {
     }
 
     public static void execute(Context context, Callback callback) {
+        Callback withUnbind = (service, connection) -> {
+            callback.onConnected(service, connection);
+            connection.unbind(context);
+        };
+        new TrackRecordingServiceConnection(withUnbind)
+                .bindWithStart(context);
+    }
+
+    public static void executeForeground(Context context, Callback callback) {
         Callback withUnbind = (service, connection) -> {
             callback.onConnected(service, connection);
             connection.unbind(context);

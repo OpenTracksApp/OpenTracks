@@ -201,7 +201,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
         }
 
         if (item.getItemId() == R.id.track_detail_resume_track) {
-            TrackRecordingServiceConnection.execute(this, (service, connection) -> {
+            TrackRecordingServiceConnection.executeForeground(this, (service, connection) -> {
                 service.resumeTrack(trackId);
 
                 Intent newIntent = IntentUtils.newIntent(TrackRecordedActivity.this, TrackRecordingActivity.class)

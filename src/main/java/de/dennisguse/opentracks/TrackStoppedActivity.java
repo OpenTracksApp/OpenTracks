@@ -136,7 +136,7 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
     }
 
     private void resumeTrackAndFinish() {
-        TrackRecordingServiceConnection.execute(this, (service, connection) -> {
+        TrackRecordingServiceConnection.executeForeground(this, (service, connection) -> {
             service.resumeTrack(trackId);
 
             Intent newIntent = IntentUtils.newIntent(TrackStoppedActivity.this, TrackRecordingActivity.class)
