@@ -1,0 +1,4 @@
+v4.11.1: OpenTracks
+
+Arranxo:
+- Fallaba a API pública ao deterse

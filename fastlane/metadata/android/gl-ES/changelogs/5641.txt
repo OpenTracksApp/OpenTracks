@@ -1,0 +1,8 @@
+v4.11.0: Opentracks
+
+Cambios:
+- A localización dos Marcadores faise abrindo a opción engadir (era gardar)
+- Gráficos: usar menos espazo nos eixes
+- Gráficos: melloras en como se mostran os eixes
+- Gráficos: non encher cando se mostran máis de dúas liñas
+- Melloras nos anuncios por voz (omitir o decimal se é .0)
