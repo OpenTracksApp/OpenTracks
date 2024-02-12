@@ -92,7 +92,7 @@ limitations under the License.
     <string name="description_altitude_metric">海拔（米）</string>
     <string name="description_fastest_pace_in_minute">最快配速：%1$s分钟/公里（%2$s分钟/英里）</string>
     <string name="description_max_altitude">最高海拔：%1$d 米（%2$d 英尺）</string>
-    <string name="description_max_speed">最高限速：%1$.2f 公里/小时（%2$.1f 英里/小时）</string>
+    <string name="description_max_speed">最高速度：%1$.2f 公里/小时（%2$.1f 英里/小时）</string>
     <string name="description_min_altitude">最低海拔：%1$d 米（%2$d 英尺）</string>
     <string name="description_moving_time">移动时间：%1$s</string>
     <string name="description_pace_imperial">配速（分钟/英里）</string>
@@ -351,14 +351,14 @@ limitations under the License.
     <string name="waypoint_type_water_fountain">喷泉</string>
     <string name="waypoint_type_waypoint">路标</string>
     <string name="about_url">项目主页：<a href="%1$s">%1$s</a></string>
-    <string name="about_history">OpenTracks 是 <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a>（终止于 2016 年）的一个分支版本。</string>
+    <string name="about_history">OpenTracks 是已于 2016 年停止维护的 <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a> 的一个分支版本。</string>
     <string name="open_track_as_trackfileformat">作为 %1$s 文件打开</string>
     <string name="about_preference_title">关于 OpenTracks</string>
     <string name="about_version_name">版本名称：%1$s</string>
     <string name="about_version_code">版本号：%1$d</string>
     <string name="about_libraries">库</string>
     <string name="help_feature_title">OpenTracks 支持以下特性：</string>
-    <string name="activity_type_escooter">电动车</string>
+    <string name="activity_type_escooter">电动滑板车</string>
     <string name="description_altitude_loss">海拔降低：%1$d 米（%2$d 英尺）</string>
     <string name="description_default_speed_or_pace">按活动类型</string>
     <!-- Share image -->
@@ -384,7 +384,7 @@ limitations under the License.
     <string name="help_gps_troubleshooting_content"> \u0020下面是你可以做的事情： \u0020
 \n 一、检查 GPS 是否已经开启， \u0020
 \n 二、改善 GPS 信号（比如走到室外）， \u0020
-\n 三、用譬如 <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> 之类的工具检查 GPS 是否正常，并且 
+\n 三、使用 <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> 工具检查 GPS 是否正常， 
 \n 四、关闭节能模式。 \u0020
 \n \u0020
 \n 如果以上措施都不起作用，请给我们提交 BUG 报告。 \u0020</string>
@@ -615,7 +615,7 @@ limitations under the License.
     <string name="sensor_state_heart_rate_unit">bpm</string>
     <string name="sensor_state_power_unit">瓦</string>
     <string name="settings_sensor_bluetooth_service_filter_off">显示所有可发现的蓝牙设备</string>
-    <string name="help_data_google_play_services_content">否</string>
+    <string name="help_data_google_play_services_content">不使用</string>
     <string name="settings_announcements_idle_category_title">空闲公告</string>
     <string name="settings_ui_dynamic_colors_title">动态颜色</string>
     <string name="settings_recording_title">记录</string>
