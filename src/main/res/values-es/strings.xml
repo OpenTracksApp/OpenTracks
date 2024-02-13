@@ -478,7 +478,7 @@ limitations under the License.
     <string name="settings_sensor_cycling_distance_speed">Distancia y velocidad</string>
     <string name="settings_sensor_cycling_cadence">Cadencia</string>
     <string name="settings_announcements_totaltime_frequency">Intervalo de tiempo</string>
-    <string name="settings_announcements_distance_frequency">Intervalo de distancia</string>
+    <string name="settings_announcements_distance_frequency">Longitud de la vuelta</string>
     <string name="stats_sensors_heart_rate">Frecuencia cardiaca</string>
     <string name="stats_sensors_cadence">Cadencia</string>
     <string name="stats_sensors_power">Poder</string>
