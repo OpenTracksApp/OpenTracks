@@ -26,6 +26,7 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import de.dennisguse.opentracks.BuildConfig;
 
@@ -80,8 +81,7 @@ public class TrackRecordingServiceConnection {
         }
 
         Log.i(TAG, "Binding the service.");
-
-        int flags = Context.BIND_AUTO_CREATE + (BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0);
+        int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
         context.bindService(new Intent(context, TrackRecordingService.class), serviceConnection, flags);
     }
 
@@ -142,6 +142,6 @@ public class TrackRecordingServiceConnection {
         new TrackRecordingServiceConnection(withUnbind)
                 .bind(context);
 
-        // ContextCompat.startForegroundService(context, new Intent(context, TrackRecordingService.class));
+        ContextCompat.startForegroundService(context, new Intent(context, TrackRecordingService.class));
     }
 }
