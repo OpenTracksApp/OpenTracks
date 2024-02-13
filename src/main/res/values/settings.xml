@@ -281,16 +281,19 @@
     <string name="night_mode_default" translatable="false">@string/night_mode_system_value</string>
     <string name="night_mode_no_value" translatable="false">1</string>
     <string name="night_mode_yes_value" translatable="false">2</string>
+    <string name="night_mode_night_oled_value" translatable="false">3</string>
     <string name="night_mode_system_value" translatable="false">-1</string>
     <string-array name="night_mode_values">
         <item>@string/night_mode_system_value</item>
         <item>@string/night_mode_no_value</item>
         <item>@string/night_mode_yes_value</item>
+        <item>@string/night_mode_night_oled_value</item>
     </string-array>
     <string-array name="night_mode_options">
         <item>@string/settings_night_mode_option_system</item>
         <item>@string/settings_night_mode_option_day</item>
         <item>@string/settings_night_mode_option_night</item>
+        <item>@string/settings_night_mode_option_night_oled</item>
     </string-array>
 
     <!-- Stats layout customization -->

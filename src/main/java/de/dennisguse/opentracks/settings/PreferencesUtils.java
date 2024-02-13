@@ -87,6 +87,10 @@ public class PreferencesUtils {
         changeListener.onSharedPreferenceChanged(sharedPreferences, null);
     }
 
+    public static void registerOnSharedPreferenceChangeListenerSilent(SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener);
+    }
+
     public static void unregisterOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener);
     }
@@ -670,13 +674,29 @@ public class PreferencesUtils {
     }
 
     /**
-     * @return {@link androidx.appcompat.app.AppCompatDelegate}.MODE_*
+     * @return * {@link androidx.appcompat.app.AppCompatDelegate}.MODE_*
+     * * 3: Night OLED friendly
      */
-    public static int getDefaultNightMode() {
+    private static String getUiMode() {
         final String defaultValue = getKey(R.string.night_mode_default);
         final String value = getString(R.string.night_mode_key, defaultValue);
 
-        return Integer.parseInt(value);
+        return value;
+    }
+
+    public static boolean shouldApplyOledTheme() {
+        return resources.getString(R.string.night_mode_night_oled_value)
+                .equals(getUiMode());
+    }
+
+    public static void applyNightMode() {
+        String uiMode = getUiMode();
+        if (resources.getString(R.string.night_mode_night_oled_value)
+                .equals(uiMode)) {
+            return;
+        }
+
+        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(uiMode));
     }
 
     public static void resetPreferences(Context context, boolean readAgain) {
@@ -821,10 +841,6 @@ public class PreferencesUtils {
             editor.remove(resources.getString(R.string.stats_custom_layouts_key));
             editor.commit();
         }
-    }
-
-    public static void applyNightMode() {
-        AppCompatDelegate.setDefaultNightMode(PreferencesUtils.getDefaultNightMode());
     }
 
     //TODO Check if resetPreferences can be used instead.

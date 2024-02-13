@@ -8,19 +8,20 @@
         <!-- Material3 https://github.com/material-components/material-components-android/issues/2828#issuecomment-1187563903 -->
         <item name="switchPreferenceCompatStyle">@style/MaterialSwitchPreferenceCompat</item>
 
-        <item name="android:statusBarColor">?attr/colorSurfaceBright</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:navigationBarColor">?attr/colorSurfaceContainer</item>
-
         <!-- Snackbar -->
         <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
         <item name="snackbarButtonStyle">@style/MaterialSnackbarTextButtonTheme</item>
         <item name="snackbarTextViewStyle">@style/MaterialSnackbarTextViewTheme</item>
 
-        <item name="bottomAppBarStyle">@style/Widget.OpenTracks.BottomAppBar</item>
         <item name="floatingActionButtonStyle">@style/Widget.OpenTracks.FloatingActionButton</item>
 
         <item name="windowActionModeOverlay">true</item>
+
+        <item name="bottomAppBarStyle">@style/Widget.OpenTracks.BottomAppBar</item>
+
+        <item name="android:statusBarColor">?attr/colorSurfaceBright</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">?attr/colorSurfaceContainer</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.SplashScreen">
@@ -30,5 +31,37 @@
 
     <style name="Widget.OpenTracks.BottomAppBar" parent="Widget.Material3.BottomAppBar">
         <item name="backgroundTint">?attr/colorSurfaceContainer</item>
+    </style>
+
+    <style name="OpenTracksThemeOled" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/opentracks</item>
+        <item name="colorSecondary">@color/opentracks</item>
+
+        <!-- Material3 https://github.com/material-components/material-components-android/issues/2828#issuecomment-1187563903 -->
+        <item name="switchPreferenceCompatStyle">@style/MaterialSwitchPreferenceCompat</item>
+
+        <!-- Snackbar -->
+        <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
+        <item name="snackbarButtonStyle">@style/MaterialSnackbarTextButtonTheme</item>
+        <item name="snackbarTextViewStyle">@style/MaterialSnackbarTextViewTheme</item>
+
+        <item name="floatingActionButtonStyle">@style/Widget.OpenTracks.FloatingActionButton</item>
+
+        <item name="windowActionModeOverlay">true</item>
+
+        <!-- Differences to OpenTracksTheme -->
+        <item name="bottomAppBarStyle">@style/Widget.OpenTracks.BottomAppBarOled</item>
+
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+
+        <item name="colorSurface">@android:color/black</item>
+        <item name="colorSurfaceContainer">@android:color/black</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <style name="Widget.OpenTracks.BottomAppBarOled" parent="Widget.Material3.BottomAppBar">
+        <item name="backgroundTint">@android:color/transparent</item>
     </style>
 </resources>

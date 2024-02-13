@@ -377,6 +377,7 @@ limitations under the License.
     <string name="settings_chart_by_time">By time</string>
     <!-- Settings Recording -->
     <string name="settings_recording_title">Recording</string>
+    <string name="settings_theme_switch_restart">Theme changes may require a manual restart.</string>
     <string name="settings_ui_dynamic_colors_title">Dynamic Colors</string>
     <string name="settings_ui_dynamic_colors_summary">Use user-defined Dynamic Colors (Android 12+ only; requires a manual restart)</string>
     <string name="settings_recording_customize_layout_title">Customize your recording layout</string>
@@ -404,6 +405,7 @@ limitations under the License.
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Day</string>
     <string name="settings_night_mode_option_night">Night</string>
+    <string name="settings_night_mode_option_night_oled">Night (OLED friendly)</string>
 
     <string name="settings_announcements_totaltime_frequency">Time interval</string>
     <string name="settings_announcements_distance_frequency">Lap length</string>
