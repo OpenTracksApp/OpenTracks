@@ -22,6 +22,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import de.dennisguse.opentracks.services.announcement.TTSManager;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * @author Jimmy Shih
@@ -30,6 +31,10 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (PreferencesUtils.shouldApplyOledTheme()) {
+            setTheme(R.style.OpenTracksThemeOled);
+        }
+
         super.onCreate(savedInstanceState);
 
         // Set volume control stream for text to speech
