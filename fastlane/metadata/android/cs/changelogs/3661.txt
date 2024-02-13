@@ -1,4 +1,0 @@
-v3.11.1: OpenTracks
-
-Bugfix:
-- Voice announcements reported wrong statistics

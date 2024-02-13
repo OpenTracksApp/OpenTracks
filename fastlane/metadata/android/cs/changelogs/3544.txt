@@ -1,4 +1,0 @@
-v3.9.3: OpenTracks
-
-Bugfixes:
-- Fixed export all tracks bug.

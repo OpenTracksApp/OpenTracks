@@ -1,4 +1,0 @@
-v4.9.4: OpenTracks
-
-Bugfix:
-- Pád na systému Android 14 při neudělení oprávnění

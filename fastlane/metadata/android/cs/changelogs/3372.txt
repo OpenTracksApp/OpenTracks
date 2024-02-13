@@ -1,7 +1,0 @@
-v3.7.1: OpenTracks
-
-Workaround:
-- Hide start GPS button
-
-Bugfix:
-- Fixed null pointer

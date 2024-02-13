@@ -1,7 +1,0 @@
-v3.2.1: OpenTracks
-
-Changes:
-- Settings are now on a single page
-
-Developer:
-- Settings moved to Androidx compat (uses fragments)
