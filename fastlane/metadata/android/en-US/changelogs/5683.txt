@@ -1,0 +1,5 @@
+v4.11.2: OpenTracks
+
+Bugfix:
+- Recording stopped when screen turned of (introduced in v4.11.1)
+  (reverting da3dd29b8e44624a8222caea9067955f252ef5f8)
