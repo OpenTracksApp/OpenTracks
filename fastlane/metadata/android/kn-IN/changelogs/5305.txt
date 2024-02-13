@@ -1,0 +1,8 @@
+v4.6.2: OpenTracks
+
+Bugfix:
+- Crash on voice annoucement for imperial+meter
+- Crash on settings for imperial+meter
+- Fixed clipping of charts (Material3 upgrade)
+- Bluetooth settings handle missing permission
+- Aggregated stats didn't show imperial units for avg speed

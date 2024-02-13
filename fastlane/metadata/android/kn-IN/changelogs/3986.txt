@@ -1,0 +1,7 @@
+v3.17.1: OpenTracks
+
+
+Bugfix:
+- Interval length in meters instead of kilometers (introduced in v3.17.0)
+- Elevation gain/loss not recorded (introduced in v3.17.0)
+- Announcements not working on Android 11

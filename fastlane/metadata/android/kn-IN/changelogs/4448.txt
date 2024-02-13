@@ -1,0 +1,11 @@
+v3.20.2: OpenTracks
+
+Changes:
+- Elevation gain and loss are integers instead of floats
+- Ask for permission before using Bluetooth by a Toast message
+
+Bugfix:
+- Set FLAG_IMMUTABLE for PendingIntents to avoid crash on Android 12
+- Cadence sensor returns 0 instead of None when user is not pedaling
+- Speed sensor returns 0 instead of the last speed when it's stopped
+- With sensors, moving time stops when is not moving

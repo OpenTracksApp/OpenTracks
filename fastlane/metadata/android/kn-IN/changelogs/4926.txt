@@ -1,0 +1,13 @@
+v4.0.1: OpenTracks
+
+Changes:
+- Voice announcements are now configurable
+- Fullscreen mode now also hides Android's navigation bar
+- Connection to BLE sensors should now be faster
+- Allow to reset settings while recording
+- Allow to change import/export settings while recording
+- KML/KMZ: do not use icons to be loaded from Google
+
+Bugfix:
+- TrackStoppedActivity now works on smaller screens
+- Requests permissions on track list

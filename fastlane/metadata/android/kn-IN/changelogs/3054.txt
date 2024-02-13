@@ -1,0 +1,16 @@
+v3.2.0: OpenTracks
+
+Changes:
+- Removed Widget
+- Introduced material design icons
+- Removed snowboarding and skiing (need new icons)
+
+Bugfix:
+- Fixed search functionality
+
+Developer:
+- Fixed (some) test cases
+- Removed unused parcelable functionality
+- Major cleanup and reformatting
+- Do not use broadcast for app to widget communication
+- stats_content.xml does not include other files

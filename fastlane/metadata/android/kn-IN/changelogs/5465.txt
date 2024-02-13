@@ -1,0 +1,8 @@
+v4.9.2: OpenTracks
+
+Changes:
+- Option to use Android 12's Dynamic Color (Material Design)
+- Android 14's Predictive Back for some activities
+
+Bugfix:
+- Settings for total distance voice announcement was accidentially removed

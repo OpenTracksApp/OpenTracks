@@ -1,0 +1,8 @@
+v4.3.2: OpenTracks
+
+Bugfix:
+- KML header was misformed (#1522)
+
+Developer:
+- Use Java 17 (multi-line text, switch)
+- API33: locale config is generated

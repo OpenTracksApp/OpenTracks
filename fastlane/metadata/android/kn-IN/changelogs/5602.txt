@@ -1,0 +1,15 @@
+v4.10.0: OpenTracks
+
+Changes:
+- Support gain/loss via BLE Environmental Sensing (barometer)
+- Internal barometer can be turned off (e.g., if broken)
+- Material3 for preference switches
+- SplashScreen supports day/night mode
+- Bluetooth sensor settings: show selected sensor name (if cached by Android)
+
+Bugfix:
+- Interval UI was misaligned
+
+Developer:
+- Cleanup TrackRecordingServiceConnection
+- TrackRecordingService always starts as ForegroundService

@@ -1,0 +1,7 @@
+v4.9.6: OpenTracks
+
+Bugfix:
+- Export: existing files is now completely overwriting
+
+Developer:
+- Refactored barometric data processing

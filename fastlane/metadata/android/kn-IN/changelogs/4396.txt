@@ -1,0 +1,8 @@
+v3.19.1: OpenTracks
+
+Changes:
+- Updated translations.
+
+Bugfix:
+- Export All Tracks bug fixed.
+- Resume Track bug fixed.

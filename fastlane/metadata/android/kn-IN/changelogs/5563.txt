@@ -1,0 +1,4 @@
+v4.9.8: OpenTracks
+
+Bugfix:
+- Cycling cadence sensor works again (introduced in v4.9.6)

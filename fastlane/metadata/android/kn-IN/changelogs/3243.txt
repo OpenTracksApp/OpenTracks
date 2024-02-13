@@ -1,0 +1,13 @@
+v3.3.0: OpenTracks
+
+Breaking changes:
+- Pictures are now stored in app-private storage (do not show up other picture apps)
+  NOTE: Pictures taking with previous version cannot be shown
+- Localization for Spanish (Latin America) only works on Android 7.0 or later
+
+Changes:
+- Import/Export via Storage Access Framework (avoids READ/WRITE_EXTERNAL_STORAGE permission)
+
+Developer:
+- Cleaned internal data structures
+- Use separate icons/app names for debug version

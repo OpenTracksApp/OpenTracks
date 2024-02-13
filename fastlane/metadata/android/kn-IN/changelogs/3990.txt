@@ -1,0 +1,8 @@
+v3.17.2: OpenTracks
+
+WARNING: The v3.17.0+ releases contain a memory leak.
+This issues is NOT FIXED by this release.
+It is recommended to not upgrade if you still use a release before v3.17.0
+
+Bugfix:
+- Crash while using voice announcements

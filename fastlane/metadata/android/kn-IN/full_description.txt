@@ -1,0 +1,22 @@
+A sport tracking buddy that respects your privacy.
+
+Sport and outdoor activities grants happiness, skill and confidence.
+
+Value your health by keeping track on your training.
+Records as you go running or walking, and gives you a bike computer with a bigger screen for cycling.
+Mark interesting locations along your way with pictures.
+Keep recorded statistics in great detail for analysis.
+Share only the data you want others to have.
+
+* Voice announcements.
+* Supports Bluetooth LE sensors: heart rate, speed and distance (cycling), cadence (cycling), and power meter (cycling).
+* Altitude gain and loss: via barometric sensor.
+* Altitude shown in EGM2008 (above mean sea level); exported as WGS84.
+* Export data as tracks either as KMZ (incl. photos), KML, or GPX.
+* No Internet access or extra permissions.
+* Dark and light theme, respecting system settings.
+* No ads.
+
+Libre software / Free Software / Open Source
+meaning you can use, study, change and share the source code.
+Licensed Apache 2.0

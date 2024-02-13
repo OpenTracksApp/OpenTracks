@@ -1,0 +1,10 @@
+v3.18.4: OpenTracks
+
+Changes:
+- Speed/distance are consistently formatted
+- Intervals tab is now faster
+
+Bugfix:
+- Cycling speed/distance sensor: 
+  - fixed parsing (UINT32)
+  - transmit data to UI properly

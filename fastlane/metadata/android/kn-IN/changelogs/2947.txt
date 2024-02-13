@@ -1,0 +1,17 @@
+v3.0.1: OpenTracks
+
+Changes:
+- Share markers
+- Restructured settings
+- Removed actionbar back button
+- Export: removed photo size settings option
+- Export: KML as format is now selectable
+
+Bugfixes:
+- export directory is now /OpenTracks/
+- landscape mode is not crashing
+- fixed KML/KMZ export
+
+Developer:
+- Test are executable (but many failing)
+- Enabled continuous integration with TravisCI (no tests)

@@ -1,0 +1,8 @@
+v4.7.1: OpenTracks
+
+Bugfixes:
+- Android 14: crash on recording start (missing permissions)
+- Android 14: crash on track deletion (ForegroundService without reason)
+
+Developer:
+- AggregatedStats is now a RecyclerView

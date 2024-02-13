@@ -1,0 +1,13 @@
+v4.0.4: OpenTracks
+
+Changes:
+- Store BLE sensor data even without distance (every 10s)
+- Public API: allows setting name, category, and description
+
+Bugfix:
+- Crash when taking a picture and rotating the phone
+- 
+
+Developer:
+- Target SDK 33
+- Barometer uses interval of 5s

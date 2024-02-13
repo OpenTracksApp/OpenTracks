@@ -1,0 +1,22 @@
+v3.12.0: OpenTracks
+
+Changes:
+- Bluetooth sensor addresses
+- Intervals: show elevation gain
+- Export: default export directory
+- Export: automatic export after finishing a track
+- Manual import/export: new user interface
+- Manual export: option to overwrite on manual export
+
+Faster:
+- Track lists loading
+- Deleting multiple tracks
+
+Bugfix:
+- Fixed intent filters for import
+- KMZ could not be parsed
+- Export: fix crash on Android 11
+
+Developer:
+- Use ViewBindings
+- Database enforces foreign key and uses cascading deletes

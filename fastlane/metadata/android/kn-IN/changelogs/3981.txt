@@ -1,0 +1,17 @@
+v3.17.0: OpenTracks
+
+Changes:
+- Add icon for kayaking
+- Charts draw missing sensor data properly
+- Default: show coordinates while recording 
+
+Bugfixes:
+- GPX schema corrected
+- GPX exported altitude loss as sensor distance
+- Statistics not computed correctly if using a speed/distance sensor
+
+Developer:
+- Distance/speed value objects
+- Replaced communication via SharedPreferences 
+- Use non-static service binder
+- Use altitude in the code base (instead of elevation)

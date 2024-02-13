@@ -1,0 +1,11 @@
+v4.10.1: OpenTracks
+
+Changes:
+- Android 14: crash on recording start if permissions are not granted
+- Chart titles are more compact
+
+Bugfix:
+- BLE sensor re-connect resulted in crash (introduced in v4.9.6)
+- Cycling power was not processed (introduced in v4.9.6)
+- Cycling cadence as well as distance allow for repeated data
+- BLE barometer data was not processed correctly

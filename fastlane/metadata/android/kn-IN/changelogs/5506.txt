@@ -1,0 +1,4 @@
+v4.9.4: OpenTracks
+
+Bugfix:
+- Crash on Android 14 if permissions were not granted

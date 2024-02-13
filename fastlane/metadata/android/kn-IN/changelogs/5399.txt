@@ -1,0 +1,7 @@
+v4.8.4: OpenTracks
+
+Changes:
+- Show max power for recorded tracks
+
+Developer:
+- TrackList now uses RecyclerView

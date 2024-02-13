@@ -1,0 +1,11 @@
+v4.0.8: OpenTracks
+
+Changes:
+- Altitude always shown in m/ft
+- Show track timezone if different than device timezone
+- PublicAPI: support setting the track icon explicitly
+
+Developer:
+- Introduced DistanceFormatter
+- Upgrade to AGP 7.3/desugar for Duration.class
+- Android12+: do splashscreen via Androidx
