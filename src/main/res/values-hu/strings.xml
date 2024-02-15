@@ -337,10 +337,10 @@ limitations under the License.
     <string name="track_detail_intervals_tab">Intervallum</string>
     <string name="interval_list_empty_message">Még nincs intervallum</string>
     <string name="settings_default_export_uri_title">Nyomvonal export könyvtára</string>
-    <string name="instant_export_enabled_summary">Sáv exportálása a tárolóba a felvétel befejezése után</string>
+    <string name="instant_export_enabled_summary">Nyomvonal exportálása a tárolóba a felvétel befejezése után</string>
     <string name="hold_to_stop">Tartsa lenyomva a leállításhoz</string>
     <string name="track_distance_notification">Távolság: %1$s</string>
-    <string name="instant_export_enabled_title">Azonnali edzés utáni export</string>
+    <string name="instant_export_enabled_title">Azonnali edzés utáni exportálás</string>
     <string name="track_pace_notification">Tempó: %1$s</string>
     <string name="export_with_photos">fotókkal</string>
     <string name="export_error_post_workout">Az edzés utáni exportálás sikertelen, kérjük, ellenőrizze az exportkönyvtárat.</string>
@@ -432,7 +432,7 @@ limitations under the License.
 \n * pályák megjelenítése térképen (lásd alább)</string>
     <string name="about_third_party_data">Harmadik féltől származó adatok</string>
     <string name="menu_voice_rate">Hangsebesség</string>
-    <string name="track_delete_not_recording">Ez a sáv nem törölhető, mivel jelenleg is rögzítve van.</string>
+    <string name="track_delete_not_recording">Ez a nyomvonal nem törölhető, mivel jelenleg is rögzítve van.</string>
     <string name="settings_sensor_cycling_cadence">Kerékpározás: lépésszám</string>
     <string name="settings_sensor_cycling_distance_speed">Kerékpározás: táv és sebesség</string>
     <string name="settings_sensor_running_speed_and_cadence">Futás: távolság, sebesség és ritmus</string>
@@ -486,7 +486,7 @@ limitations under the License.
     <string name="average_heart_rate">Átlagos pulzusszám</string>
     <string name="settings_sensor_bluetooth_service_filter_on">Csak azokat a Bluetooth-eszközöket jelenítse meg, amelyek szükséges szolgáltatásokat kérnek</string>
     <string name="settings_import_section">Importálás</string>
-    <string name="settings_export_section">Kivitel</string>
+    <string name="settings_export_section">Exportálás</string>
     <string name="settings_layout_reset_confirm_title">Állítsa vissza az elrendezéseket\?</string>
     <string name="settings_layout_reset_done">Az összes elrendezési beállítás visszaállt az alapértelmezett értékekre</string>
     <string name="custom_layout_list_layout_removed">Az elrendezést eltávolították</string>
