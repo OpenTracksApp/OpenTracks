@@ -593,4 +593,5 @@ limitations under the License.
     <string name="sensor_state_pressure">Barometer</string>
     <string name="value_internal_sensor">Interni senzor</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="settings_recording_min_sampling_interval_title">Interval uzorkovanja</string>
 </resources>
