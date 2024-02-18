@@ -163,7 +163,7 @@
     <string name="generic_separator_done_total">/</string>
     <string name="generic_show_errors">ದೋಷಗಳನ್ನು ತೋರಿಸಿ</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">ಒಂದು ದೋಷದೊಂದಿಗೆ ಪೂರ್ಣಗೊಂಡಿದೆ</item>
+        <item quantity="one">%1$d ದೋಷದೊಂದಿಗೆ ಪೂರ್ಣಗೊಂಡಿದೆ</item>
         <item quantity="other">%1$d ದೋಷಗಳೊಂದಿಗೆ ಪೂರ್ಣಗೊಂಡಿದೆ</item>
     </plurals>
     <string name="generic_completed">ಪೂರ್ಣಗೊಂಡಿದೆ</string>
