@@ -1,0 +1,12 @@
+v3.3.1: OpenTracks
+
+Changes:
+- Android 10: on uninstall allow to keep app data
+- Introduced Dashboard API: map icon can be used to open current track in external app
+  (requires installation of another app like OSMDashboard)
+
+Bugfix:
+- App label was broken (introduced in v3.3.0)
+
+Developer:
+- Documentation for Dashboard API can be found in README_DEVELOPER.md

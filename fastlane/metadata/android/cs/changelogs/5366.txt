@@ -1,0 +1,4 @@
+v4.8.1: OpenTracks
+
+Bugfix:
+- Location permission was not granted due to ACCESS_LOCATION_BACKGROUND (removed)

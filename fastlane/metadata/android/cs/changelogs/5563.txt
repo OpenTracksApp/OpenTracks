@@ -1,0 +1,4 @@
+v4.9.8: OpenTracks
+
+Oprava chyby:
+- Senzor kadence znovu funguje (chyba vznikla ve verzi v4.9.6)

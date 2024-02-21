@@ -1,0 +1,10 @@
+(versionName): OpenTracks
+
+Změny:
+-
+
+Opravy:
+-
+
+Vývojář:
+-

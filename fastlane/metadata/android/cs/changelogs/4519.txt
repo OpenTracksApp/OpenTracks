@@ -1,0 +1,11 @@
+v3.22.0: OpenTracks
+
+Changes:
+- Locations are only stored if traveled distance > recording distance interval
+  (removed left over functionality from idle/non-idle detection)
+- UI can be configured to show a clock
+- Idle speed is now configurable
+
+Bugfix:
+- Intervals: crash when gain but not loss was stored
+- While recording: prevent crash when disabling voice announcements

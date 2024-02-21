@@ -1,0 +1,13 @@
+v3.21.0: OpenTracks
+
+Changes:
+- While recording: remove idle/non-idle creation of TrackPoints
+- Settings are now in separate folders
+- Opening OpenTracks from notification (while recording) and pressing back opens track list
+- GPX compatibilty: support <speed> for import
+
+Bugfixes:
+- Altitude and distance (from BlE sensor): only reset counters if data was actually stored
+- Import without speed, requires computing speed
+- BLE running sensor not connected, should not be reported as present
+- BLE r

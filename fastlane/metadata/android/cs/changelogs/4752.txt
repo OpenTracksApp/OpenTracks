@@ -1,0 +1,11 @@
+v3.25.0: OpenTracks
+
+Changes:
+- GPS is now optional incl. GPS disabled warning
+- PublicAPI: other applications can now receive recorded data if they start a recording (implemented for Gadgetbridge)
+- New activities: swimming, swimming open, and workout
+- Removed share pic functionality
+
+Bugfix:
+- UI: speed/elevation where jumping between 0.0 and the actual value
+- Tracks with emojis can be exported

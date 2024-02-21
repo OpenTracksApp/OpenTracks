@@ -1,0 +1,13 @@
+v3.7.0: OpenTracks
+
+Changes:
+- Report speed/pace by activity type
+- Added workaround for GPS week rollover
+- (Experimental) Support for Bluetooth LE cycling sensors (cadence and speed)
+- KMZ/KML import enhanced
+
+Bugfix:
+- KMZ import: only import used images
+
+Developer:
+- Refactored TrackRecordingService

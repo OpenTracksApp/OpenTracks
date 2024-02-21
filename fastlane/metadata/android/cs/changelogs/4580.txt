@@ -1,0 +1,10 @@
+v3.23.0: OpenTracks
+
+Changes:
+- Added UI profiles
+- Aggregated statistics for selected tracks
+- Re-implemented idle/non-idle TrackPoints as moving time stopped working (introduced in v3.22.0)
+
+Bugfixes:
+- BLE sensors: clear data on disconnect
+- Automatic export needs to persist permission

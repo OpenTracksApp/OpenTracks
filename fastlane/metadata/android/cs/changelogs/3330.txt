@@ -1,0 +1,10 @@
+v3.6.0: OpenTracks
+
+Changes:
+- Stopped tracks can now be resumed
+
+Bugfix:
+- Import of KMZ did not process the photo URL correctly
+
+Developer:
+- Simplified data processing

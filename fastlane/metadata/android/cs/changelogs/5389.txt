@@ -1,0 +1,8 @@
+v4.8.3: OpenTracks
+
+
+Bugfix:
+- Android 14: prevent crash due to malformed UUID (example for filename template)
+
+Developer:
+- Marker list is now a RecyclerView

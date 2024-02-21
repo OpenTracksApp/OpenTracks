@@ -1,0 +1,11 @@
+v3.2.10: OpenTracks
+
+Changes:
+- ChartView is not configurable anymore
+- After reboot: removed automatic restart of an unfinished recording
+
+Bugfix:
+- Speech announcements use MAY_DUCK (again)
+- ChartView shows markers (again)
+- Fixed landscape recordingLayout of TrackListActivity
+- Request legacy file API behavior (necessary for Android 10)

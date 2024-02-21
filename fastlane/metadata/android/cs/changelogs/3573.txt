@@ -1,0 +1,10 @@
+v3.9.4: OpenTracks
+
+Changes:
+- Added interval computation
+- Voice announcements present last interval statistics
+- Settings: Bluetooth icon is animated
+
+Bugfix:
+- GPS was not turned off when stopping a recording
+- Show on map via KML/KMZ/GPX was broken due to refactoring

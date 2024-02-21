@@ -1,0 +1,5 @@
+v3.9.2: OpenTracks
+
+Bugfixes:
+- Fixed force close on API<25 (due to an animation)
+- Reset recording state (on app startup) if crashed while recording

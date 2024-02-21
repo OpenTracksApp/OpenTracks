@@ -1,0 +1,6 @@
+v3.20.1: OpenTracks
+
+Changes:
+- Announcements can now be used by both distance and time
+- Announcements beep if no Text-to-speech software is installed
+- Removed adaptive GPS location frequency

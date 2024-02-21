@@ -1,0 +1,7 @@
+v4.1.1: OpenTracks
+
+Changes:
+- Add introduction screen (show once)
+
+Bugfix:
+- Do not crash if no GPS device is present

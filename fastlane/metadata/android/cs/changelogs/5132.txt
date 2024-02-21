@@ -1,0 +1,7 @@
+v4.2.1: OpenTracks
+
+Changes:
+- Speed sensor: acceptable wheel diameter is 100mm-4000mm
+
+Bugfix:
+- Reconnect to a sensor if connection is lost

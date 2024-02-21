@@ -1,0 +1,6 @@
+v4.9.9: OpenTracks
+
+Oprava chyby:
+- Pád při používání senzoru BLE na konci záznamu (závod)
+  Důvod: subsystém senzorů byl spuštěn dvakrát a pouze druhý z nich byl vypnut.
+- Při nahrávání jsou znovu zobrazeny názvy senzorů BLE

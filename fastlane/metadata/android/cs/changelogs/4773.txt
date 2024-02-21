@@ -1,0 +1,8 @@
+v3.26.0: OpenTracks
+
+Changes:
+- Voice announcements are configurable
+- Voice announcements of heart rate
+
+Bugfix:
+- Crash due to race condition
