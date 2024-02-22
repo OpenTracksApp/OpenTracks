@@ -112,8 +112,13 @@ public class MarkerListActivity extends AbstractActivity {
         viewBinding.markerList.setLayoutManager(layoutManager);
         viewBinding.markerList.setAdapter(adapter);
 
-        setSupportActionBar(viewBinding.markerListToolbar);
         adapter.setActionModeCallback(contextualActionModeCallback);
+
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
+        setSupportActionBar(viewBinding.markerListToolbar);
+        viewBinding.bottomAppBarLayout.bottomAppBar.setNavigationOnClickListener(item -> {
+            finish();
+        });
     }
 
     @Override
