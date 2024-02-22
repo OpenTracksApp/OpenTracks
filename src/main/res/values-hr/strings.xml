@@ -379,7 +379,7 @@ limitations under the License.
     <string name="settings_public_api_package_title">Ime paketa za javni API</string>
     <string name="sensor_could_not_scan">Neuspjelo traženje Bluetooth uređaja (greška %1$i).</string>
     <string name="help_storage_pictures_content">One se spremaju u internoj memoriji aplikacije (dostupne su samo unutar OpenTracksa).</string>
-    <string name="import_no_kml_file_found">U KMZ-u nije pronađena datoteka doc.kml</string>
+    <string name="import_no_kml_file_found">U KMZ-u nije pronađena datoteka kml</string>
     <string name="settings_announcements_idle_category_title">Najave o neaktivnosti</string>
     <string name="generic_open_track">Otvori rutu</string>
     <string name="sensor_state_power_unit">W</string>

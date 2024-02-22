@@ -427,7 +427,7 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="import_progress_summary_errors_msg">Akatsak</string>
     <string name="import_parser_error">Analizatzailea errorea: %1$s</string>
     <string name="import_unable_to_import_file">Ezin izan da inportazio fitxategia: %1$s</string>
-    <string name="import_no_kml_file_found">Ez doc.kml fitxategia aurkitu KMZ</string>
+    <string name="import_no_kml_file_found">Ez kml fitxategia aurkitu KMZ</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_progress_summary_exists_msg">Dagoeneko existitzen da</string>
     <string name="import_prevent_reimport">Ezarri duzu saihesteko re-import track</string>

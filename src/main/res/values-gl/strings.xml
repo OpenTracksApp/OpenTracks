@@ -416,7 +416,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="instant_export_enabled_summary">Rematou a exportación da ruta á almacenaxe tras a gravación</string>
     <string name="import_thread_interrupted">Fío interrumpido</string>
     <string name="export_progress_summary_new_msg">Exportados os novos ficheiros</string>
-    <string name="import_no_kml_file_found">Non se atopou ficheiro doc.kml en KMZ</string>
+    <string name="import_no_kml_file_found">Non se atopou ficheiro kml en KMZ</string>
     <string name="stats_loss">Perda</string>
     <string name="description_altitude_loss">Perda de altitude: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Fallou a exportación, comproba o directorio de exportación.</string>

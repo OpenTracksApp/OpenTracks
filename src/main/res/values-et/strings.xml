@@ -421,7 +421,7 @@ limitations under the License.
     <string name="generic_click_twice_cancel">Tühistamiseks vajutage uuesti tagasi</string>
     <string name="gps_disabled_msg">GPS keelatud</string>
     <string name="import_unsupported_format">Toetamata failivorming</string>
-    <string name="import_no_kml_file_found">doc.kml faili ei leitud KMZ-st</string>
+    <string name="import_no_kml_file_found">kml faili ei leitud KMZ-st</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_error_list_dialog_title">Faile pole imporditud</string>
     <string name="import_file_imported">Fail %1$s imporditud</string>

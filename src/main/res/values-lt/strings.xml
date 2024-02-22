@@ -393,7 +393,7 @@ limitations under the License.
     <string name="sensor_state_heart_rate_max">Maksimalus širdies ritmas</string>
     <string name="help_recording_title">Kaip OpenTracks įrašo duomenis\?</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Per visą ekraną</string>
-    <string name="import_no_kml_file_found">KMZ nerastas doc.kml failas</string>
+    <string name="import_no_kml_file_found">KMZ nerastas kml failas</string>
     <string name="settings_sensor_wheel_circumference">Rato apskritimas (mm)</string>
     <string name="about_version_code">Versijos kodas: %1$d</string>
     <string name="hold_to_stop">Laikykite sustabdyti</string>

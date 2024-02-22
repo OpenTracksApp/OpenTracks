@@ -426,7 +426,7 @@ limitations under the License.
     <string name="import_unsupported_format">Formato de ficheiro não suportado</string>
     <string name="import_parser_error">Erro do analisador: %1$s</string>
     <string name="import_unable_to_import_file">Não foi possível importar o ficheiro: %1$s</string>
-    <string name="import_no_kml_file_found">Nenhum ficheiro doc.kml encontrado no KMZ</string>
+    <string name="import_no_kml_file_found">Nenhum ficheiro kml encontrado no KMZ</string>
     <string name="import_file_imported">Ficheiro %1$s importado</string>
     <string name="import_prevent_reimport">Definiu evitar reimportar a trilha</string>
     <string name="import_progress_summary_ok_msg">Ficheiros importados</string>

@@ -578,7 +578,7 @@ limitations under the License.
     <string name="activity_type_workout">健身</string>
     <string name="generic_today">今天</string>
     <string name="generic_yesterday">昨天</string>
-    <string name="import_no_kml_file_found">在 KMZ 中没有找到 doc.kml 文件</string>
+    <string name="import_no_kml_file_found">在 KMZ 中没有找到 kml 文件</string>
     <string name="import_error_info">%1$s：%2$s</string>
     <string name="import_error_list_dialog_title">文件未导入</string>
     <string name="import_file_imported">文件 %1$s 已导入</string>

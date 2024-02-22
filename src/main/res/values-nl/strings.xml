@@ -385,7 +385,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="generic_click_twice_cancel">Klik nogmaals terug om te annuleren</string>
     <string name="settings_default_export_uri_title">Spoor export map</string>
     <string name="import_thread_interrupted">Draad onderbroken</string>
-    <string name="import_no_kml_file_found">Geen doc.kml bestand gevonden in KMZ</string>
+    <string name="import_no_kml_file_found">Geen kml bestand gevonden in KMZ</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Volledig scherm</string>
     <string name="gps_fixed_and_ready">GPS vast en klaar</string>
     <string name="aggregated_stats_empty_message">Neem uw eerste route op om geaggregeerde statistieken te zien</string>

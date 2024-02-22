@@ -386,7 +386,7 @@ limitations under the License.
     <string name="instant_export_enabled_title">Instant post-workout vienti</string>
     <string name="hold_to_stop">Pidä lopettaa</string>
     <string name="gps_fixed_and_ready">GPS kiinteä ja valmis</string>
-    <string name="import_no_kml_file_found">Ei doc.KML tiedosto löytyy KMZ</string>
+    <string name="import_no_kml_file_found">Ei kml tiedosto löytyy KMZ</string>
     <string name="settings_default_export_uri_title">Seuraa vientihakemistoa</string>
     <string name="instant_export_enabled_summary">Vie reitti tiedostoon tallennuksen loputtua</string>
     <string name="settings_sensor_wheel_circumference">Pyörän ympärysmitta (mm)</string>

@@ -431,7 +431,7 @@ limitations under the License.
     <string name="import_progress_summary_exists_msg">Już istnieje</string>
     <string name="import_progress_summary_ok_msg">Pliki importowane</string>
     <string name="import_file_imported">Plik %1$s zaimportowany</string>
-    <string name="import_no_kml_file_found">W pliku KMZ nie znaleziono pliku doc.kml</string>
+    <string name="import_no_kml_file_found">W pliku KMZ nie znaleziono pliku kml</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="track_pace_notification">Prędkość: %1$s</string>
     <string name="track_speed_notification">Szybkość: %1$s</string>

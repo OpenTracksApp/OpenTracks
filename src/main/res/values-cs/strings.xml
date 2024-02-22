@@ -379,7 +379,7 @@ limitations under the License.
     <string name="generic_completed">Ukončeno</string>
     <string name="gps_disabled_msg">GPS vypnuto</string>
     <string name="gps_fixed_and_ready">GPS zaměřeno a připraveno</string>
-    <string name="import_no_kml_file_found">Soubor doc.kml nenalezen v KMZ</string>
+    <string name="import_no_kml_file_found">Soubor kml nenalezen v KMZ</string>
     <string name="settings_default_trackfileformat">Formát souboru pro export/sdílení</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Na celou obrazovku</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Při nahrávání využívat celou obrazovku.</string>

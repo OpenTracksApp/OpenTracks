@@ -191,7 +191,7 @@
     <string name="image_discard">ತ್ಯಜಿಸಿ</string>
     <string name="image_track">ಟ್ರ್ಯಾಕ್</string>
     <string name="import_thread_interrupted">ಥ್ರೆಡ್ ಅಡಚಣೆಯಾಗಿದೆ</string>
-    <string name="import_no_kml_file_found">KMZ ನಲ್ಲಿ ಯಾವುದೇ doc.kml ಫೈಲ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="import_no_kml_file_found">KMZ ನಲ್ಲಿ ಯಾವುದೇ kml ಫೈಲ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
     <string name="import_unsupported_format">ಫೈಲ್ ಫಾರ್ಮ್ಯಾಟ್ ಬೆಂಬಲಿತವಾಗಿಲ್ಲ</string>
     <string name="import_parser_error">ಪಾರ್ಸರ್ ದೋಷ: %1$s</string>
     <string name="import_unable_to_import_file">ಫೈಲ್ ಅನ್ನು ಆಮದು ಮಾಡಲು ಸಾಧ್ಯವಿಲ್ಲ: %1$s</string>

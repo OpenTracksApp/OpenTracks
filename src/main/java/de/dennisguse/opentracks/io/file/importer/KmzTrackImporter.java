@@ -37,7 +37,6 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
 import de.dennisguse.opentracks.util.FileUtils;
 
 /**
@@ -48,6 +47,8 @@ import de.dennisguse.opentracks.util.FileUtils;
 public class KmzTrackImporter {
 
     private static final String TAG = KmzTrackImporter.class.getSimpleName();
+
+    private static final String KML_FILE_EXTENSION = ".kml";
 
     private static final List<String> KMZ_IMAGES_EXT = List.of("jpeg", "jpg", "png");
 
@@ -156,7 +157,7 @@ public class KmzTrackImporter {
                 }
 
                 String fileName = zipEntry.getName();
-                if (KmzTrackExporter.KMZ_KML_FILE.equals(fileName)) {
+                if (fileName.endsWith(KML_FILE_EXTENSION)) {
                     List<Track.Id> trackId = parseKml(zipInputStream);
                     if (trackId.isEmpty()) {
                         Log.d(TAG, "Unable to parse kml in kmz");

@@ -471,7 +471,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_recording_fullscreen_on_while_recording_summary">Anzeige im Vollbildmodus während der Aufzeichnung.</string>
     <string name="sensor_state_heart_rate_avg">Durchschnittlicher Herzfrequenz</string>
     <string name="settings_prevent_reimport_tracks_title">Verhindere den erneuten Import von Strecken(aufzeichnungen)</string>
-    <string name="import_no_kml_file_found">Keine doc.kml Datei im KMZ gefunden</string>
+    <string name="import_no_kml_file_found">Keine kml Datei im KMZ gefunden</string>
     <string name="import_thread_interrupted">Thread unterbrochen</string>
     <string name="import_unable_to_import_file">Importieren der Datei gescheitert: %1$s</string>
     <string name="settings_sensor_cycling_cadence">Trittfrequenz</string>
