@@ -365,7 +365,7 @@
     <string name="export_error_post_workout">A exportação pós-treino falhou, verifique o diretório de exportação.</string>
     <string name="description_altitude_loss">Perda de elevação: %1$d m (%2$d ft)</string>
     <string name="export_progress_summary_new_msg">Novas trilhas exportadas</string>
-    <string name="import_no_kml_file_found">Nenhum arquivo doc.kml encontrado no KMZ</string>
+    <string name="import_no_kml_file_found">Nenhum arquivo kml encontrado no KMZ</string>
     <string name="settings_prevent_reimport_tracks_title">Impedir a reimportação de trilhas</string>
     <string name="export_progress_summary_overwrite_msg">Trilhas sobrescritas</string>
     <string name="export_progress_summary_skip_msg">Trilhas puladas</string>

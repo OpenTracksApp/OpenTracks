@@ -390,7 +390,7 @@ limitations under the License.
     <string name="marker_add_photo_canceled">Đã hủy, không có dấu ảnh nào được thêm</string>
     <string name="generic_completed">Hoàn tất</string>
     <string name="export_progress_summary_errors_msg">Lỗi</string>
-    <string name="import_no_kml_file_found">Không tìm thấy tệp doc.kml nào trong KMZ</string>
+    <string name="import_no_kml_file_found">Không tìm thấy tệp kml nào trong KMZ</string>
     <string name="activity_type_escooter">xe scooter điện</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="other">Đã hoàn tất với %1$d lỗi</item>

@@ -316,7 +316,7 @@
         <item quantity="other">Completado con %1$d errores</item>
     </plurals>
     <string name="import_thread_interrupted">Hilo interrumpido</string>
-    <string name="import_no_kml_file_found">No se ha encontrado ningún archivo doc.kml en KMZ</string>
+    <string name="import_no_kml_file_found">No se ha encontrado ningún archivo kml en KMZ</string>
     <string name="sensor_state_power_avg">Potencia promedio</string>
     <string name="sensor_could_not_scan">No se pudieron buscar dispositivos Bluetooth (error %1$i).</string>
     <string name="settings_prevent_reimport_tracks_title">Evitar reimportar los recorridos</string>

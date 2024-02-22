@@ -425,7 +425,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="export_progress_summary_skip_msg">Tracce saltate</string>
     <string name="export_progress_summary_overwrite_msg">Tracce sovrascritte</string>
     <string name="export_progress_summary_new_msg">Nuove tracce esportate</string>
-    <string name="import_no_kml_file_found">Nessun file doc.kml trovato in KMZ</string>
+    <string name="import_no_kml_file_found">Nessun file kml trovato in KMZ</string>
     <string name="import_progress_summary_ok_msg">File importati</string>
     <string name="import_progress_summary_exists_msg">Esiste già</string>
     <string name="import_progress_summary_errors_msg">Errori</string>

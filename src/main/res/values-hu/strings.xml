@@ -384,7 +384,7 @@ limitations under the License.
     <string name="gps_disabled_msg">GPS letiltva</string>
     <string name="gps_fixed_and_ready">GPS rögzítve és készen áll</string>
     <string name="import_unable_to_import_file">Nem sikerült importálni a fájlt: %1$s</string>
-    <string name="import_no_kml_file_found">Nincs doc.kml fájl található a KMZ fájlban</string>
+    <string name="import_no_kml_file_found">Nincs kml fájl található a KMZ fájlban</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_file_imported">Fájl %1$s importálva</string>
     <string name="import_prevent_reimport">Beállítottad, hogy megakadályozd az újraimportálást</string>

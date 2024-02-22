@@ -371,7 +371,7 @@ limitations under the License.
     <string name="import_thread_interrupted">Поток перервано</string>
     <string name="import_unsupported_format">Формат файлу не підтримується</string>
     <string name="import_parser_error">Помилка парсера: %1$s</string>
-    <string name="import_no_kml_file_found">Файл doc.kml не знайдено в KMZ</string>
+    <string name="import_no_kml_file_found">Файл kml не знайдено в KMZ</string>
     <string name="import_error_list_dialog_title">Файли не імпортовано</string>
     <string name="import_error_info">%1$s:%2$s</string>
     <string name="marker_add_photo_canceled">Скасовано, фото-маркування не додано</string>

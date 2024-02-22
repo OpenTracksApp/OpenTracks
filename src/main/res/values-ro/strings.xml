@@ -395,7 +395,7 @@ limitations under the License.
     <string name="sensor_state_cadence_max">Max Cadență</string>
     <string name="sensor_could_not_scan">Nu a fost posibilă scanarea pentru dispozitive Bluetooth (eroare %1$i).</string>
     <string name="share_image_subject">Aș dori să vă împărtășesc o imagine</string>
-    <string name="import_no_kml_file_found">Nu s-a găsit niciun fișier doc.kml în KMZ</string>
+    <string name="import_no_kml_file_found">Nu s-a găsit niciun fișier kml în KMZ</string>
     <string name="settings_prevent_reimport_tracks_title">Împiedicați reimportul de piese</string>
     <string name="import_progress_summary_ok_msg">Fișierele importate</string>
     <string name="permission_gps_failed">OpenTracks necesită permisiunea de a utiliza GPS.</string>

@@ -396,7 +396,7 @@ limitations under the License.
     <string name="menu_insert_gallery_img">Vložiť obrázok do galérie</string>
     <string name="menu_voice_rate">Rýchlosť hlasu</string>
     <string name="import_unable_to_import_file">Nie je možné importovať súbor: %1$s</string>
-    <string name="import_no_kml_file_found">V KMZ nebol nájdený žiadny súbor doc.kml</string>
+    <string name="import_no_kml_file_found">V KMZ nebol nájdený žiadny súbor kml</string>
     <string name="generic_undo">Zrušiť</string>
     <string name="gps_fixed_and_ready">GPS pevná a pripravená</string>
     <string name="import_error_info">%1$s: %2$s</string>

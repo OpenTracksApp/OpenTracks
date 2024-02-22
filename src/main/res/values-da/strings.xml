@@ -390,7 +390,7 @@ limitations under the License.
     <string name="export_track_errors">Filer ikke eksporteret</string>
     <string name="gps_disabled_msg">GPS deaktiveret</string>
     <string name="gps_fixed_and_ready">GPS fastsat og klar</string>
-    <string name="import_no_kml_file_found">Ingen doc.kml-fil fundet i KMZ</string>
+    <string name="import_no_kml_file_found">Ingen kml-fil fundet i KMZ</string>
     <string name="sensor_state_cadence_avg">Gns. kadence</string>
     <string name="sensor_state_cadence_max">Maks. kadence</string>
     <string name="sensor_state_heart_rate_avg">Gns. Puls</string>

@@ -411,7 +411,7 @@ limitations under the License.
     <string name="help_track_export_content"> Spår kan exporteras från inställningarna som KMZ, KML eller GPX. KMZ/KML alla data; GPX endast platser. Spår som delas via <i>delningsikonen</i> delas som KMZ. </string>
     <string name="about_preference_title">Om OpenTracks</string>
     <string name="import_progress_summary_errors_msg">Fel</string>
-    <string name="import_no_kml_file_found">Ingen doc.KML-filen finns i KMZ</string>
+    <string name="import_no_kml_file_found">Ingen kml-filen finns i KMZ</string>
     <string name="import_prevent_reimport">Du har angett förhindra åter importera spår</string>
     <string name="menu_resume_track">Återuppta spår</string>
     <string name="import_unsupported_format">Filformat som inte stöds</string>

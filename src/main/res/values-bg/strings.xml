@@ -333,7 +333,7 @@ limitations under the License.
     <string name="track_recording_notification_accuracy">Точност на локацията: %1$s</string>
     <string name="about_version_name">Име на версията: %1$s</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">По време на запис присъства в режим на цял екран.</string>
-    <string name="import_no_kml_file_found">В KMZ не е открит файл doc.kml</string>
+    <string name="import_no_kml_file_found">В KMZ не е открит файл kml</string>
     <string name="help_gps_troubleshooting_content"> Какво можете да направите:
 \n а) проверете дали GPS е активиран,
 \n б) да подобрите приемането на GPS (например да излезете на открито),

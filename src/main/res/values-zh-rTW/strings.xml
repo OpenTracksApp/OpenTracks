@@ -239,7 +239,7 @@ limitations under the License.
     <string name="import_unsupported_format">未支援的檔案格式</string>
     <string name="import_parser_error">分析器錯誤：%1$s</string>
     <string name="import_unable_to_import_file">無法匯入檔案：%1$s</string>
-    <string name="import_no_kml_file_found">在 KMZ 中沒有發現 doc.kml 檔案</string>
+    <string name="import_no_kml_file_found">在 KMZ 中沒有發現 kml 檔案</string>
     <string name="import_error_info">%1$s：%2$s</string>
     <string name="import_error_list_dialog_title">檔案未匯入</string>
     <string name="import_file_imported">檔案 %1$s 已匯入</string>
