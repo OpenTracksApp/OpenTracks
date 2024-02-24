@@ -119,7 +119,7 @@ limitations under the License.
     <string name="generic_name_line">Név: %1$s</string>
     <string name="generic_recording">Rögzítés…</string>
     <string name="generic_save">Mentés</string>
-    <string name="generic_tracks">Számok</string>
+    <string name="generic_tracks">Nyomvonalak</string>
     <!-- Gps -->
     <string name="gps_starting">GPS indítása</string>
     <string name="gps_wait_for_better_signal">Várakozás jobb GPS-jelre</string>
@@ -130,7 +130,7 @@ limitations under the License.
     <string name="image_photo_marker">Fényképjelölő</string>
     <string name="image_record">Rögzítés</string>
     <string name="image_stop">Leállítás</string>
-    <string name="image_track">Útvonal</string>
+    <string name="image_track">Nyomvonal</string>
     <!-- Import -->
     <string name="import_progress_message">Importálás innen: %1$s…</string>
     <!-- Marker -->
@@ -167,7 +167,7 @@ limitations under the License.
     <!-- Search -->
     <!-- Sensor State -->
     <string name="sensor_state_heart_rate">Szívritmus</string>
-    <string name="sensor_state_heart_rate_value">%1$d ütés/perc</string>
+    <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Teljesítmény</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Speciális</string>
@@ -199,11 +199,11 @@ limitations under the License.
     <string name="share_track_share_file_body">Szerintem érdekelni fog ez a nyomvonal.
 \n
 \n%1$s</string>
-    <string name="share_track_subject">Szeretnék megosztani veled egy pályát</string>
+    <string name="share_track_subject">Egy nyomvonalat szeretnék megosztani veled</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Mozgás átlagos irama</string>
-    <string name="stats_average_moving_speed">Mozgás átlagos sebessége</string>
-    <string name="stats_average_pace">Átlagos iram</string>
+    <string name="stats_average_moving_speed">Mozgás átl. sebessége</string>
+    <string name="stats_average_pace">Átl. iram</string>
     <string name="stats_average_speed">Átlagsebesség</string>
     <string name="stats_altitude">Magasság</string>
     <string name="stats_fastest_pace">Leggyorsabb ütem</string>
@@ -325,12 +325,12 @@ limitations under the License.
     <string name="help_support_title">Hogyan tudom támogatni az OpenTracks-t\?</string>
     <string name="open_track_as_trackfileformat">Megnyitás %1$s néven</string>
     <string name="activity_type_escooter">elektromos roller</string>
-    <string name="help_recording_content">Az OpenTracks a készülék GPS-érzékelőjét használja a hely folyamatos rögzítésére. Ha a GPS-eszköz pontatlan adatokat (pl. hely, sebesség, magasság) jelent, az OpenTracks nem tud mit tenni.</string>
+    <string name="help_recording_content">Az OpenTracks a készülék GPS-érzékelőjét használja a hely folyamatos rögzítésére. Ha a GPS-eszköz pontatlan adatokat (pl. hely, sebesség, magasság) jelent, az OpenTracks semmit sem tehet ellene.</string>
     <string name="help_data_storage_title">Hogyan tárolja az OpenTracks az érzékelőadatokat\?</string>
-    <string name="import_error_list_dialog_title">Nem importált fájlok</string>
+    <string name="import_error_list_dialog_title">A fájlok nincsenek importálva</string>
     <string name="import_progress_summary_errors_msg">Hibák</string>
-    <string name="sensor_state_cadence_max">Max kadencia</string>
-    <string name="sensor_state_heart_rate_max">Átlagos pulzusszám</string>
+    <string name="sensor_state_cadence_max">Max ütem</string>
+    <string name="sensor_state_heart_rate_max">Max pulzusszám</string>
     <string name="settings_sensor_wheel_circumference">Kerékkörfogat (mm)</string>
     <string name="stats_split_interval">Osztott intervallum</string>
     <string name="track_speed_notification">Sebesség: %1$s</string>
@@ -351,7 +351,7 @@ limitations under the License.
     <string name="import_unsupported_format">Nem támogatott fájlformátum</string>
     <string name="description_default_speed_or_pace">Tevékenységtípus szerint</string>
     <string name="export_without_photos">fotók nélkül</string>
-    <string name="help_gps_troubleshooting_content"> \u0020Mit tehetsz: 
+    <string name="help_gps_troubleshooting_content"> \u0020Mit tehet: 
 \n a) ellenőrizze, hogy a GPS engedélyezve van-e, 
 \n b) javítsa a GPS-vételt (pl. menjen a szabadba), 
 \n c) ellenőrizze a <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> alkalmazással, és 
@@ -360,16 +360,16 @@ limitations under the License.
 \n Ha mindez nem segít, kérjük, jelentse a hibát. \u0020</string>
     <string name="export_progress_summary_new_msg">Új fájlok exportálva</string>
     <string name="generic_completed">Befejezett</string>
-    <string name="sensor_state_heart_rate_avg">Átlagos pulzusszám</string>
-    <string name="sensor_state_power_avg">Átlagos teljesítmény</string>
-    <string name="bluetooth_disabled">Kérjük, engedélyezze a Bluetooth funkciót.</string>
+    <string name="sensor_state_heart_rate_avg">Átl. pulzusszám</string>
+    <string name="sensor_state_power_avg">Átl. teljesítmény</string>
+    <string name="bluetooth_disabled">Kérjük, engedélyezze a Bluetooth-t.</string>
     <string name="settings_default_trackfileformat">Export/megosztás fájlformátum</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Felvétel közben a statisztika megjelenítése a készülék feloldása nélkül.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Tartsa a képernyőt bekapcsolva</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Felvétel közben tartsa bekapcsolva a képernyőt.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Teljes képernyőn</string>
-    <string name="sensor_state_cadence_avg">Avg Kadencia</string>
-    <string name="settings_night_mode_title">UI téma</string>
+    <string name="sensor_state_cadence_avg">Átl. ütem</string>
+    <string name="settings_night_mode_title">UI Téma</string>
     <string name="settings_night_mode_option_system">Rendszer</string>
     <string name="settings_night_mode_option_day">Nap</string>
     <string name="settings_night_mode_option_night">Éjszaka</string>
@@ -387,18 +387,18 @@ limitations under the License.
     <string name="import_no_kml_file_found">Nincs kml fájl található a KMZ fájlban</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_file_imported">Fájl %1$s importálva</string>
-    <string name="import_prevent_reimport">Beállítottad, hogy megakadályozd az újraimportálást</string>
+    <string name="import_prevent_reimport">Beállította az újraimportálás megakadályozását</string>
     <string name="import_progress_summary_ok_msg">Importált fájlok</string>
     <string name="import_progress_summary_exists_msg">Már létezik</string>
     <string name="menu_insert_gallery_img">Galéria kép beillesztése</string>
-    <string name="menu_resume_track">Folytassa a pályát</string>
+    <string name="menu_resume_track">Nyomvonal folytatása</string>
     <string name="import_parser_error">Parser hiba: %1$s</string>
-    <string name="help_data_storage_content"> \u0020Az érzékelőadatokat rögzített helyenként tárolják. A pulzusszám-érzékelőre vonatkoztatva ez azt jelenti, hogy csak <i>egy</i> pulzusszámmérés kerül tárolásra helyenként. Ha mozdulatlanul áll vagy beltérben tartózkodik, akkor nem kerülnek rögzítésre az érzékelő adatai (de megjelenítésre kerülnek). \u0020</string>
+    <string name="help_data_storage_content"> \u0020Az érzékelőadatokat rögzített helyenként tárolják. A pulzusszám-érzékelőre vonatkoztatva ez azt jelenti, hogy csak <i>egy</i> pulzusszámmérés kerül tárolásra helyenként. Ha Ön mozdulatlanul áll vagy beltérben tartózkodik, akkor nem kerülnek rögzítésre az érzékelő adatai (de megjelenik). \u0020</string>
     <string name="help_support_content"> \u0020Megteheti:
 \n \u0020a) terjesztheti az OpenTracks hírét,
 \n \u0020b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">jellemzőket javasolhat</a>,
 \n \u0020c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">hibákat jelenteni</a>,
-\n \u0020d) segíthetsz a szoftverfejlesztésben,
+\n \u0020d) segíthet a szoftverfejlesztésben,
 \n \u0020e) vásárolhat a <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>-ban,
 \n \u0020f) adományozni, és
 \n \u0020g) tegyen bármit, ami Ön szerint segít az OpenTracks-nak. \u0020</string>
@@ -408,7 +408,7 @@ limitations under the License.
     </plurals>
     <string name="description_altitude_loss">Magasságveszteség: %1$d m (%2$d ft)</string>
     <string name="marker_add_photo_canceled">Törölt, nincs fotójelző hozzáadva</string>
-    <string name="permission_gps_failed">Az OpenTracks engedélyt igényel a GPS használatához.</string>
+    <string name="permission_gps_failed">Az OpenTracks engedélyt kér a GPS használatához.</string>
     <string name="sensor_could_not_scan">Nem sikerült Bluetooth-eszközöket keresni (hiba %1$i).</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Statisztikák megjelenítése a záróképernyőn</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Felvétel közben teljes képernyőn jelenik meg.</string>
@@ -428,18 +428,18 @@ limitations under the License.
 \n * szívritmus-érzékelő használata (csak Bluetooth LE)
 \n * hangbejelentések (idő vagy távolság alapján)
 \n * jelölések létrehozása (képekkel együtt)
-\n * teljesen offline működik
-\n * pályák megjelenítése térképen (lásd alább)</string>
+\n * teljes offline működés
+\n * nyomvonalak megjelenítése a térképen (lásd lentebb)</string>
     <string name="about_third_party_data">Harmadik féltől származó adatok</string>
     <string name="menu_voice_rate">Hangsebesség</string>
     <string name="track_delete_not_recording">Ez a nyomvonal nem törölhető, mivel jelenleg is rögzítve van.</string>
-    <string name="settings_sensor_cycling_cadence">Kerékpározás: lépésszám</string>
-    <string name="settings_sensor_cycling_distance_speed">Kerékpározás: táv és sebesség</string>
-    <string name="settings_sensor_running_speed_and_cadence">Futás: távolság, sebesség és ritmus</string>
+    <string name="settings_sensor_cycling_cadence">Lépésszám</string>
+    <string name="settings_sensor_cycling_distance_speed">Távolság és Sebesség</string>
+    <string name="settings_sensor_running_speed_and_cadence">Távolság, Sebesség és ritmus</string>
     <string name="generic_today">Ma</string>
     <string name="generic_yesterday">Tegnap</string>
     <string name="generic_filter">Szűrő</string>
-    <string name="generic_to">Hogy</string>
+    <string name="generic_to">Eddig</string>
     <string name="generic_from">Tól től</string>
     <string name="activity_type_swimming">úszás</string>
     <string name="activity_type_swimming_open">úszás nyílt vízben</string>
@@ -447,19 +447,19 @@ limitations under the License.
     <string name="export_cannot_write_to_dir">Nem lehet írni az exportkönyvtárba.</string>
     <string name="export_dir_not_writable">" (nem írható!)"</string>
     <string name="generic_choose_an_option">Válasszon egy opciót</string>
-    <string name="menu_select_layout">Válassza Ki Az Elrendezést</string>
+    <string name="menu_select_layout">Elrendezés Kiválasztása</string>
     <string name="menu_add_custom_layout">Új Elrendezés</string>
     <string name="menu_filter">Szűrő</string>
-    <string name="settings_defaults_title">Alapértelmezett egységek és tevékenység</string>
+    <string name="settings_defaults_title">Alapértelmezett Egységek és Tevékenység</string>
     <string name="gps_recording_status">%1$s: %2$s</string>
-    <string name="settings_defaults_summary">Preferált Egységek, Alapértelmezett Tevékenység, Alapértelmezett Név Követése</string>
+    <string name="settings_defaults_summary">Preferált Egységek, Alapértelmezett Tevékenység, Alapértelmezett Nyomvonal Név</string>
     <string name="settings_ui_title">Felhasználói Felület</string>
     <string name="settings_ui_summary">Megjelenés, Felvétel Elrendezése, Téma</string>
-    <string name="settings_gps_summary">Időintervallum, távolság intervallum, Max távolság, pontosság</string>
+    <string name="settings_gps_summary">Időintervallum, Távolság intervallum, Max Távolság, Pontosság</string>
     <string name="settings_sensors_title">Bluetooth Érzékelők</string>
-    <string name="generic_dismiss">Elbocsátás</string>
-    <string name="settings_sensors_summary">Kerékpáros Érzékelők, Kerék Kerülete, Futásérzékelők</string>
-    <string name="settings_announcements_statistics_title">Statisztikai közlemények</string>
+    <string name="generic_dismiss">Elvetés</string>
+    <string name="settings_sensors_summary">Kerékpáros Érzékelők, Kerékkörfogat, Futásérzékelők</string>
+    <string name="settings_announcements_statistics_title">Statisztikai Közlemények</string>
     <string name="settings_export_filename_title">A fájlnév formátuma</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">A rögzített adatokat nem osztják meg automatikusan más alkalmazásokkal.</string>
     <string name="field_remove_from_layout">Eltávolítás</string>
@@ -494,7 +494,7 @@ limitations under the License.
     <string name="settings_recording_customize_layout_select_columns">Adatmezők soronként</string>
     <string name="custom_layout_list_edit_already_exists">Az elrendezés neve már létezik</string>
     <string name="stats_custom_layout_default_layout">Alapértelmezett Elrendezés</string>
-    <string name="settings_layout_reset">Egyéni elrendezés visszaállítása</string>
+    <string name="settings_layout_reset">Egyéni Elrendezés visszaállítása</string>
     <string name="settings_cycling_sensor">Kerékpározás</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
@@ -519,15 +519,15 @@ limitations under the License.
     <string name="value_float_mile_hour">%1$.1f mérföld/óra</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
     <string name="settings_announcements_lap_heart_rate">Kör pulzusszám</string>
-    <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth-eszközök szűrése</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth-Eszközök szűrése</string>
     <string name="activity_type_kickscooter">roller</string>
     <string name="gps_recording_without_signal">Az OpenTracks GPS-adatok nélkül rögzít.</string>
     <string name="permission_recording_failed">Az OpenTracks engedélyt kér a tartózkodási helyéhez és a közeli eszközökhöz való hozzáféréshez.</string>
-    <string name="sensor_state_power_max">Maximális teljesítmény</string>
+    <string name="sensor_state_power_max">Max teljesítmény</string>
     <string name="settings_open_tracks_summary">Minden az OpenTracks projektről</string>
-    <string name="settings_announcements_idle_title">Tétlen</string>
-    <string name="settings_import_export_summary">Importálás, exportálás, automatikus exportálás</string>
-    <string name="settings_ui_dynamic_colors_title">Dinamikus színek</string>
+    <string name="settings_announcements_idle_title">Tétlenség</string>
+    <string name="settings_import_export_summary">Importálás, Exportálás, Automatikus Exportálás</string>
+    <string name="settings_ui_dynamic_colors_title">Dinamikus Színek</string>
     <string name="settings_recording_min_required_accuracy_summary">A hely figyelmen kívül marad, ha a pontossága nagyobb, mint %1$s</string>
     <string name="introduction_osm_dashboard">Az OpenTracks önmagában nem szolgáltat térképet. Kérjük, telepítse az OSMDashboard-ot a felvételek térképen történő megjelenítéséhez.</string>
     <string name="settings_recording_idle_timeout_title">Tétlenségi küszöbérték</string>
@@ -536,7 +536,7 @@ limitations under the License.
     <string name="settings_public_api_package_title">Nyilvános API csomag neve</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="settings_public_api_enabled_summary_off">Csak az OpenTracks képes elindítani és leállítani a felvételeket.</string>
-    <string name="stats_coordinates">Szélesség/hosszúság</string>
+    <string name="stats_coordinates">Szélesség/Hosszúság</string>
     <string name="track_delete_number_of_tracks">%1$d nyomvonalak</string>
     <string name="unit_knots">csomó</string>
     <string name="description_pace_nautical">Tempó (perc/tengeri mérföld)</string>
@@ -574,8 +574,8 @@ limitations under the License.
     <string name="description_speed_source_gps">GPS</string>
     <string name="menu_export_all_one_file">Összes exportálása (egy fájl az összes nyomvonalhoz)</string>
     <string name="permission_bluetooth_failed">Az OpenTracks engedélyt kér a Bluetooth használatához.</string>
-    <string name="settings_activity_defaults_category">Alapértelmezett tevékenységek</string>
-    <string name="settings_reset_summary">Beállítások visszaállítása alapértelmezett értékekre</string>
+    <string name="settings_activity_defaults_category">Alapértelmezett Tevékenységek</string>
+    <string name="settings_reset_summary">Beállítások Visszaállítása Alapértelmezett Értékekre</string>
     <string name="value_float_knots_recommended">%1$.1f csomó (javasolt)</string>
     <string name="sensor_state_cadence_unit">fordulat</string>
     <string name="sensor_state_heart_rate_unit">bpm</string>
@@ -590,8 +590,8 @@ limitations under the License.
     <string name="settings_recording_location_distance_summary">%1$s a rögzített helyek között</string>
     <string name="settings_recording_title">Rögzítés</string>
     <string name="settings_stats_units_imperial_meter">Angolszász (mérföld, m )</string>
-    <string name="settings_ui_dynamic_colors_summary">Felhasználó által meghatározott dinamikus színek használata (csak Android 12+ felett; manuális újraindítást igényel)</string>
-    <string name="settings_announcements_idle_category_title">Tétlenségi közlemények</string>
+    <string name="settings_ui_dynamic_colors_summary">Felhasználó által meghatározott Dinamikus Színek használata (csak Android 12+; manuális újraindítást igényel)</string>
+    <string name="settings_announcements_idle_category_title">Tétlenségi Közlemények</string>
     <string name="permission_bluetooth_failed_rejected">A rendszerbeállításokban manuálisan kell engedélyeznie az OpenTracks hozzáférését a Közeli eszközökhöz.</string>
     <string name="help_data_google_play_services_content">Nem</string>
 </resources>
