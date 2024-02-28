@@ -1,0 +1,10 @@
+v4.11.3: OpenTracks
+
+Změny:
+- Nový vhled nálepek!
+- Nové snímky obrazovky!
+- Import KMZ podporuje jakýkoli soubor KML uvnitř jiného KMZ
+
+Opravy chyb:
+- Tlačítko zpět u seznamu značek opět funguje
+- Zastavení veřejné API by nemělo spustit službu na popředí (2. pokus)
