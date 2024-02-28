@@ -1,0 +1,10 @@
+v4.11.3: OpenTracks
+
+Changes:
+- New sticker design!
+- New screenshots!
+- KMZ importer supports any KML file inside a KMZ
+
+Bugfix:
+- Marker list back button works
+- Public API stop shouldn't start foreground service (2nd try)
