@@ -317,7 +317,7 @@ limitations under the License.
     <string name="help_data_google_play_services_title">Az OpenTracks igényli/használja a Google Play szolgáltatást?</string>
     <string name="help_track_export_title">Hogyan tudom exportálni/megosztani a felvett nyomvonalakat?</string>
     <string name="help_storage_pictures_content">Ezeket az alkalmazás belső tárhelyén tárolja (azaz csak az OpenTracks-en belül érhető el).</string>
-    <string name="about_libraries">Könyvtárak</string>
+    <string name="about_libraries">Programkönyvtár</string>
     <string name="help_feature_title">Az OpenTracks a következő funkciókkal rendelkezik:</string>
     <string name="help_storage_pictures_title">Hogyan tárolja az OpenTracks a jelölőként készített képeket\?</string>
     <string name="help_track_map_title">Hogyan jelenítsünk meg egy nyomvonalat a térképen?</string>
@@ -344,7 +344,7 @@ limitations under the License.
     <string name="track_pace_notification">Tempó: %1$s</string>
     <string name="export_with_photos">fotókkal</string>
     <string name="export_error_post_workout">Az edzés utáni exportálás sikertelen, kérjük, ellenőrizze az exportkönyvtárat.</string>
-    <string name="export_track_already_exists_msg">A %1$s cím már létezik a célkönyvtárban.</string>
+    <string name="export_track_already_exists_msg">A(z) %1$s fájl már létezik a célkönyvtárban.</string>
     <string name="export_all_do_it_for_all">minden konfliktus esetén</string>
     <string name="export_track_errors">A fájlok nincsenek exportálva</string>
     <string name="import_thread_interrupted">Szál megszakadt</string>
@@ -378,7 +378,7 @@ limitations under the License.
     <string name="export_progress_summary_overwrite_msg">Fájlok felülírva</string>
     <string name="export_progress_summary_skip_msg">Kihagyott fájlok</string>
     <string name="export_progress_summary_errors_msg">Hibák</string>
-    <string name="generic_open_track">Nyílt pálya</string>
+    <string name="generic_open_track">Nyomvonal megnyitása</string>
     <string name="generic_show_errors">Hibák megjelenítése</string>
     <string name="generic_click_twice_cancel">Kattintson vissza a törléshez</string>
     <string name="gps_disabled_msg">GPS letiltva</string>
@@ -422,8 +422,8 @@ limitations under the License.
 \n \u0020a) \u0020(élő frissítések) Telepítse a <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. \u0020Ez online vagy offline térképeket biztosít a <a href="https://www.openstreetmap.org">OpenStreetMap</a> segítségével.
 \n \u0020Valójában az OSMDashboard egy különálló alkalmazás, amely csak a megjelenítendő nyomvonal(ak) adataihoz fér hozzá (ideiglenesen). \u0020
 \n \u0020b) \u0020Egy normál térképalkalmazáson keresztül (pl. <a href="http://osmand.net/">OsmAnd</a> és <a href="https://maps.me/">MAPS.ME</a>). \u0020Ezeknek az alkalmazásoknak támogatniuk kell a KMZ fájlformátumot (csak a helyeket és az időbélyegeket). \u0020Valójában egy alkalmazásnak támogatnia kell a <i>ACTION_VIEW</i> MIME <i>application/vnd.google-earth.kmz</i> formátumot. \u0020</string>
-    <string name="about_description">Az <i>OpenTracks</i> egy sportkövető alkalmazás, amely teljes mértékben tiszteletben tartja az Ön magánéletét.</string>
-    <string name="about_history">Az OpenTracks a <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (2016-ban megszűnt) elágazása.</string>
+    <string name="about_description">Az <i>OpenTracks</i> egy sportkövető alkalmazás, amely teljes mértékben tiszteletben tartja az Ön adatvédelmét.</string>
+    <string name="about_history">Az OpenTracks a <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a> (2016-ban megszűnt) elágazása.</string>
     <string name="help_feature_content">* GPS nyomvonalak létrehozása
 \n * szívritmus-érzékelő használata (csak Bluetooth LE)
 \n * hangbejelentések (idő vagy távolság alapján)
