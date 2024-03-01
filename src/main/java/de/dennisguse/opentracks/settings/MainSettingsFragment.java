@@ -52,6 +52,12 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        ((SettingsActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_settings);
+    }
+
+    @Override
     public void onDisplayPreferenceDialog(@NonNull Preference preference) {
         DialogFragment dialogFragment = null;
 

@@ -18,9 +18,9 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
     public static final String EXTRAS_EXPORT_ERROR_MESSAGE = "Export error message";
 
-    private String exportErrorMessage = null;
-
     public static final String FRAGMENT_KEY = "fragmentKey";
+
+    private String exportErrorMessage = null;
 
     private PreferenceFragmentCompat fragment = null;
 
@@ -43,6 +43,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         }
 
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
+        setSupportActionBar(viewBinding.topAppBar);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, fragment).commit();
     }
