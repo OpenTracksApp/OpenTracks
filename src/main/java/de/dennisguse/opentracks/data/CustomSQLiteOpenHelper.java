@@ -25,8 +25,7 @@ import de.dennisguse.opentracks.data.tables.TracksColumns;
 /**
  * Database helper for creating and upgrading the database.
  */
-@VisibleForTesting
-public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
+class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String TAG = CustomSQLiteOpenHelper.class.getSimpleName();
 
