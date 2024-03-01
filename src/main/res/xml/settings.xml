@@ -39,6 +39,12 @@
         android:summary="@string/settings_import_export_summary"
         android:title="@string/settings_import_export_title" />
 
+    <Preference
+        android:icon="@drawable/ic_baseline_api_24"
+        android:key="@string/settings_api_key"
+        android:summary="@string/settings_api_summary"
+        android:title="@string/settings_api_title" />
+
     <de.dennisguse.opentracks.settings.ResetDialogPreference
         android:dialogMessage="@string/settings_reset_confirm_message"
         android:dialogTitle="@string/settings_reset_confirm_title"
@@ -49,12 +55,6 @@
         android:positiveButtonText="@android:string/ok"
         android:summary="@string/settings_reset_summary"
         android:title="@string/settings_all_reset" />
-
-    <Preference
-        android:icon="@drawable/ic_baseline_api_24"
-        android:key="@string/settings_api_key"
-        android:summary="@string/settings_api_summary"
-        android:title="@string/settings_api_title" />
 
     <Preference
         android:icon="@drawable/ic_baseline_info_24"
