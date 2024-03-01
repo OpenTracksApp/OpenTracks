@@ -460,13 +460,13 @@ limitations under the License.
     <string name="settings_ui_title">Kasutajaliides</string>
     <string name="settings_ui_summary">Välimus, Salvestamise Paigutus, Teema</string>
     <string name="settings_gps_summary">Ajavahemik, vahemaa intervall, maksimaalne kaugus, täpsus</string>
-    <string name="settings_sensors_title">Bluetooth Andurid</string>
+    <string name="settings_sensors_title">Andurid</string>
     <string name="settings_announcements_statistics_title">Häälteated</string>
     <string name="settings_announcements_summary">Aeg, Kaugus, Hääle Kiirus</string>
     <string name="settings_units_category">Ühikud</string>
     <string name="settings_import_export_summary">Import, Eksport, Automaatne Eksport</string>
     <string name="settings_import_export_title">Import/Eksport</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_open_tracks_summary">Kõik OpenTracks Projekti Kohta</string>
     <string name="settings_reset_summary">Lähtestage Seaded vaikeväärtustele</string>
     <string name="settings_recording_customize_layout_title">Kohandage oma salvestuspaigutust</string>

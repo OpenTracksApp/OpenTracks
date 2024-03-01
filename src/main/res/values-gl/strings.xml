@@ -481,9 +481,9 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_defaults_title">Unidades e Actividade por defecto</string>
     <string name="settings_ui_title">Interface da app</string>
     <string name="settings_ui_summary">Aparencia, Gravación, Deseño, Tema</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">Intervalo de tempo, Distancia intervalo, Max Distancia, Precisión</string>
-    <string name="settings_sensors_title">Sensores Bluetooth</string>
+    <string name="settings_sensors_title">Sensores</string>
     <string name="settings_sensors_summary">Sensores de ciclismo, Circunferencia da roda, Sensores de carreira</string>
     <string name="settings_announcements_statistics_title">Indicacións por Voz</string>
     <string name="settings_import_export_title">Importación/Exportación</string>

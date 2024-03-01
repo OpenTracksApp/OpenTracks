@@ -431,9 +431,9 @@
     <string name="generic_yesterday">Ayer</string>
     <string name="menu_filter">Filtrar</string>
     <string name="settings_ui_summary">Apariencia, Diseño de grabación, Tema</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">Intervalo de tiempo, Intervalo de distancia, Distancia máxima, Precisión</string>
-    <string name="settings_sensors_title">Sensores Bluetooth</string>
+    <string name="settings_sensors_title">Sensores</string>
     <string name="settings_sensors_summary">Sensores de ciclismo, Circunferencia de la rueda, Sensores de carrera</string>
     <string name="settings_export_section">Exportar</string>
     <string name="activity_type_swimming">Natación</string>

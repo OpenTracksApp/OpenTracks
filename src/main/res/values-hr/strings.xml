@@ -320,7 +320,7 @@ limitations under the License.
     <string name="permission_bluetooth_failed">OpenTracks zahtijeva dozvolu za korištenje Bluetootha.</string>
     <string name="permission_bluetooth_failed_rejected">OpenTracksu moraš ručno dozvoliti pristup obližnjim uređajima u postavkama sustava.</string>
     <string name="menu_add_custom_layout">Novi raspored</string>
-    <string name="settings_sensors_title">Bluetooth senzori</string>
+    <string name="settings_sensors_title">Senzori</string>
     <string name="menu_filter">Filtar</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Tijekom snimanja ostavi ekran uključenim.</string>
     <string name="settings_import_export_summary">Uvoz, Izvoz, Automatski izvoz</string>
@@ -330,7 +330,7 @@ limitations under the License.
     <string name="sensor_state_cadence_max">Maks. ritam</string>
     <string name="settings_units_category">Jedinice</string>
     <string name="settings_open_tracks_summary">Sve o projektu OpenTracks</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_announcements_summary">Vrijeme, udaljenost, brzina glasa</string>
     <string name="menu_resume_track">Nastavi rutu</string>
     <string name="settings_ui_summary">Izgled, raspored snimanja, tema</string>

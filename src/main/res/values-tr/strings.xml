@@ -358,7 +358,7 @@ limitations under the License.
     <string name="sensor_state_cadence_avg">Ort. Kadans</string>
     <string name="sensor_state_cadence_max">Maks. Kadans</string>
     <string name="settings_ui_summary">Görünüm, Kayıt Düzeni, Tema</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_defaults_summary">Tercih Edilen Birimler, Varsayılan Etkinlik, Varsayılan Parça Adı</string>
     <string name="settings_gps_summary">Zaman aralığı, Mesafe aralığı, Maks. Mesafe, Hassasiyet</string>
     <string name="settings_announcements_statistics_title">Sesli Anonslar</string>
@@ -379,7 +379,7 @@ limitations under the License.
     <string name="export_all_do_it_for_all">bütün çatışmalar için bunu uygula</string>
     <string name="generic_undo">Geri al</string>
     <string name="menu_insert_gallery_img">Galeri resmi ekle</string>
-    <string name="settings_sensors_title">Bluetooth Sensörleri</string>
+    <string name="settings_sensors_title">Sensörleri</string>
     <string name="settings_sensors_summary">Bisiklet Sensörleri, Tekerlek Çevresi, Koşu Sensörleri</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Bir hatayla tamamlandı</item>

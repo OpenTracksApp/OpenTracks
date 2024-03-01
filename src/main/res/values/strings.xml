@@ -347,10 +347,10 @@ limitations under the License.
     <string name="settings_ui_title">User Interface</string>
     <string name="settings_ui_summary">Appearance, Recording Layout, Theme</string>
 
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">Time interval, Distance interval, Max Distance, Accuracy</string>
 
-    <string name="settings_sensors_title">Bluetooth Sensors</string>
+    <string name="settings_sensors_title">Sensors</string>
     <string name="settings_sensors_summary">Cycling Sensors, Wheel Circumference, Running Sensors</string>
 
 

@@ -205,7 +205,7 @@
     <string name="settings_open_tracks_summary">Gach Maidir Tionscadal OpenTracks</string>
     <string name="settings_defaults_title">Aonaid agus Gníomhaíocht Réamhshocraithe</string>
     <string name="settings_ui_title">Comhéadan Úsáideora</string>
-    <string name="settings_sensors_title">Braiteoirí Bluetooth</string>
+    <string name="settings_sensors_title">Braiteoirí</string>
     <string name="settings_announcements_summary">Am, Fad, Luas Gutha</string>
     <string name="settings_import_export_title">Iompórtáil/Easpórtáil</string>
     <string name="settings_import_export_summary">Iompórtáil, Easpórtáil, Uathoibríoch</string>
@@ -385,7 +385,7 @@
     <string name="description_sensor_cadence">Mál (rpm )</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="image_stop">Stad</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_api_title">API Poiblí</string>
     <string name="settings_public_api_package_title">Ainm an phacáiste don API Poiblí</string>
     <string name="settings_public_api_enabled_title">API Poiblí</string>

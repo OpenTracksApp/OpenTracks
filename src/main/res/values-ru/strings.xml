@@ -449,9 +449,9 @@ limitations under the License.
     <string name="menu_filter">Фильтр</string>
     <string name="permission_bluetooth_failed">OpenTracks требуется разрешение на использование Bluetooth.</string>
     <string name="permission_bluetooth_failed_rejected">Вам нужно вручную разрешить OpenTracks доступ к информации об устройствах поблизости в настройках системы.</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">Интервал времени, интервал расстояния, макс. расстояние, точность</string>
-    <string name="settings_sensors_title">Bluetooth-датчики</string>
+    <string name="settings_sensors_title">датчики</string>
     <string name="settings_sensors_summary">Велосипедные датчики, окружность колеса, датчики для бега</string>
     <string name="settings_announcements_statistics_title">Голосовые подсказки статистические</string>
     <string name="settings_import_export_title">Импорт/экспорт</string>

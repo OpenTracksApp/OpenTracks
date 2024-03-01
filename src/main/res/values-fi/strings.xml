@@ -462,8 +462,8 @@ limitations under the License.
     <string name="field_remove_from_layout">Poista</string>
     <string name="menu_add_custom_layout">Uusi asettelu</string>
     <string name="settings_ui_summary">Ulkonäkö, asettelu, teema</string>
-    <string name="settings_gps_title">GPS</string>
-    <string name="settings_sensors_title">Bluetooth-anturit</string>
+    <string name="settings_gps_sensor">GPS</string>
+    <string name="settings_sensors_title">Anturit</string>
     <string name="settings_import_export_title">Tuonti/Vienti</string>
     <string name="custom_layout_list_edit_name">Nimeä luotava asettelu</string>
     <string name="custom_layout_list_edit_already_exists">Samanniminen asettelu on jo olemassa</string>

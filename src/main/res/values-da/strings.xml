@@ -470,7 +470,7 @@ limitations under the License.
     <string name="export_cannot_write_to_dir">Kan ikke skrive til eksportmappen.</string>
     <string name="export_dir_not_writable">" (ikke skrivbar!)"</string>
     <string name="menu_add_custom_layout">Nyt layout</string>
-    <string name="settings_sensors_title">Bluetooth-sensorer</string>
+    <string name="settings_sensors_title">Sensorer</string>
     <string name="stats_custom_layout_default_layout">Standardlayout</string>
     <string name="custom_layout_select_layout">Vælg layout</string>
     <string name="settings_running_sensor">Kører</string>
@@ -482,7 +482,7 @@ limitations under the License.
     <string name="generic_to">Til</string>
     <string name="generic_from">Fra</string>
     <string name="settings_ui_title">Brugergrænseflade</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_activity_defaults_category">Aktivitetens standardværdier</string>
     <string name="settings_units_category">Enheder</string>
     <string name="settings_layout_reset_done">Alle opsætningsindstillinger er blevet tilbageført til standardværdierne</string>

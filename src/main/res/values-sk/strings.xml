@@ -477,8 +477,8 @@ limitations under the License.
     <string name="settings_ui_title">Používateľské rozhranie</string>
     <string name="settings_ui_summary">Vzhľad, Rozloženie nahrávania, Téma</string>
     <string name="settings_announcements_statistics_title">Hlasové oznámenia</string>
-    <string name="settings_gps_title">GPS</string>
-    <string name="settings_sensors_title">Senzory Bluetooth</string>
+    <string name="settings_gps_sensor">GPS</string>
+    <string name="settings_sensors_title">Senzory</string>
     <string name="settings_sensors_summary">Cyklistické snímače, obvod kolies, snímače behu</string>
     <string name="settings_open_tracks_summary">Viac o projekte OpenTracks</string>
     <string name="settings_gps_summary">Interval času, interval vzdialenosti, Max. vzdialenosť, Presnosť</string>

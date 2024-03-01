@@ -19,7 +19,7 @@
         android:icon="@drawable/ic_baseline_satellite_alt_24"
         android:key="@string/settings_gps_key"
         android:summary="@string/settings_gps_summary"
-        android:title="@string/settings_gps_title" />
+        android:title="@string/settings_recording_title" />
 
     <Preference
         android:icon="@drawable/ic_baseline_sensors_24"

@@ -306,7 +306,7 @@ limitations under the License.
     <string name="settings_defaults_summary">首選單位、預設活動、蹤跡預設名稱</string>
     <string name="settings_ui_title">使用者介面</string>
     <string name="settings_ui_summary">外觀、紀錄布局、主題</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">時間間隔、距離間隔、最大距離、精度</string>
     <string name="settings_sensors_title">藍芽感測器</string>
     <string name="settings_sensors_summary">自行車感測器、輪周、跑步感測器</string>

@@ -302,8 +302,8 @@
     <string name="settings_import_export_summary">Impor, Ekspor, Ekspor Otomatis</string>
     <string name="sensor_state_power_max">Tenaga Maks</string>
     <string name="settings_ui_title">Antarmuka Pengguna</string>
-    <string name="settings_sensors_title">Sensor Bluetooth</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_sensors_title">Sensor</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_activity_defaults_category">Default Aktivitas</string>
     <string name="settings_ui_summary">Penampilan, Tata letak perekaman, Tema</string>
     <string name="settings_announcements_statistics_title">Pengumuman Statistik</string>
