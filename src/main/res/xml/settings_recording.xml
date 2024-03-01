@@ -2,13 +2,7 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:title="@string/settings_gps_title">
-
-    <ListPreference
-        android:defaultValue="@string/min_sampling_interval_default"
-        android:entryValues="@array/min_sampling_interval_values"
-        android:key="@string/min_sampling_interval_key"
-        android:title="@string/settings_recording_min_sampling_interval_title" />
+    android:title="@string/settings_recording_title">
 
     <ListPreference
         android:defaultValue="@string/recording_distance_interval_default"
@@ -21,12 +15,6 @@
         android:entryValues="@array/max_recording_distance_values"
         android:key="@string/max_recording_distance_key"
         android:title="@string/settings_recording_max_recording_distance_title" />
-
-    <ListPreference
-        android:defaultValue="@string/recording_gps_accuracy_default"
-        android:entryValues="@array/recording_gps_accuracy_values"
-        android:key="@string/recording_gps_accuracy_key"
-        android:title="@string/settings_recording_min_required_accuracy_title" />
 
     <ListPreference
         android:defaultValue="@string/idle_duration_default"

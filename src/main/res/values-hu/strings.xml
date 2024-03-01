@@ -456,7 +456,7 @@ limitations under the License.
     <string name="settings_ui_title">Felhasználói felület</string>
     <string name="settings_ui_summary">Megjelenés, felvétel elrendezése, téma</string>
     <string name="settings_gps_summary">Időintervallum, távolságintervallum, max. távolság, pontosság</string>
-    <string name="settings_sensors_title">Bluetooth érzékelők</string>
+    <string name="settings_sensors_title">érzékelők</string>
     <string name="generic_dismiss">Elvetés</string>
     <string name="settings_sensors_summary">Kerékpáros érzékelők, kerékkörfogat, futásérzékelők</string>
     <string name="settings_announcements_statistics_title">Statisztikai közlemények</string>
@@ -568,7 +568,7 @@ limitations under the License.
     <string name="custom_layout_select_layout">Elrendezés kiválasztása</string>
     <string name="settings_announcements_distance_frequency">Kör hossza</string>
     <string name="settings_announcements_lap_speed_pace">Körsebesség/tempó</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="voiceDistanceNauticalMilesPlural">{n,number,#.0} tengeri mérföld</string>
     <string name="no_compatible_gallery_installed">Nincs kompatibilis képgaléria alkalmazás telepítve</string>
     <string name="description_speed_source_gps">GPS</string>

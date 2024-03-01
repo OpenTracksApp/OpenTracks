@@ -490,7 +490,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/u (aanbevolen)</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="export_cannot_write_to_dir">Geen schrijfrecht in export map.</string>
     <string name="generic_choose_an_option">Maak een keuze</string>
     <string name="permission_bluetooth_failed">OpenTracks heeft toestemming nodig om Bluetooth te gebruiken.</string>
@@ -522,7 +522,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_defaults_title">Standaard Eenheden en Activiteit</string>
     <string name="settings_defaults_summary">Voorkeurslengtemaat, standaardactiviteit, standaardroutenaam</string>
     <string name="settings_gps_summary">Tijdsinterval, afstandsinterval, maximale afstand, nauwkeurigheid</string>
-    <string name="settings_sensors_title">Bluetooth sensoren</string>
+    <string name="settings_sensors_title">Sensoren</string>
     <string name="settings_sensors_summary">Fiets sensoren, wielomtrek, loop sensoren</string>
     <string name="settings_announcements_statistics_title">Gesproken berichten</string>
     <string name="custom_layout_list_title">Lay-outs</string>

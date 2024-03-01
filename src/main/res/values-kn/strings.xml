@@ -255,7 +255,7 @@
     <string name="settings_defaults_summary">ಆದ್ಯತೆಯ ಘಟಕಗಳು, ಡೀಫಾಲ್ಟ್ ಚಟುವಟಿಕೆ, ಡೀಫಾಲ್ಟ್ ಟ್ರ್ಯಾಕ್ ಹೆಸರು</string>
     <string name="settings_ui_title">ಬಳಕೆದಾರರ ಇಂಟರ್ಫೇಸ್</string>
     <string name="settings_ui_summary">ಗೋಚರತೆ, ರೆಕಾರ್ಡಿಂಗ್ ಲೇಔಟ್, ಥೀಮ್</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">ಸಮಯದ ಮಧ್ಯಂತರ, ದೂರದ ಮಧ್ಯಂತರ, ಗರಿಷ್ಠ ದೂರ, ನಿಖರತೆ</string>
     <string name="settings_sensors_title">ಬ್ಲೂಟೂತ್ ಸಂವೇದಕಗಳು</string>
     <string name="settings_sensors_summary">ಸೈಕ್ಲಿಂಗ್ ಸಂವೇದಕಗಳು, ಚಕ್ರದ ಸುತ್ತಳತೆ, ಓಟದ ಸಂವೇದಕಗಳು</string>

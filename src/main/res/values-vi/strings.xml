@@ -477,8 +477,8 @@ limitations under the License.
     <string name="settings_defaults_summary">Đơn vị ưu tiên, Hoạt động mặc định, Tên mặc định tuyến đường</string>
     <string name="settings_ui_title">Giao diện người dùng</string>
     <string name="settings_ui_summary">Vẻ ngoài, Bố cục ghi, Chủ đề</string>
-    <string name="settings_gps_title">GPS</string>
-    <string name="settings_sensors_title">Cảm Biến Bluetooth</string>
+    <string name="settings_gps_sensor">GPS</string>
+    <string name="settings_sensors_title">Cảm Biến</string>
     <string name="settings_sensors_summary">Đi Xe Đạp Cảm Biến, Bánh Vòng, Chạy Bộ Cảm Biến</string>
     <string name="settings_announcements_statistics_title">Thông báo thống kê</string>
     <string name="settings_announcements_summary">Thời Gian, Khoảng Cách, Tốc Độ Giọng Nói</string>

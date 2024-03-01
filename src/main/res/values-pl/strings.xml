@@ -464,8 +464,8 @@ limitations under the License.
     <string name="permission_bluetooth_failed_rejected">Należy manualnie zezwolić OpenTracks na dostęp do Najbliższych Urządzeń w ustawieniach.</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="settings_ui_summary">Wygląd, Układ ekranu śledzenia, Motyw</string>
-    <string name="settings_gps_title">GPS</string>
-    <string name="settings_sensors_title">Czujnik Bluetooth</string>
+    <string name="settings_gps_sensor">GPS</string>
+    <string name="settings_sensors_title">Czujnik</string>
     <string name="settings_sensors_summary">Czujniki rowerowe, Obwód koła, Czujniki biegowe</string>
     <string name="settings_announcements_statistics_title">Wiadomości głosowe</string>
     <string name="settings_announcements_summary">Czas, Dystans, Głos prędkości</string>

@@ -520,9 +520,9 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_import_export_title">Importez/Exportez</string>
     <string name="settings_announcements_summary">Temps, distance, vitesse de la voix</string>
     <string name="settings_announcements_statistics_title">Annonces vocales</string>
-    <string name="settings_sensors_title">Capteurs Bluetooth</string>
+    <string name="settings_sensors_title">Capteurs</string>
     <string name="settings_gps_summary">Intervalle de temps, Intervalle de distance, Distance maximale, Précision</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_ui_title">Interface utilisateur</string>
     <string name="settings_defaults_summary">Unités préférées, Activité par défaut, Suivi du nom par défaut</string>
     <string name="settings_defaults_title">Unités et activité par défaut</string>

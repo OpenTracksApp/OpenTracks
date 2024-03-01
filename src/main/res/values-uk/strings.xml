@@ -480,7 +480,7 @@ limitations under the License.
     <string name="settings_defaults_title">Одиниці виміру і дії за замовчуванням</string>
     <string name="settings_ui_title">Інтерфейс користувача</string>
     <string name="settings_ui_summary">Зовнішній вигляд, Макет запису, Тема</string>
-    <string name="settings_sensors_title">Датчики Bluetooth</string>
+    <string name="settings_sensors_title">Датчики</string>
     <string name="settings_announcements_statistics_title">Голосові оголошення</string>
     <string name="settings_gps_summary">Інтервал часу, інтервал відстані, Максимальна відстань, точність</string>
     <string name="settings_sensors_summary">Датчики Їзди На Велосипеді, Окружність Колеса, Датчики Ходу</string>
@@ -504,7 +504,7 @@ limitations under the License.
     <string name="value_float_mile_hour">%1$.1f km/h</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="no_compatible_file_manager_installed">Не встановлено сумісний файловий менеджер</string>
     <string name="help_data_google_play_services_content">Ні</string>
     <string name="activity_type_workout">тренування</string>

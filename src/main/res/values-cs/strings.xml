@@ -482,13 +482,13 @@ limitations under the License.
     <string name="settings_import_export_title">Import/Export</string>
     <string name="settings_announcements_summary">Čas, vzdálenost, rychlost hlasu</string>
     <string name="settings_announcements_statistics_title">Hlasová oznámení</string>
-    <string name="settings_sensors_title">Bluetooth senzory</string>
+    <string name="settings_sensors_title">Senzory</string>
     <string name="settings_gps_summary">Časový interval, Interval vzdálenosti, Maximální vzdálenost, Přesnost</string>
     <string name="settings_ui_summary">Vzhled, Rozložení záznamu, Téma</string>
     <string name="settings_open_tracks_summary">Vše o projektu OpenTracks</string>
     <string name="settings_defaults_title">Výchozí jednotky a aktivity</string>
     <string name="settings_ui_title">Uživatelské rozhraní</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="generic_undo">Zrušit</string>
     <string name="menu_select_layout">Vyberte rozvržení</string>
     <string name="custom_layout_list_title">Rozložení</string>

@@ -480,7 +480,7 @@ limitations under the License.
     <string name="settings_defaults_summary">偏好的单位，默认活动类型，路线默认名称</string>
     <string name="settings_ui_title">用户界面</string>
     <string name="settings_ui_summary">外观，记录中布局，主题</string>
-    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_sensor">GPS</string>
     <string name="settings_import_export_title">导入/导出</string>
     <string name="settings_activity_defaults_category">活动默认</string>
     <string name="settings_announcements_totaltime_frequency">时间间隔</string>

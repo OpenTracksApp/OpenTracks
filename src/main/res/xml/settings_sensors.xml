@@ -4,6 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/settings_sensors_title">
 
+    <PreferenceCategory android:title="@string/settings_gps_sensor">
+        <ListPreference
+            android:defaultValue="@string/min_sampling_interval_default"
+            android:entryValues="@array/min_sampling_interval_values"
+            android:key="@string/min_sampling_interval_key"
+            android:title="@string/settings_recording_min_sampling_interval_title" />
+
+        <ListPreference
+            android:defaultValue="@string/recording_gps_accuracy_default"
+            android:entryValues="@array/recording_gps_accuracy_values"
+            android:key="@string/recording_gps_accuracy_key"
+            android:title="@string/settings_recording_min_required_accuracy_title" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/settings_generic_sensor">
         <de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference
             android:defaultValue="@string/sensor_type_value_none"
