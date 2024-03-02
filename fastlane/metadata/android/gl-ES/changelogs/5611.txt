@@ -1,0 +1,11 @@
+v4.10.1: OpenTracks
+
+Cambios:
+- Android 14: fallo xeral ao iniciar gravación se non se concederon permisos
+- Títulos dos gráficos máis compactos
+
+Arranxos:
+- A reconexión do sensor BLE estragaba a app (introducido en v4.9.6)
+- A potencia en ciclismo non se procesaba (introducido en v4.9.6)
+- A cadencia de ciclismo así como a distancia permitía datos repetidos
+- Non se procesaba correctamente os datos do barómetro BLE

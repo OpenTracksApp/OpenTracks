@@ -1,0 +1,5 @@
+v4.11.2: OpenTracks
+
+Arranxo:
+- A gravación detense ao apagarse a pantalla (introducido en v4.11.1)
+  (retrotraer da3dd29b8e44624a8222caea9067955f252ef5f8)

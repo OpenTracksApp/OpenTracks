@@ -1,0 +1,10 @@
+v4.11.3: OpenTracks
+
+Cambios:
+- Novo deseño do adhesivo!
+- Novas capturas de pantalla!
+- O importador de KMZ ten soporte para calquera KML dentro dun KMZ
+
+Arranxos:
+- do botón atrás na lista de marcadores
+- a detención da API Pública non debería iniciar o servizo en primeiro plano (2º intento)
