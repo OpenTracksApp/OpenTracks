@@ -1,0 +1,10 @@
+v4.11.3: OpenTracks
+
+Veranderingen:
+- Nieuw stickerontwerp!
+- Nieuwe screenshots!
+- KMZ-importeur ondersteunt elk KML-bestand in een KMZ
+
+Opgeloste problemen:
+- Marker list terug knop werkt
+- Openbare API-stop mag de voorgrondservice niet starten (2e poging)
