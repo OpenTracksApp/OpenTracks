@@ -1,0 +1,4 @@
+v4.11.1: OpenTracks
+
+错误修正：
+- PublicAPI 停止时崩溃

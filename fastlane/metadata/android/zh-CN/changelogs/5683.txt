@@ -1,0 +1,5 @@
+v4.11.2: OpenTracks
+
+错误修正：
+- 屏幕关闭时录音停止（在 v4.11.1 中引入）
+ (reverting da3dd29b8e44624a8222caea9067955f252ef5f8)
