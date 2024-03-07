@@ -460,7 +460,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="menu_filter">Filter</string>
     <string name="permission_bluetooth_failed_rejected">OpenTracks moet handmatig toegang krijgen tot Apparaten in de buurt.</string>
     <string name="menu_add_custom_layout">Nieuwe lay-out</string>
-    <string name="settings_import_export_title">Invoer/uitvoer</string>
+    <string name="settings_import_export_title">Invoer en uitvoer</string>
     <string name="settings_announcements_totaltime_frequency">Tijdsinterval</string>
     <string name="field_set_secondary">Secondair</string>
     <string name="field_remove_from_layout">Verwijderen</string>
@@ -600,4 +600,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="sensor_state_pressure">Barometer</string>
     <string name="settings_recording_location_distance_summary">%1$s tussen opgenomen locaties</string>
     <string name="settings_recording_min_sampling_interval_title">Interval van metingen</string>
+    <string name="settings_theme_switch_restart">Themawijzigingen kunnen een handmatige herstart verlangen.</string>
+    <string name="settings_night_mode_option_night_oled">Nacht (OLED-vriendelijk)</string>
 </resources>
