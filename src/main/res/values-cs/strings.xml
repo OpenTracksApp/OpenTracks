@@ -479,7 +479,7 @@ limitations under the License.
     <string name="settings_activity_defaults_category">Výchozí nastavení aktivity</string>
     <string name="settings_units_category">Jednotky</string>
     <string name="settings_import_export_summary">Import, export, automatický export</string>
-    <string name="settings_import_export_title">Import/Export</string>
+    <string name="settings_import_export_title">Import a export</string>
     <string name="settings_announcements_summary">Čas, vzdálenost, rychlost hlasu</string>
     <string name="settings_announcements_statistics_title">Hlasová oznámení</string>
     <string name="settings_sensors_title">Senzory</string>
@@ -599,4 +599,6 @@ limitations under the License.
     <string name="sensor_state_pressure">Barometr</string>
     <string name="settings_recording_min_sampling_interval_title">Interval vzorkování</string>
     <string name="settings_recording_location_distance_summary">%1$s mezi zaznamenanými polohami</string>
+    <string name="settings_theme_switch_restart">Změna motivu může vyžadovat ruční restart.</string>
+    <string name="settings_night_mode_option_night_oled">Noční (OLED)</string>
 </resources>
