@@ -456,7 +456,7 @@ limitations under the License.
     <string name="settings_ui_title">Felhasználói felület</string>
     <string name="settings_ui_summary">Megjelenés, felvétel elrendezése, téma</string>
     <string name="settings_gps_summary">Időintervallum, távolságintervallum, max. távolság, pontosság</string>
-    <string name="settings_sensors_title">érzékelők</string>
+    <string name="settings_sensors_title">Érzékelők</string>
     <string name="generic_dismiss">Elvetés</string>
     <string name="settings_sensors_summary">Kerékpáros érzékelők, kerékkörfogat, futásérzékelők</string>
     <string name="settings_announcements_statistics_title">Statisztikai közlemények</string>
@@ -594,4 +594,6 @@ limitations under the License.
     <string name="settings_announcements_idle_category_title">Tétlenségi közlemények</string>
     <string name="permission_bluetooth_failed_rejected">A rendszerbeállításokban kézileg kell engedélyeznie az OpenTracks hozzáférését a közeli eszközökhöz.</string>
     <string name="help_data_google_play_services_content">Nem</string>
+    <string name="settings_theme_switch_restart">A témaváltoztatások kézi újraindítást igényelnek.</string>
+    <string name="settings_night_mode_option_night_oled">Éjszaka (kímélő OLED)</string>
 </resources>
