@@ -486,7 +486,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_sensors_title">Sensores</string>
     <string name="settings_sensors_summary">Sensores de ciclismo, Circunferencia da roda, Sensores de carreira</string>
     <string name="settings_announcements_statistics_title">Indicacións por Voz</string>
-    <string name="settings_import_export_title">Importación/Exportación</string>
+    <string name="settings_import_export_title">Importar e Exportar</string>
     <string name="settings_import_export_summary">Importación, Exportación, Auto Exportación</string>
     <string name="settings_units_category">Unidades</string>
     <string name="settings_activity_defaults_category">Valores por defecto</string>
@@ -601,4 +601,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="sensor_state_pressure">Barómetro</string>
     <string name="settings_recording_min_sampling_interval_title">Intervalo de tempo entre mostras</string>
     <string name="settings_recording_location_distance_summary">%1$s entre posicións gravadas</string>
+    <string name="settings_theme_switch_restart">Os cambios de decorado poderían requerir reinicio.</string>
+    <string name="settings_night_mode_option_night_oled">Noite (para OLED)</string>
 </resources>
