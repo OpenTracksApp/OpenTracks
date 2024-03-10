@@ -481,7 +481,7 @@ limitations under the License.
     <string name="settings_ui_title">用户界面</string>
     <string name="settings_ui_summary">外观，记录中布局，主题</string>
     <string name="settings_gps_sensor">GPS</string>
-    <string name="settings_import_export_title">导入/导出</string>
+    <string name="settings_import_export_title">导入与导出</string>
     <string name="settings_activity_defaults_category">活动默认</string>
     <string name="settings_announcements_totaltime_frequency">时间间隔</string>
     <string name="settings_announcements_distance_frequency">每圈长度</string>
@@ -549,7 +549,7 @@ limitations under the License.
     <string name="generic_undo">撤销</string>
     <string name="generic_dismiss">关闭</string>
     <string name="settings_defaults_title">默认的单位和活动类型</string>
-    <string name="settings_sensors_title">蓝牙传感器</string>
+    <string name="settings_sensors_title">传感器</string>
     <string name="settings_sensors_summary">自行车传感器，车轮周长，跑步传感器</string>
     <string name="settings_announcements_statistics_title">语音播报</string>
     <string name="settings_reset_summary">将设置重置为默认值</string>
@@ -632,4 +632,6 @@ limitations under the License.
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
     <string name="settings_recording_min_sampling_interval_title">采样时间间隔</string>
     <string name="settings_recording_location_distance_summary">每隔%1$s记录地点之间</string>
+    <string name="settings_theme_switch_restart">主题变更可能需要手动重启。</string>
+    <string name="settings_night_mode_option_night_oled">黑夜模式(OLED优化)</string>
 </resources>
