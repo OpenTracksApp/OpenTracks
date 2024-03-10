@@ -1,0 +1,8 @@
+v4.12.0: OpenTracks
+
+更改：
+- OLED 友好型暗色主题（需要手动重启）
+- 重新排序设置（GPS 是一个传感器）
+
+开发人员：
+- 为 PlayStore 上传添加了 Fastlane 脚本（翻译）
