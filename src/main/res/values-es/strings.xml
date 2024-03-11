@@ -520,7 +520,7 @@ limitations under the License.
     <string name="settings_gps_sensor">GPS</string>
     <string name="settings_announcements_statistics_title">Avisos de voz</string>
     <string name="settings_units_category">Unidades</string>
-    <string name="settings_import_export_title">Importar/Exportar</string>
+    <string name="settings_import_export_title">Importar y exportar</string>
     <string name="stats_custom_layout_default_layout">Diseño predeterminado</string>
     <string name="custom_layout_select_layout">Seleccionar diseño</string>
     <string name="custom_layout_list_edit_already_exists">El nombre de este diseño ya existe</string>
@@ -654,4 +654,6 @@ limitations under the License.
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
     <string name="settings_recording_min_sampling_interval_title">Intervalo de muestreo</string>
     <string name="settings_recording_location_distance_summary">%1$s entre lugares registrados</string>
+    <string name="settings_theme_switch_restart">Los cambios del tema pueden requerir un reinicio manual.</string>
+    <string name="settings_night_mode_option_night_oled">Oscuro (compatible con OLED)</string>
 </resources>
