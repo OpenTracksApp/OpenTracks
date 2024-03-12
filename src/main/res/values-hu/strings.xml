@@ -558,7 +558,7 @@ limitations under the License.
     <string name="report_bug">Hibajelentés</string>
     <string name="select_show_on_map_behavior">A „megjelenítés a térképen” viselkedés választása</string>
     <string name="image_discard">Eldobás</string>
-    <string name="settings_import_export_title">Importálás/exportálás</string>
+    <string name="settings_import_export_title">Importálás és exportálás</string>
     <string name="generic_undo">Visszavonás</string>
     <string name="settings_sensor_heart_rate_max">Zónák: maximális pulzusszám (bpm)</string>
     <string name="settings_public_api_disabled_toast">Az OpenTracks nyilvános API-ja le van tiltva: a beállításokban engedélyezhető.</string>
