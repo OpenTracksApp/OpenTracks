@@ -618,4 +618,22 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_recording_min_required_accuracy_summary">Ort wird ignoriert wenn seine Genauigkeit über %1$s liegt</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth Geräte filtern</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Alle verfügbaren Bluetooth Geräte anzeigen</string>
+    <string name="settings_theme_switch_restart">Themenänderungen können einen manuellen Neustart erfordern.</string>
+    <string name="settings_recording_idle_timeout_title">Stillstand Schwelle</string>
+    <string name="settings_night_mode_option_night_oled">Nacht (OLED freundlich)</string>
+    <string name="sensor_state_pressure">Barometer</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="settings_announcements_idle_category_title">Stillstand Benachrichtigung</string>
+    <string name="settings_announcements_idle_title">Stillstand</string>
+    <string name="settings_ui_dynamic_colors_title">Dynamische Farben</string>
+    <string name="value_internal_sensor">Interner Sensor</string>
+    <string name="permission_recording_failed">OpenTracks benötigt die Berechtigubg, auf Ihren Standort sowie nahe gelegene Geräte zuzugreifen.</string>
+    <string name="sensor_state_power_max">Maximale Leistung</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="settings_recording_title">Aufnahme</string>
+    <string name="settings_ui_dynamic_colors_summary">Verwenden Sie benutzerdefinierte dynamische Farben (nur Android 12+; erfordert einen manuellen Neustart)</string>
+    <string name="value_int_seconds">%1$d s (empfohlen)</string>
+    <string name="sensor_state_cadence_unit">Drehzahl</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="activity_type_kickscooter">Roller</string>
 </resources>
