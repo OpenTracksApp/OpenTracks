@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 
+import java.time.Duration;
+
 public class ActivityUtils {
 
     private static final String TAG = ActivityUtils.class.getSimpleName();
@@ -32,12 +34,12 @@ public class ActivityUtils {
         return searchView;
     }
 
-    public static void vibrate(@NonNull Context context, int milliseconds) {
+    public static void vibrate(@NonNull Context context, Duration duration) {
         final Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
+            vibrator.vibrate(VibrationEffect.createOneShot(duration.toMillis(), VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
-            vibrator.vibrate(milliseconds);
+            vibrator.vibrate(duration.toMillis());
         }
     }
 

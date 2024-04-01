@@ -20,7 +20,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ServiceInfo;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager.WakeLock;
@@ -46,7 +45,6 @@ import de.dennisguse.opentracks.services.announcement.VoiceAnnouncementManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.util.PermissionRequester;
 import de.dennisguse.opentracks.util.SystemUtils;
 
 public class TrackRecordingService extends Service implements TrackPointCreator.Callback, SharedPreferences.OnSharedPreferenceChangeListener, TrackRecordingManager.IdleObserver {
@@ -207,17 +205,10 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     private synchronized void startSensors() {
         if (isSensorStarted()) {
             Log.i(TAG, "sensors already started; skipping");
-            return;
         }
         Log.i(TAG, "startSensors");
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         trackPointCreator.start(this, handler);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            if (!PermissionRequester.RECORDING.hasPermission(this)) {
-                throw new RuntimeException("Android14: Please grant permissions LOCATION and NEARBY DEVICES (manually)");
-            }
-        }
 
         ServiceCompat.startForeground(this, TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this), ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION + ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
     }

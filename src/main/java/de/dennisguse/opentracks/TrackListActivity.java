@@ -40,6 +40,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -47,6 +48,7 @@ import java.util.Objects;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackListBinding;
+import de.dennisguse.opentracks.services.MissingPermissionException;
 import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -159,7 +161,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 if (gpsStatusValue.isGpsStarted()) {
                     recordingStatusConnection.stopService(this);
                 } else {
-                    TrackRecordingServiceConnection.executeForeground(this, (service, connection) -> service.tryStartSensors());
+                    startSensorsOrRecording((service, connection) -> service.tryStartSensors());
                 }
             }
         });
@@ -178,7 +180,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             // Not Recording -> Recording
             Log.i(TAG, "Starting recording");
             updateGpsMenuItem(false, true);
-            TrackRecordingServiceConnection.executeForeground(this, (service, connection) -> {
+            startSensorsOrRecording((service, connection) -> {
                 Track.Id trackId = service.startNewTrack();
 
                 Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
@@ -192,7 +194,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             }
 
             // Recording -> Stop
-            ActivityUtils.vibrate(this, 1000);
+            ActivityUtils.vibrate(this, Duration.ofSeconds(1));
             updateGpsMenuItem(false, false);
             recordingStatusConnection.stopRecording(TrackListActivity.this);
             viewBinding.trackListFabAction.setImageResource(R.drawable.ic_baseline_record_24);
@@ -444,5 +446,13 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         recordingStatus = status;
         setFloatButton();
         adapter.updateRecordingStatus(recordingStatus);
+    }
+
+    private void startSensorsOrRecording(TrackRecordingServiceConnection.Callback callback) {
+        try {
+            TrackRecordingServiceConnection.executeForeground(this, callback);
+        } catch (MissingPermissionException e) {
+            Toast.makeText(this, R.string.permission_recording_failed, Toast.LENGTH_LONG).show();
+        }
     }
 }

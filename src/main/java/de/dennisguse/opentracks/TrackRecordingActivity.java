@@ -24,6 +24,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.time.Duration;
 import java.util.List;
 
 import de.dennisguse.opentracks.chart.ChartFragment;
@@ -136,7 +137,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         viewBinding.trackRecordingFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.opentracks));
         viewBinding.trackRecordingFabAction.setBackgroundColor(ContextCompat.getColor(this, R.color.opentracks));
         viewBinding.trackRecordingFabAction.setOnLongClickListener((view) -> {
-            ActivityUtils.vibrate(this, 1000);
+            ActivityUtils.vibrate(this, Duration.ofSeconds(1));
             trackRecordingServiceConnection.stopRecording(TrackRecordingActivity.this);
             Intent newIntent = IntentUtils.newIntent(TrackRecordingActivity.this, TrackStoppedActivity.class)
                     .putExtra(TrackStoppedActivity.EXTRA_TRACK_ID, trackId);

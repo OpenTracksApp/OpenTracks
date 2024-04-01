@@ -20,6 +20,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.IBinder.DeathRecipient;
 import android.os.RemoteException;
@@ -29,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import de.dennisguse.opentracks.BuildConfig;
+import de.dennisguse.opentracks.util.PermissionRequester;
 
 /**
  * Wrapper for the track recording service.
@@ -157,6 +159,12 @@ public class TrackRecordingServiceConnection {
     }
 
     public static void executeForeground(Context context, Callback callback) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            if (!PermissionRequester.RECORDING.hasPermission(context)) {
+                throw new MissingPermissionException(PermissionRequester.RECORDING);
+            }
+        }
+
         Callback withUnbind = (service, connection) -> {
             callback.onConnected(service, connection);
             connection.unbind(context);
