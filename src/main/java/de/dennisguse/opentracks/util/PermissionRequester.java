@@ -95,7 +95,7 @@ public class PermissionRequester {
         ArrayList<String> recording = new ArrayList<>(GPS_PERMISSION);
         recording.addAll(BLUETOOTH_PERMISSIONS);
 
-        RECORDING_PERMISSIONS = Collections.unmodifiableList(recording);
+        RECORDING_PERMISSIONS = Collections.unmodifiableList(new ArrayList<>(recording));
 
         recording.addAll(NOTIFICATION_PERMISSIONS);
 
