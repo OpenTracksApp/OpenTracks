@@ -30,10 +30,10 @@ limitations under the License.
 \n * funciona sen precisar conexión á rede
 \n * mostra as rutas nun mapa (ver abaixo)</string>
     <string name="help_track_map_title">Como mostrar a ruta no mapa\?</string>
-    <string name="help_track_map_content"> Usa a icona do mapa pequeno.
-\n a) (actualizacións en directo) Instala <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Proporciona mapas en liña ou sen conexión grazas a <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
-\n En realidade, OSMDashboard é unha aplicación independente que só pode acceder (temporalmente) aos datos das pistas que se amosarán.
-\n b) A través dunha aplicación de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAnd</a> e <a href="https://maps.me/">MAPS.ME</a>). Estas aplicacións precisan admitir o formato de ficheiro KMZ (só localizacións e marcas de tempo). De feito, unha aplicación ten que admitir <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="help_track_map_content"> \u0020Usa a icona do mapa pequeno. 
+\n a) (actualizacións en directo) Instala <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Proporciona mapas en liña ou sen conexión grazas a <a href="https://www.openstreetmap.org">OpenStreetMap</a>. 
+\n En realidade, OSMDashboard é unha aplicación independente que só pode acceder (temporalmente) aos datos das pistas que se amosarán. 
+\n b) A través dunha aplicación de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAnd</a> e <a href="https://maps.me/">MAPS.ME</a>). Estas aplicacións precisan admitir o formato de ficheiro KMZ (só localizacións e marcas de tempo). De feito, unha aplicación ten que admitir <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>. \u0020</string>
     <string name="help_storage_pictures_title">De que xeito garda OpenTracks as fotos tomadas como marcadores\?</string>
     <string name="help_storage_pictures_content">Gárdanse na almacenaxe interna da app (só accesible desde OpenTracks).</string>
     <string name="help_track_export_title">De que xeito exporto/importo as rutas gravadas\?</string>
@@ -46,27 +46,27 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="help_data_storage_title">De que xeito garda OpenTracks os datos dos sensores\?</string>
     <string name="help_data_storage_content"> \u0020Os datos dos sensores gárdanse asociados á localización. \u0020 Respecto do ritmo cardíaco, significa que só se garda <i>unha medida</i> asociada a unha localización. \u0020 Se te detés ou estás en interiores, non se gardarán datos do sensor (mais serán mostrados). \u0020</string>
     <string name="help_gps_troubleshooting_title">OpenTracks non grava as localizacións\?</string>
-    <string name="help_gps_troubleshooting_content"> Podes intentar:
-\n a) mira que o GPS esté activado,
-\n b) mellora a recepción GPS (ex. sae ao exterior),
-\n c) comprobaa coa app <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, e
-\n d) desactiva o aforro de enerxía.
-\n
-\n Se isto non axuda, infórmanos do problema. </string>
+    <string name="help_gps_troubleshooting_content"> \u0020Podes intentar: 
+\n a) mira que o GPS esté activado, 
+\n b) mellora a recepción GPS (ex. sae ao exterior), 
+\n c) comprobaa coa app <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, e 
+\n d) desactiva o aforro de enerxía. 
+\n 
+\n Se isto non axuda, infórmanos do problema. \u0020</string>
     <string name="help_support_title">Como podo axudar a OpenTracks\?</string>
-    <string name="help_support_content"> Podes:
-\n a) falar de OpenTracks coas túas amizades,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propoñer novas funcións</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">informar de fallos</a>,
-\n d) axudar no desenvolvemento,
-\n e) mercar a app na <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
-\n f) facer unha doazón, e
-\n g) calquera cousa que estimes axuda a OpenTracks. </string>
+    <string name="help_support_content"> \u0020Podes: 
+\n a) falar de OpenTracks coas túas amizades, 
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propoñer novas funcións</a>, 
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">informar de fallos</a>, 
+\n d) axudar no desenvolvemento, 
+\n e) mercar a app na <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>, 
+\n f) facer unha doazón, e 
+\n g) calquera cousa que estimes axuda a OpenTracks. \u0020</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">avión</string>
     <string name="activity_type_atv">Quad</string>
-    <string name="activity_type_biking">ciclismo</string>
+    <string name="activity_type_biking">ir en bici</string>
     <string name="activity_type_blimp">dirixible</string>
     <string name="activity_type_boat">barco</string>
     <string name="activity_type_climbing">escalada</string>
