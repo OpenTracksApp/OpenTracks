@@ -243,7 +243,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_recording_keep_screen_on_while_recording_title">Bildschirm eingeschaltet lassen</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Lasse während der Aufnahme den Bildschirm eingeschaltet.</string>
     <string name="settings_recording_default_activity_title">Standardaktivität</string>
-    <string name="settings_recording_location_frequency_summary">Entfernungs-/Zeitintervall %1$s zwischen zwei Standortaufzeichnungen</string>
+    <string name="settings_recording_location_frequency_summary">%1$s zwischen Standort Überprüfungen</string>
     <string name="settings_recording_max_recording_distance_summary">Ein neues Segment wird erstellt, wenn die Entfernung zwischen zwei Standorten mehr als %1$s beträgt</string>
     <string name="settings_recording_max_recording_distance_title">Max. Entfernung</string>
     <string name="settings_recording_min_recording_distance_title">Aufzeichnungsintervall</string>
@@ -490,7 +490,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="menu_select_layout">Wähle Layout</string>
     <string name="generic_choose_an_option">Wähle eine Option</string>
     <string name="settings_gps_sensor">GPS</string>
-    <string name="settings_import_export_title">Import/Export</string>
+    <string name="settings_import_export_title">Import und Export</string>
     <string name="settings_sensors_title">Sensoren</string>
     <string name="settings_sensors_summary">Fahrradsensoren, Radumfang und Lauf-Sensoren</string>
     <string name="settings_announcements_statistics_title">Sprachansagen</string>
@@ -532,7 +532,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="export_dir_not_writable">" (nicht schreibbar)"</string>
     <string name="stats_clock">Uhr</string>
     <string name="image_discard">Verwerfen</string>
-    <string name="settings_announcements_distance_frequency">Entfernungsintervall</string>
+    <string name="settings_announcements_distance_frequency">Runden Länge</string>
     <string name="settings_public_api_enabled_title">Öffentliche API</string>
     <string name="track_discarding">Verwerfe Track</string>
     <string name="average_heart_rate">Durchschnittlicher Puls</string>
@@ -636,4 +636,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="sensor_state_cadence_unit">Drehzahl</string>
     <string name="sensor_state_heart_rate_unit">bpm</string>
     <string name="activity_type_kickscooter">Roller</string>
+    <string name="settings_recording_location_distance_summary">%1$s zwischen aufgezeichneten Orten</string>
+    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 Knoten} other {{n,number,#.0} Knoten} }</string>
 </resources>
