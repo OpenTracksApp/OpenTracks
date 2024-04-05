@@ -1,0 +1,6 @@
+v4.12.1: OpenTracks
+
+Bugfix:
+- Android 14: report missing permissions (instead of forced chrash with stacktrace)
+- POST_NOTIFICATION is optional 
+
