@@ -1,0 +1,5 @@
+v4.12.1: OpenTracks
+
+Oprava chyb:
+- Android 14: nahlášení chybějících oprávnění (namísto nuceného pádu se stacktrace)
+- POST_NOTIFICATION je volitelné
