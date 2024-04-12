@@ -205,6 +205,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     private synchronized void startSensors() {
         if (isSensorStarted()) {
             Log.i(TAG, "sensors already started; skipping");
+            return;
         }
         Log.i(TAG, "startSensors");
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
