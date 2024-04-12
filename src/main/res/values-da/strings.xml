@@ -16,7 +16,7 @@ limitations under the License.
 --><resources>
     <string name="about_preference_title">Om OpenTracks</string>
     <string name="about_description"><i> OpenTracks </i> er en sportstracker, der fuldt ud respekterer dit privatliv.</string>
-    <string name="about_url">Projekthjemmeside: <a href="%1$s">%1$s</a></string>
+    <string name="about_url">Projektets hjemmeside: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Versionsnavn: %1$s</string>
     <string name="about_version_code">Versionskode: %1$d</string>
     <string name="about_history">OpenTracks er en forgrening fra <a href="https://code.google.com/archive/p/mytracks/"> <i> Googles MyTracks </i> </a> (afviklet i 2016).</string>
