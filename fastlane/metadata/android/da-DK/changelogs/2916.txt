@@ -1,0 +1,15 @@
+v3.0.0: OpenTracks
+
+Første udgivelse af OpenTracks (dvs. hard fork fra MyTracks)
+
+Ændringer:
+- Omdøbt fra MyTracks til OpenTracks
+- Tilføjet Bluetooth LE-pulssensor
+- Fjernet alle funktioner, der kræver internetadgang
+- Fjernet Google Maps-integration
+- Fjernet brug af Google Play-tjenester
+- ANT+ sensorer fjernet
+- Fjernet klassiske Bluetooth-sensorer
+- Fjernet Protobuf
+- Fjernet kalorieberegning og aktivitetsberegning
+- Fjernet MyTracks Service-API (dvs. ingen integration med andre apps)
