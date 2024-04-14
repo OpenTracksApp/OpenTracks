@@ -1,0 +1,4 @@
+v4.12.2.: OpenTracks
+
+Oprava chyvy:
+- Umožnění spuštění senzorů před začátkem záznamu
