@@ -1,0 +1,4 @@
+v4.12.2 .: OpenTracks
+
+Bugfix:
+- Toestaan dat sensoren voor de opname worden gestart
