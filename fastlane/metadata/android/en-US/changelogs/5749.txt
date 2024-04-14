@@ -1,0 +1,4 @@
+v4.12.2.: OpenTracks
+
+Bugfix:
+- Allow to start sensors before recording
