@@ -60,6 +60,12 @@
             android:title="@string/settings_announcements_lap_speed_pace" />
 
         <SwitchPreferenceCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="@bool/voice_announce_unit_default"
+            android:key="@string/voice_announce_unit_key"
+            android:title="@string/settings_announcements_unit" />
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_average_heart_rate_default"
             android:key="@string/voice_announce_average_heart_rate_key"
             android:title="@string/settings_announcements_average_heart_rate" />

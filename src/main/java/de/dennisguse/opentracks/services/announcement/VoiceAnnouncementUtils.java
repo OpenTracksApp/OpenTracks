@@ -7,6 +7,7 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapSpeedPace;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceUnit;
 
 import android.content.Context;
 import android.icu.text.MessageFormat;
@@ -27,6 +28,7 @@ import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
+import de.dennisguse.opentracks.util.StringUtils;
 
 class VoiceAnnouncementUtils {
 
@@ -44,34 +46,37 @@ class VoiceAnnouncementUtils {
         Speed averageMovingSpeed = trackStatistics.getAverageMovingSpeed();
         Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
 
-        int perUnitStringId;
-        int distanceId;
-        int speedId;
-        String unitDistanceTTS;
-        String unitSpeedTTS;
-        switch (unitSystem) {
-            case METRIC -> {
-                perUnitStringId = R.string.voice_per_kilometer;
-                distanceId = R.string.voiceDistanceKilometersPlural;
-                speedId = R.string.voiceSpeedKilometersPerHourPlural;
-                unitDistanceTTS = "kilometer";
-                unitSpeedTTS = "kilometer per hour";
+        int perUnitStringId = R.string.empty;
+        int distanceId = R.string.voiceDistance;
+        int speedId = R.string.voiceSpeed;
+        String unitDistanceTTS = StringUtils.EMPTY;
+        String unitSpeedTTS = StringUtils.EMPTY;
+
+        if(shouldVoiceAnnounceUnit()) {
+            switch (unitSystem) {
+                case METRIC -> {
+                    perUnitStringId = R.string.voice_per_kilometer;
+                    distanceId = R.string.voiceDistanceKilometersPlural;
+                    speedId = R.string.voiceSpeedKilometersPerHourPlural;
+                    unitDistanceTTS = "kilometer";
+                    unitSpeedTTS = "kilometer per hour";
+                }
+                case IMPERIAL_FEET, IMPERIAL_METER -> {
+                    perUnitStringId = R.string.voice_per_mile;
+                    distanceId = R.string.voiceDistanceMilesPlural;
+                    speedId = R.string.voiceSpeedMilesPerHourPlural;
+                    unitDistanceTTS = "mile";
+                    unitSpeedTTS = "mile per hour";
+                }
+                case NAUTICAL_IMPERIAL -> {
+                    perUnitStringId = R.string.voice_per_nautical_mile;
+                    distanceId = R.string.voiceDistanceNauticalMilesPlural;
+                    speedId = R.string.voiceSpeedMKnotsPlural;
+                    unitDistanceTTS = "nautical mile";
+                    unitSpeedTTS = "knots";
+                }
+                default -> throw new RuntimeException("Not implemented");
             }
-            case IMPERIAL_FEET, IMPERIAL_METER -> {
-                perUnitStringId = R.string.voice_per_mile;
-                distanceId = R.string.voiceDistanceMilesPlural;
-                speedId = R.string.voiceSpeedMilesPerHourPlural;
-                unitDistanceTTS = "mile";
-                unitSpeedTTS = "mile per hour";
-            }
-            case NAUTICAL_IMPERIAL -> {
-                perUnitStringId = R.string.voice_per_nautical_mile;
-                distanceId = R.string.voiceDistanceNauticalMilesPlural;
-                speedId = R.string.voiceSpeedMKnotsPlural;
-                unitDistanceTTS = "nautical mile";
-                unitSpeedTTS = "knots";
-            }
-            default -> throw new RuntimeException("Not implemented");
         }
 
         double distanceInUnit = totalDistance.toKM_Miles(unitSystem);

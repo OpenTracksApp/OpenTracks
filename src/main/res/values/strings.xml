@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
+    <string name="empty"></string>
     <string name="about_preference_title">About OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> is a sport tracking application that completely respects your privacy.</string>
     <string name="about_url">Project web page: <a href="%1$s">%1$s</a></string>
@@ -413,6 +414,7 @@ limitations under the License.
     <string name="settings_announcements_lap_heart_rate">Lap heart rate</string>
     <string name="settings_announcements_average_speed_pace">Average speed/pace</string>
     <string name="settings_announcements_lap_speed_pace">Lap speed/pace</string>
+    <string name="settings_announcements_unit">Distance/speed unit</string>
 
     <!-- Custom Layout -->
 
@@ -602,6 +604,12 @@ limitations under the License.
         other {{n,number,#.0} knots}
         }
     </string>
+    <string name="voiceSpeed">
+        {n, plural,
+        =1 {1}
+        other {{n,number,#.0}}
+        }
+    </string>
     <string name="voice_on_device_speaker_title">Use the device\'s speaker</string>
     <string name="voice_per_kilometer">per kilometer</string>
     <string name="voice_per_mile">per mile</string>
@@ -627,6 +635,13 @@ limitations under the License.
         {n, plural,
         =1 {1 nautical mile}
         other {{n,number,#.0} nautical miles}
+        }
+    </string>
+
+    <string name="voiceDistance">
+        {n, plural,
+        =1 {1 }
+        other {{n,number,#.0}}
         }
     </string>
     <string name="average_heart_rate">Average heart rate</string>

@@ -57,6 +57,7 @@ import de.dennisguse.opentracks.settings.UnitSystem;
 public class StringUtils {
 
     private static final String TAG = StringUtils.class.getSimpleName();
+    public static final String EMPTY = "";
 
     private StringUtils() {
     }
