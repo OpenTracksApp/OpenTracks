@@ -333,6 +333,10 @@ public class PreferencesUtils {
         return getBoolean(R.string.voice_announce_idle_key, true);
     }
 
+    public static boolean shouldVoiceAnnounceUnit() {
+        return getBoolean(R.string.voice_announce_unit_key, true);
+    }
+
     public static Duration getVoiceAnnouncementFrequency() {
         final int DEFAULT = Integer.parseInt(resources.getString(R.string.voice_announcement_frequency_default));
         int value = getInt(R.string.voice_announcement_frequency_key, DEFAULT);
