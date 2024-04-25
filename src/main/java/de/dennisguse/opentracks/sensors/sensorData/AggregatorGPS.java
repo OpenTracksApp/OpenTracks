@@ -4,7 +4,10 @@ import android.location.Location;
 
 import androidx.annotation.NonNull;
 
-public class AggregatorGPS extends Aggregator<Location, Location> {
+import java.util.Optional;
+
+public class AggregatorGPS extends Aggregator<Location, Optional<Location>> {
+
 
     public AggregatorGPS(String sensorAddress) {
         super(sensorAddress);
@@ -12,7 +15,7 @@ public class AggregatorGPS extends Aggregator<Location, Location> {
 
     @Override
     protected void computeValue(Raw<Location> current) {
-        value = current.value();
+        value = Optional.of(current.value());
     }
 
     @Override
@@ -22,7 +25,7 @@ public class AggregatorGPS extends Aggregator<Location, Location> {
 
     @NonNull
     @Override
-    protected Location getNoneValue() {
-        return new Location("none");
+    protected Optional<Location> getNoneValue() {
+        return Optional.empty();
     }
 }

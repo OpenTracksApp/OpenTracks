@@ -44,7 +44,7 @@ public abstract class Aggregator<Input, Output> {
 
     public Output getValue() {
         if (!hasValue()) {
-            return null;
+            return null; //TODO Check if this is a good idea!
         }
         if (isRecent()) {
             return value;

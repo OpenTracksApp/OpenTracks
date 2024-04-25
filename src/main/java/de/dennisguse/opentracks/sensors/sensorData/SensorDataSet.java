@@ -152,7 +152,8 @@ public final class SensorDataSet {
 
     public void fillTrackPoint(TrackPoint trackPoint) {
         if (gps != null && gps.hasValue()) {
-            trackPoint.setLocation(gps.getValue());
+            gps.getValue()
+                    .ifPresent(trackPoint::setLocation);
         }
 
         if (getHeartRate() != null) {
