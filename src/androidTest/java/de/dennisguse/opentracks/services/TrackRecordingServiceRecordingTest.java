@@ -10,6 +10,7 @@ import android.os.Looper;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
+import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
 import org.junit.AfterClass;
@@ -20,12 +21,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.TestUtil;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.AltitudeGainLoss;
@@ -53,6 +56,9 @@ public class TrackRecordingServiceRecordingTest {
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
+
+    @Rule
+    public GrantPermissionRule mGrantPermissionRule = TestUtil.createGrantPermissionRule();
 
     private final Context context = ApplicationProvider.getApplicationContext();
     private ContentProviderUtils contentProviderUtils;
@@ -124,6 +130,47 @@ public class TrackRecordingServiceRecordingTest {
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f)
+        ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
+    }
+
+
+    /**
+     * Test that an IDLE event, doesn't store invalid GPS-provided data.
+     */
+    @MediumTest
+    @Test
+    public void recording_startIdle() throws InterruptedException {
+
+        // given
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+        String startTime = "2020-02-02T02:02:02Z";
+        trackPointCreator.setClock(startTime);
+        Track.Id trackId = service.startNewTrack();
+        String gps1 = "2020-02-02T02:02:03Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps1, 45.0, 35.0, 1, 15);
+        String gps2 = "2020-02-02T02:02:04Z";
+
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.0, 35.0, 1, 15);
+
+        // when
+        String idleTime = "2020-02-02T02:02:17Z";
+        trackPointCreator.setClock("2020-02-02T02:02:17Z");
+        Thread.sleep(Duration.ofSeconds(15).toMillis());
+
+        // then
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps1))
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setSpeed(Speed.of(15)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps2))
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setSpeed(Speed.of(15)),
+                new TrackPoint(TrackPoint.Type.IDLE, Instant.parse(idleTime))
         ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
     }
 
