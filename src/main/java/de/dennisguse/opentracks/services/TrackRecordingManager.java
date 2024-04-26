@@ -197,6 +197,9 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
 
         if (trackPoint.hasLocation() && lastStoredTrackPointWithLocation == null) {
             insertTrackPoint(trackPoint, true);
+
+            handler.removeCallbacks(ON_IDLE);
+            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
             return true;
         }
 
