@@ -70,7 +70,7 @@ hosted.weblate.org</a>.
     * export automatically after each recording (e.g., to sync via [Nextcloud](https://nextcloud.com/))
     * avoid duplication: each exported file contain a random unique identifier (i.e., `opentracks:trackid`)
 * __Altitude:__
-    * gain/loss via barometric sensor (if present)
+    * gain/loss via barometric sensor (internal if present or via Bluetooth's Environmental Sensing Service)
     * shown in EGM2008 (above mean sea level); exported as WGS84
 * __Bluetooth LE sensors:__
     * heart rate

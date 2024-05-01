@@ -60,7 +60,15 @@ We do not support type of movement (i.e., walking vs running).
 * Stryd (incl. power)
 * Wahoo Tickr X (Cadence appears to be reported in SPM rather than RPM)
 
-## Tested Barometric Sensor Smartphones
+## Barometer (gain/loss)
+
+### 0x2A6D: Environmental Sensing Service
+Sadly, Bluetooth sensors providing _air pressure_ via Environmental Sensing Service seem to be very rare.
+
+* NoTrustIssues: https://github.com/OpenTracksApp/NoTrustIssues
+  An Android app that exposes the internal barometer via Environmental Sensing Service.
+
+### Internal: tested Barometric Sensor Smartphones
 
 OpenTracks derives the altitude gain and altitude loss using the internal barometric sensor of a device (if present).
 However, barometric sensor seem to be prone to a lot of noise.
