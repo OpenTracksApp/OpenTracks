@@ -656,4 +656,5 @@ limitations under the License.
     <string name="settings_recording_location_distance_summary">%1$s entre lugares registrados</string>
     <string name="settings_theme_switch_restart">Los cambios del tema pueden requerir un reinicio manual.</string>
     <string name="settings_night_mode_option_night_oled">Oscuro (compatible con OLED)</string>
+    <string name="settings_announcements_unit">Unidad de distancia/velocidad</string>
 </resources>
