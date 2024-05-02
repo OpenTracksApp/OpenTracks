@@ -601,4 +601,7 @@ limitations under the License.
     <string name="settings_recording_location_distance_summary">%1$s mezi zaznamenanými polohami</string>
     <string name="settings_theme_switch_restart">Změna motivu může vyžadovat ruční restart.</string>
     <string name="settings_night_mode_option_night_oled">Noční (OLED)</string>
+    <string name="settings_announcements_unit">Jednotka vzdálenosti/rychlosti</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} few {{n,number}} other {{n,number,#.0}} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } few {{n,number}} other {{n,number,#.0}} }</string>
 </resources>
