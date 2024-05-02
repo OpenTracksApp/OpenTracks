@@ -603,4 +603,5 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_recording_location_distance_summary">%1$s entre posicións gravadas</string>
     <string name="settings_theme_switch_restart">Os cambios de decorado poderían requerir reinicio.</string>
     <string name="settings_night_mode_option_night_oled">Noite (para OLED)</string>
+    <string name="settings_announcements_unit">Unidades de distancia/velocidade</string>
 </resources>
