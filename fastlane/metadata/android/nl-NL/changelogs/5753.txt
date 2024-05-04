@@ -1,0 +1,8 @@
+v4.12.3: OpenTracks
+
+Bugfix:
+- Gebruikmakend van GPS- en IDLE-functionaliteit opgeslagen coördinaten 0.0 / 0.0 en overschat zo alle statistieken (afstand >10.000 km). (Ingevoerd in v4.12.0)
+- Idle: ook trigger als er maar één locatie is ontvangen.
+
+Met betrekking tot de bug rond de overschatting van afstand: de opgeslagen gegevens worden niet binnen OpenTracks gecorrigeerd.
+Aanbeveling: exporteer de als KML / KMZ en vervang de ongeldige coördinaten.
