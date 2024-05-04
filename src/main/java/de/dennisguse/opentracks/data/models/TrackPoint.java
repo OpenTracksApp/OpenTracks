@@ -135,6 +135,10 @@ public class TrackPoint {
         return this;
     }
 
+    public boolean isIdleTriggered() {
+        return type == Type.IDLE;
+    }
+
     public boolean isSegmentManualStart() {
         return type == Type.SEGMENT_START_MANUAL;
     }

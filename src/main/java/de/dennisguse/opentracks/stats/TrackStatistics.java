@@ -107,6 +107,7 @@ public class TrackStatistics {
      *
      * @param other another statistics data object
      */
+    //TODO Should be refactored to append only [mainly due to isIdle] (NOTE: This requires to use a custom value object for AggregatedStatistics; this is anyhow recommended).
     public void merge(TrackStatistics other) {
         if (startTime == null) {
             startTime = other.startTime;
@@ -118,6 +119,8 @@ public class TrackStatistics {
         } else {
             stopTime = stopTime.isAfter(other.stopTime) ? stopTime : other.stopTime;
         }
+
+        isIdle = other.isIdle; //TODO This implicitly assumes append mode.
 
         if (avgHeartRate == null) {
             avgHeartRate = other.avgHeartRate;
