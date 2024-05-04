@@ -26,6 +26,7 @@ import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * Updater for {@link TrackStatistics}.
@@ -56,11 +57,6 @@ public class TrackStatisticsUpdater {
         this(new TrackStatistics());
     }
 
-    /**
-     * Creates a new{@link TrackStatisticsUpdater} with a {@link TrackStatisticsUpdater} already existed.
-     *
-     * @param trackStatistics a {@link TrackStatisticsUpdater}
-     */
     public TrackStatisticsUpdater(TrackStatistics trackStatistics) {
         this.trackStatistics = trackStatistics;
         this.currentSegment = new TrackStatistics();
@@ -87,9 +83,6 @@ public class TrackStatisticsUpdater {
         trackPoints.stream().forEachOrdered(this::addTrackPoint);
     }
 
-    /**
-     *
-     */
     public void addTrackPoint(TrackPoint trackPoint) {
         if (trackPoint.isSegmentManualStart()) {
             reset(trackPoint);
@@ -151,18 +144,23 @@ public class TrackStatisticsUpdater {
                 movingDistance = trackPoint.distanceToPrevious(lastTrackPoint);
             }
             if (movingDistance != null) {
-                currentSegment.setIdle(false);
                 currentSegment.addTotalDistance(movingDistance);
             }
 
-            if (!currentSegment.isIdle() && !trackPoint.isSegmentManualStart()) {
-                if (lastTrackPoint != null) {
+            if (!currentSegment.isIdle()) {
+                if (!trackPoint.isSegmentManualStart() && lastTrackPoint != null) {
                     currentSegment.addMovingTime(trackPoint, lastTrackPoint);
                 }
             }
 
-            if (trackPoint.getType() == TrackPoint.Type.IDLE) {
+            if (trackPoint.isIdleTriggered()) {
                 currentSegment.setIdle(true);
+            } else if (currentSegment.isIdle()) {
+                // Shall we switch to non-idle?
+                if (movingDistance != null
+                        && movingDistance.greaterOrEqualThan(PreferencesUtils.getRecordingDistanceInterval())) {
+                    currentSegment.setIdle(false);
+                }
             }
 
             if (trackPoint.hasSpeed()) {
