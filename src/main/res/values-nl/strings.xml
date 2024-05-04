@@ -602,4 +602,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_min_sampling_interval_title">Interval van metingen</string>
     <string name="settings_theme_switch_restart">Themawijzigingen kunnen een handmatige herstart verlangen.</string>
     <string name="settings_night_mode_option_night_oled">Nacht (OLED-vriendelijk)</string>
+    <string name="settings_announcements_unit">Afstand-/snelheidseenheid</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
 </resources>
