@@ -1,7 +1,9 @@
 package de.dennisguse.opentracks.stats;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -263,6 +265,63 @@ public class TrackStatisticsUpdaterTest {
         // then
         assertEquals(Duration.ofSeconds(45), subject.getTrackStatistics().getMovingTime());
         assertEquals(Distance.of(1040), subject.getTrackStatistics().getTotalDistance());
+    }
+
+    @Test
+    public void addTrackPoint_idle_remain_idle() {
+        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
+
+        // when
+        subject.addTrackPoint(new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0)));
+        subject.addTrackPoint(
+                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(10))
+                        .setSensorDistance(Distance.of(10)));
+
+        subject.addTrackPoint(new TrackPoint(TrackPoint.Type.IDLE, Instant.ofEpochSecond(30)));
+        // then
+        assertTrue(subject.getTrackStatistics().isIdle());
+        assertEquals(Duration.ofSeconds(30), subject.getTrackStatistics().getMovingTime());
+        assertEquals(Duration.ofSeconds(30), subject.getTrackStatistics().getTotalTime());
+        assertEquals(Distance.of(10), subject.getTrackStatistics().getTotalDistance());
+
+        // when
+        subject.addTrackPoint(
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(40))
+                        .setSensorDistance(Distance.of(0)));
+        // then
+        assertTrue(subject.getTrackStatistics().isIdle());
+        assertEquals(Duration.ofSeconds(30), subject.getTrackStatistics().getMovingTime());
+        assertEquals(Duration.ofSeconds(40), subject.getTrackStatistics().getTotalTime());
+        assertEquals(Distance.of(10), subject.getTrackStatistics().getTotalDistance());
+
+        // when
+        subject.addTrackPoint(
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(45))
+                        .setSensorDistance(Distance.of(1)));
+        // then
+        assertTrue(subject.getTrackStatistics().isIdle());
+        assertEquals(Duration.ofSeconds(30), subject.getTrackStatistics().getMovingTime());
+        assertEquals(Duration.ofSeconds(45), subject.getTrackStatistics().getTotalTime());
+        assertEquals(Distance.of(11), subject.getTrackStatistics().getTotalDistance());
+
+        // when
+        subject.addTrackPoint(
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(50))
+                        .setSensorDistance(Distance.of(10)));
+        // then
+        assertFalse(subject.getTrackStatistics().isIdle());
+        assertEquals(Duration.ofSeconds(30), subject.getTrackStatistics().getMovingTime());
+        assertEquals(Duration.ofSeconds(50), subject.getTrackStatistics().getTotalTime());
+        assertEquals(Distance.of(21), subject.getTrackStatistics().getTotalDistance());
+
+        // when
+        subject.addTrackPoint(new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochSecond(60)));
+
+        // then
+        assertFalse(subject.getTrackStatistics().isIdle());
+        assertEquals(Duration.ofSeconds(40), subject.getTrackStatistics().getMovingTime());
+        assertEquals(Duration.ofSeconds(60), subject.getTrackStatistics().getTotalTime());
+        assertEquals(Distance.of(21), subject.getTrackStatistics().getTotalDistance());
     }
 
     @Test
