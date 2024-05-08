@@ -604,4 +604,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_theme_switch_restart">Os cambios de decorado poderían requerir reinicio.</string>
     <string name="settings_night_mode_option_night_oled">Noite (para OLED)</string>
     <string name="settings_announcements_unit">Unidades de distancia/velocidade</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
 </resources>
