@@ -143,8 +143,8 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="description_max_speed">Vitesse max. : %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Élévation min. : %1$d m (%2$d pi)</string>
     <string name="description_moving_time">Durée en déplacement : %1$s</string>
-    <string name="description_pace_imperial">Vitesse (min/mi)</string>
-    <string name="description_pace_metric">Vitesse (min/km)</string>
+    <string name="description_pace_imperial">Allure (min/mi)</string>
+    <string name="description_pace_metric">Allure (min/km)</string>
     <string name="description_recorded_time">Date d\'enregistrement : %1$s</string>
     <string name="description_speed_ms">Vitesse (m/s)</string>
     <string name="description_sensor_cadence">Cadence (tr/min)</string>
@@ -410,7 +410,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <!-- Share image -->
     <string name="share_image_subject">J aimerais partager une image avec vous</string>
     <string name="share_image_body">Je pense que cette image pourrait vous intéresser.</string>
-    <string name="track_pace_notification">Vitesse : %1$s</string>
+    <string name="track_pace_notification">Allure : %1$s</string>
     <string name="track_speed_notification">Vitesse : %1$s</string>
     <string name="track_detail_intervals_tab">Intervalles</string>
     <string name="interval_list_empty_message">Il n\'y a pas encore d\'intervalle</string>
@@ -494,12 +494,12 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_announcements_totaltime_frequency">Intervalle de temps</string>
     <string name="settings_announcements_distance_frequency">Intervalle de distance</string>
     <string name="settings_layout_reset_confirm_title">Réinitialiser vos dispositions \?</string>
-    <string name="settings_layout_reset_done">Tous les paramètres pas défaut sont revenus à leur valeur par défaut</string>
+    <string name="settings_layout_reset_done">Tous les paramètres par défaut sont revenus à leur valeur par défaut</string>
     <string name="settings_all_reset">Réinitialiser</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="permission_bluetooth_failed">OpenTracks a besoin de la permission d\'utiliser le Bluetooth.</string>
-    <string name="settings_recording_customize_layout_select_columns">Champs de données pas rangée</string>
+    <string name="settings_recording_customize_layout_select_columns">Champs de données par rangée</string>
     <string name="field_set_primary">Principal</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (recommandé)</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
@@ -637,4 +637,25 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_sensor_heart_rate_max">Zones : fréquence cardiaque maximale (bpm)</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Filtrer les périphériques Bluetooth</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Afficher tout les périphériques Bluetooth découverts</string>
+    <string name="settings_recording_location_distance_summary">%1$s entre chaque localisation enregistrée</string>
+    <string name="sensor_state_pressure">Baromètre</string>
+    <string name="sensor_state_power_max">Puissance maximale</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="settings_announcements_idle_category_title">Alertes de mise en veille</string>
+    <string name="settings_recording_title">Enregistrement</string>
+    <string name="settings_theme_switch_restart">Le changement de thème peut nécessiter un redémarrage manuel.</string>
+    <string name="settings_ui_dynamic_colors_summary">Utiliser des couleurs dynamiques définies par l\'utilisateur (Android 12+ uniquement ; requiert un redémarrage manuel)</string>
+    <string name="settings_recording_idle_timeout_title">Délai avant mise en veille</string>
+    <string name="settings_night_mode_option_night_oled">Sombre (compatible OLED)</string>
+    <string name="settings_announcements_unit">Unité de Distance/Vitesse</string>
+    <string name="value_internal_sensor">Capteur interne</string>
+    <string name="value_int_seconds">%1$d s (recommandé)</string>
+    <string name="voiceIdle">Mise en veille.</string>
+    <string name="settings_recording_min_sampling_interval_title">Fréquence d\'échantillonnage</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="settings_announcements_idle_title">En veille</string>
+    <string name="settings_ui_dynamic_colors_title">Couleurs dynamiques</string>
+    <string name="permission_recording_failed">OpenTracks a besoin de la permission d\'accéder à votre localisation ainsi qu\'aux appareils à proximité.</string>
 </resources>
