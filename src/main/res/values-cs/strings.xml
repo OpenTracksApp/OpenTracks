@@ -37,12 +37,12 @@ limitations under the License.
     <string name="help_storage_pictures_title">Jak ukládá OpenTracks obrázky pořízené jako značky na cestě\?</string>
     <string name="help_storage_pictures_content">Jsou uloženy v interním úložišti aplikace (tj. přístupné pouze v rámci OpenTracks).</string>
     <string name="help_track_export_title">Jak mohu exportovat/sdílet zaznamenané stopy\?</string>
-    <string name="help_track_export_content"> \u0020Trasy lze exportovat z Nastavení jako KMZ, KML nebo GPX. \u0020KMZ a KML obsahuje všechna data, GPX pouze polohu. \u0020Trasy sdílené pomocí <i>ikony sdílení</i> jsou sdíleny jako KMZ. \u0020</string>
+    <string name="help_track_export_content"> Trasy lze exportovat z Nastavení jako KMZ, KML nebo GPX. KMZ a KML obsahuje všechna data, GPX pouze polohu. Trasy sdílené pomocí <i>ikony sdílení</i> jsou sdíleny jako KMZ. </string>
     <string name="help_data_google_play_services_title">Vyžaduje/používá OpenTracks službu Google Play\?</string>
     <string name="help_recording_title">Jak OpenTracks zaznamenává data?</string>
     <string name="help_recording_content">OpenTracks používá GPS senzor zařízení k nepřetržitému zaznamenávání polohy. Pokud zařízení GPS hlásí nepřesná data (např. polohu, rychlost, nadmořskou výšku), OpenTracks s tím nemůže nic udělat.</string>
     <string name="help_data_storage_title">Jak OpenTracks ukládá data ze senzorů\?</string>
-    <string name="help_data_storage_content"> \u0020Data senzoru se ukládají na zaznamenané místo. \u0020Pokud jde o snímač srdeční frekvence, znamená to, že na každé místo je uloženo pouze <i> jedno </i> měření srdeční frekvence. \u0020Pokud stojíte v klidu nebo jste uvnitř, nebudou zaznamenána žádná data ze senzorů (ale budou zobrazena). \u0020</string>
+    <string name="help_data_storage_content"> Data senzorů se ukládají na zaznamenané místo. Pokud jde o snímač srdeční frekvence, znamená to, že na každé místo je uloženo pouze <i>jedno</i> měření srdeční frekvence. Pokud stojíte v klidu nebo jste uvnitř, nebudou zaznamenána žádná data ze senzorů (ale budou zobrazena). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks nezaznamenává místa?</string>
     <string name="help_gps_troubleshooting_content"> \u0020Co můžete udělat:
 \n \u0020a) zkontrolujte zda je zapnuta GPS,
@@ -604,4 +604,8 @@ limitations under the License.
     <string name="settings_announcements_unit">Jednotka vzdálenosti/rychlosti</string>
     <string name="voiceSpeed">{n, plural, =1 {1} few {{n,number}} other {{n,number,#.0}} }</string>
     <string name="voiceDistance">{n, plural, =1 {1 } few {{n,number}} other {{n,number,#.0}} }</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="power">Výkon</string>
+    <string name="settings_announcements_lap_power">Výkon kola</string>
+    <string name="power_x_watt">Výkon {x, plural, =1 {1 watt} few {# watty} other {# wattů} }</string>
 </resources>
