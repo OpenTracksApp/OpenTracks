@@ -38,11 +38,7 @@ limitations under the License.
     <string name="help_storage_pictures_title">OpenTracks 如何存儲作為標記拍攝的照片？</string>
     <string name="help_storage_pictures_content">這些儲存在應用程序內部儲存區中 (即，只能在 OpenTracks 中存取)。</string>
     <string name="help_track_export_title">如何匯出/分享 紀錄的蹤跡？</string>
-    <string name="help_track_export_content">
-        可以從設定匯出蹤跡為 KMZ、KML 或 GPX。
-        KMZ/KML 全部資料；GPX 只有位置。
-        通過<i>分享圖示</i>以分享蹤跡為 KMZ。
-    </string>
+    <string name="help_track_export_content"> \u0020可以從設定匯出蹤跡為 KMZ、KML 或 GPX。 \u0020KMZ/KML 全部資料；GPX 只有位置。 \u0020通過<i>分享圖示</i>以分享蹤跡為 KMZ。 \u0020</string>
     <string name="help_data_google_play_services_title">OpenTracks 是否需要/使用 Google Play 服務？</string>
     <string name="help_data_google_play_services_content">否</string>
     <string name="help_recording_title">OpenTracks 是如何記錄資料的？</string>
