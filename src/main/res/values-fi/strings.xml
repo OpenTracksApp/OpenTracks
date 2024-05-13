@@ -23,13 +23,12 @@ limitations under the License.
     <string name="about_libraries">Kirjastot</string>
     <!-- Help -->
     <string name="help_feature_title">OpenTracksissa on seuraavat ominaisuudet:</string>
-    <string name="help_feature_content">
-        * luo GPS-reittejä\n
-        * käytä sykeanturia (vain Bluetooth LE)\n
-        * ääni-ilmoitukset (ajan tai etäisyyden perusteella)\n
-        * luo merkkejä (mukaan lukien kuvia)\n
-        * toimii täysin ilman verkkoyhteyttä\n
-        * näytä jäljet kartalla (ks. alla)</string>
+    <string name="help_feature_content">* luo GPS-reittejä
+\n * käytä sykeanturia (vain Bluetooth LE)
+\n * ääni-ilmoitukset (ajan tai etäisyyden perusteella)
+\n * luo merkkejä (mukaan lukien kuvia)
+\n * toimii täysin ilman verkkoyhteyttä
+\n * näytä jäljet kartalla (ks. alla)</string>
     <string name="help_track_map_title">Miten näyttää rata kartalla\?</string>
     <string name="help_track_map_content"> Käytä pientä karttakuvaketta.
 \n a) (live-päivityksiä) Asenna <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Se tarjoaa online-tai offline-karttoja kautta <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
