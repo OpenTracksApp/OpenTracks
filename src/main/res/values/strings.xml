@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,12 +13,11 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
-    <string name="empty"></string>
+--><resources>
+    <string name="empty"/>
     <string name="about_preference_title">About OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> is a sport tracking application that completely respects your privacy.</string>
-    <string name="about_url">Project web page: <a href="%1$s">%1$s</a></string>
+    <string name="about_url">Project webpage: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Version name: %1$s</string>
     <string name="about_version_code">Version code: %1$d</string>
     <string name="about_history">OpenTracks is a fork of <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (discontinued in 2016).</string>
@@ -25,15 +25,12 @@ limitations under the License.
     <string name="about_libraries">Libraries</string>
     <!-- Help -->
     <string name="help_feature_title">OpenTracks has the following features:</string>
-    <string name="help_feature_content">
-        * create GPS tracks\n
-        * use a heart rate sensor (Bluetooth LE only)\n
-        * voice announcements (by time or distance)\n
-        * create markers (incl. pictures)\n
-        * works completely offline\n
-        * show tracks on a map (see below)
-    </string>
-
+    <string name="help_feature_content">* create GPS tracks
+\n* use a heart rate sensor (Bluetooth LE only)
+\n* voice announcements (by time or distance)
+\n* create markers (incl. pictures)
+\n* works completely offline
+\n* show tracks on a map (see below)</string>
     <string name="help_track_map_title">How to show a track on a map?</string>
     <string name="help_track_map_content">
         Use the small map icon.\n
@@ -48,33 +45,19 @@ limitations under the License.
         These apps need to support the KMZ file format (only locations and timestamps).
         In fact, an app needs to support <i>ACTION_VIEW</i> with MIME <i>application/vnd.google-earth.kmz</i>.
     </string>
-
     <string name="help_storage_pictures_title">How does OpenTracks store pictures that were taken as markers?</string>
     <string name="help_storage_pictures_content">These are stored in the app internal storage (i.e., only accessible within OpenTracks).</string>
-
     <string name="help_track_export_title">How can I export/share recorded tracks?</string>
-    <string name="help_track_export_content">
-        Tracks can be exported from the Settings as KMZ, KML, or GPX.
-        KMZ/KML all data; GPX only locations.
-        Tracks shared via the <i>share icon</i> are shared as KMZ.
-    </string>
-
+    <string name="help_track_export_content"> Tracks can be exported from the Settings as KMZ, KML, or GPX. KMZ/KML all data; GPX only locations. Tracks shared via the <i>share icon</i> are shared as KMZ. </string>
     <string name="help_data_google_play_services_title">Does OpenTracks require/use Google Play Service?</string>
     <string name="help_data_google_play_services_content">No</string>
-
     <string name="help_recording_title">How does OpenTracks record data?</string>
     <string name="help_recording_content">
         OpenTracks uses the GPS sensor of the device to record the location continuously.
         If the GPS device reports inaccurate data (e.g., location, speed, elevation), OpenTracks cannot do anything about it.
     </string>
-
     <string name="help_data_storage_title">How does OpenTracks store sensor data?</string>
-    <string name="help_data_storage_content">
-        Sensor data is stored per recorded location.
-        In terms of a heart rate sensor, this means that only <i>one</i> heart rate measurement is stored per location.
-        If you are standing still or are indoors, no sensor data will be recorded (but it will be shown).
-    </string>
-
+    <string name="help_data_storage_content"> Sensor data is stored per recorded location. In terms of a heart rate sensor, this means that only <i>one</i> heart rate measurement is stored per location. If you are standing still or are indoors, no sensor data will be recorded (but it will be shown). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks is not recording locations?</string>
     <string name="help_gps_troubleshooting_content">
         What you can do:\n
@@ -85,7 +68,6 @@ limitations under the License.
         \n
         If everything does not help please report a bug.
     </string>
-
     <string name="help_support_title">How can I support OpenTracks?</string>
     <string name="help_support_content">
         You can:\n
@@ -97,9 +79,7 @@ limitations under the License.
         f) donate, and\n
         g) do whatever you think helps OpenTracks.
     </string>
-
     <string name="open_track_as_trackfileformat">Open as %1$s</string>
-
     <!-- Activity Type -->
     <string name="activity_type_airplane">airplane</string>
     <string name="activity_type_atv">ATV</string>
@@ -209,7 +189,7 @@ limitations under the License.
     <string name="export_error_post_workout">Post-workout export failed, please check the export directory.</string>
     <string name="export_cannot_write_to_dir">Cannot write to export directory.</string>
     <string name="export_dir_not_writable">" (not writable!)"</string>
-    <string name="export_progress_message">Exporting to %1$s&#8230;</string>
+    <string name="export_progress_message">Exporting to %1$s…</string>
     <string name="export_track_already_exists_msg">The file %1$s already exists at the destination directory.</string>
     <string name="export_all_do_it_for_all">do it for all conflicts</string>
     <string name="export_track_errors">Files not exported</string>
@@ -226,7 +206,7 @@ limitations under the License.
     <string name="generic_name">Name</string>
     <string name="generic_name_line">Name: %1$s</string>
     <string name="generic_open_track">Open Track</string>
-    <string name="generic_recording">Recording&#8230;</string>
+    <string name="generic_recording">Recording…</string>
     <string name="generic_save">Save</string>
     <string name="generic_tracks">Tracks</string>
     <string name="generic_overwrite">Overwrite</string>
@@ -273,7 +253,7 @@ limitations under the License.
     <string name="import_error_list_dialog_title">Files not imported</string>
     <string name="import_file_imported">File %1$s imported</string>
     <string name="import_prevent_reimport">You have set prevent re-import track</string>
-    <string name="import_progress_message">Importing from %1$s&#8230;</string>
+    <string name="import_progress_message">Importing from %1$s…</string>
     <string name="import_progress_summary_ok_msg">Files imported</string>
     <string name="import_progress_summary_exists_msg">Already exists</string>
     <string name="import_progress_summary_errors_msg">Errors</string>
@@ -339,36 +319,24 @@ limitations under the License.
     <string name="sensor_could_not_scan">Could not scan for Bluetooth devices (error %1$i).</string>
     <string name="bluetooth_disabled">Please enable Bluetooth.</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
-
     <string name="settings_open_tracks_summary">All About OpenTracks Project</string>
-
     <string name="settings_defaults_title">Default Units and Activity</string>
     <string name="settings_defaults_summary">Preferred Units, Default Activity, Track Default Name</string>
-
     <string name="settings_ui_title">User Interface</string>
     <string name="settings_ui_summary">Appearance, Recording Layout, Theme</string>
-
     <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">Time interval, Distance interval, Max Distance, Accuracy</string>
-
     <string name="settings_sensors_title">Sensors</string>
     <string name="settings_sensors_summary">Cycling Sensors, Wheel Circumference, Running Sensors</string>
-
-
     <string name="settings_announcements_idle_category_title">Idle Announcements</string>
     <string name="settings_announcements_idle_title">Idle</string>
-
     <string name="settings_announcements_statistics_title">Statistics Announcements</string>
     <string name="settings_announcements_summary">Time, Distance, Voice Speed</string>
-
     <string name="settings_import_export_title">Import and Export</string>
     <string name="settings_import_export_summary">Import, Export, Auto Export</string>
-
     <string name="settings_units_category">Units</string>
     <string name="settings_activity_defaults_category">Activity\'s Defaults</string>
-
     <string name="settings_reset_summary">Reset Settings to Default Values</string>
-
     <!-- Settings Advanced -->
     <string name="settings_advanced">Advanced</string>
     <string name="settings_default_trackfileformat">Export/sharing file format</string>
@@ -407,7 +375,6 @@ limitations under the License.
     <string name="settings_night_mode_option_day">Day</string>
     <string name="settings_night_mode_option_night">Night</string>
     <string name="settings_night_mode_option_night_oled">Night (OLED friendly)</string>
-
     <string name="settings_announcements_totaltime_frequency">Time interval</string>
     <string name="settings_announcements_distance_frequency">Lap length</string>
     <string name="settings_announcements_average_heart_rate">Average heart rate</string>
@@ -415,7 +382,6 @@ limitations under the License.
     <string name="settings_announcements_average_speed_pace">Average speed/pace</string>
     <string name="settings_announcements_lap_speed_pace">Lap speed/pace</string>
     <string name="settings_announcements_unit">Distance/speed unit</string>
-
     <!-- Custom Layout -->
 
 
@@ -439,7 +405,6 @@ limitations under the License.
     <string name="settings_generic_sensor">Generic</string>
     <string name="settings_cycling_sensor">Cycling</string>
     <string name="settings_running_sensor">Running</string>
-
     <string name="settings_sensor_cycling_distance_speed">Distance and Speed</string>
     <string name="settings_sensor_cycling_cadence">Cadence</string>
     <string name="settings_sensor_running_speed_and_cadence">Distance, Speed, and Cadence</string>
@@ -447,9 +412,7 @@ limitations under the License.
     <string name="settings_sensor_bluetooth_service_filter_title">Filter Bluetooth Devices</string>
     <string name="settings_sensor_bluetooth_service_filter_on">Only show Bluetooth devices that announce required services</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Show all discoverable Bluetooth devices</string>
-
     <string name="settings_sensor_heart_rate_max">Zones: maximum Heart rate (bpm)</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Preferred rate</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
@@ -457,7 +420,6 @@ limitations under the License.
     <string name="settings_stats_units_metric">Metric (km, m)</string>
     <string name="settings_stats_units_nautical">Nautical (NM, ft)</string>
     <string name="settings_stats_units_title">Preferred units</string>
-
     <!-- Settings public api -->
     <string name="settings_api_title">Public API</string>
     <string name="settings_api_summary">Remote control and statistics API for other apps</string>
@@ -469,11 +431,9 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_title">Automatic data transfer</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">An application that started a recording can also access the recorded data.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Recorded data will not be shared automatically with other applications.</string>
-
     <!-- Settings import/export -->
     <string name="settings_import_section">Import</string>
     <string name="settings_export_section">Export</string>
-
     <string name="settings_prevent_reimport_tracks_title">Prevent re-import of tracks</string>
     <!-- Share Track -->
     <string name="share_track_share_file_body">I think you might be interested in this track.\n\n%1$s</string>
@@ -512,7 +472,7 @@ limitations under the License.
     <string name="track_delete_one_confirm_message">The track and its markers will be permanently deleted from the device.</string>
     <string name="track_delete_one_confirm_title">Delete track?</string>
     <string name="track_delete_multiple_confirm_message">The selected tracks and their markers will be permanently deleted from the device.</string>
-    <string name="track_delete_progress_message">Deleting&#8230;</string>
+    <string name="track_delete_progress_message">Deleting…</string>
     <string name="track_delete_number_of_tracks">%1$d tracks</string>
     <string name="track_delete_not_recording">This track cannot be deleted as it is currently recorded.</string>
     <string name="track_discarding">Discarding Track</string>
@@ -637,7 +597,6 @@ limitations under the License.
         other {{n,number,#.0} nautical miles}
         }
     </string>
-
     <string name="voiceDistance">
         {n, plural,
         =1 {1 }
@@ -701,12 +660,9 @@ limitations under the License.
     <!-- Share image -->
     <string name="share_image_subject">I would like to share an image with you</string>
     <string name="share_image_body">I think you might be interested in this image.</string>
-
     <string name="hold_to_stop">Hold to stop</string>
-
     <string name="instant_export_enabled_summary">Export track to storage after recording is finished</string>
     <string name="instant_export_enabled_title">Instant post-workout export</string>
-
     <string name="settings_default_export_uri_title">Track export directory</string>
     <!-- Fields -->
     <string name="field_set_primary">Primary</string>
@@ -718,13 +674,11 @@ limitations under the License.
     <string name="error_crash_title">%1$s crashed</string>
     <string name="share_crash_report">Share crash report</string>
     <string name="report_bug">Report bug</string>
-
     <string name="select_show_on_map_behavior">Select \"show on map\" behavior</string>
     <string name="show_on_map_format_ask">Ask</string>
     <string name="show_on_dashboard">OpenTracks Dashboard API</string>
     <string name="show_on_dashboard_not_installed">No application supporting OpenTracks Dashboard API installed.</string>
     <string name="always">Always</string>
-
     <string name="introduction_osm_dashboard">OpenTracks itself does not provide a map. Please install OSMDashboard to view your recordings on a map.</string>
     <string name="settings_recording_min_sampling_interval_title">Sampling time interval</string>
     <string name="settings_recording_location_distance_summary">%1$s between recorded locations</string>
