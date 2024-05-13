@@ -23,13 +23,12 @@ limitations under the License.
     <string name="about_libraries">Liburutegiak</string>
     <!-- Help -->
     <string name="help_feature_title">OpenTracks ek ezaugarri hauek ditu:</string>
-    <string name="help_feature_content">
-* GPS ibilbideak sortu\n
-* erabili bihotz-maiztasuneko sentsorea (Bluetooth LE soilik)\n
-* ahots iragarpenak (denboraren edo distantziaren arabera)\n
-* Sortu markatzaileak (irudiak barne)\n
-* guztiz lineaz kanpo funtzionatzen du\n
-* Erakutsi ibilbideak mapa batean (ikusi azpian)</string>
+    <string name="help_feature_content">* GPS ibilbideak sortu
+\n * erabili bihotz-maiztasuneko sentsorea (Bluetooth LE soilik)
+\n * ahots iragarpenak (denboraren edo distantziaren arabera)
+\n * Sortu markatzaileak (irudiak barne)
+\n * guztiz lineaz kanpo funtzionatzen du
+\n * Erakutsi ibilbideak mapa batean (ikusi azpian)</string>
     <string name="help_track_map_title">Nola erakutsi pista batean mapa batean?</string>
     <string name="help_track_map_content"> Erabili maparen ikono txikia.
 \n a) (zuzeneko eguneratzeak) Instalatu <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Lineako edo lineaz kanpoko mapak eskaintzen ditu <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
