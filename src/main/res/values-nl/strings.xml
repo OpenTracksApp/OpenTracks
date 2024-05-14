@@ -24,11 +24,11 @@ limitations under the License.
     <!-- Help -->
     <string name="help_feature_title">OpenTracks heeft de volgende kenmerken:</string>
     <string name="help_feature_content">* GPS-tracks aanmaken
-\n * een hartslagsensor gebruiken (alleen Bluetooth LE)
-\n * spraakaankondigingen (op tijd of afstand)
-\n * markereringen aanmaken (incl. foto\'s)
-\n * werkt volledig offline
-\n * toon tracks op een kaart (zie hieronder)</string>
+\n* een hartslagsensor gebruiken (alleen Bluetooth LE)
+\n* spraakaankondigingen (op tijd of afstand)
+\n* markereringen aanmaken (incl. foto\'s)
+\n* werkt volledig offline
+\n* toon tracks op een kaart (zie hieronder)</string>
     <string name="help_track_map_title">Hoe wordt een spoor op een kaart weergegeven\?</string>
     <string name="help_track_map_content"> \u0020Gebruik het kleine kaartpictogram.
 \n \u0020a) \u0020(live updates) Installeer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Het biedt online of offline kaarten via <a href="https://www.openstreetmap.org">OpenStreetMap</a>. 
@@ -37,14 +37,14 @@ limitations under the License.
     <string name="help_storage_pictures_title">Hoe slaat OpenTracks foto\'s op die als markeringen zijn genomen\?</string>
     <string name="help_storage_pictures_content">Deze worden opgeslagen in de interne opslag van de app (d.w.z. alleen toegankelijk binnen OpenTracks).</string>
     <string name="help_track_export_title">Hoe kan ik opgenomen tracks exporteren/delen?</string>
-    <string name="help_track_export_content"> \u0020Tracks kunnen worden geëxporteerd vanuit de instellingen als KMZ, KML of GPX. KMZ/KML alle gegevens; GPX alleen locaties. \u0020Tracks die worden gedeeld via het <i>share-icoontje</i> worden gedeeld als KMZ \u0020</string>
+    <string name="help_track_export_content"> Tracks kunnen worden geëxporteerd vanuit de instellingen als KMZ, KML of GPX. KMZ/KML alle gegevens; GPX alleen locaties. Tracks die worden gedeeld via het <i>share-icoontje</i> worden gedeeld als KMZ </string>
     <string name="help_data_google_play_services_title">Vereist/gebruikt OpenTracks Google Play Service\?</string>
     <string name="help_recording_title">Hoe legt OpenTracks gegevens vast?</string>
     <string name="help_recording_content">
 OpenTracks gebruikt de GPS-sensor van het apparaat om de locatie continu te registreren.
 Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid, hoogte), kan OpenTracks daar niets aan doen.</string>
     <string name="help_data_storage_title">Hoe slaat OpenTracks sensorgegevens op?</string>
-    <string name="help_data_storage_content"> \u0020De sensorgegevens worden per opgenomen locatie opgeslagen. In termen van een hartslagsensor betekent dit dat slechts <i>een</i> hartslagmeting per locatie wordt opgeslagen. Als u stilstaat of binnenshuis bent, worden er geen sensorgegevens geregistreerd (maar wel getoond) \u0020</string>
+    <string name="help_data_storage_content"> De sensorgegevens worden per opgenomen locatie opgeslagen. In termen van een hartslagsensor betekent dit dat slechts <i>een</i> hartslagmeting per locatie wordt opgeslagen. Als u stilstaat of binnenshuis bent, worden er geen sensorgegevens geregistreerd (maar wel getoond) </string>
     <string name="help_gps_troubleshooting_title">OpenTracks neemt geen locaties op?</string>
     <string name="help_gps_troubleshooting_content"> \u0020Wat u kunt doen: 
 \n \u0020a) Controleer of GPS is ingeschakeld, 
@@ -605,4 +605,8 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_announcements_unit">Afstand-/snelheidseenheid</string>
     <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
     <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="power">Power</string>
+    <string name="settings_announcements_lap_power">Lap power</string>
+    <string name="power_x_watt">Power {x, plural, =1 {1 watt} other {# watt} }</string>
 </resources>
