@@ -24,11 +24,11 @@ limitations under the License.
     <!-- Help -->
     <string name="help_feature_title">Características de OpenTracks:</string>
     <string name="help_feature_content">* crear rutas GPS
-\n * usar monitor do pulso cardíaco (só Bluetooth LE)
-\n * anuncios por voz (de tempo ou distancia)
-\n * crear marcadores (incl. fotos)
-\n * funciona sen precisar conexión á rede
-\n * mostra as rutas nun mapa (ver abaixo)</string>
+\n* usar monitor do pulso cardíaco (só Bluetooth LE)
+\n* anuncios por voz (de tempo ou distancia)
+\n* crear marcadores (incl. fotos)
+\n* funciona sen precisar conexión á rede
+\n* mostra as rutas nun mapa (ver abaixo)</string>
     <string name="help_track_map_title">Como mostrar a ruta no mapa\?</string>
     <string name="help_track_map_content"> \u0020Usa a icona do mapa pequeno. 
 \n a) (actualizacións en directo) Instala <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Proporciona mapas en liña ou sen conexión grazas a <a href="https://www.openstreetmap.org">OpenStreetMap</a>. 
@@ -37,14 +37,14 @@ limitations under the License.
     <string name="help_storage_pictures_title">De que xeito garda OpenTracks as fotos tomadas como marcadores\?</string>
     <string name="help_storage_pictures_content">Gárdanse na almacenaxe interna da app (só accesible desde OpenTracks).</string>
     <string name="help_track_export_title">De que xeito exporto/importo as rutas gravadas\?</string>
-    <string name="help_track_export_content"> \u0020As rutas pódense exportar desde os Axustes como KMZ, KML ou GPX. \u0020KMZ/KML inclúe todos os datos; GPX só localización. \u0020As rutas compartidas a través da <i>icona compartir</i> compártense como KMZ. \u0020</string>
+    <string name="help_track_export_content"> As rutas pódense exportar desde os Axustes como KMZ, KML ou GPX. KMZ/KML inclúe todos os datos; GPX só localización. As rutas compartidas a través da <i>icona compartir</i> compártense como KMZ. </string>
     <string name="help_data_google_play_services_title">OpenTracks precisa/utiliza Google Play Service\?</string>
     <string name="help_recording_title">Como grava OpenTracks os datos\?</string>
     <string name="help_recording_content">
 OpenTracks usa o sensor GPS do dispositivo para gravar a localización de xeito contínuo.
 Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, elevación), OpenTracks  non pode facer nada ao respecto.</string>
     <string name="help_data_storage_title">De que xeito garda OpenTracks os datos dos sensores\?</string>
-    <string name="help_data_storage_content"> \u0020Os datos dos sensores gárdanse asociados á localización. \u0020 Respecto do ritmo cardíaco, significa que só se garda <i>unha medida</i> asociada a unha localización. \u0020 Se te detés ou estás en interiores, non se gardarán datos do sensor (mais serán mostrados). \u0020</string>
+    <string name="help_data_storage_content"> Os datos dos sensores gárdanse asociados á localización. Respecto do ritmo cardíaco, significa que só se garda <i>unha medida</i> asociada a unha localización. \u0020Se te detés ou estás en interiores, non se gardarán datos do sensor (mais serán mostrados). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks non grava as localizacións\?</string>
     <string name="help_gps_troubleshooting_content"> \u0020Podes intentar: 
 \n a) mira que o GPS esté activado, 
@@ -606,4 +606,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_announcements_unit">Unidades de distancia/velocidade</string>
     <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
     <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
+    <string name="settings_announcements_lap_power">Potencia na volta</string>
+    <string name="power">Potencia</string>
+    <string name="power_x_watt">Potencia {x, plural, =1 {1 watio} other {# watios} }</string>
 </resources>
