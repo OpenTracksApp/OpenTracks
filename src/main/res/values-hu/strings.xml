@@ -598,4 +598,6 @@ limitations under the License.
     <string name="settings_night_mode_option_night_oled">Éjszaka (kímélő OLED)</string>
     <string name="settings_announcements_unit">Távolság/sebesség egység</string>
     <string name="power">Erő</string>
+    <string name="voiceSpeed">{n,number,#.0}</string>
+    <string name="settings_announcements_lap_power">Kör teljesítmény</string>
 </resources>
