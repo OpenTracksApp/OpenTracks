@@ -24,11 +24,11 @@ limitations under the License.
     <!-- Help -->
     <string name="help_feature_title">OpenTracks hat die folgenden Funktionen:</string>
     <string name="help_feature_content">* GPS-Tracks erstellen
-\n * einen Herzfrequenzsensor verwenden (nur Bluetooth LE)
-\n * Sprachansagen (nach Zeit oder Entfernung)
-\n * Markierungen erstellen (inkl. Bilder)
-\n * arbeitet vollständig offline
-\n * Tracks auf einer Karte anzeigen (siehe unten)</string>
+\n* einen Herzfrequenzsensor verwenden (nur Bluetooth LE)
+\n* Sprachansagen (nach Zeit oder Entfernung)
+\n* Markierungen erstellen (inkl. Bilder)
+\n* arbeitet vollständig offline
+\n* Tracks auf einer Karte anzeigen (siehe unten)</string>
     <string name="help_track_map_title">Wie wird ein Track auf einer Karte angezeigt?</string>
     <string name="help_track_map_content"> Verwende das kleine Kartensymbol.
 \n a) (Live-Aktualisierungen) Installiere <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. OSMDashboard stellt Online- oder Offline-Karten über <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
@@ -637,4 +637,8 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="activity_type_kickscooter">Roller</string>
     <string name="settings_recording_location_distance_summary">%1$s zwischen aufgezeichneten Orten</string>
     <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 Knoten} other {{n,number,#.0} Knoten} }</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
+    <string name="settings_announcements_unit">Distanz/Geschwindigkeits Einheit</string>
+    <string name="power_x_watt">Leistung {x, plural, =1 {1 Watt} other {# Watt} }</string>
+    <string name="power">Leistung</string>
 </resources>
