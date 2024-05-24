@@ -455,7 +455,7 @@ limitations under the License.
     <string name="field_set_secondary">Sekundær</string>
     <string name="field_remove_from_layout">Fjern</string>
     <string name="settings_announcements_totaltime_frequency">Tidsintervall</string>
-    <string name="settings_announcements_distance_frequency">Distanseintervall</string>
+    <string name="settings_announcements_distance_frequency">Rundelengde</string>
     <string name="permission_bluetooth_failed">OpenTracks krever tillatelse til å bruke Blåtann.</string>
     <string name="permission_bluetooth_failed_rejected">Du må manuelt gi OpenTracks tilgang til «enheter i nærheten» i systeminnstillingene.</string>
     <string name="settings_generic_sensor">Generisk</string>
@@ -580,4 +580,13 @@ limitations under the License.
     <string name="settings_announcements_idle_title">Inaktivitet</string>
     <string name="settings_recording_idle_timeout_title">Inaktivitetsterskel</string>
     <string name="activity_type_kickscooter">sparkesykkel</string>
+    <string name="settings_recording_title">Opptak</string>
+    <string name="settings_ui_dynamic_colors_title">Dynamiske farger</string>
+    <string name="settings_ui_dynamic_colors_summary">Bruk brukerdefinerte dynamiske farger (kun Android 12+; krever manuell omstart)</string>
+    <string name="settings_night_mode_option_night_oled">Natt (OLED-vennlig)</string>
+    <string name="settings_announcements_unit">Distanse/hastighet-enhet</string>
+    <string name="settings_recording_location_distance_summary">%1$s mellom registrerte posisjoner</string>
+    <string name="settings_announcements_lap_power">Runde-kraft</string>
+    <string name="power_x_watt">Kraft {x, plural, =1 {1 watt} other {# watt} }</string>
+    <string name="power">Kraft</string>
 </resources>
