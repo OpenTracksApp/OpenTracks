@@ -64,8 +64,8 @@ android {
 
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
-        versionCode 5753
-        versionName "v4.12.3"
+        versionCode 5788
+        versionName "v4.12.4"
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
