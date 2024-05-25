@@ -111,15 +111,6 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
     }
 
     @Override
-    public void onBackPressed() {
-        if (isDiscarding) {
-            return;
-        }
-        super.onBackPressed();
-        resumeTrackAndFinish();
-    }
-
-    @Override
     protected View getRootView() {
         viewBinding = TrackStoppedBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();

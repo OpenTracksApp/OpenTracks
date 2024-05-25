@@ -17,12 +17,7 @@ limitations under the License.
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/marker_list_insert_marker"
-        android:icon="@drawable/ic_marker_show_24dp"
+        android:icon="@drawable/ic_marker_add_24dp"
         android:title="@string/menu_insert_marker"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/marker_list_search"
-        android:title="@string/menu_search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom" />
 </menu>

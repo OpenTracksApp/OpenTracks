@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.ui.markers;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,7 +24,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
-import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.List;
@@ -95,7 +93,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         }
     };
     private MenuItem insertMarkerMenuItem;
-    private MenuItem searchMenuItem;
 
     private String searchQuery;
 
@@ -153,6 +150,14 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     @Override
     protected View getRootView() {
         viewBinding = MarkerListBinding.inflate(getLayoutInflater());
+
+        viewBinding.markerListSearchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
+            searchQuery = viewBinding.markerListSearchView.getEditText().getText().toString();
+            viewBinding.markerListSearchView.hide();
+            loadData();
+            return true;
+        });
+
         return viewBinding.getRoot();
     }
 
@@ -161,9 +166,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         getMenuInflater().inflate(R.menu.marker_list, menu);
 
         insertMarkerMenuItem = menu.findItem(R.id.marker_list_insert_marker);
-
-        searchMenuItem = menu.findItem(R.id.marker_list_search);
-        ActivityUtils.configureSearchWidget(this, searchMenuItem);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -236,35 +238,10 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         return false;
     }
 
-    @Override
-    public void onBackPressed() {
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-        }
-
-        if (searchQuery != null) {
-            searchQuery = null;
-            loadData();
-            return;
-        }
-
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            searchQuery = intent.getStringExtra(SearchManager.QUERY);
-        } else {
-            searchQuery = null;
-        }
-    }
-
     @UiThread
     private void loadData() {
+        viewBinding.markerListToolbar.setText(searchQuery);
+
         viewBinding.markerListToolbar.setTitle(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.menu_markers)));
 
         List<Marker> markers = contentProviderUtils.searchMarkers(trackId, searchQuery);

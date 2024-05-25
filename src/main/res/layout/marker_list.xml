@@ -22,13 +22,23 @@ limitations under the License.
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.MaterialToolbar
+        <com.google.android.material.search.SearchBar
             android:id="@+id/marker_list_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_marker_show_24dp"
-            app:title="@string/menu_markers" />
+            app:layout_behavior="@string/searchbar_scrolling_view_behavior"
+            app:menu="@menu/marker_list" />
     </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.search.SearchView
+        android:id="@+id/marker_list_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="@string/menu_search"
+        app:layout_anchor="@id/marker_list_toolbar">
+        <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
+    </com.google.android.material.search.SearchView>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -2,37 +2,19 @@ package de.dennisguse.opentracks.ui.util;
 
 import static android.content.Context.VIBRATOR_SERVICE;
 
-import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
 
 import java.time.Duration;
 
 public class ActivityUtils {
 
     private static final String TAG = ActivityUtils.class.getSimpleName();
-
-    public static SearchView configureSearchWidget(Activity activity, final MenuItem menuItem) {
-        final SearchView searchView = (SearchView) menuItem.getActionView();
-        SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
-        if (searchManager != null) {
-            //NOTE: Use searchManager.getSearchableInfo(new ComponentName(activity, SearchActivity.class)) if another activity should handle the search
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
-        } else {
-            Log.w(TAG, "Could not retrieve SearchManager.");
-        }
-        searchView.setSubmitButtonEnabled(true);
-        return searchView;
-    }
 
     public static void vibrate(@NonNull Context context, Duration duration) {
         final Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
