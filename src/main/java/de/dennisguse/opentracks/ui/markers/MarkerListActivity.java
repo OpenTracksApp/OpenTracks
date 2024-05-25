@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.UiThread;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -48,7 +49,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class MarkerListActivity extends AbstractActivity {
+public class MarkerListActivity extends AbstractActivity implements DeleteMarkerDialogFragment.DeleteMarkerCaller {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -262,6 +263,7 @@ public class MarkerListActivity extends AbstractActivity {
         }
     }
 
+    @UiThread
     private void loadData() {
         viewBinding.markerListToolbar.setTitle(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.menu_markers)));
 
@@ -280,5 +282,10 @@ public class MarkerListActivity extends AbstractActivity {
 
     private void onRecordingStatusChanged(RecordingStatus status) {
         recordingStatus = status;
+    }
+
+    @Override
+    public void onMarkerDeleted() {
+        runOnUiThread(this::loadData);
     }
 }
