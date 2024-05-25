@@ -323,42 +323,13 @@ limitations under the License.
         </activity>
 
         <activity android:name=".ui.markers.MarkerEditActivity" />
+        <activity android:name=".ui.markers.MarkerListActivity" />
 
-        <activity
-            android:name=".ui.markers.MarkerListActivity"
-            android:exported="true"
-            android:label="@string/menu_markers"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-
-        <activity
-            android:name=".TrackListActivity"
-            android:exported="true"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-
+        <activity android:name=".TrackListActivity" />
         <activity android:name=".TrackRecordedActivity" />
         <activity android:name=".TrackStoppedActivity" />
 
-        <activity
-            android:name=".TrackRecordingActivity"
-            android:parentActivityName=".TrackListActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".TrackListActivity" />
-        </activity>
+        <activity android:name=".TrackRecordingActivity" />
 
         <activity android:name=".TrackEditActivity" />
 

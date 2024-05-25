@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -26,7 +25,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +32,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -129,7 +126,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     };
 
     // Menu items
-    private MenuItem searchMenuItem;
 
     private String searchQuery;
 
@@ -249,15 +245,20 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     @Override
     protected View getRootView() {
         viewBinding = TrackListBinding.inflate(getLayoutInflater());
+
+        viewBinding.trackListSearchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
+            searchQuery = viewBinding.trackListSearchView.getEditText().getText().toString();
+            viewBinding.trackListSearchView.hide();
+            loadData();
+            return true;
+        });
+
         return viewBinding.getRoot();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.track_list, menu);
-
-        searchMenuItem = menu.findItem(R.id.track_list_search);
-        ActivityUtils.configureSearchWidget(this, searchMenuItem);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -280,13 +281,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             return true;
         }
 
-        if (item.getItemId() == R.id.track_list_search) {
-            SearchView searchView = (SearchView) searchMenuItem.getActionView();
-            searchView.setIconified(false);
-            searchMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            return true;
-        }
-
         if (item.getItemId() == R.id.track_list_help) {
             startActivity(IntentUtils.newIntent(this, HelpActivity.class));
             return true;
@@ -295,42 +289,9 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_SEARCH && searchMenuItem != null) {
-            return true;
-        }
-        return super.onKeyUp(keyCode, event);
-    }
-
-    @Override
-    public void onBackPressed() {
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-        }
-
-        if (searchQuery != null) {
-            searchQuery = null;
-            loadData();
-            return;
-        }
-
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            searchQuery = intent.getStringExtra(SearchManager.QUERY);
-        } else {
-            searchQuery = null;
-        }
-    }
-
     private void loadData() {
+        viewBinding.trackListToolbar.setText(searchQuery);
+
         viewBinding.trackListToolbar.setTitle(Objects.requireNonNullElseGet(searchQuery, () -> getString(R.string.app_name)));
 
         Cursor tracks = new ContentProviderUtils(this).searchTracks(searchQuery);
