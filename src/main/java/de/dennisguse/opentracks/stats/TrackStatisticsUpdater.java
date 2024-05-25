@@ -140,6 +140,10 @@ public class TrackStatisticsUpdater {
         }
 
         {
+            if (trackPoint.getType() == TrackPoint.Type.IDLE) {
+                currentSegment.setIdle(true);
+            }
+
             // Update total distance
             Distance movingDistance = null;
             if (trackPoint.hasSensorDistance()) {
@@ -150,19 +154,21 @@ public class TrackStatisticsUpdater {
                 // GPS-based distance/speed
                 movingDistance = trackPoint.distanceToPrevious(lastTrackPoint);
             }
+
             if (movingDistance != null) {
-                currentSegment.setIdle(false);
                 currentSegment.addTotalDistance(movingDistance);
+
+                // TODO: for this, we need the distance covered since idle TrackPoint, right?
+                // movingDistance may only be from previous processed TrackPoint.
+                if (movingDistance.greaterOrEqualThan(Distance.of(10))) { //TODO Take preference value
+                    currentSegment.setIdle(false);
+                }
             }
 
             if (!currentSegment.isIdle() && !trackPoint.isSegmentManualStart()) {
                 if (lastTrackPoint != null) {
                     currentSegment.addMovingTime(trackPoint, lastTrackPoint);
                 }
-            }
-
-            if (trackPoint.getType() == TrackPoint.Type.IDLE) {
-                currentSegment.setIdle(true);
             }
 
             if (trackPoint.hasSpeed()) {
