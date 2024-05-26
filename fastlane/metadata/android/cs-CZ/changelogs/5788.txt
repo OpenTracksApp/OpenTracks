@@ -1,0 +1,8 @@
+v4.12.4: OpenTracks
+
+Změny:
+- Oznámení: jednotky lze vynechat
+- Oznámení: přidán výkon pro jízdu na kole
+
+Oprava chyby:
+- Pád při odstranění značky ze seznamu
