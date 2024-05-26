@@ -1,0 +1,8 @@
+v4.12.4: OpenTracks
+
+Veranderingen:
+- Aankondigingen: eenheden kunnen worden weggelaten
+- Aankondigingen: extra wielrenkracht
+
+Bugfix:
+- Markeringen verwijderen uit lijst gecrasht
