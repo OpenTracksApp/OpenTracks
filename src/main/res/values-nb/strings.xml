@@ -589,4 +589,6 @@ limitations under the License.
     <string name="settings_announcements_lap_power">Runde-kraft</string>
     <string name="power_x_watt">Kraft {x, plural, =1 {1 watt} other {# watt} }</string>
     <string name="power">Kraft</string>
+    <string name="settings_theme_switch_restart">Temaendringer kan kreve en manuell omstart.</string>
+    <string name="value_internal_sensor">Intern sensor</string>
 </resources>
