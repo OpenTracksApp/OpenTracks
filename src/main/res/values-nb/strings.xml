@@ -175,7 +175,7 @@ limitations under the License.
     <string name="settings_chart_by_distance">Etter avstand</string>
     <string name="settings_chart_by_time">Etter tid</string>
     <string name="settings_recording_default_activity_title">Forvalgt aktivitetstype</string>
-    <string name="settings_recording_location_frequency_summary">%1$s mellom registrerte posisjoner</string>
+    <string name="settings_recording_location_frequency_summary">%1$s mellom posisjonskontroller</string>
     <string name="settings_recording_max_recording_distance_summary">Det blir opprettet et nytt segment hvis avstanden mellom to posisjoner er større enn %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Maks. avstand</string>
     <string name="settings_recording_min_recording_distance_title">Avstandsintervall for opptak</string>
@@ -479,7 +479,7 @@ limitations under the License.
     <string name="settings_sensors_title">Sensorer</string>
     <string name="settings_announcements_statistics_title">Statistikkmeldinger</string>
     <string name="settings_announcements_summary">Tid, distanse, talehastighet</string>
-    <string name="settings_import_export_title">Import/eksport</string>
+    <string name="settings_import_export_title">Import og eksport</string>
     <string name="settings_import_export_summary">Import, eksport, auto-eksport</string>
     <string name="settings_units_category">Enheter</string>
     <string name="settings_activity_defaults_category">Aktivitetens forvalg</string>
@@ -591,4 +591,10 @@ limitations under the License.
     <string name="power">Kraft</string>
     <string name="settings_theme_switch_restart">Temaendringer kan kreve en manuell omstart.</string>
     <string name="value_internal_sensor">Intern sensor</string>
+    <string name="sensor_state_pressure">Barometer</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Filtrer Bluetooth-enheter</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Vis alle Bluetooth-enheter som kan oppdages</string>
+    <string name="permission_recording_failed">OpenTracks krever tillatelse for å få tilgang til posisjonen din samt enheter i nærheten.</string>
 </resources>
