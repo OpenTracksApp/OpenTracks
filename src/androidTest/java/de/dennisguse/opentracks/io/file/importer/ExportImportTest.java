@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Looper;
 
 import androidx.preference.PreferenceManager;
@@ -65,7 +64,6 @@ import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingCadence;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorHeartRate;
-import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
@@ -596,15 +594,13 @@ public class ExportImportTest {
         location.setLatitude(latitude);
         location.setLongitude(longitude);
         location.setAccuracy(accuracy);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            location.setVerticalAccuracyMeters(verticalAccuracy);
-        }
+        location.setVerticalAccuracyMeters(verticalAccuracy);
         location.setSpeed(speed);
         location.setAltitude(altitude);
 
         mockAltitudeChange(trackPointCreator, altitudeGain);
 
         trackPointCreator.setClock(time);
-        trackPointCreator.getSensorManager().onChanged(new Raw<>(location));
+        trackPointCreator.getSensorManager().getGpsManager().onLocationChanged(location);
     }
 }

@@ -16,7 +16,6 @@
 package de.dennisguse.opentracks.data.models;
 
 import android.location.Location;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -26,6 +25,7 @@ import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 
 /**
  * Sensor and/or location information for a specific point in time.
@@ -42,6 +42,7 @@ public class TrackPoint {
     @NonNull
     private final Instant time;
 
+    //TODO We may use Position for these items
     private Double latitude;
     private Double longitude;
     private Distance horizontalAccuracy;
@@ -185,42 +186,40 @@ public class TrackPoint {
         return this;
     }
 
-    //TODO Better return null, if no location is present aka latitude == null etc.
     @NonNull
-    public Location getLocation() {
-        Location location = new Location("");
-        location.setTime(time.toEpochMilli());
-        if (hasLocation()) {
-            location.setLatitude(latitude);
-            location.setLongitude(longitude);
-        }
-        if (hasBearing()) {
-            location.setBearing(bearing);
-        }
-        if (hasHorizontalAccuracy()) {
-            location.setAccuracy((float) horizontalAccuracy.toM());
-        }
-        if (hasAltitude()) {
-            location.setAltitude(altitude.toM());
-        }
-        if (hasSpeed()) {
-            location.setSpeed((float) speed.toMPS());
-        }
-
-        return location;
+    public Position getPosition() {
+        return new Position(
+                time,
+                latitude,
+                longitude,
+                horizontalAccuracy,
+                altitude,
+                verticalAccuracy,
+                bearing,
+                speed
+        );
     }
 
-    public TrackPoint setLocation(@NonNull Location location) {
-        this.latitude = location.getLatitude();
-        this.longitude = location.getLongitude();
-        this.altitude = location.hasAltitude() ? Altitude.WGS84.of(location.getAltitude()) : null;
-        this.speed = location.hasSpeed() ? Speed.of(location.getSpeed()) : null;
-        this.horizontalAccuracy = location.hasAccuracy() ? Distance.of(location.getAccuracy()) : null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            this.verticalAccuracy = location.hasVerticalAccuracy() ? Distance.of(location.getVerticalAccuracyMeters()) : null;
-        }
+    public TrackPoint setPosition(Position location) {
+        this.latitude = location.latitude();
+        this.longitude = location.longitude();
+        this.altitude = location.altitude();
+        this.speed = location.speed();
+        this.horizontalAccuracy = location.horizontalAccuracy();
+        this.verticalAccuracy = location.verticalAccuracy();
 
-        //TODO Should we copy the bearing?
+        return this;
+    }
+
+    @Deprecated
+    @NonNull
+    public Location getLocation() {
+        return getPosition().toLocation();
+    }
+
+    @Deprecated
+    public TrackPoint setLocation(@NonNull Location location) {
+        setPosition(Position.of(location));
         return this;
     }
 
@@ -292,6 +291,7 @@ public class TrackPoint {
         this.speed = speed;
         return this;
     }
+
     public boolean hasBearing() {
         return bearing != null;
     }
@@ -352,13 +352,20 @@ public class TrackPoint {
         return hasHorizontalAccuracy() && horizontalAccuracy.lessThan(thresholdHorizontalAccuracy);
     }
 
-    public float bearingTo(@NonNull TrackPoint dest) {
+    public Optional<Float> bearingTo(@NonNull TrackPoint dest) {
+        if (!dest.hasLocation() || !hasLocation()) {
+            return Optional.empty();
+        }
         return bearingTo(dest.getLocation());
     }
 
     //TODO Bearing requires a location; what do we do if we don't have any?
-    public float bearingTo(@NonNull Location dest) {
-        return getLocation().bearingTo(dest);
+    @Deprecated
+    public Optional<Float> bearingTo(@NonNull Location dest) {
+        if (!hasLocation()) {
+            return Optional.empty();
+        }
+        return Optional.of(getLocation().bearingTo(dest));
     }
 
     // Sensor data

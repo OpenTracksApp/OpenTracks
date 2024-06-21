@@ -1,12 +1,10 @@
 package de.dennisguse.opentracks.sensors.sensorData;
 
-import android.location.Location;
-
 import androidx.annotation.NonNull;
 
-import java.util.Optional;
+import de.dennisguse.opentracks.data.models.Position;
 
-public class AggregatorGPS extends Aggregator<Location, Optional<Location>> {
+public class AggregatorGPS extends Aggregator<Position, Position> {
 
 
     public AggregatorGPS(String sensorAddress) {
@@ -14,8 +12,8 @@ public class AggregatorGPS extends Aggregator<Location, Optional<Location>> {
     }
 
     @Override
-    protected void computeValue(Raw<Location> current) {
-        value = Optional.of(current.value());
+    protected void computeValue(Raw<Position> current) {
+        value = current.value();
     }
 
     @Override
@@ -25,7 +23,7 @@ public class AggregatorGPS extends Aggregator<Location, Optional<Location>> {
 
     @NonNull
     @Override
-    protected Optional<Location> getNoneValue() {
-        return Optional.empty();
+    protected Position getNoneValue() {
+        return Position.empty();
     }
 }
