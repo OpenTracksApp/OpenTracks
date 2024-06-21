@@ -18,6 +18,7 @@ import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.SensorConnector;
 import de.dennisguse.opentracks.sensors.SensorManager;
@@ -138,7 +139,7 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
             return;
         }
 
-        listener.onChange(new Raw<>(location));
+        listener.onChange(new Raw<>(Position.of(location)));
     }
 
     @Override
