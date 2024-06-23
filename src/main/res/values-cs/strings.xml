@@ -419,14 +419,14 @@ limitations under the License.
         <item quantity="other">Ukončeno s %1$d chybami</item>
     </plurals>
     <string name="import_progress_summary_errors_msg">Chyba</string>
-    <string name="settings_prevent_reimport_tracks_title">Zabraňte opětovnému importu aktivit</string>
+    <string name="settings_prevent_reimport_tracks_title">Zabránit opětov. importu stop</string>
     <string name="export_progress_summary_errors_msg">Chyba</string>
     <string name="export_progress_summary_skip_msg">Soubory přeskočeny</string>
     <string name="export_progress_summary_overwrite_msg">Soubory přepsány</string>
     <string name="export_progress_summary_new_msg">Nové soubory exportovány</string>
     <string name="import_progress_summary_exists_msg">Existovat</string>
     <string name="import_progress_summary_ok_msg">Importované soubory</string>
-    <string name="generic_open_track">Otevřená trať</string>
+    <string name="generic_open_track">Otevřít stopu</string>
     <string name="sensor_state_power_avg">Prům. výkon</string>
     <string name="sensor_state_heart_rate_max">Maximální srdeční frekvence</string>
     <string name="sensor_state_heart_rate_avg">Avg srdeční frekvence</string>
