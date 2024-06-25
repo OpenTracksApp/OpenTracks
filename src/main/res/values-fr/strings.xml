@@ -16,7 +16,7 @@ limitations under the License.
 --><resources>
     <string name="about_preference_title">À propos d\'OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> est une application de suivi sportif qui respecte totalement votre vie privée.</string>
-    <string name="about_url">Page web du projet : <a href="%1$s">%1$s</a></string>
+    <string name="about_url">Page web du projet : <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Nom de la version : %1$s</string>
     <string name="about_version_code">Code de version : %1$d</string>
     <string name="about_history">OpenTracks est une bifurcation de <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (abandonné en 2016).</string>
@@ -30,10 +30,10 @@ limitations under the License.
 \n* Fonctionne complètement hors ligne
 \n* Affichage des traces sur une carte (voir ci-dessous)</string>
     <string name="help_track_map_title">Comment afficher un tracé sur une carte \?</string>
-    <string name="help_track_map_content"> Utilisez la petite icône en forme de carte.
-\na) (Actualisation en direct) Installez <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Il fournit des cartes en ligne ou hors ligne grâce à <a href="https://www.openstreetmap.org ">OpenStreetMap</a>.
-\nOSMDashboard est en réalité une application séparée qui n\'accéder (temporairement) qu\'aux données des tracés qui vont être affichées.
-\nb) Via une application cartographique standard (p. ex. <a href="http://osmand.net/">OsmAnd</a> ou <a href="https://maps.me/">MAPS.ME</a> ). L’application doit prendre en charge le format de fichier KMZ (uniquement les lieux et les horodatages). Plus précisément, l\'application doit prendre en charge <i>ACTION_VIEW</i> avec le type MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="help_track_map_content"> \u0020Utilisez la petite icône en forme de carte. 
+\n \u0020 \u0020a) \u0020 \u0020(Actualisation en direct) Installez <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. \u0020 \u0020Il fournit des cartes en ligne ou hors ligne grâce à <a href="https://www.openstreetmap.org ">OpenStreetMap</a>. 
+\n \u0020 \u0020OSMDashboard est en réalité une application séparée qui n\'accéder (temporairement) qu\'aux données des tracés qui vont être affichées. \u0020 
+\n \u0020 \u0020b) \u0020 Via une application cartographique standard (p. ex. <a href="http://osmand.net/">OsmAnd</a> ou <a href="https://maps.me/">MAPS.ME</a> ). \u0020 L’application doit prendre en charge le format de fichier KMZ (uniquement les lieux et les horodatages). \u0020 Plus précisément, l\'application doit prendre en charge <i>ACTION_VIEW</i> avec le type MIME <i>application/vnd.google-earth.kmz</i>. \u0020</string>
     <string name="help_storage_pictures_title">Comment OpenTracks stocke-t-il les photos qui ont été prises en tant que repère \?</string>
     <string name="help_storage_pictures_content">Elles sont enregistrées dans le stockage interne de l\'application (c\'est-à-dire uniquement accessible dans OpenTracks).</string>
     <string name="help_track_export_title">Comment puis-je exporter/partager des tracés enregistrées \?</string>
