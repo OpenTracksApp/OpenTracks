@@ -206,7 +206,8 @@ public class TrackImporter {
                 }
 
                 if (!current.hasBearing()) {
-                    current.setBearing(previous.bearingTo(current));
+                    previous.bearingTo(current)
+                            .ifPresent(current::setBearing);
                 }
 
                 if (current.getType().equals(TrackPoint.Type.TRACKPOINT) && distanceToPrevious.greaterThan(maxRecordingDistance)) {

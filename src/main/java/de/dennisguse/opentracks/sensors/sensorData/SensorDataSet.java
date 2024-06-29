@@ -1,6 +1,5 @@
 package de.dennisguse.opentracks.sensors.sensorData;
 
-import android.location.Location;
 import android.util.Log;
 import android.util.Pair;
 
@@ -11,6 +10,7 @@ import androidx.annotation.VisibleForTesting;
 import de.dennisguse.opentracks.data.models.AtmosphericPressure;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.BluetoothHandlerCyclingCadence;
@@ -127,8 +127,8 @@ public final class SensorDataSet {
             this.barometer.add((Raw<AtmosphericPressure>) data);
             return;
         }
-        if (value instanceof Location) {
-            this.gps.add((Raw<Location>) data);
+        if (value instanceof Position) {
+            this.gps.add((Raw<Position>) data);
             return;
         }
 
@@ -152,8 +152,7 @@ public final class SensorDataSet {
 
     public void fillTrackPoint(TrackPoint trackPoint) {
         if (gps != null && gps.hasValue()) {
-            gps.getValue()
-                    .ifPresent(trackPoint::setLocation);
+            trackPoint.setPosition(gps.getValue());
         }
 
         if (getHeartRate() != null) {
