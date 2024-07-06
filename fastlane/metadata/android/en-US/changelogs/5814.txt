@@ -1,0 +1,8 @@
+v4.12.5: OpenTracks
+
+Bugfix:
+- Moving is now computed correctly again.
+  Was broken since v4.9.0 due to the introduction of idle functionality. See #1756.
+
+Changes:
+- Support for Predictive Back
