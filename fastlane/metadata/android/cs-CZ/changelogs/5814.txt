@@ -1,0 +1,8 @@
+v4.12.5: OpenTracks
+
+Oprava chyby:
+- Pohyb je nyní opět počítán správně.
+  Byl rozbitý od verze 4.9.0 z důvodu představení funkce přestávky. Viz #1756.
+
+Změny:
+- Podpora prediktivního zadávání
