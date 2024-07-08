@@ -1,0 +1,8 @@
+v4.12.5: OpenTracks
+
+Foutcorrectie:
+- Verplaatsing wordt weer correct berekend.
+  Was defect sinds v4.9.0 t.g.v. de introductie van inactieve functionaliteit. Zie # 1756.
+
+Veranderingen:
+- Ondersteuning voor Predictive Back
