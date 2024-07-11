@@ -45,7 +45,7 @@ public enum ActivityType {
     MOTOR_BIKE("motor bike", R.string.activity_type_motor_bike, R.drawable.ic_activity_mtb_24dp, true),
     MOTOR_BOATING("motor boating", R.string.activity_type_motor_boating, R.drawable.ic_activity_boat_24dp, true),
     MOUNTAIN_BIKING("mountain biking", R.string.activity_type_mountain_biking, R.drawable.ic_activity_mtb_24dp, true),
-    OFF_TRAIL_HIKING("off trail hiking", R.string.activity_type_hiking, R.drawable.ic_activity_walk_24dp, false),
+    OFF_TRAIL_HIKING("off trail hiking", R.string.activity_type_off_trail_hiking, R.drawable.ic_activity_walk_24dp, false),
     OTHER("other", R.string.activity_type_other, ActivityIcon.ICON_UNKNOWN, true),
     PADDLING("paddling", R.string.activity_type_paddling, ActivityIcon.ICON_UNKNOWN, true),
     PARA_GLIDING("para gliding", R.string.activity_type_para_gliding, ActivityIcon.ICON_UNKNOWN, true),
