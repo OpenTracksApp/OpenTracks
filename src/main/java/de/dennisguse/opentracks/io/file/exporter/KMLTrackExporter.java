@@ -498,7 +498,7 @@ public class KMLTrackExporter implements TrackExporter {
     }
 
     private void writeTypeLocalized(String localizedValue) {
-        if (localizedValue == null || localizedValue.equals("")) {
+        if (localizedValue == null || localizedValue.isEmpty()) {
             return;
         }
         printWriter.println("<ExtendedData>");

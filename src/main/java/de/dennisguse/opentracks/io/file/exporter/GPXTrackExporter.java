@@ -310,7 +310,7 @@ public class GPXTrackExporter implements TrackExporter {
     }
 
     public Distance writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint, List<TrackPoint> sensorPoints, Distance trackDistance) {
-        Distance cumulativeDistance = null;
+        Distance cumulativeDistance;
 
         printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");
 

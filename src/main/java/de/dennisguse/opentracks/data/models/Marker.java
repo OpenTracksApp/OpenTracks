@@ -263,7 +263,7 @@ public final class Marker {
     }
 
     public boolean hasPhoto() {
-        return photoUrl != null && !"".equals(photoUrl);
+        return photoUrl != null && !photoUrl.isEmpty();
     }
 
     public record Id(long id) implements Parcelable {

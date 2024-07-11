@@ -20,9 +20,7 @@ public class GainManager implements SensorConnector {
 
     private final SensorManager.SensorDataChangedObserver listener;
 
-    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
-        connect();
-    };
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> connect();
 
     private Context context;
     private Handler handler;

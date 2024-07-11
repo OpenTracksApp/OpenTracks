@@ -41,9 +41,9 @@ import androidx.core.view.GestureDetectorCompat;
 import java.text.NumberFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Iterator;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Marker;
@@ -679,12 +679,13 @@ public class ChartView extends View {
     private record TitlePosition(
             int line, // line number (starts at 1, top to bottom numbering)
             int xPos // x position in points (starts at 0, left to right indexing)
-    ) {};
+    ) {}
+
     private record TitleDimensions(
             int lineCount, // number of lines the titles will take
             int lineHeight, // height of a line (all lines have the same height)
             List<TitlePosition> titlePositions // positions of visible titles (the order corresponds to seriesList)
-    ) {};
+    ) {}
 
     /**
      * Draws series titles.
@@ -711,7 +712,7 @@ public class ChartView extends View {
     private TitleDimensions getTitleDimensions() {
         int lineCnt = 1;
         int lineHeight = 0;
-        List<TitlePosition> tps = new ArrayList<TitlePosition>();
+        List<TitlePosition> tps = new ArrayList<>();
         int xPosInLine = spacer;
         for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {

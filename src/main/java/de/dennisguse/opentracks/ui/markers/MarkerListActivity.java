@@ -114,9 +114,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
         setSupportActionBar(viewBinding.markerListToolbar);
-        viewBinding.bottomAppBarLayout.bottomAppBar.setNavigationOnClickListener(item -> {
-            finish();
-        });
+        viewBinding.bottomAppBarLayout.bottomAppBar.setNavigationOnClickListener(item -> finish());
     }
 
     @Override

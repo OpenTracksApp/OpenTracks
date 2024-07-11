@@ -229,7 +229,7 @@ public class PreferencesUtils {
 
     //TODO Check if actually needed or can be superseeded by a flexible default in getUnit()
     public static void applyDefaultUnit() {
-        if (getString(R.string.stats_units_key, "").equals("")) {
+        if (getString(R.string.stats_units_key, "").isEmpty()) {
             if (!Locale.US.equals(Locale.getDefault())) {
                 setUnit(UnitSystem.METRIC);
             } else {

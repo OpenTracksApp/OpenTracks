@@ -55,7 +55,7 @@ public abstract class Aggregator<Input, Output> {
     /**
      * Reset long term aggregated values (more than derived from previous SensorData). e.g. overall distance.
      */
-    public void reset() {};
+    public void reset() {}
 
     /**
      * Is the data recent considering the current time.

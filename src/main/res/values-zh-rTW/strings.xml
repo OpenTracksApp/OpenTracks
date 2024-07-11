@@ -201,7 +201,6 @@ limitations under the License.
     <string name="generic_separator_done_total">/</string>
     <string name="generic_show_errors">顯示錯誤</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">已完成，但有一個錯誤</item>
         <item quantity="other">已完成，但有 %1$d 個錯誤</item>
     </plurals>
     <string name="generic_completed">完成</string>
