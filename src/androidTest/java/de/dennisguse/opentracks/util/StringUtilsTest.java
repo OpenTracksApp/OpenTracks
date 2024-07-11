@@ -38,7 +38,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.TextStyle;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
@@ -138,10 +137,10 @@ public class StringUtilsTest {
         ArrayList<String> shortMonths = Arrays.stream(Month.values()).map(m -> m.getDisplayName(TextStyle.SHORT, Locale.getDefault())).collect(Collectors.toCollection(ArrayList::new));
 
         LocalDate today = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).toLocalDate();
-        LocalDate yesterday = today.minus(1, ChronoUnit.DAYS);
-        LocalDate dayName = today.minus(2, ChronoUnit.DAYS);
-        LocalDate thisYear = today.minus(15, ChronoUnit.DAYS);
-        LocalDate aYearAgo = today.minus(400, ChronoUnit.DAYS);
+        LocalDate yesterday = today.minusDays(1);
+        LocalDate dayName = today.minusDays(2);
+        LocalDate thisYear = today.minusDays(15);
+        LocalDate aYearAgo = today.minusDays(400);
 
         int offsetFromLocale = OffsetDateTime.now().getOffset().getTotalSeconds() - 28800; // -08:00
 
