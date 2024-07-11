@@ -42,8 +42,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             fragment = new MainSettingsFragment();
         }
 
-        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
         setSupportActionBar(viewBinding.topAppBar);
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, fragment).commit();
     }
