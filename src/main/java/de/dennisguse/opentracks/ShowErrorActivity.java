@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -39,12 +40,17 @@ public class ShowErrorActivity extends AbstractActivity {
 
     private void reportBug() {
         Uri uriUrl;
-        uriUrl = Uri.parse(
-                String.format(
-                        getString(R.string.report_issue_link),
-                        URLEncoder.encode(viewBinding.textViewError.getText().toString(), StandardCharsets.UTF_8)
-                )
-        );
+        try {
+            uriUrl = Uri.parse(
+                    String.format(
+                            getString(R.string.report_issue_link),
+                            URLEncoder.encode(viewBinding.textViewError.getText().toString(), StandardCharsets.UTF_8.toString())
+                    )
+            );
+        } catch (final UnsupportedEncodingException ignored) {
+            // can't happen as UTF-8 is always available
+            return;
+        }
         Intent intent = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(intent);
     }
