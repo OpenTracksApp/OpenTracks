@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
@@ -41,11 +42,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.time.Instant;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.MarkerEditBinding;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -58,7 +61,9 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 public class MarkerEditActivity extends AbstractActivity {
 
     public static final String EXTRA_TRACK_ID = "track_id";
+    public static final String EXTRA_TRACK_ID_LONG = "track_id_long";
     public static final String EXTRA_MARKER_ID = "marker_id";
+    public static final String EXTRA_LOCATION = "location";
 
     private static final String CAMERA_PHOTO_URI_KEY = "camera_photo_uri_key";
 
@@ -66,6 +71,7 @@ public class MarkerEditActivity extends AbstractActivity {
 
     private static final String TAG = MarkerEditActivity.class.getSimpleName();
     private Track.Id trackId;
+    private Location location;
     private Marker marker;
 
     private MenuItem insertPhotoMenuItem;
@@ -93,6 +99,10 @@ public class MarkerEditActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
 
         trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
+        if (getIntent().hasExtra(EXTRA_TRACK_ID_LONG)) {
+            trackId = new Track.Id(getIntent().getLongExtra(EXTRA_TRACK_ID_LONG, 0L));
+        }
+        location = getIntent().getParcelableExtra(EXTRA_LOCATION);
         @Nullable Marker.Id markerId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
         final boolean isNewMarker = markerId == null;
 
@@ -176,7 +186,11 @@ public class MarkerEditActivity extends AbstractActivity {
 
     private Marker.Id createNewMarker(TrackRecordingService trackRecordingService) {
         try {
-            Marker.Id marker = trackRecordingService.insertMarker("", "", "", null);
+            TrackPoint trackPoint = null;
+            if (location != null) {
+                trackPoint = new TrackPoint(location, Instant.now());
+            }
+            Marker.Id marker = trackRecordingService.insertMarker("", "", "", null, trackId, trackPoint);
             if (marker == null) {
                 Toast.makeText(this, R.string.marker_add_error, Toast.LENGTH_LONG).show();
                 return null;

@@ -269,12 +269,12 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         gpsStatusObservable.postValue(gpsStatusValue);
     }
 
-    public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
-        if (!isRecording()) {
+    public Marker.Id insertMarker(String name, String category, String description, String photoUrl, Track.Id trackId, TrackPoint trackPoint) {
+        if (!isRecording() && (trackId == null || trackPoint == null)) {
             return null;
         }
 
-        return trackRecordingManager.insertMarker(name, category, description, photoUrl);
+        return trackRecordingManager.insertMarker(name, category, description, photoUrl, trackId, trackPoint);
     }
 
     @Deprecated

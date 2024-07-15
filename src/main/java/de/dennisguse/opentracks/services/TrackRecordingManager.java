@@ -14,6 +14,7 @@ import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
 import java.time.ZoneOffset;
+import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -138,19 +139,21 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         return new Pair<>(track, current);
     }
 
-    public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
+    public Marker.Id insertMarker(String name, String category, String description, String photoUrl, Track.Id trackId, TrackPoint trackPoint) {
+        Track.Id markerTrackId = Objects.requireNonNullElseGet(trackId, () -> this.trackId);
         if (name == null) {
-            Integer nextMarkerNumber = contentProviderUtils.getNextMarkerNumber(trackId);
+            Integer nextMarkerNumber = contentProviderUtils.getNextMarkerNumber(markerTrackId);
             if (nextMarkerNumber == null) {
                 nextMarkerNumber = 1;
             }
             name = context.getString(R.string.marker_name_format, nextMarkerNumber + 1);
         }
 
-        if (lastStoredTrackPointWithLocation == null) {
+        if (lastStoredTrackPointWithLocation == null && trackPoint == null) {
             Log.i(TAG, "Could not create a marker as trackPoint is unknown.");
             return null;
         }
+        TrackPoint markerTrackPoint = Objects.requireNonNullElseGet(trackPoint, () -> lastStoredTrackPointWithLocation);
 
         category = category != null ? category : "";
         description = description != null ? description : "";
@@ -158,7 +161,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         photoUrl = photoUrl != null ? photoUrl : "";
 
         // Insert marker
-        Marker marker = new Marker(name, description, category, icon, trackId, getTrackStatistics(), lastStoredTrackPointWithLocation, photoUrl);
+        Marker marker = new Marker(name, description, category, icon, markerTrackId, getTrackStatistics(), markerTrackPoint, photoUrl);
         Uri uri = contentProviderUtils.insertMarker(marker);
         return new Marker.Id(ContentUris.parseId(uri));
     }
@@ -247,6 +250,9 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
     }
 
     TrackStatistics getTrackStatistics() {
+        if (trackStatisticsUpdater == null) {
+            return null;
+        }
         return trackStatisticsUpdater.getTrackStatistics();
     }
 

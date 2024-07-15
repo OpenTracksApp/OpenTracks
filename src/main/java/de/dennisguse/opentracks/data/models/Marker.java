@@ -81,14 +81,19 @@ public final class Marker {
     }
 
     @Deprecated
-    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, @NonNull TrackStatistics statistics, @NonNull TrackPoint trackPoint, String photoUrl) {
+    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, TrackStatistics statistics, @NonNull TrackPoint trackPoint, String photoUrl) {
         this(trackId, trackPoint);
         this.name = name;
         this.description = description;
         this.category = category;
         this.icon = icon;
-        this.length = statistics.getTotalDistance();
-        this.duration = statistics.getTotalTime();
+        if (statistics == null) {
+            this.length = Distance.of(0);
+            this.duration = Duration.ofMillis(0);
+        } else {
+            this.length = statistics.getTotalDistance();
+            this.duration = statistics.getTotalTime();
+        }
         this.photoUrl = photoUrl;
     }
 

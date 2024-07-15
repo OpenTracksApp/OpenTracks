@@ -322,7 +322,15 @@ limitations under the License.
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.markers.MarkerEditActivity" />
+        <activity
+            android:name=".ui.markers.MarkerEditActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="de.dennisguse.opentracks.MarkerEdit" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".ui.markers.MarkerListActivity" />
 
         <activity android:name=".TrackListActivity" />

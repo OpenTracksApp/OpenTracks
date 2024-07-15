@@ -98,10 +98,32 @@ public class TrackRecordingServiceMarkerTest {
         assertFalse(service.isRecording());
 
         // when
-        Marker.Id markerId = service.insertMarker(null, null, null, null);
+        Marker.Id markerId = service.insertMarker(null, null, null, null, null, null);
 
         // then
         assertNull(markerId);
+    }
+
+    @MediumTest
+    @Test
+    public void notRecording_but_TrackId_and_TrackPoint_provided_testInsertMarker() {
+        // given
+        var trackId = service.startNewTrack();
+        service.endCurrentTrack();
+        assertFalse(service.isRecording());
+
+        // when
+        Marker.Id markerId = service.insertMarker(null, null, null, null, trackId, new TrackPoint(50.0, 9.0, null, Instant.now()));
+
+        // then
+        assertNotEquals(new Marker.Id(-1L), markerId);
+        Marker wpt = contentProviderUtils.getMarker(markerId);
+        assertEquals(context.getString(R.string.marker_icon_url), wpt.getIcon());
+        assertEquals(context.getString(R.string.marker_name_format, 1), wpt.getName());
+        assertEquals(trackId, wpt.getTrackId());
+        assertEquals(50.0, wpt.getLatitude(), 0.01);
+        assertEquals(9.0, wpt.getLongitude(), 0.01);
+        assertNotNull(wpt.getLocation());
     }
 
     @MediumTest
@@ -111,7 +133,7 @@ public class TrackRecordingServiceMarkerTest {
         service.startNewTrack();
 
         // when
-        Marker.Id markerId = service.insertMarker(null, null, null, null);
+        Marker.Id markerId = service.insertMarker(null, null, null, null, null, null);
 
         // then
         assertNull(markerId);
@@ -135,7 +157,7 @@ public class TrackRecordingServiceMarkerTest {
         );
 
         // when
-        Marker.Id markerId = service.insertMarker(null, null, null, null);
+        Marker.Id markerId = service.insertMarker(null, null, null, null, null, null);
 
         // then
         assertNotEquals(new Marker.Id(-1L), markerId);
