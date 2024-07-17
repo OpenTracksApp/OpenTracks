@@ -151,7 +151,7 @@ limitations under the License.
     <string name="menu_aggregated_statistics">Toplu istatistikler</string>
     <string name="menu_delete">Sil</string>
     <string name="menu_edit">Düzenle</string>
-    <string name="menu_export_all">Tümünü dışa aktar</string>
+    <string name="menu_export_all">Tümünü dışa aktar (her parça başına bir dosya)</string>
     <string name="menu_help">Yardım</string>
     <string name="menu_import_all">Tümünü içe aktar</string>
     <string name="menu_insert_marker">İşaretçi ekle</string>
@@ -330,7 +330,7 @@ limitations under the License.
 \n Aslında OSMDashboard, sadece gösterilecek olan parçaların verilerine (geçici olarak) erişebilen ayrı bir uygulamadır.
 \n b) Normal bir harita uygulaması aracılığıyla (ör. &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; ve &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). Bu uygulamaların KMZ dosya biçimini (yalnızca konumlar ve zaman damgaları) desteklemesi gerekir. Aslında, bir uygulamanın MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt; ile &lt;i&gt;ACTION_VIEW&lt;/i&gt; özelliğini desteklemesi gerekir. &lt;/i&gt; "</string>
     <string name="help_storage_pictures_title">OpenTracks, işaretçi olarak çekilmiş resimleri nasıl saklar\?</string>
-    <string name="about_url">Proje web sayfası: <a href="%1$s">%1$s</a></string>
+    <string name="about_url">Proje ağ sayfası: <a href="%1$s">%1$s</a></string>
     <string name="help_track_export_title">Kayıtlı parkurları nasıl dışa aktarabilirim/paylaşabilirim\?</string>
     <string name="about_version_code">Sürüm kodu: %1$d</string>
     <string name="generic_choose_an_option">Bir seçenek belirleyin</string>
@@ -343,7 +343,7 @@ limitations under the License.
     <string name="export_without_photos">fotoğrafsız</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="export_error_post_workout">Antrenman sonrası dışa aktarma başarısız oldu, lütfen dışa aktarma dizinini kontrol edin.</string>
-    <string name="export_progress_summary_new_msg">Yeni parçalar dışa aktarıldı</string>
+    <string name="export_progress_summary_new_msg">Yeni dosyalar dışa aktarıldı</string>
     <string name="generic_today">Bugün</string>
     <string name="generic_click_twice_cancel">İptal etmek için tekrar geri düğmesine tıklayın</string>
     <string name="generic_yesterday">Dün</string>
@@ -415,9 +415,9 @@ limitations under the License.
     <string name="help_recording_content">OpenTracks, konumu devamlı olarak kaydetmek için cihazın GPS sensörünü kullanır. GPS cihazı yanlış veriler bildirirse (ör. konum, hız, yükseklik) OpenTracks bu konuda bir şey yapamaz.</string>
     <string name="help_data_storage_title">OpenTracks sensör verilerini nasıl depolar\?</string>
     <string name="export_dir_not_writable">" (yazılabilir değil!)"</string>
-    <string name="export_track_errors">Parçalar dışa aktarılmadı</string>
-    <string name="export_progress_summary_overwrite_msg">Parçaların üzerine yazıldı</string>
-    <string name="export_progress_summary_skip_msg">Parçalar atlandı</string>
+    <string name="export_track_errors">Dosyalar dışa aktarılmadı</string>
+    <string name="export_progress_summary_overwrite_msg">Dosyaların üzerine yazıldı</string>
+    <string name="export_progress_summary_skip_msg">Dosyalar atlandı</string>
     <string name="export_progress_summary_errors_msg">Hatalar</string>
     <string name="generic_open_track">Parçayı Aç</string>
     <string name="generic_overwrite">Üzerine yaz</string>
@@ -435,7 +435,7 @@ limitations under the License.
     <string name="settings_ui_title">Kullanıcı Arayüzü</string>
     <string name="settings_default_trackfileformat">Dosya biçimini dışa aktarma/paylaşma</string>
     <string name="settings_export_filename_title">Dosya adının biçimi</string>
-    <string name="settings_import_export_title">İçe/Dışa Aktar</string>
+    <string name="settings_import_export_title">İçe ve Dışa Aktar</string>
     <string name="settings_import_export_summary">İçe, Dışa, Otomatik Dışa Aktar</string>
     <string name="settings_units_category">Birimler</string>
     <string name="settings_activity_defaults_category">Aktivitenin Varsayılanları</string>
@@ -496,7 +496,7 @@ limitations under the License.
     <string name="instant_export_enabled_summary">Kayıt tamamlandıktan sonra parçayı depolamaya aktar</string>
     <string name="value_float_mile_hour">%1$.1f mi/s</string>
     <string name="settings_announcements_totaltime_frequency">Zaman aralığı</string>
-    <string name="settings_announcements_distance_frequency">Mesafe aralığı</string>
+    <string name="settings_announcements_distance_frequency">Tur uzunluğu</string>
     <string name="stats_sensors_heart_rate">Kalp atış hızı</string>
     <string name="stats_clock">Saat</string>
     <string name="stats_sensors_cadence">Kadans</string>
@@ -544,4 +544,60 @@ limitations under the License.
     <string name="voice_per_nautical_mile">deniz mili başına</string>
     <string name="settings_public_api_package_title">Genel API için paket adı</string>
     <string name="show_on_dashboard_not_installed">OpenTracks Gösterge Paneli API\'sini destekleyen hiçbir uygulama yüklü değil.</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth Cihazlarını Filtrele</string>
+    <string name="settings_stats_units_imperial_meter">İngiliz Ölçü Birimi (mi, m)</string>
+    <string name="settings_api_summary">Diğer uygulamalar için uzaktan kontrol ve istatistik Uygulama Programlama Arayüzü (API)</string>
+    <string name="generic_from">\'den beri</string>
+    <string name="image_discard">Çıkar</string>
+    <string name="import_thread_interrupted">İzlek kesintiye uğradı</string>
+    <string name="settings_theme_switch_restart">Tema değişiklikleri elle yeniden başlatmayı gerektirebilir.</string>
+    <string name="settings_ui_dynamic_colors_summary">Kullanıcı tanımlı Dinamik Renkleri kullan (sadece Android 12+; elle yeniden başlatmayı gerektirir)</string>
+    <string name="settings_night_mode_option_night_oled">Gece (OLED dostu)</string>
+    <string name="settings_announcements_lap_heart_rate">Tur kalp atışı</string>
+    <string name="settings_announcements_unit">Mesafe/hız birimi</string>
+    <string name="settings_sensor_heart_rate_max">Alanlar: en yüksek Kalp atış hızı (atım/dk)</string>
+    <string name="track_discarding">Çıkarılan Parçalar</string>
+    <string name="unit_knots">kn</string>
+    <string name="unit_nautical_mile">NM</string>
+    <string name="value_internal_sensor">Dâhilî duyarga (sensör)</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
+    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometre/saat} other {{n,number,#.0} kilometre/saat} }</string>
+    <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 mil/saat} other {{n,number,#.0} mil/saat} }</string>
+    <string name="voice_on_device_speaker_title">Cihazın hoparlörünü kullan</string>
+    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 not} other {{n,number,#.0} not} }</string>
+    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometre} other {{n,number,#.0} kilometre} }</string>
+    <string name="voiceDistanceMilesPlural">{n, plural, =1 {1 mil} other {{n,number,#.0} mil} }</string>
+    <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 deniz mili} other {{n,number,#.0} deniz mili} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
+    <string name="introduction_osm_dashboard">OpenTracks uygulaması harita işlevselliği sunmaz. Kayıtlarınızı bir haritada görüntülemek için lütfen OSMDashboard benzeri bir uygulama yükleyiniz.</string>
+    <string name="settings_recording_min_sampling_interval_title">Örnekleme zaman aralığı</string>
+    <string name="settings_recording_location_distance_summary">kayıtlı konumlar arasındaki mesafe: %1$s</string>
+    <string name="no_compatible_camera_installed">Uyumlu kamera uygulaması yüklü değil</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Tüm keşfedilebilir Bluetooth cihazlarını göster</string>
+    <string name="sensor_state_cadence_unit">devir/dk</string>
+    <string name="sensor_state_heart_rate_unit">atım/dk</string>
+    <string name="voiceHoursPlural">{n, plural, =1 {1 saat} other {{n,number} saat} }</string>
+    <string name="no_compatible_gallery_installed">Uyumlu galeri uygulaması yüklü değil</string>
+    <string name="permission_recording_failed">OpenTracks, konumunuzun yanı sıra yakındaki cihazlara erişmek için de izin gerektirir.</string>
+    <string name="generic_to">\'e</string>
+    <string name="settings_recording_min_required_accuracy_summary">Eğer hassasiyet oranı %1$s\'dan büyükse Konum göz ardı edilir</string>
+    <string name="settings_recording_idle_timeout_title">Boşta Durma Eşiği</string>
+    <string name="value_int_seconds">%1$d s (tavsiye edilen)</string>
+    <string name="sensor_state_power_max">En Yüksek Güç</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="settings_announcements_idle_category_title">Boşta Durma Bildirimleri</string>
+    <string name="settings_announcements_idle_title">Boşta Durma</string>
+    <string name="settings_recording_title">Kaydediliyor</string>
+    <string name="settings_ui_dynamic_colors_title">Dinamik Renkler</string>
+    <string name="voiceMinutesPlural">{n, plural, =1 {1 dakika} other {{n,number} dakika} }</string>
+    <string name="voiceSecondsPlural">{n, plural, =1 {1 saniye} other {{n,number} saniye} }</string>
+    <string name="voiceIdle">Boşta durma hâline geçiliyor.</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="sensor_state_pressure">Basınçölçer</string>
+    <string name="menu_export_all_one_file">Tümünü dışa aktar (tüm parçaları tek dosyada topla)</string>
+    <string name="track_delete_number_of_tracks">%1$d parçalar</string>
+    <string name="settings_announcements_lap_power">Tur gücü</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="power_x_watt">Power {x, plural, =1 {1 vat(watt)} other {# vat(watt)} }</string>
+    <string name="power">Güç</string>
 </resources>
