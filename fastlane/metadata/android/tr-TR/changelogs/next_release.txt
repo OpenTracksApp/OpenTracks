@@ -1,0 +1,10 @@
+(versiyonAdı): OpenTracks
+
+Değişiklikler:
+-
+
+Hata Ayıklama:
+-
+
+Geliştirici:
+-

@@ -1,0 +1,4 @@
+v4.12.2.: OpenTracks
+
+Hata Ayıklama:
+- Sensörleri kayıttan önce başlatmaya izin ver

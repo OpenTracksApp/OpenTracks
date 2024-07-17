@@ -1,0 +1,8 @@
+v4.12.4: OpenTracks
+
+Değişiklikler:
+- Duyurular: birimler ihmal edilebilir
+- Duyurular: tur bisikleti gücü eklendi
+
+Hata Ayıklama:
+- İşaretçileri çöken listesinden sil

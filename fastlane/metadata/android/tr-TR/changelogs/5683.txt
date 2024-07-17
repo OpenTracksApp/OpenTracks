@@ -1,0 +1,5 @@
+v4.11.2: OpenTracks
+
+Hata Düzeltme:
+- Ekran kapandığında kayıt durduruluyor  (v4.11.1 versiyonundan beri)
+  (geri dönülüyor da3dd29b8e44624a8222caea9067955f252ef5f8)

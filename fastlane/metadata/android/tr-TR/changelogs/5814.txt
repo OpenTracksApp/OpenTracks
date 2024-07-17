@@ -1,0 +1,8 @@
+v4.12.5: OpenTracks
+
+Hata Ayıklama:
+- Hareketler artık yeniden doğru bir şekilde hesaplanıyor.
+ boşta durulan vakit özelliğinin getirilmesinden dolayı v4.9.0'den beri bozuktu. #1756'ya bakınız
+
+Değişiklikler:
+- Tahmine Dayalı Geri Dönüş Desteği eklendi
