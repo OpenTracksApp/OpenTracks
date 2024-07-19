@@ -57,6 +57,10 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     public static final RecordingData NOT_RECORDING = new RecordingData(null, null, null);
     public static final GpsStatusValue STATUS_GPS_DEFAULT = GpsStatusValue.GPS_NONE;
 
+    public TrackPoint getLastStoredTrackPointWithLocation() {
+        return trackRecordingManager.getLastStoredTrackPointWithLocation();
+    }
+
     public class Binder extends android.os.Binder {
 
         private Binder() {
@@ -270,7 +274,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     }
 
     public Marker.Id insertMarker(String name, String category, String description, String photoUrl, Track.Id trackId, TrackPoint trackPoint) {
-        if (!isRecording() && (trackId == null || trackPoint == null)) {
+        if (trackId == null || trackPoint == null) {
             return null;
         }
 

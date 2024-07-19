@@ -139,19 +139,12 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
     }
 
     public Marker.Id insertMarker(String name, String category, String description, String photoUrl, Track.Id trackId, TrackPoint trackPoint) {
-        Track.Id markerTrackId = trackId != null ? trackId : this.trackId;
         if (name == null) {
-            Integer nextMarkerNumber = contentProviderUtils.getNextMarkerNumber(markerTrackId);
+            Integer nextMarkerNumber = contentProviderUtils.getNextMarkerNumber(trackId);
             if (nextMarkerNumber == null) {
                 nextMarkerNumber = 1;
             }
             name = context.getString(R.string.marker_name_format, nextMarkerNumber + 1);
-        }
-
-        TrackPoint markerTrackPoint = trackPoint != null ? trackPoint : lastStoredTrackPointWithLocation;
-        if (markerTrackPoint == null) {
-            Log.i(TAG, "Could not create a marker as trackPoint is unknown.");
-            return null;
         }
 
         category = category != null ? category : "";
@@ -160,7 +153,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         photoUrl = photoUrl != null ? photoUrl : "";
 
         // Insert marker
-        Marker marker = new Marker(name, description, category, icon, markerTrackId, getTrackStatistics(), markerTrackPoint, photoUrl);
+        Marker marker = new Marker(name, description, category, icon, trackId, getTrackStatistics(), trackPoint, photoUrl);
         Uri uri = contentProviderUtils.insertMarker(marker);
         return new Marker.Id(ContentUris.parseId(uri));
     }
@@ -249,10 +242,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
     }
 
     TrackStatistics getTrackStatistics() {
-        if (trackStatisticsUpdater == null) {
-            return null;
-        }
-        return trackStatisticsUpdater.getTrackStatistics();
+        return trackStatisticsUpdater == null ? null : trackStatisticsUpdater.getTrackStatistics();
     }
 
     private void insertTrackPoint(@NonNull TrackPoint trackPoint, boolean storeLastTrackPointIfUseful) {
@@ -311,6 +301,10 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         if (PreferencesUtils.isKey(R.string.idle_duration_key, key)) {
             idleDuration = PreferencesUtils.getIdleDurationTimeout();
         }
+    }
+
+    public TrackPoint getLastStoredTrackPointWithLocation() {
+        return lastStoredTrackPointWithLocation;
     }
 
     public interface IdleObserver {

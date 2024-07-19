@@ -186,10 +186,10 @@ public class MarkerEditActivity extends AbstractActivity {
 
     private Marker.Id createNewMarker(TrackRecordingService trackRecordingService) {
         try {
-            TrackPoint trackPoint = null;
-            if (location != null) {
-                trackPoint = new TrackPoint(location, Instant.now());
+            if (location == null) {
+                throw new IllegalStateException("Location is null");
             }
+            TrackPoint trackPoint = new TrackPoint(location, Instant.now());
             Marker.Id marker = trackRecordingService.insertMarker("", "", "", null, trackId, trackPoint);
             if (marker == null) {
                 Toast.makeText(this, R.string.marker_add_error, Toast.LENGTH_LONG).show();
