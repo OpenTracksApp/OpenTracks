@@ -249,10 +249,6 @@ public class TrackImporter {
                 }
 
                 marker.setIcon(context.getString(R.string.marker_icon_url)); //TODO Why?
-
-                marker.setLength(statistics.getTotalDistance());
-                marker.setDuration(statistics.getTotalTime());
-
                 marker.setTrackPoint(trackPoint);
             }
 

@@ -150,14 +150,13 @@ public class TrackRecordingServiceMarkerTest {
         service.stopUpdateRecordingData();
 
         assertTrue(service.isRecording());
-        trackPointCreator.onNewTrackPoint(
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:03Z"))
-                        .setLatitude(10)
-                        .setLongitude(10)
-        );
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:03Z"))
+                .setLatitude(10)
+                .setLongitude(10);
+        trackPointCreator.onNewTrackPoint(trackPoint);
 
         // when
-        Marker.Id markerId = service.insertMarker(null, null, null, null, null, null);
+        Marker.Id markerId = service.insertMarker(null, null, null, null, trackId, trackPoint);
 
         // then
         assertNotEquals(new Marker.Id(-1L), markerId);
@@ -165,7 +164,6 @@ public class TrackRecordingServiceMarkerTest {
         assertEquals(context.getString(R.string.marker_icon_url), wpt.getIcon());
         assertEquals(context.getString(R.string.marker_name_format, 1), wpt.getName());
         assertEquals(trackId, wpt.getTrackId());
-        assertEquals(0.0, wpt.getLength().toM(), 0.01);
         assertNotNull(wpt.getLocation());
 
         trackPointCreator.setClock("2020-02-02T02:02:04Z");

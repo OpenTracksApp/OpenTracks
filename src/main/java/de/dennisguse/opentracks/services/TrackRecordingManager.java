@@ -153,7 +153,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         photoUrl = photoUrl != null ? photoUrl : "";
 
         // Insert marker
-        Marker marker = new Marker(name, description, category, icon, trackId, getTrackStatistics(), trackPoint, photoUrl);
+        Marker marker = new Marker(name, description, category, icon, trackId, trackPoint, photoUrl);
         Uri uri = contentProviderUtils.insertMarker(marker);
         return new Marker.Id(ContentUris.parseId(uri));
     }
