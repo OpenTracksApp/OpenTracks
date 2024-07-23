@@ -63,6 +63,7 @@ public class MarkerEditActivity extends AbstractActivity {
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";
     public static final String EXTRA_LOCATION = "location";
+    public static final String EXTRA_IS_NEW_MARKER = "is_new_marker";
 
     private static final String CAMERA_PHOTO_URI_KEY = "camera_photo_uri_key";
 
@@ -100,7 +101,7 @@ public class MarkerEditActivity extends AbstractActivity {
         trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
         location = getIntent().getParcelableExtra(EXTRA_LOCATION);
         @Nullable Marker.Id markerId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
-        final boolean isNewMarker = markerId == null;
+        final boolean isNewMarker = markerId == null || getIntent().getBooleanExtra(EXTRA_IS_NEW_MARKER, false);
 
         if (savedInstanceState != null) {
             cameraPhotoUri = Uri.parse(savedInstanceState.getString(CAMERA_PHOTO_URI_KEY, ""));

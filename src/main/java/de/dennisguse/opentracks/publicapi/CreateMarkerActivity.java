@@ -59,7 +59,8 @@ public class CreateMarkerActivity extends AppCompatActivity {
                 Intent intent = IntentUtils
                         .newIntent(this, MarkerEditActivity.class)
                         .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId)
-                        .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, marker);
+                        .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, marker)
+                        .putExtra(MarkerEditActivity.EXTRA_IS_NEW_MARKER, true);
                 startActivity(intent);
             }
             finish();
