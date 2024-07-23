@@ -61,7 +61,6 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 public class MarkerEditActivity extends AbstractActivity {
 
     public static final String EXTRA_TRACK_ID = "track_id";
-    public static final String EXTRA_TRACK_ID_LONG = "track_id_long";
     public static final String EXTRA_MARKER_ID = "marker_id";
     public static final String EXTRA_LOCATION = "location";
 
@@ -99,9 +98,6 @@ public class MarkerEditActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
 
         trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
-        if (getIntent().hasExtra(EXTRA_TRACK_ID_LONG)) {
-            trackId = new Track.Id(getIntent().getLongExtra(EXTRA_TRACK_ID_LONG, 0L));
-        }
         location = getIntent().getParcelableExtra(EXTRA_LOCATION);
         @Nullable Marker.Id markerId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
         final boolean isNewMarker = markerId == null;
@@ -224,6 +220,7 @@ public class MarkerEditActivity extends AbstractActivity {
         super.onDestroy();
 
         trackId = null;
+        location = null;
         viewBinding = null;
         viewModel = null;
         takePictureFromGallery = null;
