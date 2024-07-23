@@ -377,8 +377,6 @@ public class ContentProviderUtils {
         int categoryIndex = cursor.getColumnIndexOrThrow(MarkerColumns.CATEGORY);
         int iconIndex = cursor.getColumnIndexOrThrow(MarkerColumns.ICON);
         int trackIdIndex = cursor.getColumnIndexOrThrow(MarkerColumns.TRACKID);
-        int lengthIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LENGTH);
-        int durationIndex = cursor.getColumnIndexOrThrow(MarkerColumns.DURATION);
         int longitudeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LONGITUDE);
         int latitudeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LATITUDE);
         int timeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.TIME);
