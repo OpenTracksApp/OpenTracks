@@ -25,7 +25,7 @@ limitations under the License.
         <com.google.android.material.search.SearchBar
             android:id="@+id/marker_list_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_marker_show_24dp"
             app:layout_behavior="@string/searchbar_scrolling_view_behavior"
             app:menu="@menu/marker_list" />
