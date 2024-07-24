@@ -220,47 +220,37 @@ public class TrackImporter {
      * NOTE: Modifies content of markers (incl. removal).
      */
     private void matchMarkers2TrackPoints(Track.Id trackId) {
-        List<TrackPoint> trackPointsWithLocation = trackPoints.stream()
-                .filter(TrackPoint::hasLocation)
-                .collect(Collectors.toList());
-
         List<Marker> todoMarkers = new LinkedList<>(markers);
         List<Marker> doneMarkers = new LinkedList<>();
-
-        for (final TrackPoint trackPoint : trackPointsWithLocation) {
-            if (todoMarkers.isEmpty()) {
-                break;
-            }
-
-            TrackStatisticsUpdater updater = new TrackStatisticsUpdater();
-            updater.addTrackPoint(trackPoint);
-
-            List<Marker> matchedMarkers = todoMarkers.stream()
-                    .filter(it -> trackPoint.getLatitude() == it.getLatitude()
-                            && trackPoint.getLongitude() == it.getLongitude()
-                            && trackPoint.getTime().equals(it.getTime())
-                    )
-                    .collect(Collectors.toList());
-
-            TrackStatistics statistics = updater.getTrackStatistics();
-            for (Marker marker : matchedMarkers) {
-                if (marker.hasPhoto()) {
-                    marker.setPhotoUrl(getInternalPhotoUrl(trackId, marker.getPhotoUrl()));
-                }
-
-                marker.setIcon(context.getString(R.string.marker_icon_url)); //TODO Why?
-                marker.setTrackPoint(trackPoint);
-            }
-
-            todoMarkers.removeAll(matchedMarkers);
-            doneMarkers.addAll(matchedMarkers);
-        }
+        markers.clear();
 
         if (todoMarkers.isEmpty()) {
             Log.w(TAG, "Some markers could not be attached to TrackPoints; those are not imported.");
+            return;
         }
 
-        markers.clear();
+        // TODO: why do we need to match the markers with the TrackPoints? We will loose the manual added from the map.
+        trackPoints.stream()
+            .filter(TrackPoint::hasLocation)
+            .forEach(trackPoint -> {
+                List<Marker> matchedMarkers = todoMarkers.stream()
+                        .filter(it -> trackPoint.getLatitude() == it.getLatitude()
+                                && trackPoint.getLongitude() == it.getLongitude()
+                                && trackPoint.getTime().equals(it.getTime())
+                        ).peek(marker -> {
+                                if (marker.hasPhoto()) {
+                                    marker.setPhotoUrl(getInternalPhotoUrl(trackId, marker.getPhotoUrl()));
+                                }
+
+                                marker.setIcon(context.getString(R.string.marker_icon_url)); //TODO Why?
+                                marker.setTrackPoint(trackPoint);
+                        })
+                        .toList();
+
+                todoMarkers.removeAll(matchedMarkers);
+                doneMarkers.addAll(matchedMarkers);
+            });
+
         markers.addAll(doneMarkers);
     }
 
