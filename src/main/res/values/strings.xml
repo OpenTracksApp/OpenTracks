@@ -687,4 +687,5 @@ limitations under the License.
     <string name="settings_announcements_lap_power">Lap power</string>
     <string name="power_x_watt">Power {x, plural,  =1 {1 watt} other {# watts} }</string>
     <string name="power">Power</string>
+    <string name="publicapi_disabled">Public API is disabled</string>
 </resources>

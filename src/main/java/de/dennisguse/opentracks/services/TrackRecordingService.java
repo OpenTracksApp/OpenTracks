@@ -26,6 +26,7 @@ import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ServiceCompat;
@@ -273,11 +274,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         gpsStatusObservable.postValue(gpsStatusValue);
     }
 
-    public Marker.Id insertMarker(String name, String category, String description, String photoUrl, Track.Id trackId, TrackPoint trackPoint) {
-        if (trackId == null || trackPoint == null) {
-            return null;
-        }
-
+    public Marker.Id insertMarker(String name, String category, String description, String photoUrl, @NonNull Track.Id trackId, @NonNull TrackPoint trackPoint) {
         return trackRecordingManager.insertMarker(name, category, description, photoUrl, trackId, trackPoint);
     }
 

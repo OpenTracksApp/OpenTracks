@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.time.Instant;
@@ -18,6 +19,7 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.ui.markers.MarkerEditActivity;
 import de.dennisguse.opentracks.util.IntentUtils;
 
@@ -35,21 +37,14 @@ public class CreateMarkerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: do we want to check if public API is enabled?
+        if (!PreferencesUtils.isPublicAPIenabled()) {
+            Toast.makeText(this, R.string.publicapi_disabled, Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
-        Track.Id trackId;
-        if (getIntent().hasExtra(EXTRA_TRACK_ID)) {
-            trackId = new Track.Id(getIntent().getLongExtra(EXTRA_TRACK_ID, 0L));
-        } else {
-            trackId = null;
-        }
-        TrackPoint trackPoint;
-        if (getIntent().hasExtra(EXTRA_LOCATION)) {
-            Location location = getIntent().getParcelableExtra(EXTRA_LOCATION);
-            trackPoint = new TrackPoint(location, Instant.now());
-        } else {
-            trackPoint = null;
-        }
+        Track.Id trackId = new Track.Id(getIntent().getLongExtra(EXTRA_TRACK_ID, 0L));
+        TrackPoint trackPoint = new TrackPoint(getIntent().<Location>getParcelableExtra(EXTRA_LOCATION), Instant.now());
 
         TrackRecordingServiceConnection.execute(this, (service, self) -> {
             Marker.Id marker = createNewMarker(trackId, trackPoint, service);
@@ -67,16 +62,8 @@ public class CreateMarkerActivity extends AppCompatActivity {
         });
     }
 
-    private Marker.Id createNewMarker(Track.Id trackId, TrackPoint trackPoint, TrackRecordingService trackRecordingService) {
-        try {
-            if (trackPoint == null || trackId == null) {
-                throw new IllegalStateException("TrackPoint or Track.Id is null");
-            }
-            return trackRecordingService.insertMarker("", "", "", null, trackId, trackPoint);
-        } catch (IllegalStateException e) {
-            Log.e(TAG, "Unable to add marker.", e);
-        }
-        return null;
+    private Marker.Id createNewMarker(@NonNull Track.Id trackId, @NonNull TrackPoint trackPoint, TrackRecordingService trackRecordingService) {
+        return trackRecordingService.insertMarker("", "", "", null, trackId, trackPoint);
     }
 
 }

@@ -44,17 +44,10 @@ public class ShowMarkerActivity extends AppCompatActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        Marker.Id markerId = null;
-        if (getIntent().hasExtra(EXTRA_MARKER_ID)) {
-            markerId = new Marker.Id(getIntent().getLongExtra(EXTRA_MARKER_ID, 0));
-        }
-        if (markerId == null) {
-            Log.d(TAG, "invalid marker id");
-        } else {
-            Intent intent = IntentUtils.newIntent(this, MarkerDetailActivity.class)
-                    .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, markerId);
-            startActivity(intent);
-        }
+        Marker.Id markerId = new Marker.Id(getIntent().getLongExtra(EXTRA_MARKER_ID, 0));
+        Intent intent = IntentUtils.newIntent(this, MarkerDetailActivity.class)
+                .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, markerId);
+        startActivity(intent);
         finish();
     }
 
