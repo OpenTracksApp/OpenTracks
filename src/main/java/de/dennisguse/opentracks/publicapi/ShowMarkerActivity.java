@@ -45,6 +45,9 @@ public class ShowMarkerActivity extends AppCompatActivity {
         super.onCreate(bundle);
 
         Marker.Id markerId = new Marker.Id(getIntent().getLongExtra(EXTRA_MARKER_ID, 0));
+        if (markerId.id() == 0) {
+            throw new IllegalStateException("No valid markerId provided");
+        }
         Intent intent = IntentUtils.newIntent(this, MarkerDetailActivity.class)
                 .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, markerId);
         startActivity(intent);
