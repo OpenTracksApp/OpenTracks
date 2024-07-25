@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="activity_type_airplane">aeroplane</string>
-    <string name="activity_type_atv">ATV</string>
-    <string name="activity_type_biking">biking</string>
+    <string name="activity_type_atv">ATV 4-Wheeler</string>
+    <string name="activity_type_biking">A bike ride</string>
     <string name="activity_type_blimp">airship</string>
-    <string name="activity_type_boat">boat</string>
+    <string name="activity_type_boat">Boating</string>
     <string name="activity_type_climbing">climbing</string>
-    <string name="activity_type_commercial_airplane">commercial aeroplane</string>
+    <string name="activity_type_commercial_airplane">commercial flight</string>
     <string name="activity_type_cross_country_skiing">Cross-country skiing</string>
     <string name="activity_type_cycling">cycling</string>
     <string name="activity_type_dirt_bike">dirt bike</string>
-    <string name="activity_type_donkey_back_riding">donkey riding</string>
+    <string name="activity_type_donkey_back_riding">Donkey ride</string>
     <string name="activity_type_driving">driving</string>
     <string name="activity_type_driving_bus">driving bus</string>
-    <string name="activity_type_driving_car">driving car</string>
+    <string name="activity_type_driving_car">Car driving</string>
     <string name="activity_type_ferry">ferry</string>
     <string name="activity_type_frisbee">frisbee</string>
     <string name="activity_type_gliding">gliding</string>
