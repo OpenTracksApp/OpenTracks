@@ -30,7 +30,7 @@ limitations under the License.
     <string name="activity_type_driving_bus">prowadzenie autobusu</string>
     <string name="activity_type_driving_car">prowadzenie samochodu</string>
     <string name="activity_type_ferry">prom</string>
-    <string name="activity_type_frisbee">fisbee</string>
+    <string name="activity_type_frisbee">frizbee</string>
     <string name="activity_type_gliding">szybownictwo</string>
     <string name="activity_type_hang_gliding">lotniarstwo</string>
     <string name="activity_type_helicopter">helikopter</string>
