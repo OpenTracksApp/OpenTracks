@@ -166,7 +166,7 @@ public class KMLTrackImporterTest {
         assertEquals(ActivityType.UNKNOWN, importedTrack.getActivityType());
 
         // 2. markers
-        assertEquals(0, contentProviderUtils.getMarkers(importTrackId).size());
+        assertEquals(1, contentProviderUtils.getMarkers(importTrackId).size());
 
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
