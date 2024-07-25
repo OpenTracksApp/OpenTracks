@@ -26,7 +26,6 @@ import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.util.Pair;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ServiceCompat;
@@ -38,7 +37,6 @@ import java.io.StringWriter;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.data.models.Distance;
-import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
@@ -272,10 +270,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
         notificationManager.updateContent(getString(gpsStatusValue.message));
         gpsStatusObservable.postValue(gpsStatusValue);
-    }
-
-    public Marker.Id insertMarker(String name, String category, String description, String photoUrl, @NonNull Track.Id trackId, @NonNull TrackPoint trackPoint) {
-        return trackRecordingManager.insertMarker(name, category, description, photoUrl, trackId, trackPoint);
     }
 
     @Deprecated

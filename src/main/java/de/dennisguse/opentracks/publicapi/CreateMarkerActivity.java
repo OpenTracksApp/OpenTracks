@@ -3,14 +3,11 @@ package de.dennisguse.opentracks.publicapi;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.ui.markers.MarkerEditActivity;
 import de.dennisguse.opentracks.util.IntentUtils;
 
@@ -25,12 +22,6 @@ public class CreateMarkerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (!PreferencesUtils.isPublicAPIenabled()) {
-            Toast.makeText(this, R.string.publicapi_disabled, Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
 
         Track.Id trackId = new Track.Id(getIntent().getLongExtra(EXTRA_TRACK_ID, 0L));
         Location location = getIntent().getParcelableExtra(EXTRA_LOCATION);
