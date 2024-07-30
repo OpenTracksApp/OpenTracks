@@ -33,6 +33,7 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackDataHub;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.TrackRecordingBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
@@ -269,9 +270,14 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         }
 
         if (item.getItemId() == R.id.track_detail_insert_marker) {
+            TrackPoint trackPoint = trackRecordingServiceConnection.getTrackRecordingService().getLastStoredTrackPointWithLocation();
+            if (trackPoint == null) {
+                return true;
+            }
             Intent intent = IntentUtils
                     .newIntent(this, MarkerEditActivity.class)
-                    .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
+                    .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId)
+                    .putExtra(MarkerEditActivity.EXTRA_LOCATION, trackPoint.getLocation());
             startActivity(intent);
             return true;
         }

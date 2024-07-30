@@ -139,7 +139,7 @@ public class ExportImportTest {
         Distance sensorDistance = Distance.of(10); // recording distance interval
 
         sendLocation(trackPointCreator, "2020-02-02T02:02:03Z", 3, 14, 10, 13, 15, 10, 1f);
-        service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
+        contentProviderUtils.insertMarker(new Marker("Marker 1", "Marker 1 desc", "Marker 1 category", null, trackId, service.getLastStoredTrackPointWithLocation(), ""));
 
         // A sensor-only TrackPoint
         trackPointCreator.setClock("2020-02-02T02:02:04Z");
@@ -154,7 +154,7 @@ public class ExportImportTest {
         mockSensorData(trackPointCreator, 5f, Distance.of(2), 69f, 3f, 50f, null); // Distance will be added to next TrackPoint
 
         sendLocation(trackPointCreator, "2020-02-02T02:02:17Z", 3, 14.001, 10, 13, 15, 10, 0f);
-        service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
+        contentProviderUtils.insertMarker(new Marker("Marker 2", "Marker 2 desc", "Marker 2 category", null, trackId, service.getLastStoredTrackPointWithLocation(), ""));
 
         trackPointCreator.setClock("2020-02-02T02:02:18Z");
         trackPointCreator.getSensorManager().sensorDataSet = new SensorDataSet();

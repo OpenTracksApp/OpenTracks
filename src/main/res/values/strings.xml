@@ -258,6 +258,7 @@ limitations under the License.
     <string name="import_progress_summary_exists_msg">Already exists</string>
     <string name="import_progress_summary_errors_msg">Errors</string>
     <!-- Marker -->
+    <string name="create_marker_error">Unable to create a marker. Try again.</string>
     <string name="marker_add_error">Unable to insert a marker. No GPS signal. Try again.</string>
     <string name="marker_add_success">A marker was inserted</string>
     <string name="marker_add_canceled">Canceled, no marker added</string>

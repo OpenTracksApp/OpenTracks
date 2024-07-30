@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
@@ -36,19 +37,19 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.time.Instant;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.MarkerEditBinding;
-import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 
 /**
  * An activity to add/edit a marker.
@@ -59,13 +60,14 @@ public class MarkerEditActivity extends AbstractActivity {
 
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";
+    public static final String EXTRA_LOCATION = "location";
 
     private static final String CAMERA_PHOTO_URI_KEY = "camera_photo_uri_key";
 
-    private static final String NEW_MARKER_ID = "new_marker_id";
-
     private static final String TAG = MarkerEditActivity.class.getSimpleName();
     private Track.Id trackId;
+    private Location location;
+    private Marker.Id markerId;
     private Marker marker;
 
     private MenuItem insertPhotoMenuItem;
@@ -93,16 +95,16 @@ public class MarkerEditActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
 
         trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
-        @Nullable Marker.Id markerId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
-        final boolean isNewMarker = markerId == null;
+        location = getIntent().getParcelableExtra(EXTRA_LOCATION);
+        markerId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
+        if ((trackId == null || location == null) && markerId == null) {
+            throw new IllegalStateException("TrackId and Location must be provided or an existing markerId");
+        }
 
         if (savedInstanceState != null) {
             cameraPhotoUri = Uri.parse(savedInstanceState.getString(CAMERA_PHOTO_URI_KEY, ""));
-            Marker.Id newMarkerId = savedInstanceState.getParcelable(NEW_MARKER_ID);
-            if (newMarkerId != null) {
-                markerId = newMarkerId;
-            }
         }
+        boolean isNewMarker = markerId == null;
 
         hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
 
@@ -157,16 +159,8 @@ public class MarkerEditActivity extends AbstractActivity {
                     }
                 });
 
-
-        if (markerId == null) {
-            TrackRecordingServiceConnection.execute(this, (service, self) -> {
-                Marker.Id newMarkerId = createNewMarker(service);
-                if (newMarkerId == null) {
-                    finish();
-                } else {
-                    loadMarkerData(newMarkerId);
-                }
-            });
+        if (isNewMarker) {
+            createNewMarker().observe(this, this::loadMarkerData);
         } else {
             loadMarkerData(markerId);
         }
@@ -174,35 +168,27 @@ public class MarkerEditActivity extends AbstractActivity {
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 
-    private Marker.Id createNewMarker(TrackRecordingService trackRecordingService) {
-        try {
-            Marker.Id marker = trackRecordingService.insertMarker("", "", "", null);
-            if (marker == null) {
-                Toast.makeText(this, R.string.marker_add_error, Toast.LENGTH_LONG).show();
-                return null;
-            }
-
-            return marker;
-        } catch (IllegalStateException e) {
-            Log.e(TAG, "Unable to add marker.", e);
-            return null;
-        }
+    private LiveData<Marker> createNewMarker() {
+        TrackPoint trackPoint = new TrackPoint(location, Instant.now());
+        return viewModel.createNewMarker(trackId, trackPoint);
     }
 
     private void loadMarkerData(Marker.Id markerId) {
-        viewModel.getMarkerData(markerId).observe(this, data -> {
-            marker = data;
-            viewBinding.markerEditName.setText(marker.getName());
-            viewBinding.markerEditMarkerType.setText(marker.getCategory());
-            viewBinding.markerEditDescription.setText(marker.getDescription());
-            if (marker.hasPhoto()) {
-                setMarkerImageView(marker.getPhotoURI());
-            } else {
-                viewBinding.markerEditPhoto.setImageDrawable(null);
-            }
+        viewModel.getMarkerData(markerId).observe(this, this::loadMarkerData);
+    }
 
-            hideAndShowOptions();
-        });
+    private void loadMarkerData(Marker data) {
+        marker = data;
+        viewBinding.markerEditName.setText(marker.getName());
+        viewBinding.markerEditMarkerType.setText(marker.getCategory());
+        viewBinding.markerEditDescription.setText(marker.getDescription());
+        if (marker.hasPhoto()) {
+            setMarkerImageView(marker.getPhotoURI());
+        } else {
+            viewBinding.markerEditPhoto.setImageDrawable(null);
+        }
+
+        hideAndShowOptions();
     }
 
     @Override
@@ -210,6 +196,8 @@ public class MarkerEditActivity extends AbstractActivity {
         super.onDestroy();
 
         trackId = null;
+        location = null;
+        markerId = null;
         viewBinding = null;
         viewModel = null;
         takePictureFromGallery = null;
@@ -222,8 +210,6 @@ public class MarkerEditActivity extends AbstractActivity {
         if (cameraPhotoUri != null) {
             outState.putString(CAMERA_PHOTO_URI_KEY, cameraPhotoUri.toString());
         }
-
-        outState.putParcelable(NEW_MARKER_ID, marker.getId());
     }
 
     @Override

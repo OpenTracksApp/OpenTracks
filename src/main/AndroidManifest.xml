@@ -314,7 +314,7 @@ limitations under the License.
         </activity>
 
         <activity
-            android:name=".ui.markers.MarkerDetailActivity"
+            android:name=".publicapi.ShowMarkerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="de.dennisguse.opentracks.MarkerDetails" />
@@ -322,6 +322,16 @@ limitations under the License.
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".publicapi.CreateMarkerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="de.dennisguse.opentracks.CreateMarker" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.markers.MarkerDetailActivity" />
         <activity android:name=".ui.markers.MarkerEditActivity" />
         <activity android:name=".ui.markers.MarkerListActivity" />
 

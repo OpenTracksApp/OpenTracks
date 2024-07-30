@@ -29,7 +29,7 @@ class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String TAG = CustomSQLiteOpenHelper.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 37;
+    private static final int DATABASE_VERSION = 38;
 
     private final Context context;
 
@@ -81,6 +81,7 @@ class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                 case 35 -> upgradeFrom34to35(db);
                 case 36 -> upgradeFrom35to36(db);
                 case 37 -> upgradeFrom36to37(db);
+                case 38 -> upgradeFrom37to38(db);
                 default -> throw new RuntimeException("Not implemented: upgrade to " + toVersion);
             }
         }
@@ -105,6 +106,7 @@ class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                 case 34 -> downgradeFrom35to34(db);
                 case 35 -> downgradeFrom36to35(db);
                 case 36 -> downgradeFrom37to36(db);
+                case 37 -> downgradeFrom38to37(db);
                 default -> throw new RuntimeException("Not implemented: downgrade to " + toVersion);
             }
         }
@@ -639,6 +641,30 @@ class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE tracks_old");
 
         db.execSQL("CREATE UNIQUE INDEX tracks_uuid_index ON tracks(uuid)");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    private void upgradeFrom37to38(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        db.execSQL("ALTER TABLE markers RENAME TO markers_old");
+        db.execSQL("CREATE TABLE markers (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, category TEXT, icon TEXT, trackid INTEGER NOT NULL, longitude INTEGER, latitude INTEGER, time INTEGER, elevation FLOAT, accuracy FLOAT, bearing FLOAT, photoUrl TEXT, FOREIGN KEY (trackid) REFERENCES tracks(_id) ON UPDATE CASCADE ON DELETE CASCADE)");
+        db.execSQL("INSERT INTO markers SELECT _id, name, description, category, icon, trackid, longitude, latitude, time, elevation, accuracy, bearing, photoUrl FROM markers_old");
+        db.execSQL("DROP TABLE markers_old");
+
+        db.execSQL("CREATE INDEX markers_trackid_index ON markers(trackid)");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    private void downgradeFrom38to37(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        db.execSQL("ALTER TABLE markers ADD COLUMN length FLOAT");
+        db.execSQL("ALTER TABLE markers ADD COLUMN duration INTEGER");
 
         db.setTransactionSuccessful();
         db.endTransaction();

@@ -152,31 +152,6 @@ public class ChartView extends View {
             return true;
         }
 
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent event) {
-            // Check if the y event is within markerHeight of the marker center
-            if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2f) < markerHeight) {
-                int minDistance = Integer.MAX_VALUE;
-                Marker nearestMarker = null;
-                synchronized (markers) {
-                    for (Marker marker : markers) {
-                        int distance = Math.abs(getX(getMarkerXValue(marker)) - (int) event.getX() - getScrollX());
-                        if (distance < minDistance) {
-                            minDistance = distance;
-                            nearestMarker = marker;
-                        }
-                    }
-                }
-                if (nearestMarker != null && minDistance < markerWidth) {
-                    Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
-                            .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestMarker.getId());
-                    getContext().startActivity(intent);
-                    return true;
-                }
-            }
-
-            return false;
-        }
     });
 
     private final ScaleGestureDetector detectorZoom = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
@@ -589,7 +564,6 @@ public class ChartView extends View {
 
             clipToGraphArea(canvas);
             drawDataSeries(canvas);
-            drawMarker(canvas);
             drawGrid(canvas);
 
             canvas.restore();
@@ -626,30 +600,6 @@ public class ChartView extends View {
         for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
                 chartValueSeries.drawPath(canvas, titleDimensions.titlePositions.size() < 3 );
-            }
-        }
-    }
-
-    private void drawMarker(Canvas canvas) {
-        synchronized (markers) {
-            for (Marker marker : markers) {
-                double xValue = getMarkerXValue(marker);
-                double markerIconSizeInXaxisUnits = maxX*markerWidth/effectiveWidth / zoomLevel;
-                if (xValue > maxX + markerIconSizeInXaxisUnits * (1-MARKER_X_ANCHOR)) {
-                    continue; // there is no chance that this marker will be visible
-                }
-                canvas.save();
-                float x = getX(getMarkerXValue(marker));
-                canvas.drawLine(x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
-                // if marker is not near the end of the track then draw it normally
-                if (xValue < maxX - markerIconSizeInXaxisUnits*(1-MARKER_X_ANCHOR)) {
-                    canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
-                } else { // marker at the end needs to be drawn mirrored so that it is more visible
-                    canvas.translate(x + (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
-                    canvas.scale(-1, 1);
-                }
-                markerPin.draw(canvas);
-                canvas.restore();
             }
         }
     }
@@ -1041,14 +991,6 @@ public class ChartView extends View {
         double percentage = (value - chartValueSeries.getMinMarkerValue()) / effectiveSpread;
         int rangeHeight = effectiveHeight - 2 * yAxisOffset;
         return topBorder + yAxisOffset + (int) ((1 - percentage) * rangeHeight);
-    }
-
-    private double getMarkerXValue(Marker marker) {
-        if (chartByDistance) {
-            return marker.getLength().toKM_Miles(unitSystem);
-        } else {
-            return marker.getDuration().toMillis();
-        }
     }
 
     /**

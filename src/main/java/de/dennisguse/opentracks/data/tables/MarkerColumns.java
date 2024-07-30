@@ -41,10 +41,6 @@ public interface MarkerColumns extends BaseColumns {
     String CATEGORY = "category"; // marker category
     String ICON = "icon"; // marker icon
     String TRACKID = "trackid"; // track id
-
-    String LENGTH = "length"; // length of the track (without smoothing)
-    String DURATION = "duration"; // total duration of the track from the beginning until now
-
     String LONGITUDE = "longitude"; // longitude
     String LATITUDE = "latitude"; // latitude
     String TIME = "time"; // time
@@ -61,8 +57,6 @@ public interface MarkerColumns extends BaseColumns {
             + CATEGORY + " TEXT, "
             + ICON + " TEXT, "
             + TRACKID + " INTEGER NOT NULL, "
-            + LENGTH + " FLOAT, "
-            + DURATION + " INTEGER, "
             + LONGITUDE + " INTEGER, "
             + LATITUDE + " INTEGER, "
             + TIME + " INTEGER, "

@@ -37,7 +37,6 @@ import java.io.StringWriter;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.data.models.Distance;
-import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
@@ -56,6 +55,10 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     public static final RecordingStatus STATUS_DEFAULT = RecordingStatus.notRecording();
     public static final RecordingData NOT_RECORDING = new RecordingData(null, null, null);
     public static final GpsStatusValue STATUS_GPS_DEFAULT = GpsStatusValue.GPS_NONE;
+
+    public TrackPoint getLastStoredTrackPointWithLocation() {
+        return trackRecordingManager.getLastStoredTrackPointWithLocation();
+    }
 
     public class Binder extends android.os.Binder {
 
@@ -267,14 +270,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
         notificationManager.updateContent(getString(gpsStatusValue.message));
         gpsStatusObservable.postValue(gpsStatusValue);
-    }
-
-    public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
-        if (!isRecording()) {
-            return null;
-        }
-
-        return trackRecordingManager.insertMarker(name, category, description, photoUrl);
     }
 
     @Deprecated

@@ -88,9 +88,9 @@ public class TestDataUtil {
         stats.setTotalDistance(Distance.of(0));
         stats.setTotalTime(Duration.ofMillis(0));
         List<Marker> markers = List.of(
-                new Marker("Marker 1", "Marker description 1", "Marker category 3", "", trackId, stats, trackPoints.get(1), null),
-                new Marker("Marker 2", "Marker description 2", "Marker category 3", "", trackId, stats, trackPoints.get(4), null),
-                new Marker("Marker 3", "Marker description 3", "Marker category 3", "", trackId, stats, trackPoints.get(5), null)
+                new Marker("Marker 1", "Marker description 1", "Marker category 3", "", trackId, trackPoints.get(1), null),
+                new Marker("Marker 2", "Marker description 2", "Marker category 3", "", trackId, trackPoints.get(4), null),
+                new Marker("Marker 3", "Marker description 3", "Marker category 3", "", trackId, trackPoints.get(5), null)
         );
 
         return new TrackData(track, trackPoints, markers);
@@ -152,7 +152,7 @@ public class TestDataUtil {
         stats.setTotalDistance(Distance.of(0));
         stats.setTotalTime(Duration.ofMillis(0));
 
-        return new Marker("Marker name", "Marker description", "Marker category", "", trackId, stats, trackPoint, photoUrl);
+        return new Marker("Marker name", "Marker description", "Marker category", "", trackId, trackPoint, photoUrl);
     }
 
     public static List<TrackPoint> getTrackPoints(ContentProviderUtils contentProviderUtils, Track.Id trackId) {

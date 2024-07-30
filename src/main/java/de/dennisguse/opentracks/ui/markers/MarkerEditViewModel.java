@@ -20,6 +20,8 @@ import java.util.NoSuchElementException;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.util.FileUtils;
 
 public class MarkerEditViewModel extends AndroidViewModel {
@@ -122,11 +124,32 @@ public class MarkerEditViewModel extends AndroidViewModel {
         marker.setName(name);
         marker.setCategory(category);
         marker.setDescription(description);
-        new ContentProviderUtils(getApplication()).updateMarker(getApplication(), marker);
+        if (marker.getId() == null) {
+            new ContentProviderUtils(getApplication()).insertMarker(marker);
+        } else {
+            new ContentProviderUtils(getApplication()).updateMarker(getApplication(), marker);
+        }
 
         if (photoOriginalUri != null && (!marker.hasPhoto() || !photoOriginalUri.equals(marker.getPhotoURI()))) {
             deletePhoto(photoOriginalUri);
         }
+    }
+
+    public LiveData<Marker> createNewMarker(Track.Id trackId, TrackPoint trackPoint) {
+        Integer nextMarkerNumber = new ContentProviderUtils(getApplication()).getNextMarkerNumber(trackId);
+        if (nextMarkerNumber == null) {
+            nextMarkerNumber = 1;
+        }
+        String name = getApplication().getString(R.string.marker_name_format, nextMarkerNumber + 1);
+        String icon = getApplication().getString(R.string.marker_icon_url);
+
+        Marker marker = new Marker(name, "", "", icon, trackId, trackPoint, "");
+
+        if (markerData == null) {
+            markerData = new MutableLiveData<>();
+        }
+        markerData.postValue(marker);
+        return markerData;
     }
 
     public void onCancel(boolean isNewMarker) {
@@ -135,9 +158,6 @@ public class MarkerEditViewModel extends AndroidViewModel {
             // it's new marker -> clean all photos.
             deletePhoto(marker);
             deletePhoto(photoOriginalUri);
-
-            new ContentProviderUtils(getApplication()).deleteMarker(getApplication(), marker.getId());
-
         } else if (photoOriginalUri == null || (marker.hasPhoto() && !marker.getPhotoURI().equals(photoOriginalUri))) {
             // it's an edit marker -> delete photo if it was empty or it was changed (leaving the original in that case).
             deletePhoto(marker);
