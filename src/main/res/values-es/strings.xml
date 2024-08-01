@@ -37,12 +37,12 @@ limitations under the License.
     <string name="help_storage_pictures_title">¿Cómo almacena OpenTracks las imágenes que se tomaron como marcadores\?</string>
     <string name="help_storage_pictures_content">Estos se almacenan en el almacenamiento interno de la aplicación (es decir, solo se puede acceder a ellos dentro de OpenTracks).</string>
     <string name="help_track_export_title">¿Cómo puedo exportar/compartir recorridos grabados\?</string>
-    <string name="help_track_export_content"> \u0020Los Tracks se pueden exportar desde la Configuración como KMZ, KML o GPX. \u0020KMZ/KML todos los datos; solo ubicaciones GPX. \u0020Las pistas compartidas a través del <i>icono de compartir</i> se comparten como KMZ. \u0020</string>
+    <string name="help_track_export_content"> Las pistas se pueden exportar desde la configuración como KMZ, KML o GPX. KMZ/KML todos los datos; Ubicaciones solo GPX. Las pistas compartidas a través del <i>icono de compartir</i> se comparten como KMZ. </string>
     <string name="help_data_google_play_services_title">¿OpenTracks requiere/usa los servicios de Google Play\?</string>
     <string name="help_recording_title">¿Cómo registra OpenTracks los datos?</string>
     <string name="help_recording_content">OpenTracks utiliza el sensor GPS del dispositivo para registrar la ubicación de forma continua. Si el dispositivo GPS informa datos inexactos (por ejemplo, ubicación, velocidad, elevación), OpenTracks no puede hacer nada al respecto.</string>
     <string name="help_data_storage_title">¿Cómo almacena OpenTracks los datos de los sensores?</string>
-    <string name="help_data_storage_content"> \u0020Los datos del sensor se almacenan por ubicación registrada. \u0020En términos de un sensor de frecuencia cardiaca, esto significa que sólo se almacena <i>una</i> medición de frecuencia cardiaca por ubicación. \u0020Si está parado o se encuentra en interiores, no se registrará ningún dato del sensor (pero se mostrará). \u0020</string>
+    <string name="help_data_storage_content"> Los datos del sensor se almacenan por ubicación registrada. En términos de un sensor de frecuencia cardíaca, esto significa que solo se almacena <i>una</i> medición de frecuencia cardíaca por ubicación. Si está parado o está en interiores, no se registrarán los datos del sensor (pero se mostrarán). </string>
     <string name="help_gps_troubleshooting_title">¿OpenTracks no registra ubicaciones\?</string>
     <string name="help_gps_troubleshooting_content"> Lo que puedes hacer:
 \na) compruebe si el GPS está habilitado,
@@ -657,4 +657,11 @@ limitations under the License.
     <string name="settings_theme_switch_restart">Los cambios del tema pueden requerir un reinicio manual.</string>
     <string name="settings_night_mode_option_night_oled">Oscuro (compatible con OLED)</string>
     <string name="settings_announcements_unit">Unidad de distancia/velocidad</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
+    <string name="settings_announcements_lap_power">Potencia por vuelta</string>
+    <string name="power_x_watt">Potencia {x, plural, =1 {1 vatio} otros {# vatios} }</string>
+    <string name="create_marker_error">No se ha podido crear un marcador. Inténtelo de nuevo.</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="power">Potencia</string>
 </resources>
