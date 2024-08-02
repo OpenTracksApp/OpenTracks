@@ -608,4 +608,5 @@ limitations under the License.
     <string name="power">Výkon</string>
     <string name="settings_announcements_lap_power">Výkon kola</string>
     <string name="power_x_watt">Výkon {x, plural, =1 {1 watt} few {# watty} other {# wattů} }</string>
+    <string name="create_marker_error">Nepodařilo se vytvořit značku. Zkuste to znovu.</string>
 </resources>
