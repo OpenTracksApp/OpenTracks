@@ -609,4 +609,5 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="power">Power</string>
     <string name="settings_announcements_lap_power">Lap power</string>
     <string name="power_x_watt">Power {x, plural, =1 {1 watt} other {# watt} }</string>
+    <string name="create_marker_error">Kan geen markering maken. Probeer het opnieuw.</string>
 </resources>
