@@ -33,6 +33,7 @@ import java.util.Optional;
  * Time is created using the {@link de.dennisguse.opentracks.services.handlers.MonotonicClock}, because system time jump backwards.
  * GPS time is ignored as for non-GPS events, we could not create timestamps.
  */
+//TODO Should be a record (with final properties)
 public class TrackPoint {
 
     private static final Duration MAX_LOCATION_AGE = Duration.ofMinutes(1);
