@@ -609,4 +609,5 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_announcements_lap_power">Potencia na volta</string>
     <string name="power">Potencia</string>
     <string name="power_x_watt">Potencia {x, plural, =1 {1 watio} other {# watios} }</string>
+    <string name="create_marker_error">Non se creou o marcador. Inténtao outra vez.</string>
 </resources>
