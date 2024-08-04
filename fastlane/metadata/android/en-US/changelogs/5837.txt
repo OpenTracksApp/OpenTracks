@@ -1,0 +1,15 @@
+v4.13.0: OpenTracks
+
+Changes:
+- Markers can be created via Public API
+  This allows to create Markers at any location and after recording.
+  Drawback: Markers are not shown in diagrams anymore.
+  NOTE: OSMDashboard supports this API after version: v4.1.0
+
+Bugfix:
+- Default activity setting should have been a dropdown
+- Back arrow not working in settings
+- Label for off trail hiking now shows "off trail hiking"
+
+Developer:
+- Use Position instead of Android's Location
