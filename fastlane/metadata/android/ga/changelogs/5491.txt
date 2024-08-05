@@ -1,0 +1,4 @@
+v4.9.3: OpenTracks
+
+Ceartúchán Bug:
+- Cosc a chur ar thuairteála mar toList() nach bhfuil ar fáil i gcónaí

@@ -1,0 +1,8 @@
+v3.8.1: OpenTracks
+
+Athruithe:
+- Agus tú ag taifeadadh: cuir rogha le haghaidh lánscáileáin
+- Cuirtear tús leis an bpainéal ar an tasc céanna
+
+Ceartúcháin fhabht:
+- Bhí na scagairí intinne chun comhaid a allmhairiú ródhóchasach

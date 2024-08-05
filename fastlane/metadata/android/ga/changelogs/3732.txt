@@ -1,0 +1,10 @@
+v3.13.0: OpenTracks
+
+Athruithe:
+- Braiteoir: tacaíocht do mhéadar cumhachta (BLE)
+- Cuardaigh de réir rian agus marcóir (i liostaí)
+- Cuardach comhcheangailte bainte
+
+Ceartúchán Bug:
+- Thuar an iompórtáil in Chomhéadain
+- Níor iompórtáladh íomhánna de mharcóirí

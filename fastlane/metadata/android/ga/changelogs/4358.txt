@@ -1,0 +1,16 @@
+v3.19.0: OpenTracks
+
+Athruithe:
+- Tacaíocht do bhraiteoirí Luais Rith agus Láimhne (RCS) curtha i bhfeidhm
+- Nuair a bhíonn rian á roinnt: cruthaítear pictiúr sciar
+- Gan aon chreathadh agus taifeadadh á thosú
+- Agus tú ag taifeadadh: léiríonn an Chomhéadain Chomhéadain airde, luas agus imthacaí is déanaí a fuarthas (fiú mura bhfuil sé stóráilte)
+
+Ceartúchán Bug:
+- Níor cheart go n-áireofaí tréimhsí sosaithe i ríomh na ré iomláin (tá gá le hath-allmhairiú)
+- (arís) Úsáid achoimrí saincheaptha má tá siad i láthair
+
+Forbróir:
+- Uasghrádú go SDK31 agus AGP7.0.0 (éilíonn JDK11)
+- TrackRecordingService: comhleá braiteoir imithe i léig (TrackPointCreator) agus stóráil TrackPoint (TrackRecordingManager)
+- Is deitéarmanicí/ tairiseach iad ExportImportTest anois

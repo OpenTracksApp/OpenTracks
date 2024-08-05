@@ -1,0 +1,6 @@
+v3.7.2: OpenTracks
+
+Ceartúchán Bug:
+- Cnaipe tús GPS ath-chur leis
+- Ní dhéantar ainm an amhráin a fhorscríobh ag deireadh taifeadta
+- Marcóirí: scriostar an comhad freisin má bhaintear grianghraf

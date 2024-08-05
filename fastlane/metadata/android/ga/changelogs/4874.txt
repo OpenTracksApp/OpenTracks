@@ -1,0 +1,24 @@
+v4.0.0: OpenTracks
+
+Athruithe:
+- Athmhacrú Chomhéadain le Barra Feidhmchláir Bun.
+- API Poiblí: STOP curtha i bhfeidhm i gceart.
+- Glanta: bain úsáid as aitheantóirí sainroghanna do TrackFileFormat.
+- Feabhsuithe ar láimhseálaí BLE.
+- Cuir láimhseálaí eisceachta leis agus taispeáin gníomhaíocht earráide ionas gur féidir le húsáideoirí tuairiscí a sheoladh faoi fhabhtanna.
+- Android 13: deilbhín tosaitheoir, cuir deilbhín le téamaí ar fáil.
+- Athrú caipitlithe teidil riain go habairtí.
+- Aistriúcháin nuashonraithe.
+
+Ceartúchán Bug:
+- Roinnt rian curtha leis iarmhír comhaid faoi dhó.
+- Córas aonaid gan luchtú i gceart.
+- Níor lódaíodh teimpléad formáid comhaid (NPE).
+- API Poiblí: meas ar onnmhairiú iar-workout.
+
+Forbróir:
+- Bog go andrix.constraintlayout.
+- tástálacha Chomhéadain beagán níos láidre.
+- Iarratas ar chead Refactor.
+- Uasghrádú go gradlew 7.4.2
+- Ábhar bump ó 1.5.0 go 1.6.0

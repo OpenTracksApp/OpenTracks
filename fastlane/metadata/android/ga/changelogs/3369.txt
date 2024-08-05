@@ -1,0 +1,13 @@
+v3.7.0: OpenTracks
+
+Athruithe:
+- Luas/luas a thuairisciú de réir an chineáil gníomhaíochta
+- Cur i láthair oibre breise le haghaidh tar-rolladh seachtaine GPS
+- (Turgnamhach) Tacaíocht do bhraiteoirí rothaíochta Bluetooth LE (deireadh agus luas)
+- Iompórtáil KMZ/KML feabhsaithe
+
+Ceartúchán Bug:
+- Iompórtáil KMZ: iompórtáil ach íomhánna a úsáidtear
+
+Forbróir:
+- Seirbhís Taifeadta Refactored

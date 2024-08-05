@@ -1,0 +1,15 @@
+v4.10.0: OpenTracks
+
+Athruithe:
+- Tacaigh le gnóthachan/caillteanas trí BLE Environmental Sensing (baraiméadar)
+- Is féidir baraiméadar inmheánach a mhúchadh (m.sh., má tá sé briste)
+- Ábhar3 do lasca tosaíochta
+- Tacaíonn SplashScreen le modh lae / oíche
+- Socruithe braiteora Bluetooth: taispeáin an t-ainm braiteora roghnaithe (má tá sé i dtaisce ag Android)
+
+Ceartúchán Bug:
+- Rinneadh an Chomhéadain Eatramh a dhí-ailíniú
+
+Forbróir:
+- Glanta TrackRecordingServiceConnection
+- Tosaíonn TrackRecordingService i gcónaí mar ForegroundService

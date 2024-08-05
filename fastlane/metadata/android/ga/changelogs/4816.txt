@@ -1,0 +1,17 @@
+v3.27.0: OpenTracks
+
+Athruithe:
+- Fógraí gutha: cuir 100m, 200m, agus 500m
+- Eatramh: cuir 100m agus 500m
+- Léiríonn Clog anois soicind freisin
+- GPX, KML, KMZ: onnmhairiú agus allmhairiú cruinneas cothrománach
+- GPX: achar carnach onnmhairithe trí shíneadh braisle
+- CSV: onnmhairiú bunúsach (TrackPoints amháin; ní le haghaidh cúltaca)
+- Réitigh le haghaidh Tickr X agus é ag tuairisciú SPM in ionad RPM
+
+Ceartúcháin fhabht:
+- Cloí leis an achar eatramh a thaifeadadh;
+ Taifeadadh Trackpoints cé go raibh siad ró-ghar
+- Cosc a chur ar thuairteála ar stad-taifeadadh (coinníoll cine)
+- Cosc a chur ar tuairteála agus braiteoirí iolracha á n-úsáid (coinníoll cine)
+- Cosc a chur ar thuairteála agus OpenTracks á oscailt trí fhógra

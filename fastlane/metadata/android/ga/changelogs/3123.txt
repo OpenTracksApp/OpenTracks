@@ -1,0 +1,15 @@
+v3.2.5: OpenTracks
+
+Athruithe:
+- Díchumasaigh athrú gníomhaíochta
+- Cuir cead isteach le haghaidh Android 10: sonraí suímh a thaifeadadh
+
+Ceartúchán Bug:
+- Deisigh socruithe athshocrú
+
+Forbróir:
+- Roghanna
+ - murar féidir Socruithe a luchtú, athshocraigh gach sainroghanna
+ - bhog rochtain ar roghanna go PreferencesUtil
+ - ar athraíodh a ionad réamhshocraithe sainroghanna ón gcód go xml
+ - úsáid SummaryProvider

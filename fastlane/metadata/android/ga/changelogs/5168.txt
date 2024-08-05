@@ -1,0 +1,7 @@
+v4.3.1: OpenTracks
+
+Athruithe:
+- Socrú chun fógraí gutha a scipeáil ar chainteoir an ghléis
+
+Ceartúchán Bug:
+- Taispeánadh rabhadh faoi mhíchumas GPS go bréagach

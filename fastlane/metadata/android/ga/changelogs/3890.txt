@@ -1,0 +1,8 @@
+v3.15.3: OpenTracks
+
+Athruithe:
+- Ríomh meánlíon/uas: ráta croí, deireadh, agus cumhacht
+
+Ceartúchán Bug:
+- Ní easpórtálann KML/KMZ #start/#deireadh áitmharcanna a thuilleadh
+- Agus tú ag taifeadadh: Taispeánadh luas/suíomh go bréagach mar 0 uaireanta.

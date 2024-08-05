@@ -1,0 +1,4 @@
+v3.9.1: OpenTracks
+
+Ceartúcháin fhabht:
+- Léiríonn réamh-tús GPS stádas an tsocraithe

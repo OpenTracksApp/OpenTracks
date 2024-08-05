@@ -1,0 +1,10 @@
+v3.18.4: OpenTracks
+
+Athruithe:
+- Déantar luas/achar a fhormáidiú go comhsheasmhach
+- Tá cluaisín Eatramh níos tapúla anois
+
+Ceartúchán Bug:
+- Braiteoir luais / achair rothaíochta:
+ - parsáil sheasta (UINT32)
+ - sonraí a tharchur chuig Chomhéadain i gceart

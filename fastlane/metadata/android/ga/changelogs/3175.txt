@@ -1,0 +1,10 @@
+v3.2.9: OpenTracks
+
+Athruithe:
+- Rogha an scáileán a choinneáil ar siúl agus tú ag taifeadadh
+- Marcóirí: baineadh marcóirí scoilte go hiomlán
+- Oibríonn fógra gutha anois gan cead READ_PHONE_STATE
+
+Ceartúcháin fhabht:
+- Staitisticí: níor léiríodh ráta croí
+- Staitisticí: athshocraigh an t-am go hachomair go 0s

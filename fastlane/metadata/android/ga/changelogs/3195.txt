@@ -1,0 +1,11 @@
+v3.2.10: OpenTracks
+
+Athruithe:
+- Níl ChartView inchumraithe a thuilleadh
+- Tar éis atosaigh: baineadh atosú uathoibríoch de thaifeadadh neamhchríochnaithe
+
+Ceartúchán Bug:
+- Úsáideann fógraí cainte MAY_DUCK (arís)
+- Taispeánann ChartView marcóirí (arís)
+- Taifeadadh tírdhreacha seasta Leagan Amach TrackListActivity
+- Iarr iompar API comhaid oidhreachta (riachtanach le haghaidh Android 10)

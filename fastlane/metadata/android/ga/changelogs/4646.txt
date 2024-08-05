@@ -1,0 +1,16 @@
+v3.24.0: OpenTracks
+
+Athruithe:
+- Tá GPS roghnach (lena n-úsáid laistigh freisin): má úsáidtear braiteoirí BLE a sholáthraíonn achar
+- Socruithe: rogha chun scagadh gléasanna BLE a dhíchumasú
+- Cairteacha: tosaíonn an airde ag an luach íosta in ionad 0m.
+- Tacaíonn Chomhéadain le faisnéis crios ama stóráilte a thaispeáint
+
+Ceartúchán Bug:
+- Comhfhreagras ath-chur leis le haghaidh tuairteála mar gheall ar an gclog ag taisteal ar ais in am (baineadh an clár oibre in v3.23.0)
+- Baineadh réiteach oibre gan ghá le haghaidh braiteoir rothaíochta BLE (RTFM)
+- Níor láimhseáil allmhaireoir GPX sonraí a bhí in easnamh i gceart
+
+Forbróir:
+- Tuairiscíonn braiteoirí BLE sonraí atá bunaithe ar imeacht seachas tarraingt-bhunaithe
+- Trialacha comhtháthaithe athoibrithe agus curtha leo le haghaidh taifeadta

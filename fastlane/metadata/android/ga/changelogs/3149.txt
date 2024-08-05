@@ -1,0 +1,10 @@
+v3.2.7: OpenTracks
+
+Athruithe:
+- Léiríonn fógra cruinneas GPS
+- Taispeáin fógra chun cinn má thiteann cruinneas GPS thar an tairseach
+- Taispeáin an chairt i gcónaí de réir ama agus de réir achair
+- Cabhair curtha leis (sna Socruithe)
+
+Ceartúchán Bug:
+- TrackDetailActivity: modh tírdhreacha neamhoibríoch faoi mhíchumas (sealadach)

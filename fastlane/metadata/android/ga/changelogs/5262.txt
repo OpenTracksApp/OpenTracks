@@ -1,0 +1,14 @@
+v4.5.0: OpenTracks
+
+Athruithe:
+- Ábhar3
+- aicearra app le haghaidh staitisticí comhiomlána
+- Aonad Nua: míle le méadar
+
+Ceartúchán Bug:
+- Taispeántar rabhaidh díchumasaithe GPS arís agus arís eile (#1429)
+
+Forbróir:
+- Bain úsáid as Taifid Java
+- Sprioc API34
+- Láimhseáil braiteoir Refactor

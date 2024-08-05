@@ -1,0 +1,8 @@
+v4.12.5: OpenTracks
+
+Ceartúchán Bug:
+- Tá an t-aistriú á ríomh i gceart arís.
+ Bhí briste ó v4.9.0 mar gheall ar thabhairt isteach feidhmiúlacht díomhaoin. Féach #1756.
+
+Athruithe:
+- Tacaíocht do Chúl Thuarthach

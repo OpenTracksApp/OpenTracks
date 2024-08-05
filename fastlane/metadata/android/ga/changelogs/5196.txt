@@ -1,0 +1,4 @@
+v4.3.4: OpenTracks
+
+Ceartúchán Bug:
+- Android 13: níorbh fhéidir logaí réigiúnacha a roghnú (a tugadh isteach i v4.3.0)

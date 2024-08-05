@@ -1,0 +1,4 @@
+v4.8.2: OpenTracks
+
+Athruithe:
+- Tar éis onnmhairiú a thaifeadadh: taispeáin an teachtaireacht earráide mura n-éiríonn leis

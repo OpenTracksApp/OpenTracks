@@ -1,0 +1,10 @@
+v4.11.3: OpenTracks
+
+Athruithe:
+- Dearadh greamáin nua!
+- screenshots nua!
+- Tacaíonn allmhaireoir KMZ le haon chomhad KML taobh istigh de KMZ
+
+Ceartúchán Bug:
+- Oibríonn cnaipe ar ais liosta marcóir
+- Níor cheart go gcuirfeadh stad poiblí API tús leis an tseirbhís tulra (2ú triail)

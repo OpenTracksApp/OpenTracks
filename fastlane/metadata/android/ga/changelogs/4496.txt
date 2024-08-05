@@ -1,0 +1,19 @@
+v3.21.0: OpenTracks
+
+Athruithe:
+- Agus tú ag taifeadadh: bain cruthú díomhaoin/neamhdhíomhaoin TrackPoints
+- Tá na socruithe i bhfillteáin ar leith anois
+- Osclaíonn oscailt OpenTracks ón bhfógra (agus tú ag taifeadadh) agus brúigh siar liosta rian
+- Comhoiriúnacht GPX: tacaíocht <speed> don allmhairiú
+
+Ceartúcháin fhabht:
+- Airde agus fad (ó bhraiteoir BlE): athshocraigh cuntair ach amháin má bhí sonraí stóráilte i ndáiríre
+- Iompórtáil gan luas, éilíonn luas ríomhaireachta
+- Braiteoir reatha BLE nach bhfuil ceangailte, níor cheart a thuairisciú mar láthair
+- Braiteoir reatha BLE: taispeáin sonraí agus tú ag taifeadadh
+- Níor nuashonraíodh deilbhín den chineál gníomhaíochta agus an ghníomhaíocht á athrú
+
+Forbróir:
+- SharedPrefences trí thagairt statach
+- Déantar tástálacha i gcoinne bunachar sonraí cuimhne
+- Coinníonn TrackRecordingManager TrackPoint deireanach i gcuimhne

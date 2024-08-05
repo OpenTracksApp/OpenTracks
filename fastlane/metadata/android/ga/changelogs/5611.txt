@@ -1,0 +1,11 @@
+v4.10.1: OpenTracks
+
+Athruithe:
+- Android 14: tuairteála ar thosú taifeadta mura ndeonaítear ceadanna
+- Tá teidil cairteacha níos dlúithe
+
+Ceartúchán Bug:
+- Bhí timpiste mar thoradh ar athcheangal braiteoir BLE (a tugadh isteach in v4.9.6)
+- Níor próiseáladh cumhacht rothaíochta (a tugadh isteach in v4.9.6)
+- Ceadaíonn deireadh rothaíochta agus fad sonraí arís agus arís eile
+- Níor próiseáladh sonraí baraiméadar BLE i gceart

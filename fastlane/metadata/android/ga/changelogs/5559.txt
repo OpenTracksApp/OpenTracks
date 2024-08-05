@@ -1,0 +1,4 @@
+v4.9.7: OpenTracks
+
+Ceartúchán Bug:
+- cosc tuairteála agus taifeadadh á stopadh (a tugadh isteach i v4.9.6)

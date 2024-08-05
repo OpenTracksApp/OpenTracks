@@ -1,0 +1,10 @@
+v3.10.0: OpenTracks
+
+Athruithe:
+- Gnóthachan airde trí bharaiméadar
+- Cuir splancscáileán leis
+- Android 11 / F-Droid: íosghrádú go targetSDK 29 (síniú v1)
+ féach https://gitlab.com/fdroid/fdroidserver/-/issues/827
+
+Ceartúchán Bug:
+- Roinnt réiteach mar gheall ar athmhacrú trackId

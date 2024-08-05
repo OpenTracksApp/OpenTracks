@@ -1,0 +1,8 @@
+v4.2.0: OpenTracks
+
+Athruithe:
+- Taispeáin faisnéis chrios ráta croí
+
+Forbróir:
+- Aistríodh chuig hosted.weblate.org
+- Úsáideann Taifeadadh Chomhéadain Radhairc go díreach

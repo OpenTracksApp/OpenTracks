@@ -1,0 +1,22 @@
+v3.15.0: OpenTracks
+
+RABHADH:
+Cuireann an scaoileadh seo athruithe bunachar sonraí i bhfeidhm NACH FÉIDIR A CHUR AR AIS.
+De réir mar a athraíonn iompar easpórtála/allmhairithe KMZ/KML freisin, moltar (A) cúltaca a ghlacadh ROIMH uasghrádú agus (B) ina dhiaidh sin.
+Formáid mholta: KMZ.
+
+ATHRUITHE ATHRUITHE:
+- Athraítear stóráil inmheánach na gcodanna rian
+ (Breithnítear anois ar imeachtaí arna nginiúint ag úsáideoirí mar rianphointí gan suíomh ach le stampa ama)
+- Stóráiltear am gléas in ionad am GPS
+ (ní modhnaítear na sonraí atá ann cheana)
+- Painéal API v2
+ (uasghrádaigh OSMDashboard 2.10.0 le do thoil)
+
+Athruithe:
+- Is féidir KML/KMZ a úsáid chun cúltaca agus athchóiriú beacht a dhéanamh (lena n-áirítear staitisticí)
+
+Forbróir:
+- Deighilt rianta athoibrithe agus a stóráil (marcóir sos / RESUME roimhe seo)
+- Déantar TrackStatistics a ríomh ag baint úsáide as TrackPoints amháin
+- In ionad fada le Meandaracha/Aga

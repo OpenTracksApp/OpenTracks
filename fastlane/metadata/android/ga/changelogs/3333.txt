@@ -1,0 +1,4 @@
+v3.6.1: OpenTracks
+
+Ceartúchán Bug:
+- Iompórtáil KMZ: stóráil cosán ceart pictiúir

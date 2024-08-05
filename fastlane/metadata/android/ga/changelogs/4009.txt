@@ -1,0 +1,10 @@
+v3.17.3: OpenTracks
+
+RABHADH: Tá sceitheadh cuimhne sna heisiúintí v3.17.0+.
+NACH bhfuil an tsaincheist seo socraithe ag an scaoileadh seo.
+Moltar gan uasghrádú a dhéanamh má úsáideann tú scaoileadh fós roimh v3.17.0
+
+Ceartúchán Bug:
+- Tuairteála má úsáidtear luas le haghaidh fógraí gutha (a tugadh isteach i v3.17.0)
+- Thaispeáin na staitisticí luas ar dtús (a tugadh isteach in v3.17.0)
+- Tuairteála annamh nuair a bhíonn rianta á scriosadh

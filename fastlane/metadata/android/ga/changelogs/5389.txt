@@ -1,0 +1,8 @@
+v4.8.3: OpenTracks
+
+
+Ceartúchán Bug:
+- Android 14: cuir cosc ar thimpiste mar gheall ar UUID míchumtha (mar shampla do theimpléad ainm comhaid)
+
+Forbróir:
+- Is RecyclerView anois an liosta marcóirí

@@ -1,0 +1,13 @@
+v3.3.0: OpenTracks
+
+Athruithe a bhriseadh:
+- Stóráiltear pictiúir anois i stóras aip-phríobháideach (ná taispeáin aipeanna pictiúir eile)
+ TABHAIR FAOI DEARA: Ní féidir pictiúir a ghlactar leis an leagan roimhe seo a thaispeáint
+- Ní oibríonn Logánú don Spáinnis (Meiriceá Laidineach) ach ar Android 7.0 nó níos déanaí
+
+Athruithe:
+- Iompórtáil/Easpórtáil trí Chreat Rochtana Stórála (seachain cead READ/WRITE_EXTERNAL_STORAGE)
+
+Forbróir:
+- Struchtúir sonraí inmheánacha glanta
+- Úsáid deilbhíní ar leith / ainmneacha feidhmchláir don leagan dífhabhtaithe

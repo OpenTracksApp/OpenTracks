@@ -1,0 +1,5 @@
+v4.3.0: OpenTracks
+
+Athruithe:
+- Ceadaigh cúltacaí (lena n-áirítear criptithe do Google)
+- Android 13: ceadaigh socruithe teanga a bhaineann go sonrach le haipeanna

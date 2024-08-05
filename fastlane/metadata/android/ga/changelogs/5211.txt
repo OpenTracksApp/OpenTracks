@@ -1,0 +1,5 @@
+v4.3.5: OpenTracks
+
+Ceartúchán Bug:
+- Bhí fabht aonuaire thar maoil ag parsáil an bhraiteora (#1559)
+- Cuir isteach marcóir: ná tuairteála mura bhfuil aip ceamara suiteáilte (#1561)

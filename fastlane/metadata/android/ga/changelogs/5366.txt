@@ -1,0 +1,4 @@
+v4.8.1: OpenTracks
+
+Ceartúchán Bug:
+- Níor tugadh cead suímh mar gheall ar ACCESS_LOCATION_BACKGROUND (bainte)

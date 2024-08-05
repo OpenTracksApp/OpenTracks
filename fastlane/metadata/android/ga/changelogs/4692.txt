@@ -1,0 +1,16 @@
+v3.24.1: OpenTracks
+
+Athruithe:
+- Cuireadh API leis chun taifeadtaí a thosú ó fheidhmchláir eile (díchumasaithe de réir réamhshocraithe)
+- Ainmneacha rianta ISO8601 giorraithe
+- Braiteoirí achair BLE: stóráil suíomhanna GPS bunaithe ar láithreacha GPS roimhe seo
+
+Ceartúchán Bug:
+- Agus tú ag taifeadadh: tuairteála seasta agus cairteacha á oscailt
+- Ba cheart go gcuirfí deireadh le próiseáil TrackDataHub tar éis stad()
+- Cosc a chur ar tuairteála annamh agus rianta á scriosadh
+
+Forbróir:
+- Struchtúr pacáiste athmheasta
+- Clog monotonach
+- Luach a chur ar rudaí mar gheall ar ráta croí, deiridh, agus cumhachta

@@ -1,0 +1,5 @@
+v3.13.1: OpenTracks
+
+Ceartúchán Bug:
+- Tuairteála ar taifead: íoslaghdaigh/laghdaigh baintear intarraingthe
+- Theip ar easpórtáil uathoibríoch go ciúin (cinn scríbe cianda go príomha)

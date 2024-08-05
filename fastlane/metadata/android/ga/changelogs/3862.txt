@@ -1,0 +1,7 @@
+v3.15.1: OpenTracks
+
+Athruithe:
+- Tar éis staitisticí braiteora seó a thaifeadadh (m.sh., meánlíon AD)
+
+Ceartúchán Bug:
+- Crash ar thosú taifeadta le domhanleithead / domhanfhad seó cumasaithe

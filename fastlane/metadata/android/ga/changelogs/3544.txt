@@ -1,0 +1,4 @@
+v3.9.3: OpenTracks
+
+Ceartúcháin fhabht:
+- Easpórtáil Seasta gach fabht rianta.

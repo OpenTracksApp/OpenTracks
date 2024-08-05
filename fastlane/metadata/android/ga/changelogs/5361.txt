@@ -1,0 +1,10 @@
+v4.8.0: OpenTracks
+
+Athruithe:
+- Cead: Tá ACCESS_BACKGROUND_LOCATION ag teastáil mar gheall ar an API
+- Ullmhúchán do bhrath díomhaoin bunaithe ar am
+- Buail le hidirdhealú a dhéanamh ar an bhfoinse (braiteoirí GPS vs BLE) le haghaidh sonraí stóráilte
+
+Forbróir:
+- réitigh riochtaí cine bainte (TrackRecordingService agus GpsStatusManager)
+- Láimhseálann TrackRecordingServiceConnection múchadh seirbhíse

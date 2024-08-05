@@ -1,0 +1,12 @@
+v3.4.0: OpenTracks
+
+Athruithe:
+- Painéal API: rianta iolracha
+- Cabhair nuashonraithe
+
+Ceartúchán Bug:
+- Tuairteála seasta ar athchruthú blúirí
+- Nuair a bheidh sé ar sos: cosc a chur ar an app a stopadh
+
+Forbróir:
+- Cumasaigh tástáil trí CI (Github Actions agus TravisCI)

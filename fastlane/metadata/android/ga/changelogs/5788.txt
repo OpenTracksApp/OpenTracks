@@ -1,0 +1,8 @@
+v4.12.4: OpenTracks
+
+Athruithe:
+- Fógraí: is féidir aonaid a fhágáil ar lár
+- Fógraí: cumhacht breise rothaíochta lap
+
+Ceartúchán Bug:
+- Scrios marcóirí ón liosta tuairteála

@@ -1,0 +1,16 @@
+v3.8.0: OpenTracks
+
+Athrú briste:
+- Luas allmhairithe/onnmhairithe GPX, deireadh a chur leis, agus ráta croí trí TrackPointExtension/v2
+
+Athruithe:
+- Painéal API: cuir rochtain ar mharcóirí ar fáil (lena n-áirítear aisghlao le taispeáint in OpenTracks)
+- Deilbhín marcála nua (bioráin oráiste, SVG)
+- Is féidir comhaid le hiompórtáil a roghnú trí bhainisteoir comhaid
+
+Ceartúcháin fhabht:
+- Léiríonn Chomhéadain na stats comhiomlánaithe an ráta tosaíochta
+- Theip ar chur in eagar marcóir ar athrú treoshuímh
+
+Forbróir:
+- Seirbhís Taifeadta Refactored

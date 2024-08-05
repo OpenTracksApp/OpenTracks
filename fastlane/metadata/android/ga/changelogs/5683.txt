@@ -1,0 +1,5 @@
+v4.11.2: OpenTracks
+
+Ceartúchán Bug:
+- Stopadh an taifeadadh nuair a chas an scáileán de (a tugadh isteach i v4.11.1)
+ (ag filleadh da3dd29b8e44624a8222caea9067955f252ef5f8)

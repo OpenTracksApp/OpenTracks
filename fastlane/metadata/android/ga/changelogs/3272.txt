@@ -1,0 +1,11 @@
+v3.3.2: OpenTracks
+
+Athruithe:
+- Easpórtáil: forscríobhtar comhaid anois
+
+Ceartúchán Bug:
+- Bain fógra taifeadta i gcónaí
+
+Forbróir:
+- Ar API 26+ úsáidtear java.time chun dátaí a pharsáil agus a scríobh
+- TrackRecordingService a athfhachtóiriú

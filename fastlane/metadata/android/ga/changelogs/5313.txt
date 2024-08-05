@@ -1,0 +1,9 @@
+v4.7.0: OpenTracks
+
+Athruithe:
+- Staitisticí: áirítear achar, am iomlán, agus am gluaiseachta idir deighleoga uathoibríoch (cruthaithe mar gheall ar achar ró-fhada ón suíomh roimhe seo)
+- Léiríonn rianta taifeadta staitisticí braite arís
+
+Ceartúchán Bug:
+- Onnmhaireoir GPX: d'fhéadfadh sé nach bhfuil aon suíomh ann i gcás codanna uathoibríocha
+- Onnmhaireoir CSV: níor bhain an t-achar úsáid as an ngrúpáil deachúlach

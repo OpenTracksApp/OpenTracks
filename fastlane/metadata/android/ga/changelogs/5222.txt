@@ -1,0 +1,4 @@
+v4.4.0: OpenTracks
+
+Athruithe:
+- Easpórtáil gach rian mar chomhad amháin

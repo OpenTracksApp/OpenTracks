@@ -1,0 +1,4 @@
+v3.6.2: OpenTracks
+
+Ceartúchán Bug:
+- Níor taispeánadh na cairteacha i gceart (a tugadh isteach v3.6.0)

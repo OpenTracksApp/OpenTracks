@@ -1,0 +1,10 @@
+v3.9.4: OpenTracks
+
+Athruithe:
+- Cuireadh ríomh eatramh leis
+- Cuireann fógraí gutha staitisticí na n-eatramh deireanach i láthair
+- Socruithe: Tá deilbhín Bluetooth beoite
+
+Ceartúchán Bug:
+- Níor múchadh GPS agus taifeadadh á stopadh
+- Briseadh an taispeáint ar léarscáil trí KML/KMZ/GPX mar gheall ar athmhacrú

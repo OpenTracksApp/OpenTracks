@@ -1,0 +1,7 @@
+v3.18.2: OpenTracks
+
+Ceartúchán Bug:
+- Tuairteála agus tú ag bogadh ó chairteacha go gníomhaíocht/aip eile #787
+
+Forbróir:
+- Déanann TrackRecordingService sonraí a bhrú chuig an Chomhéadain agus iad ag taifeadadh

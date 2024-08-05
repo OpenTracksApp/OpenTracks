@@ -1,0 +1,12 @@
+v4.6.0: OpenTracks
+
+Athruithe:
+- Úsáideann fógraí gutha formáid iolra ICU (en, es, pt, zh, dr, de) de bharr cainníochtaí codánacha #1584
+- Tá Android 7.0 / SDK24+ ag teastáil mar gheall ar iolraí ICU
+- Ar Android 14+: bain úsáid as AltitudeConverter Android in ionad EGM2008 inmheánach
+
+Ceartúchán Bug:
+- Níorbh fhéidir le Android 13 íomhánna a roghnú ón ngailearaí
+
+Forbróir:
+- Roinn Gníomhaíocht Cineál agus ActivityIcon

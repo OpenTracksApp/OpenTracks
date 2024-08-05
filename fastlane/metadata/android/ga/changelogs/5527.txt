@@ -1,0 +1,4 @@
+v4.9.5: OpenTracks
+
+Ceartúchán Bug:
+- tá socrú fógra díomhaoin ag obair arís

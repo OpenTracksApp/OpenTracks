@@ -1,0 +1,8 @@
+v4.6.2: OpenTracks
+
+Ceartúchán Bug:
+- Tuairteála ar fhógra gutha le haghaidh + méadar impiriúil
+- Tuairteála ar na socruithe do + méadar impiriúil
+- Bearradh seasta cairteacha (uasghrádú ar Ábhar3)
+- Láimhseálann socruithe Bluetooth cead ar iarraidh
+- Níor léirigh staitisticí comhiomlánaithe aonaid impiriúla do luas meánach

@@ -1,0 +1,11 @@
+v3.7.6: OpenTracks
+
+Athruithe:
+- Modh tírdhreacha
+- Níl sa Chomhéadain scriosta rianta anois ach rothlóir
+- Déantar luas a onnmhairiú agus a allmhairiú (GPX / KML / KMZ)
+- Is é KMZ san áireamh an fhormáid easpórtála réamhshocraithe. na sonraí agus na pictiúir go léir
+
+Forbróir:
+- Cuireadh Snáitheanna in ionad AsyncTasks
+- Sioncronú: gintear UUID in aghaidh an traic (gan easpórtáil fós)

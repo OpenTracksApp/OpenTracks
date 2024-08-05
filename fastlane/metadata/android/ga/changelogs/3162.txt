@@ -1,0 +1,10 @@
+v3.2.8: OpenTracks
+
+Athruithe:
+- Cairt: súmáil isteach trí gothaí
+
+Ceartúcháin fhabht:
+- Níor easpórtáil an t-easpórtáil trí KMZ comhainmneacha pictiúir i gceart
+- Ní raibh comhaid KMZ san áireamh agus rianta iolracha á roinnt
+- Níor taispeánadh UI MarkerDetailActivity
+- Tháinig tuairteáil ar na socruithe murar cuireadh tús le rogha an ráta croí

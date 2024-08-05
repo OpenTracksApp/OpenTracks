@@ -1,0 +1,13 @@
+v3.18.3: OpenTracks
+
+Athruithe:
+- Ní éilíonn parsáil KML an t-ord cathain/gx:coords
+- Iompórtálaí rian: athordaítear láithreacha de réir stampa ama
+- Deilbhíní tosaitheoir rindreáilte bainte do Android < 8.0.0 (API 26)
+ (d'fhéadfadh cuma beagán difriúil a bheith orthu, ach seachain fadhbanna tógála in-atáirgthe)
+
+Ceartúchán Bug:
+- Seachain timpiste sna cairteacha mar gheall ar riocht cine
+
+Forbróir:
+- Scoilt GPX agus KML allmhaireoir (oidhreacht choiteann bainte)

@@ -1,0 +1,6 @@
+v3.28.0: OpenTracks
+
+Athruithe:
+- Ainm comhaid inchumraithe le haghaidh easpórtáil/roinnt (réamhshocrú: {starttime}_{name}. {iarmhír})
+- Tá cruinneas GPS Ingearach stóráilte anois agus is féidir é a onnmhairiú / a allmhairiú
+ (Leibhéal API >= 26).

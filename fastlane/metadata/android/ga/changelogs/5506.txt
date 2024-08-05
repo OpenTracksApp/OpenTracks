@@ -1,0 +1,4 @@
+v4.9.4: OpenTracks
+
+Ceartúchán Bug:
+- Tuairteála ar Android 14 mura deonaíodh ceadanna

@@ -1,0 +1,15 @@
+v3.18.0: OpenTracks
+
+Athruithe:
+- Taispeántar airde in EGM2008 (stóráilte/onnmhairithe mar WGS84)
+
+Ceartúchán Bug:
+- Sceitheadh cuimhne seasta (a tugadh isteach v3.17.0)
+- Cairteacha: ba cheart go mbeadh an airde i M/FT (a tugadh isteach in v3.17.1)
+- Cairteacha: cé nár nuashonraíodh an taifeadadh i gceart (tugtha isteach in v3.17.3)
+- Níor thug TrackDataHub cuntas ar TaifeadadhDistanceInterval (a tugadh isteach i v3.17.2)
+
+Forbróir:
+- Díchumasaigh géarchor PNG (tógáil in-atáirgthe)
+- TrackImporter athmhéadaithe agus allmhairiú KMZ optamaithe
+- Úsáid LiveData le haghaidh TrackRecordingService le cumarsáid Chomhéadain (a bhaint as sceitheadh cuimhne)

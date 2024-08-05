@@ -1,0 +1,13 @@
+v3.16.0: OpenTracks
+
+Athruithe:
+- Rothaíocht: faigh fad ó bhraiteoir luais BLE
+- Chomhéadain athoibrithe curtha i láthair agus é ag taifeadadh
+- Optimizations feidhmíochta Chomhéadain
+- Ainmneacha comhaid easpórtáilte: <An chéad 32 giotán UUID>_ <ainm an rian>.<síneadh>
+- Iompórtáil comhaid iolracha trí Intent (m.sh., ó Gadgetbridge)
+- GPX: onnmhairiú sonraí cumhachta
+- Aistriúcháin nuashonraithe
+
+Ceartúchán Bug:
+- Úsáideann fógra gutha miontuairiscí i gceart

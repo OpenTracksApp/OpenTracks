@@ -1,0 +1,7 @@
+v3.7.1: OpenTracks
+
+Réimse oibre:
+- Folaigh an cnaipe tús GPS
+
+Ceartúchán Bug:
+- Pointeoir nialasach seasta

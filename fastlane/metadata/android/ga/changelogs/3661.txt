@@ -1,0 +1,4 @@
+v3.11.1: OpenTracks
+
+Ceartúchán Bug:
+- Thuairiscigh fógraí gutha staitisticí mícheart

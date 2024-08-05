@@ -1,0 +1,7 @@
+v4.11.0: OpenTracks
+
+Athruithe:
+- Glactar le Suíomh Marcóirí ag oscailt dialóg cuir leis (sábháladh é)
+- Cairteacha: bain úsáid as níos lú spré do na haiseanna
+- Cairteacha: ná líon isteach nuair a thaispeánann tú níos mó ná dhá líne
+- Feabhsaíodh fógraí gutha (scipeáil an deachúil más .0)

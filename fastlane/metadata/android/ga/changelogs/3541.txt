@@ -1,0 +1,5 @@
+v3.9.2: OpenTracks
+
+Ceartúcháin fhabht:
+- Dúnadh fórsa seasta ar API<25 (mar gheall ar bheochan)
+- Athshocraigh staid taifeadta (ar am tosaithe app) má thuairteáladh agus tú ag taifeadadh

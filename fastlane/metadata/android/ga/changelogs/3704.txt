@@ -1,0 +1,22 @@
+v3.12.0: OpenTracks
+
+Athruithe:
+- Seoltaí braiteoir Bluetooth
+- Eatraimh: taispeáin gnóthachan ingearchló
+- Easpórtáil: eolaire easpórtála réamhshocraithe
+- Easpórtáil: onnmhairiú uathoibríoch tar éis críochnú rian
+- Iompórtáil / onnmhairiú láimhe: comhéadan úsáideora nua
+- Easpórtáil láimhe: rogha chun scríobh ar onnmhairiú láimhe
+
+Níos tapúla:
+- Liostaí rian á lódáil
+- Rianta iolracha a scriosadh
+
+Ceartúchán Bug:
+- Scagairí rún seasta le haghaidh allmhairithe
+- Níorbh fhéidir KMZ a pharsáil
+- Easpórtáil: deisigh tuairteála ar Android 11
+
+Forbróir:
+- Úsáid ViewBindings
+- Forfheidhmíonn Bunachar Sonraí eochair choigríche agus úsáideann scriosadh cascáideacha

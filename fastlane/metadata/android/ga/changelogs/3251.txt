@@ -1,0 +1,12 @@
+v3.3.1: OpenTracks
+
+Athruithe:
+- Android 10: ar dhíshuiteáil cead a thabhairt sonraí app a choinneáil
+- API Painéal Tugadh isteach: is féidir deilbhín léarscáile a úsáid chun an rian reatha a oscailt san aip sheachtrach
+ (gá suiteáil aip eile cosúil le OSMDashboard)
+
+Ceartúchán Bug:
+- Briseadh lipéad aipe (a tugadh isteach v3.3.0)
+
+Forbróir:
+- Is féidir doiciméadú le haghaidh API an Deais a fháil in README_DEVELOPER.md

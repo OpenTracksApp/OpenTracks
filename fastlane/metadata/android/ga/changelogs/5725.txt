@@ -1,0 +1,8 @@
+v4.12.0: OpenTracks
+
+Athruithe:
+- Téama dorcha cairdiúil OLED (gá atosú láimhe)
+- Socruithe athordú (is braiteoir é GPS)
+
+Forbróir:
+- Scripteanna curtha leis le haghaidh Fastlane le huaslódáil PlayStore (aistriúcháin)

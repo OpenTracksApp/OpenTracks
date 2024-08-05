@@ -1,0 +1,4 @@
+v3.15.4: OpenTracks
+
+Ceartúchán Bug:
+- Ba cheart go mbeadh an t-eatramh fógraí gutha i nóiméid (a tugadh isteach in v3.15.0)

@@ -1,0 +1,8 @@
+v3.9.5: OpenTracks
+
+Athruithe:
+- Léiríonn Chomhéadain luas le digit codánach amháin
+
+Ceartúchán Bug:
+- Tuairteáil aipe sa chuardach (mar gheall ar athmhacrú Track.Id)
+- Léirigh an liosta rianta anois an raibh taifeadadh ar siúl (mar gheall ar athmhacrú Track.Id)

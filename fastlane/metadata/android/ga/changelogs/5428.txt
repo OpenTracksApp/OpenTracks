@@ -1,0 +1,23 @@
+v4.9.0: OpenTracks
+
+TABHAIR FAOI DEARA: BREAKING ATHRÚ
+
+Athraíonn an scaoileadh seo conas a chinneann OpenTracks bogadh agus gan bogadh.
+Go dtí seo, baineadh úsáid as an luas (GPS nó braiteoir) le tairseach a chur i bhfeidhm (m.sh., níos lú ná 0.3 m/s).
+Mar sin féin, d'fhéadfadh sé seo a bheith an-torann.
+As seo amach, úsáidtear tréimhse ama istigh (i.e., gan aon athrú suntasach ar an suíomh le X soicind dheireanacha).
+Is féidir an ré seo a chumrú.
+Stóráiltear na himeachtaí díomhaoin sa bhunachar sonraí san áireamh. stampa ama, ionas gur féidir staitisticí a athríomh.
+
+Ní chuirtear íosghrádú ón leagan seo i bhfeidhm.
+Déan cúltaca de gach rud le do thoil roimh uasghrádú.
+
+Athruithe:
+- Úsáideann braite díomhaoin fad “gan ghluaiseacht” seachas luas ró-íseal
+- Cuireadh gníomhaíocht scútair leis
+
+Ceartúchán Bug:
+- Agus é ag taifeadadh, léirigh TrackList gach rian mar thaifeadadh
+
+Forbróir:
+- Trialacha forghníomhaithe gníomhaíochta Github a athchumasaíodh

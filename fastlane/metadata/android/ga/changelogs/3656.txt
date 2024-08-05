@@ -1,0 +1,10 @@
+v3.11.0: OpenTracks
+
+Athruithe:
+- Téama: mód lae/oíche (réamhshocraithe: oíche)
+- Téamach: bain úsáid as Dearadh Ábhar in ionad téamaí gné saincheaptha
+- Úsáid targetSDK 30 arís (comharthaí F-Droid anois le V2)
+
+Ceartúchán Bug:
+- Android 11: thit an t-easpórtáil ar fad
+- Níor nuashonraíodh TrackDetail san Chomhéadain tar éis don úsáideoir sonraí a athrú

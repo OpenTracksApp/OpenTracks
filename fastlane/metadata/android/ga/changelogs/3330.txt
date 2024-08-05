@@ -1,0 +1,10 @@
+v3.6.0: OpenTracks
+
+Athruithe:
+- Is féidir rianta stoptha a atosú anois
+
+Ceartúchán Bug:
+- Níor phróiseáil iompórtáil KMZ URL an ghrianghraif i gceart
+
+Forbróir:
+- Próiseáil sonraí simplithe

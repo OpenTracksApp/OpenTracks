@@ -1,0 +1,11 @@
+v4.1.2: OpenTracks
+
+Athruithe:
+- Ní úsáidtear fógraí gutha ach amháin ar dheachúil le haghaidh achair
+
+Ceartúchán Bug:
+- Tuairteála nuair a stopadh (riocht cine)
+
+Forbróir:
+- Gníomhartha Github: tástáil ionstraimíochta faoi mhíchumas (ró-mhall)
+- Déantar tástálacha le sonraí GPS bréige amháin

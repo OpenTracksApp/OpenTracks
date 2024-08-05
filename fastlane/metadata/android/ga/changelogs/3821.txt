@@ -1,0 +1,10 @@
+v3.14.2: OpenTracks
+
+Athruithe:
+- Íosghrádaigh bunachar sonraí ó scaoileadh atá le teacht v3.15.0
+- Iompórtáil / Easpórtáil Chomhéadain feabhsaithe
+- Iompórtáil tairiscintí chun rian allmhairithe a thaispeáint
+- Feabhsaíodh feidhmíocht an liosta marcóirí
+
+Forbróir:
+- Track.Id/Marker.Id: bain úsáid as null

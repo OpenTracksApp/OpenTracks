@@ -1,0 +1,8 @@
+v4.3.2: OpenTracks
+
+Ceartúchán Bug:
+- Mífhoirmíodh an ceanntásc KML (#1522)
+
+Forbróir:
+- Úsáid Java 17 (téacs illíne, lasc)
+- API33: gintear cumraíocht locale

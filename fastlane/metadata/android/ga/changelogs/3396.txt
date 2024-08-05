@@ -1,0 +1,12 @@
+v3.7.4: OpenTracks
+
+Athruithe:
+- Roinnt / formáid onnmhairithe configurable
+
+Ceartúchán Bug:
+- Trastomhas roth gan stóráil i gceart (le haghaidh braiteoir luais)
+- Cabhair: tá naisc inchliceáilte
+
+Forbróir:
+- Scoilt TrackDetailActivity
+- Úsáideann comharba StatsFragement ConstraintLayout

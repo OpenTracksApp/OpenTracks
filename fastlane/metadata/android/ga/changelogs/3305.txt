@@ -1,0 +1,14 @@
+v3.5.0: OpenTracks
+
+Athruithe:
+- Marcóir: roghnaigh pictiúir ón ngailearaí
+- Marcóir: roinn pictiúr
+- Úsáid rian ainm mar ainm comhaid nuair a roinnt
+- Baineadh an t-ingearchló íosmhéid/uas (bhí sé neamhchruinn)
+
+Ceartúchán Bug:
+- Úsáideann cairt na haonaid agus an ráta tosaíochta
+
+Forbróir:
+- Bunachar Sonraí: bain na colúin nár úsáideadh
+- Bunachar Sonraí: cuir innéacsanna leis

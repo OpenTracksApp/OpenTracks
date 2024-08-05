@@ -1,0 +1,4 @@
+v3.13.2: OpenTracks
+
+Ceartúchán Bug:
+- Tuairteála i mód tírdhreacha

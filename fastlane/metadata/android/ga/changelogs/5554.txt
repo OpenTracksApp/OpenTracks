@@ -1,0 +1,7 @@
+v4.9.6: OpenTracks
+
+Ceartúchán Bug:
+- Easpórtáil: tá na comhaid atá ann cheana féin á scríobh go hiomlán anois
+
+Forbróir:
+- Próiseáil sonraí barometric athmheasta

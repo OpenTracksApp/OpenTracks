@@ -1,0 +1,4 @@
+v4.12.2.: OpenTracks
+
+Ceartúchán Bug:
+- Ceadaigh braiteoirí a thosú roimh thaifeadadh

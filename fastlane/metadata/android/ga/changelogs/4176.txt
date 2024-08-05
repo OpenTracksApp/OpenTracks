@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Athruithe:
+- Luas fógartha gutha inchumraithe
+- API <26: Fágann deilbhín an lainse an cúlra
+
+Ceartúcháin fhabht:
+- Chomhéadain Taifeadta: taispeáin na luachanna cearta
+- Chomhéadain taifeadta: taispeáin (arís) airde in EGM2008
+
+Forbróir:
+- ceadanna Android12 (BLUETOOTH_CONNECT)

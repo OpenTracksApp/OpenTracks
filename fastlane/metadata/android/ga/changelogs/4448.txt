@@ -1,0 +1,11 @@
+v3.20.2: OpenTracks
+
+Athruithe:
+- Is slánuimhreacha iad gnóthachan agus caillteanas in airde in ionad snámháin
+- Iarr cead roimh theachtaireacht Bluetooth le Tósta a úsáid
+
+Ceartúchán Bug:
+- Socraigh FLAG_IMMUTABLE do Ar Feithimh chun tuairteála ar Android 12 a sheachaint
+- Filleann braiteoir cadence 0 in ionad Dada nuair nach bhfuil an t-úsáideoir ag pedaláil
+- Filleann braiteoir luais 0 in ionad an luas deiridh nuair a stoptar é
+- Le braiteoirí, stopann am ag gluaiseacht nuair nach bhfuil sé ag bogadh

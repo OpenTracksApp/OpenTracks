@@ -1,0 +1,6 @@
+v4.9.9: OpenTracks
+
+Ceartúchán Bug:
+- Tuairteála nuair a bhíonn braiteoir BLE á úsáid ag deireadh taifeadta (riocht cine)
+ Cúis: cuireadh tús le fochóras braiteora faoi dhó agus níor múchadh ach an dara ceann.
+- Agus tú ag taifeadadh, taispeántar ainmneacha braiteoirí BLE arís

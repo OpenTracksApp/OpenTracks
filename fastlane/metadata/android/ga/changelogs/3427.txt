@@ -1,0 +1,11 @@
+v3.7.5: OpenTracks
+
+Athruithe:
+- Achoimre staitisticí comhiomlánaithe curtha leis (ó phríomhroghchlár an scáileáin)
+- Painéal API: pas "thaispeáint ar an scáileán glas" - agus "coimeád an scáileán ar" -setting
+- Aistriúcháin nuashonraithe
+- Iompórtáil: bí trócaireach le formáid dáta ISO8601
+- Taispeáin rian ar an léarscáil: is féidir formáid comhaid a roghnú agus oibreacha an deais a oscailt ar Android R (API 30+)
+
+Ceartúchán Bug:
+- Deilbhín app curtha i bhfeidhm i gceart anois

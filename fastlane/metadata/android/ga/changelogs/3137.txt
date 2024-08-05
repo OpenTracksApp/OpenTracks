@@ -1,0 +1,8 @@
+v3.2.6: OpenTracks
+
+Athruithe:
+- Monatóir ráta croí: scanadh le haghaidh feistí atá ar fáil
+- Bain aicearra chuig socruithe Bluetooth
+
+Forbróir:
+- Roghanna: ar athraíodh a ionad réamhshocraithe sainroghanna ón gcód go xml

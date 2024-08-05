@@ -1,0 +1,7 @@
+v4.2.2: OpenTracks
+
+Ceartúchán Bug:
+- Deilbhín rian léirithe go mícheart sa dialóg
+- Bhí an téacsdath do chrios ráta croí 1 ag tabhairt aird ar an téama
+- Níor léiríodh gach cineál gníomhaíochta sa liosta anuas
+- Tuairteála mar gheall ar dath nach bhfuarthas

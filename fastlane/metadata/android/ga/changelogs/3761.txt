@@ -1,0 +1,10 @@
+v3.14.0: OpenTracks
+
+Athruithe:
+- Tacaíocht cheart don taobh clé
+- Iompórtáil: glantachán níos tapúla tar éis teip ar allmhairí
+- Téacs i scálaí cairteacha de réir socruithe Android
+- Ráta croí: tacaíocht do ghléasanna Huami (gá Gadgetbridge)
+
+Forbróir:
+- Déantar an t-iompórtáil i gcuimhne anois

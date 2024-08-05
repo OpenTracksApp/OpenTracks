@@ -1,0 +1,14 @@
+v3.2.3: OpenTracks
+
+Athruithe:
+- Roinnt: bain úsáid as Scarbhileog Android
+- Roinnt: roinnt rianta iolracha mar chomhaid aonair
+- Úsáid Android ShareSheet
+- Braiteoir ráta croí (Bluetooth LE): athcheangal uathoibríoch
+
+Ceartúchán Bug:
+- Braiteoir ráta croí (Bluetooth LE): dícheangail i gceart
+- Níor léiríodh ráta croí i gcónaí agus é ag taifeadadh
+
+Forbróir:
+- Trialacha ionstraimíochta TravisCI a chumasú

@@ -1,0 +1,14 @@
+v3.14.1: OpenTracks
+
+Athruithe:
+- Caillteanas ingearchló breise (trí bharaiméadar)
+- Aistriúcháin nuashonraithe (cz, gl, é, nb, pl, pt, sp)
+- Is féidir marcóirí a roinnt ón liosta
+- Deilbhín an Bharra Gníomhaíochta (barr ar chlé) chun dul siar
+-
+Ceartúchán Bug:
+- Tuairteála féideartha ar allmhairiú
+
+Forbróir:
+- Tástáil bhunúsach EspressoUI curtha i bhfeidhm
+- Acmhainn tagartha trí más rud é seachas lasc/cás

@@ -1,0 +1,17 @@
+v3.17.0: OpenTracks
+
+Athruithe:
+- Cuir deilbhín le haghaidh cadhcáil leis
+- Tarraingíonn cairteacha sonraí braiteora atá in easnamh i gceart
+- Réamhshocrú: taispeáin comhordanáidí agus tú ag taifeadadh
+
+Ceartúcháin fhabht:
+- Scéimre GPX ceartaithe
+- Easpórtáil GPX caillteanas airde mar achar braiteora
+- Staidreamh gan a bheith ríofa i gceart má tá braiteoir luais / faid in úsáid
+
+Forbróir:
+- Fad réada luacha/luas
+- Athsholáthar cumarsáide trí SharedPreferences
+- Úsáid neamh-statach ceanglóra seirbhíse
+- Úsáid airde sa bhunchód (in ionad ingearchló)

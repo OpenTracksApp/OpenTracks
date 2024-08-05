@@ -1,0 +1,5 @@
+v3.2.4: OpenTracks
+
+Ceartúchán Bug:
+- Socruithe tuairteanna gníomhaíochta
+ Baineadh an deis chun minicíocht gutha/deighilte a athrú ón roghchlár comhthéacs

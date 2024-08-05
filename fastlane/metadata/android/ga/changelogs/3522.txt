@@ -1,0 +1,14 @@
+v3.9.0: OpenTracks
+
+Athruithe:
+- Easpórtáil rianta lena n-UUID
+- Cosc a chur ar iompórtáil rianta atá ann cheana trí UUID (inchumraithe; réamhshocraithe tá)
+- Tá brú fada de dhíth anois ar an gcnaipe sos/stop
+- Léiríonn réamh-tús GPS stádas an tsocraithe
+- Cuireadh deilbhíní gníomhaíochta nua leis
+- Braiteoir luais: méid rothaí atá inchumraithe anois i milliméadar
+
+Ceartúcháin fhabht:
+- Socraíodh roinnt tuairteanna neamhchoitianta (NPE)
+- Ceartaíodh an fhormáidiú luas
+- Deilbhín app sa tosaitheoir athshuite

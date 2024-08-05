@@ -1,0 +1,4 @@
+v3.14.3: OpenTracks
+
+Ceartúchán Bug:
+- Bunachar sonraí a íosghrádú ón eisiúint atá le teacht v3.15.0

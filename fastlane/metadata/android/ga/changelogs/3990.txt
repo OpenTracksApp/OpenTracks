@@ -1,0 +1,8 @@
+v3.17.2: OpenTracks
+
+RABHADH: Tá sceitheadh cuimhne sna heisiúintí v3.17.0+.
+NACH bhfuil an tsaincheist seo socraithe ag an scaoileadh seo.
+Moltar gan uasghrádú a dhéanamh má úsáideann tú scaoileadh fós roimh v3.17.0
+
+Ceartúchán Bug:
+- Tuairteála agus fógraí gutha in úsáid

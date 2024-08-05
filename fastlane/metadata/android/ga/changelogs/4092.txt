@@ -1,0 +1,13 @@
+v3.18.1: OpenTracks
+
+Athruithe:
+- Déanann seirbhís a láimhseáil rianta a scriosadh
+- Scriosann Díshuiteáil na sonraí go léir (i.e., hasFragileData=bréagach)
+
+Ceartúcháin fhabht:
+- Coinníoll cine: tuairteála agus tú ag taifeadadh agus ag aistriú OpenTracks isteach sa chúlra
+- Ní raibh an cuardach sa liosta rian ag obair
+- Braiteoir luais rothaíochta: bhí ríomh an achair mícheart (ní raibh tionchar aige ach ar staitisticí)
+
+Forbróir:
+- Tagann ControllerFragment in ionad TrackController

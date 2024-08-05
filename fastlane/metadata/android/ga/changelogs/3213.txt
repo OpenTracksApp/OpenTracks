@@ -1,0 +1,12 @@
+v3.2.11: OpenTracks
+
+fabht:
+- Tá an luas uasta comhionann le meánluas
+
+Ceartúchán Bug:
+- Tuairteála ar roghnú braiteoir ráta croí
+
+Forbróir:
+- TabsLayout curtha in ionad TabHost
+- Baineadh an chéad bhealachbhealach speisialta
+- Aistriúcháin dhúblacha bainte

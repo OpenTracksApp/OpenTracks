@@ -1,0 +1,7 @@
+v3.17.1: OpenTracks
+
+
+Ceartúchán Bug:
+- Fad eatramh i méadair in ionad ciliméadar (a tugadh isteach in v3.17.0)
+- Gnóthachan/caillteanas airde nár taifeadadh (a tugadh isteach in v3.17.0)
+- Fógraí nach bhfuil ag obair ar Android 11

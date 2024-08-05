@@ -1,0 +1,7 @@
+v4.8.4: OpenTracks
+
+Athruithe:
+- Taispeáin uaschumhacht do rianta taifeadta
+
+Forbróir:
+- Úsáideann TrackList anois RecyclerView

@@ -1,0 +1,4 @@
+v4.6.1: OpenTracks
+
+Ceartúchán Bug:
+- Staidreamh comhiomlánaithe de réir na rianta roghnaithe a athchur leis

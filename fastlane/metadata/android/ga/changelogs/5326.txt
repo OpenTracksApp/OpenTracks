@@ -1,0 +1,8 @@
+v4.7.1: OpenTracks
+
+Ceartúcháin fhabht:
+- Android 14: tuairteála ar thosú taifeadta (ceadanna in easnamh)
+- Android 14: tuairteála ar scriosadh rian (ForegroundService gan chúis)
+
+Forbróir:
+- Is RecyclerView anois é AggregatedStats

@@ -1,0 +1,7 @@
+v3.7.3: OpenTracks
+
+Ceartúchán Bug:
+- Ríomhaireacht sheasta dúnta agus luais (trí braiteoir Bluetooth LE)
+
+Forbróir:
+- Aistriúcháin neamhúsáidte bainte
