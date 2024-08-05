@@ -1,0 +1,7 @@
+v3.2.1: OpenTracks
+
+Athruithe:
+- Tá na socruithe ar leathanach amháin anois
+
+Forbróir:
+- Socruithe aistrithe go compat Androidx (úsáideann blúirí)

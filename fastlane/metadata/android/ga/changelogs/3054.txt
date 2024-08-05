@@ -1,0 +1,16 @@
+v3.2.0: OpenTracks
+
+Athruithe:
+- Giuirléid Bainte
+- Tugadh isteach deilbhíní dearaidh ábhair
+- Snowboarding agus sciáil bainte (deilbhíní nua de dhíth)
+
+Ceartúchán Bug:
+- Feidhmiúlacht cuardaigh seasta
+
+Forbróir:
+- Cásanna tástála seasta (roinnt).
+- Feidhmiúlacht beartán neamhúsáidte bainte
+- Mórghlanadh agus athfhormáidiú
+- Ná húsáid craoladh le haghaidh cumarsáide aip chun giuirléidí
+- ní chuimsíonn stats_content.xml comhaid eile

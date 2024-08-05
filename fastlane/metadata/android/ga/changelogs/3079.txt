@@ -1,0 +1,13 @@
+v3.2.2: OpenTracks
+
+Athruithe:
+- Staitisticí comhiomlána bainte
+- Aistrithe go Dearadh Ábhar
+
+Ceartúchán Bug:
+- Easpórtáil sheasta sonraí braiteora
+- Iompórtáil sheasta sonraí braite neamhiomlán
+
+Forbróir:
+- Cuireadh barra uirlisí le barra gníomhaíochta
+- Aistrithe go androidx appcompat (lena n-áirítear Dearadh Ábhar)

@@ -1,0 +1,14 @@
+v3.1.0: OpenTracks
+
+Athruithe:
+- Cuireadh rian taispeántais leis in aipeanna léarscáile (arna thástáil le OsmAnd agus Maps.ME)
+- Curtha leis agus tú ag rianú, taispeáin staitisticí rian gan an gléas a dhíghlasáil
+- Mód tírdhreacha bainte le haghaidh radharc sonraí an rianta (bugaí a bhí ann)
+- Baineadh stair moltaí cuardaigh
+
+Ceartúchán Bug:
+- Iarr cead stórála le haghaidh allmhairiú go léir / onnmhairiú go léir
+
+Forbróir:
+- Uasghrádú go Gradle 5.6
+- Ná mionlaigh tógálacha scaoilte

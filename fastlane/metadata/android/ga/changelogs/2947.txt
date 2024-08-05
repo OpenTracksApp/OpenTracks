@@ -1,0 +1,17 @@
+v3.0.1: OpenTracks
+
+Athruithe:
+- Comhroinn marcóirí
+- Socruithe athstruchtúraithe
+- Baineadh cnaipe ar ais an bharra gníomhaíochta
+- Easpórtáil: rogha socruithe méid grianghraf bainte
+- Easpórtáil: Is féidir KML mar fhormáid a roghnú anois
+
+Ceartúcháin fhabht:
+- tá eolaire easpórtála anois /OpenTracks/
+- nach bhfuil mód tírdhreach crashing
+- Easpórtáil KML/KMZ seasta
+
+Forbróir:
+- Tá tástáil inrite (ach teipeann ar go leor)
+- Cumasaíodh comhtháthú leanúnach le TravisCI (gan tástálacha)

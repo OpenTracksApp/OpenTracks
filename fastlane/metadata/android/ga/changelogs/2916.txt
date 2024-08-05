@@ -1,0 +1,15 @@
+v3.0.0: OpenTracks
+
+An chéad eisiúint OpenTracks (i.e., forc crua ó MyTracks)
+
+Athruithe:
+- Athbhrandáil ó MyTracks go OpenTracks
+- Braiteoir ráta croí Bluetooth LE curtha leis
+- Baineadh na gnéithe go léir óna dteastaíonn rochtain Idirlín
+- Baineadh comhtháthú Google Maps
+- Baineadh úsáid as seirbhísí Google Play
+- Braiteoirí ANT+ bainte
+- Braiteoirí clasaiceacha Bluetooth bainte
+- Protobuf Bainte
+- Meastachán calraí bainte agus meastachán gníomhaíochta
+- API Seirbhíse MyTracks bainte (i.e. gan aon chomhtháthú le haipeanna eile)
