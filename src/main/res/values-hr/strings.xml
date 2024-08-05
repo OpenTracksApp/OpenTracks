@@ -175,7 +175,7 @@ limitations under the License.
     <string name="settings_chart_by_distance">Prema udaljenosti</string>
     <string name="settings_chart_by_time">Prema vremenu</string>
     <string name="settings_recording_default_activity_title">Standardna vrsta aktivnosti</string>
-    <string name="settings_recording_location_frequency_summary">%1$s između snimljenih lokacija</string>
+    <string name="settings_recording_location_frequency_summary">%1$s između provjera lokacija</string>
     <string name="settings_recording_max_recording_distance_summary">Novi segment izrađuje se ako je udaljenost između dviju lokacija veća od %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Maks. udaljenost</string>
     <string name="settings_recording_min_recording_distance_title">Snimanje intervala udaljenosti</string>
@@ -325,7 +325,7 @@ limitations under the License.
     <string name="settings_recording_keep_screen_on_while_recording_summary">Tijekom snimanja ostavi ekran uključenim.</string>
     <string name="settings_import_export_summary">Uvoz, Izvoz, Automatski izvoz</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Cjeloekranski prikaz</string>
-    <string name="settings_import_export_title">Uvoz/Izvoz</string>
+    <string name="settings_import_export_title">Uvoz i izvoz</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Tijekom snimanja prikaži u cjeloekranskom prikazu.</string>
     <string name="sensor_state_cadence_max">Maks. ritam</string>
     <string name="settings_units_category">Jedinice</string>
@@ -351,11 +351,11 @@ limitations under the License.
     <string name="hold_to_stop">Pritisni za prekidanje</string>
     <string name="about_history">OpenTracks je kopija aplikacije <a href="https://code.google.com/archive/p/mytracks/"><i>Googleovog MyTracksa</i></a> (ukinuta 2016.).</string>
     <string name="help_feature_content">* stvori GPS rute
-\n * koristi senzor pulsa (samo Bluetooth LE)
-\n * glasovne najave (po vremenu ili udaljenosti)
-\n * stvori oznake (uključujući slike)
-\n * radi bez internetske veze
-\n * prikaži rute na karti (vidi dolje)</string>
+\n* koristi senzor pulsa (samo Bluetooth LE)
+\n* glasovne najave (po vremenu ili udaljenosti)
+\n* stvori oznake (uključujući slike)
+\n* radi bez internetske veze
+\n* prikaži rute na karti (vidi dolje)</string>
     <string name="settings_announcements_totaltime_frequency">Vremenski interval</string>
     <string name="value_integer_knots">%1$d čvorova</string>
     <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 nautička milja} few {{n,number,#.0} nautičke milje} other {{n,number,#.0} nautičkih milja} }</string>
@@ -487,7 +487,7 @@ limitations under the License.
     <string name="track_discarding">Odbacivanje rute</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="generic_yesterday">Jučer</string>
-    <string name="about_version_code">Kôd verzije: %1$d</string>
+    <string name="about_version_code">Kod verzije: %1$d</string>
     <string name="generic_undo">Poništi</string>
     <string name="settings_night_mode_option_system">Sustav</string>
     <string name="share_image_body">Mislim da bi te ova slika mogla zanimati.</string>
@@ -523,7 +523,7 @@ limitations under the License.
     <string name="unit_knots">čv</string>
     <string name="stats_sensors_cadence">Ritam</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
-    <string name="help_data_storage_content"> \u0020Podaci senzora se spremaju za svaku snimljenu lokaciju. \u0020U smislu senzora pulsa, to znači da se za svaku lokaciju sprema samo <i>jedno</i> mjerenje pulsa. \u0020Ako se ne krećeš ili ako si u zatvorenom prostoru, podaci senzora se neće snimati (ali će se prikazati). \u0020</string>
+    <string name="help_data_storage_content"> Podaci senzora se spremaju za svaku snimljenu lokaciju. U smislu senzora pulsa, to znači da se za svaku lokaciju sprema samo <i>jedno</i> mjerenje pulsa. Ako se ne krećeš ili ako si u zatvorenom prostoru, podaci senzora se neće snimati (ali će se prikazati). </string>
     <string name="generic_choose_an_option">Odaberi jednu opciju</string>
     <string name="custom_layout_list_layout_removed">Raspored je uklonjen</string>
     <string name="settings_announcements_average_speed_pace">Prosječna brzina/tempo</string>
@@ -538,7 +538,7 @@ limitations under the License.
     <string name="settings_all_reset">Resetiraj</string>
     <string name="about_third_party_data">Podaci trećih strana</string>
     <string name="speed">Prosječna brzina kretanja</string>
-    <string name="help_track_export_content"> \u0020Rute se mogu izvesti iz postavki kao KMZ, KML ili GPX. \u0020KMZ/KML svi podaci; GPX samo lokacije. \u0020Rute koje se dijele putem <i>ikone dijeljenja</i> dijele se kao KMZ. \u0020</string>
+    <string name="help_track_export_content"> Rute se mogu izvesti iz postavki kao KMZ, KML ili GPX. KMZ/KML svi podaci; GPX samo lokacije. Rute koje se dijele putem <i>ikone dijeljenja</i> dijele se kao KMZ. </string>
     <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 čvor} few {{n,number} čvora} other {{n,number} čvorova} }</string>
     <string name="value_int_seconds">%1$d s (preporučeno)</string>
     <string name="track_detail_intervals_tab">Intervali</string>
@@ -554,37 +554,37 @@ limitations under the License.
     <string name="total_distance">Ukupna udaljenost</string>
     <string name="settings_running_sensor">Trčanje</string>
     <string name="import_thread_interrupted">Komponenta procesa prekinuta</string>
-    <string name="help_track_map_content"> Koristi malu ikonu karte.
-\n a) (aktualiziranje uživo) Instaliraj <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Omogućuje online ili offline karte putem <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
-\n Zapravo, OSMDashboard je zasebna aplikacija koja može samo (privremeno) pristupiti podacima ruta koje će se prikazati.
-\n b) Putem uobičajene aplikacije za karte (npr. <a href="http://osmand.net/">OsmAnd</a> i <a href="https://maps.me/">MAPS.ME</a>). Ove aplikacije moraju podržavati datotečni format KMZ (samo lokacije i vremenske oznake). Zapravo, aplikacija mora podržavati <i>ACTION_VIEW</i> s MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="help_track_map_content"> \u0020Koristi malu ikonu karte. 
+\n \u0020a) (aktualiziranje uživo) Instaliraj <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Omogućuje online ili offline karte putem <a href="https://www.openstreetmap.org">OpenStreetMap</a>. 
+\n \u0020Zapravo, OSMDashboard je zasebna aplikacija koja može samo (privremeno) pristupiti podacima ruta koje će se prikazati. 
+\n \u0020b) Putem uobičajene aplikacije za karte (npr. <a href="http://osmand.net/">OsmAnd</a> i <a href="https://maps.me/">MAPS.ME</a>). Ove aplikacije moraju podržavati datotečni format KMZ (samo lokacije i vremenske oznake). Zapravo, aplikacija mora podržavati <i>ACTION_VIEW</i> s MIME <i>application/vnd.google-earth.kmz</i>. \u0020</string>
     <string name="export_dir_not_writable">" (zabranjeno pisanje!)"</string>
     <string name="export_progress_summary_overwrite_msg">Datoteke su prepisane</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Snimljeni podaci se neće automatski dijeliti s drugim aplikacijama.</string>
     <string name="select_show_on_map_behavior">Odaberi „Prikaži na karti”</string>
     <string name="export_progress_summary_skip_msg">Datoteke su preskočene</string>
     <string name="activity_type_kickscooter">skuter</string>
-    <string name="help_gps_troubleshooting_content"> Što možeš učiniti:
-\n a) provjeri je li GPS uključen,
-\n b) poboljšaj GPS prijem (npr. izađi van),
-\n c) provjeri pomoću aplikacije <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> i
-\n d) deaktiviraj štednju energije.
-\n
-\n Ako ništa od navedenog ne pomogne, prijavi grešku. </string>
+    <string name="help_gps_troubleshooting_content"> \u0020Što možeš učiniti: 
+\n \u0020a) provjeri je li GPS uključen, 
+\n \u0020b) poboljšaj GPS prijem (npr. izađi van), 
+\n \u0020c) provjeri pomoću aplikacije <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> i 
+\n \u0020d) deaktiviraj štednju energije. 
+\n 
+\n \u0020Ako ništa od navedenog ne pomogne, prijavi grešku. \u0020</string>
     <string name="export_all_do_it_for_all">učini to za sve konflikte</string>
     <string name="share_crash_report">Dijeli izvještaj o prekidu rada</string>
     <string name="error_crash_title">%1$s je prekinuo rad</string>
     <string name="voiceIdle">Prelazi u stanje neaktivnosti.</string>
     <string name="export_error_post_workout">Izvoz nakon treninga nije uspio. Provjeri direktorij za izvoz.</string>
     <string name="activity_type_escooter">e-skuter</string>
-    <string name="help_support_content"> Možeš:
-\n a) širiti glas o OpenTracksu,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">predložiti funkcije</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">prijaviti greške</a>,
-\n d) pomoći u razvoju softvera,
-\n e) kupiti na stranici <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Trgovina Google Play</a>,
-\n f) donirati
-\n g) učiniti sve što misliš da pomaže OpenTracksu. </string>
+    <string name="help_support_content"> \u0020Možeš: 
+\n \u0020a) širiti glas o OpenTracksu, 
+\n \u0020b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">predložiti funkcije</a>, 
+\n \u0020c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">prijaviti greške</a>, 
+\n \u0020d) pomoći u razvoju softvera, 
+\n \u0020e) kupiti na stranici <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Trgovina Google Play</a>, 
+\n \u0020f) donirati 
+\n \u0020g) učiniti sve što misliš da pomaže aplikaciji OpenTracks. \u0020</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Aplikacija koja je pokrenula snimanje također može pristupiti snimljenim podacima.</string>
     <string name="export_progress_summary_new_msg">Nove datoteke su izvezene</string>
     <string name="settings_recording_idle_timeout_title">Prag neaktivnosti</string>
@@ -594,4 +594,15 @@ limitations under the License.
     <string name="value_internal_sensor">Interni senzor</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
     <string name="settings_recording_min_sampling_interval_title">Interval uzorkovanja</string>
+    <string name="settings_theme_switch_restart">Mijenjanja teme mogu zahtijevati ručno ponovno pokretanje.</string>
+    <string name="settings_announcements_unit">Jedinica udaljenosti/brzine</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} few {{n,number,#.0}} other {{n,number,#.0}} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } few {{n,number,#.0}} other {{n,number,#.0}} }</string>
+    <string name="settings_recording_location_distance_summary">%1$s između snimljenih lokacija</string>
+    <string name="create_marker_error">Nije moguće stvoriti oznaku. Pokušaj ponovo.</string>
+    <string name="settings_night_mode_option_night_oled">Noć (pogodno za OLED)</string>
+    <string name="power_x_watt">Snaga {x, plural, =1 {1 watt} few {# watta} other {# watta} }</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="settings_announcements_lap_power">Snaga runde</string>
+    <string name="power">Snaga</string>
 </resources>
