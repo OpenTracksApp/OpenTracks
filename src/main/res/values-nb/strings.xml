@@ -597,4 +597,5 @@ limitations under the License.
     <string name="settings_sensor_bluetooth_service_filter_title">Filtrer Bluetooth-enheter</string>
     <string name="settings_sensor_bluetooth_service_filter_off">Vis alle Bluetooth-enheter som kan oppdages</string>
     <string name="permission_recording_failed">OpenTracks krever tillatelse for å få tilgang til posisjonen din samt enheter i nærheten.</string>
+    <string name="create_marker_error">Klarte ikke å opprette en markør. Prøv igjen.</string>
 </resources>
