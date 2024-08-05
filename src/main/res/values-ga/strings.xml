@@ -116,9 +116,9 @@
     <string name="export_without_photos">gan grianghraif</string>
     <string name="export_cannot_write_to_dir">Ní féidir scríobh chuig an eolaire easpórtála.</string>
     <string name="export_dir_not_writable">" (Ní inscríofa!)"</string>
-    <string name="export_progress_summary_new_msg">Rianta nua easpórtáilte</string>
-    <string name="export_progress_summary_overwrite_msg">Rianta forscríofa</string>
-    <string name="export_progress_summary_skip_msg">Rianta skip</string>
+    <string name="export_progress_summary_new_msg">Comhaid nua easpórtáilte</string>
+    <string name="export_progress_summary_overwrite_msg">Comhaid forscríofa</string>
+    <string name="export_progress_summary_skip_msg">Léimíodh comhaid</string>
     <string name="generic_delete_selected_confirm_title">Scrios roghnaithe\?</string>
     <string name="export_all_do_it_for_all">é a dhéanamh do gach coinbhleacht</string>
     <string name="export_progress_summary_errors_msg">Earráidí</string>
@@ -174,7 +174,7 @@
     <string name="menu_aggregated_statistics">Staitisticí comhiomlána</string>
     <string name="menu_delete">Scrios</string>
     <string name="menu_edit">Cuir in eagar</string>
-    <string name="menu_export_all">Easpórtáil go léir</string>
+    <string name="menu_export_all">Easpórtáil gach ceann (comhad amháin in aghaidh an traic)</string>
     <string name="menu_help">Cabhrú</string>
     <string name="marker_list_empty_message">Níl aon marcóirí agat</string>
     <string name="menu_import_all">Iompórtáil go léir</string>
@@ -207,7 +207,7 @@
     <string name="settings_ui_title">Comhéadan Úsáideora</string>
     <string name="settings_sensors_title">Braiteoirí</string>
     <string name="settings_announcements_summary">Am, Fad, Luas Gutha</string>
-    <string name="settings_import_export_title">Iompórtáil/Easpórtáil</string>
+    <string name="settings_import_export_title">Iompórtáil agus Easpórtáil</string>
     <string name="settings_import_export_summary">Iompórtáil, Easpórtáil, Uathoibríoch</string>
     <string name="settings_units_category">Aonaid</string>
     <string name="settings_activity_defaults_category">Réamhshocruithe Gníomhaíochta</string>
@@ -224,7 +224,7 @@
     <string name="settings_recording_fullscreen_on_while_recording_title">Scáileán iomlán</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Agus tú ag taifeadadh, cuir i láthair ar lánscáileán.</string>
     <string name="settings_recording_default_activity_title">Cineál gníomhaíochta réamhshocraithe</string>
-    <string name="settings_recording_location_frequency_summary">%1$s idir suíomhanna taifeadta</string>
+    <string name="settings_recording_location_frequency_summary">%1$s idir seiceálacha suímh</string>
     <string name="settings_recording_max_recording_distance_summary">Cruthaítear teascán nua má tá an fad idir dhá shuíomh níos mó ná %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Fad uasta</string>
     <string name="settings_recording_min_required_accuracy_title">Cruinneas GPS</string>
@@ -236,7 +236,7 @@
     <string name="settings_night_mode_option_system">Córas</string>
     <string name="settings_night_mode_option_day">Lá</string>
     <string name="settings_night_mode_option_night">Oíche</string>
-    <string name="settings_announcements_distance_frequency">Fad eatramh</string>
+    <string name="settings_announcements_distance_frequency">Fad glúine</string>
     <string name="settings_announcements_lap_heart_rate">Ráta croí glúine</string>
     <string name="settings_announcements_average_speed_pace">Meánluas/luas</string>
     <string name="settings_announcements_lap_speed_pace">Luas/luas glúine</string>
@@ -307,14 +307,14 @@
 \n * taispeáin rianta ar léarscáil (féach thíos)</string>
     <string name="help_data_storage_content"> Stóráiltear sonraí braiteora in aghaidh an tsuímh taifeadta. Maidir le braiteoir ráta croí, ciallaíonn sé seo nach stóráiltear ach tomhas ráta croí <i>amháin</i> in aghaidh an tsuímh. Má tá tú i do sheasamh nó má tá tú istigh, ní dhéanfar aon sonraí braite a thaifeadadh (ach taispeánfar é). </string>
     <string name="activity_type_sky_jumping">léim spéir</string>
-    <string name="export_track_errors">Rianta gan easpórtáil</string>
+    <string name="export_track_errors">Comhaid gan easpórtáil</string>
     <string name="marker_add_photo_canceled">Ar ceal, níor cuireadh marcóir grianghraf leis</string>
     <string name="generic_save">Sábháil</string>
     <string name="activity_type_track_cycling">rothaíocht rian</string>
     <string name="marker_delete_one_confirm_message">Scriosfar an marcóir go buan ón bhfeiste</string>
     <string name="generic_separator_done_total">/</string>
     <string name="description_average_pace_in_minute">Meánluas: %1$s nóim/km (%2$s nóim/mi)</string>
-    <string name="export_track_already_exists_msg">Tá an rian %1$s sa chomhadlann sprice cheana.</string>
+    <string name="export_track_already_exists_msg">Tá an comhad %1$s sa chomhadlann sprice cheana.</string>
     <string name="generic_completed">Críochnaithe</string>
     <string name="description_total_distance">Fad iomlán: %1$.2f km (%2$.1f mi)</string>
     <string name="generic_description">Cur síos</string>
@@ -331,10 +331,10 @@
     <string name="settings_gps_summary">Eatramh ama, Fad-eatramh, Fad Max, Cruinneas</string>
     <string name="about_description"><i>Open Tracks</i> is iarratas rianaithe spóirt go n-urramaíonn go hiomlán do phríobháideacht.</string>
     <string name="help_track_export_content"> Is féidir rianta a easpórtáil ó na Socruithe mar KMZ, KML, nó GPX. na sonraí go léir KMZ/KML; Suíomhanna GPX amháin. Roinntear rianta a roinntear tríd an <i>deilbhín comhroinnte</i> mar KMZ. </string>
-    <string name="help_track_map_content">" Bain úsáid as an deilbhín léarscáile beag.
-\n  a) (nuashonraithe beo) Suiteáil &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt;OSMDashboard&lt;/a&gt;. Soláthraíonn sé léarscáileanna ar líne nó as líne trí &lt;a href=\"https://www.openstreetmap.org\"&gt;OpenStreetMap&lt;/a&gt;.
-\n  I ndáiríre, is aip ar leith é OSMDashboard nach féidir ach rochtain a fháil (go sealadach) ar shonraí na rianta atá le taispeáint.
-\n  b) Trí ghnáthfheidhmchlár léarscáile (m.sh., &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; agus &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). Ní mór do na haipeanna seo tacú le formáid comhaid KMZ (suíomhanna agus stampaí ama amháin). Go deimhin, caithfidh aip tacaíocht a thabhairt do &lt;i&gt;ACTION_VIEW&lt;/i&gt; le MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt;. "</string>
+    <string name="help_track_map_content">"  Bain úsáid as an deilbhín léarscáile beag.
+\n a) (nuashonraithe beo) Suiteáil &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt;OSMDashboard&lt;/a&gt;. Soláthraíonn sé léarscáileanna ar líne nó as líne trí &lt;a href=\"https://www.openstreetmap.org\"&gt;OpenStreetMap&lt;/a&gt;.
+\n I ndáiríre, is aip ar leith é OSMDashboard nach féidir ach rochtain a fháil (go sealadach) ar shonraí na rianta atá le taispeáint.
+\n b) Trí ghnáthfheidhmchlár léarscáile (m.sh., &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; agus &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). Ní mór do na haipeanna seo tacú le formáid comhaid KMZ (suíomhanna agus stampaí ama amháin). Go deimhin, caithfidh aip tacaíocht a thabhairt do &lt;i&gt;ACTION_VIEW&lt;/i&gt; le MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt;.  "</string>
     <string name="activity_type_ultimate_frisbee">frisbee deiridh</string>
     <string name="description_total_time">Am iomlán: %1$s</string>
     <string name="activity_type_inline_skating">scátáil inlíne</string>
@@ -504,4 +504,60 @@
     <string name="unit_meter">m</string>
     <string name="unit_kilometer">km</string>
     <string name="track_delete_not_recording">Ní féidir an traic seo a scriosadh mar go bhfuil sé taifeadta faoi láthair.</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Críochnaithe le hearráid amháin</item>
+        <item quantity="two">Críochnaithe le %1$d earráid</item>
+        <item quantity="few">Críochnaithe le %1$d earráid</item>
+        <item quantity="many">Críochnaithe le %1$d earráid</item>
+        <item quantity="other">Críochnaithe le %1$d earráid</item>
+    </plurals>
+    <string name="help_data_google_play_services_content">Níl</string>
+    <string name="activity_type_kickscooter">scútar</string>
+    <string name="permission_recording_failed">Teastaíonn cead ó OpenTracks chun rochtain a fháil ar do shuíomh chomh maith le gléasanna in aice láimhe.</string>
+    <string name="sensor_state_pressure">Baraiméadar</string>
+    <string name="settings_announcements_idle_category_title">Fógraí Díomhaoin</string>
+    <string name="settings_announcements_idle_title">Díomhaoin</string>
+    <string name="settings_ui_dynamic_colors_title">Dathanna Dinimiciúla</string>
+    <string name="settings_recording_title">Taifeadadh</string>
+    <string name="settings_theme_switch_restart">Seans go mbeidh atosú láimhe de dhíth le haghaidh athruithe téamaí.</string>
+    <string name="settings_ui_dynamic_colors_summary">Úsáid Dathanna Dinimiciúla atá sainithe ag an úsáideoir (Android 12+ amháin; tá atosú láimhe ag teastáil)</string>
+    <string name="settings_recording_min_required_accuracy_summary">Ní thugtar aird ar shuíomh más mó a chruinneas ná %1$s</string>
+    <string name="settings_recording_idle_timeout_title">Tairseach díomhaoin</string>
+    <string name="settings_announcements_unit">Aonad faid/luas</string>
+    <string name="value_internal_sensor">Braiteoir inmheánach</string>
+    <string name="voiceIdle">Ag éirí díomhaoin.</string>
+    <string name="voiceSecondsPlural">{n, iolra, =1 {1 soicind} eile {{ n,uimhir} soicind} }</string>
+    <string name="voiceSpeedKilometersPerHourPlural">{n, iolra, =1 {1 chiliméadar in aghaidh na huaire} eile {{ n,uimhir, #.0} ciliméadar san uair} }</string>
+    <string name="voiceSpeedMKnotsPlural">{n, iolra, =1 {1 snaidhm} eile {{ n,uimhir, #.0} snaidhm} }</string>
+    <string name="voiceDistanceNauticalMilesPlural">{n, iolra, =1 {1 mhuirmhíle} eile {{ n,uimhir, #.0} muirmhíle} }</string>
+    <string name="voiceDistance">{n, iolra, =1 {1 } eile {{ n,uimhir, #.0}} }</string>
+    <string name="settings_recording_min_sampling_interval_title">Eatramh ama samplála</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="settings_night_mode_option_night_oled">Oíche (OLED cairdiúil)</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="power">Cumhacht</string>
+    <string name="value_int_seconds">%1$d s (molta)</string>
+    <string name="menu_export_all_one_file">Easpórtáil gach ceann (comhad amháin do gach traic)</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Scag Gléasanna Bluetooth</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Taispeáin gach gléas Bluetooth in-aimsithe</string>
+    <string name="settings_sensor_heart_rate_max">Criosanna: uasráta croí (bpm)</string>
+    <string name="settings_stats_units_imperial_meter">Impiriúil (mi, m)</string>
+    <string name="settings_api_summary">Cianrialú agus staitisticí API le haghaidh aipeanna eile</string>
+    <string name="create_marker_error">Ní féidir marcóir a chruthú. Déan iarracht arís.</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="voiceMinutesPlural">{n, iolra, =1 {1 nóiméad} eile {{ n,uimhir} nóiméad} }</string>
+    <string name="voiceDistanceKilometersPlural">{n, iolra, =1 {1 chiliméadar} eile {{ n,uimhir, #.0} ciliméadar} }</string>
+    <string name="sensor_state_power_max">Cumhacht Max</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="voiceHoursPlural">{n, iolra, =1 {1 uair} eile {{ n,uimhir} uair an chloig} }</string>
+    <string name="voiceDistanceMilesPlural">{n, iolra, =1 {1 mhíle} eile {{ n,uimhir, #.0} míle} }</string>
+    <string name="no_compatible_camera_installed">Níl feidhmchlár ceamara comhoiriúnach suiteáilte</string>
+    <string name="voiceSpeedMilesPerHourPlural">{n, iolra, =1 {1 mhíle san uair} eile {{ n,uimhir, #.0} míle san uair} }</string>
+    <string name="voiceSpeed">{n, iolra, =1 {1} eile {{ n,uimhir, #.0}} }</string>
+    <string name="voice_on_device_speaker_title">Úsáid cainteoir an ghléis</string>
+    <string name="no_compatible_gallery_installed">Níl feidhmchlár gailearaí íomhá comhoiriúnach suiteáilte</string>
+    <string name="settings_recording_location_distance_summary">%1$s idir suíomhanna taifeadta</string>
+    <string name="settings_announcements_lap_power">Cumhacht glúine</string>
+    <string name="power_x_watt">Cumhacht {x, iolra, = 1 {1 vata} eile {# vata} }</string>
 </resources>
