@@ -1,0 +1,15 @@
+v4.13.0: OpenTracks
+
+Veranderingen:
+- Markers kunnen worden gemaakt via Public API
+  Dit maakt het mogelijk om op elke locatie en na het opnemen Markers te maken.
+  Nadeel: Markeringen worden niet meer weergegeven in diagrammen.
+  OPMERKING: OSMDashboard ondersteunt deze API na versie: v4.1.0
+
+Opgeloste probleem:
+- De standaardinstelling voor activiteit had een vervolgkeuzelijst moeten zijn
+- Pijl terug werkt niet in instellingen
+- Label voor off-trail wandelen toont nu "off trail wandelen"
+
+Ontwikkelaar:
+- Gebruik Positie in plaats van de locatie van Android
