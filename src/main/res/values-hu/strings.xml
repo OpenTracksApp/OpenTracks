@@ -600,4 +600,5 @@ limitations under the License.
     <string name="power">Erő</string>
     <string name="voiceSpeed">{n,number,#.0}</string>
     <string name="settings_announcements_lap_power">Kör teljesítmény</string>
+    <string name="create_marker_error">Nem sikerült jelölőt létrehozni. Próbálja újra.</string>
 </resources>
