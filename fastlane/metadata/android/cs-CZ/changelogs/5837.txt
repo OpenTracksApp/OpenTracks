@@ -1,0 +1,15 @@
+v4.13.0: OpenTracks
+
+Změny:
+- Značky lze vytvářet pomocí veřejného rozhraní API
+  To umožňuje vytváření značek na jakékoli lokaci po záznamu.
+  Nevýhoda: značky již nejsou zobrazeny v diagramech.
+  UPOZORNĚNÍ: OSMDashboard podporuje toto API po verzi: v4.1.0
+
+Opravy chyb:
+- Výchozí nastavení aktivity mělo být rozbalovací nabídka
+- Šipka zpět nefungovala v nastavení
+- Štítek pro turistiku mimo stezky nyní zobrazuje „turistika mimo stezky“
+
+Vývojář:
+- Použití Pozice namísto Lokace systému Android
