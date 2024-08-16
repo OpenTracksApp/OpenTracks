@@ -1,0 +1,15 @@
+v4.13.0: OpenTracks
+
+Cambios:
+- Pódense crear Marcadores usando a API Pública
+  Isto permite crear Marcadores en calquera localización despois de ter gravado.
+  Contrapartida: os Marcadores xa non se mostran nos diagramas.
+  NOTA: OSMDashboard é compatible con esta API a partir da versión: v4.1.0
+
+Arranxos:
+- O selector de actividade por defecto debería ter sido un menú despregable
+- A frecha atrás non funciona nos axustes
+- A etiqueta para camiñadas fóra do camiño agora mostra "camiñada fóra de camiños"
+
+Desenvolvemento:
+- Usar Posición no lugar da Localizacion de Android
