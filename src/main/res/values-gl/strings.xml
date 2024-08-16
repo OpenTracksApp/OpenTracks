@@ -424,7 +424,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="export_progress_summary_overwrite_msg">Ficheiros sobrescritos</string>
     <string name="export_progress_summary_skip_msg">Ficheiros omitidos</string>
     <string name="export_progress_summary_errors_msg">Erros</string>
-    <string name="generic_open_track">Aberto O Control</string>
+    <string name="generic_open_track">Abrir a Ruta</string>
     <string name="import_prevent_reimport">Estableceches previr a reimportación da ruta</string>
     <string name="import_progress_summary_ok_msg">Ficheiros importados</string>
     <string name="import_progress_summary_exists_msg">Xa existe</string>
