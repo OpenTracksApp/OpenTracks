@@ -1,2 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="about_preference_title">Apprupositu d’OpenTracks</string>
+    <string name="about_description"><i>OpenTracks</i> hè un’appiecazione di tracciamentu spurtivu chì rispetta cumpletamente a vostra vita privata.</string>
+    <string name="about_url">Pagina web di u prughjettu : <a href="%1$s">%1$s</a></string>
+    <string name="about_version_code">Codice di a versione :%1$d</string>
+    <string name="about_third_party_data">Dati esterni</string>
+    <string name="about_libraries">Bibliuteche</string>
+    <string name="help_storage_pictures_title">Cumu OpenTracks accuncieghja e fiure chì sò state pigliate cum’è stantelle ?</string>
+    <string name="help_storage_pictures_content">Sò piazzate in a memoria interna di l’appiecazione (vole si dì, solu accessibile da OpenTracks).</string>
+    <string name="help_data_google_play_services_title">OpenTracks richiede o impiegheghja u serviziu Google Play ?</string>
+    <string name="help_data_google_play_services_content">Innò</string>
+    <string name="help_recording_title">Cumu OpenTracks arregistreghja i dati ?</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks ùn arregistreghja micca e pusizioni ?</string>
+    <string name="help_support_title">Cumu possu sustene OpenTracks ?</string>
+    <string name="open_track_as_trackfileformat">Apre cum’è %1$s</string>
+    <string name="activity_type_airplane">aviò</string>
+    <string name="activity_type_atv">fora di strada</string>
+    <string name="activity_type_biking">bicicletta</string>
+    <string name="activity_type_blimp">dirigevule</string>
+    <string name="activity_type_climbing">appichjata</string>
+    <string name="activity_type_commercial_airplane">aviò cummerciale</string>
+    <string name="activity_type_cycling">ciclismu</string>
+    <string name="activity_type_dirt_bike">motocross</string>
+    <string name="activity_type_donkey_back_riding">cavalcatura à sumere</string>
+    <string name="activity_type_driving">cundotta</string>
+    <string name="activity_type_driving_bus">autobus</string>
+    <string name="activity_type_escooter">scooter elettricu</string>
+    <string name="activity_type_kickscooter">scooter</string>
+    <string name="activity_type_ferry">barcu</string>
+    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_hang_gliding">deltaplanu</string>
+    <string name="activity_type_gliding">volu à vela</string>
+    <string name="activity_type_helicopter">elicotteru</string>
+    <string name="activity_type_hiking">girandulata</string>
+    <string name="activity_type_horse_back_riding">cavalcatura à cavallu</string>
+    <string name="activity_type_hot_air_balloon">ballone</string>
+    <string name="activity_type_ice_sailing">carru à ghjacciu</string>
+    <string name="activity_type_inline_skating">pattinaghju in linea</string>
+    <string name="activity_type_kite_surfing">kitesurf</string>
+    <string name="activity_type_paddling">paddle</string>
+    <string name="activity_type_para_gliding">parapenta</string>
+    <string name="activity_type_rc_airplane">aviò radiocumandatu</string>
+    <string name="activity_type_riding">cavalcatura</string>
+    <string name="activity_type_road_biking">ciclismu nant’à strada</string>
+    <string name="activity_type_roller_skiing">schì à rutulelle</string>
+    <string name="activity_type_rowing">canuttera</string>
+    <string name="activity_type_running">corsa</string>
+    <string name="activity_type_sailing">vela</string>
+    <string name="activity_type_seaplane">idraviò</string>
+    <string name="activity_type_skate_boarding">skateboard</string>
+    <string name="activity_type_skating">pattinaghju</string>
+    <string name="activity_type_skiing">schì</string>
+    <string name="activity_type_sky_jumping">paracadutisimu</string>
+    <string name="activity_type_sled">sculiscetta</string>
+    <string name="activity_type_snow_boarding">snowboard</string>
+    <string name="activity_type_snow_shoeing">racchette di neve</string>
+    <string name="activity_type_speed_walking">marchja spurtiva</string>
+    <string name="activity_type_street_running">corsa urbana</string>
+    <string name="activity_type_surfing">surf</string>
+    <string name="activity_type_track_cycling">ciclismu nant’à traccia</string>
+    <string name="activity_type_track_running">corsa atletica</string>
+    <string name="activity_type_trail_hiking">girandulata nant’à pista</string>
+    <string name="activity_type_trail_running">corsa nant’à pista</string>
+    <string name="activity_type_train">trenu</string>
+    <string name="activity_type_ultimate_frisbee">frisbee assulutu</string>
+    <string name="activity_type_unknown">scunnisciuta</string>
+    <string name="activity_type_wakeboarding">wakeboard</string>
+    <string name="activity_type_walking">marchja</string>
+    <string name="activity_type_water_skiing">schì nauticu</string>
+    <string name="activity_type_wind_surfing">windsurf</string>
+    <string name="activity_type_swimming">nutera</string>
+    <string name="activity_type_swimming_open">nutera in acqua libera</string>
+    <string name="activity_type_workout">eserciziu</string>
+    <string name="description_average_pace_in_minute">Andatura mediana : %1$s min/km (%2$s min/mi)</string>
+    <string name="description_average_speed">Vitezza mediana : %1$.2f km/o (%2$.1f mi/o)</string>
+    <string name="description_altitude_gain">Dislivellu pusitivu : %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Dislivellu negativu : %1$d m (%2$d ft)</string>
+    <string name="description_altitude_imperial">Altitudine (ft)</string>
+    <string name="description_max_altitude">Altitudine massima : %1$d m (%2$d ft)</string>
+    <string name="description_max_speed">Vitezza massima : %1$.2f km/o (%2$.1f mi/o)</string>
+    <string name="description_min_altitude">Altitudine minima : %1$d m (%2$d ft)</string>
+    <string name="description_moving_time">Durata in mossa : %1$s</string>
+    <string name="description_pace_imperial">Andatura (min/mi)</string>
+    <string name="description_pace_nautical">Andatura (min/NM)</string>
+    <string name="description_recorded_time">Data d’arregistramentu : %1$s</string>
+    <string name="description_speed_ms">Vitezza (m/s)</string>
+    <string name="description_sensor_cadence">Cadenza (rpm)</string>
+    <string name="description_sensor_power">Putenza (W)</string>
+    <string name="description_default_speed_or_pace">Da tipu d’attività</string>
+    <string name="description_speed_imperial">Vitezza (mi/ora)</string>
+    <string name="description_speed_nautical">Vitezza (nodi)</string>
+    <string name="description_speed_source_gps">GPS</string>
+    <string name="export_error_post_workout">Fiascu à l°espurtazione di u posteserciziu, ci vole à cuntrollà u cartulare d’espurtazione.</string>
+    <string name="export_cannot_write_to_dir">Ùn si pò micca scrive in u cartulare d’espurtazione.</string>
+    <string name="export_dir_not_writable">" (non scrivibile !)"</string>
+    <string name="export_progress_message">Espurtazione versu %1$s…</string>
+    <string name="export_track_already_exists_msg">U schedariu %1$s esiste dighjà in u cartulare di destinazione.</string>
+    <string name="export_all_do_it_for_all">fallu per tutti i cunflitti</string>
+    <string name="export_progress_summary_errors_msg">Sbaglii</string>
+    <string name="generic_add">Aghjunghje</string>
+    <string name="generic_name">Nome</string>
+    <string name="generic_name_line">Nome : %1$s</string>
+    <string name="generic_save">Arregistrà</string>
+    <string name="generic_tracks">Tracciamenti</string>
+    <string name="generic_overwrite">Rimpiazzà</string>
+    <string name="generic_skip">Tralascià</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_show_errors">Affissà i sbaglii</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Compiu cù un sbagliu</item>
+        <item quantity="other">Compiu cù %1$d sbaglii</item>
+    </plurals>
+    <string name="generic_completed">Compiu</string>
+    <string name="generic_choose_an_option">Sciglite un’ozzione</string>
+    <string name="generic_undo">Disfà</string>
+    <string name="generic_from">Da</string>
+    <string name="generic_to">À</string>
+    <string name="generic_yesterday">Eri</string>
+    <string name="gps_starting">Lanciu di u GPS</string>
+    <string name="gps_wait_for_better_signal">In attesa d’un signale GPS più bellu</string>
+    <string name="gps_wait_for_signal">In attesa di u signale GPS</string>
+    <string name="gps_disabled_msg">GPS disattivatu</string>
+    <string name="gps_fixed_and_ready">GPS fissu è prontu</string>
+    <string name="gps_recording_status">%1$s : %2$s</string>
+    <string name="image_arrow">Freccia</string>
+    <string name="image_marker_count">Numeru di stantelle</string>
+    <string name="image_stop">Piantà</string>
+    <string name="image_discard">Scartà</string>
+    <string name="image_track">Tracciamentu</string>
+    <string name="import_thread_interrupted">Filu d’esecuzione interrottu</string>
+    <string name="import_unsupported_format">Furmatu di schedariu inaccettatu</string>
+    <string name="import_parser_error">Sbagliu di l’analizatore di sintassa : %1$s</string>
+    <string name="import_unable_to_import_file">Ùn si pò micca impurtà u schedariu : %1$s</string>
+    <string name="import_no_kml_file_found">Ùn si pò truvà nisunu schedariu kml in KMZ</string>
+    <string name="import_error_info">%1$s : %2$s</string>
+    <string name="import_error_list_dialog_title">Schedarii micca impurtati</string>
+    <string name="import_file_imported">Schedariu %1$s impurtatu</string>
+    <string name="import_prevent_reimport">Avete definitu d’impedisce a reimpurtazione di tracciamentu</string>
+    <string name="import_progress_message">Impurtazione da %1$s…</string>
+    <string name="import_progress_summary_ok_msg">Schedarii impurtati</string>
+    <string name="import_progress_summary_exists_msg">Esiste dighjà</string>
+    <string name="marker_add_error">Impussibule di framette una stantella. Nisunu signale GPS. Pruvate torna.</string>
+    <string name="marker_add_canceled">Operazione abbandunata, nisuna stantella aghjunta</string>
+    <string name="marker_add_photo_canceled">Operazione abbandunata, nisuna stantella di fotò aghjunta</string>
+    <string name="marker_delete_one_confirm_message">A stantella serà squassata ab’eternu da l’apparechju</string>
+    <string name="marker_delete_one_confirm_title">Squassà a stantella ?</string>
+    <string name="marker_delete_multiple_confirm_message">E stantelle selezziunate seranu squassate ab’eternu da l’apparechju</string>
+    <string name="marker_name_format">Stantella %1$d</string>
+    <string name="marker_title">%1$d nant’à %2$d</string>
+    <string name="marker_list_empty_message">Ùn avete nisuna stantella</string>
+    <string name="menu_aggregated_statistics">Statistiche aggregate</string>
+    <string name="menu_edit">Mudificà</string>
+    <string name="menu_insert_marker">Framette una stantella</string>
+    <string name="menu_insert_photo">Framette una fotò</string>
+    <string name="menu_insert_gallery_img">Framette una fiura di a galleria</string>
+    <string name="menu_markers">Stantelle</string>
+    <string name="menu_search">Ricercà</string>
+    <string name="menu_show_on_map">Affissà nant’à a carta</string>
+    <string name="menu_voice_rate">Vitezza di a voce</string>
+    <string name="menu_resume_track">Ripiglià u tracciamentu</string>
+    <string name="menu_add_custom_layout">Accunciamentu novu</string>
+    <string name="menu_filter">Filtru</string>
+    <string name="about_version_name">Nome di a versione :%1$s</string>
+    <string name="about_history">OpenTracks hè una scansa di <a href="https://code.google.com/archive/p/mytracks/"><i>MyTracks da Google</i></a> (abbandunatu in u 2016).</string>
+    <string name="help_track_export_title">Cumu possu espurtà o scumparte i tracciamenti arregistrati ?</string>
+    <string name="help_track_export_content"> I tracciamenti ponu esse espurtati da i Parametri à u furmatu KMZ, KML, o GPX. KMZ o KML per tutti i dati ; GPX solu per e pusizioni. I tracciamenti scumparti via l’<i>icona di spartera</i> sò à u furmatu KMZ. </string>
+    <string name="help_track_map_content"> \u0020Impiegate a chjuca icona in forma di carta.
+\n \u0020a) \u0020(messe à livellu in vivu) Installate <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. \u0020Furnisce carte in linea o fora di linea via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n \u0020In fatti, OSMDashboard hè un’altra appiecazione chì pò solu accede (timpurariamente) à i dati chì anu da esse affissati). \u0020
+\n \u0020b) \u0020Via un’appiecazione classica di cartugrafia (p.i. <a href="http://osmand.net/">OsmAnd</a> è <a href="https://maps.me/">MAPS.ME</a>). \u0020St’appiecazioni devenu piglià in carica u furmatu di schedariu KMZ (solu e pusizioni è e stampiglie). \u0020In fatti, l’appiecazione deve incaricassi di <i>ACTION_VIEW</i> cù u tipu MIME <i>application/vnd.google-earth.kmz</i>. \u0020</string>
+    <string name="help_recording_content">OpenTracks impiegheghja u cattore GPS di l’apparechju per arregistrà di cuntinuu a pusizione. S’è l’apparechju GPS signaleghja dati falsi (per indettu, pusizione, vitezza o altezza), OpenTracks ùn pò fà nunda.</string>
+    <string name="help_data_storage_title">Cumu OpenTracks arregistreghja i dati di i cattori ?</string>
+    <string name="activity_type_driving_car">vittura</string>
+    <string name="help_data_storage_content"> I dati di i cattori sò piazzati à a pusizione arregistrata. In casu d’un cattore di frequenza cardiaca, vole si dì chì solu <i>una</i> misura di frequenza cardiaca hè arregistrata à a pusizione. S’è vo state immobile o s’è vo site dentru, nisunu datu di cattore ùn serà arregistratu (ma serà affissatu). </string>
+    <string name="help_gps_troubleshooting_content"> \u0020Ciò ch’ella si pò fà :
+\n \u0020a) verificate chì u GPS hè attivatu,
+\n \u0020b) amendà a ricezzione (p.i. andate fora),
+\n \u0020c) cuntrollate cù l’appiecazione <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, è
+\n \u0020d) disattivate l’ecunumia d’energia.
+\n 
+\n \u0020S’è tuttu què ùn aiuta micca, ci vole à signalà u prublema. \u0020</string>
+    <string name="help_support_content"> \u0020Pudete :
+\n \u0020a) fà cunnosce OpenTracks,
+\n \u0020b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">prupone funzioni</a>,
+\n \u0020c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">signalà i prublemi</a>,
+\n \u0020d) aiutà à u sviluppu di u prugramma,
+\n \u0020e) cumprallu in u <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n \u0020f) fà una dunazione, è
+\n \u0020g) fà tuttu ciò ch’ella vi pare ghjuvevule per OpenTracks. \u0020</string>
+    <string name="activity_type_boat">battellu</string>
+    <string name="activity_type_cross_country_skiing">schì di fondu</string>
+    <string name="help_feature_title">OpenTracks pussede quelle funzioni :</string>
+    <string name="help_feature_content">* creazione di traccie GPS
+\n* impiegu d’un cattore di frequenza cardiaca (Bluetooth LE solu)
+\n* annunziamenti vucali (per tempu o per distanza)
+\n* creazione di stantelle (cù fiure)
+\n* funziuneghja cumpletamente fora di linea
+\n* affissera di e traccie nant’à una carta (fighjà quì sottu)</string>
+    <string name="help_track_map_title">Cumu affissà una traccia nant’à una carta ?</string>
+    <string name="activity_type_kayaking">kayac</string>
+    <string name="activity_type_mixed_type">tipu mischju</string>
+    <string name="activity_type_motor_bike">motò</string>
+    <string name="activity_type_motor_boating">battellu à mutore</string>
+    <string name="activity_type_mountain_biking">VTT</string>
+    <string name="activity_type_off_trail_hiking">girandulata fora di strada</string>
+    <string name="activity_type_other">altru</string>
+    <string name="activity_type_land_sailing">carru à vela</string>
+    <string name="activity_type_rc_helicopter">elicotteru radiocumandatu</string>
+    <string name="activity_type_rc_boat">battellu radiocumandatu</string>
+    <string name="description_altitude_metric">Altitudine (m)</string>
+    <string name="description_average_moving_pace_in_minute">Andatura mediana in mossa : %1$s min/km (%2$s min/mi)</string>
+    <string name="description_activity_type">Tipu d’attività : %1$s</string>
+    <string name="description_fastest_pace_in_minute">Andatura massima : %1$s min/km (%2$s min/mi)</string>
+    <string name="description_pace_metric">Andatura (min/km)</string>
+    <string name="description_average_moving_speed">Vitezza mediana in mossa : %1$.2f km/o (%2$.1f mi/o)</string>
+    <string name="description_sensor_heart_rate">Frequenza cardiaca (bpm)</string>
+    <string name="description_speed_metric">Vitezza (km/ora)</string>
+    <string name="description_time">Durata</string>
+    <string name="description_total_distance">Distanza tutale : %1$.2f km (%2$.1f mi)</string>
+    <string name="description_total_time">Durata tutale : %1$s</string>
+    <string name="export_with_photos">cù e fotò</string>
+    <string name="export_without_photos">senza fotò</string>
+    <string name="export_track_errors">Schedarii micca espurtati</string>
+    <string name="export_progress_summary_overwrite_msg">Schedarii rimpiazzati</string>
+    <string name="export_progress_summary_skip_msg">Schedarii tralasciati</string>
+    <string name="export_progress_summary_new_msg">Schedarii novi espurtati</string>
+    <string name="generic_delete_selected_confirm_title">Squassà l’elementi selezziunati ?</string>
+    <string name="generic_description_line">Discrizzione : %1$s</string>
+    <string name="generic_description">Discrizzione</string>
+    <string name="generic_open_track">Apre una traccia</string>
+    <string name="generic_click_twice_cancel">Cliccu torna nant’à ritornu per abbandunà</string>
+    <string name="generic_filter">Filtru</string>
+    <string name="generic_recording">Arregistramentu…</string>
+    <string name="generic_today">Oghje</string>
+    <string name="generic_dismiss">Ricusà</string>
+    <string name="gps_recording_without_signal">OpenTracks arregistreghja senza i dati GPS.</string>
+    <string name="image_record">Arregistrà</string>
+    <string name="import_progress_summary_errors_msg">Sbaglii</string>
+    <string name="create_marker_error">Impussibule di creà una stantella. Pruvate torna.</string>
+    <string name="marker_edit_marker_type">Tipu di stantella (p.i. cascata)</string>
+    <string name="menu_delete">Squassà</string>
+    <string name="menu_export_all">Tuttu espurtà (un schedariu à u tracciamentu)</string>
+    <string name="menu_export_all_one_file">Tuttu espurtà (un schedariu per tutti i tracciamenti)</string>
+    <string name="menu_help">Aiutu</string>
+    <string name="menu_import_all">Tuttu impurtà</string>
+    <string name="marker_add_success">Una stantella hè stata framessa</string>
+    <string name="image_photo_marker">Stantella di fotò</string>
+    <string name="menu_select_all">Tuttu selezziunà</string>
+    <string name="menu_settings">Parametri</string>
+    <string name="menu_share">Sparte</string>
+    <string name="menu_select_layout">Selezziunà a messa in pagina</string>
+    <string name="recording_service">Serviziu d’arregistramentu</string>
+</resources>
