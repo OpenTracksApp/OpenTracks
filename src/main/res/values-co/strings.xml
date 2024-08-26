@@ -191,13 +191,13 @@
     <string name="activity_type_boat">battellu</string>
     <string name="activity_type_cross_country_skiing">schì di fondu</string>
     <string name="help_feature_title">OpenTracks pussede quelle funzioni :</string>
-    <string name="help_feature_content">* creazione di traccie GPS
+    <string name="help_feature_content">* creazione di tracciati GPS
 \n* impiegu d’un cattore di frequenza cardiaca (Bluetooth LE solu)
 \n* annunziamenti vucali (per tempu o per distanza)
 \n* creazione di stantelle (cù fiure)
 \n* funziuneghja cumpletamente fora di linea
-\n* affissera di e traccie nant’à una carta (fighjà quì sottu)</string>
-    <string name="help_track_map_title">Cumu affissà una traccia nant’à una carta ?</string>
+\n* affissera di i tracciati nant’à una carta (fighjà quì sottu)</string>
+    <string name="help_track_map_title">Cumu affissà un tracciatu nant’à una carta ?</string>
     <string name="activity_type_kayaking">kayac</string>
     <string name="activity_type_mixed_type">tipu mischju</string>
     <string name="activity_type_motor_bike">motò</string>
