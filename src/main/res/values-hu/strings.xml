@@ -393,7 +393,7 @@ limitations under the License.
     <string name="menu_insert_gallery_img">Galériakép beillesztése</string>
     <string name="menu_resume_track">Nyomvonal folytatása</string>
     <string name="import_parser_error">Értelmezőhiba: %1$s</string>
-    <string name="help_data_storage_content"> \u0020Az érzékelőadatok rögzített helyenként vannak tárolva. A pulzusszám-érzékelőre vonatkoztatva ez azt jelenti, hogy csak <i>egy</i> pulzusszámmérés kerül tárolásra helyenként. Ha Ön mozdulatlanul áll vagy beltérben tartózkodik, akkor nem kerülnek rögzítésre az érzékelőadatai (de megjelennek). \u0020</string>
+    <string name="help_data_storage_content"> Az érzékelőadatok rögzített helyenként vannak tárolva. A pulzusszám-érzékelőre vonatkoztatva ez azt jelenti, hogy csak <i>egy</i> pulzusszámmérés kerül tárolásra helyenként. Ha Ön mozdulatlanul áll vagy beltérben tartózkodik, akkor nem kerülnek rögzítésre az érzékelőadatai (de megjelennek). </string>
     <string name="help_support_content"> \u0020Ezeket teheti meg: 
 \n \u0020a) terjesztheti az OpenTracks hírét, 
 \n \u0020b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">funkciókat javasolhat</a>, 
@@ -417,7 +417,7 @@ limitations under the License.
     <string name="share_image_subject">Szeretnék megosztani veletek egy képet</string>
     <string name="share_image_body">Azt hiszem, ez a kép érdekelhet.</string>
     <string name="help_recording_title">Hogyan veszi fel az OpenTracks az adatokat?</string>
-    <string name="help_track_export_content"> \u0020A nyomvonalak KMZ, KML vagy GPX formátumban exportálhatók a Beállításokból. KMZ/KML minden adat; GPX csak a helyszínek. \u0020A <i>megosztás ikonon</i> keresztül megosztott nyomvonalak KMZ formátumban kerülnek megosztásra. \u0020</string>
+    <string name="help_track_export_content"> A nyomvonalak KMZ, KML vagy GPX formátumban exportálhatók a Beállításokból. KMZ/KML minden adat; GPX csak a helyszínek. A <i>megosztás ikonon</i> keresztül megosztott nyomvonalak KMZ formátumban kerülnek megosztásra. </string>
     <string name="help_track_map_content"> \u0020Használja a kis térkép ikont.
 \n \u0020a) \u0020(élő frissítések) Telepítse a <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. \u0020Ez online vagy offline térképeket biztosít a <a href="https://www.openstreetmap.org">OpenStreetMap</a> segítségével.
 \n \u0020Valójában az OSMDashboard egy különálló alkalmazás, amely csak a megjelenítendő nyomvonal(ak) adataihoz fér hozzá (ideiglenesen). \u0020
@@ -425,11 +425,11 @@ limitations under the License.
     <string name="about_description">Az <i>OpenTracks</i> egy sportkövető alkalmazás, amely teljes mértékben tiszteletben tartja az Ön adatvédelmét.</string>
     <string name="about_history">Az OpenTracks a <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a> (2016-ban megszűnt) elágazása.</string>
     <string name="help_feature_content">* GPS nyomvonalak létrehozása
-\n * szívritmus-érzékelő használata (csak Bluetooth LE)
-\n * hangbejelentések (idő vagy távolság alapján)
-\n * jelölések létrehozása (képekkel együtt)
-\n * teljes offline működés
-\n * nyomvonalak megjelenítése a térképen (lásd lentebb)</string>
+\n* szívritmus-érzékelő használata (csak Bluetooth LE)
+\n* hangbejelentések (idő vagy távolság alapján)
+\n* jelölések létrehozása (képekkel együtt)
+\n* teljes offline működés
+\n* nyomvonalak megjelenítése a térképen (lásd lentebb)</string>
     <string name="about_third_party_data">Harmadik féltől származó adatok</string>
     <string name="menu_voice_rate">Beszédhang sebessége</string>
     <string name="track_delete_not_recording">Ez a nyomvonal nem törölhető, mivel jelenleg is felveszi.</string>
@@ -601,4 +601,7 @@ limitations under the License.
     <string name="voiceSpeed">{n,number,#.0}</string>
     <string name="settings_announcements_lap_power">Kör teljesítmény</string>
     <string name="create_marker_error">Nem sikerült jelölőt létrehozni. Próbálja újra.</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="power_x_watt">Teljesítmény {x, plural, =1 {1 watt} other {# watts} }</string>
 </resources>
