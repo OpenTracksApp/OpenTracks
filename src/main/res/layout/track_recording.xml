@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:fabAlignmentMode="end"
-        app:navigationIcon="@drawable/ic_logo_color_24dp"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
         app:menu="@menu/track_record" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
