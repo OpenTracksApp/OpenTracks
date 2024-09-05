@@ -68,7 +68,7 @@ public class KMLTrackExporter implements TrackExporter {
     public static final String EXTENDED_DATA_TYPE_SPEED = "speed";
     public static final String EXTENDED_DATA_TYPE_DISTANCE = "distance";
     public static final String EXTENDED_DATA_TYPE_CADENCE = "cadence";
-    public static final String EXTENDED_DATA_TYPE_HEART_RATE = "heart_rate";
+    public static final String EXTENDED_DATA_TYPE_HEARTRATE = "heartrate";
     public static final String EXTENDED_DATA_TYPE_POWER = "power";
     public static final String EXTENDED_DATA_TYPE_ALTITUDE_GAIN = "elevation_gain";
     public static final String EXTENDED_DATA_TYPE_ALTITUDE_LOSS = "elevation_loss";
@@ -253,7 +253,7 @@ public class KMLTrackExporter implements TrackExporter {
         writeSimpleArrayStyle(EXTENDED_DATA_TYPE_SPEED, context.getString(R.string.description_speed_ms));
         writeSimpleArrayStyle(EXTENDED_DATA_TYPE_POWER, context.getString(R.string.description_sensor_power));
         writeSimpleArrayStyle(EXTENDED_DATA_TYPE_CADENCE, context.getString(R.string.description_sensor_cadence));
-        writeSimpleArrayStyle(EXTENDED_DATA_TYPE_HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
+        writeSimpleArrayStyle(EXTENDED_DATA_TYPE_HEARTRATE, context.getString(R.string.description_sensor_heart_rate));
 
         printWriter.println("</Schema>");
     }
@@ -348,7 +348,7 @@ public class KMLTrackExporter implements TrackExporter {
             writeSimpleArraySensorData(cadenceList, EXTENDED_DATA_TYPE_CADENCE);
         }
         if (heartRateList.stream().anyMatch(Objects::nonNull)) {
-            writeSimpleArraySensorData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
+            writeSimpleArraySensorData(heartRateList, EXTENDED_DATA_TYPE_HEARTRATE);
         }
         if (altitudeGainList.stream().anyMatch(Objects::nonNull)) {
             writeSimpleArraySensorData(altitudeGainList, EXTENDED_DATA_TYPE_ALTITUDE_GAIN);

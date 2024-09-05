@@ -82,6 +82,8 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private static final String TAG_UUID = "opentracks:trackid";
 
     private static final String ATTRIBUTE_NAME = "name";
+    // Until v4.13.0, was in contradiction with KML2.3 standard; keeping backward compatibility.
+    public static final String EXTENDED_DATA_TYPE_HEART_RATE_LEGACY = "heart_rate";
 
     private Locator locator;
 
@@ -426,7 +428,8 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             case KMLTrackExporter.EXTENDED_DATA_TYPE_SPEED -> sensorSpeedList.add(value);
             case KMLTrackExporter.EXTENDED_DATA_TYPE_DISTANCE -> sensorDistanceList.add(value);
             case KMLTrackExporter.EXTENDED_DATA_TYPE_POWER -> sensorPowerList.add(value);
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_HEART_RATE -> sensorHeartRateList.add(value);
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_HEARTRATE,
+                 EXTENDED_DATA_TYPE_HEART_RATE_LEGACY -> sensorHeartRateList.add(value);
             case KMLTrackExporter.EXTENDED_DATA_TYPE_CADENCE -> sensorCadenceList.add(value);
             case KMLTrackExporter.EXTENDED_DATA_TYPE_ALTITUDE_GAIN -> altitudeGainList.add(value);
             case KMLTrackExporter.EXTENDED_DATA_TYPE_ALTITUDE_LOSS -> altitudeLossList.add(value);
