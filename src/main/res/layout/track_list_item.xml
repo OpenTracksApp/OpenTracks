@@ -22,11 +22,12 @@
     <TextView
         android:id="@+id/track_list_item_name"
         style="?attr/textAppearanceBody1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:singleLine="true"
         app:layout_constraintStart_toEndOf="@id/track_list_item_icon"
+        app:layout_constraintEnd_toStartOf="@id/track_list_item_date"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Main Text" />
 
