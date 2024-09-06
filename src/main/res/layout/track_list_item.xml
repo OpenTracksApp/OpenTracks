@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/activated_background"
-    android:padding="8dp">
+    android:paddingTop="8dp"
+    android:paddingHorizontal="8dp">
 
     <!-- Icon -->
     <ImageView
@@ -21,7 +22,7 @@
     <TextView
         android:id="@+id/track_list_item_name"
         style="?attr/textAppearanceBody1"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:singleLine="true"
