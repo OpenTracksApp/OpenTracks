@@ -34,7 +34,6 @@ limitations under the License.
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginBottom="@dimen/m3_bottom_nav_min_height"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <ScrollView style="@style/ScrollView.WithBottomButtons">
@@ -150,9 +149,5 @@ limitations under the License.
                 android:layout_gravity="end" />
         </LinearLayout>
     </LinearLayout>
-
-    <include
-        android:id="@+id/bottom_app_bar_layout"
-        layout="@layout/bottomappbar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

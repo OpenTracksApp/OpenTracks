@@ -107,8 +107,6 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
         viewBinding.trackEditCancel.setOnClickListener(v -> finish());
         viewBinding.trackEditCancel.setVisibility(View.VISIBLE);
-
-        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 
     @Override
