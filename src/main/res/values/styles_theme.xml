@@ -22,6 +22,8 @@
         <item name="android:statusBarColor">?attr/colorSurfaceBright</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">?attr/colorSurfaceContainer</item>
+        <!-- Material3-related: otherwise the actionbar does not overlay the SearchBar completely (with AppBarLayout) -->
+        <item name="actionBarSize">88dp</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.SplashScreen">
