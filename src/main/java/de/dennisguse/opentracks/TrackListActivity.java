@@ -297,14 +297,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         Cursor tracks = new ContentProviderUtils(this).searchTracks(searchQuery);
 
         adapter.swapData(tracks);
-
-        if (tracks.getCount() == 0) {
-            viewBinding.trackListEmptyView.setVisibility(View.VISIBLE);
-            viewBinding.trackList.setVisibility(View.GONE);
-        } else {
-            viewBinding.trackListEmptyView.setVisibility(View.GONE);
-            viewBinding.trackList.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override

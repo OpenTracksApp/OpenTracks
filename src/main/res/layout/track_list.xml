@@ -40,75 +40,11 @@ limitations under the License.
         <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
     </com.google.android.material.search.SearchView>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/track_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:orientation="vertical"
-        android:paddingBottom="?attr/actionBarSize"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/track_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.8" />
-
-        <RelativeLayout
-            android:id="@+id/track_list_empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.2">
-
-            <LinearLayout
-                android:id="@+id/track_list_arrow_long"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:paddingTop="16dp"
-                android:paddingBottom="0dp">
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:contentDescription="@string/image_arrow"
-                    android:paddingBottom="50dp"
-                    android:src="@drawable/ic_arrow_long" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/track_list_arrow_long">
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3" />
-
-                <TextView
-                    style="?attr/textAppearanceHeadline6"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="10"
-                    android:gravity="end"
-                    android:text="@string/track_list_empty_message" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.3" />
-            </LinearLayout>
-        </RelativeLayout>
-
-    </LinearLayout>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_app_bar"
