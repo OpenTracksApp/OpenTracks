@@ -92,10 +92,12 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public void updateRecordingStatus(RecordingStatus recordingStatus) {
         this.recordingStatus = recordingStatus;
+        this.notifyDataSetChanged();
     }
 
     public void updateUnitSystem(UnitSystem unitSystem) {
         this.unitSystem = unitSystem;
+        this.notifyDataSetChanged();
     }
 
     @Override
