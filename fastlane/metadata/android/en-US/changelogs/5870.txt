@@ -1,0 +1,10 @@
+v4.13.1: OpenTracks
+
+Changes:
+- Aggregated stats calender' uses regional preferences (Android 14+)
+
+Bugfix:
+- KML 2.3: use standardized field name for heartrate
+- Track list: recording status was not updated correctly
+- Material3 related UI fixes
+
