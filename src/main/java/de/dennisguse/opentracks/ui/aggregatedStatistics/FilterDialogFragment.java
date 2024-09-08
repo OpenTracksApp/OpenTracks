@@ -10,15 +10,18 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.util.Pair;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.TimeZone;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.databinding.FragmentFilterDialogBinding;
@@ -65,47 +68,53 @@ public class FilterDialogFragment extends DialogFragment {
             layout.filterItems.addView(view.getRoot());
         }
 
-        LocalDateTime firstDayThisWeek = LocalDate.now().with(WeekFields.of(Locale.getDefault()).getFirstDayOfWeek()).atStartOfDay();
-        layout.filterDateEditTextFrom.setText(StringUtils.formatLocalDateTime(firstDayThisWeek));
-        layout.filterDatePickerFrom.init(firstDayThisWeek.getYear(), firstDayThisWeek.getMonthValue() - 1, firstDayThisWeek.getDayOfMonth(), (view, year, monthOfYear, dayOfMonth) -> {
-            LocalDateTime localDateTime = LocalDateTime.of(year, monthOfYear + 1, dayOfMonth, 0, 0, 0);
-            layout.filterDateEditTextFrom.setText(StringUtils.formatLocalDateTime(localDateTime));
-            layout.filterDatePickerFrom.setVisibility(View.GONE);
-            layout.filterDatePickerTo.setMinDate(localDateTime.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
-            if (localDateTime.isAfter(LocalDateTime.of(layout.filterDatePickerTo.getYear(), layout.filterDatePickerTo.getMonth() + 1, layout.filterDatePickerTo.getDayOfMonth(), 23, 59, 59))) {
-                layout.filterDatePickerTo.updateDate(year, monthOfYear, dayOfMonth);
-            }
+
+        // Interval is last 7 days.
+        LocalDateTime initialToDate = LocalDate.now().atStartOfDay();
+        LocalDateTime initialFromDate = initialToDate.minusDays(6);
+
+        MaterialDatePicker<Pair<Long, Long>> dateRangePicker = MaterialDatePicker.Builder
+                .dateRangePicker()
+                .setSelection(new Pair<>(
+                        initialFromDate.toInstant(ZoneOffset.UTC).toEpochMilli(),
+                        initialToDate.toInstant(ZoneOffset.UTC).toEpochMilli())
+
+                )
+                .build();
+
+        layout.filterDateEditTextFrom.setText(StringUtils.formatLocalDateTime(initialFromDate));
+        layout.filterDateEditTextTo.setText(StringUtils.formatLocalDateTime(initialToDate));
+
+        dateRangePicker.addOnPositiveButtonClickListener(selection -> {
+            Pair<LocalDateTime, LocalDateTime> javaxSelection = to(dateRangePicker);
+
+            layout.filterDateEditTextFrom.setText(StringUtils.formatLocalDateTime(javaxSelection.first));
+            layout.filterDateEditTextTo.setText(StringUtils.formatLocalDateTime(javaxSelection.second));
         });
 
-        LocalDateTime lastDayThisWeek = firstDayThisWeek.plusDays(6).withHour(23).withMinute(59).withSecond(59);
-        layout.filterDateEditTextTo.setText(StringUtils.formatLocalDateTime(lastDayThisWeek));
-        layout.filterDatePickerTo.init(lastDayThisWeek.getYear(), lastDayThisWeek.getMonthValue() - 1, lastDayThisWeek.getDayOfMonth(), (view, year, monthOfYear, dayOfMonth) -> {
-            LocalDateTime localDateTime = LocalDateTime.of(year, monthOfYear + 1, dayOfMonth, 23, 59, 59);
-            layout.filterDateEditTextTo.setText(StringUtils.formatLocalDateTime(localDateTime));
-            layout.filterDatePickerTo.setVisibility(View.GONE);
-        });
-
-        layout.filterDateEditTextFrom.setOnClickListener(v -> {
-            layout.filterDatePickerFrom.setVisibility(View.VISIBLE);
-            layout.filterDatePickerTo.setVisibility(View.GONE);
-        });
-
-        layout.filterDateEditTextTo.setOnClickListener(v -> {
-            layout.filterDatePickerFrom.setVisibility(View.GONE);
-            layout.filterDatePickerTo.setVisibility(View.VISIBLE);
-        });
+        View.OnClickListener openDatePicker = v -> dateRangePicker.show(getChildFragmentManager(), "DATE_PICKER");
+        layout.filterDateEditTextFrom.setOnClickListener(openDatePicker);
+        layout.filterDateEditTextTo.setOnClickListener(openDatePicker);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.generic_filter));
         builder.setView(layout.getRoot());
-        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> filterDialogListener.onFilterDone(
-                filterItems,
-                LocalDateTime.of(layout.filterDatePickerFrom.getYear(), layout.filterDatePickerFrom.getMonth() + 1, layout.filterDatePickerFrom.getDayOfMonth(), 0, 0, 0),
-                LocalDateTime.of(layout.filterDatePickerTo.getYear(), layout.filterDatePickerTo.getMonth() + 1, layout.filterDatePickerTo.getDayOfMonth(), 23, 59, 59)
-        ));
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            Pair<LocalDateTime, LocalDateTime> a = to(dateRangePicker);
+            filterDialogListener.onFilterDone(filterItems, a.first, a.second);
+        });
         builder.setNegativeButton(android.R.string.cancel, null);
 
         return builder.create();
+    }
+
+    private static Pair<LocalDateTime, LocalDateTime> to(MaterialDatePicker<Pair<Long, Long>> dateRangePicker) {
+        Pair<Long, Long> selection = dateRangePicker.getSelection();
+
+        return new Pair<>(
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(selection.first), TimeZone.getDefault().toZoneId()),
+                LocalDateTime.ofInstant(Instant.ofEpochMilli(selection.second), TimeZone.getDefault().toZoneId())
+        );
     }
 
     @Override
