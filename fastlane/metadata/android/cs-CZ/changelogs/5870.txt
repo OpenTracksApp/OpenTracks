@@ -1,0 +1,9 @@
+v4.13.1: OpenTracks
+
+Změny:
+- Kalendář agregovaných statistik využívá regionální preference (Android 14+)
+
+Opravy chyb:
+- KML 2.3: standardizovaný název pole pro srdeční tep
+- Seznam stop: stav nahrávání nebyl správně aktualizován
+- Opravy rozhraní související s Material 3
