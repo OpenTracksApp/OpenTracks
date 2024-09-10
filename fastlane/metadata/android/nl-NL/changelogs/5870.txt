@@ -1,0 +1,9 @@
+v4.13.1: OpenTracks
+
+Veranderingen:
+- Geaggregeerde statistieken calender 'gebruikt regionale voorkeuren (Android 14 +)
+
+Bugfix:
+- KML 2.3: gebruik gestandaardiseerde veldnaam voor hartslag
+- Tracklijst: opnamestatus is niet correct bijgewerkt
+- Material3 gerelateerde UI-fixes
