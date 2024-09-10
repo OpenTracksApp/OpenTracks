@@ -1,0 +1,15 @@
+v4.13.0: OpenTracks
+
+Athruithe:
+- Is féidir marcóirí a chruthú trí API Poiblí
+ Ligeann sé seo a chruthú Marcóirí ag aon suíomh agus tar éis taifeadadh.
+ Míbhuntáiste: Ní thaispeántar marcóirí sna léaráidí a thuilleadh.
+ TABHAIR FAOI DEARA: Tacaíonn OSMDashboard leis an API seo tar éis leagan: v4.1.0
+
+Ceartúchán Bug:
+- Ba cheart go mbeadh socrú gníomhaíochta réamhshocraithe ina anuas
+- Ar ais saighead nach bhfuil ag obair i socruithe
+- Léiríonn an lipéad le haghaidh siúil as cosán anois "siúlóid as cosán"
+
+Forbróir:
+- Úsáid Post in ionad Suíomh Android

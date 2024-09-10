@@ -1,0 +1,9 @@
+v4.13.1: OpenTracks
+
+Athruithe:
+- Úsáideann féilire staitisticí comhiomlánaithe roghanna réigiúnacha (Android 14+)
+
+Ceartúchán Bug:
+- KML 2.3: bain úsáid as ainm réimse caighdeánaithe le haghaidh ráta croí
+- Liosta rianta: níor nuashonraíodh stádas taifeadta i gceart
+- Ceartúcháin Chomhéadain a bhaineann le hábhar3
