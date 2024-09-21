@@ -1,11 +1,14 @@
-OpenTracks er en app for opptak av sportsaktivitet som respekterer ditt personvern.
+OpenTracks er en app for opptak av sportsaktivitet som respekterer personvernet ditt.
 
 Funksjoner:
-* Sportsporing: Registrer dine sports- og utendørsaktiviteter
-* Bilder og markører: Marker interessante steder under sporing
+* Registrer dine sports- og utendørsaktiviteter
+* Bilder og markører: Marker interessante steder underveis
 * Total stigning og nedstigning: via barometersensor
 * Høyde vist i EGM2008 (over havnivå); eksportert som WGS84
 * Talemeldinger
 * Støtter Blåtann LE-sensorer: puls, hastighet og distanse (sykling), kadens (sykling) og wattmåler (sykling)
 * Eksport av data: Enten som KMZ (inkl. bilder), KML eller GPX
 * Ingen internettilgang: Internett brukes ikke
+* Mørkt og lyst tema, respekterer systeminnstillingene
+
+En åpen kildekode-app uten reklame.
