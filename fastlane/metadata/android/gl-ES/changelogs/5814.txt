@@ -1,0 +1,8 @@
+v4.12.5: OpenTracks
+
+Arranxos:
+- detección correcta do movemento.
+  Estragouse na v4.9.0 ao engdir detección da pausa. Mira #1756.
+
+Cambios:
+- Soporte para Retroceso Predictivo

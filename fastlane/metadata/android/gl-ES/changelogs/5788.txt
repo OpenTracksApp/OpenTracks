@@ -1,0 +1,8 @@
+v4.12.4: OpenTracks
+
+Cambios:
+- Anuncios: pódense omitir as unidades de medida
+- Anuncios: engadida a potencia durante a volta no ciclismo
+
+Arranxo:
+- fallo ao eliminar marcadores na lista

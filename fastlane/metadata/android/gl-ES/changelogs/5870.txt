@@ -1,0 +1,9 @@
+v4.13.1: OpenTracks
+
+Cambios:
+- O calendario con estatísticas acumuladas segue os axustes rexionais (Android 14+)
+
+Arranxos:
+- KML 2.3: usa o nome de campo estándar para frecuencia cardíaca
+- Lista de rutas: non se actualizaba correctamente o estado da gravación
+- Arranxos na IU relacionados con Material3
