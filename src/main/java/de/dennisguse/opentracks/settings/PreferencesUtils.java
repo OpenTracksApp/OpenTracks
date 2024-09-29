@@ -344,17 +344,17 @@ public class PreferencesUtils {
     }
 
     static String[] getVoiceAnnouncementFrequencyEntries() {
-        String[] values = resources.getStringArray(R.array.voice_announcement_frequency_values);
-        String[] options = new String[values.length];
-        for (int i = 0; i < values.length; i++) {
-            if (resources.getString(R.string.announcement_off).equals(values[i])) {
-                options[i] = resources.getString(R.string.value_off);
+        String[] entryValues = resources.getStringArray(R.array.voice_announcement_frequency_values);
+        String[] entries = new String[entryValues.length];
+        for (int i = 0; i < entryValues.length; i++) {
+            if (resources.getString(R.string.announcement_off).equals(entryValues[i])) {
+                entries[i] = resources.getString(R.string.value_off);
             } else {
-                int value = Integer.parseInt(values[i]);
-                options[i] = resources.getString(R.string.value_integer_minute, Duration.ofSeconds(value).toMinutes());
+                int value = Integer.parseInt(entryValues[i]);
+                entries[i] = resources.getString(R.string.value_integer_minute, Duration.ofSeconds(value).toMinutes());
             }
         }
-        return options;
+        return entries;
     }
 
     /**
@@ -370,23 +370,23 @@ public class PreferencesUtils {
      * @return Result depends on getUnitSystem
      */
     static String[] getVoiceAnnouncementDistanceEntries() {
-        String[] values = resources.getStringArray(R.array.voice_announcement_distance_values);
-        String[] options = new String[values.length];
+        String[] entryValues = resources.getStringArray(R.array.voice_announcement_distance_values);
+        String[] entries = new String[entryValues.length];
         UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
                 .setUnit(unitSystem)
                 .build(resources);
-        for (int i = 0; i < values.length; i++) {
-            if (resources.getString(R.string.announcement_off).equals(values[i])) {
-                options[i] = resources.getString(R.string.value_off);
+        for (int i = 0; i < entryValues.length; i++) {
+            if (resources.getString(R.string.announcement_off).equals(entryValues[i])) {
+                entries[i] = resources.getString(R.string.value_off);
             } else {
-                Distance distance = Distance.one(unitSystem).multipliedBy(Double.parseDouble(values[i]));
-                options[i] = formatter.formatDistance(distance);
+                Distance distance = Distance.one(unitSystem).multipliedBy(Double.parseDouble(entryValues[i]));
+                entries[i] = formatter.formatDistance(distance);
             }
         }
-        return options;
+        return entries;
     }
 
     public static float getVoiceSpeedRate() {
@@ -642,7 +642,9 @@ public class PreferencesUtils {
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
 
-            if (value == idleDurationDefault) {
+            if (resources.getString(R.string.announcement_off).equals(entryValues[i])) {
+                entries[i] = resources.getString(R.string.value_off);
+            } else if (value == idleDurationDefault) {
                 entries[i] = resources.getString(R.string.value_int_seconds, value);
             } else {
                 entries[i] = value < 60 ? resources.getString(R.string.value_integer_second, value) : resources.getString(R.string.value_integer_minute, value / 60);

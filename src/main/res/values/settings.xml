@@ -127,7 +127,9 @@
 
     <string name="idle_duration_key" translatable="false">idleSpeedDuration</string>
     <string name="idle_duration_default" translatable="false">10</string>
+    <string name="idle_duration_off" translatable="false">0</string>
     <string-array name="idle_duration_values">
+        <item>@string/idle_duration_off</item>
         <item>5</item>
         <item>@string/idle_duration_default</item>
         <item>15</item>
