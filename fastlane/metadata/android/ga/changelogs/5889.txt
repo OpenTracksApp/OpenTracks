@@ -1,0 +1,7 @@
+v4.14.0: OpenTracks
+
+Athruithe:
+- Úsáid sonraí Androidx EGM2008 (in ionad ár réiteach saincheaptha a chuachadh).
+
+Forbróir:
+- Dírigh ar Android15/ SDK35
