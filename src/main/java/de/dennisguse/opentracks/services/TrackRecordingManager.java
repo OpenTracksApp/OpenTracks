@@ -170,8 +170,7 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         if (trackPoint.hasLocation() && lastStoredTrackPointWithLocation == null) {
             insertTrackPoint(trackPoint, true);
 
-            handler.removeCallbacks(ON_IDLE);
-            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
+            scheduleNewIdleTimeout();
             return true;
         }
 
@@ -199,16 +198,14 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
             trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
             insertTrackPoint(trackPoint, true);
 
-            handler.removeCallbacks(ON_IDLE);
-            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
+            scheduleNewIdleTimeout();
             return true;
         }
 
         if (distanceToLastStoredTrackPoint.greaterOrEqualThan(recordingDistanceInterval)) {
             insertTrackPoint(trackPoint, false);
 
-            handler.removeCallbacks(ON_IDLE);
-            handler.postDelayed(ON_IDLE, idleDuration.toMillis());
+            scheduleNewIdleTimeout();
             return true;
         }
 
@@ -216,6 +213,15 @@ public class TrackRecordingManager implements SharedPreferences.OnSharedPreferen
         lastTrackPoint = trackPoint;
 
         return false;
+    }
+
+    private void scheduleNewIdleTimeout() {
+        if (idleDuration.isZero()) {
+            Log.d(TAG, "idle functionality is disabled");
+            return;
+        }
+        handler.removeCallbacks(ON_IDLE);
+        handler.postDelayed(ON_IDLE, idleDuration.toMillis());
     }
 
     TrackStatistics getTrackStatistics() {
