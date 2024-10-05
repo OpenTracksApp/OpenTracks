@@ -1,0 +1,7 @@
+v4.14.0: OpenTracks
+
+Změny:
+- Použití dat Androidx EGM2008 (namísto přibalení našeho vlastního řešení).
+
+Vývojář:
+- Cíl Android 15 / SDK 35
