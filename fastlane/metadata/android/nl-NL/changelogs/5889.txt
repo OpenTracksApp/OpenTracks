@@ -1,0 +1,7 @@
+v4.14.0: OpenTracks
+
+Veranderingen:
+- Gebruik de EGM2008-gegevens van Androidx (in plaats van onze aangepaste oplossing te bundelen).
+
+Ontwikkelaar:
+- Target Android15 / SDK35
