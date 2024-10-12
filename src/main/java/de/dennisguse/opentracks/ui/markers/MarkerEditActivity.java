@@ -164,6 +164,8 @@ public class MarkerEditActivity extends AbstractActivity {
         } else {
             loadMarkerData(markerId);
         }
+
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 
     private LiveData<Marker> createNewMarker() {
