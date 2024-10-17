@@ -560,4 +560,5 @@
     <string name="settings_recording_location_distance_summary">%1$s idir suíomhanna taifeadta</string>
     <string name="settings_announcements_lap_power">Cumhacht glúine</string>
     <string name="power_x_watt">Cumhacht {x, iolra, = 1 {1 vata} eile {# vata} }</string>
+    <string name="empty"> </string>
 </resources>
