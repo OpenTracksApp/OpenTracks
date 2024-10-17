@@ -136,7 +136,7 @@ dependencies {
     implementation 'androidx.core:core:1.13.1'
     implementation 'androidx.core:core-splashscreen:1.0.1'
     implementation 'androidx.mediarouter:mediarouter:1.7.0'
-    implementation 'androidx.core:core-location-altitude:1.0.0-alpha02'
+    implementation 'androidx.core:core-location-altitude:1.0.0-alpha03'
 
     androidTestImplementation 'androidx.test:core:1.6.1'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
