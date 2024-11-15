@@ -658,4 +658,8 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_announcements_idle_title">En veille</string>
     <string name="settings_ui_dynamic_colors_title">Couleurs dynamiques</string>
     <string name="permission_recording_failed">OpenTracks a besoin de la permission d\'accéder à votre localisation ainsi qu\'aux appareils à proximité.</string>
+    <string name="create_marker_error">Impossible de créer un marqueur. Veuillez réessayer.</string>
+    <string name="power">Puissance</string>
+    <string name="power_x_watt">Puissance {x, plural, =1 {1 watt} autres {# watt} }</string>
+    <string name="settings_announcements_lap_power">Puissance par tour</string>
 </resources>
