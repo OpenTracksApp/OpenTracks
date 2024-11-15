@@ -1,0 +1,11 @@
+v3.3.2 : OpenTracks
+
+Changements :
+− Export : écrase désormais les fichiers
+
+Correction de bogue :
+− Supprime toujours la notification d'enregistrement
+
+Développeurs :
+− Sur l'API 26+, java.time est utilisé pour analyser et écrire les dates
+− Réusinage de TrackRecordingService

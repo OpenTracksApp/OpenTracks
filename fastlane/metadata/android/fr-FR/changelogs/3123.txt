@@ -1,0 +1,15 @@
+v3.2.5 : OpenTracks
+
+Changements :
+− Désactivation du changement d'activité
+− Ajout des permissions pour Android 10 : enregistrement des données de localisation
+
+Correction de bogue :
+− Correction des paramètres de réinitialisation
+
+Développeurs :
+− Préférences
+  − Si les paramètres ne peuvent être chargés, remise à zéro de toutes les préférences
+  − Déplacement de l'accès des préférences vers PreferencesUtil
+  − Déplacement paramètres défaut préférences de code à XML
+  − Utilise SummaryProvider

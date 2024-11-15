@@ -1,0 +1,7 @@
+v4.14.0 : OpenTracks
+
+Changements :
+− Utilisation des données EGM2008 d'Androidx (au lieu d'empaqueter notre propre solution).
+
+Développeurs :
+− Cible Android15/ SDK35

@@ -1,0 +1,7 @@
+v3.2.1 : OpenTracks
+
+Changements :
+− Les paramètres sont désormais une page unique
+
+Développeurs :
+− Paramètres passé à Androidx compat (utilisation de fragments)

@@ -1,0 +1,10 @@
+v3.2.9 : OpenTracks
+
+Changements :
+− Option pour garder l'écran allumé lors de l'enregistrement
+− Marqueurs : suppression des marqueurs divisés
+− L'annonceur vocal fonctionne désormais sans la permission READ_PHONE_STATE
+
+Correction de bogues :
+− Statistiques : le rythme cardiaque n'était pas montré
+− Statistiques : le temps était brièvement remis à 0s

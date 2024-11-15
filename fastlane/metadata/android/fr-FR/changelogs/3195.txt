@@ -1,0 +1,11 @@
+v3.2.10 : OpenTracks
+
+Changements :
+− ChartView n'est désormais plus configurable
+− Après redémarrage : suppression du redémarrage automatique d'un enregistrement incomplet
+
+Correction de bogues :
+− L'annonceur vocal utilise MAY_DUCK (à nouveau)
+− ChartView montre les marqueurs (à nouveau)
+− Correction du paysage de recordingLayout pour TrackListActivity
+− Demande du comportement de l'API des fichiers obsolètes (nécessaire pour Android 10)

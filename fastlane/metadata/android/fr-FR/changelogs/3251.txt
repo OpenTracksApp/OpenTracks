@@ -1,0 +1,12 @@
+v3.3.1 : OpenTracks
+
+Changements :
+− Android 10 : lors de la désinstallation, permet la conservation des données de l'app
+− Introduction de l'API du tableau de bord : l'icon de la carte peut être utilisé pour ouvrir le tracé actuel dans une app externe
+  (nécessite l'installation d'une app comme OSMDashboard)
+
+Correction de bogue :
+− Le label de l'app était cassé (introduit en v3.3.0)
+
+Développeurs :
+− La documentation pour l'API du tableau de bord se situe dans README_DEVELOPER.md

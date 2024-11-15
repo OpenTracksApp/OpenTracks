@@ -1,0 +1,14 @@
+v3.1.0 : OpenTracks
+
+Changements :
+− Ajout de l'option pour montrer les traces sur une application de carte (testé avec OsmAnd et Maps.ME)
+− Ajout des statistiques de la trace sans débloquer l'appareil, durant le tracé
+− Suppression du mode paysage pour la vue détaillée de la trace (était bogué)
+− Suppression des suggestions pour l'historique de recherche
+
+Correction de bogue :
+− Demande des permissions de stockage pour tout importer / tout exporter
+
+Développeurs :
+− Mise à niveau vers Gradle 5.6
+− Ne pas minifier les compilations release

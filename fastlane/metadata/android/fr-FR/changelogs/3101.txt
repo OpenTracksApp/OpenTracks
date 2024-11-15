@@ -1,0 +1,14 @@
+v3.2.3 : OpenTracks
+
+Changements :
+− Partage : utilise Android Sharesheet
+− Partage : partage de plusieurs tracés en tant que fichier individuel
+− Utilisation d'Android ShareSheet
+− Capteur de fréquence cardiaque (Bluetooth LE) : reconnexion automatique
+
+Correction de bogues :
+− Capteur de fréquence cardiaque (Bluetooth LE) : déconnecte correctement
+− La fréquence cardiaque n'était pas toujours montrée lors de l'enregistrement
+
+Développeurs :
+− Activation des tests d'instrumentation de TravisCI

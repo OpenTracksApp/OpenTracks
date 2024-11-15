@@ -1,0 +1,10 @@
+v3.2.8 : OpenTracks
+
+Changements :
+− Graphique : zoom en effectuant des gestes
+
+Correction de bogues :
+− L'export via KMZ n'exportait pas le nom des images correctement
+− Le partage de plusieurs tracés n'incluait pas les fichiers KMZ
+− L'IU de MarkerDetailActivity n'était pas montré
+− Les paramètres plantaient si les préférences pour le rythme cardiaque n'étaient pas initialisées

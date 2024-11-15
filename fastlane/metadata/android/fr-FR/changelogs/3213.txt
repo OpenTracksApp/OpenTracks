@@ -1,0 +1,12 @@
+v3.2.11 : OpenTracks
+
+Bogues :
+− La vitesse maximale est égale à la vitesse moyenne
+
+Correction de bogue :
+− Plantage lors de la sélection du capteur de rythme cardiaque
+
+Développeurs :
+− Remplacement de TabHost par TabsLayout
+− Suppression premier point de cheminement spécial
+− Suppression des traductions dupliquées

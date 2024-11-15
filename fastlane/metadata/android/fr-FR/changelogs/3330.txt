@@ -1,0 +1,10 @@
+v3.6.0 : OpenTracks
+
+Changements :
+− Les traces arrêtées peuvent être reprises
+
+Correction de bogue :
+− L'import de KMZ ne traitait pas les URL de photos correctement
+
+Développeurs :
+− Simplification du traitement des données

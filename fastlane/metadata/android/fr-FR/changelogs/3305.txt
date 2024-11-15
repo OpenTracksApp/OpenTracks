@@ -1,0 +1,14 @@
+v3.5.0 : OpenTracks
+
+Changements :
+− Marqueur : sélection d'une image depuis la galerie
+− Marqueur : partager une image
+− Utilisation du nom de la trace lors du partage
+− Suppression de l’élévation min et max (était imprécise)
+
+Correction de bogue :
+− Les graphiques utilisent les unités et quantités préférées
+
+Développeurs :
+− Base de données : suppression des colonnes inutilisées
+− Base de données : Ajout d'index

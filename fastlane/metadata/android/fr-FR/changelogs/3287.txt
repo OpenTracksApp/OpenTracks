@@ -1,0 +1,12 @@
+v3.4.0 : OpenTracks
+
+Changements :
+− API tableau de bord : plusieurs tracés
+− Mise à jour de l'aide
+
+Correction de bogues :
+− Correction du plantage lors de la recréation de fragment
+− Lors d'une pause : empêche l'app de s'arrêter
+
+Développeurs :
+− Activation de tests via CI (Github Actions et TravisCI)

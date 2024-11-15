@@ -1,0 +1,17 @@
+v3.0.1 : OpenTracks
+
+Changements :
+− Partage des marqueurs
+− Restructuration des paramètres
+− Suppression du bouton retour de la barre d'action
+− Exportation : suppression de l'option de paramétrage de la taille de photo
+− Exportation : KML est désormais sélectionnable en tant que format
+
+Correction de bogues :
+− Le répertoire d'export est désormais /OpenTracks/
+− Le mode paysage ne plante plus
+− Correction de l'export KML/KMZ
+
+Développeurs :
+− Les tests sont exécutables (mais beaucoup d'échecs)
+− Activation de l'intégration continue avec TravisCI (pas de tests)

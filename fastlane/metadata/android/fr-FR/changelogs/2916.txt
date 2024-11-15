@@ -1,0 +1,15 @@
+v3.0.0 : OpenTracks
+
+Première édition de OpenTracks (c'est-à-dire bifurcation du dépôt depuis MyTracks)
+
+Changements:
+- Renommé de MyTracks à OpenTracks
+- Capteur de fréquence cardiaque par Bluetooth LE ajouté
+- Toutes les fonctionnalités nécessitant une connexion Internet ont été enlevées
+- Intégration Google Maps enlevée
+- Toutes les utilisations des services Google Play ont été enlevées
+- Capteurs ANT+ enlevés
+- Capteurs Bluetooth classiques enlevés
+- Protobuf enlevé
+- Estimations de calories et d'activité enlevés
+- API Service MyTracks enlevée (c'est-à-dire, pas d'intégration avec les autres applications)

@@ -1,0 +1,10 @@
+v3.2.7 : OpenTracks
+
+Changements :
+− Notification montre la précision GPS
+− Montre une notification d'avertissement si la précision GPS descend en dessous du seuil
+− Montre toujours les graphiques en fonction du temps, ainsi que par la distance
+− Ajout de l'aide (dans les paramètres)
+
+Correction de bogue :
+- TrackDetailActivity : désactivation du mode paysage non fonctionnel (temporaire)
