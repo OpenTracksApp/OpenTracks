@@ -1,0 +1,8 @@
+v4.14.1: OpenTracks
+
+Changes:
+- Idle detection can be disabled
+
+Bugfix:
+- UI for adding pictures to markers was hidden
+
