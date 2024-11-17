@@ -1,0 +1,7 @@
+v4.14.1: OpenTracks
+
+Cambios:
+-  Detección de inactividad se puede desactivar
+
+Correcciones de errores:
+- UI para añadir imágenes a los marcadores estaba oculto
