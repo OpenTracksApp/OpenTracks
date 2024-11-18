@@ -1,0 +1,7 @@
+v4.14.1: OpenTracks
+
+Změny:
+- Detekce zastavení může být zakázána
+
+Oprava chyby:
+- Rozhraní přidávání obrázků ke značkám bylo skryto
