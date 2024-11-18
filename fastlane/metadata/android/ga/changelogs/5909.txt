@@ -1,0 +1,7 @@
+v4.14.1: OpenTracks
+
+Athruithe:
+- Is féidir brath díomhaoin a dhíchumasú
+
+Ceartúchán Bug:
+- Bhí Chomhéadain chun pictiúir a chur le marcóirí i bhfolach
