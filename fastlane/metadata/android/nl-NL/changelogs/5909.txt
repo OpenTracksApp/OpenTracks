@@ -1,0 +1,7 @@
+v4.14.1: OpenTracks
+
+Veranderingen:
+- Detectie van inactiviteit kan worden uitgeschakeld
+
+Opgeloste probleemoplossing:
+- Gebruikersinterface voor het toevoegen van afbeeldingen aan markeringen is verborgen
