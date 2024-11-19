@@ -530,8 +530,6 @@ limitations under the License.
     <string name="error_crash_title">%1$s krasjet</string>
     <string name="share_crash_report">Del krasjrapport</string>
     <string name="report_bug">Rapporter feil</string>
-    <string name="select_show_on_map_behavior">Velg virkemåte for «Vis på kart»</string>
-    <string name="show_on_map_format_ask">Spør</string>
     <string name="show_on_dashboard">OpenTracks-API for oversikten</string>
     <string name="always">Alltid</string>
     <string name="settings_announcements_average_heart_rate">Gjennomsnittlig puls</string>

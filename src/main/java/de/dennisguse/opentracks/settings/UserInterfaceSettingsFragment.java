@@ -7,15 +7,10 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import java.util.Map;
-
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.util.IntentDashboardUtils;
 
 public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
 
@@ -41,8 +36,6 @@ public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
 
         Preference dynamicColors = findPreference(getString(R.string.settings_ui_dynamic_colors_key));
         dynamicColors.setEnabled(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU);
-
-        setShowOnMapFormatOptions();
     }
 
     @Override
@@ -79,14 +72,4 @@ public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
 
         super.onDisplayPreferenceDialog(preference);
     }
-
-    private void setShowOnMapFormatOptions() {
-        Map<String, String> options = TrackFileFormat.toPreferenceIdLabelMap(getResources(), IntentDashboardUtils.SHOW_ON_MAP_TRACK_FILE_FORMATS);
-        options.put(IntentDashboardUtils.PREFERENCE_ID_DASHBOARD, getString(R.string.show_on_dashboard));
-        options.put(IntentDashboardUtils.PREFERENCE_ID_ASK, getString(R.string.show_on_map_format_ask));
-        ListPreference listPreference = findPreference(getString(R.string.show_on_map_format_key));
-        listPreference.setEntries(options.values().toArray(new String[0]));
-        listPreference.setEntryValues(options.keySet().toArray(new String[0]));
-    }
-
 }

@@ -528,8 +528,6 @@ limitations under the License.
     <string name="share_image_body">Acho que pode estar interessado nesta imagem.</string>
     <string name="hold_to_stop">Segure para parar</string>
     <string name="report_bug">Relatório de problema</string>
-    <string name="select_show_on_map_behavior">Selecionar comportamento de \"mostrar no mapa\"</string>
-    <string name="show_on_map_format_ask">Perguntas</string>
     <string name="show_on_dashboard">Painel API do OpenTracks</string>
     <string name="settings_reset_summary">Redefinir configurações para valores padrão</string>
     <string name="settings_default_trackfileformat">Exportar/compartilhar formato de ficheiro</string>

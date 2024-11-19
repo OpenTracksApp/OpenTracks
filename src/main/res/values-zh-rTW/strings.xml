@@ -566,8 +566,6 @@ limitations under the License.
     <string name="error_crash_title">%1$s 已崩潰</string>
     <string name="share_crash_report">分享</string>
     <string name="report_bug">回報 bug</string>
-    <string name="select_show_on_map_behavior">選擇「在地圖上顯示」行為</string>
-    <string name="show_on_map_format_ask">詢問</string>
     <string name="show_on_dashboard">OpenTracks 儀表板 API</string>
     <string name="show_on_dashboard_not_installed">沒有安裝支援 OpenTracks 儀表板 API 的應用程式。</string>
     <string name="always">總是</string>

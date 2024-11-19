@@ -524,13 +524,11 @@ limitations under the License.
     <string name="import_prevent_reimport">Parçayı yeniden içe aktarmayı engellemeye ayarladınız</string>
     <string name="settings_night_mode_option_day">Gündüz</string>
     <string name="settings_recording_customize_layout_select_columns">Satır başına veri alanları</string>
-    <string name="show_on_map_format_ask">Sor</string>
     <string name="show_on_dashboard">OpenTracks Gösterge Paneli API</string>
     <string name="always">Daima</string>
     <string name="share_crash_report">Çökme raporunu paylaşın</string>
     <string name="report_bug">Hata bildir</string>
     <string name="error_crash_title">%1$s çöktü</string>
-    <string name="select_show_on_map_behavior">\"Haritada göster\" eylemini seçin</string>
     <string name="settings_announcements_average_heart_rate">Ortalama kalp atış hızı</string>
     <string name="description_pace_nautical">Tempo (dk/NM)</string>
     <string name="description_speed_nautical">Hız (düğüm)</string>

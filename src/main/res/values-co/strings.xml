@@ -417,8 +417,6 @@
     <string name="no_compatible_camera_installed">Nisuna appiecazione cumpatibile per l’apparechju-fotò ùn hè installata</string>
     <string name="error_crash_title">%1$s s‘hè lampatu</string>
     <string name="report_bug">Signalà un prublema</string>
-    <string name="select_show_on_map_behavior">Selezziunà u cumpurtamentu « Affissà nant’à a carta »</string>
-    <string name="show_on_map_format_ask">Dumandà</string>
     <string name="show_on_dashboard">API di tavula di cundutta d’OpenTracks</string>
     <string name="show_on_dashboard_not_installed">Nisuna appiecazione accettendu l’API di tavula di cundutta d’OpenTracks ùn hè installata.</string>
     <string name="power">Putenza</string>

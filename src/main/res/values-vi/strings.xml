@@ -535,7 +535,6 @@ limitations under the License.
     <string name="settings_announcements_average_speed_pace">Tốc độ trung bình/nhịp độ</string>
     <string name="settings_stats_units_nautical">Hải lý (dặm hải lý, ft)</string>
     <string name="settings_public_api_package_title">Tên gói cho API công khai</string>
-    <string name="select_show_on_map_behavior">Chọn hành vi \"hiện trên bản đồ\"</string>
     <string name="settings_announcements_lap_speed_pace">Tốc độ vòng/nhịp độ</string>
     <string name="track_discarding">Đang bỏ đoạn đường</string>
     <string name="voice_per_nautical_mile">trên dặm hải lý</string>
@@ -549,7 +548,6 @@ limitations under the License.
     <string name="error_crash_title">%1$s đã dừng đột ngột</string>
     <string name="share_crash_report">Chia sẻ báo cáo dừng đột ngột</string>
     <string name="report_bug">Báo cáo lỗi</string>
-    <string name="show_on_map_format_ask">Hỏi</string>
     <string name="show_on_dashboard">API Bảng điều khiển OpenTracks</string>
     <string name="always">Luôn luôn</string>
     <string name="track_delete_number_of_tracks">%1$d tuyến đường</string>

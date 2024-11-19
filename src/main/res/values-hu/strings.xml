@@ -513,7 +513,6 @@ limitations under the License.
     <string name="voiceMinutesPlural">{n,number} perc</string>
     <string name="voiceSpeedMKnotsPlural">{n,number,#.0} csomó</string>
     <string name="voice_per_mile">mérföldenként</string>
-    <string name="show_on_map_format_ask">Rákérdezés</string>
     <string name="show_on_dashboard">OpenTracks Dashboard API</string>
     <string name="show_on_dashboard_not_installed">Nincs OpenTracks Dashboard API-t támogató alkalmazás telepítve.</string>
     <string name="value_float_mile_hour">%1$.1f mérföld/óra</string>
@@ -556,7 +555,6 @@ limitations under the License.
     <string name="no_compatible_camera_installed">Nincs kompatibilis kamera alkalmazás telepítve</string>
     <string name="share_crash_report">Hibajelentés megosztása</string>
     <string name="report_bug">Hibajelentés</string>
-    <string name="select_show_on_map_behavior">A „megjelenítés a térképen” viselkedés választása</string>
     <string name="image_discard">Eldobás</string>
     <string name="settings_import_export_title">Importálás és exportálás</string>
     <string name="generic_undo">Visszavonás</string>

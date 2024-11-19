@@ -292,8 +292,6 @@
     <string name="hold_to_stop">Coinnigh chun stop a chur</string>
     <string name="share_image_subject">Ba mhaith liom íomhá a roinnt leat</string>
     <string name="show_on_dashboard">API Painéal OpenTracks</string>
-    <string name="show_on_map_format_ask">Iarr</string>
-    <string name="select_show_on_map_behavior">Roghnaigh iompar \"taispeáin ar léarscáil\"</string>
     <string name="report_bug">Tuairiscigh fabht</string>
     <string name="share_crash_report">Comhroinn tuairisc tuairteála</string>
     <string name="no_compatible_file_manager_installed">Níl aon bhainisteoir comhad comhoiriúnach suiteáilte</string>

@@ -601,7 +601,6 @@ limitations under the License.
     <string name="voice_per_nautical_mile">por milla náutica</string>
     <string name="error_crash_title">%1$s falló</string>
     <string name="report_bug">Reportar error</string>
-    <string name="show_on_map_format_ask">Preguntar</string>
     <string name="show_on_dashboard">Panel de control del API de OpenTracks</string>
     <string name="show_on_dashboard_not_installed">No se ha instalado ninguna aplicación compatible con el panel de control del API de OpenTracks.</string>
     <string name="always">Siempre</string>
@@ -622,7 +621,6 @@ limitations under the License.
         other {{n,number,#.0} millas náuticas}
         }
     </string>
-    <string name="select_show_on_map_behavior">Seleccionar el comportamiento de \"mostrar en el mapa\"</string>
     <string name="introduction_osm_dashboard">OpenTracks en sí no proporciona un mapa. Por favor, instale OSMDashboard para ver sus grabaciones en un mapa.</string>
     <string name="share_crash_report">Compartir informe de fallo</string>
     <string name="settings_stats_units_imperial_meter">Imperial (millas, metros)</string>
