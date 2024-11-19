@@ -408,7 +408,6 @@ limitations under the License.
     <string name="permission_bluetooth_failed">OpenTracks 需要使用蓝牙的权限。</string>
     <string name="generic_choose_an_option">选择一项</string>
     <string name="settings_gps_summary">时间间隔，距离间隔，最大距离，精度</string>
-    <string name="select_show_on_map_behavior">选择“在地图上显示”按钮的行为</string>
     <string name="permission_bluetooth_failed_rejected">您需要在系统设置中手动授予 OpenTracks 访问附近设备的权限。</string>
     <string name="settings_recording_customize_layout_title">自定义记录中布局</string>
     <string name="settings_announcements_lap_heart_rate">单圈心率</string>
@@ -597,7 +596,6 @@ limitations under the License.
     <string name="error_crash_title">%1$s 已崩溃</string>
     <string name="share_crash_report">分享崩溃报告</string>
     <string name="report_bug">报告 BUG</string>
-    <string name="show_on_map_format_ask">询问</string>
     <string name="show_on_dashboard">OpenTracks 仪表盘 API</string>
     <string name="always">总是</string>
     <string name="track_speed_notification">速度：%1$s</string>

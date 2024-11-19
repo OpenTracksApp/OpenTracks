@@ -52,7 +52,6 @@ import de.dennisguse.opentracks.sensors.SensorType;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
 import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayoutIO;
-import de.dennisguse.opentracks.util.IntentDashboardUtils;
 
 /**
  * Utilities to access preferences stored in {@link SharedPreferences}.
@@ -858,14 +857,6 @@ public class PreferencesUtils {
     @VisibleForTesting
     public static void clear() {
         sharedPreferences.edit().clear().commit();
-    }
-
-    public static void setShowOnMapFormat(final String showOnMapFormat) {
-        setString(R.string.show_on_map_format_key, showOnMapFormat);
-    }
-
-    public static String getShowOnMapFormat() {
-        return getString(R.string.show_on_map_format_key, IntentDashboardUtils.PREFERENCE_ID_ASK);
     }
 
     public static int getTotalRowsDeleted() {

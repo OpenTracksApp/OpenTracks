@@ -501,8 +501,6 @@
     <string name="error_crash_title">%1$s ಕ್ರ್ಯಾಶ್ ಆಗಿದೆ</string>
     <string name="share_crash_report">ಕ್ರ್ಯಾಶ್ ವರದಿಯನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="report_bug">ದೋಷವನ್ನು ವರದಿ ಮಾಡಿ</string>
-    <string name="select_show_on_map_behavior">\"ನಕ್ಷೆಯಲ್ಲಿ ತೋರಿಸು\" ನಡವಳಿಕೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
-    <string name="show_on_map_format_ask">ಕೇಳು</string>
     <string name="show_on_dashboard">OpenTracks ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ API</string>
     <string name="show_on_dashboard_not_installed">OpenTracks ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ API ಅನ್ನು ಬೆಂಬಲಿಸುವ ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್ ಸ್ಥಾಪಿಸಲಾಗಿಲ್ಲ.</string>
     <string name="always">ಯಾವಾಗಲೂ</string>

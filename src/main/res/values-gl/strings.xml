@@ -553,8 +553,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="value_float_knots_recommended">%1$.1f nós (recomendado)</string>
     <string name="voice_per_nautical_mile">por milla náutica</string>
     <string name="show_on_dashboard_not_installed">Non hai ningunha aplicación instalada con soporte para a API de OpenTracks.</string>
-    <string name="select_show_on_map_behavior">Elixe \"ver no mapa\"</string>
-    <string name="show_on_map_format_ask">Preguntar</string>
     <string name="always">Sempre</string>
     <string name="error_crash_title">%1$s fallou</string>
     <string name="report_bug">Informar do problema</string>

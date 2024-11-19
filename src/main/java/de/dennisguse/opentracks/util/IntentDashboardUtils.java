@@ -6,25 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-import android.util.Pair;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
-import de.dennisguse.opentracks.data.ShareContentProvider;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
 import de.dennisguse.opentracks.data.tables.TracksColumns;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
@@ -38,14 +31,6 @@ public class IntentDashboardUtils {
     private static final String ACTION_DASHBOARD = "Intent.OpenTracks-Dashboard";
 
     private static final String ACTION_DASHBOARD_PAYLOAD = ACTION_DASHBOARD + ".Payload";
-
-    public static final TrackFileFormat[] SHOW_ON_MAP_TRACK_FILE_FORMATS = new TrackFileFormat[] {
-            TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES,
-            TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA,
-            TrackFileFormat.GPX};
-
-    public static final String PREFERENCE_ID_DASHBOARD = ACTION_DASHBOARD;
-    public static final String PREFERENCE_ID_ASK = "ASK";
 
     /**
      * Assume "v1" if not present.
@@ -73,59 +58,13 @@ public class IntentDashboardUtils {
 
     /**
      * Send intent to show tracks on a map (needs an another app) as resource URIs.
-     * Shows an AlertDialog with different format option if none is defined as preference.
      *
      * @param context  the context
      * @param isRecording are we currently recording?
      * @param trackIds the track ids
      */
     public static void showTrackOnMap(Context context, boolean isRecording, Track.Id... trackIds) {
-        Map<String, String> options = TrackFileFormat.toPreferenceIdLabelMap(context.getResources(), IntentDashboardUtils.SHOW_ON_MAP_TRACK_FILE_FORMATS);
-        options.put(IntentDashboardUtils.PREFERENCE_ID_DASHBOARD, context.getString(R.string.show_on_dashboard));
-        final String[] optionLabels = options.values().toArray(new String[0]);
-        final String[] optionValues = options.keySet().toArray(new String[0]);
-        final AtomicInteger checkedItem = new AtomicInteger(NONE_SELECTED);
-        String preferenceValue = PreferencesUtils.getShowOnMapFormat();
-        for (int i = 0; i < optionValues.length; i++) {
-            if (optionValues[i].equals(preferenceValue)) {
-                checkedItem.set(i);
-            }
-        }
-        if (checkedItem.get() == NONE_SELECTED) {
-            checkedItem.set(0); // set first option as default
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(R.string.select_show_on_map_behavior);
-            builder.setSingleChoiceItems(optionLabels, checkedItem.get(), (dialog, which) -> checkedItem.set(which));
-            builder.setPositiveButton(android.R.string.ok, (dialog, which) -> onFormatSelected(context, isRecording, optionValues[checkedItem.get()], trackIds, false));
-            builder.setNeutralButton(R.string.always, ((dialog, which) -> onFormatSelected(context, isRecording, optionValues[checkedItem.get()], trackIds, true)));
-            builder.setNegativeButton(android.R.string.cancel, null);
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        } else {
-            onFormatSelected(context, isRecording, preferenceValue, trackIds, true);
-        }
-    }
-
-    /**
-     * A format was selected, remember if <code>always</code> is true and start the necessary action
-     *
-     * @param context the context
-     * @param isRecording are we currently recording?
-     * @param selectedValue the chosen format
-     * @param trackIds the track ids
-     * @param always set the selectedValue as default preference
-     */
-    private static void onFormatSelected(final Context context, final boolean isRecording, final String selectedValue, final Track.Id[] trackIds, final boolean always) {
-        if (always) {
-            PreferencesUtils.setShowOnMapFormat(selectedValue);
-        }
-        TrackFileFormat trackFileFormat = TrackFileFormat.valueOfPreferenceId(selectedValue);
-        if (trackFileFormat != null) {
-            showTrackOnMapWithFileFormat(context, trackFileFormat, Set.of(trackIds));
-        } else {
-            startDashboard(context, isRecording, null, null, trackIds);
-        }
+        startDashboard(context, isRecording, null, null, trackIds);
     }
 
     /**
@@ -183,28 +122,4 @@ public class IntentDashboardUtils {
             Toast.makeText(context, R.string.show_on_dashboard_not_installed, Toast.LENGTH_SHORT).show();
         }
     }
-
-    /**
-     * Send intent to show tracks on a map (needs an another app) to support specific trackFileFormat.
-     *
-     * @param context  the context
-     * @param trackFileFormat the track file format
-     * @param trackIds the track ids
-     */
-    private static void showTrackOnMapWithFileFormat(Context context, TrackFileFormat trackFileFormat, Set<Track.Id> trackIds) {
-        if (trackIds.isEmpty()) {
-            return;
-        }
-
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, "SharingTrack", trackFileFormat);
-        intent.setDataAndType(uriAndMime.first, uriAndMime.second);
-
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        context.startActivity(Intent.createChooser(intent, context.getString(R.string.open_track_as_trackfileformat, trackFileFormat.getExtension())));
-    }
-
 }

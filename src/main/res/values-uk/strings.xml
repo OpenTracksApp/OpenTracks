@@ -557,8 +557,6 @@ limitations under the License.
     <string name="no_compatible_camera_installed">Не встановлено сумісну програму камери</string>
     <string name="no_compatible_gallery_installed">Не встановлено сумісну програму галереї зображень</string>
     <string name="report_bug">Повідомити про помилку</string>
-    <string name="select_show_on_map_behavior">Виберіть поведінку \"показати на карті\"</string>
-    <string name="show_on_map_format_ask">Запитувати</string>
     <string name="voice_per_nautical_mile">за морську милю</string>
     <string name="always">Завжди</string>
     <string name="value_integer_knots">%1$d вузлів</string>

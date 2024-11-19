@@ -503,8 +503,6 @@
     <string name="unit_nautical_mile">NM</string>
     <string name="error_crash_title">%1$s falharam</string>
     <string name="share_crash_report">Compartilhar relatório de falha</string>
-    <string name="select_show_on_map_behavior">Selecionar comportamento de \"mostrar no mapa\"</string>
-    <string name="show_on_map_format_ask">Perguntas</string>
     <string name="show_on_dashboard">Painel API do OpenTracks</string>
     <string name="always">Sempre</string>
     <string name="description_speed_nautical">Velocidade (nós)</string>

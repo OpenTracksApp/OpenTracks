@@ -544,8 +544,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_announcements_lap_speed_pace">Snelheid/tred per ronde</string>
     <string name="show_on_dashboard">OpenTracks Dashboard API</string>
     <string name="always">Altijd</string>
-    <string name="show_on_map_format_ask">Vragen</string>
-    <string name="select_show_on_map_behavior">Selecteer \"toon op kaart\"-gedrag</string>
     <string name="show_on_dashboard_not_installed">Er is geen app geïnstalleerd die OpenTracks Dashboard API ondersteunt.</string>
     <string name="help_data_google_play_services_content">Nee</string>
     <string name="introduction_osm_dashboard">OpenTracks zelf biedt geen kaart. Installeer OSMDashboard om uw opnames op een kaart te bekijken.</string>

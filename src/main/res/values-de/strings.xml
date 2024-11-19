@@ -570,7 +570,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="error_crash_title">%1$s ist abgestürzt</string>
     <string name="share_crash_report">Absturzbericht teilen</string>
     <string name="always">Immer</string>
-    <string name="select_show_on_map_behavior">Wähle \"Zeige auf Karte\"-Verhalten</string>
     <string name="settings_open_tracks_summary">Alles über das OpenTracks-Projekt</string>
     <string name="settings_layout_reset_confirm_message">Alle Layout-Einstellungen werden auf die Standardwerte zurückgesetzt. Aufzeichnungen werden nicht vom Gerät gelöscht.</string>
     <string name="report_bug">Fehler melden</string>
@@ -587,7 +586,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="no_compatible_gallery_installed">Keine kompatible Bildergalerie Anwendung installiert</string>
     <string name="show_on_dashboard_not_installed">Es ist keine Anwendung installiert, die die OpenTracks Dashboard API unterstützt.</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
-    <string name="show_on_map_format_ask">Nachfragen</string>
     <string name="settings_stats_units_nautical">Nautisches Maß (NM, ft)</string>
     <string name="unit_minute_per_nautical_mile">min/NM</string>
     <string name="voice_on_device_speaker_title">Verwende den Lautsprecher des Gerätes</string>

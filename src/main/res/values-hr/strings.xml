@@ -408,7 +408,6 @@ limitations under the License.
     <string name="settings_public_api_enabled_summary_on">Druge instalirane aplikacije mogu pokrenuti ili prekinuti snimanja.</string>
     <string name="help_track_export_title">Kako mogu izvesti/dijeliti snimljene rute\?</string>
     <string name="voice_on_device_speaker_title">Koristi zvučnik uređaja</string>
-    <string name="show_on_map_format_ask">Pitaj</string>
     <string name="generic_today">Danas</string>
     <string name="marker_add_photo_canceled">Prekinuto, nije dodana nijedna oznaka za slike</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
@@ -561,7 +560,6 @@ limitations under the License.
     <string name="export_dir_not_writable">" (zabranjeno pisanje!)"</string>
     <string name="export_progress_summary_overwrite_msg">Datoteke su prepisane</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Snimljeni podaci se neće automatski dijeliti s drugim aplikacijama.</string>
-    <string name="select_show_on_map_behavior">Odaberi „Prikaži na karti”</string>
     <string name="export_progress_summary_skip_msg">Datoteke su preskočene</string>
     <string name="activity_type_kickscooter">skuter</string>
     <string name="help_gps_troubleshooting_content"> \u0020Što možeš učiniti: 

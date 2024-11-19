@@ -581,7 +581,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="voice_per_mile">par mile</string>
     <string name="pace">Rythme</string>
     <string name="lap_speed">Vitesse par tour</string>
-    <string name="show_on_map_format_ask">Demander</string>
     <string name="show_on_dashboard">Tableau de bord de l\'API OpenTracks</string>
     <string name="always">Toujours</string>
     <string name="share_crash_report">Partager le rapport de crash</string>
@@ -589,7 +588,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="error_crash_title">%1$s a crashé</string>
     <string name="gps_recording_without_signal">OpenTracks enregistre actuellement sans les données GPS.</string>
     <string name="settings_export_filename_title">Format du nom de fichier</string>
-    <string name="select_show_on_map_behavior">Sélectionner le comportement \"Montrer sur la carte\"</string>
     <string name="settings_public_api_dashboard_enabled_title">Transfert automatique des données</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Une application qui a commencé un enregistrement peut aussi accéder aux données enregistrées.</string>
     <string name="settings_announcements_average_speed_pace">Allure/vitesse moyenne</string>

@@ -545,8 +545,6 @@ limitations under the License.
     <string name="value_float_knots_recommended">%1$.1f узла (рекомендуется)</string>
     <string name="settings_announcements_average_heart_rate">Средний пульс</string>
     <string name="settings_stats_units_nautical">Морская система (морские мили, футы)</string>
-    <string name="select_show_on_map_behavior">Выберите действие для \"Показать на карте\"</string>
-    <string name="show_on_map_format_ask">Спрашивать</string>
     <string name="always">Всегда</string>
     <string name="voice_per_nautical_mile">за морскую милю</string>
     <string name="settings_announcements_average_speed_pace">Средняя скорость/темп</string>
