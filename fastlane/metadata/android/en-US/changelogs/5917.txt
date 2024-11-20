@@ -1,0 +1,4 @@
+v4.14.2: OpenTracks
+
+Bugfix:
+- Android 15: UI is not overflowing anymore (edge-to-edge)
