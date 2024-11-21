@@ -1,0 +1,4 @@
+v4.14.2: OpenTracks
+
+Bugfix:
+- Android 15: gebruikersinterface loopt niet meer over (rand tot rand)
