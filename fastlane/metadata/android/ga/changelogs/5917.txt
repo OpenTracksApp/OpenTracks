@@ -1,0 +1,4 @@
+v4.14.2: OpenTracks
+
+Ceartúchán Bug:
+- Android 15: Níl an Chomhéadain ag cur thar maoil níos mó (ó imeall go himeall)
