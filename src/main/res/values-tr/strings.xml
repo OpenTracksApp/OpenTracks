@@ -323,12 +323,7 @@ limitations under the License.
 \n * işaretleyiciler oluşturun (resimler dahil)
 \n * tamamen çevrimdışı çalışır
 \n * harita üzerinde parkurları gösterir (aşağıya bakın)</string>
-    <string name="help_track_map_content">" Küçük harita simgesini kullanın.
-\n a) (canlı güncellemeler) &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt;
-\nOSMDashboard&lt;/a&gt;\'u yükleyin. &lt;a href=\"https://www.openstreetmap.org\"&gt;
-\nOpenStreetMap&lt;/a&gt; aracılığıyla çevrimiçi veya çevrimdışı haritalar sağlar.
-\n Aslında OSMDashboard, sadece gösterilecek olan parçaların verilerine (geçici olarak) erişebilen ayrı bir uygulamadır.
-\n b) Normal bir harita uygulaması aracılığıyla (ör. &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; ve &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). Bu uygulamaların KMZ dosya biçimini (yalnızca konumlar ve zaman damgaları) desteklemesi gerekir. Aslında, bir uygulamanın MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt; ile &lt;i&gt;ACTION_VIEW&lt;/i&gt; özelliğini desteklemesi gerekir. &lt;/i&gt; "</string>
+    <string name="help_track_map_content">" Küçük harita simgesini kullanın.\n\n a) (canlı güncellemeler) &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt;\n\nOSMDashboard&lt;/a&gt;\'u yükleyin. &lt;a href=\"https://www.openstreetmap.org\"&gt;\n\nOpenStreetMap&lt;/a&gt; aracılığıyla çevrimiçi veya çevrimdışı haritalar sağlar.\n\n Aslında OSMDashboard, sadece gösterilecek olan parçaların verilerine (geçici olarak) erişebilen ayrı bir uygulamadır.\n\n b) Normal bir harita uygulaması aracılığıyla (ör. &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; ve &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). Bu uygulamaların KMZ dosya biçimini (yalnızca konumlar ve zaman damgaları) desteklemesi gerekir. Aslında, bir uygulamanın MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt; ile &lt;i&gt;ACTION_VIEW&lt;/i&gt; özelliğini desteklemesi gerekir. &lt;/i&gt; "</string>
     <string name="help_storage_pictures_title">OpenTracks, işaretçi olarak çekilmiş resimleri nasıl saklar\?</string>
     <string name="about_url">Proje ağ sayfası: <a href="%1$s">%1$s</a></string>
     <string name="help_track_export_title">Kayıtlı parkurları nasıl dışa aktarabilirim/paylaşabilirim\?</string>
