@@ -305,16 +305,6 @@ limitations under the License.
     <string name="waypoint_type_waterfall">滝</string>
     <string name="waypoint_type_water_fountain">噴水</string>
     <string name="waypoint_type_waypoint">地点</string>
-    <string name="help_feature_content">"* GPS トラックを作成します
-\n
-\n  * 心拍センサーを使用します (Bluetooth LE のみ)
-\n
-\n  * 音声アナウンス（時間または距離）
-\n
-\n  * マーカーの作成 (写真を含む)
-\n
-\n  * 完全にオフラインで動作します
-\n
-\n  * 地図上にトラックを表示します (下記を参照)"</string>
+    <string name="help_feature_content">"* GPS トラックを作成します\n\n\n\n  * 心拍センサーを使用します (Bluetooth LE のみ)\n\n\n\n  * 音声アナウンス（時間または距離）\n\n\n\n  * マーカーの作成 (写真を含む)\n\n\n\n  * 完全にオフラインで動作します\n\n\n\n  * 地図上にトラックを表示します (下記を参照)"</string>
     <string name="help_data_google_play_services_content">いいえ</string>
 </resources>
