@@ -1,0 +1,4 @@
+v4.14.2 : OpenTracks
+
+Correction de bogue :
+− Android 15 : l’interface utilisateur ne débordera plus (bord-à-bord / edge-to-edge)
