@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
     <string name="empty"/>
-    <string name="about_preference_title">About OpenTracks</string>
+    <string name="about_preference_title">About</string>
     <string name="about_description"><i>OpenTracks</i> is a sport tracking application that completely respects your privacy.</string>
     <string name="about_url">Project webpage: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Version name: %1$s</string>
@@ -320,7 +320,6 @@ limitations under the License.
     <string name="sensor_could_not_scan">Could not scan for Bluetooth devices (error %1$i).</string>
     <string name="bluetooth_disabled">Please enable Bluetooth.</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
-    <string name="settings_open_tracks_summary">All About OpenTracks Project</string>
     <string name="settings_defaults_title">Default Units and Activity</string>
     <string name="settings_defaults_summary">Preferred Units, Default Activity, Track Default Name</string>
     <string name="settings_ui_title">User Interface</string>

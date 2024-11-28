@@ -436,7 +436,6 @@
     <string name="settings_import_export_summary">Importar, Exportar, Auto Export</string>
     <string name="settings_import_export_title">Importar/Exportar</string>
     <string name="settings_announcements_summary">Tempo, distância, velocidade da voz</string>
-    <string name="settings_open_tracks_summary">Tudo sobre o Projeto OpenTracks</string>
     <string name="stats_custom_layout_default_layout">Layout padrão</string>
     <string name="custom_layout_list_edit_already_exists">O nome do layout já existe</string>
     <string name="custom_layout_list_edit_name">Digite o nome do layout a ser adicionado</string>

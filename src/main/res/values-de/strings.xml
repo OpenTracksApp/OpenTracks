@@ -570,7 +570,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="error_crash_title">%1$s ist abgestürzt</string>
     <string name="share_crash_report">Absturzbericht teilen</string>
     <string name="always">Immer</string>
-    <string name="settings_open_tracks_summary">Alles über das OpenTracks-Projekt</string>
     <string name="settings_layout_reset_confirm_message">Alle Layout-Einstellungen werden auf die Standardwerte zurückgesetzt. Aufzeichnungen werden nicht vom Gerät gelöscht.</string>
     <string name="report_bug">Fehler melden</string>
     <string name="settings_ui_summary">Erscheinungsbild, Aufzeichnungslayout, Theme</string>

@@ -202,7 +202,6 @@
     <string name="settings_ui_summary">Dealramh, Leagan Amach Taifeadta, Téama</string>
     <string name="settings_sensors_summary">Braiteoirí Rothaíochta, Imlíne Rothaí, Braiteoirí Reatha</string>
     <string name="bluetooth_disabled">Cumasaigh Bluetooth le do thoil.</string>
-    <string name="settings_open_tracks_summary">Gach Maidir Tionscadal OpenTracks</string>
     <string name="settings_defaults_title">Aonaid agus Gníomhaíocht Réamhshocraithe</string>
     <string name="settings_ui_title">Comhéadan Úsáideora</string>
     <string name="settings_sensors_title">Braiteoirí</string>

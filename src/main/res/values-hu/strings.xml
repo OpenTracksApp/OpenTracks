@@ -523,7 +523,6 @@ limitations under the License.
     <string name="gps_recording_without_signal">Az OpenTracks GPS-adatok nélkül rögzít.</string>
     <string name="permission_recording_failed">Az OpenTracks engedélyt kér a tartózkodási helyéhez és a közeli eszközökhöz való hozzáféréshez.</string>
     <string name="sensor_state_power_max">Max. teljesítmény</string>
-    <string name="settings_open_tracks_summary">Minden az OpenTracks projektről</string>
     <string name="settings_announcements_idle_title">Tétlenség</string>
     <string name="settings_import_export_summary">Importálás, exportálás, automatikus Exportálás</string>
     <string name="settings_ui_dynamic_colors_title">Dinamikus színek</string>

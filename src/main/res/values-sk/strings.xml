@@ -480,7 +480,6 @@ limitations under the License.
     <string name="settings_gps_sensor">GPS</string>
     <string name="settings_sensors_title">Senzory</string>
     <string name="settings_sensors_summary">Cyklistické snímače, obvod kolies, snímače behu</string>
-    <string name="settings_open_tracks_summary">Viac o projekte OpenTracks</string>
     <string name="settings_gps_summary">Interval času, interval vzdialenosti, Max. vzdialenosť, Presnosť</string>
     <string name="share_image_body">Myslím, že by vás mohol zaujímať tento obrázok.</string>
     <string name="export_progress_summary_skip_msg">Vynechané skladby</string>

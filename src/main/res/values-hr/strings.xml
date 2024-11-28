@@ -329,7 +329,6 @@ limitations under the License.
     <string name="settings_recording_fullscreen_on_while_recording_summary">Tijekom snimanja prikaži u cjeloekranskom prikazu.</string>
     <string name="sensor_state_cadence_max">Maks. ritam</string>
     <string name="settings_units_category">Jedinice</string>
-    <string name="settings_open_tracks_summary">Sve o projektu OpenTracks</string>
     <string name="settings_gps_sensor">GPS</string>
     <string name="settings_announcements_summary">Vrijeme, udaljenost, brzina glasa</string>
     <string name="menu_resume_track">Nastavi rutu</string>

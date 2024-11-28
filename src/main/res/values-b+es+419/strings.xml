@@ -450,7 +450,6 @@
     <string name="gps_recording_without_signal">OpenTracks está grabando sin datos GPS.</string>
     <string name="menu_add_custom_layout">Nuevo diseño</string>
     <string name="permission_bluetooth_failed_rejected">Es necesario conceder manualmente a OpenTracks el acceso a los Dispositivos Cercanos en la configuración del sistema.</string>
-    <string name="settings_open_tracks_summary">Todo sobre el proyecto OpenTracks</string>
     <string name="settings_activity_defaults_category">Prederminados de la actividad</string>
     <string name="settings_reset_summary">Restablecer a valores predeterminados</string>
     <string name="custom_layout_list_title">Diseños</string>

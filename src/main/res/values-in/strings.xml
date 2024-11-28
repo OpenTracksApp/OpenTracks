@@ -293,7 +293,6 @@
     <string name="sensor_state_heart_rate_unit">bpm</string>
     <string name="bluetooth_disabled">Silahkan aktifkan Bluetooth.</string>
     <string name="sensor_state_heart_rate_avg">Detak Jantung rata-rata</string>
-    <string name="settings_open_tracks_summary">Semua Tentang Proyek OpenTracks</string>
     <string name="sensor_could_not_scan">Tidak dapat memindai perangkat Bluetooth (error %1$i).</string>
     <string name="settings_announcements_idle_category_title">Pengumuman Idle</string>
     <string name="sensor_state_power_unit">W</string>

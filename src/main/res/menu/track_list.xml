@@ -30,4 +30,9 @@ limitations under the License.
         android:icon="@drawable/ic_help_24dp"
         android:title="@string/menu_help" />
 
+    <item
+        android:id="@+id/track_list_about"
+        android:icon="@drawable/ic_baseline_info_24"
+        android:title="@string/about_preference_title" />
+
 </menu>

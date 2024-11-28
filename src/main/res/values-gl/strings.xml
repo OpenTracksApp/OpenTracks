@@ -477,7 +477,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="stats_clock">Reloxo</string>
     <string name="settings_defaults_summary">Unidades preferidas, Actividade por defecto, Nome da ruta</string>
     <string name="settings_announcements_summary">A Distancia, Tempo, Voz Velocidade</string>
-    <string name="settings_open_tracks_summary">Todo sobre o Proxecto OpenTracks</string>
     <string name="settings_defaults_title">Unidades e Actividade por defecto</string>
     <string name="settings_ui_title">Interface da app</string>
     <string name="settings_ui_summary">Aparencia, Gravación, Deseño, Tema</string>

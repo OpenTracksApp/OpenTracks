@@ -266,7 +266,6 @@
     <string name="sensor_could_not_scan">Ùn si pò micca ricercà l’apparechji Bluetooth (sbagliu %1$i).</string>
     <string name="bluetooth_disabled">Ci vole à attivà u Bluetooth.</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
-    <string name="settings_open_tracks_summary">Apprupositu di u prughjettu OpenTracks</string>
     <string name="settings_defaults_title">Unità è attività predefinite</string>
     <string name="settings_ui_title">Interfaccia di l’utilizatore</string>
     <string name="settings_ui_summary">Aspettu, accunciamentu di l’arregistramentu, tema</string>

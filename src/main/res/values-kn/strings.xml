@@ -250,7 +250,6 @@
     <string name="sensor_could_not_scan">ಬ್ಲೂಟೂತ್ ಸಾಧನಗಳಿಗಾಗಿ ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ (ದೋಷ %1$i).</string>
     <string name="bluetooth_disabled">ದಯವಿಟ್ಟು ಬ್ಲೂಟೂತ್ ಸಕ್ರಿಯಗೊಳಿಸಿ.</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
-    <string name="settings_open_tracks_summary">OpenTracks ಪ್ರಾಜೆಕ್ಟ್ ಬಗ್ಗೆ ಎಲ್ಲಾ ಮಾಹಿತಿ</string>
     <string name="settings_defaults_title">ಪೂರ್ವನಿಯೋಜಿತ ಘಟಕಗಳು ಮತ್ತು ಚಟುವಟಿಕೆ</string>
     <string name="settings_defaults_summary">ಆದ್ಯತೆಯ ಘಟಕಗಳು, ಡೀಫಾಲ್ಟ್ ಚಟುವಟಿಕೆ, ಡೀಫಾಲ್ಟ್ ಟ್ರ್ಯಾಕ್ ಹೆಸರು</string>
     <string name="settings_ui_title">ಬಳಕೆದಾರರ ಇಂಟರ್ಫೇಸ್</string>

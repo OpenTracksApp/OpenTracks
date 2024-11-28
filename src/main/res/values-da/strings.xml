@@ -443,7 +443,6 @@ limitations under the License.
     <string name="generic_today">I dag</string>
     <string name="generic_yesterday">I går</string>
     <string name="menu_filter">Filter</string>
-    <string name="settings_open_tracks_summary">Alt om OpenTracks-projektet</string>
     <string name="settings_defaults_title">Standardenheder og aktivitet</string>
     <string name="settings_defaults_summary">Foretrukne enheder, standardaktivitet, standardspornavn</string>
     <string name="settings_gps_summary">Tidsinterval, distanceinterval, maksimal afstand, nøjagtighed</string>

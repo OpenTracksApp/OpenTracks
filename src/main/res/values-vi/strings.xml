@@ -472,7 +472,6 @@ limitations under the License.
     <string name="settings_units_category">Đơn vị đo</string>
     <string name="settings_gps_summary">Khoảng thời gian, Khoảng cách, Khoảng cách tối đa, Độ chính xác</string>
     <string name="settings_import_export_summary">Nhập, Xuất, Tự động xuất</string>
-    <string name="settings_open_tracks_summary">Tất Cả Về Dự Án OpenTracks</string>
     <string name="settings_defaults_title">Định Vị và các Hoạt động</string>
     <string name="settings_defaults_summary">Đơn vị ưu tiên, Hoạt động mặc định, Tên mặc định tuyến đường</string>
     <string name="settings_ui_title">Giao diện người dùng</string>

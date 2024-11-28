@@ -466,7 +466,6 @@ limitations under the License.
     <string name="settings_public_api_enabled_summary_off">Только OpenTracks может запускать и останавливать запись.</string>
     <string name="value_float_mile_hour_recommended">%1$.1f миль/ч (рекомендуется)</string>
     <string name="export_cannot_write_to_dir">Невозможно записать в папку экспорта.</string>
-    <string name="settings_open_tracks_summary">Всё о проекте OpenTracks</string>
     <string name="settings_defaults_summary">Предпочитаемые единицы, вид активности и название трека по умолчанию</string>
     <string name="settings_recording_customize_layout_title">Изменить раскладку записи</string>
     <string name="settings_recording_customize_layout_select_columns">Ячеек с данными в строке</string>

@@ -403,7 +403,6 @@ limitations under the License.
     <string name="export_progress_summary_skip_msg">已跳过的文件</string>
     <string name="generic_overwrite">覆盖</string>
     <string name="import_progress_summary_ok_msg">文件已导入</string>
-    <string name="settings_open_tracks_summary">关于 OpenTracks 项目的一切</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f 公里/小时（推荐）</string>
     <string name="permission_bluetooth_failed">OpenTracks 需要使用蓝牙的权限。</string>
     <string name="generic_choose_an_option">选择一项</string>

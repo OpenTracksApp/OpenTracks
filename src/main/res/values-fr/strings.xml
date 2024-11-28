@@ -526,7 +526,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_ui_title">Interface utilisateur</string>
     <string name="settings_defaults_summary">Unités préférées, Activité par défaut, Suivi du nom par défaut</string>
     <string name="settings_defaults_title">Unités et activité par défaut</string>
-    <string name="settings_open_tracks_summary">A propos du projet OpenTracks</string>
     <string name="generic_undo">Annuler</string>
     <string name="menu_add_custom_layout">Nouvelle présentation</string>
     <string name="generic_filter">Filtre</string>

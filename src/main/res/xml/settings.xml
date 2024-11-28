@@ -56,13 +56,4 @@
         android:summary="@string/settings_reset_summary"
         android:title="@string/settings_all_reset" />
 
-    <Preference
-        android:icon="@drawable/ic_baseline_info_24"
-        android:summary="@string/settings_open_tracks_summary"
-        android:title="@string/about_preference_title">
-        <intent
-            android:targetClass="de.dennisguse.opentracks.AboutActivity"
-            android:targetPackage="@string/applicationId" />
-    </Preference>
-
 </PreferenceScreen>

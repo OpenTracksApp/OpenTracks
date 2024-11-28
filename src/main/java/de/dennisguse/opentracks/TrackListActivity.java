@@ -286,6 +286,11 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             return true;
         }
 
+        if (item.getItemId() == R.id.track_list_about) {
+            startActivity(IntentUtils.newIntent(this, AboutActivity.class));
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

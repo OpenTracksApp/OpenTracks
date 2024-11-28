@@ -480,7 +480,6 @@ limitations under the License.
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="generic_yesterday">Eilen</string>
-    <string name="settings_open_tracks_summary">Kaikki OpenTracks-projektista</string>
     <string name="settings_ui_title">Käyttöliittymä</string>
     <string name="settings_import_export_summary">Tuo, vie, automaattinen vienti</string>
     <string name="settings_units_category">Yksiköt</string>

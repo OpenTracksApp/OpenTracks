@@ -319,7 +319,6 @@ limitations under the License.
     <string name="menu_add_custom_layout">Nova postavitev</string>
     <string name="menu_resume_track">Potek obnove</string>
     <string name="sensor_could_not_scan">Ni bilo mogoče poiskati naprav Bluetooth (napaka %1$i).</string>
-    <string name="settings_open_tracks_summary">Vse o projektu OpenTracks</string>
     <string name="settings_defaults_summary">Prednostne enote, privzeta dejavnost, privzeto ime sledi</string>
     <string name="settings_import_export_summary">Uvoz, izvoz, samodejni izvoz</string>
     <string name="settings_units_category">Enote</string>
