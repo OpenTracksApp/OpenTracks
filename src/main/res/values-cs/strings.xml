@@ -30,10 +30,7 @@ limitations under the License.
 \n* funguje zcela offline
 \n* zobrazit trasy na mapě (viz níže)</string>
     <string name="help_track_map_title">Jak ukázat trasu na mapě\?</string>
-    <string name="help_track_map_content"> \u0020Použijte malou ikonu mapy.
-\n \u0020a) \u0020(živé aktualizace) Nainstalujte <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. \u0020Poskytuje online nebo offline mapy prostřednictvím <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
-\n \u0020Ve skutečnosti je OSMDashboard samostatná aplikace, která má přístup (dočasně) pouze k datům stop, které se budou zobrazovat. \u0020
-\n \u0020b) \u0020Prostřednictvím normální mapové aplikace (např. <a href="http://osmand.net/">OsmAnd</a> a <a href="https://maps.me/">MAPS.ME</a>). \u0020Tyto aplikace musí podporovat formát souboru KMZ (pouze umístění a časová razítka). \u0020Ve skutečnosti musí aplikace podporovat <i>ACTION_VIEW</i> pomocí MIME <i>application/vnd.google-earth.kmz</i>. \u0020</string>
+    <string name="help_track_map_content">Použijte malou ikonu mapy.\n a) (živé aktualizace) Nainstalujte si aplikaci <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Poskytuje online i offline mapy prostřednictvím <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n OSMDashboard je samostatná aplikace, která má (dočasný) přístup pouze k datům stop, které se budou zobrazovat. \n b) Prostřednictvím normální mapové aplikace (např. <a href="http://osmand.net/">OsmAnd</a> a <a href="https://maps.me/">MAPS.ME</a>). Tyto aplikace musí podporovat formát souboru KMZ (pouze umístění a časová razítka). Technicky vzato musí aplikace podporovat <i>ACTION_VIEW</i> s MIME <i>application/vnd.google-earth.kmz</i>.</string>
     <string name="help_storage_pictures_title">Jak ukládá OpenTracks obrázky pořízené jako značky na cestě\?</string>
     <string name="help_storage_pictures_content">Jsou uloženy v interním úložišti aplikace (tj. přístupné pouze v rámci OpenTracks).</string>
     <string name="help_track_export_title">Jak mohu exportovat/sdílet zaznamenané stopy\?</string>
@@ -44,22 +41,9 @@ limitations under the License.
     <string name="help_data_storage_title">Jak OpenTracks ukládá data ze senzorů\?</string>
     <string name="help_data_storage_content"> Data senzorů se ukládají na zaznamenané místo. Pokud jde o snímač srdeční frekvence, znamená to, že na každé místo je uloženo pouze <i>jedno</i> měření srdeční frekvence. Pokud stojíte v klidu nebo jste uvnitř, nebudou zaznamenána žádná data ze senzorů (ale budou zobrazena). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks nezaznamenává místa?</string>
-    <string name="help_gps_troubleshooting_content"> \u0020Co můžete udělat:
-\n \u0020a) zkontrolujte zda je zapnuta GPS,
-\n \u0020b) zkuste zlepšit příjem GPS (např. vyjít ven),
-\n \u0020c) zkontrolujte, zda používáte aplikaci <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest </a> a
-\n \u0020d) deaktivujte úsporu energie.
-\n \u0020
-\n \u0020Pokud nic nepomůže, nahlaste to jako chybu. \u0020</string>
+    <string name="help_gps_troubleshooting_content">Co můžete udělat:\n a) zkontrolujte zda je zapnuta poloha,\n b) zkuste zlepšit příjem GPS (např. vyjít ven),\n c) zkontrolujte funkčnost polohy s aplikací <a href="https://f-droid.org/cs/packages/com.android.gpstest.osmdroid/">GPSTest </a> a\n d) vypněte spořič baterie.\n \n Pokud nic nepomůže, nahlaste to jako chybu.</string>
     <string name="help_support_title">Jak mohu podpořit OpenTracks\?</string>
-    <string name="help_support_content"> \u0020Můžete:
-\n \u0020a) dát vědět ostatním o OpenTracks
-\n \u0020b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">navrhnout nové funkce</a>,
-\n \u0020c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">nahlásit chybu</a>,
-\n \u0020d) pomoci při vývoji aplikace,
-\n \u0020e) zakoupit v <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Obchodě Google Play</a>,
-\n \u0020f) zaslat dar či
-\n \u0020g) udělat něco jiného, co si myslíte že pomůže OpenTracks. \u0020</string>
+    <string name="help_support_content">Můžete:\n a) dát vědět ostatním o OpenTracks\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">navrhnout nové funkce</a>,\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">nahlásit chybu</a>,\n d) pomoci při vývoji aplikace,\n e) koupit si aplikaci v <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Obchodě Google Play</a>,\n f) zaslat dar nebo\n g) udělat něco jiného, co si myslíte že pomůže OpenTracks.</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">letadlo</string>
     <string name="activity_type_atv">terénní auta</string>
