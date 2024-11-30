@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
-    <string name="about_preference_title">O OpenTracks</string>
+    <string name="about_preference_title">O aplikaci</string>
     <string name="about_description"><i> OpenTracks </i> je aplikace pro záznam vašich sportů, která zcela respektuje vaše soukromí.</string>
     <string name="about_url">Webová stránka projektu: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Název verze: %1$s</string>
@@ -607,4 +607,6 @@ limitations under the License.
     <string name="power_x_watt">Výkon {x, plural, =1 {1 watt} few {# watty} other {# wattů} }</string>
     <string name="create_marker_error">Nepodařilo se vytvořit značku. Zkuste to znovu.</string>
     <string name="empty">" "</string>
+    <string name="settings_locale_title">Jazyk</string>
+    <string name="settings_locale_system_default">Podle systému</string>
 </resources>
