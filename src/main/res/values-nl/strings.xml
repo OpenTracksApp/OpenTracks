@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
-    <string name="about_preference_title">Over OpenTracks</string>
+    <string name="about_preference_title">Over</string>
     <string name="about_description"><i>OpenTracks</i> is een sport tracker applicatie met respect voor privacy.</string>
     <string name="about_url">Project webpagina: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Versienaam: %1$s</string>
@@ -607,4 +607,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_announcements_lap_power">Lap power</string>
     <string name="power_x_watt">Power {x, plural, =1 {1 watt} other {# watt} }</string>
     <string name="create_marker_error">Kan geen markering maken. Probeer het opnieuw.</string>
+    <string name="settings_locale_title">Taal</string>
+    <string name="settings_locale_system_default">Systeemstandaard</string>
 </resources>
