@@ -49,7 +49,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.OpenTracks.PrimaryHeader"
-            android:text="@string/stats_altitude" />
+            android:text="@string/stats_gain_loss" />
 
     </LinearLayout>
 
