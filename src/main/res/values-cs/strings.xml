@@ -593,4 +593,5 @@ limitations under the License.
     <string name="empty">" "</string>
     <string name="settings_locale_title">Jazyk</string>
     <string name="settings_locale_system_default">Podle systému</string>
+    <string name="stats_gain_loss">Stoupání a klesání</string>
 </resources>
