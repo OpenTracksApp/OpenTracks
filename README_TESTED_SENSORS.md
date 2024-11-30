@@ -66,6 +66,7 @@ We do not support type of movement (i.e., walking vs running).
 ### 0x2A6D: Environmental Sensing Service
 Sadly, Bluetooth sensors providing _air pressure_ via Environmental Sensing Service seem to be very rare.
 
+* [Flybeeper Pressure Sensor](https://market.flybeeper.com/device/ps1)
 * NoTrustIssues: https://github.com/OpenTracksApp/NoTrustIssues
   An Android app that exposes the internal barometer via Environmental Sensing Service.
 
