@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/settings_ui_title">
 
+    <de.dennisguse.opentracks.settings.LocalePreference
+        android:key="@string/locale_key"
+        android:persistent="false"
+        android:title="@string/settings_locale_title"
+        app:useSimpleSummaryProvider="true" />
+
     <ListPreference
         android:defaultValue="@string/night_mode_default"
         android:entries="@array/night_mode_options"
