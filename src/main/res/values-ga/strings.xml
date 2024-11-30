@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_libraries">Leabharlanna</string>
-    <string name="about_preference_title">Maidir Le OpenTracks</string>
+    <string name="about_preference_title">Maidir</string>
     <string name="about_url">Leathanach Gréasáin an tionscadail: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Ainm an leagain: %1$s</string>
     <string name="about_version_code">Cód an leagain: %1$d</string>
@@ -542,4 +542,6 @@
     <string name="settings_announcements_lap_power">Cumhacht glúine</string>
     <string name="power_x_watt">Cumhacht {x, iolra, = 1 {1 vata} eile {# vata} }</string>
     <string name="empty">" "</string>
+    <string name="settings_locale_system_default">Réamhshocrú córais</string>
+    <string name="settings_locale_title">Teanga</string>
 </resources>
