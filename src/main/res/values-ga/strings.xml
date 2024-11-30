@@ -15,13 +15,7 @@
     <string name="help_recording_title">Conas a thaifeadann OpenTracks sonraí\?</string>
     <string name="help_data_storage_title">Conas a stórálann OpenTracks sonraí braiteora\?</string>
     <string name="help_recording_content">OpenTracks úsáideann an braiteoir GPS an fheiste chun an suíomh a thaifeadadh go leanúnach. Má thuairiscíonn an gléas GPS sonraí míchruinne (m.sh., suíomh, luas, ingearchló), Ní féidir Le OpenTracks aon rud a dhéanamh faoi.</string>
-    <string name="help_gps_troubleshooting_content"> \u0020Cad is féidir leat a dhéanamh: 
-\n a) seiceáil an bhfuil GPS cumasaithe, 
-\n b) feabhas a chur ar fáiltiú GPS (e.g., dul amuigh faoin AER), 
-\n c) seiceáil le <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">gpstest</a> app, agus
-\n d) díchumasaigh coigilt cumhachta.
-\n
-\nMura gcabhraíonn gach rud le do thoil tuairiscigh fabht. \u0020</string>
+    <string name="help_gps_troubleshooting_content">Cad is féidir leat a dhéanamh: \n a) seiceáil an bhfuil GPS cumasaithe, \n b) feabhas a chur ar fáiltiú GPS (e.g., dul amuigh faoin AER), \n c) seiceáil le <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">gpstest</a> app, agus \n d) díchumasaigh coigilt cumhachta. \n \nMura gcabhraíonn gach rud le do thoil tuairiscigh fabht.</string>
     <string name="open_track_as_trackfileformat">Oscail mar %1$s</string>
     <string name="activity_type_airplane">eitleán</string>
     <string name="activity_type_biking">rothaíocht</string>
@@ -328,10 +322,7 @@
     <string name="settings_gps_summary">Eatramh ama, Fad-eatramh, Fad Max, Cruinneas</string>
     <string name="about_description"><i>Open Tracks</i> is iarratas rianaithe spóirt go n-urramaíonn go hiomlán do phríobháideacht.</string>
     <string name="help_track_export_content"> Is féidir rianta a easpórtáil ó na Socruithe mar KMZ, KML, nó GPX. na sonraí go léir KMZ/KML; Suíomhanna GPX amháin. Roinntear rianta a roinntear tríd an <i>deilbhín comhroinnte</i> mar KMZ. </string>
-    <string name="help_track_map_content"> \u0020Bain úsáid as an deilbhín léarscáile beag.
-\n a) (nuashonraithe beo) Suiteáil <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Soláthraíonn sé léarscáileanna ar líne nó as líne trí <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
-\n I ndáiríre, is aip ar leith é OSMDashboard nach féidir ach rochtain a fháil (go sealadach) ar shonraí na rianta atá le taispeáint.
-\n b) Trí ghnáthfheidhmchlár léarscáile (m.sh., <a href="http://osmand.net/">OsmAnd</a> agus <a href="https://maps.me/">MAPS.ME</a>). Ní mór do na haipeanna seo tacú le formáid comhaid KMZ (suíomhanna agus stampaí ama amháin). Go deimhin, caithfidh aip tacaíocht a thabhairt do <i>ACTION_VIEW</i> le MIME <i>application/vnd.google-earth.kmz</i>. \u0020</string>
+    <string name="help_track_map_content">Bain úsáid as an deilbhín léarscáile beag. \n a) (nuashonraithe beo) Suiteáil <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Soláthraíonn sé léarscáileanna ar líne nó as líne trí <a href="https://www.openstreetmap.org">OpenStreetMap</a>. \n I ndáiríre, is aip ar leith é OSMDashboard nach féidir ach rochtain a fháil (go sealadach) ar shonraí na rianta atá le taispeáint. \n b) Trí ghnáthfheidhmchlár léarscáile (m.sh., <a href="http://osmand.net/">OsmAnd</a> agus <a href="https://maps.me/">MAPS.ME</a>). Ní mór do na haipeanna seo tacú le formáid comhaid KMZ (suíomhanna agus stampaí ama amháin). Go deimhin, caithfidh aip tacaíocht a thabhairt do <i>ACTION_VIEW</i> le MIME <i>application/vnd.google-earth.kmz</i>.</string>
     <string name="activity_type_ultimate_frisbee">frisbee deiridh</string>
     <string name="description_total_time">Am iomlán: %1$s</string>
     <string name="activity_type_inline_skating">scátáil inlíne</string>
@@ -361,14 +352,7 @@
     <string name="always">I gcónaí</string>
     <string name="show_on_dashboard_not_installed">Níl aon fheidhmchlár a thacaíonn le OpenTracks Dashboard API suiteáilte.</string>
     <string name="share_image_body">Sílim go mb\'fhéidir go mbeadh suim agat san íomhá seo.</string>
-    <string name="help_support_content"> \u0020You can: 
-\n a) spread the word about OpenTracks, 
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propose features</a>,
-\nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">report bugs</a>, 
-\n d) help in software development, 
-\n e) buy in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>, 
-\n f) donate, and 
-\n g) do whatever you think helps OpenTracks. \u0020</string>
+    <string name="help_support_content">You can: \n a) spread the word about OpenTracks, \n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propose features</a>, \nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">report bugs</a>, \n d) help in software development, \n e) buy in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>, \n f) donate, and \n g) do whatever you think helps OpenTracks.</string>
     <string name="settings_public_api_disabled_toast">Tá OpenTracks Public API díchumasaithe: is féidir é a chumasú sna socruithe.</string>
     <string name="stats_altitude">Airde</string>
     <string name="stats_coordinates">Domhanleithead/Domhanfhad</string>
@@ -557,4 +541,5 @@
     <string name="settings_recording_location_distance_summary">%1$s idir suíomhanna taifeadta</string>
     <string name="settings_announcements_lap_power">Cumhacht glúine</string>
     <string name="power_x_watt">Cumhacht {x, iolra, = 1 {1 vata} eile {# vata} }</string>
+    <string name="empty">" "</string>
 </resources>

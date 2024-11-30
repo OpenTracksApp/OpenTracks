@@ -1,0 +1,4 @@
+v4.14.2: OpenTracks
+
+Oprava chyby:
+- Android 15: rozhraní již nepřetéká (edge-to-edge)
