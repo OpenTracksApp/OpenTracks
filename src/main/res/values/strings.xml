@@ -370,6 +370,9 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Number</string>
     <string name="settings_recording_track_name_title">Default track name</string>
     <string name="settings_recording_idle_timeout_title">Idle threshold</string>
+    <string name="settings_locale_title">Language</string>
+    <string name="settings_locale_system_default">System default</string>
+
     <string name="settings_night_mode_title">UI Theme</string>
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Day</string>

@@ -279,6 +279,9 @@
     <bool name="settings_ui_dynamic_colors_default" translatable="false">false</bool>
 
     <!-- androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode() -->
+    <string name="locale_key" translatable="false">localeKey</string>
+
+    <!-- androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode() -->
     <string name="night_mode_key" translatable="false">nightMode</string>
     <string name="night_mode_default" translatable="false">@string/night_mode_system_value</string>
     <string name="night_mode_no_value" translatable="false">1</string>
