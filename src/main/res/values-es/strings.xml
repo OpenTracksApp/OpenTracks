@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
-    <string name="about_preference_title">Acerca de OpenTracks</string>
+    <string name="about_preference_title">Acerca de</string>
     <string name="about_description"><i> OpenTracks </i> es una aplicación de seguimiento deportivo que respeta completamente su privacidad.</string>
     <string name="about_url">Página web del proyecto: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Nombre de la versión: %1$s</string>
@@ -661,4 +661,7 @@ limitations under the License.
     <string name="create_marker_error">No se ha podido crear un marcador. Inténtelo de nuevo.</string>
     <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
     <string name="power">Potencia</string>
+    <string name="settings_locale_title">Idioma</string>
+    <string name="settings_locale_system_default">Predeterminado del sistema</string>
+    <string name="stats_gain_loss">Ganancia y pérdida</string>
 </resources>
