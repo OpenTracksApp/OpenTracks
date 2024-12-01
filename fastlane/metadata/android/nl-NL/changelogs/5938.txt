@@ -1,0 +1,8 @@
+v4.15.0: OpenTracks
+
+Wijzigingen:
+- In-app taalkiezer (Android 14 of hoger)
+- Show-on-map-functie ondersteunt alleen OSM Dashboard (verwijderd KML/KMZ of GPX) 
+
+Ontwikkelaar:
+- Github-acties gebruiken nu Ubuntu
