@@ -42,7 +42,7 @@ public class LocalePreference extends ListPreference {
 
     private void init(Context context) {
         setPersistent(false);
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             setEnabled(false);
             return;
         }
