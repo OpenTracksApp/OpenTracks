@@ -609,4 +609,5 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="create_marker_error">Kan geen markering maken. Probeer het opnieuw.</string>
     <string name="settings_locale_title">Taal</string>
     <string name="settings_locale_system_default">Systeemstandaard</string>
+    <string name="stats_gain_loss">Winst &amp; verlies</string>
 </resources>
