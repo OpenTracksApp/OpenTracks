@@ -1,0 +1,8 @@
+v4.15.0: OpenTracks
+
+Changes:
+- In-app language selector (Android 14 or later)
+- Show-on-map-feature only supports OSM Dashboard (removed KML/KMZ or GPX) 
+
+Developer:
+- Github actions now uses Ubuntu
