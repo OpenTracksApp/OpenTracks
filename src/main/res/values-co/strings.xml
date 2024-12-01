@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about_preference_title">Apprupositu d’OpenTracks</string>
+    <string name="about_preference_title">Apprupositu</string>
     <string name="about_description"><i>OpenTracks</i> hè un’appiecazione di tracciatu spurtivu chì rispetta cumpletamente a vostra vita privata.</string>
     <string name="about_url">Pagina web di u prughjettu : <a href="%1$s">%1$s</a></string>
     <string name="about_version_code">Codice di a versione :%1$d</string>
@@ -553,4 +553,8 @@
     <string name="settings_recording_min_sampling_interval_title">Intervallu di durata di campiunariu</string>
     <string name="settings_announcements_idle_title">Inattività</string>
     <string name="voiceIdle">Diventà inattivu.</string>
+    <string name="settings_locale_title">Lingua</string>
+    <string name="settings_locale_system_default">Parametri predefiniti di u sistema</string>
+    <string name="stats_gain_loss">Guadagnu è perdita</string>
+    <string name="voice_announce_lap_power_key">AnnunziamentuVucalePutenzaÀUGiru</string>
 </resources>
