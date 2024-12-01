@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
-    <string name="about_preference_title">Sobre OpenTracks</string>
+    <string name="about_preference_title">Sobre</string>
     <string name="about_description"><i>OpenTracks</i> é unha aplicación para rexistrar actividades deportivas que respecta a túa privacidade.</string>
     <string name="about_url">Web do proxecto: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Nome da versión: %1$s</string>
@@ -30,10 +30,7 @@ limitations under the License.
 \n* funciona sen precisar conexión á rede
 \n* mostra as rutas nun mapa (ver abaixo)</string>
     <string name="help_track_map_title">Como mostrar a ruta no mapa\?</string>
-    <string name="help_track_map_content"> \u0020Usa a icona do mapa pequeno. 
-\n a) (actualizacións en directo) Instala <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Proporciona mapas en liña ou sen conexión grazas a <a href="https://www.openstreetmap.org">OpenStreetMap</a>. 
-\n En realidade, OSMDashboard é unha aplicación independente que só pode acceder (temporalmente) aos datos das pistas que se amosarán. 
-\n b) A través dunha aplicación de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAnd</a> e <a href="https://maps.me/">MAPS.ME</a>). Estas aplicacións precisan admitir o formato de ficheiro KMZ (só localizacións e marcas de tempo). De feito, unha aplicación ten que admitir <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>. \u0020</string>
+    <string name="help_track_map_content">Usa a icona do mapa pequeno. \n a) (actualizacións en directo) Instala <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Proporciona mapas en liña ou sen conexión grazas a <a href="https://www.openstreetmap.org">OpenStreetMap</a>. \n En realidade, OSMDashboard é unha aplicación independente que só pode acceder (temporalmente) aos datos das pistas que se amosarán. \n b) A través dunha aplicación de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAnd</a> e <a href="https://maps.me/">MAPS.ME</a>). Estas aplicacións precisan admitir o formato de ficheiro KMZ (só localizacións e marcas de tempo). De feito, unha aplicación ten que admitir <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>.</string>
     <string name="help_storage_pictures_title">De que xeito garda OpenTracks as fotos tomadas como marcadores\?</string>
     <string name="help_storage_pictures_content">Gárdanse na almacenaxe interna da app (só accesible desde OpenTracks).</string>
     <string name="help_track_export_title">De que xeito exporto/importo as rutas gravadas\?</string>
@@ -44,24 +41,11 @@ limitations under the License.
 OpenTracks usa o sensor GPS do dispositivo para gravar a localización de xeito contínuo.
 Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, elevación), OpenTracks  non pode facer nada ao respecto.</string>
     <string name="help_data_storage_title">De que xeito garda OpenTracks os datos dos sensores\?</string>
-    <string name="help_data_storage_content"> Os datos dos sensores gárdanse asociados á localización. Respecto do ritmo cardíaco, significa que só se garda <i>unha medida</i> asociada a unha localización. \u0020Se te detés ou estás en interiores, non se gardarán datos do sensor (mais serán mostrados). </string>
+    <string name="help_data_storage_content">Os datos dos sensores gárdanse asociados á localización. Respecto do ritmo cardíaco, significa que só se garda <i>unha medida</i> asociada a unha localización. Se te detés ou estás en interiores, non se gardarán datos do sensor (mais serán mostrados).</string>
     <string name="help_gps_troubleshooting_title">OpenTracks non grava as localizacións\?</string>
-    <string name="help_gps_troubleshooting_content"> \u0020Podes intentar: 
-\n a) mira que o GPS esté activado, 
-\n b) mellora a recepción GPS (ex. sae ao exterior), 
-\n c) comprobaa coa app <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, e 
-\n d) desactiva o aforro de enerxía. 
-\n 
-\n Se isto non axuda, infórmanos do problema. \u0020</string>
+    <string name="help_gps_troubleshooting_content">Podes intentar: \n a) mira que o GPS esté activado, \n b) mellora a recepción GPS (ex. sae ao exterior), \n c) comprobaa coa app <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, e \n d) desactiva o aforro de enerxía. \n \n Se isto non axuda, infórmanos do problema.</string>
     <string name="help_support_title">Como podo axudar a OpenTracks\?</string>
-    <string name="help_support_content"> \u0020Podes: 
-\n a) falar de OpenTracks coas túas amizades, 
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propoñer novas funcións</a>, 
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">informar de fallos</a>, 
-\n d) axudar no desenvolvemento, 
-\n e) mercar a app na <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>, 
-\n f) facer unha doazón, e 
-\n g) calquera cousa que estimes axuda a OpenTracks. \u0020</string>
+    <string name="help_support_content">Podes: \n a) falar de OpenTracks coas túas amizades, \n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propoñer novas funcións</a>, \n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">informar de fallos</a>, \n d) axudar no desenvolvemento, \n e) mercar a app na <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>, \n f) facer unha doazón, e \n g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">avión</string>
@@ -103,7 +87,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="activity_type_rc_airplane">Avión de radiocontrol</string>
     <string name="activity_type_rc_boat">Barco de radiocontrol</string>
     <string name="activity_type_rc_helicopter">Helicóptero de radiocontrol</string>
-    <string name="activity_type_riding">ciclismo</string>
+    <string name="activity_type_riding">equitación</string>
     <string name="activity_type_road_biking">ciclismo de estrada</string>
     <string name="activity_type_roller_skiing">esquí sobre rodas</string>
     <string name="activity_type_rowing">remo</string>
@@ -607,4 +591,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="power">Potencia</string>
     <string name="power_x_watt">Potencia {x, plural, =1 {1 watio} other {# watios} }</string>
     <string name="create_marker_error">Non se creou o marcador. Inténtao outra vez.</string>
+    <string name="settings_locale_title">Idioma</string>
+    <string name="settings_locale_system_default">Predeterminado no sistema</string>
+    <string name="stats_gain_loss">Ganancia e Perda</string>
 </resources>
