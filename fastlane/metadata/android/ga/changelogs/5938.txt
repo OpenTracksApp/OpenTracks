@@ -1,0 +1,8 @@
+v4.15.0: OpenTracks
+
+Athruithe:
+- Roghnóir teanga in-app (Android 14 nó níos déanaí)
+- Ní thacaíonn an ghné taispeáin-ar-mapa ach le Painéal OSM (bainte KML/KMZ nó GPX)
+
+Forbróir:
+- Úsáideann gníomhartha Github anois Ubuntu
