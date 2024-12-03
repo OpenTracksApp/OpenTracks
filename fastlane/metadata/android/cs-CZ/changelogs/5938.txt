@@ -1,0 +1,8 @@
+v4.15.0: OpenTracks
+
+Změny:
+- Výběr jazyka v aplikaci (Android 14 nebo novější)
+- Funkce zobrazit na mapě podporuje pouze aplikaci OSM Dashboard (odstraněno KML/KMZ nebo GPX) 
+
+Vývojář:
+- GitHub Actions nyní používají Ubuntu
