@@ -1,0 +1,7 @@
+v4.14.1 : OpenTracks
+
+Changements :
+− La détection d’immobilité peut être désactivée
+
+Correction de bogue :
+− L’interface utilisateur pour ajouter des images aux marqueurs était cachée

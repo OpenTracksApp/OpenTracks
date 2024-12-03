@@ -1,0 +1,8 @@
+v4.15.0 : OpenTracks
+
+Changements :
+− Sélection de la langue sur l’application (Android 14 ou plus)
+− La fonctionnalité « montrer sur la carte » prend en charge uniquement OSM Dashboard (suppression de KML/KMZ ou GPX)
+
+Développeurs :
+− Les actions Github utilisent désormais Ubuntu
