@@ -31,13 +31,7 @@ public class PublicApiTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
 
-    @Test
-    public void StartTest() {
-        PreferencesUtils.setBoolean(R.string.publicapi_enabled_key, true);
-
-        context.startActivity(IntentUtils.newIntent(context, StartRecording.class));
-    }
-
+    //NOTE: this doesn't check if the TrackRecordingService was started in foreground.
     @Test
     public void StartStopTest() throws InterruptedException {
         PreferencesUtils.setBoolean(R.string.publicapi_enabled_key, true);
