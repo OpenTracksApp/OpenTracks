@@ -33,11 +33,15 @@ public abstract class AbstractAPIActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
-        splashScreen.setKeepOnScreenCondition(() -> true );
+        splashScreen.setKeepOnScreenCondition(() -> true);
 
         if (PreferencesUtils.isPublicAPIenabled()) {
             Log.i(TAG, "Received and trying to execute requested action.");
-            TrackRecordingServiceConnection.execute(this, serviceConnectedCallback);
+            if (requiresForeground()) {
+                TrackRecordingServiceConnection.executeForeground(this, serviceConnectedCallback);
+            } else {
+                TrackRecordingServiceConnection.execute(this, serviceConnectedCallback);
+            }
         } else {
             Toast.makeText(this, getString(R.string.settings_public_api_disabled_toast), Toast.LENGTH_LONG).show();
             Log.w(TAG, "Public API is disabled; ignoring request.");
@@ -48,4 +52,8 @@ public abstract class AbstractAPIActivity extends AppCompatActivity {
     protected abstract void execute(TrackRecordingService service);
 
     protected abstract boolean isPostExecuteStopService();
+
+    protected boolean requiresForeground() {
+        return false;
+    }
 }
