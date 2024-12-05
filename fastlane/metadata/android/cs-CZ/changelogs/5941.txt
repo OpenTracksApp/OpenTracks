@@ -1,0 +1,4 @@
+v4.16.0: OpenTracks
+
+Oprava chyby:
+- PublicAPI: spuštění záznamu nezaznamenalo žádná data
