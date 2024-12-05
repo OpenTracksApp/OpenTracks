@@ -196,9 +196,7 @@ limitations under the License.
     <string name="settings_stats_units_metric">Metriske (km, m)</string>
     <string name="settings_stats_units_title">Foretrukne enheter</string>
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Jeg tror du kan være interessert i dette sporet.
-\n
-\n%1$s</string>
+    <string name="share_track_share_file_body">Jeg tror du kan være interessert i dette sporet.\n\n%1$s</string>
     <string name="share_track_subject">Jeg vil dele et spor med deg</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Gjen. forflytningstempo</string>
@@ -359,12 +357,7 @@ limitations under the License.
     <string name="sensor_could_not_scan">Kunne ikke se etter Blåtannsenheter (feil %1$i).</string>
     <string name="help_data_google_play_services_title">Krever/bruker OpenTracks Google Play-tjenesten\?</string>
     <string name="help_feature_title">OpenTracks har følgende funksjoner:</string>
-    <string name="help_feature_content">* Opprett GPS-spor
-\n * Bruk av pulssensor (kun Blåtann-LE)
-\n * Talemeldinger (etter tid eller distanse)
-\n * Opprett markører (inkl. bilder)
-\n * Fungerer uten Internett-forbindelse
-\n * Vis spor på et kart (se nedenfor)</string>
+    <string name="help_feature_content">* Opprett GPS-spor \n* Bruk av pulssensor (kun Blåtann-LE) \n* Talemeldinger (etter tid eller distanse) \n* Opprett markører (inkl. bilder) \n* Fungerer uten Internett-forbindelse \n* Vis spor på et kart (se nedenfor)</string>
     <string name="help_track_map_title">Hvordan vise et spor på et kart\?</string>
     <string name="about_description"><i>OpenTracks</i> er et sportssporingsprogram som fullt ut respekterer ditt personvern.</string>
     <string name="about_url">Prosjektnettside: <a href="%1$s">%1$s</a></string>
@@ -392,21 +385,8 @@ limitations under the License.
     <string name="help_data_storage_title">Hvordan lagrer OpenTracks sensordata\?</string>
     <string name="help_data_storage_content"> Sensordata lagres per posisjon som er tatt opp. Når det gjelder pulssensorer betyr dette at kun <i>én</i> pulsmåling lagres per posisjon. Hvis du står stille eller er innendørs, blir ingen sensordata tatt opp (men de vil bli vist). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks tar ikke opp posisjoner\?</string>
-    <string name="help_gps_troubleshooting_content"> Hva du kan gjøre:
-\n a) sjekk om GPS er slått på,
-\n b) forbedre GPS-mottak (f.eks. gå utendørs),
-\n c) sjekk med programmet <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, og
-\n d) slå av strømsparing.
-\n
-\n Hvis alt dette ikke hjelper, kan du rapportere en feil. </string>
-    <string name="help_support_content"> Du kan:
-\n a) spre info om OpenTracks,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">foreslå funksjoner</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">rapportere feil</a>,
-\n d) hjelpe til med programvareutvikling,
-\n e) kjøpe programmet i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
-\n f) donere, og
-\n g) gjøre noe du tror hjelper OpenTracks. </string>
+    <string name="help_gps_troubleshooting_content">Hva du kan gjøre:\n a) sjekk om GPS er slått på,\n b) forbedre GPS-mottak (f.eks. gå utendørs),\n c) sjekk med programmet <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, og\n d) slå av strømsparing.\n \n Hvis alt dette ikke hjelper, kan du rapportere en feil.</string>
+    <string name="help_support_content">Du kan:\n a) spre info om OpenTracks,\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">foreslå funksjoner</a>,\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">rapportere feil</a>,\n d) hjelpe til med programvareutvikling,\n e) kjøpe programmet i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n f) donere, og\n g) gjøre noe du tror hjelper OpenTracks.</string>
     <string name="description_altitude_loss">Total nedstigning: %1$d m (%2$d ft)</string>
     <string name="stats_loss">Total nedstigning</string>
     <string name="import_prevent_reimport">Du har stilt inn forhindring av at spor importeres om igjen</string>
@@ -547,7 +527,7 @@ limitations under the License.
     <string name="value_float_knots">%1$.1f knop</string>
     <string name="value_float_knots_recommended">%1$.1f knop (anbefales)</string>
     <string name="voice_per_nautical_mile">per nautisk mil</string>
-    <string name="show_on_dashboard_not_installed">Ingen app som støtter OpenTracks-API for oversikten er installert.</string>
+    <string name="show_on_dashboard_not_installed">Ingen app som støtter OpenTracks Dashboard-API er installert.</string>
     <string name="track_delete_number_of_tracks">%1$d spor</string>
     <string name="settings_public_api_package_title">Pakkenavn for offentlig API</string>
     <string name="introduction_osm_dashboard">OpenTracks sørger ikke selv for kart. Installer OSMDashboard for å vise opptakene dine på et kart.</string>
@@ -595,4 +575,7 @@ limitations under the License.
     <string name="settings_sensor_bluetooth_service_filter_off">Vis alle Bluetooth-enheter som kan oppdages</string>
     <string name="permission_recording_failed">OpenTracks krever tillatelse for å få tilgang til posisjonen din samt enheter i nærheten.</string>
     <string name="create_marker_error">Klarte ikke å opprette en markør. Prøv igjen.</string>
+    <string name="settings_locale_title">Språk</string>
+    <string name="settings_locale_system_default">Systemstandard</string>
+    <string name="stats_gain_loss">Total stigning og nedstigning</string>
 </resources>
