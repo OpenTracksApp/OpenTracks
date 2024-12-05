@@ -95,8 +95,8 @@ android {
         }
 
         nightly {
-            signingConfig signingConfigs.nightly
             applicationIdSuffix ".nightly"
+            signingConfig signingConfigs.nightly
         }
 
         release {
@@ -121,6 +121,12 @@ android {
                 outputFileName = "${applicationId}_${variant.versionCode}.apk"
             }
         }
+    }
+
+    dependenciesInfo {
+        //Disabled for reproducible builds
+        includeInApk = false
+        includeInBundle = false
     }
 }
 
