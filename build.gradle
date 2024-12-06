@@ -26,7 +26,7 @@ def getVersionName = { ->
         }
         return stdout.toString().trim()
     } catch (ignored) {
-        return null
+        throw new GradleException('VersionName could not be read:' + ignored.message)
     }
 }
 
@@ -39,7 +39,7 @@ def getVersionCode = { ->
         }
         return Integer.valueOf(stdout.toString().trim())
     } catch (ignored) {
-        return null
+        throw new GradleException('VersionCode could not be read:' + ignored.message)
     }
 }
 
