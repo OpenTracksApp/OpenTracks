@@ -1,0 +1,4 @@
+v4.16.0: OpenTracks
+
+Opgelost probleem:
+- PublicAPI: bij het starten van een opname zijn geen gegevens vastgelegd
