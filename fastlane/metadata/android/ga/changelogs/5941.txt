@@ -1,0 +1,4 @@
+v4.16.0: OpenTracks
+
+Ceartúchán Bug:
+- PublicAPI: níor taifeadadh aon sonraí le tosú taifeadta
