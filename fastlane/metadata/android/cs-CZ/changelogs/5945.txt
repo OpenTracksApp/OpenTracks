@@ -1,0 +1,8 @@
+v4.16.1: OpenTracks
+
+Změny:
+- Výběr jazyka v aplikaci je nyní k dispozici pro všechny verze systému Android
+  (na základě velké poptávky)
+
+Vývojář:
+- GitHub Actions: při checkoutu se nestahovaly značky (noční aktualizace)
