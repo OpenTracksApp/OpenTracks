@@ -1,0 +1,8 @@
+v4.16.1: OpenTracks
+
+Changes:
+- In-app language selector now available for all Android versions
+  (due to some popular demand)
+
+Developer:
+- Github actions: checkout was not fetching tags (nightly)
