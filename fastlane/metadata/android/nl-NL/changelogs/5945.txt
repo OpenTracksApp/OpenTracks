@@ -1,0 +1,8 @@
+v4.16.1: OpenTracks
+
+Veranderingen:
+- In-app taalkiezer nu beschikbaar voor alle Android-versies
+  (op veler verzoek)
+
+Ontwikkelaar:
+- Github-acties: checkout was not fetching tags (nightly)
