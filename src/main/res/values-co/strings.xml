@@ -278,7 +278,7 @@
     <string name="settings_export_filename_title">Furmatu di u nome di schedariu</string>
     <string name="settings_chart_by_distance">Secondu à a distanza</string>
     <string name="settings_chart_by_time">Secondu à a durata</string>
-    <string name="settings_ui_dynamic_colors_summary">Impiegà i culori dinamichi definiti da l’utilizatore (solu Android 12è più ; richiede un rilanciu manuale)</string>
+    <string name="settings_ui_dynamic_colors_summary">Impiegà i culori dinamichi definiti da l’utilizatore (solu Android 12 è più ; richiede un rilanciu manuale)</string>
     <string name="settings_recording_customize_layout_title">Persunalizà u vostru accunciamentu d’arregistramentu</string>
     <string name="settings_recording_customize_layout_select_columns">Campi di dati à a linea</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Cunservà u screnu accesu</string>
