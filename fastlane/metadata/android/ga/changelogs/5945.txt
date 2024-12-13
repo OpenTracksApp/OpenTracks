@@ -1,0 +1,8 @@
+v4.16.1: OpenTracks
+
+Athruithe:
+- Roghnóir teanga in-app ar fáil anois do gach leagan Android
+ (mar gheall ar roinnt éileamh coitianta)
+
+Forbróir:
+- Gníomhartha Github: ní raibh an tseiceáil amach ag fáil clibeanna (oíche)
