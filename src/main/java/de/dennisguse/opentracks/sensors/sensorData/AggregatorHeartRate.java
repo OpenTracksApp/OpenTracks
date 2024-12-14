@@ -15,6 +15,11 @@ public class AggregatorHeartRate extends Aggregator<HeartRate, HeartRate> {
         this.value = current.value();
     }
 
+    @Override
+    public void reset() {
+        // We don't need to reset the heart rate as this value is valid for a certain amount of time: and it is not an aggregate.
+    }
+
     @NonNull
     @Override
     protected HeartRate getNoneValue() {

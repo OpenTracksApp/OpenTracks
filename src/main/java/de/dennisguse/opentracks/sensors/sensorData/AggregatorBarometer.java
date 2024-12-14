@@ -37,10 +37,5 @@ public class AggregatorBarometer extends Aggregator<AtmosphericPressure, Altitud
         return new AltitudeGainLoss(0f, 0f);
     }
 
-    @Override
-    public void reset() {
-        value = getNoneValue();
-    }
-
     public record Data(Altitude gain, Altitude loss) {}
 }
