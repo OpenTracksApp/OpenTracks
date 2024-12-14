@@ -16,11 +16,6 @@ public class AggregatorGPS extends Aggregator<Position, Position> {
         value = current.value();
     }
 
-    @Override
-    public void reset() {
-        value = null;
-    }
-
     @NonNull
     @Override
     protected Position getNoneValue() {
