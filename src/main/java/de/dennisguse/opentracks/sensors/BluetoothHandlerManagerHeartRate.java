@@ -45,7 +45,7 @@ public class BluetoothHandlerManagerHeartRate implements SensorHandlerInterface 
         HeartRate heartRate = parseHeartRate(characteristic);
 
         if (heartRate != null) {
-            observer.onChange(new Raw<>(heartRate));
+            observer.onChange(new Raw<>(observer.getNow(), heartRate));
         }
     }
 

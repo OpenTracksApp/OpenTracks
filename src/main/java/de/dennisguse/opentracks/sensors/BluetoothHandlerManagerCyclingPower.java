@@ -35,7 +35,7 @@ public class BluetoothHandlerManagerCyclingPower implements SensorHandlerInterfa
         Data cyclingPower = parseCyclingPower(characteristic);
 
         if (cyclingPower != null) {
-            observer.onChange(new Raw<>(cyclingPower));
+            observer.onChange(new Raw<>(observer.getNow(), cyclingPower));
         }
     }
 

@@ -8,6 +8,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+import java.time.Instant;
+
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.Aggregator;
 import de.dennisguse.opentracks.sensors.sensorData.Raw;
@@ -46,6 +48,11 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
         @Override
         public void onRemove(Aggregator<?, ?> aggregator) {
             sensorDataSet.remove(aggregator);
+        }
+
+        @Override
+        public Instant getNow() {
+            return observer.createNow();
         }
     };
 
@@ -138,5 +145,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
         void onDisconnect(Aggregator<?, ?> sensorData);
 
         void onRemove(Aggregator<?, ?> sensorData);
+
+        Instant getNow();
     }
 }
