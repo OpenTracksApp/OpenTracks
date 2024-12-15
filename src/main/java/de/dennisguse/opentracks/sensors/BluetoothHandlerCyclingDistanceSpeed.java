@@ -34,7 +34,7 @@ public class BluetoothHandlerCyclingDistanceSpeed implements SensorHandlerInterf
     public void handlePayload(SensorManager.SensorDataChangedObserver observer, ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
         Pair<WheelData, BluetoothHandlerCyclingCadence.CrankData> data = parseCyclingCrankAndWheel(address, sensorName, characteristic);
         if (data.first != null) {
-            observer.onChange(new Raw<>(data.first));
+            observer.onChange(new Raw<>(observer.getNow(), data.first));
         }
     }
 

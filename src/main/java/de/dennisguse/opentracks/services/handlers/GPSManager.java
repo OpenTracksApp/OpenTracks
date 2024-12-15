@@ -37,7 +37,7 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
 
     private TrackPointCreator trackPointCreator;
 
-    private SensorManager.SensorDataChangedObserver listener;
+    private SensorManager.SensorDataChangedObserver observer;
     private Context context;
     private Handler handler;
 
@@ -46,9 +46,9 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
     private Duration gpsInterval;
     private Distance thresholdHorizontalAccuracy;
 
-    public GPSManager(TrackPointCreator trackPointCreator, SensorManager.SensorDataChangedObserver listener) {
+    public GPSManager(TrackPointCreator trackPointCreator, SensorManager.SensorDataChangedObserver observer) {
         this.trackPointCreator = trackPointCreator;
-        this.listener = listener;
+        this.observer = observer;
     }
 
     public void start(@NonNull Context context, @NonNull Handler handler) {
@@ -60,7 +60,7 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
         gpsStatusManager = new GpsStatusManager(context, this, handler);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-        listener.onConnect(new AggregatorGPS("internal"));
+        observer.onConnect(new AggregatorGPS("internal"));
 
         registerLocationListener();
         gpsStatusManager.start();
@@ -82,8 +82,8 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
         gpsStatusManager.stop();
         gpsStatusManager = null;
 
-        listener.onDisconnect(new AggregatorGPS("internal"));
-        listener = null;
+        observer.onDisconnect(new AggregatorGPS("internal"));
+        observer = null;
 
         trackPointCreator = null;
     }
@@ -139,7 +139,7 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
             return;
         }
 
-        listener.onChange(new Raw<>(Position.of(location)));
+        observer.onChange(new Raw<>(observer.getNow(), Position.of(location)));
     }
 
     @Override

@@ -124,8 +124,7 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
         return new Pair<>(currentTrackPoint, sensorDataSet);
     }
 
-    @VisibleForTesting
-    Instant createNow() {
+    public Instant createNow() {
         return Instant.now(clock);
     }
 

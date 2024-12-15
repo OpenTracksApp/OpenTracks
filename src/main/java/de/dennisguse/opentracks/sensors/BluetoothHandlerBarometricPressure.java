@@ -33,7 +33,7 @@ public class BluetoothHandlerBarometricPressure implements SensorHandlerInterfac
         AtmosphericPressure value = parseEnvironmentalSensing(characteristic);
         if (value == null) return;
 
-        observer.onChange(new Raw<>(value));
+        observer.onChange(new Raw<>(observer.getNow(), value));
     }
 
     /**

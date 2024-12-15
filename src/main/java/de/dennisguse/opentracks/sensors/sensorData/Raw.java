@@ -6,11 +6,11 @@ import androidx.annotation.NonNull;
 import java.time.Instant;
 
 public record Raw<T>(
-        @NonNull T value,
-
-        @NonNull Instant time
+        @NonNull Instant time,
+        @NonNull T value
 ) {
+    @Deprecated
     public Raw(@NonNull T value) {
-        this(value, Instant.now()); //TODO We should be using the MonotonicClock
+        this(Instant.now(), value); //TODO We should be using the MonotonicClock
     }
 }

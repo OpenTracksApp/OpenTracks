@@ -22,7 +22,7 @@ public class BarometerInternal implements Driver {
 
     private static final int SAMPLING_PERIOD = (int) TimeUnit.SECONDS.toMicros(5);
 
-    private final SensorManager.SensorDataChangedObserver listener;
+    private final SensorManager.SensorDataChangedObserver observer;
 
     private Context context;
 
@@ -34,7 +34,7 @@ public class BarometerInternal implements Driver {
                 return;
             }
 
-            listener.onChange(new Raw<>(AtmosphericPressure.ofHPA(event.values[0])));
+            observer.onChange(new Raw<>(observer.getNow(), AtmosphericPressure.ofHPA(event.values[0])));
         }
 
         @Override
@@ -43,8 +43,8 @@ public class BarometerInternal implements Driver {
         }
     };
 
-    public BarometerInternal(@NonNull SensorManager.SensorDataChangedObserver listener) {
-        this.listener = listener;
+    public BarometerInternal(@NonNull SensorManager.SensorDataChangedObserver observer) {
+        this.observer = observer;
 
     }
 
@@ -60,7 +60,7 @@ public class BarometerInternal implements Driver {
 
         if (sensorManager.registerListener(sensorEventListener, pressureSensor, SAMPLING_PERIOD, handler)) {
             this.context = context;
-            listener.onConnect(new AggregatorBarometer("internal", null));
+            observer.onConnect(new AggregatorBarometer("internal", null));
             return;
         }
 
