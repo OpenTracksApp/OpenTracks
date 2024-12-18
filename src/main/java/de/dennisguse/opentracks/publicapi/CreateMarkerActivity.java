@@ -23,8 +23,11 @@ public class CreateMarkerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Track.Id trackId = new Track.Id(getIntent().getLongExtra(EXTRA_TRACK_ID, 0L));
+        Track.Id trackId = new Track.Id(getIntent().getLongExtra(EXTRA_TRACK_ID, -1L));
         Location location = getIntent().getParcelableExtra(EXTRA_LOCATION);
+        if (!getIntent().hasExtra(EXTRA_TRACK_ID) || location == null) {
+            throw new IllegalStateException("Parameter 'track_id' and/or 'location' missing or invalid.");
+        }
 
         TrackRecordingServiceConnection.execute(this, (service, self) -> {
             Intent intent = IntentUtils
