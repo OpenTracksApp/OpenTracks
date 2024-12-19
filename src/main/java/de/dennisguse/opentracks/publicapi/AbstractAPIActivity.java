@@ -13,7 +13,7 @@ import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
-public abstract class AbstractAPIActivity extends AppCompatActivity {
+abstract class AbstractAPIActivity extends AppCompatActivity {
 
     private final String TAG = AbstractAPIActivity.class.getSimpleName();
 
