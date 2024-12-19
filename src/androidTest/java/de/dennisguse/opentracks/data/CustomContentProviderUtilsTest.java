@@ -482,7 +482,7 @@ public class CustomContentProviderUtilsTest {
         assertEquals(contentProviderUtils.getMarkers(trackId).size(), 1);
 
         // Get marker id that needs to delete.
-        Marker.Id marker1Id = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker1)));
+        Marker.Id marker1Id = contentProviderUtils.insertMarker(marker1);
 
         // Delete
         contentProviderUtils.deleteMarker(context, marker1Id);
@@ -509,7 +509,7 @@ public class CustomContentProviderUtilsTest {
         assertEquals(contentProviderUtils.getMarkers(trackId).size(), 1);
 
         // Get marker id that needs to delete.
-        Marker.Id marker1Id = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker1)));
+        Marker.Id marker1Id = contentProviderUtils.insertMarker(marker1);
 
         // Check marker has photo and it's in the external storage.
         assertTrue(marker1.hasPhoto());
@@ -553,11 +553,11 @@ public class CustomContentProviderUtilsTest {
         // Insert at first.
         Marker marker1 = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         marker1.setDescription(MOCK_DESC);
-        Marker.Id marker1Id = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker1)));
+        Marker.Id marker1Id = contentProviderUtils.insertMarker(marker1);
 
         Marker marker2 = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         marker2.setDescription(MOCK_DESC);
-        Marker.Id marker2Id = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker2)));
+        Marker.Id marker2Id = contentProviderUtils.insertMarker(marker2);
 
         // Delete
         assertNotNull(contentProviderUtils.getMarker(marker1Id));
@@ -598,7 +598,7 @@ public class CustomContentProviderUtilsTest {
 
         Marker marker = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         marker.setDescription(TEST_DESC);
-        Marker.Id markerId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker)));
+        Marker.Id markerId = contentProviderUtils.insertMarker(marker);
 
         assertEquals(TEST_DESC, contentProviderUtils.getMarker(markerId).getDescription());
     }
@@ -614,7 +614,7 @@ public class CustomContentProviderUtilsTest {
         // Insert at first.
         Marker marker = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         marker.setDescription(TEST_DESC);
-        Marker.Id markerId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker)));
+        Marker.Id markerId = contentProviderUtils.insertMarker(marker);
 
         // Update
         marker = contentProviderUtils.getMarker(markerId);
@@ -638,7 +638,7 @@ public class CustomContentProviderUtilsTest {
         TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
         Marker marker = TestDataUtil.createMarkerWithPhoto(context, trackId, trackPoint);
         marker.setDescription(TEST_DESC);
-        Marker.Id markerId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker)));
+        Marker.Id markerId = contentProviderUtils.insertMarker(marker);
 
         File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.id());
         assertTrue(dir.exists());
@@ -673,7 +673,7 @@ public class CustomContentProviderUtilsTest {
         TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
         Marker marker = TestDataUtil.createMarkerWithPhoto(context, trackId, trackPoint);
         marker.setDescription(TEST_DESC);
-        Marker.Id markerId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker)));
+        Marker.Id markerId = contentProviderUtils.insertMarker(marker);
 
         File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.id());
         assertTrue(dir.exists());
@@ -709,7 +709,7 @@ public class CustomContentProviderUtilsTest {
         marker.setDescription(TEST_DESC);
         Marker otherMarker = TestDataUtil.createMarkerWithPhoto(context, trackId, trackPoint);
         otherMarker.setDescription(TEST_DESC);
-        Marker.Id markerId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(marker)));
+        Marker.Id markerId = contentProviderUtils.insertMarker(marker);
         contentProviderUtils.insertMarker(otherMarker);
 
         File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.id());

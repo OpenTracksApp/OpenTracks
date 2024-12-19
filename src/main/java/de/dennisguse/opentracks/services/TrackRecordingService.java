@@ -36,7 +36,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.Duration;
 
+import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
@@ -241,6 +243,20 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         notificationManager.cancelNotification();
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
         gpsStatusObservable.postValue(STATUS_GPS_DEFAULT);
+    }
+
+    public Marker.Id createMarker() {
+        if (!isRecording()) {
+            return null;
+        }
+
+        //TODO This contains some duplication to TrackRecodingActivity's Marker creation
+        TrackPoint trackPoint = trackRecordingManager.getLastStoredTrackPointWithLocation();
+        if (trackPoint == null) {
+            return null;
+        }
+        Marker marker = new Marker(recordingStatus.trackId(), trackPoint);
+        return new ContentProviderUtils(this).insertMarker(marker);
     }
 
     @Override
