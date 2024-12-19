@@ -98,6 +98,14 @@ limitations under the License.
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".publicapi.CreateMarker"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <!-- NOTE: the name of the MAIN/LAUNCHER is used by icon packs; if this is changed, icon packs break.-->
         <activity

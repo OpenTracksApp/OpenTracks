@@ -13,7 +13,7 @@ import de.dennisguse.opentracks.ui.markers.MarkerDetailActivity;
 import de.dennisguse.opentracks.util.IntentUtils;
 
 /**
- * Public api to show an existing marker
+ * INTERNAL: only meant for clients of OSMDashboard API.
  */
 public class ShowMarkerActivity extends AppCompatActivity {
 
