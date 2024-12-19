@@ -487,12 +487,11 @@ public class ContentProviderUtils {
         return markers;
     }
 
-    /**
-     * @return the content provider URI of the inserted marker.
-     */
-    public Uri insertMarker(@NonNull Marker marker) {
+    // TODO Merge with updateMarker
+    public Marker.Id insertMarker(@NonNull Marker marker) {
         marker.setId(null);
-        return contentResolver.insert(MarkerColumns.CONTENT_URI, createContentValues(marker));
+        Uri uri = contentResolver.insert(MarkerColumns.CONTENT_URI, createContentValues(marker));
+        return new Marker.Id(ContentUris.parseId(uri));
     }
 
     private void deleteMarkerPhoto(Context context, Marker marker) {

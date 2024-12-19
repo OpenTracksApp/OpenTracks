@@ -12,7 +12,7 @@ import de.dennisguse.opentracks.ui.markers.MarkerEditActivity;
 import de.dennisguse.opentracks.util.IntentUtils;
 
 /**
- * Public API to creates a Marker for a given track with a given location
+ * INTERNAL: only meant for clients of OSMDashboard API.
  */
 public class CreateMarkerActivity extends AppCompatActivity {
 
