@@ -1,0 +1,8 @@
+v4.17.0: OpenTracks
+
+Changes:
+- Public API to create markers (while recording)
+
+Bugfix:
+- Sensors: on idle, set movement-based sensor data to 0
+
