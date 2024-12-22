@@ -1,0 +1,7 @@
+v4.17.0: OpenTracks
+
+Změny:
+- Veřejné rozhraní API pro vytváření značek (během záznamu)
+
+Oprava chyby:
+- Senzory: při nečinnosti nastavena data pohybových senzorů na 0
