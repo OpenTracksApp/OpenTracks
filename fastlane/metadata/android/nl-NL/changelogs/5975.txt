@@ -1,0 +1,9 @@
+v4.17.0: OpenTracks
+
+Aanpassing:
+
+- Openbare API om markeringen te maken (tijdens opname)
+
+Opgelost:
+
+- Sensoren: bij rust de op beweging gebaseerde sensorgegevens op 0 zetten
