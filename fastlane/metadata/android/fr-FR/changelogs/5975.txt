@@ -1,0 +1,7 @@
+v4.17.0 : OpenTracks
+
+Changements :
+− IPA (API) publique pour créer des marqueurs (lors de l’enregistrement)
+
+Correction de bogue :
+− Capteurs : quand immobile, les données des capteurs de mouvements sont mises à 0
