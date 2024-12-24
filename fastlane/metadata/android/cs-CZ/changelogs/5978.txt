@@ -1,0 +1,5 @@
+v4.17.1: OpenTracks
+
+Změny:
+- Reprodukovatelné sestavení: uvidíme, jestli to bude fungovat.
+  Varianta pro Obchod Play bude odeslána F-Droidu, který ji ověří a zveřejní.
