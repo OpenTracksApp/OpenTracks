@@ -95,30 +95,41 @@ android {
         }
 
         nightly {
-            signingConfig signingConfigs.nightly
             applicationIdSuffix ".nightly"
+            signingConfig signingConfigs.nightly
         }
 
         release {
+            // Non-reproducible: https://f-droid.org/de/packages/de.dennisguse.opentracks/
             crunchPngs false
             minifyEnabled false
+            versionNameSuffix "irreproducible"
         }
 
-        releasePlayStore {
+        reproducible {
+            // Developer Binaries: https://github.com/OpenTracksApp/OSMDashboard/releases/download/v%v/de.dennisguse.opentracks.playstore_%v.apk
+            // FDroid: https://f-droid.org/de/packages/de.dennisguse.opentracks.playstore
+            // PlayStore: https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore
             applicationIdSuffix ".playstore"
-            versionNameSuffix "-PlayStore"
-            signingConfig signingConfigs.debug
+
+            crunchPngs false
+            minifyEnabled false
         }
     }
 
     applicationVariants.configureEach { variant ->
         variant.resValue "string", "applicationId", variant.applicationId
 
-        if (variant.buildType.name == 'nightly') {
-            variant.outputs.configureEach {
+        variant.outputs.configureEach {
+            if (variant.buildType.name == 'reproducible') {
+                outputFileName = "${applicationId}_${variant.buildType.name}_${variant.versionName}.apk"
+            } else {
+                outputFileName = "${applicationId}_${variant.buildType.name}_${variant.versionCode}.apk"
+            }
+
+            if (variant.buildType.name == 'nightly') {
                 setVersionCodeOverride(getVersionCode())
                 setVersionNameOverride(getVersionName())
-                outputFileName = "${applicationId}_${variant.versionCode}.apk"
             }
         }
     }
