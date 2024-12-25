@@ -1,0 +1,9 @@
+v4.17.2: OpenTracks
+
+Changes:
+- Reproducible build: let's see if it works.
+  The PlayStore variant will be submitted to F-Droid, verified and published them.
+
+Developer:
+- F-Droid requires to use Product Flavors (instead of Build Types)
+
