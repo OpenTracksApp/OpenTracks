@@ -1,0 +1,7 @@
+v4.17.0: OpenTracks
+
+Athruithe:
+- API poiblí chun marcóirí a chruthú (agus tú ag taifeadadh)
+
+Ceartúchán Bug:
+- Braiteoirí: i gcás díomhaoin, socraigh sonraí braiteora bunaithe ar ghluaiseacht go 0

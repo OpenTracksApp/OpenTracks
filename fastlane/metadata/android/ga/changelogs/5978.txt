@@ -1,0 +1,5 @@
+v4.17.1: OpenTracks
+
+Athruithe:
+- Tógáil atáirgthe: féachaimis an n-oibríonn sé.
+ Cuirfear an leagan PlayStore faoi bhráid F-Droid, fíorófar iad agus foilseofar iad.
