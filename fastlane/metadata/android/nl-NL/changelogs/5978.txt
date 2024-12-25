@@ -1,0 +1,5 @@
+v4.17.1: OpenTracks
+
+Veranderingen:
+- Reproduceerbare build: laten we eens kijken of het werkt.
+  De PlayStore-variant wordt ingediend bij F-Droid, geverifieerd en gepubliceerd.
