@@ -63,7 +63,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "de.dennisguse.opentracks"
+        applicationId 'de.dennisguse.opentracks'
         versionCode 5978
         versionName "v4.17.1"
 
@@ -72,16 +72,16 @@ android {
         minSdk 26
         targetSdk 35
 
-        testInstrumentationRunner "de.dennisguse.opentracks.TestRunner"
+        testInstrumentationRunner 'de.dennisguse.opentracks.TestRunner'
         testInstrumentationRunnerArguments clearPackageData: 'true'
     }
     signingConfigs {
         nightly {
-            if (System.getProperty("nightly_store_file") != null) {
-                storeFile file(System.getProperty("nightly_store_file"))
-                storePassword System.getProperty("nightly_store_password")
-                keyAlias System.getProperty("nightly_key_alias")
-                keyPassword System.getProperty("nightly_key_password")
+            if (System.getProperty('nightly_store_file') != null) {
+                storeFile file(System.getProperty('nightly_store_file'))
+                storePassword System.getProperty('nightly_store_password')
+                keyAlias System.getProperty('nightly_key_alias')
+                keyPassword System.getProperty('nightly_key_password')
             }
         }
     }
@@ -90,41 +90,46 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-debug"
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
         }
-
-        nightly {
-            applicationIdSuffix ".nightly"
-            signingConfig signingConfigs.nightly
-        }
-
         release {
-            // Non-reproducible: https://f-droid.org/de/packages/de.dennisguse.opentracks/
-            crunchPngs false
-            minifyEnabled false
-            versionNameSuffix "irreproducible"
-        }
-
-        reproducible {
-            // Developer Binaries: https://github.com/OpenTracksApp/OSMDashboard/releases/download/v%v/de.dennisguse.opentracks.playstore_%v.apk
-            // FDroid: https://f-droid.org/de/packages/de.dennisguse.opentracks.playstore
-            // PlayStore: https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore
-            applicationIdSuffix ".playstore"
-
             crunchPngs false
             minifyEnabled false
         }
     }
 
+
+    flavorDimensions 'version'
+    productFlavors {
+        nightly {
+            dimension 'version'
+            applicationIdSuffix '.nightly'
+            signingConfig signingConfigs.nightly
+        }
+        irreproducible {
+            // Non-reproducible: https://f-droid.org/de/packages/de.dennisguse.opentracks/
+            dimension 'version'
+            applicationId 'de.dennisguse.opentracks'
+            versionNameSuffix 'irreproducible'
+        }
+        reproducible {
+            // Developer Binaries: https://github.com/OpenTracksApp/OSMDashboard/releases/download/v%v/de.dennisguse.opentracks.playstore_%v.apk
+            // FDroid: https://f-droid.org/de/packages/de.dennisguse.opentracks.playstore
+            // PlayStore: https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore
+            dimension 'version'
+            applicationId 'de.dennisguse.opentracks.playstore'
+        }
+    }
+
     applicationVariants.configureEach { variant ->
-        variant.resValue "string", "applicationId", variant.applicationId
+        variant.resValue 'string', 'applicationId', variant.applicationId
 
         variant.outputs.configureEach {
             if (variant.buildType.name == 'reproducible') {
-                outputFileName = "${applicationId}_${variant.buildType.name}_${variant.versionName}.apk"
+                outputFileName = '${applicationId}_${variant.buildType.name}_${variant.versionName}.apk'
             } else {
-                outputFileName = "${applicationId}_${variant.buildType.name}_${variant.versionCode}.apk"
+                outputFileName = '${applicationId}_${variant.buildType.name}_${variant.versionCode}.apk'
             }
 
             if (variant.buildType.name == 'nightly') {
