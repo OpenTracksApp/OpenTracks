@@ -127,9 +127,9 @@ android {
 
         variant.outputs.configureEach {
             if (variant.buildType.name == 'reproducible') {
-                outputFileName = '${applicationId}_${variant.buildType.name}_${variant.versionName}.apk'
+                outputFileName = "${applicationId}_${variant.buildType.name}_${variant.versionName}.apk"
             } else {
-                outputFileName = '${applicationId}_${variant.buildType.name}_${variant.versionCode}.apk'
+                outputFileName = "${applicationId}_${variant.buildType.name}_${variant.versionCode}.apk"
             }
 
             if (variant.buildType.name == 'nightly') {
