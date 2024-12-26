@@ -1,0 +1,7 @@
+v4.17.3: OpenTracks
+
+Veranderingen:
+- Reproduceerbare build: laten we eens kijken of het werkt.
+
+Ontwikkelaar:
+- Ik probeer gewoon de APK-bestandsnaam te krijgen, toch...
