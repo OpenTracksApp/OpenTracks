@@ -1,0 +1,7 @@
+v4.17.3: OpenTracks
+
+Cambios:
+- Compilación reproducible: agardemos que funcione ben.
+
+Desenvolvemento:
+- Intento de que o nome do ficheiro APK sai a ben, vexamos...

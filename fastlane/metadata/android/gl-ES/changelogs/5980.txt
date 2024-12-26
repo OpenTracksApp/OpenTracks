@@ -1,0 +1,8 @@
+v4.17.2: OpenTracks
+
+Cambios:
+- Compilación reproducible: comprobemos se funciona ben.
+  Enviaremos a F-Droid a variante da Play Store, para que a verifiquen e publiquen.
+
+Desenvolvemento:
+- F-Droid require que usemos Product Flavors (no lugar de Build Types)
