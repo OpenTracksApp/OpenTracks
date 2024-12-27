@@ -2,39 +2,31 @@
 
 ## Craft new releases
 
-1. Get next _version code_ (main): `git rev-list HEAD --count main`
-2. Decide on _version name_ (semantic versioning)
-3. Manually update _version code_ and _version name_ in `build.gradle`
-4. Create changelog (`_version code_.txt`)
-5. Create commit with all changes
-6. Tag newly create commit with _version name_ (e.g., v3.2.1)
-7. Push commits and tags to public repository
-8. Add changelog to tag (Github releases)
+1. Execute use `RELEASE.sh`.
+2. Push to Github
+3. Create release on Github (incl. changelog)
+   This actually creates a tag that is later used by F-Droid
+4. Pull from Github
+5. Build reproducible release and attach to release
+6. ... wait until reproducibility is verified by F-Droid
 
-## F-Droid
-Application id: de.dennisguse.opentracks
+Two releases will be created:
+* Application id: `de.dennisguse.opentracks` (irreproducible)
+* Application id: `de.dennisguse.opentracks.playstore` (reproducible)
 
-It if it properly tagged F-Droid takes care of building the app and publishing.
-Usually, it takes two days before the update is published (build, signed, and published). 
+For F-Droid the build status can be found [here](https://monitor.f-droid.org/builds/build).
 
-The recent build activity can be found [here](https://monitor.f-droid.org/builds/build)
+## Reproducible builds
 
-## Google Play Store
-Application id: `de.dennisguse.opentracks.playstore`
+A lot of detailed information can be found [here](https://f-droid.org/docs/Reproducible_Builds/)
 
-Requirement: `gem install fastlane`
-
-1. Build signed apk
-   (requires keystore)
-2. Upload signed apk to [Google Play Console](https://play.google.com/apps/publish)
-3. Update store meta data (e.g., description and screenshots)
-   `fastlane metadata`
-   (requires API key configured in `Appfile`)
-
-Supported languages: https://support.google.com/googleplay/android-developer/table/4419860
+Technical requirements:
+* Must be build using OpenJDK17
 
 ## Translations (localization)
 
 Translations of the OpenTracks are handled in
-Weblate: [https://hosted.weblate.org/projects/opentracks/](https://hosted.weblate.org/projects/opentracks)
-.
+Weblate: [https://hosted.weblate.org/projects/opentracks/](https://hosted.weblate.org/projects/opentracks).
+
+## Google Play Store
+Supported languages: https://support.google.com/googleplay/android-developer/table/4419860
