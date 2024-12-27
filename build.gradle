@@ -84,6 +84,14 @@ android {
                 keyPassword System.getProperty('nightly_key_password')
             }
         }
+        release {
+            if (System.getProperty("release_store_file") != null) {
+                storeFile file(System.getProperty("release_store_file"))
+                storePassword System.getProperty("release_store_password")
+                keyAlias System.getProperty("release_key_alias")
+                keyPassword System.getProperty("release_key_password")
+            }
+        }
     }
 
     namespace 'de.dennisguse.opentracks'
@@ -113,12 +121,13 @@ android {
             applicationId 'de.dennisguse.opentracks'
             versionNameSuffix 'irreproducible'
         }
-         reproducible {
+        reproducible {
             // Developer Binaries: https://github.com/OpenTracksApp/OSMDashboard/releases/download/v%v/de.dennisguse.opentracks.playstore_%v.apk
             // FDroid: https://f-droid.org/de/packages/de.dennisguse.opentracks.playstore
             // PlayStore: https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore
             dimension 'version'
             applicationId 'de.dennisguse.opentracks.playstore'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -132,7 +141,7 @@ android {
                 outputFileName = "${applicationId}_${variant.versionCode}.apk"
             }
 
-            if (variant.flavorName== 'nightly') {
+            if (variant.flavorName == 'nightly') {
                 setVersionCodeOverride(getVersionCode())
                 setVersionNameOverride(getVersionName())
             }
