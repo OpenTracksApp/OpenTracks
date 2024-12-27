@@ -1,0 +1,7 @@
+v4.17.2: OpenTracks
+
+Změny:
+- Reprodukovatelné sestavení: uvidíme, zda to bude fungovat.
+
+Vývojář:
+- Pokus o opravu názvu souboru APK...

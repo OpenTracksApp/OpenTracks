@@ -1,0 +1,8 @@
+v4.17.2: OpenTracks
+
+Změny:
+- Reprodukovatelné sestavení: uvidíme, zda to bude fungovat
+  Varianta pro Obchod Play bude odeslána do F-Droidu, kde bude ověřena a zveřejněna.
+
+Vývojář:
+- F-Droid vyžaduje použití Product Flavors (namísto Build Types)
