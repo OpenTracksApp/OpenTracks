@@ -304,11 +304,11 @@ public class TrackRecordingServiceRecordingTest {
         String sensor1 = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(sensor1);
 
-        sensorManager.onChanged(new Raw<>(HeartRate.of(5))); //Should be ignored
+        sensorManager.onChanged(new Raw<>(sensor1, HeartRate.of(5))); //Should be ignored
 
         String sensor3 = "2020-02-02T02:02:13Z";
         trackPointCreator.setClock(sensor3);
-        sensorManager.onChanged(new Raw<>(HeartRate.of(7)));
+        sensorManager.onChanged(new Raw<>(sensor3, HeartRate.of(7)));
 
         String stopTime = "2020-02-02T02:02:15Z";
         trackPointCreator.setClock(stopTime);
@@ -646,12 +646,12 @@ public class TrackRecordingServiceRecordingTest {
         // when
         String sensor1 = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(sensor1);
-        sensorManager.onChanged(new Raw<>(new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(0)))); //Should be ignored
+        sensorManager.onChanged(new Raw<>(sensor1, new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(0)))); //Should be ignored
 
         // when
         String sensor2 = "2020-02-02T02:02:04Z";
         trackPointCreator.setClock(sensor2);
-        sensorManager.onChanged(new Raw<>(new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(2))));
+        sensorManager.onChanged(new Raw<>(sensor2, new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(2))));
 
         // when
         String gps1 = "2020-02-02T02:02:05Z";
@@ -660,12 +660,12 @@ public class TrackRecordingServiceRecordingTest {
         // when
         String sensor3 = "2020-02-02T02:02:06Z";
         trackPointCreator.setClock(sensor3);
-        sensorManager.onChanged(new Raw<>(new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(12))));
+        sensorManager.onChanged(new Raw<>(sensor3, new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(12))));
 
         // when
         String sensor4 = "2020-02-02T02:02:07Z";
         trackPointCreator.setClock(sensor4);
-        sensorManager.onChanged(new Raw<>(new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(14)))); //Should be ignored
+        sensorManager.onChanged(new Raw<>(sensor4, new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(14)))); //Should be ignored
 
         // when
         String gps2 = "2020-02-02T02:02:08Z";
@@ -674,7 +674,7 @@ public class TrackRecordingServiceRecordingTest {
         // when
         String sensor5 = "2020-02-02T02:02:10Z";
         trackPointCreator.setClock(sensor5);
-        sensorManager.onChanged(new Raw<>(new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(16)))); //Should be ignored
+        sensorManager.onChanged(new Raw<>(sensor5, new BluetoothHandlerRunningSpeedAndCadence.Data(Speed.of(5), null, Distance.of(16)))); //Should be ignored
 
         // when
         String gps3 = "2020-02-02T02:02:12Z";
@@ -730,7 +730,7 @@ public class TrackRecordingServiceRecordingTest {
     private void mockAltitudeChange(TrackPointCreator trackPointCreator, float altitudeGain) {
         AggregatorBarometer barometer = Mockito.mock(AggregatorBarometer.class);
         Mockito.when(barometer.hasValue()).thenReturn(true);
-        Mockito.when(barometer.getValue()).thenReturn(new AltitudeGainLoss(altitudeGain, altitudeGain));
+        Mockito.when(barometer.getValue(Mockito.any())).thenReturn(new AltitudeGainLoss(altitudeGain, altitudeGain));
 
         trackPointCreator.getSensorManager().sensorDataSet.barometer = barometer;
     }

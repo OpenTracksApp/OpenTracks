@@ -3,6 +3,8 @@ package de.dennisguse.opentracks.viewmodels;
 import android.util.Pair;
 import android.view.LayoutInflater;
 
+import java.time.Instant;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.HeartRateZones;
 import de.dennisguse.opentracks.databinding.StatsSensorItemBinding;
@@ -92,7 +94,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
 
             Pair<String, String> valueAndUnit;
             if (sensorDataSet != null && sensorDataSet.getCyclingPower() != null) {
-                valueAndUnit = StringUtils.getPowerParts(getContext(), sensorDataSet.getCyclingPower().getValue());
+                valueAndUnit = StringUtils.getPowerParts(getContext(), sensorDataSet.getCyclingPower().getValue(Instant.now())); //TODO Use MonotonicClock
                 sensorName = sensorDataSet.getCyclingPower().getSensorNameOrAddress();
             } else {
                 valueAndUnit = StringUtils.getCadenceParts(getContext(), null);

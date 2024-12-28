@@ -23,7 +23,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     //TODO Should be final and not be visible for testing
     @VisibleForTesting
-    public SensorDataSet sensorDataSet = new SensorDataSet();
+    public SensorDataSet sensorDataSet;
 
     private final TrackPointCreator observer;
 
@@ -64,6 +64,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     public SensorManager(TrackPointCreator observer) {
         this.observer = observer;
+        this.sensorDataSet = new SensorDataSet(observer);
     }
 
     public void start(Context context, Handler handler) {
