@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.util.Set;
 
+import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
@@ -34,6 +35,7 @@ public class ShareContentProviderTest {
     public void testCreateURIescapeFilename() {
         Pair<Uri, String> shareURIandMIME = ShareContentProvider.createURI(Set.of(new Track.Id(1)), "../../&1=1", TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA);
 
-        assertEquals(Uri.parse("content://de.dennisguse.opentracks.debug.content/tracks/KML_WITH_TRACKDETAIL_AND_SENSORDATA/1/..%2F..%2F%261%3D1"), shareURIandMIME.first);
+
+        assertEquals(Uri.parse("content://" + BuildConfig.APPLICATION_ID + ".content/tracks/KML_WITH_TRACKDETAIL_AND_SENSORDATA/1/..%2F..%2F%261%3D1"), shareURIandMIME.first);
     }
 }
