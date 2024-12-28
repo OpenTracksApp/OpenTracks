@@ -332,6 +332,10 @@ public class PreferencesUtils {
         return getBoolean(R.string.voice_announce_idle_key, true);
     }
 
+    public static boolean shouldVoiceAnnounceTime() {
+        return getBoolean(R.string.voice_announce_unit_key, true);
+    }
+
     public static boolean shouldVoiceAnnounceUnit() {
         return getBoolean(R.string.voice_announce_unit_key, true);
     }

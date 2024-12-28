@@ -118,7 +118,13 @@ public class Track {
     }
 
     public OffsetDateTime getStartTime() {
-        return trackStatistics.getStartTime().atOffset(zoneOffset);
+        return trackStatistics
+                .getStartTime().atOffset(zoneOffset);
+    }
+
+    public OffsetDateTime getStopTime() {
+        return trackStatistics
+                .getStopTime().atOffset(zoneOffset);
     }
 
     @NonNull
