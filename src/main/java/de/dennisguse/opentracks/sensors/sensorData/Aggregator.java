@@ -42,11 +42,11 @@ public abstract class Aggregator<Input, Output> {
     @NonNull
     protected abstract Output getNoneValue();
 
-    public Output getValue() {
+    public Output getValue(Instant now) {
         if (!hasValue()) {
             return null; //TODO Check if this is a good idea!
         }
-        if (isRecent()) {
+        if (isRecent(now)) {
             return value;
         }
         return getNoneValue();
@@ -62,12 +62,12 @@ public abstract class Aggregator<Input, Output> {
     /**
      * Is the data recent considering the current time.
      */
-    private boolean isRecent() {
+    private boolean isRecent(Instant now) {
         if (previous == null) {
             return false;
         }
 
-        return Instant.now()
+        return now
                 .isBefore(previous.time().plus(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE));
     }
 

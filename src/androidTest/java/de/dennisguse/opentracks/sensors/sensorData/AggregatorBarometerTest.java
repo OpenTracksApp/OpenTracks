@@ -3,13 +3,15 @@ package de.dennisguse.opentracks.sensors.sensorData;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.Instant;
+
 import de.dennisguse.opentracks.data.models.AtmosphericPressure;
 
 public class AggregatorBarometerTest {
 
     private static void addSensorValue(AggregatorBarometer aggregatorBarometer, float[] values) {
         for (float f : values) {
-            aggregatorBarometer.add(new Raw<>(AtmosphericPressure.ofHPA(f)));
+            aggregatorBarometer.add(new Raw<>(Instant.MIN, AtmosphericPressure.ofHPA(f)));
         }
     }
 

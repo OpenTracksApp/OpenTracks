@@ -17,6 +17,7 @@ import de.dennisguse.opentracks.sensors.BluetoothHandlerCyclingCadence;
 import de.dennisguse.opentracks.sensors.BluetoothHandlerCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.BluetoothHandlerManagerCyclingPower;
 import de.dennisguse.opentracks.sensors.BluetoothHandlerRunningSpeedAndCadence;
+import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public final class SensorDataSet {
@@ -43,11 +44,15 @@ public final class SensorDataSet {
 
     public AggregatorGPS gps;
 
-    public SensorDataSet() {
+    private TrackPointCreator trackPointCreator;
+
+    public SensorDataSet(TrackPointCreator trackPointCreator) {
+        this.trackPointCreator = trackPointCreator;
     }
 
+    @Deprecated //TODO This is not a copy constructor anymore, but it should be - aggregators are no value objects; best guess: can be removed
     public SensorDataSet(SensorDataSet toCopy) {
-        //TODO This is not a copy constructor anymore, but it should be - aggregators are no value objects
+        this.trackPointCreator = toCopy.trackPointCreator;
         this.heartRate = toCopy.heartRate;
         this.cyclingCadence = toCopy.cyclingCadence;
         this.cyclingDistanceSpeed = toCopy.cyclingDistanceSpeed;
@@ -59,7 +64,7 @@ public final class SensorDataSet {
 
     public Pair<HeartRate, String> getHeartRate() {
         if (heartRate != null) {
-            return new Pair<>(heartRate.getValue(), heartRate.getSensorNameOrAddress());
+            return new Pair<>(heartRate.getValue(trackPointCreator.createNow()), heartRate.getSensorNameOrAddress());
         }
 
         return null;
@@ -67,7 +72,7 @@ public final class SensorDataSet {
 
     public Pair<Cadence, String> getCadence() {
         if (cyclingCadence != null) {
-            return new Pair<>(cyclingCadence.getValue(), cyclingCadence.getSensorNameOrAddress());
+            return new Pair<>(cyclingCadence.getValue(trackPointCreator.createNow()), cyclingCadence.getSensorNameOrAddress());
         }
 
         if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue() && runningDistanceSpeedCadence.value.cadence() != null) {
@@ -78,11 +83,11 @@ public final class SensorDataSet {
     }
 
     public Pair<Speed, String> getSpeed() {
-        if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasValue() && cyclingDistanceSpeed.getValue().speed() != null) {
-            return new Pair<>(cyclingDistanceSpeed.getValue().speed(), cyclingDistanceSpeed.getSensorNameOrAddress());
+        if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasValue() && cyclingDistanceSpeed.getValue(trackPointCreator.createNow()).speed() != null) {
+            return new Pair<>(cyclingDistanceSpeed.getValue(trackPointCreator.createNow()).speed(), cyclingDistanceSpeed.getSensorNameOrAddress());
         }
 
-        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue() && runningDistanceSpeedCadence.getValue().speed() != null) {
+        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue() && runningDistanceSpeedCadence.getValue(trackPointCreator.createNow()).speed() != null) {
             return new Pair<>(runningDistanceSpeedCadence.value.speed(), runningDistanceSpeedCadence.getSensorNameOrAddress());
         }
 
@@ -152,7 +157,7 @@ public final class SensorDataSet {
 
     public void fillTrackPoint(TrackPoint trackPoint) {
         if (gps != null && gps.hasValue()) {
-            trackPoint.setPosition(gps.getValue());
+            trackPoint.setPosition(gps.getValue(trackPointCreator.createNow()));
         }
 
         if (getHeartRate() != null) {
@@ -168,20 +173,20 @@ public final class SensorDataSet {
         }
 
         if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasValue()) {
-            trackPoint.setSensorDistance(cyclingDistanceSpeed.getValue().distanceOverall());
+            trackPoint.setSensorDistance(cyclingDistanceSpeed.getValue(trackPointCreator.createNow()).distanceOverall());
         }
 
         if (cyclingPower != null && cyclingPower.hasValue()) {
-            trackPoint.setPower(cyclingPower.getValue());
+            trackPoint.setPower(cyclingPower.getValue(trackPointCreator.createNow()));
         }
 
         if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue()) {
-            trackPoint.setSensorDistance(runningDistanceSpeedCadence.getValue().distance());
+            trackPoint.setSensorDistance(runningDistanceSpeedCadence.getValue(trackPointCreator.createNow()).distance());
         }
 
         if (barometer != null && barometer.hasValue()) {
-            trackPoint.setAltitudeGain(barometer.getValue().gain_m());
-            trackPoint.setAltitudeLoss(barometer.getValue().loss_m());
+            trackPoint.setAltitudeGain(barometer.getValue(trackPointCreator.createNow()).gain_m());
+            trackPoint.setAltitudeLoss(barometer.getValue(trackPointCreator.createNow()).loss_m());
         }
     }
 
