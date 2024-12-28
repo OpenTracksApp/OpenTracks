@@ -46,9 +46,9 @@ public class TrackStatistics {
     private final ExtremityMonitor altitudeExtremities = new ExtremityMonitor();
 
     // The track start time.
-    private Instant startTime;
+    private Instant startTime; //TODO Should never be null!
     // The track stop time.
-    private Instant stopTime;
+    private Instant stopTime; //TODO Should never be null!
 
     private Distance totalDistance;
     // Updated when new points are received, may be stale.

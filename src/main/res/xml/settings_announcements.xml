@@ -40,6 +40,11 @@
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_time_default"
+            android:key="@string/voice_announce_time_key"
+            android:title="@string/description_time" />
+
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_total_distance_default"
             android:key="@string/voice_announce_total_distance_key"
             android:title="@string/total_distance" />

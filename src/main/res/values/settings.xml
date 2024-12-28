@@ -250,6 +250,8 @@
     <bool name="voice_announce_average_speed_pace_default" translatable="false">true</bool>
     <string name="voice_announce_lap_speed_pace_key" translatable="false">voiceAnnounceLapSpeedPace</string>
     <bool name="voice_announce_lap_speed_pace_default" translatable="false">true</bool>
+    <string name="voice_announce_time_key" translatable="false">voiceAnnounceTime</string>
+    <bool name="voice_announce_time_default" translatable="false">true</bool>
     <string name="voice_announce_unit_key" translatable="false">voiceAnnounceUnit</string>
     <bool name="voice_announce_unit_default" translatable="false">true</bool>
 

@@ -7,12 +7,14 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapPower;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapSpeedPace;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTime;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceUnit;
 
 import android.content.Context;
 import android.icu.text.MessageFormat;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.TtsSpan;
 
@@ -20,12 +22,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Map;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
-import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -42,8 +47,15 @@ class VoiceAnnouncementUtils {
                 .append(context.getString(R.string.voiceIdle));
     }
 
-    static Spannable createStatistics(Context context, TrackStatistics trackStatistics, UnitSystem unitSystem, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval, @Nullable SensorStatistics sensorStatistics) {
+    static Spannable createStatistics(Context context, Track track, UnitSystem unitSystem, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval, @Nullable SensorStatistics sensorStatistics) {
+        TrackStatistics trackStatistics = track.getTrackStatistics();
+
         SpannableStringBuilder builder = new SpannableStringBuilder();
+
+        if (shouldVoiceAnnounceTime()) {
+            appendTime(builder, track.getStopTime());
+        }
+
         Distance totalDistance = trackStatistics.getTotalDistance();
         Speed averageMovingSpeed = trackStatistics.getAverageMovingSpeed();
         Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
@@ -177,6 +189,7 @@ class VoiceAnnouncementUtils {
         return builder;
     }
 
+    //TODO TtsSpan.TimeBuilder?
     private static void appendDuration(@NonNull Context context, @NonNull SpannableStringBuilder builder, @NonNull Duration duration) {
         int hours = (int) (duration.toHours());
         int minutes = (int) (duration.toMinutes() % 60);
@@ -194,6 +207,20 @@ class VoiceAnnouncementUtils {
             String template = context.getResources().getString(R.string.voiceSecondsPlural);
             appendDecimalUnit(builder, MessageFormat.format(template, Map.of("n", seconds)), seconds, 0, "second");
         }
+    }
+
+    private static void appendTime(@NonNull SpannableStringBuilder builder, OffsetDateTime now) {
+        TtsSpan.TimeBuilder ttsSpan = new TtsSpan.TimeBuilder();
+        ttsSpan.setHours(now.getHour());
+        ttsSpan.setMinutes(now.getMinute());
+
+        String formattedTime = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+                        .format(now);
+
+        Spannable spannable = new SpannableString(formattedTime + ".");
+        spannable.setSpan(ttsSpan.build(), 0, spannable.length(), SPAN_INCLUSIVE_EXCLUSIVE);
+        builder.append(spannable);
+        builder.append(" ");
     }
 
     /**

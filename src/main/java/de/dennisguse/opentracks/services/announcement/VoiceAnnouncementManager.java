@@ -115,7 +115,7 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
             return;
         }
 
-        voiceAnnouncement.announce(VoiceAnnouncementUtils.createIdle(context));
+        voiceAnnouncement.speak(VoiceAnnouncementUtils.createIdle(context));
     }
 
     public void announceStatisticsIfNeeded(@NonNull Track track) {
@@ -135,7 +135,7 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         }
 
         if (announce) {
-            voiceAnnouncement.announce(createAnnouncement(track));
+            voiceAnnouncement.speak(createAnnouncement(track));
         }
     }
 
@@ -155,7 +155,7 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
             sensorStatistics = contentProviderUtils.getSensorStats(track.getId());
         }
 
-        return VoiceAnnouncementUtils.createStatistics(context, track.getTrackStatistics(), PreferencesUtils.getUnitSystem(), PreferencesUtils.isReportSpeed(track), lastInterval, sensorStatistics);
+        return VoiceAnnouncementUtils.createStatistics(context, track, PreferencesUtils.getUnitSystem(), PreferencesUtils.isReportSpeed(track), lastInterval, sensorStatistics);
     }
 
     public void stop() {

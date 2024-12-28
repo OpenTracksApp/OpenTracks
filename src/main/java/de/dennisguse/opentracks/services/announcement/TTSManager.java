@@ -22,7 +22,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-import android.text.Spannable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -118,7 +117,7 @@ public class TTSManager {
         }
     }
 
-    public void announce(@NonNull Spannable announcement) {
+    public void speak(@NonNull CharSequence announcement) {
         synchronized (this) {
             if (!ttsReady) {
                 ttsReady = ttsInitStatus == TextToSpeech.SUCCESS;
