@@ -1,0 +1,10 @@
+v4.17.5: OpenTracks
+
+Athruithe:
+- Tógáil atáirgthe: féachaimis an n-oibríonn sé.
+
+Ceartúchán Bug:
+- Úsáideann tógáil atáirgthe íocón PlayStore.
+
+Forbróir:
+- Curtha leis RELEASE_BUILD.sh

@@ -1,0 +1,7 @@
+v4.17.3: OpenTracks
+
+Athruithe:
+- Tógáil atáirgthe: féachaimis an n-oibríonn sé.
+
+Forbróir:
+- Díreach ag iarraidh ainm an chomhaid APK a fháil, ceart ...

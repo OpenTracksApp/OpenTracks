@@ -1,0 +1,8 @@
+v4.17.4: OpenTracks
+
+
+Athruithe:
+- Tógáil atáirgthe: féachaimis an n-oibríonn sé.
+
+Forbróir:
+- DependencyInfo a bhaint.
