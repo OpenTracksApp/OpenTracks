@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
-    <string name="about_preference_title">A proposito di OpenTracks</string>
+    <string name="about_preference_title">Informazioni su OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i>è un\'applicazione di tracciamento sportivo che rispetta completamente la tua privacy.</string>
     <string name="about_url">Pagina web del progetto: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Nome versione: %1$s</string>
@@ -189,7 +189,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="menu_aggregated_statistics">Statistiche aggregate</string>
     <string name="menu_delete">Elimina</string>
     <string name="menu_edit">Modifica</string>
-    <string name="menu_export_all">Esporta tutto</string>
+    <string name="menu_export_all">Esporta tutto (un file per traccia)</string>
     <string name="menu_help">Aiuto</string>
     <string name="menu_import_all">Importa tutto</string>
     <string name="menu_insert_marker">Inserisci indicatore</string>
@@ -213,7 +213,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_chart_by_distance">Per distanza</string>
     <string name="settings_chart_by_time">Per durata</string>
     <string name="settings_recording_default_activity_title">Tipo di attività predefinita</string>
-    <string name="settings_recording_location_frequency_summary">%1$s tra posizioni registrate</string>
+    <string name="settings_recording_location_frequency_summary">%1$s tra posizioni marcate</string>
     <string name="settings_recording_max_recording_distance_summary">Viene creato un nuovo segmento se la distanza tra due punti è maggiore di %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Distanza massima</string>
     <string name="settings_recording_min_recording_distance_title">Intervallo distanza tra registrazioni</string>
@@ -371,7 +371,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="activity_type_escooter">Scooter elettrico</string>
     <string name="export_with_photos">con foto</string>
     <string name="export_without_photos">senza foto</string>
-    <string name="export_track_already_exists_msg">Il percorso %1$s esiste già nella cartella di salvataggio.</string>
+    <string name="export_track_already_exists_msg">Il file %1$s esiste già nella cartella di salvataggio.</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Completato con un errore</item>
         <item quantity="other">Completato con %1$d errori</item>
@@ -384,7 +384,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Durante la registrazione del percorso, mostra le statistiche senza sbloccare il dispositivo.</string>
     <string name="description_default_speed_or_pace">Per tipo di attività</string>
     <string name="export_all_do_it_for_all">applica lo stesso per tutti i conflitti</string>
-    <string name="export_track_errors">Percorsi non esportati</string>
+    <string name="export_track_errors">Files non esportati</string>
     <string name="generic_overwrite">Sovrascrivere</string>
     <string name="generic_skip">Ignora</string>
     <string name="generic_separator_done_total">/</string>
@@ -422,9 +422,9 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="export_error_post_workout">Esportazione post-allenamento non riuscita, controllare la cartella di esportazione.</string>
     <string name="settings_prevent_reimport_tracks_title">Impedire la reimportazione delle tracce</string>
     <string name="export_progress_summary_errors_msg">Errori</string>
-    <string name="export_progress_summary_skip_msg">Tracce saltate</string>
-    <string name="export_progress_summary_overwrite_msg">Tracce sovrascritte</string>
-    <string name="export_progress_summary_new_msg">Nuove tracce esportate</string>
+    <string name="export_progress_summary_skip_msg">Files saltati</string>
+    <string name="export_progress_summary_overwrite_msg">Files sovrascritti</string>
+    <string name="export_progress_summary_new_msg">Nuovi files esportati</string>
     <string name="import_no_kml_file_found">Nessun file kml trovato in KMZ</string>
     <string name="import_progress_summary_ok_msg">File importati</string>
     <string name="import_progress_summary_exists_msg">Esiste già</string>
@@ -448,7 +448,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_sensor_running_speed_and_cadence">Distanza, Velocità e Cadenza</string>
     <string name="stats_clock">Orologio</string>
     <string name="settings_announcements_totaltime_frequency">Intervallo di tempo</string>
-    <string name="settings_announcements_distance_frequency">Intervallo di distanza</string>
+    <string name="settings_announcements_distance_frequency">Lunghezza giro</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (consigliato)</string>
@@ -482,7 +482,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_sensors_title">Sensori</string>
     <string name="settings_announcements_statistics_title">Annunci Vocali</string>
     <string name="settings_announcements_summary">Tempo, Distanza, Velocità della Voce</string>
-    <string name="settings_import_export_title">Importa/Esporta</string>
+    <string name="settings_import_export_title">Importa ed Esporta</string>
     <string name="settings_import_export_summary">Importa, Esporta, Auto Esporta</string>
     <string name="settings_units_category">Unità</string>
     <string name="settings_activity_defaults_category">Predefiniti dell\'Attività</string>
@@ -491,7 +491,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_layout_reset_confirm_message">Tutte le impostazioni di layout saranno reimpostate ai valori predefiniti. Questo non eliminerà alcuna traccia dal dispositivo.</string>
     <string name="settings_layout_reset_confirm_title">Rempostare i tuoi layout\?</string>
     <string name="settings_all_reset">Reimposta</string>
-    <string name="stats_sensors_heart_rate">Frequenza Cardiaca</string>
+    <string name="stats_sensors_heart_rate">Frequenza cardiaca</string>
     <string name="stats_sensors_power">Potenza</string>
     <string name="custom_layout_list_title">Disegni</string>
     <string name="custom_layout_list_edit_name">Digitare il nome del layout da aggiungere</string>
@@ -513,4 +513,104 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="export_cannot_write_to_dir">Impossibile scrivere nella directory di esportazione.</string>
     <string name="export_dir_not_writable">" (non scrivibile!)"</string>
     <string name="no_compatible_file_manager_installed">Nessun file manager compatibile installato</string>
+    <string name="value_integer_knots">%1$d nodi</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="total_distance">Distanza totale</string>
+    <string name="average_heart_rate">Frequenza cardiaca media</string>
+    <string name="error_crash_title">%1$s si è interrotto</string>
+    <string name="description_pace_nautical">Ritmo (min/NM)</string>
+    <string name="description_speed_nautical">Velocità (nodi)</string>
+    <string name="gps_recording_without_signal">OpenTracks sta registrando senza segnale GPS.</string>
+    <string name="image_discard">Cancella</string>
+    <string name="menu_export_all_one_file">Esporta tutto (un file con tutte le tracce)</string>
+    <string name="permission_recording_failed">OpenTracks richiede il permesso di accedere alla tua posizione e ai dispositivi vicini.</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="sensor_state_cadence_unit">rpm (rotazioni per minuto)</string>
+    <string name="sensor_state_pressure">Barometro</string>
+    <string name="sensor_state_power_max">Potenza Massima</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="settings_night_mode_option_night_oled">Notte (schermi OLED)</string>
+    <string name="settings_recording_idle_timeout_title">Soglia di inattività</string>
+    <string name="settings_announcements_lap_speed_pace">Velocità/ritmo del giro</string>
+    <string name="settings_api_title">API pubblica</string>
+    <string name="settings_public_api_disabled_toast">L\'API pubblica di OpenTracks è disabilitata: può essere riabilitata nelle impostazioni.</string>
+    <string name="settings_public_api_dashboard_enabled_title">Trasferimento dati automatico</string>
+    <string name="voice_per_kilometer">per kilometro</string>
+    <string name="share_crash_report">Condividi il report d\'errore</string>
+    <string name="report_bug">Segnala un problema</string>
+    <string name="show_on_dashboard">OpenTracks Dashboard API</string>
+    <string name="introduction_osm_dashboard">OpenTracks non fornisce mappe. Installa OSMDashboard per visualizzare le tue registrazioni su una mappa.</string>
+    <string name="show_on_dashboard_not_installed">Nessuna delle applicazioni installate supporta l\'API di OpenTracks Dashboard.</string>
+    <string name="settings_locale_title">Lingua</string>
+    <string name="settings_locale_system_default">Default di sistema</string>
+    <string name="settings_announcements_lap_heart_rate">Frequenza cardiaca del giro</string>
+    <string name="settings_announcements_average_speed_pace">Media velocità/ritmo</string>
+    <string name="settings_announcements_unit">Unità di misura della distanza/velocità</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Filtra dispositivi Bluetooth</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Mostra tutti i dispositivi Bluetooth che possono essere associati</string>
+    <string name="settings_stats_units_imperial_meter">Imperiale (mi,m)</string>
+    <string name="settings_stats_units_nautical">Nautiche (NM, ft)</string>
+    <string name="settings_public_api_enabled_title">API pubblica</string>
+    <string name="settings_public_api_enabled_summary_on">Altre applicazioni installate possono far partire o fermare le registrazioni.</string>
+    <string name="settings_api_summary">API per controllo remoto e statistiche con altre applicazioni</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">I dati registrati non saranno condivisi in automatico con altre applicazioni.</string>
+    <string name="track_delete_number_of_tracks">%1$d tracce</string>
+    <string name="voiceDistanceMilesPlural">{n, plural, =1 {un miglio} other {{n,number,#.0} miglia} }</string>
+    <string name="no_compatible_gallery_installed">Nessuna delle applicazioni galleria (foto) installate è compatibile</string>
+    <string name="no_compatible_camera_installed">Nessuna delle applicazioni telecamera installate è compatibile</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="settings_announcements_idle_category_title">Annunci di inattività</string>
+    <string name="settings_announcements_idle_title">Inattività</string>
+    <string name="settings_recording_title">Registrazione</string>
+    <string name="settings_theme_switch_restart">Cambiamenti al tema potrebbero richiedere un riavvio manuale dell\'applicazione.</string>
+    <string name="settings_ui_dynamic_colors_title">Colori Dinamici</string>
+    <string name="settings_ui_dynamic_colors_summary">Utilizza Colori Dinamici definiti dall\'utente (si applica solo ad Android 12+; richiede un riavvio manuale dell\'applicazione)</string>
+    <string name="settings_recording_min_required_accuracy_summary">La posizione viene ignorata se l\'accuratezza del segnale è maggiore di %1$s</string>
+    <string name="voice_on_device_speaker_title">Utilizza l\'altoparlante dello smartphone</string>
+    <string name="voice_per_nautical_mile">per miglio nautico</string>
+    <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {un miglio nautico} other {{n,number,#.0} miglia nautiche} }</string>
+    <string name="current_heart_rate">Frequenza cardiaca istantanea</string>
+    <string name="stats_gain_loss">Guadagno &amp; Perdita</string>
+    <string name="track_discarding">Traccia da cancellare</string>
+    <string name="unit_knots">kn</string>
+    <string name="value_float_knots">%1$.1f nodi</string>
+    <string name="value_float_knots_recommended">%1$.1f nodi (consigliato)</string>
+    <string name="value_internal_sensor">Sensore interno</string>
+    <string name="value_int_seconds">%1$d s (consigliato)</string>
+    <string name="voiceHoursPlural">{n, plural, =1 {un\'ora} other {{n,number} ore} }</string>
+    <string name="voiceSecondsPlural">{n, plural, =1 {un secondo} other {{n,number} secondi} }</string>
+    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {un kilometro all\'ora} other {{n,number,#.0} kilometri all\'ora} }</string>
+    <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {un miglio all\'ora} other {{n,number,#.0} miglia all\'ora} }</string>
+    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 nodo} other {{n,number,#.0} nodi} }</string>
+    <string name="lap_time">Tempo del giro</string>
+    <string name="speed">Velocità media in movimento</string>
+    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {un kilometro} other {{n,number,#.0} kilometri} }</string>
+    <string name="settings_announcements_lap_power">Potenza del giro</string>
+    <string name="power">Potenza</string>
+    <string name="settings_recording_location_distance_summary">%1$s tra posizioni registrate</string>
+    <string name="power_x_watt">Potenza {x, plural, =1 {un watt} other {# watt} }</string>
+    <string name="voice_per_mile">per miglio</string>
+    <string name="unit_nautical_mile">MN</string>
+    <string name="help_data_google_play_services_content">No</string>
+    <string name="generic_dismiss">Ignora</string>
+    <string name="always">Sempre</string>
+    <string name="activity_type_swimming">nuoto</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="activity_type_swimming_open">nuoto in mare</string>
+    <string name="settings_public_api_enabled_summary_off">Solo OpenTracks può far partire o fermare le registrazioni.</string>
+    <string name="pace">Ritmo</string>
+    <string name="lap_speed">Velocità del giro</string>
+    <string name="unit_minute_per_nautical_mile">min/NM</string>
+    <string name="voiceMinutesPlural">{n, plural, =1 {un minuto} other {{n,number} minuti} }</string>
+    <string name="settings_announcements_average_heart_rate">Frequenza cardiaca media</string>
+    <string name="activity_type_kickscooter">monopattino</string>
+    <string name="settings_recording_min_sampling_interval_title">Intervallo temporale di campionamento</string>
+    <string name="create_marker_error">Impossibile marcare la posizione. Riprovare.</string>
+    <string name="settings_export_filename_title">Formato del nome del file</string>
+    <string name="settings_sensor_heart_rate_max">Zone: frequenza cardiaca massima (bpm)</string>
+    <string name="settings_public_api_package_title">Nome del pacchetto per API pubblica</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Un\'applicazione che ha fatto partire una registrazione può anche accedere ai dati registrati.</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
+    <string name="lap_heart_rate">Frequenza cardiaca del giro</string>
 </resources>
