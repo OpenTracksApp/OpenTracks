@@ -541,4 +541,5 @@
     <string name="settings_locale_system_default">Predefinizione di u sistema</string>
     <string name="stats_gain_loss">Guadagnu è perdita</string>
     <string name="voice_announce_lap_power_key">AnnunziamentuVucalePutenzaÀUGiru</string>
+    <string name="lap_heart_rate">Frequenza cardiaca à u giru</string>
 </resources>
