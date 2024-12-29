@@ -1,0 +1,10 @@
+v4.17.5: OpenTracks
+
+Změny:
+- Reprodukovatelné sestavení: uvidíme, jestli to bude fungovat.
+
+Oprava chyby:
+- Reprodukovatelné sestavení používá ikonu z Obchodu Play.
+
+Vývojář:
+- Přidán soubor RELEASE_BUILD.sh

@@ -1,0 +1,8 @@
+v4.17.4: OpenTracks
+
+
+Změny:
+- Reprodukovatelné sestavení: uvidíme, jestli to bude fungovat.
+
+Vývojář:
+- Odstranění DependencyInfo.
