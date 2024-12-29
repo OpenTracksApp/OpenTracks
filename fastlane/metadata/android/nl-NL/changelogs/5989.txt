@@ -1,0 +1,10 @@
+v4.17.5: OpenTracks
+
+Veranderingen:
+- Reproduceerbare build: laten we eens kijken of het werkt.
+
+Opgelost probleem:
+- Reproduceerbare build maakt gebruik van het PlayStore-pictogram.
+
+Ontwikkelaar:
+- Toegevoegd RELEASE_BUILD.sh
