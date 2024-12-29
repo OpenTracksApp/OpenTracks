@@ -1,5 +1,6 @@
 v4.17.4: OpenTracks
 
+
 Veranderingen:
 - Reproduceerbare build: laten we eens kijken of het werkt.
 
