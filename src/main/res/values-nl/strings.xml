@@ -520,7 +520,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="report_bug">Bug rapporteren</string>
     <string name="share_crash_report">Deel het crash rapport</string>
     <string name="settings_announcements_average_heart_rate">Gemiddelde hartslag</string>
-    <string name="settings_announcements_lap_heart_rate">Hartslag per ronde</string>
+    <string name="settings_announcements_lap_heart_rate">Ronde-hartslag</string>
     <string name="image_discard">Weggooien</string>
     <string name="settings_announcements_average_speed_pace">Gemiddelde snelheid/tred</string>
     <string name="track_discarding">Track weggooien</string>
@@ -594,4 +594,5 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_locale_title">Taal</string>
     <string name="settings_locale_system_default">Systeemstandaard</string>
     <string name="stats_gain_loss">Winst &amp; verlies</string>
+    <string name="lap_heart_rate">Ronde-hartslag</string>
 </resources>
