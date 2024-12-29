@@ -135,15 +135,15 @@ android {
         variant.resValue 'string', 'applicationId', variant.applicationId
 
         variant.outputs.configureEach {
+            if (variant.flavorName == 'nightly') {
+                setVersionCodeOverride(getVersionCode())
+                setVersionNameOverride(getVersionName())
+            }
+
             if (variant.flavorName == 'reproducible') {
                 outputFileName = "${applicationId}_${variant.versionName}.apk"
             } else {
                 outputFileName = "${applicationId}_${variant.versionCode}.apk"
-            }
-
-            if (variant.flavorName == 'nightly') {
-                setVersionCodeOverride(getVersionCode())
-                setVersionNameOverride(getVersionName())
             }
         }
     }
