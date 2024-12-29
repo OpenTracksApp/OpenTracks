@@ -545,4 +545,5 @@
     <string name="settings_locale_system_default">Réamhshocrú córais</string>
     <string name="settings_locale_title">Teanga</string>
     <string name="stats_gain_loss">Gnóthachan &amp; Caillteanas</string>
+    <string name="lap_heart_rate">Ráta croí glúine</string>
 </resources>
