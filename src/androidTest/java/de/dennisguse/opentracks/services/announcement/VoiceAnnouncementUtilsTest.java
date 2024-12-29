@@ -1,9 +1,11 @@
 package de.dennisguse.opentracks.services.announcement;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import android.content.Context;
 import android.icu.text.MessageFormat;
+import android.os.Build;
 import android.util.Pair;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -55,6 +57,11 @@ public class VoiceAnnouncementUtilsTest {
     }
 
     @Test
+    public void sdkRequirement() {
+        assertFalse("Due to DateTimeFormatter using NBSP, these tests only work in SDK34+", Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE);
+    }
+
+    @Test
     public void getAnnouncement_metric_speed() {
         TrackStatistics stats = new TrackStatistics();
         stats.setStartTime(Instant.EPOCH);
@@ -71,7 +78,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, null, null).toString();
 
         // then
-        assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour 5 minutes 10 seconds. Average moving speed 18.4 kilometers per hour.", announcement);
+        assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour 5 minutes 10 seconds. Average moving speed 18.4 kilometers per hour.", announcement);
     }
 
     @Test
@@ -91,7 +98,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, null, null).toString();
 
         // then
-        assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour 1 second. Average moving speed 20.0 kilometers per hour.", announcement);
+        assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour 1 second. Average moving speed 20.0 kilometers per hour.", announcement);
     }
 
     @Test
@@ -111,7 +118,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, null, null).toString();
 
         // then
-        assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour. Average moving speed 20.0 kilometers per hour.", announcement);
+        assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour. Average moving speed 20.0 kilometers per hour.", announcement);
     }
 
     @Test
@@ -131,7 +138,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, null, null).toString();
 
         // then
-        assertEquals("12:00 AM. Total distance 19.9 kilometers. 1 hour. Average moving speed 19.9 kilometers per hour.", announcement);
+        assertEquals("12:00 AM. Total distance 19.9 kilometers. 1 hour. Average moving speed 19.9 kilometers per hour.", announcement);
     }
 
     @Test
@@ -156,7 +163,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, lastInterval, null).toString();
 
         // then
-        assertEquals("12:16 AM. Total distance 14.2 kilometers. 16 minutes 39 seconds. Average moving speed 51.2 kilometers per hour. Lap speed 51.2 kilometers per hour.", announcement);
+        assertEquals("12:16 AM. Total distance 14.2 kilometers. 16 minutes 39 seconds. Average moving speed 51.2 kilometers per hour. Lap speed 51.2 kilometers per hour.", announcement);
     }
 
     @Test
@@ -176,7 +183,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, false, null, null).toString();
 
         // then
-        assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour 5 minutes 10 seconds. Pace 3 minutes 15 seconds per kilometer.", announcement);
+        assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour 5 minutes 10 seconds. Pace 3 minutes 15 seconds per kilometer.", announcement);
     }
 
     @Test
@@ -201,7 +208,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, false, lastInterval, null).toString();
 
         // then
-        assertEquals("12:16 AM. Total distance 14.2 kilometers. 16 minutes 39 seconds. Pace 1 minute 10 seconds per kilometer. Lap time 1 minute 10 seconds per kilometer.", announcement);
+        assertEquals("12:16 AM. Total distance 14.2 kilometers. 16 minutes 39 seconds. Pace 1 minute 10 seconds per kilometer. Lap time 1 minute 10 seconds per kilometer.", announcement);
     }
 
     @Test
@@ -221,7 +228,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_FEET, true, null, null).toString();
 
         // then
-        assertEquals("12:00 AM. Total distance 12.4 miles. 1 hour 5 minutes 10 seconds. Average moving speed 11.4 miles per hour.", announcement);
+        assertEquals("12:00 AM. Total distance 12.4 miles. 1 hour 5 minutes 10 seconds. Average moving speed 11.4 miles per hour.", announcement);
     }
 
     @Test
@@ -239,7 +246,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_FEET, true, null, null).toString();
 
         // then
-        assertEquals("12:00 AM. Total distance 1.1 miles. 1 hour. Average moving speed 1.1 miles per hour.", announcement);
+        assertEquals("12:00 AM. Total distance 1.1 miles. 1 hour. Average moving speed 1.1 miles per hour.", announcement);
     }
 
     @Test
@@ -257,7 +264,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_METER, true, null, null).toString();
 
         // then
-        assertEquals("12:00 AM. Total distance 1.1 miles. 1 hour. Average moving speed 1.1 miles per hour.", announcement);
+        assertEquals("12:00 AM. Total distance 1.1 miles. 1 hour. Average moving speed 1.1 miles per hour.", announcement);
     }
 
     @Test
@@ -275,7 +282,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, null, null).toString();
 
         // then
-        assertEquals("12:00 AM. Total distance 1.1 kilometers. 1 hour. Average moving speed 1.1 kilometers per hour.", announcement);
+        assertEquals("12:00 AM. Total distance 1.1 kilometers. 1 hour. Average moving speed 1.1 kilometers per hour.", announcement);
     }
 
     @Test
@@ -300,7 +307,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_FEET, true, lastInterval, null).toString();
 
         // then
-        assertEquals("12:16 AM. Total distance 8.8 miles. 16 minutes 39 seconds. Average moving speed 31.8 miles per hour. Lap speed 31.8 miles per hour.", announcement);
+        assertEquals("12:16 AM. Total distance 8.8 miles. 16 minutes 39 seconds. Average moving speed 31.8 miles per hour. Lap speed 31.8 miles per hour.", announcement);
     }
 
     @Test
@@ -320,7 +327,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_FEET, false, null, null).toString();
 
         // then
-        assertEquals("12:00 AM. Total distance 12.4 miles. 1 hour 5 minutes 10 seconds. Pace 5 minutes 15 seconds per mile.", announcement);
+        assertEquals("12:00 AM. Total distance 12.4 miles. 1 hour 5 minutes 10 seconds. Pace 5 minutes 15 seconds per mile.", announcement);
     }
 
     @Test
@@ -345,7 +352,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_FEET, false, lastInterval, null).toString();
 
         // then
-        assertEquals("12:16 AM. Total distance 8.8 miles. 16 minutes 39 seconds. Pace 1 minute 53 seconds per mile. Lap time 1 minute 53 seconds per mile.", announcement);
+        assertEquals("12:16 AM. Total distance 8.8 miles. 16 minutes 39 seconds. Pace 1 minute 53 seconds per mile. Lap time 1 minute 53 seconds per mile.", announcement);
     }
 
     @Test
@@ -374,7 +381,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, lastInterval, sensorStatistics).toString();
 
         // then
-        assertEquals("12:16 AM. Total distance 14.2 kilometers. 16 minutes 39 seconds. Average moving speed 51.2 kilometers per hour. Lap speed 51.2 kilometers per hour. Average heart rate 180 bpm. Current heart rate 133 bpm.", announcement);
+        assertEquals("12:16 AM. Total distance 14.2 kilometers. 16 minutes 39 seconds. Average moving speed 51.2 kilometers per hour. Lap speed 51.2 kilometers per hour. Average heart rate 180 bpm. Current heart rate 133 bpm.", announcement);
     }
 
     @Test
@@ -407,7 +414,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, lastInterval, sensorStatistics).toString();
 
         // then
-        assertEquals("12:16 AM.  Current heart rate 133 bpm.", announcement);
+        assertEquals("12:16 AM.  Current heart rate 133 bpm.", announcement);
     }
 
     @Test
