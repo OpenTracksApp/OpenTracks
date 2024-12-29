@@ -501,7 +501,7 @@ limitations under the License.
     <string name="show_on_dashboard_not_installed">Nincs OpenTracks Dashboard API-t támogató alkalmazás telepítve.</string>
     <string name="value_float_mile_hour">%1$.1f mérföld/óra</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
-    <string name="settings_announcements_lap_heart_rate">Kör pulzusszám</string>
+    <string name="settings_announcements_lap_heart_rate">Körönkénti pulzusszám</string>
     <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth-eszközök szűrése</string>
     <string name="activity_type_kickscooter">roller</string>
     <string name="gps_recording_without_signal">Az OpenTracks GPS-adatok nélkül rögzít.</string>
@@ -588,4 +588,5 @@ limitations under the License.
     <string name="settings_locale_title">Nyelv</string>
     <string name="settings_locale_system_default">Rendszer alapértelmezett</string>
     <string name="stats_gain_loss">Növekedés és veszteség</string>
+    <string name="lap_heart_rate">Körönkénti pulzusszám</string>
 </resources>
