@@ -20,7 +20,7 @@ import de.dennisguse.opentracks.sensors.BluetoothHandlerRunningSpeedAndCadence;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
-public final class SensorDataSet {
+public class SensorDataSet {
 
     private static final String TAG = SensorDataSet.class.getSimpleName();
 

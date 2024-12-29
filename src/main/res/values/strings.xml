@@ -609,6 +609,7 @@ limitations under the License.
     </string>
     <string name="average_heart_rate">Average heart rate</string>
     <string name="current_heart_rate">Current heart rate</string>
+    <string name="lap_heart_rate">Lap heart rate</string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bank</string>

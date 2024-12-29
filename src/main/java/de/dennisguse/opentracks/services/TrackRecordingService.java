@@ -317,7 +317,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Compute temporary track statistics using sensorData and update time.
         Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI();
 
-        voiceAnnouncementManager.announceStatisticsIfNeeded(data.first);
+        voiceAnnouncementManager.announceStatisticsIfNeeded(data.first, data.second.second);
 
         recordingDataObservable.postValue(new RecordingData(data.first, data.second.first, data.second.second));
     }

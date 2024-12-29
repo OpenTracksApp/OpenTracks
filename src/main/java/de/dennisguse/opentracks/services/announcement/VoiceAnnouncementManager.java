@@ -33,6 +33,7 @@ import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -118,7 +119,7 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         voiceAnnouncement.speak(VoiceAnnouncementUtils.createIdle(context));
     }
 
-    public void announceStatisticsIfNeeded(@NonNull Track track) {
+    public void announceStatisticsIfNeeded(@NonNull Track track, @NonNull SensorDataSet sensorDataSet) {
         if (shouldNotAnnounce()) {
             return;
         }
@@ -135,11 +136,11 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         }
 
         if (announce) {
-            voiceAnnouncement.speak(createAnnouncement(track));
+            voiceAnnouncement.speak(createAnnouncement(track, sensorDataSet));
         }
     }
 
-    private Spannable createAnnouncement(Track track) {
+    private Spannable createAnnouncement(Track track, SensorDataSet sensorDataSet) {
         Distance currentIntervalDistance = PreferencesUtils.getVoiceAnnouncementDistance();
         if (currentIntervalDistance != intervalDistance) {
             intervalStatistics = new IntervalStatistics(currentIntervalDistance);
@@ -155,7 +156,7 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
             sensorStatistics = contentProviderUtils.getSensorStats(track.getId());
         }
 
-        return VoiceAnnouncementUtils.createStatistics(context, track, PreferencesUtils.getUnitSystem(), PreferencesUtils.isReportSpeed(track), lastInterval, sensorStatistics);
+        return VoiceAnnouncementUtils.createStatistics(context, track, sensorDataSet, PreferencesUtils.getUnitSystem(), PreferencesUtils.isReportSpeed(track), lastInterval, sensorStatistics);
     }
 
     public void stop() {

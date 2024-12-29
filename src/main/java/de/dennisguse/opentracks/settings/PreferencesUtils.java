@@ -433,12 +433,21 @@ public class PreferencesUtils {
         setBoolean(R.string.voice_announce_lap_speed_pace_key, value);
     }
 
-    public static boolean shouldVoiceAnnounceLapHeartRate() {
-        return getBoolean(R.string.voice_announce_lap_heart_rate_key, false);
-    }
-
     public static boolean shouldVoiceAnnounceLapPower() {
         return getBoolean(R.string.voice_announce_lap_power_key, false);
+    }
+
+    public static boolean shouldVoiceAnnounceHeartRateCurrent() {
+        return getBoolean(R.string.voice_announce_heart_rate_current_key, false);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceHeartRateCurrent(boolean value) {
+        setBoolean(R.string.voice_announce_heart_rate_current_key, value);
+    }
+
+    public static boolean shouldVoiceAnnounceLapHeartRate() {
+        return getBoolean(R.string.voice_announce_lap_heart_rate_key, false);
     }
 
     @VisibleForTesting

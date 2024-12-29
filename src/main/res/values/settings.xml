@@ -255,6 +255,8 @@
     <string name="voice_announce_unit_key" translatable="false">voiceAnnounceUnit</string>
     <bool name="voice_announce_unit_default" translatable="false">true</bool>
 
+    <string name="voice_announce_heart_rate_current_key" translatable="false">voiceAnnounceHeartRateCurrent</string>
+    <bool name="voice_announce_heart_rate_current_default" translatable="false">false</bool>
     <string name="voice_announce_average_heart_rate_key" translatable="false">voiceAnnounceAverageHeartRate</string>
     <bool name="voice_announce_average_heart_rate_default" translatable="false">false</bool>
     <string name="voice_announce_lap_heart_rate_key" translatable="false">voiceAnnounceLapHeartRate</string>

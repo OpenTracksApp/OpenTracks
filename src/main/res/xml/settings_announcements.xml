@@ -60,6 +60,11 @@
             android:title="@string/settings_announcements_average_speed_pace" />
 
         <SwitchPreferenceCompat
+            android:defaultValue="@bool/voice_announce_heart_rate_current_default"
+            android:key="@string/voice_announce_heart_rate_current_key"
+            android:title="@string/current_heart_rate" />
+
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/voice_announce_average_heart_rate_default"
             android:key="@string/voice_announce_average_heart_rate_key"
             android:title="@string/settings_announcements_average_heart_rate" />

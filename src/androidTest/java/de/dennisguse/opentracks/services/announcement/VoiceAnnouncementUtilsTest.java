@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -29,6 +30,7 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.SensorStatistics;
@@ -48,6 +50,7 @@ public class VoiceAnnouncementUtilsTest {
     public void setUp() {
         contentProviderUtils = new ContentProviderUtils(context);
 
+        PreferencesUtils.setVoiceAnnounceHeartRateCurrent(false);
         PreferencesUtils.setVoiceAnnounceLapHeartRate(false);
         PreferencesUtils.setVoiceAnnounceAverageHeartRate(false);
         PreferencesUtils.setVoiceAnnounceTotalDistance(true);
@@ -74,8 +77,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, null, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.METRIC, true, null, null).toString();
 
         // then
         assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour 5 minutes 10 seconds. Average moving speed 18.4 kilometers per hour.", announcement);
@@ -94,8 +100,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, null, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.METRIC, true, null, null).toString();
 
         // then
         assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour 1 second. Average moving speed 20.0 kilometers per hour.", announcement);
@@ -114,8 +123,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, null, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.METRIC, true, null, null).toString();
 
         // then
         assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour. Average moving speed 20.0 kilometers per hour.", announcement);
@@ -134,8 +146,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, null, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.METRIC, true, null, null).toString();
 
         // then
         assertEquals("12:00 AM. Total distance 19.9 kilometers. 1 hour. Average moving speed 19.9 kilometers per hour.", announcement);
@@ -156,11 +171,14 @@ public class VoiceAnnouncementUtilsTest {
             lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
         }
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         Track track = new Track();
         track.setTrackStatistics(stats);
 
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, lastInterval, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.METRIC, true, lastInterval, null).toString();
 
         // then
         assertEquals("12:16 AM. Total distance 14.2 kilometers. 16 minutes 39 seconds. Average moving speed 51.2 kilometers per hour. Lap speed 51.2 kilometers per hour.", announcement);
@@ -179,8 +197,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, false, null, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.METRIC, false, null, null).toString();
 
         // then
         assertEquals("12:00 AM. Total distance 20.0 kilometers. 1 hour 5 minutes 10 seconds. Pace 3 minutes 15 seconds per kilometer.", announcement);
@@ -204,8 +225,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, false, lastInterval, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.METRIC, false, lastInterval, null).toString();
 
         // then
         assertEquals("12:16 AM. Total distance 14.2 kilometers. 16 minutes 39 seconds. Pace 1 minute 10 seconds per kilometer. Lap time 1 minute 10 seconds per kilometer.", announcement);
@@ -224,8 +248,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_FEET, true, null, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.IMPERIAL_FEET, true, null, null).toString();
 
         // then
         assertEquals("12:00 AM. Total distance 12.4 miles. 1 hour 5 minutes 10 seconds. Average moving speed 11.4 miles per hour.", announcement);
@@ -242,8 +269,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_FEET, true, null, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.IMPERIAL_FEET, true, null, null).toString();
 
         // then
         assertEquals("12:00 AM. Total distance 1.1 miles. 1 hour. Average moving speed 1.1 miles per hour.", announcement);
@@ -260,8 +290,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_METER, true, null, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.IMPERIAL_METER, true, null, null).toString();
 
         // then
         assertEquals("12:00 AM. Total distance 1.1 miles. 1 hour. Average moving speed 1.1 miles per hour.", announcement);
@@ -278,8 +311,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, null, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.METRIC, true, null, null).toString();
 
         // then
         assertEquals("12:00 AM. Total distance 1.1 kilometers. 1 hour. Average moving speed 1.1 kilometers per hour.", announcement);
@@ -303,8 +339,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_FEET, true, lastInterval, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.IMPERIAL_FEET, true, lastInterval, null).toString();
 
         // then
         assertEquals("12:16 AM. Total distance 8.8 miles. 16 minutes 39 seconds. Average moving speed 31.8 miles per hour. Lap speed 31.8 miles per hour.", announcement);
@@ -323,8 +362,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_FEET, false, null, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.IMPERIAL_FEET, false, null, null).toString();
 
         // then
         assertEquals("12:00 AM. Total distance 12.4 miles. 1 hour 5 minutes 10 seconds. Pace 5 minutes 15 seconds per mile.", announcement);
@@ -348,8 +390,11 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.IMPERIAL_FEET, false, lastInterval, null).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.IMPERIAL_FEET, false, lastInterval, null).toString();
 
         // then
         assertEquals("12:16 AM. Total distance 8.8 miles. 16 minutes 39 seconds. Pace 1 minute 53 seconds per mile. Lap time 1 minute 53 seconds per mile.", announcement);
@@ -377,17 +422,22 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, lastInterval, sensorStatistics).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.METRIC, true, lastInterval, sensorStatistics).toString();
 
         // then
-        assertEquals("12:16 AM. Total distance 14.2 kilometers. 16 minutes 39 seconds. Average moving speed 51.2 kilometers per hour. Lap speed 51.2 kilometers per hour. Average heart rate 180 bpm. Current heart rate 133 bpm.", announcement);
+        assertEquals("12:16 AM. Total distance 14.2 kilometers. 16 minutes 39 seconds. Average moving speed 51.2 kilometers per hour. Lap speed 51.2 kilometers per hour. Average heart rate 180 bpm. Lap heart rate 133 bpm.", announcement);
     }
 
     @Test
-    public void getAnnouncement_only_lap_heart_rate() {
+    public void getAnnouncement_heart_rate() {
+        PreferencesUtils.setVoiceAnnounceHeartRateCurrent(true);
         PreferencesUtils.setVoiceAnnounceLapHeartRate(true);
-        PreferencesUtils.setVoiceAnnounceAverageHeartRate(false);
+        PreferencesUtils.setVoiceAnnounceAverageHeartRate(true);
+
         PreferencesUtils.setVoiceAnnounceTotalDistance(false);
         PreferencesUtils.setVoiceAnnounceMovingTime(false);
         PreferencesUtils.setVoiceAnnounceAverageSpeedPace(false);
@@ -410,11 +460,14 @@ public class VoiceAnnouncementUtilsTest {
         Track track = new Track();
         track.setTrackStatistics(stats);
 
+        SensorDataSet dataSet = Mockito.mock(SensorDataSet.class);
+        Mockito.when(dataSet.getHeartRate()).thenReturn(new Pair<>(HeartRate.of(60), "unused"));
+
         // when
-        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, UnitSystem.METRIC, true, lastInterval, sensorStatistics).toString();
+        String announcement = VoiceAnnouncementUtils.createStatistics(context, track, dataSet, UnitSystem.METRIC, true, lastInterval, sensorStatistics).toString();
 
         // then
-        assertEquals("12:16 AM.  Current heart rate 133 bpm.", announcement);
+        assertEquals("12:16 AM.  Current heart rate 60 bpm. Average heart rate 180 bpm. Lap heart rate 133 bpm.", announcement);
     }
 
     @Test
