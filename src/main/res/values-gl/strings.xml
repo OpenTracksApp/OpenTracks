@@ -594,4 +594,5 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_locale_title">Idioma</string>
     <string name="settings_locale_system_default">Predeterminado no sistema</string>
     <string name="stats_gain_loss">Ganancia e Perda</string>
+    <string name="lap_heart_rate">Pulso medio na volta</string>
 </resources>
