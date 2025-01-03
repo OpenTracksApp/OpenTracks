@@ -12,7 +12,7 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
     </tr>
     <tr>
         <td align="center">
-            <a href="https://f-droid.org/packages/de.dennisguse.opentracks">
+            <a href="https://f-droid.org/packages/de.dennisguse.opentracks.playstore">
                 <img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="60" align="middle">
             </a>
         </td>
@@ -29,7 +29,7 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
     </tr>
     <tr>
         <td align="center">
-            <img alt="OpenTracks version published on F-Droid" src="https://img.shields.io/f-droid/v/de.dennisguse.opentracks.svg" align="middle" >
+            <img alt="OpenTracks version published on F-Droid" src="https://img.shields.io/f-droid/v/de.dennisguse.opentracks.playstore.svg" align="middle" >
         </td>
         <td></td>
         <td align="center">
