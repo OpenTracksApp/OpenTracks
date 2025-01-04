@@ -1,0 +1,4 @@
+v4.12.2.: OpenTracks
+
+Buggfix:
+- Tillåt att sensorerna startas före inspelningen

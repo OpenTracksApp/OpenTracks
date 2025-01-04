@@ -1,0 +1,4 @@
+v3.6.1: OpenTracks
+
+Buggfix:
+- KMZ-importering: lagra korrekt genväg för bild

@@ -1,0 +1,4 @@
+v4.4.0: OpenTracks
+
+Ändringar:
+- Exportera alla spår som en fil

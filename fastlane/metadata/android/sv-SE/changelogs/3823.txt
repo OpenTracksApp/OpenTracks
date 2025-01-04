@@ -1,0 +1,4 @@
+v3.14.3: OpenTracks
+
+Buggfix: 
+- Nedgraderar databasen från nästkommande utgåva v3.15.0

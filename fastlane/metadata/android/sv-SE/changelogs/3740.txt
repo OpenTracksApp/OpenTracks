@@ -1,0 +1,4 @@
+v3.13.2: OpenTracks
+
+Buggfix:
+- Krasch i liggande läge

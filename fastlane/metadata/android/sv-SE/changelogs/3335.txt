@@ -1,0 +1,4 @@
+v3.6.2: OpenTracks
+
+Buggfix:
+- Diagrammen visades inte korrekt (introducerades i v3.6.0)
