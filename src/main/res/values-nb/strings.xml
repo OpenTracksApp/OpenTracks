@@ -578,4 +578,5 @@ limitations under the License.
     <string name="settings_locale_title">Språk</string>
     <string name="settings_locale_system_default">Systemstandard</string>
     <string name="stats_gain_loss">Total stigning og nedstigning</string>
+    <string name="lap_heart_rate">Runde-puls</string>
 </resources>
