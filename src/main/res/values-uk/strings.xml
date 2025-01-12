@@ -175,7 +175,7 @@ limitations under the License.
     <string name="settings_chart_by_distance">Дистанція</string>
     <string name="settings_chart_by_time">Час</string>
     <string name="settings_recording_default_activity_title">Тип за умовчанням</string>
-    <string name="settings_recording_location_frequency_summary">Записувати відрізок через кожні %1$s</string>
+    <string name="settings_recording_location_frequency_summary">%1$s між перевірками місцезнаходження</string>
     <string name="settings_recording_max_recording_distance_summary">Кожні %1$s шляху відміряється новий відрізок</string>
     <string name="settings_recording_max_recording_distance_title">Максимальна відстань</string>
     <string name="settings_recording_min_recording_distance_title">Відстань відрізка</string>
@@ -326,8 +326,8 @@ limitations under the License.
 \n d) вимкніть енергоощадження.
 \n
 \n Якщо нічого не допомагає, будь ласка, повідомте нам про помилку. </string>
-    <string name="about_preference_title">Про OpenTracks</string>
-    <string name="about_url">Веб-сторінка проєкту: <a href="%1$s">%1$s</a></string>
+    <string name="about_preference_title">Про</string>
+    <string name="about_url">Веб-сторінка проекту: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Версія: %1$s</string>
     <string name="about_version_code">Код версії: %1$d</string>
     <string name="about_libraries">Бібліотеки</string>
@@ -459,14 +459,14 @@ limitations under the License.
     <string name="settings_units_category">Одиниця</string>
     <string name="settings_import_export_summary">Імпорт, Експорт, Автоэкспорт</string>
     <string name="settings_announcements_summary">Час, відстань, швидкість передачі голосу</string>
-    <string name="settings_import_export_title">Імпорт/Експорт</string>
+    <string name="settings_import_export_title">Імпорт та експорт</string>
     <string name="settings_recording_customize_layout_title">Налаштуйте свій макет запису</string>
     <string name="stats_custom_layout_default_layout">Макет за замовчуванням</string>
     <string name="custom_layout_select_layout">Виберіть макет</string>
     <string name="custom_layout_list_layout_removed">Макет був видалений</string>
     <string name="custom_layout_list_edit_already_exists">Ім\'я макета вже існує</string>
     <string name="custom_layout_list_edit_name">Введіть ім\'я макета для додавання</string>
-    <string name="settings_announcements_distance_frequency">Інтервал відстаней</string>
+    <string name="settings_announcements_distance_frequency">Довжина кола</string>
     <string name="settings_announcements_totaltime_frequency">Часовий інтервал</string>
     <string name="settings_running_sensor">Рухомий</string>
     <string name="settings_generic_sensor">Загальний</string>
@@ -567,4 +567,5 @@ limitations under the License.
     <string name="show_on_dashboard_not_installed">Не встановлено програму, що підтримує OpenTracks Dashboard API.</string>
     <string name="value_float_knots_recommended">%1$.1f вузлів (рекомендовано)</string>
     <string name="sensor_state_power_max">Макс. потужність</string>
+    <string name="power">Сила</string>
 </resources>
