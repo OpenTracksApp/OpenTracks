@@ -1,0 +1,16 @@
+v3.2.0: OpenTracks
+
+Muutokset:
+- Vimpain poistettu
+- Otettiin käyttöön materiaalisuunnittelun kuvakkeet
+- Lumilautailu ja hiihto poistettu (tarvitaan uudet kuvakkeet)
+
+Viankorjaus:
+- Kiinteä hakutoiminto
+
+Kehittäjä:
+- Korjatut (jotkut) testitapaukset
+- Käyttämätön parcel-toiminto poistettu
+- Suuri puhdistus ja alustaminen
+- Älä käytä lähetystä sovelluksen ja vimpaimen väliseen viestintään
+- stats_content.xml ei sisällä muita tiedostoja
