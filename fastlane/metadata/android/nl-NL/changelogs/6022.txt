@@ -1,0 +1,5 @@
+v4.17.6: OpenTracks
+
+Opgeloste probleem:
+- UI: GPS-gegevens worden mogelijk niet regelmatig weergegeven (heeft geen invloed op opgenomen gegevens)
+  Geïntroduceerd in v4.17.0
