@@ -1,0 +1,5 @@
+v4.17.6: OpenTracks
+
+Bugfix:
+- UI: GPS data may be not shown regularly (does not affect recorded data)
+  Introduced in v4.17.0
