@@ -1,0 +1,5 @@
+v4.17.6: OpenTracks
+
+Oprava chyby:
+- Rozhraní: polohová data nemusejí být zobrazena pravidelně (neovlivňuje zaznamenaná data)
+  Chyba vznikla ve verzi v4.17.0
