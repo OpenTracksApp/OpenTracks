@@ -1,0 +1,10 @@
+(versionName): OpenTracks
+
+Änderungen:
+-
+
+Bugfix:
+-
+
+Entwickler:
+-
