@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
-    <string name="about_preference_title">Über OpenTracks</string>
+    <string name="about_preference_title">Über</string>
     <string name="about_description"><i>OpenTracks</i> ist eine Sport-Tracking-Anwendung, die deine Privatsphäre respektiert.</string>
     <string name="about_url">Projekt-Website: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Versionsname: %1$s</string>
@@ -643,4 +643,8 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="voice_announce_lap_power_key">StimmeAnkündigungLapPower</string>
     <string name="settings_announcements_lap_power">Rundenleistung</string>
     <string name="create_marker_error">Die Markierung konnte nicht erstellt werden. Versuchen Sie es erneut.</string>
+    <string name="settings_locale_title">Sprache</string>
+    <string name="settings_locale_system_default">Systemvorgabe</string>
+    <string name="stats_gain_loss">Gewinn &amp; Verlust</string>
+    <string name="lap_heart_rate">Runden-Herzfrequenz</string>
 </resources>
