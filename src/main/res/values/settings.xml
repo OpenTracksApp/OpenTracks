@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Do not translate anything in this file directly. -->
-    <string name="stats_show_on_lockscreen_while_recording_key" translatable="false">trackdetail_show_on_lockscreen_while_recording</string>
-    <bool name="stats_show_on_lockscreen_while_recording_default" translatable="false">false</bool>
-
-    <string name="stats_keep_screen_on_while_recording_key" translatable="false">trackdetail_keep_screen_on_while_recording</string>
-    <bool name="stats_keep_screen_on_while_recording_default" translatable="false">false</bool>
-
-    <string name="stats_fullscreen_while_recording_key" translatable="false">trackdetail_fullscreen_while_recording</string>
-    <bool name="stats_fullscreen_while_recording_default" translatable="false">false</bool>
 
     <!-- Main settings -->
     <string name="settings_defaults_key" translatable="false">settingsDefaults</string>
@@ -279,8 +271,31 @@
     <string name="show_introduction_screen_key" translatable="false">showIntroduction</string>
     <bool name="show_introduction_screen_default">true</bool>
 
+    <!-- User Interface Settings -->
+
     <string name="settings_ui_dynamic_colors_key" translatable="false">uiDynamicColors</string>
     <bool name="settings_ui_dynamic_colors_default" translatable="false">false</bool>
+
+    <!-- Recording Settings -->
+    <string name="stats_show_on_lockscreen_while_recording_key" translatable="false">trackdetail_show_on_lockscreen_while_recording</string>
+    <bool name="stats_show_on_lockscreen_while_recording_default" translatable="false">false</bool>
+
+    <string name="stats_keep_screen_on_while_recording_key" translatable="false">trackdetail_keep_screen_on_while_recording</string>
+    <bool name="stats_keep_screen_on_while_recording_default" translatable="false">false</bool>
+
+    <string name="stats_fullscreen_while_recording_key" translatable="false">trackdetail_fullscreen_while_recording</string>
+    <bool name="stats_fullscreen_while_recording_default" translatable="false">false</bool>
+
+    <!-- Chart Settings -->
+    <string name="chart_display_elevation_key" translatable="false">chart_display_elevation</string>
+    <bool name="chart_display_elevation_default" translatable="false">true</bool>
+
+    <string name="chart_display_pace_or_speed_key" translatable="false">chart_display_pace_or_speed</string>
+    <bool name="chart_display_pace_or_speed_default" translatable="false">true</bool>
+
+    <string name="chart_display_heart_rate_key" translatable="false">chart_display_heart_rate</string>
+    <bool name="chart_display_heart_rate_default" translatable="false">true</bool>
+
 
     <!-- androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode() -->
     <string name="locale_key" translatable="false">localeKey</string>
