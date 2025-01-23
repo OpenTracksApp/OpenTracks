@@ -318,6 +318,21 @@ public class PreferencesUtils {
         return getBoolean(R.string.stats_fullscreen_while_recording_key, DEFAULT);
     }
 
+    public static boolean shouldShowElevation() {
+        final boolean DEFAULT = resources.getBoolean(R.bool.chart_display_elevation_default);
+        return getBoolean(R.string.chart_display_elevation_key, DEFAULT);
+    }
+
+    public static boolean shouldShowPaceOrSpeed() {
+        final boolean DEFAULT = resources.getBoolean(R.bool.chart_display_pace_or_speed_default);
+        return getBoolean(R.string.chart_display_pace_or_speed_key, DEFAULT);
+    }
+
+    public static boolean shouldShowHeartRate() {
+        final boolean DEFAULT = resources.getBoolean(R.bool.chart_display_heart_rate_default);
+        return getBoolean(R.string.chart_display_heart_rate_key, DEFAULT);
+    }
+
     public static boolean shouldUseDynamicColors() {
         final boolean DEFAULT = resources.getBoolean(R.bool.settings_ui_dynamic_colors_default);
         return getBoolean(R.string.settings_ui_dynamic_colors_key, DEFAULT);

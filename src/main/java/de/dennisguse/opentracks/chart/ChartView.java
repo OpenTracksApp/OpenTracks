@@ -86,8 +86,10 @@ public class ChartView extends View {
     }
 
     private final List<ChartValueSeries> seriesList = new LinkedList<>();
+    private final ChartValueSeries elevationSeries;
     private final ChartValueSeries speedSeries;
     private final ChartValueSeries paceSeries;
+    private final ChartValueSeries heartRateSeries;
 
     private final LinkedList<ChartPoint> chartPoints = new LinkedList<>();
     private final List<Marker> markers = new LinkedList<>();
@@ -123,6 +125,7 @@ public class ChartView extends View {
     private boolean chartByDistance = false;
     private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
     private boolean reportSpeed = true;
+    private boolean showPaceOrSpeed = true;
     private boolean showPointer = false;
 
     private final GestureDetectorCompat detectorScrollFlingTab = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener() {
@@ -176,17 +179,17 @@ public class ChartView extends View {
         int fontSizeSmall = ThemeUtils.getFontSizeSmallInPx(context);
         int fontSizeMedium = ThemeUtils.getFontSizeMediumInPx(context);
 
-        seriesList.add(new ChartValueSeries(context,
-                Integer.MIN_VALUE,
-                Integer.MAX_VALUE,
-                new int[]{5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000},
-                R.string.description_altitude_metric,
-                R.string.description_altitude_imperial,
-                R.string.description_altitude_imperial,
-                R.color.chart_altitude_fill,
-                R.color.chart_altitude_border,
-                fontSizeSmall,
-                fontSizeMedium) {
+        elevationSeries = new ChartValueSeries(context,
+            Integer.MIN_VALUE,
+            Integer.MAX_VALUE,
+            new int[]{5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000},
+            R.string.description_altitude_metric,
+            R.string.description_altitude_imperial,
+            R.string.description_altitude_imperial,
+            R.color.chart_altitude_fill,
+            R.color.chart_altitude_border,
+            fontSizeSmall,
+            fontSizeMedium) {
             @Override
             protected Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.altitude();
@@ -196,7 +199,8 @@ public class ChartView extends View {
             protected boolean drawIfChartPointHasNoData() {
                 return false;
             }
-        });
+        };
+        seriesList.add(elevationSeries);
 
         speedSeries = new ChartValueSeries(context,
                 0,
@@ -244,10 +248,15 @@ public class ChartView extends View {
         };
         seriesList.add(paceSeries);
 
-        seriesList.add(new ChartValueSeries(context,
+        heartRateSeries = new ChartValueSeries(context,
                 0,
                 Integer.MAX_VALUE,
-                new int[]{25, 50},
+                // For Zone 5 cardio, the 25 value should result in nice visuals, as the values
+                // will range from ~70 - ~180 (around 4.5 intervals).
+                // For Zone 1 cardio, the 15 value should result in nice visuals, as the values
+                // will range from ~70 - ~120 (around 3.5 intervals)
+                // The fallback of 50 should give appropriate visuals for values outside this range.
+                new int[]{15, 25, 50},
                 R.string.description_sensor_heart_rate,
                 R.string.description_sensor_heart_rate,
                 R.string.description_sensor_heart_rate,
@@ -264,7 +273,8 @@ public class ChartView extends View {
             protected boolean drawIfChartPointHasNoData() {
                 return false;
             }
-        });
+        };
+        seriesList.add(heartRateSeries);
 
         seriesList.add(new ChartValueSeries(context,
                 0,
@@ -343,9 +353,15 @@ public class ChartView extends View {
         setClickable(true);
         updateDimensions();
 
-        // either speedSeries or paceSeries should be enabled.
-        speedSeries.setEnabled(reportSpeed);
-        paceSeries.setEnabled(!reportSpeed);
+        // Either speedSeries or paceSeries should be enabled, if one is shown.
+        if (showPaceOrSpeed) {
+            speedSeries.setEnabled(reportSpeed);
+            paceSeries.setEnabled(!reportSpeed);
+        }
+
+        // Defaults for our chart series.
+        heartRateSeries.setEnabled(true);
+        elevationSeries.setEnabled(true);
     }
 
     @Override
@@ -379,6 +395,12 @@ public class ChartView extends View {
     }
 
     public boolean applyReportSpeed() {
+        if (!showPaceOrSpeed) {
+            paceSeries.setEnabled(false);
+            speedSeries.setEnabled(false);
+            return true;
+        }
+
         if (reportSpeed) {
             if (!speedSeries.isEnabled()) {
                 speedSeries.setEnabled(true);
@@ -394,6 +416,20 @@ public class ChartView extends View {
         }
 
         return false;
+    }
+
+    void setShowElevation(boolean value) {
+        elevationSeries.setEnabled(value);
+    }
+    void setShowPaceOrSpeed(boolean value) {
+        showPaceOrSpeed = value;
+
+        // we want to make sure we show whatever version the user has
+        // selected when we turn this back on.
+        applyReportSpeed();
+    }
+    void setShowHeartRate(boolean value) {
+        heartRateSeries.setEnabled(value);
     }
 
     public void setShowPointer(boolean value) {
@@ -644,10 +680,18 @@ public class ChartView extends View {
      */
     private void drawSeriesTitles(Canvas canvas) {
         Iterator<TitlePosition> tpI = titleDimensions.titlePositions.iterator();
+
         for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
                 String title = getContext().getString(chartValueSeries.getTitleId(unitSystem));
                 Paint paint = chartValueSeries.getTitlePaint();
+
+                // It is possible for the titlePositions to become empty temporarily, while switching between
+                // chart screens quickly.
+                if (!tpI.hasNext()) {
+                    return;
+                }
+
                 TitlePosition tp = tpI.next();
                 int y = topBorder - spacer - (titleDimensions.lineCount - tp.line) * (titleDimensions.lineHeight + spacer);
                 canvas.drawText(title, tp.xPos + getScrollX(), y, paint);
@@ -774,7 +818,7 @@ public class ChartView extends View {
 
         //TODO
         int markerXPosition = x - spacer;
-        int index = titleDimensions.titlePositions.size() - 1; // index only onver the visible chart series
+        int index = titleDimensions.titlePositions.size() - 1; // index only over the visible chart series
         final int lastDrawn2ndLineMarkerIndex = getYmarkerCountOn1stLine();
         for (int i = seriesList.size()-1; i>=0 ;--i) { // draw markers from the last series to achieve right alignment
             ChartValueSeries chartValueSeries = seriesList.get(i);

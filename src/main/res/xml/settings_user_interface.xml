@@ -58,4 +58,23 @@
             android:title="@string/settings_recording_fullscreen_on_while_recording_title" />
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/settings_charts_title">
+        <SwitchPreferenceCompat
+            android:icon="@drawable/ic_activity_climbing_24dp"
+            android:defaultValue="@bool/chart_display_elevation_default"
+            android:key="@string/chart_display_elevation_key"
+            android:title="@string/settings_chart_display_elevation_title" />
+
+        <SwitchPreferenceCompat
+            android:icon="@drawable/ic_activity_snowboarding_24dp"
+            android:defaultValue="@bool/chart_display_pace_or_speed_default"
+            android:key="@string/chart_display_pace_or_speed_key"
+            android:title="@string/settings_chart_display_pace_or_speed_title" />
+
+        <SwitchPreferenceCompat
+            android:icon="@drawable/ic_activity_workout_24dp"
+            android:defaultValue="@bool/chart_display_heart_rate_default"
+            android:key="@string/chart_display_heart_rate_key"
+            android:title="@string/settings_chart_display_heart_rate_title" />
+    </PreferenceCategory>
 </PreferenceScreen>

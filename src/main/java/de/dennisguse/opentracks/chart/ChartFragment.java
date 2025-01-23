@@ -86,6 +86,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
                     });
                 }
             }
+
             if (PreferencesUtils.isKey(R.string.stats_rate_key, key)) {
                 boolean reportSpeed = PreferencesUtils.isReportSpeed(activityTypeLocalized);
                 if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
@@ -98,6 +99,21 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
                         }
                     });
                 }
+            }
+
+            if (PreferencesUtils.isKey(R.string.chart_display_elevation_key, key)) {
+                viewBinding.chartView.setShowElevation(PreferencesUtils.shouldShowElevation());
+                refreshChart();
+            }
+
+            if (PreferencesUtils.isKey(R.string.chart_display_pace_or_speed_key, key)) {
+                viewBinding.chartView.setShowPaceOrSpeed(PreferencesUtils.shouldShowPaceOrSpeed());
+                refreshChart();
+            }
+
+            if (PreferencesUtils.isKey(R.string.chart_display_heart_rate_key, key)) {
+                viewBinding.chartView.setShowHeartRate(PreferencesUtils.shouldShowHeartRate());
+                refreshChart();
             }
         }
     };
@@ -272,5 +288,14 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
         if (fragmentActivity != null) {
             fragmentActivity.runOnUiThread(runnable);
         }
+    }
+
+    private void refreshChart() {
+        runOnUiThread(() -> {
+            if (isResumed()) {
+                viewBinding.chartView.invalidate();
+                viewBinding.chartView.requestLayout();
+            }
+        });
     }
 }

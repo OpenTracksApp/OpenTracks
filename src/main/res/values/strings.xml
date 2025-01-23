@@ -344,6 +344,11 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">By distance</string>
     <string name="settings_chart_by_time">By time</string>
+    <string name="settings_charts_title">Charts</string>
+    <string name="settings_chart_display_elevation_title">Display elevation</string>
+    <string name="settings_chart_display_pace_or_speed_title">Display pace or speed</string>
+    <string name="settings_chart_display_heart_rate_title">Display heart rate</string>
+
     <!-- Settings Recording -->
     <string name="settings_recording_title">Recording</string>
     <string name="settings_theme_switch_restart">Theme changes may require a manual restart.</string>
