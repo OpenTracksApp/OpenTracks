@@ -595,4 +595,8 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_locale_system_default">Systeemstandaard</string>
     <string name="stats_gain_loss">Winst &amp; verlies</string>
     <string name="lap_heart_rate">Ronde-hartslag</string>
+    <string name="settings_charts_title">Grafieken</string>
+    <string name="settings_chart_display_elevation_title">Hoogte weergeven</string>
+    <string name="settings_chart_display_pace_or_speed_title">Tempo of snelheid weergeven</string>
+    <string name="settings_chart_display_heart_rate_title">Hartslag weergeven</string>
 </resources>
