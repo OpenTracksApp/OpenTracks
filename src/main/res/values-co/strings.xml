@@ -166,7 +166,7 @@
     <string name="help_track_export_title">Cumu possu espurtà o scumparte i tracciati arregistrati ?</string>
     <string name="help_track_export_content"> I tracciati ponu esse espurtati da i Parametri à u furmatu KMZ, KML, o GPX. KMZ o KML per tutti i dati ; GPX solu per e pusizioni. I tracciati scumparti via l’<i>icona di spartera</i> sò à u furmatu KMZ. </string>
     <string name="help_track_map_content">Impiegate a chjuca icona in forma di carta.\n \u0020a) (messe à livellu in vivu) Installate <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Furnisce carte in linea o fora di linea via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n \u0020In fatti, OSMDashboard hè un’altra appiecazione chì pò solu accede (timpurariamente) à i dati di i tracciati chì anu da esse affissati).\n \u0020b) Via un’appiecazione classica di cartugrafia (p.i. <a href="http://osmand.net/">OsmAnd</a> è <a href="https://maps.me/">MAPS.ME</a>). \u0020St’appiecazioni devenu piglià in carica u furmatu di schedariu KMZ (solu e pusizioni è e stampiglie). \u0020In fatti, l’appiecazione deve incaricassi di <i>ACTION_VIEW</i> cù u tipu MIME <i>application/vnd.google-earth.kmz</i>.</string>
-    <string name="help_recording_content">OpenTracks impiegheghja u cattore GPS di l’apparechju per arregistrà di cuntinuu a pusizione. S’è l’apparechju GPS signaleghja dati falsi (per indettu, pusizione, vitezza o altezza), OpenTracks ùn pò fà nunda.</string>
+    <string name="help_recording_content">OpenTracks impiegheghja u cattore GPS di l’apparechju per arregistrà di cuntinuu a pusizione. S’è l’apparechju GPS signaleghja dati falsi (per indettu, pusizione, vitezza o altitudine), OpenTracks ùn pò fà nunda.</string>
     <string name="help_data_storage_title">Cumu OpenTracks arregistreghja i dati di i cattori ?</string>
     <string name="activity_type_driving_car">vittura</string>
     <string name="help_data_storage_content"> I dati di i cattori sò piazzati à a pusizione arregistrata. In casu d’un cattore di frequenza cardiaca, vole si dì chì solu <i>una</i> misura di frequenza cardiaca hè arregistrata à a pusizione. S’è vo state immobile o s’è vo site dentru, nisunu datu di cattore ùn serà arregistratu (ma serà affissatu). </string>
@@ -542,4 +542,8 @@
     <string name="stats_gain_loss">Guadagnu è perdita</string>
     <string name="voice_announce_lap_power_key">AnnunziamentuVucalePutenzaÀUGiru</string>
     <string name="lap_heart_rate">Frequenza cardiaca à u giru</string>
+    <string name="settings_charts_title">Grafici</string>
+    <string name="settings_chart_display_elevation_title">Affissà l’altitudine</string>
+    <string name="settings_chart_display_heart_rate_title">Affissà a frequenza cardiaca</string>
+    <string name="settings_chart_display_pace_or_speed_title">Affissà l’andatura o a vitezza</string>
 </resources>
