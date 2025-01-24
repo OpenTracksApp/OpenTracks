@@ -595,4 +595,8 @@ limitations under the License.
     <string name="settings_locale_system_default">Podle systému</string>
     <string name="stats_gain_loss">Stoupání a klesání</string>
     <string name="lap_heart_rate">Tepová frekvence za kolo</string>
+    <string name="settings_charts_title">Grafy</string>
+    <string name="settings_chart_display_elevation_title">Zobrazit nadmořskou výšku</string>
+    <string name="settings_chart_display_heart_rate_title">Zobrazit srdeční frekvenci</string>
+    <string name="settings_chart_display_pace_or_speed_title">Zobrazit tempo nebo rychlost</string>
 </resources>
