@@ -666,4 +666,9 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_locale_title">Langue</string>
     <string name="stats_gain_loss">Gain et perte</string>
     <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="settings_chart_display_pace_or_speed_title">Afficher le pas ou la vitesse</string>
+    <string name="settings_chart_display_elevation_title">Afficher l\'altitude</string>
+    <string name="settings_chart_display_heart_rate_title">Afficher la fréquence cardiaque</string>
+    <string name="settings_charts_title">Graphiques</string>
+    <string name="lap_heart_rate">Fréquence cardiaque au tour</string>
 </resources>
