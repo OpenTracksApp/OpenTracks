@@ -344,7 +344,7 @@ limitations under the License.
     <string name="instant_export_enabled_title">Auto-eksport etter opptak</string>
     <string name="settings_default_export_uri_title">Mappe for sporeksport</string>
     <string name="share_image_body">Jeg tror du kan være interessert i dette bildet.</string>
-    <string name="about_preference_title">Om OpenTracks</string>
+    <string name="about_preference_title">Om</string>
     <string name="open_track_as_trackfileformat">Åpne som %1$s</string>
     <string name="export_with_photos">med bilder</string>
     <string name="export_track_already_exists_msg">Filen %1$s finnes allerede i målmappen.</string>
@@ -371,7 +371,7 @@ limitations under the License.
     <string name="gps_fixed_and_ready">GPS bestemt og klar</string>
     <string name="import_parser_error">Analysefeil: %1$s</string>
     <string name="import_error_info">%1$s: %2$s</string>
-    <string name="help_storage_pictures_title">Hvordan lagrer OpenTracks bilder tatt som markører\?</string>
+    <string name="help_storage_pictures_title">Hvordan lagrer OpenTracks bilder som er tatt som markører?</string>
     <string name="help_storage_pictures_content">Disse lagres i programmets internlager (dvs. kun tilgjengelig i OpenTracks).</string>
     <string name="generic_click_twice_cancel">Trykk tilbake-knappen igjen for å avbryte</string>
     <string name="help_track_map_content"> Bruk det lille kartikonet.
@@ -579,4 +579,9 @@ limitations under the License.
     <string name="settings_locale_system_default">Systemstandard</string>
     <string name="stats_gain_loss">Total stigning og nedstigning</string>
     <string name="lap_heart_rate">Runde-puls</string>
+    <string name="settings_charts_title">Diagrammer</string>
+    <string name="settings_chart_display_elevation_title">Vis høyde</string>
+    <string name="settings_chart_display_heart_rate_title">Vis puls</string>
+    <string name="settings_chart_display_pace_or_speed_title">Vis tempo eller hastighet</string>
+    <string name="settings_recording_min_sampling_interval_title">Samplingtidsintervall</string>
 </resources>
