@@ -546,4 +546,8 @@
     <string name="settings_locale_title">Teanga</string>
     <string name="stats_gain_loss">Gnóthachan &amp; Caillteanas</string>
     <string name="lap_heart_rate">Ráta croí glúine</string>
+    <string name="settings_charts_title">Cairteacha</string>
+    <string name="settings_chart_display_elevation_title">Ingearchló taispeána</string>
+    <string name="settings_chart_display_pace_or_speed_title">Taispeáin ráta nó luas</string>
+    <string name="settings_chart_display_heart_rate_title">Taispeáin ráta croí</string>
 </resources>
