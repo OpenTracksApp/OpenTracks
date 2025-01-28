@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
-    <string name="about_preference_title">關於 OpenTracks</string>
+    <string name="about_preference_title">關於</string>
     <string name="about_description"><i>OpenTracks</i> 是一個完全尊重您的隱私的運動蹤跡應用程式。</string>
     <string name="about_url">專案網頁：<a href="%1$s">%1$s</a></string>
     <string name="about_version_name">版本名稱：%1$s</string>
@@ -302,11 +302,11 @@ limitations under the License.
     <string name="settings_ui_summary">外觀、紀錄布局、主題</string>
     <string name="settings_gps_sensor">GPS</string>
     <string name="settings_gps_summary">時間間隔、距離間隔、最大距離、精度</string>
-    <string name="settings_sensors_title">藍芽感測器</string>
+    <string name="settings_sensors_title">感測器</string>
     <string name="settings_sensors_summary">自行車感測器、輪周、跑步感測器</string>
     <string name="settings_announcements_statistics_title">語音播報</string>
     <string name="settings_announcements_summary">時間、距離、語速</string>
-    <string name="settings_import_export_title">匯入/匯出</string>
+    <string name="settings_import_export_title">匯入與匯出</string>
     <string name="settings_import_export_summary">匯入、匯出、自動匯出</string>
     <string name="settings_units_category">單位</string>
     <string name="settings_activity_defaults_category">活動的預設值</string>
@@ -328,7 +328,7 @@ limitations under the License.
     <string name="settings_recording_fullscreen_on_while_recording_title">全螢幕</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">當記錄時，在全螢幕中呈現。</string>
     <string name="settings_recording_default_activity_title">預設活動類型</string>
-    <string name="settings_recording_location_frequency_summary">每 %1$s記錄一次位置資訊</string>
+    <string name="settings_recording_location_frequency_summary">間隔 %1$s 檢查位置</string>
     <string name="settings_recording_max_recording_distance_summary">系統會在兩個地點之間的距離大於 %1$s 時建立新的區段</string>
     <string name="settings_recording_max_recording_distance_title">最遠距離</string>
     <string name="settings_recording_min_recording_distance_title">記錄位置的距離間隔</string>
@@ -604,4 +604,18 @@ limitations under the License.
     <string name="sensor_state_cadence_unit">rpm</string>
     <string name="sensor_state_power_unit">瓦</string>
     <string name="sensor_state_heart_rate_unit">bpm</string>
+    <string name="settings_chart_display_heart_rate_title">顯示心率</string>
+    <string name="settings_announcements_unit">距離/速度單位</string>
+    <string name="lap_heart_rate">單圈心率</string>
+    <string name="settings_recording_min_sampling_interval_title">取樣時間間隔</string>
+    <string name="settings_recording_location_distance_summary">間隔 %1$s 記錄位置</string>
+    <string name="power">功率</string>
+    <string name="settings_chart_display_pace_or_speed_title">顯示配速或速度</string>
+    <string name="settings_chart_display_elevation_title">顯示海拔高度</string>
+    <string name="settings_locale_system_default">系統預設</string>
+    <string name="settings_locale_title">語言</string>
+    <string name="settings_announcements_lap_power">單圈功率</string>
+    <string name="create_marker_error">無法建立標記。請再次嘗試。</string>
+    <string name="settings_theme_switch_restart">主題變更也許需要手動重新啟動。</string>
+    <string name="settings_night_mode_option_night_oled">夜（OLED 友善的）</string>
 </resources>
