@@ -20,28 +20,34 @@ public class AggregatorCyclingCadence extends Aggregator<BluetoothHandlerCycling
 
     @Override
     protected void computeValue(Raw<BluetoothHandlerCyclingCadence.CrankData> current) {
-        if (previous != null) {
-            float timeDiff_ms = UintUtils.diff(current.value().crankRevolutionsTime(), previous.value().crankRevolutionsTime(), UintUtils.UINT16_MAX) / 1024f * 1000;
-            Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
-
-            if (timeDiff.isZero()) {
-                return;
-            }
-            if (timeDiff.isNegative()) {
-                Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
-                value = null;
-                return;
-            }
-
-            // TODO We have to treat with overflow according to the documentation: read https://github.com/OpenTracksApp/OpenTracks/pull/953#discussion_r711625268
-            if (current.value().crankRevolutionsCount() < previous.value().crankRevolutionsCount()) {
-                Log.e(TAG, "Crank revolutions count difference is invalid: cannot compute cadence.");
-                return;
-            }
-
-            long crankDiff = UintUtils.diff(current.value().crankRevolutionsCount(), previous.value().crankRevolutionsCount(), UintUtils.UINT32_MAX);
-            value = Cadence.of(crankDiff, timeDiff);
+        if (previous == null) {
+            return;
         }
+
+        float timeDiff_ms = UintUtils.diff(current.value().crankRevolutionsTime(), previous.value().crankRevolutionsTime(), UintUtils.UINT16_MAX) / 1024f * 1000;
+        Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
+
+        if (timeDiff.isZero()) {
+            return;
+        }
+        if (timeDiff.isNegative()) {
+            Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
+            aggregatedValue = null;
+            return;
+        }
+
+        // TODO We have to treat with overflow according to the documentation: read https://github.com/OpenTracksApp/OpenTracks/pull/953#discussion_r711625268
+        if (current.value().crankRevolutionsCount() < previous.value().crankRevolutionsCount()) {
+            Log.e(TAG, "Crank revolutions count difference is invalid: cannot compute cadence.");
+            return;
+        }
+
+        long crankDiff = UintUtils.diff(current.value().crankRevolutionsCount(), previous.value().crankRevolutionsCount(), UintUtils.UINT32_MAX);
+        aggregatedValue = Cadence.of(crankDiff, timeDiff);
+    }
+
+    @Override
+    public void reset() {
     }
 
     @NonNull

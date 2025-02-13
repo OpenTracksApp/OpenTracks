@@ -19,27 +19,27 @@ public class AggregatorBarometer extends Aggregator<AtmosphericPressure, Altitud
     protected void computeValue(Raw<AtmosphericPressure> current) {
         if (previous == null) {
             lastAcceptedSensorValue = current.value();
-            value = getNoneValue();
+            aggregatedValue = getNoneValue();
             return;
         }
 
         PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChangesWithSmoothing_m(lastAcceptedSensorValue, previous.value(), current.value());
         if (altitudeChange != null) {
-            value = new AltitudeGainLoss(value.gain_m() + altitudeChange.getAltitudeGain_m(), value.loss_m() + altitudeChange.getAltitudeLoss_m());
+            aggregatedValue = new AltitudeGainLoss(aggregatedValue.gain_m() + altitudeChange.getAltitudeGain_m(), aggregatedValue.loss_m() + altitudeChange.getAltitudeLoss_m());
 
             lastAcceptedSensorValue = altitudeChange.currentSensorValue();
         }
+    }
+
+    @Override
+    public void reset() {
+        aggregatedValue = getNoneValue();
     }
 
     @NonNull
     @Override
     protected AltitudeGainLoss getNoneValue() {
         return new AltitudeGainLoss(0f, 0f);
-    }
-
-    @Override
-    public void reset() {
-        value = getNoneValue();
     }
 
     public record Data(Altitude gain, Altitude loss) {}

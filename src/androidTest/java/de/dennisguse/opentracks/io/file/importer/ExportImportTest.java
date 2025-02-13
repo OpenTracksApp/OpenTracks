@@ -549,23 +549,23 @@ public class ExportImportTest {
         SensorDataSet sensorDataSet = trackPointCreator.getSensorManager().sensorDataSet;
 
         AggregatorCyclingPower cyclingPower = Mockito.mock(AggregatorCyclingPower.class);
-        Mockito.when(cyclingPower.hasValue()).thenReturn(true);
-        Mockito.when(cyclingPower.getValue(Mockito.any())).thenReturn(Power.of(power));
+        Mockito.when(cyclingPower.hasAggregatedValue()).thenReturn(true);
+        Mockito.when(cyclingPower.getAggregatedValue(Mockito.any())).thenReturn(Power.of(power));
         sensorDataSet.add(cyclingPower);
 
         AggregatorHeartRate avgHeartRate = Mockito.mock(AggregatorHeartRate.class);
-        Mockito.when(avgHeartRate.getValue(Mockito.any())).thenReturn(HeartRate.of(heartRate));
+        Mockito.when(avgHeartRate.getAggregatedValue(Mockito.any())).thenReturn(HeartRate.of(heartRate));
         sensorDataSet.add(avgHeartRate);
 
         AggregatorCyclingCadence cyclingCadence = Mockito.mock(AggregatorCyclingCadence.class);
-        Mockito.when(cyclingCadence.hasValue()).thenReturn(true);
-        Mockito.when(cyclingCadence.getValue(Mockito.any())).thenReturn(Cadence.of(cadence));
+        Mockito.when(cyclingCadence.hasAggregatedValue()).thenReturn(true);
+        Mockito.when(cyclingCadence.getAggregatedValue(Mockito.any())).thenReturn(Cadence.of(cadence));
         sensorDataSet.add(cyclingCadence);
 
         if (distance != null && speed != null) {
             AggregatorCyclingDistanceSpeed distanceSpeed = Mockito.mock(AggregatorCyclingDistanceSpeed.class);
-            Mockito.when(distanceSpeed.hasValue()).thenReturn(true);
-            Mockito.when(distanceSpeed.getValue(Mockito.any())).thenReturn(new AggregatorCyclingDistanceSpeed.Data(null, distance, Speed.of(speed)));
+            Mockito.when(distanceSpeed.hasAggregatedValue()).thenReturn(true);
+            Mockito.when(distanceSpeed.getAggregatedValue(Mockito.any())).thenReturn(new AggregatorCyclingDistanceSpeed.Data(null, distance, Speed.of(speed)));
             sensorDataSet.add(distanceSpeed);
         } else {
             sensorDataSet.add(new AggregatorCyclingDistanceSpeed("", ""));
@@ -581,8 +581,8 @@ public class ExportImportTest {
 
         if (altitudeGain != null) {
             AggregatorBarometer barometer = Mockito.mock(AggregatorBarometer.class);
-            Mockito.when(barometer.hasValue()).thenReturn(true);
-            Mockito.when(barometer.getValue(Mockito.any())).thenReturn(new AltitudeGainLoss(altitudeGain, altitudeGain));
+            Mockito.when(barometer.hasAggregatedValue()).thenReturn(true);
+            Mockito.when(barometer.getAggregatedValue(Mockito.any())).thenReturn(new AltitudeGainLoss(altitudeGain, altitudeGain));
             sensorDataSet.add(barometer);
         }  else {
             sensorDataSet.add(new AggregatorBarometer("test", null));

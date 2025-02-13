@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.sensors.sensorData;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -13,6 +12,7 @@ import java.time.Instant;
 
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.sensors.BluetoothHandlerCyclingCadence;
 import de.dennisguse.opentracks.sensors.BluetoothHandlerCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.UintUtils;
@@ -29,7 +29,7 @@ public class SensorDataCyclingTest {
         current.add(new Raw<>(Instant.MIN, new BluetoothHandlerCyclingCadence.CrankData(2, 2048)));
 
         // then
-        assertEquals(60, current.getValue(Instant.MIN).getRPM(), 0.01);
+        assertEquals(60, current.getAggregatedValue(Instant.MIN).getRPM(), 0.01);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class SensorDataCyclingTest {
         current.add(new Raw<>(Instant.MIN, new BluetoothHandlerCyclingCadence.CrankData(2, 8016)));
 
         // then
-        assertEquals(33.53, current.getValue(Instant.MIN).getRPM(), 0.01);
+        assertEquals(33.53, current.getAggregatedValue(Instant.MIN).getRPM(), 0.01);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class SensorDataCyclingTest {
         current.add(new Raw<>(Instant.MIN, new BluetoothHandlerCyclingCadence.CrankData(1, 2048)));
 
         // then
-        assertEquals(Cadence.of(0), current.getValue(Instant.MIN));
+        assertEquals(Cadence.of(0), current.getAggregatedValue(Instant.MIN));
     }
 
 
@@ -66,7 +66,7 @@ public class SensorDataCyclingTest {
         current.add(new Raw<>(Instant.MIN, new BluetoothHandlerCyclingCadence.CrankData(2, 1024)));
 
         // then
-        assertFalse(current.hasValue()); //TODO Cadence should be 0?
+        assertFalse(current.hasAggregatedValue()); //TODO Cadence should be 0?
     }
 
     @Test
@@ -78,7 +78,7 @@ public class SensorDataCyclingTest {
         current.add(new Raw<>(Instant.MIN, new BluetoothHandlerCyclingCadence.CrankData(2, 0)));
 
         // then
-        assertEquals(60, current.getValue(Instant.MIN).getRPM(), 0.01);
+        assertEquals(60, current.getAggregatedValue(Instant.MIN).getRPM(), 0.01);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class SensorDataCyclingTest {
         // then
         // TODO See #953
 //        assertEquals(60, current.getValue().getRPM(), 0.01);
-        assertNull(current.getValue(Instant.MIN));
+        assertEquals(Cadence.of(0), current.getAggregatedValue(Instant.MIN));
     }
 
     @Test
@@ -106,8 +106,8 @@ public class SensorDataCyclingTest {
         current.add(new Raw<>(Instant.MIN, new BluetoothHandlerCyclingDistanceSpeed.WheelData(2, 8016)));
 
         // then
-        assertEquals(2.15, current.getValue(Instant.MIN).distance().toM(), 0.01);
-        assertEquals(1.20, current.getValue(Instant.MIN).speed().toMPS(), 0.01);
+        assertEquals(2.15, current.getAggregatedValue(Instant.MIN).distance().toM(), 0.01);
+        assertEquals(1.20, current.getAggregatedValue(Instant.MIN).speed().toMPS(), 0.01);
     }
 
     @Test
@@ -125,6 +125,6 @@ public class SensorDataCyclingTest {
         // TODO See #953
 //        assertEquals(2, current.getValue().getDistance().toM(), 0.01);
 //        assertEquals(2, current.getValue().getSpeed().toMPS(), 0.01);
-        assertNull(current.getValue(Instant.MIN));
+        assertEquals(new AggregatorCyclingDistanceSpeed.Data(Distance.of(0), Distance.of(0), Speed.of(0)), current.getAggregatedValue(Instant.MIN));
     }
 }
