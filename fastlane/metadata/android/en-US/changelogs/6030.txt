@@ -1,0 +1,5 @@
+v4.17.8: OpenTracks
+
+Changes:
+- Charts: shown data can be configured
+
