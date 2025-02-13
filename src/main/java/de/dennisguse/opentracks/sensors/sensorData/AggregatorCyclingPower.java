@@ -13,7 +13,11 @@ public class AggregatorCyclingPower extends Aggregator<BluetoothHandlerManagerCy
 
     @Override
     public void computeValue(Raw<BluetoothHandlerManagerCyclingPower.Data> current) {
-        this.value = current.value().power();
+        this.aggregatedValue = current.value().power();
+    }
+
+    @Override
+    public void reset() {
     }
 
     @NonNull

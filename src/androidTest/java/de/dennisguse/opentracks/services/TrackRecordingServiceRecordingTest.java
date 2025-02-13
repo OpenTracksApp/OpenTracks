@@ -729,8 +729,8 @@ public class TrackRecordingServiceRecordingTest {
 
     private void mockAltitudeChange(TrackPointCreator trackPointCreator, float altitudeGain) {
         AggregatorBarometer barometer = Mockito.mock(AggregatorBarometer.class);
-        Mockito.when(barometer.hasValue()).thenReturn(true);
-        Mockito.when(barometer.getValue(Mockito.any())).thenReturn(new AltitudeGainLoss(altitudeGain, altitudeGain));
+        Mockito.when(barometer.hasAggregatedValue()).thenReturn(true);
+        Mockito.when(barometer.getAggregatedValue(Mockito.any())).thenReturn(new AltitudeGainLoss(altitudeGain, altitudeGain));
 
         trackPointCreator.getSensorManager().sensorDataSet.barometer = barometer;
     }

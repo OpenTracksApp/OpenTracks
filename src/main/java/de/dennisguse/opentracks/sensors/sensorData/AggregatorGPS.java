@@ -13,12 +13,11 @@ public class AggregatorGPS extends Aggregator<Position, Position> {
 
     @Override
     protected void computeValue(Raw<Position> current) {
-        value = current.value();
+        aggregatedValue = current.value();
     }
 
     @Override
     public void reset() {
-        value = null;
     }
 
     @NonNull

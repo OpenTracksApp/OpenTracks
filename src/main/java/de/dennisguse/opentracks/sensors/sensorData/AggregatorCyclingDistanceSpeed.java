@@ -23,47 +23,49 @@ public class AggregatorCyclingDistanceSpeed extends Aggregator<BluetoothHandlerC
 
     @Override
     protected void computeValue(Raw<BluetoothHandlerCyclingDistanceSpeed.WheelData> current) {
-        if (previous != null) {
-            float timeDiff_ms = UintUtils.diff(current.value().wheelRevolutionsTime(), previous.value().wheelRevolutionsTime(), UintUtils.UINT16_MAX) / 1024f * 1000;
-            Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
-
-            if (timeDiff.isZero()) {
-                return;
-            }
-            if (timeDiff.isNegative()) {
-                Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
-                value = null;
-                return;
-            }
-
-            if (current.value().wheelRevolutionsCount() < previous.value().wheelRevolutionsCount()) {
-                Log.e(TAG, "Wheel revolutions count difference is invalid: cannot compute speed.");
-                return;
-            }
-            long wheelDiff = UintUtils.diff(current.value().wheelRevolutionsCount(), previous.value().wheelRevolutionsCount(), UintUtils.UINT32_MAX);
-
-            Distance distance = wheelCircumference.multipliedBy(wheelDiff);
-            Distance distanceOverall = distance;
-            if (value != null) {
-                distanceOverall = distance.plus(value.distanceOverall);
-            }
-            Speed speed_mps = Speed.of(distance, timeDiff);
-            value = new Data(distance, distanceOverall, speed_mps);
+        if (previous == null) {
+            return;
         }
+
+        float timeDiff_ms = UintUtils.diff(current.value().wheelRevolutionsTime(), previous.value().wheelRevolutionsTime(), UintUtils.UINT16_MAX) / 1024f * 1000;
+        Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
+
+        if (timeDiff.isZero()) {
+            return;
+        }
+        if (timeDiff.isNegative()) {
+            Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
+            aggregatedValue = null;
+            return;
+        }
+
+        if (current.value().wheelRevolutionsCount() < previous.value().wheelRevolutionsCount()) {
+            Log.e(TAG, "Wheel revolutions count difference is invalid: cannot compute speed.");
+            return;
+        }
+        long wheelDiff = UintUtils.diff(current.value().wheelRevolutionsCount(), previous.value().wheelRevolutionsCount(), UintUtils.UINT32_MAX);
+
+        Distance distance = wheelCircumference.multipliedBy(wheelDiff);
+        Distance distanceOverall = distance;
+        if (aggregatedValue != null) {
+            distanceOverall = distance.plus(aggregatedValue.distanceOverall);
+        }
+        Speed speed_mps = Speed.of(distance, timeDiff);
+        aggregatedValue = new Data(distance, distanceOverall, speed_mps);
     }
 
     @Override
     public void reset() {
-        if (value != null) {
-            value = new Data(value.distance, Distance.of(0), value.speed);
+        if (aggregatedValue != null) {
+            aggregatedValue = new Data(aggregatedValue.distance, Distance.of(0), aggregatedValue.speed);
         }
     }
 
     @NonNull
     @Override
     protected Data getNoneValue() {
-        if (value != null) {
-            return new Data(value.distance, value.distanceOverall, Speed.zero());
+        if (aggregatedValue != null) {
+            return new Data(aggregatedValue.distance, aggregatedValue.distanceOverall, Speed.zero());
         } else {
             return new Data(Distance.of(0), Distance.of(0), Speed.zero());
         }
