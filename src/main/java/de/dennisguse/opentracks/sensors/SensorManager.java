@@ -14,7 +14,6 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.Aggregator;
 import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
-import de.dennisguse.opentracks.services.handlers.GPSManager;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 
 public class SensorManager implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -60,7 +59,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
 
     private GainManager altitudeSumManager;
 
-    private GPSManager gpsManager;
+    private GpsManager gpsManager;
 
     public SensorManager(TrackPointCreator observer) {
         this.observer = observer;
@@ -72,7 +71,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
             throw new RuntimeException("SensorManager cannot be started twice; stop first.");
         }
 
-        gpsManager = new GPSManager(observer, listener);
+        gpsManager = new GpsManager(observer, listener);
         altitudeSumManager = new GainManager(listener);
         bluetoothSensorManager = new BluetoothRemoteSensorManager(context, handler, listener);
 
@@ -114,7 +113,7 @@ public class SensorManager implements SharedPreferences.OnSharedPreferenceChange
         listener.onChange(data);
     }
 
-    public GPSManager getGpsManager() {
+    public GpsManager getGpsManager() {
         return gpsManager;
     }
 

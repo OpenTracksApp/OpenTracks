@@ -16,6 +16,7 @@ import java.time.ZoneId;
 
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.sensors.GpsStatusValue;
 import de.dennisguse.opentracks.sensors.SensorManager;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -138,7 +139,8 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
         this.clock = Clock.fixed(Instant.parse(time), ZoneId.of("CET"));
     }
 
-    void sendGpsStatus(GpsStatusValue gpsStatusValue) {
+    @Deprecated //TODO This should be refactored. Can we use a SensorDataSet for this?
+    public void sendGpsStatus(GpsStatusValue gpsStatusValue) {
         service.newGpsStatus(gpsStatusValue);
     }
 

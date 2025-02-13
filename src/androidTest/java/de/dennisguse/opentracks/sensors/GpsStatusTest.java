@@ -1,12 +1,12 @@
-package de.dennisguse.opentracks.services.handlers;
+package de.dennisguse.opentracks.sensors;
 
 import static org.junit.Assert.assertEquals;
-import static de.dennisguse.opentracks.services.handlers.GpsStatusValue.GPS_DISABLED;
-import static de.dennisguse.opentracks.services.handlers.GpsStatusValue.GPS_ENABLED;
-import static de.dennisguse.opentracks.services.handlers.GpsStatusValue.GPS_NONE;
-import static de.dennisguse.opentracks.services.handlers.GpsStatusValue.GPS_SIGNAL_BAD;
-import static de.dennisguse.opentracks.services.handlers.GpsStatusValue.GPS_SIGNAL_FIX;
-import static de.dennisguse.opentracks.services.handlers.GpsStatusValue.GPS_SIGNAL_LOST;
+import static de.dennisguse.opentracks.sensors.GpsStatusValue.GPS_DISABLED;
+import static de.dennisguse.opentracks.sensors.GpsStatusValue.GPS_ENABLED;
+import static de.dennisguse.opentracks.sensors.GpsStatusValue.GPS_NONE;
+import static de.dennisguse.opentracks.sensors.GpsStatusValue.GPS_SIGNAL_BAD;
+import static de.dennisguse.opentracks.sensors.GpsStatusValue.GPS_SIGNAL_FIX;
+import static de.dennisguse.opentracks.sensors.GpsStatusValue.GPS_SIGNAL_LOST;
 
 import android.content.Context;
 import android.location.Location;
