@@ -94,7 +94,7 @@ public abstract class SensorStatisticsViewHolder extends StatisticViewHolder<Sta
 
             Pair<String, String> valueAndUnit;
             if (sensorDataSet != null && sensorDataSet.getCyclingPower() != null) {
-                valueAndUnit = StringUtils.getPowerParts(getContext(), sensorDataSet.getCyclingPower().getValue(Instant.now())); //TODO Use MonotonicClock
+                valueAndUnit = StringUtils.getPowerParts(getContext(), sensorDataSet.getCyclingPower().getAggregatedValue(Instant.now())); //TODO Use MonotonicClock
                 sensorName = sensorDataSet.getCyclingPower().getSensorNameOrAddress();
             } else {
                 valueAndUnit = StringUtils.getCadenceParts(getContext(), null);
