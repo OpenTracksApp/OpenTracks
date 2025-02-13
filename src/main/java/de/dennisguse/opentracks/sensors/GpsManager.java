@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.services.handlers;
+package de.dennisguse.opentracks.sensors;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,18 +20,17 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.TrackPoint;
-import de.dennisguse.opentracks.sensors.SensorConnector;
-import de.dennisguse.opentracks.sensors.SensorManager;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorGPS;
 import de.dennisguse.opentracks.sensors.sensorData.Raw;
+import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-public class GPSManager implements SensorConnector, LocationListenerCompat, GpsStatusManager.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class GpsManager implements SensorConnector, LocationListenerCompat, GpsStatusManager.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private final String TAG = GPSManager.class.getSimpleName();
+    private final String TAG = GpsManager.class.getSimpleName();
 
     private static final String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
 
@@ -46,7 +45,7 @@ public class GPSManager implements SensorConnector, LocationListenerCompat, GpsS
     private Duration gpsInterval;
     private Distance thresholdHorizontalAccuracy;
 
-    public GPSManager(TrackPointCreator trackPointCreator, SensorManager.SensorDataChangedObserver observer) {
+    public GpsManager(TrackPointCreator trackPointCreator, SensorManager.SensorDataChangedObserver observer) {
         this.trackPointCreator = trackPointCreator;
         this.observer = observer;
     }
