@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.services.handlers;
+package de.dennisguse.opentracks.sensors;
 
 import de.dennisguse.opentracks.R;
 
