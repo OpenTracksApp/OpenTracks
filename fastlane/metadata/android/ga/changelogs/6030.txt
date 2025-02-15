@@ -1,0 +1,4 @@
+v4.17.8: OpenTracks
+
+Athruithe:
+- Cairteacha: is féidir na sonraí a thaispeántar a chumrú
