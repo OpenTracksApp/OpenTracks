@@ -37,7 +37,7 @@
     <string name="unit_minute_per_mile">min/mi</string>
     <string name="value_integer_feet_excellent_gps">%1$d அடி (சிறந்த சி.பி.எச்)</string>
     <string name="value_float_kilometer_hour_recommended">%1 $ .1f கிமீ/மணி (பரிந்துரைக்கப்படுகிறது)</string>
-    <string name="value_integer_minute">%$ 1 டி மணித்துளி</string>
+    <string name="value_integer_minute">%1$d மணித்துளி</string>
     <string name="waypoint_type_cafe">கஃபே</string>
     <string name="share_crash_report">பங்கு விபத்து அறிக்கை</string>
     <string name="about_preference_title">பற்றி</string>
