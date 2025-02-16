@@ -45,17 +45,17 @@ def getVersionCode = { ->
 
 android {
     compileOptions {
-        coreLibraryDesugaringEnabled true
+        coreLibraryDesugaringEnabled = true
 
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
 
-    compileSdk 35
+    compileSdk = 35
 
     buildFeatures {
-        viewBinding true
-        buildConfig true
+        viewBinding = true
+        buildConfig = true
     }
 
     androidResources {
@@ -64,13 +64,13 @@ android {
 
     defaultConfig {
         applicationId 'de.dennisguse.opentracks'
-        versionCode 6030
+        versionCode = 6030
         versionName "v4.17.8"
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
-        minSdk 26
-        targetSdk 35
+        minSdk = 26
+        targetSdk = 35
 
         testInstrumentationRunner 'de.dennisguse.opentracks.TestRunner'
         testInstrumentationRunnerArguments clearPackageData: 'true'
@@ -94,7 +94,7 @@ android {
         }
     }
 
-    namespace 'de.dennisguse.opentracks'
+    namespace = 'de.dennisguse.opentracks'
 
     buildTypes {
         debug {
@@ -102,8 +102,8 @@ android {
             versionNameSuffix '-debug'
         }
         release {
-            crunchPngs false
-            minifyEnabled false
+            crunchPngs = false
+            minifyEnabled = false
         }
     }
 
@@ -113,7 +113,7 @@ android {
         nightly {
             dimension 'version'
             applicationId 'de.dennisguse.opentracks.nightly'
-            signingConfig signingConfigs.nightly
+            signingConfig = signingConfigs.nightly
         }
         irreproducible {
             // Non-reproducible: https://f-droid.org/de/packages/de.dennisguse.opentracks/
@@ -127,7 +127,7 @@ android {
             // PlayStore: https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore
             dimension 'version'
             applicationId 'de.dennisguse.opentracks.playstore'
-            signingConfig signingConfigs.release
+            signingConfig = signingConfigs.release
         }
     }
 
