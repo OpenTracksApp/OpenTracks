@@ -37,7 +37,7 @@ limitations under the License.
 \n \u0020b) \u0020透過一個普通的地圖應用程式（例如，<a href="http://osmand.net/">OsmAnd</a> 與 <a href="https://maps.me/">MAPS.ME</a>）。 這些 APP 需要支援 KMZ 檔案格式（只有位置與時間戳記）。 更準確地說，APP 需要支援 <i>ACTION_VIEW</i> 與 MIME <i>application/vnd.google-earth.kmz</i>。 \u0020</string>
     <string name="help_storage_pictures_title">OpenTracks 如何存儲作為標記拍攝的照片？</string>
     <string name="help_storage_pictures_content">這些儲存在應用程序內部儲存區中 (即，只能在 OpenTracks 中存取)。</string>
-    <string name="help_track_export_title">如何匯出/分享 紀錄的蹤跡？</string>
+    <string name="help_track_export_title">如何匯出／分享 紀錄的蹤跡？</string>
     <string name="help_track_export_content"> 可以從設定匯出蹤跡為 KMZ、KML 或 GPX。KMZ／KML 全部資料；GPX 只有位置。通過<i>分享圖示</i>以分享蹤跡為 KMZ。 </string>
     <string name="help_data_google_play_services_title">OpenTracks 是否需要/使用 Google Play 服務？</string>
     <string name="help_data_google_play_services_content">否</string>
@@ -141,31 +141,31 @@ limitations under the License.
     <string name="activity_type_workout">訓練</string>
     <!-- Description -->
     <string name="description_activity_type">活動類型：%1$s</string>
-    <string name="description_average_moving_pace_in_minute">平均移動配速：%1$s 分鐘/公里（%2$s 分鐘/英里）</string>
-    <string name="description_average_moving_speed">平均移動速度：%1$.2f 公里/小時（%2$.1f 英里/小時）</string>
-    <string name="description_average_pace_in_minute">平均配速：%1$s 分鐘/公里（%2$s 分鐘/英里）</string>
-    <string name="description_average_speed">平均速度：%1$.2f 公里/小時（%2$.1f 英里/小時）</string>
+    <string name="description_average_moving_pace_in_minute">平均移動配速：%1$s 分鐘／公里（%2$s 分鐘／英里）</string>
+    <string name="description_average_moving_speed">平均移動速度：%1$.2f 公里／小時（%2$.1f 英里／小時）</string>
+    <string name="description_average_pace_in_minute">平均配速：%1$s 分鐘／公里（%2$s 分鐘／英里）</string>
+    <string name="description_average_speed">平均速度：%1$.2f 公里／小時（%2$.1f 英里／小時）</string>
     <string name="description_altitude_gain">爬升高度：%1$d 公尺（%2$d 英尺）</string>
     <string name="description_altitude_loss">下降高度：%1$d m（%2$d ft）</string>
     <string name="description_altitude_imperial">海拔高度（英尺）</string>
     <string name="description_altitude_metric">海拔高度（公尺）</string>
-    <string name="description_fastest_pace_in_minute">最高配速：%1$s 分鐘/公里（%2$s 分鐘/英里）</string>
+    <string name="description_fastest_pace_in_minute">最高配速：%1$s 分鐘／公里（%2$s 分鐘／英里）</string>
     <string name="description_max_altitude">最高海拔：%1$d 公尺（%2$d 英尺）</string>
-    <string name="description_max_speed">最高速度：%1$.2f 公里/小時（%2$.1f 英里/小時）</string>
+    <string name="description_max_speed">最高速度：%1$.2f 公里／小時（%2$.1f 英里／小時）</string>
     <string name="description_min_altitude">最低海拔：%1$d 公尺（%2$d 英尺）</string>
     <string name="description_moving_time">移動時間：%1$s</string>
-    <string name="description_pace_imperial">配速（分鐘/英里）</string>
-    <string name="description_pace_nautical">配速（分鐘/海里）</string>
-    <string name="description_pace_metric">配速（分鐘/公里）</string>
+    <string name="description_pace_imperial">配速（分鐘／英里）</string>
+    <string name="description_pace_nautical">配速（分鐘／海里）</string>
+    <string name="description_pace_metric">配速（分鐘／公里）</string>
     <string name="description_recorded_time">記錄時間：%1$s</string>
-    <string name="description_speed_ms">速度（公尺/秒）</string>
+    <string name="description_speed_ms">速度（公尺／秒）</string>
     <string name="description_sensor_cadence">踏頻（rpm）</string>
     <string name="description_sensor_heart_rate">心率（bpm）</string>
     <string name="description_sensor_power">功率（W）</string>
     <string name="description_default_speed_or_pace">依照活動類型</string>
-    <string name="description_speed_imperial">速度（英里/小時）</string>
+    <string name="description_speed_imperial">速度（英里／小時）</string>
     <string name="description_speed_nautical">速度（節）</string>
-    <string name="description_speed_metric">速度（公里/小時）</string>
+    <string name="description_speed_metric">速度（公里／小時）</string>
     <string name="description_time">時間</string>
     <string name="description_total_distance">總距離：%1$.2f 公里（%2$.1f 英里）</string>
     <string name="description_total_time">總時間：%1$s</string>
@@ -313,7 +313,7 @@ limitations under the License.
     <string name="settings_reset_summary">重置設定為預設值</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">進階</string>
-    <string name="settings_default_trackfileformat">匯出/分享檔案格式</string>
+    <string name="settings_default_trackfileformat">匯出／分享檔案格式</string>
     <string name="settings_export_filename_title">檔名的格式</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">依距離</string>
@@ -346,8 +346,8 @@ limitations under the License.
     <string name="settings_announcements_distance_frequency">單圈長度</string>
     <string name="settings_announcements_average_heart_rate">平均心率</string>
     <string name="settings_announcements_lap_heart_rate">單圈心率</string>
-    <string name="settings_announcements_average_speed_pace">平均速度/配速</string>
-    <string name="settings_announcements_lap_speed_pace">單圈速度/配速</string>
+    <string name="settings_announcements_average_speed_pace">平均速度／配速</string>
+    <string name="settings_announcements_lap_speed_pace">單圈速度／配速</string>
     <!-- Custom Layout -->
     <string name="custom_layout_list_title">布局</string>
     <string name="custom_layout_list_edit_name">輸入要新增的佈局名稱</string>
@@ -410,7 +410,7 @@ limitations under the License.
     <string name="stats_fastest_pace">最高配速</string>
     <string name="stats_gain">增加</string>
     <string name="stats_loss">減少</string>
-    <string name="stats_coordinates">緯度/經度</string>
+    <string name="stats_coordinates">緯度／經度</string>
     <string name="stats_latitude">緯度</string>
     <string name="stats_longitude">經度</string>
     <string name="stats_max_speed">最高速度</string>
@@ -455,32 +455,32 @@ limitations under the License.
     <!-- Unit -->
     <string name="unit_feet">英尺</string>
     <string name="unit_kilometer">公里</string>
-    <string name="unit_kilometer_per_hour">公里/小時</string>
+    <string name="unit_kilometer_per_hour">公里／小時</string>
     <string name="unit_meter">公尺</string>
     <string name="unit_mile">英里</string>
-    <string name="unit_mile_per_hour">英里/小時</string>
+    <string name="unit_mile_per_hour">英里／小時</string>
     <string name="unit_nautical_mile">海里</string>
     <string name="unit_knots">節</string>
-    <string name="unit_minute_per_kilometer">分鐘/公里</string>
-    <string name="unit_minute_per_mile">分鐘/英里</string>
-    <string name="unit_minute_per_nautical_mile">分鐘/海里</string>
+    <string name="unit_minute_per_kilometer">分鐘／公里</string>
+    <string name="unit_minute_per_mile">分鐘／英里</string>
+    <string name="unit_minute_per_nautical_mile">分鐘／海里</string>
     <!-- Location Coordinates -->
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <!-- Value -->
     <string name="value_integer_feet_excellent_gps">%1$d 英尺（GPS 訊號佳）</string>
     <string name="value_integer_feet_recommended">%1$d 英尺（建議值）</string>
-    <string name="value_integer_kilometer_hour">%1$d 公里/小時</string>
-    <string name="value_float_kilometer_hour">%1$.1f 公里/小時</string>
-    <string name="value_float_kilometer_hour_recommended">%1$.1f 公里/小時（建議值）</string>
+    <string name="value_integer_kilometer_hour">%1$d 公里／小時</string>
+    <string name="value_float_kilometer_hour">%1$.1f 公里／小時</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f 公里／小時（建議值）</string>
     <string name="value_integer_meter_excellent_gps">%1$d 公尺（GPS 訊號佳）</string>
     <string name="value_integer_meter_poor_gps">%1$d 公尺（GPS 訊號差）</string>
     <string name="value_integer_meter_recommended">%1$d 公尺（建議值）</string>
-    <string name="value_integer_mile_hour">%1$d 英里/小時</string>
+    <string name="value_integer_mile_hour">%1$d 英里／小時</string>
     <string name="value_integer_knots">%1$d 節</string>
-    <string name="value_float_mile_hour">%1$.1f 英里/小時</string>
+    <string name="value_float_mile_hour">%1$.1f 英里／小時</string>
     <string name="value_float_knots">%1$.1f 節</string>
-    <string name="value_float_mile_hour_recommended">%1$.1f 英里/小時（建議值）</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f 英里／小時（建議值）</string>
     <string name="value_float_knots_recommended">%1$.1f 節（建議值）</string>
     <string name="value_integer_minute">%1$d 分鐘</string>
     <string name="value_integer_second">%1$d 秒</string>
@@ -605,7 +605,7 @@ limitations under the License.
     <string name="sensor_state_power_unit">瓦</string>
     <string name="sensor_state_heart_rate_unit">bpm</string>
     <string name="settings_chart_display_heart_rate_title">顯示心率</string>
-    <string name="settings_announcements_unit">距離/速度單位</string>
+    <string name="settings_announcements_unit">距離／速度單位</string>
     <string name="lap_heart_rate">單圈心率</string>
     <string name="settings_recording_min_sampling_interval_title">取樣時間間隔</string>
     <string name="settings_recording_location_distance_summary">間隔 %1$s 記錄位置</string>
@@ -618,4 +618,8 @@ limitations under the License.
     <string name="create_marker_error">無法建立標記。請再次嘗試。</string>
     <string name="settings_theme_switch_restart">主題變更也許需要手動重新啟動。</string>
     <string name="settings_night_mode_option_night_oled">夜（OLED 友善的）</string>
+    <string name="power_x_watt">功率 {x, plural, =1 {1 watt} other {# watts} }</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
+    <string name="settings_charts_title">圖表</string>
+    <string name="stats_gain_loss">收益＆損失</string>
 </resources>
