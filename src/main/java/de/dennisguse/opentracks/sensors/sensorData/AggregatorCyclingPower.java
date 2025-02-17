@@ -17,7 +17,12 @@ public class AggregatorCyclingPower extends Aggregator<BluetoothHandlerManagerCy
     }
 
     @Override
-    public void reset() {
+    protected void resetImmediate() {
+        aggregatedValue = getNoneValue();
+    }
+
+    @Override
+    public void resetAggregated() {
     }
 
     @NonNull

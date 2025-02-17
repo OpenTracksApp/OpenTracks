@@ -149,12 +149,11 @@ public class TrackRecordingServiceRecordingTest {
         String gps1 = "2020-02-02T02:02:03Z";
         TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps1, 45.0, 35.0, 1, 15);
         String gps2 = "2020-02-02T02:02:04Z";
-
         TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.0, 35.0, 1, 15);
 
         // when
         String idleTime = "2020-02-02T02:02:17Z";
-        trackPointCreator.setClock("2020-02-02T02:02:17Z");
+        trackPointCreator.setClock(idleTime);
         Thread.sleep(Duration.ofSeconds(15).toMillis());
 
         // then
@@ -722,14 +721,14 @@ public class TrackRecordingServiceRecordingTest {
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSensorDistance(Distance.of(11))
-                        .setSpeed(Speed.of(5))
+                        .setSpeed(Speed.of(0)) //Sensor data is now outdated, but we do not fall back to GPS.
                         .setSensorDistance(Distance.of(0))
         ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
     }
 
     private void mockAltitudeChange(TrackPointCreator trackPointCreator, float altitudeGain) {
         AggregatorBarometer barometer = Mockito.mock(AggregatorBarometer.class);
-        Mockito.when(barometer.hasAggregatedValue()).thenReturn(true);
+        Mockito.when(barometer.hasReceivedData()).thenReturn(true);
         Mockito.when(barometer.getAggregatedValue(Mockito.any())).thenReturn(new AltitudeGainLoss(altitudeGain, altitudeGain));
 
         trackPointCreator.getSensorManager().sensorDataSet.barometer = barometer;

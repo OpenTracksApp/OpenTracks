@@ -16,7 +16,12 @@ public class AggregatorHeartRate extends Aggregator<HeartRate, HeartRate> {
     }
 
     @Override
-    public void reset() {
+    protected void resetImmediate() {
+        aggregatedValue = getNoneValue();
+    }
+
+    @Override
+    public void resetAggregated() {
     }
 
     @NonNull

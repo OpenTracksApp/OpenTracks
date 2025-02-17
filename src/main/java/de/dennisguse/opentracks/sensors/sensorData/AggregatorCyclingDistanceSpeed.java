@@ -55,7 +55,12 @@ public class AggregatorCyclingDistanceSpeed extends Aggregator<BluetoothHandlerC
     }
 
     @Override
-    public void reset() {
+    protected void resetImmediate() {
+        aggregatedValue = new Data(Distance.of(0), aggregatedValue.distanceOverall, Speed.zero());
+    }
+
+    @Override
+    public void resetAggregated() {
         if (aggregatedValue != null) {
             aggregatedValue = new Data(aggregatedValue.distance, Distance.of(0), aggregatedValue.speed);
         }
@@ -64,16 +69,16 @@ public class AggregatorCyclingDistanceSpeed extends Aggregator<BluetoothHandlerC
     @NonNull
     @Override
     protected Data getNoneValue() {
-        if (aggregatedValue != null) {
-            return new Data(aggregatedValue.distance, aggregatedValue.distanceOverall, Speed.zero());
-        } else {
-            return new Data(Distance.of(0), Distance.of(0), Speed.zero());
-        }
+        return new Data(Distance.of(0), Distance.of(0), Speed.zero());
     }
 
     public void setWheelCircumference(Distance wheelCircumference) {
         this.wheelCircumference = wheelCircumference;
     }
 
-    public record Data(Distance distance, Distance distanceOverall, Speed speed) {}
+    public record Data(
+            Distance distance, //Only used for debugging
+            Distance distanceOverall,
+            Speed speed) {
+    }
 }
