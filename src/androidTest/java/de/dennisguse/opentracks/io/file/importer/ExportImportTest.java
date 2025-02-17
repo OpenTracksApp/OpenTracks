@@ -11,6 +11,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Looper;
 
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -58,12 +59,14 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
+import de.dennisguse.opentracks.sensors.BluetoothHandlerManagerCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.Aggregator;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorBarometer;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingCadence;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.AggregatorHeartRate;
+import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
@@ -72,7 +75,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 /**
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
  * <p>
- * Note: those tests are affected by {@link Aggregator}.isRecent().
+ * Note: those tests are affected by {@link Aggregator}.isOutdated().
  * If the test device is too slow (like in a CI) these are likely to fail as the sensor data will be omitted from actual.
  */
 @RunWith(AndroidJUnit4.class)
@@ -548,23 +551,32 @@ public class ExportImportTest {
     private void mockSensorData(TrackPointCreator trackPointCreator, Float speed, Distance distance, float heartRate, float cadence, Float power, Float altitudeGain) {
         SensorDataSet sensorDataSet = trackPointCreator.getSensorManager().sensorDataSet;
 
-        AggregatorCyclingPower cyclingPower = Mockito.mock(AggregatorCyclingPower.class);
-        Mockito.when(cyclingPower.hasAggregatedValue()).thenReturn(true);
-        Mockito.when(cyclingPower.getAggregatedValue(Mockito.any())).thenReturn(Power.of(power));
+        AggregatorCyclingPower cyclingPower = new AggregatorCyclingPower("", "");
+        cyclingPower.add(new Raw<>(trackPointCreator.createNow(), new BluetoothHandlerManagerCyclingPower.Data(Power.of(power), null)));
         sensorDataSet.add(cyclingPower);
 
-        AggregatorHeartRate avgHeartRate = Mockito.mock(AggregatorHeartRate.class);
-        Mockito.when(avgHeartRate.getAggregatedValue(Mockito.any())).thenReturn(HeartRate.of(heartRate));
+
+        AggregatorHeartRate avgHeartRate = new AggregatorHeartRate("", "");
+        avgHeartRate.add(new Raw<>(trackPointCreator.createNow(), HeartRate.of(heartRate)));
         sensorDataSet.add(avgHeartRate);
 
-        AggregatorCyclingCadence cyclingCadence = Mockito.mock(AggregatorCyclingCadence.class);
-        Mockito.when(cyclingCadence.hasAggregatedValue()).thenReturn(true);
-        Mockito.when(cyclingCadence.getAggregatedValue(Mockito.any())).thenReturn(Cadence.of(cadence));
+        AggregatorCyclingCadence cyclingCadence = new AggregatorCyclingCadence("", "") {
+            @NonNull
+            @Override
+            public Cadence getAggregatedValue(Instant now) {
+                return Cadence.of(cadence);
+            }
+
+            @Override
+            public boolean hasReceivedData() {
+                return true;
+            }
+        };
         sensorDataSet.add(cyclingCadence);
 
         if (distance != null && speed != null) {
             AggregatorCyclingDistanceSpeed distanceSpeed = Mockito.mock(AggregatorCyclingDistanceSpeed.class);
-            Mockito.when(distanceSpeed.hasAggregatedValue()).thenReturn(true);
+            Mockito.when(distanceSpeed.hasReceivedData()).thenReturn(true);
             Mockito.when(distanceSpeed.getAggregatedValue(Mockito.any())).thenReturn(new AggregatorCyclingDistanceSpeed.Data(null, distance, Speed.of(speed)));
             sensorDataSet.add(distanceSpeed);
         } else {
@@ -581,7 +593,7 @@ public class ExportImportTest {
 
         if (altitudeGain != null) {
             AggregatorBarometer barometer = Mockito.mock(AggregatorBarometer.class);
-            Mockito.when(barometer.hasAggregatedValue()).thenReturn(true);
+            Mockito.when(barometer.hasReceivedData()).thenReturn(true);
             Mockito.when(barometer.getAggregatedValue(Mockito.any())).thenReturn(new AltitudeGainLoss(altitudeGain, altitudeGain));
             sensorDataSet.add(barometer);
         }  else {

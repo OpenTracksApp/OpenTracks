@@ -47,7 +47,12 @@ public class AggregatorCyclingCadence extends Aggregator<BluetoothHandlerCycling
     }
 
     @Override
-    public void reset() {
+    protected void resetImmediate() {
+        aggregatedValue = getNoneValue();
+    }
+
+    @Override
+    public void resetAggregated() {
     }
 
     @NonNull

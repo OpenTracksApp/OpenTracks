@@ -32,7 +32,11 @@ public class AggregatorBarometer extends Aggregator<AtmosphericPressure, Altitud
     }
 
     @Override
-    public void reset() {
+    protected void resetImmediate() {
+    }
+
+    @Override
+    public void resetAggregated() {
         aggregatedValue = getNoneValue();
     }
 

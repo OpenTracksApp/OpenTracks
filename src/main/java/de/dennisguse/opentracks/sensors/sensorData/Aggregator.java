@@ -37,7 +37,11 @@ public abstract class Aggregator<Input, Output> {
 
     protected abstract void computeValue(Raw<Input> current);
 
-    public boolean hasAggregatedValue() {
+    /**
+     * @return did we process data from a sensor.
+     * NOTE: for some sensors this may require more than one measurement.
+     */
+    public boolean hasReceivedData() {
         return aggregatedValue != null;
     }
 
@@ -46,15 +50,14 @@ public abstract class Aggregator<Input, Output> {
 
     @NonNull
     public Output getAggregatedValue(Instant now) {
-        if (!hasAggregatedValue()) {
+        if (!hasReceivedData()) {
             return getNoneValue();
         }
-        //TODO This should only affect measured data (like heartrate), but not aggregated values.
-        //Remove current measurements, but provide aggregates?
-        if (isRecent(now)) {
-            return aggregatedValue;
+        if (isOutdated(now)) {
+            resetImmediate();
         }
-        return getNoneValue();
+
+        return aggregatedValue;
     }
 
     @NonNull
@@ -63,20 +66,28 @@ public abstract class Aggregator<Input, Output> {
     }
 
     /**
-     * Reset long term aggregated values (more than derived from previous SensorData). e.g. overall distance.
+     * Reset short-term (i.e., non-aggregated) values that were directly derived from sensor data.
      */
-    public abstract void reset();
+    protected abstract void resetImmediate();
+
+    /**
+     * Reset long-term (i.e., aggregated) values (more than derived from previous SensorData) like overall distance.
+     */
+    public abstract void resetAggregated();
 
     /**
      * Is the data recent considering the current time.
      */
-    private boolean isRecent(Instant now) {
+    private boolean isOutdated(Instant now) {
         if (previous == null) {
-            return false;
+            return true;
         }
 
         return now
-                .isBefore(previous.time().plus(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE)); //TODO Per Sensor!
+                .isAfter(
+                        previous.time()
+                                .plus(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE)
+                );
     }
 
     @NonNull
