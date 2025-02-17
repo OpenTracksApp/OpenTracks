@@ -1,0 +1,7 @@
+v4.17.3 : OpenTracks
+
+Changements :
+− Build reproductible : Voyons voir si ça marche.
+
+Développeurs :
+− On essaie juste d’avoir le nom de fichier de l’APK, c’est ça…

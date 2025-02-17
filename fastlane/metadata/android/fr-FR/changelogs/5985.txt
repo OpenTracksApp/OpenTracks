@@ -1,0 +1,7 @@
+v4.17.4 : OpenTracks
+
+Changements :
+− Build reproductible : voyons voir si ça marche.
+
+Développeurs :
+− Suppression de DependencyInfo.

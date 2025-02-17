@@ -1,0 +1,10 @@
+v4.17.5 : OpenTracks
+
+Changements :
+− Build reproductible : voyons voir si ça marche.
+
+Correction de bogue :
+− Le build reproductible utilise l’icon du Playstore
+
+Développeurs :
+− Ajout de RELEASE_BUILD.sh

@@ -1,0 +1,5 @@
+v4.17.6 : OpenTracks
+
+Correction de bogue :
+− IU : Les données GPS peuvent ne pas être montrées de manière régulière (n’affecte pas les données enregistrées)
+  Introduit en v4.17.0

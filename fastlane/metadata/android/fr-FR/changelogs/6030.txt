@@ -1,0 +1,4 @@
+v4.17.8 : OpenTracks
+
+Changements :
+− Graphiques : les données affichées peuvent être configurées
