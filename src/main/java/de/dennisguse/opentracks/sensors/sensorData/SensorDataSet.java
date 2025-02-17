@@ -75,7 +75,7 @@ public class SensorDataSet {
             return cyclingCadence.getAggregatedValueWithSensorName(trackPointCreator.createNow());
         }
 
-        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasAggregatedValue() && runningDistanceSpeedCadence.aggregatedValue.cadence() != null) {
+        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasReceivedData() && runningDistanceSpeedCadence.aggregatedValue.cadence() != null) {
             return new Pair<>(runningDistanceSpeedCadence.aggregatedValue.cadence(), runningDistanceSpeedCadence.getSensorNameOrAddress());
         }
 
@@ -83,11 +83,11 @@ public class SensorDataSet {
     }
 
     public Pair<Speed, String> getSpeed() {
-        if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasAggregatedValue() && cyclingDistanceSpeed.getAggregatedValue(trackPointCreator.createNow()).speed() != null) {
+        if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasReceivedData() && cyclingDistanceSpeed.getAggregatedValue(trackPointCreator.createNow()).speed() != null) {
             return new Pair<>(cyclingDistanceSpeed.getAggregatedValue(trackPointCreator.createNow()).speed(), cyclingDistanceSpeed.getSensorNameOrAddress());
         }
 
-        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasAggregatedValue() && runningDistanceSpeedCadence.getAggregatedValue(trackPointCreator.createNow()).speed() != null) {
+        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasReceivedData() && runningDistanceSpeedCadence.getAggregatedValue(trackPointCreator.createNow()).speed() != null) {
             return new Pair<>(runningDistanceSpeedCadence.aggregatedValue.speed(), runningDistanceSpeedCadence.getSensorNameOrAddress());
         }
 
@@ -156,7 +156,7 @@ public class SensorDataSet {
     }
 
     public void fillTrackPoint(TrackPoint trackPoint) {
-        if (gps != null && gps.hasAggregatedValue()) {
+        if (gps != null && gps.hasReceivedData()) {
             trackPoint.setPosition(gps.getAggregatedValue(trackPointCreator.createNow()));
         }
 
@@ -172,19 +172,19 @@ public class SensorDataSet {
             trackPoint.setSpeed(getSpeed().first);
         }
 
-        if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasAggregatedValue()) {
+        if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasReceivedData()) {
             trackPoint.setSensorDistance(cyclingDistanceSpeed.getAggregatedValue(trackPointCreator.createNow()).distanceOverall());
         }
 
-        if (cyclingPower != null && cyclingPower.hasAggregatedValue()) {
+        if (cyclingPower != null && cyclingPower.hasReceivedData()) {
             trackPoint.setPower(cyclingPower.getAggregatedValue(trackPointCreator.createNow()));
         }
 
-        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasAggregatedValue()) {
+        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasReceivedData()) {
             trackPoint.setSensorDistance(runningDistanceSpeedCadence.getAggregatedValue(trackPointCreator.createNow()).distance());
         }
 
-        if (barometer != null && barometer.hasAggregatedValue()) {
+        if (barometer != null && barometer.hasReceivedData()) {
             trackPoint.setAltitudeGain(barometer.getAggregatedValue(trackPointCreator.createNow()).gain_m());
             trackPoint.setAltitudeLoss(barometer.getAggregatedValue(trackPointCreator.createNow()).loss_m());
         }
@@ -193,13 +193,13 @@ public class SensorDataSet {
     public void reset() {
         Log.i(TAG, "Resetting data");
 
-        if (heartRate != null) heartRate.reset();
-        if (cyclingCadence != null) cyclingCadence.reset();
-        if (cyclingDistanceSpeed != null) cyclingDistanceSpeed.reset();
-        if (cyclingPower != null) cyclingPower.reset();
-        if (runningDistanceSpeedCadence != null) runningDistanceSpeedCadence.reset();
-        if (barometer != null) barometer.reset();
-        if (gps != null) gps.reset();
+        if (heartRate != null) heartRate.resetAggregated();
+        if (cyclingCadence != null) cyclingCadence.resetAggregated();
+        if (cyclingDistanceSpeed != null) cyclingDistanceSpeed.resetAggregated();
+        if (cyclingPower != null) cyclingPower.resetAggregated();
+        if (runningDistanceSpeedCadence != null) runningDistanceSpeedCadence.resetAggregated();
+        if (barometer != null) barometer.resetAggregated();
+        if (gps != null) gps.resetAggregated();
     }
 
     private void set(@NonNull Aggregator<?, ?> type, @Nullable Aggregator<?, ?> sensorData) {

@@ -66,7 +66,7 @@ public class SensorDataCyclingTest {
         current.add(new Raw<>(Instant.MIN, new BluetoothHandlerCyclingCadence.CrankData(2, 1024)));
 
         // then
-        assertFalse(current.hasAggregatedValue()); //TODO Cadence should be 0?
+        assertFalse(current.hasReceivedData()); //TODO Cadence should be 0?
     }
 
     @Test
