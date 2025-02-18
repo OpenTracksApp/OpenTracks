@@ -3,7 +3,7 @@
 ## Testing
 
 Just use OpenTracks and tell us what can be improved by opening an
-issue [here](https://github.com/OpenTracksApp/OpenTracks/issues/new/choose)
+issue [here](https://github.com/OpenTracksApp/OpenTracks/issues/new/choose).
 
 If we broke things (happens now and then), please tell us also.
 
