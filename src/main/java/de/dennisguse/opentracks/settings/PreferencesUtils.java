@@ -318,6 +318,11 @@ public class PreferencesUtils {
         return getBoolean(R.string.stats_fullscreen_while_recording_key, DEFAULT);
     }
 
+    public static boolean shouldShowGpsDisabledWarning() {
+        final boolean DEFAULT = resources.getBoolean(R.bool.stats_show_gps_disabled_warnings_default);
+        return getBoolean(R.string.stats_show_gps_disabled_warnings_key, DEFAULT);
+    }
+
     public static boolean shouldShowElevation() {
         final boolean DEFAULT = resources.getBoolean(R.bool.chart_display_elevation_default);
         return getBoolean(R.string.chart_display_elevation_key, DEFAULT);

@@ -390,6 +390,10 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             return;
         }
 
+        if (!PreferencesUtils.shouldShowGpsDisabledWarning()) {
+            return;
+        }
+
         snackbar = Snackbar
                 .make(viewBinding.trackRecordingCoordinatorLayout,
                         getString(R.string.gps_recording_status, getString(gpsStatusValue.message), getString(R.string.gps_recording_without_signal)),

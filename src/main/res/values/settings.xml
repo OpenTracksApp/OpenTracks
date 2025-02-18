@@ -286,6 +286,9 @@
     <string name="stats_fullscreen_while_recording_key" translatable="false">trackdetail_fullscreen_while_recording</string>
     <bool name="stats_fullscreen_while_recording_default" translatable="false">false</bool>
 
+    <string name="stats_show_gps_disabled_warnings_key" translatable="false">trackdetail_show_gps_disabled_warnings</string>
+    <bool name="stats_show_gps_disabled_warnings_default" translatable="false">true</bool>
+
     <!-- Chart Settings -->
     <string name="chart_display_elevation_key" translatable="false">chart_display_elevation</string>
     <bool name="chart_display_elevation_default" translatable="false">true</bool>

@@ -56,6 +56,12 @@
             android:key="@string/stats_fullscreen_while_recording_key"
             android:summary="@string/settings_recording_fullscreen_on_while_recording_summary"
             android:title="@string/settings_recording_fullscreen_on_while_recording_title" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/stats_show_gps_disabled_warnings_default"
+            android:key="@string/stats_show_gps_disabled_warnings_key"
+            android:summary="@string/settings_recording_show_gps_disabled_warning_summary"
+            android:title="@string/settings_recording_show_gps_disabled_warning_title" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/settings_charts_title">
