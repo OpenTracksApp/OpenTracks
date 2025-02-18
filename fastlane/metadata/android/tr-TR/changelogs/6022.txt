@@ -1,0 +1,5 @@
+v4.17.6: OpenTracks
+
+Hata:
+- UI: V4.17.0'da tanıtılan GPS verileri düzenli olarak 
+gösterilmeyebilir (kaydedilmiş verileri etkilemez)
