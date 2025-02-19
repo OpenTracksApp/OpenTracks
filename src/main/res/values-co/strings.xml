@@ -546,4 +546,6 @@
     <string name="settings_chart_display_elevation_title">Affissà l’altitudine</string>
     <string name="settings_chart_display_heart_rate_title">Affissà a frequenza cardiaca</string>
     <string name="settings_chart_display_pace_or_speed_title">Affissà l’andatura o a vitezza</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">Avertimentu di disattivazione di u GPS</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">Durante l’arregistramentu, un avertimentu hè affissatu s’è u GPS hè disattivatu.</string>
 </resources>
