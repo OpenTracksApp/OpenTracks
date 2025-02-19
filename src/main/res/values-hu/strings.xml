@@ -593,4 +593,7 @@ limitations under the License.
     <string name="settings_chart_display_pace_or_speed_title">Tempó vagy sebesség megjelenítése</string>
     <string name="settings_chart_display_heart_rate_title">Szívritmus megjelenítése</string>
     <string name="settings_charts_title">Grafikonok</string>
+    <string name="empty">.</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">GPS letiltott figyelmeztetés</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">Felvétel közben egy figyelmeztetés jelenik meg, ha a GPS ki van kapcsolva.</string>
 </resources>
