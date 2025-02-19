@@ -599,4 +599,6 @@ limitations under the License.
     <string name="settings_chart_display_elevation_title">Zobrazit nadmořskou výšku</string>
     <string name="settings_chart_display_heart_rate_title">Zobrazit srdeční frekvenci</string>
     <string name="settings_chart_display_pace_or_speed_title">Zobrazit tempo nebo rychlost</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">Varování o vypnuté poloze</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">Během nahrávání zobrazit varování, pokud je vypnutá poloha.</string>
 </resources>
