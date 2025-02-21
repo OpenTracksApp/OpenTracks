@@ -270,7 +270,7 @@ public class KMLTrackExporter implements TrackExporter {
     }
 
     private void writeMarker(Marker marker, ZoneOffset zoneOffset) {
-        boolean existsPhoto = MarkerUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoURI()) != null;
+        boolean existsPhoto = MarkerUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoUrl()) != null;
         if (marker.hasPhoto() && exportPhotos && existsPhoto) {
             float heading = getHeading(marker.getTrackId(), marker.getLocation());
             writePhotoOverlay(marker, heading, zoneOffset);

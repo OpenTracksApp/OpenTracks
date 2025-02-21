@@ -183,7 +183,7 @@ public class MarkerEditActivity extends AbstractActivity {
         viewBinding.markerEditMarkerType.setText(marker.getCategory());
         viewBinding.markerEditDescription.setText(marker.getDescription());
         if (marker.hasPhoto()) {
-            setMarkerImageView(marker.getPhotoURI());
+            setMarkerImageView(marker.getPhotoUrl());
         } else {
             viewBinding.markerEditPhoto.setImageDrawable(null);
         }
