@@ -21,7 +21,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.location.Location;
 import android.net.Uri;
 import android.text.TextUtils;
 
@@ -46,6 +45,7 @@ import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
@@ -385,22 +385,38 @@ public class ContentProviderUtils {
         int bearingIndex = cursor.getColumnIndexOrThrow(MarkerColumns.BEARING);
         int photoUrlIndex = cursor.getColumnIndexOrThrow(MarkerColumns.PHOTOURL);
 
-        Track.Id trackId = new Track.Id(cursor.getLong(trackIdIndex));
-        Marker marker = new Marker(trackId, Instant.ofEpochMilli(cursor.getLong(timeIndex)));
 
+        Double latitude = null;
+        Double longitude = null;
+        Altitude.WGS84 altitude = null;
+        Distance horizontalAccuracy = null;
+        Float bearing = null;
         if (!cursor.isNull(longitudeIndex) && !cursor.isNull(latitudeIndex)) {
-            marker.setLongitude(((double) cursor.getInt(longitudeIndex)) / 1E6);
-            marker.setLatitude(((double) cursor.getInt(latitudeIndex)) / 1E6);
+            latitude = (((double) cursor.getInt(latitudeIndex)) / 1E6);
+            longitude = (((double) cursor.getInt(longitudeIndex)) / 1E6);
         }
         if (!cursor.isNull(altitudeIndex)) {
-            marker.setAltitude(Altitude.WGS84.of(cursor.getFloat(altitudeIndex)));
+            altitude = Altitude.WGS84.of(cursor.getFloat(altitudeIndex));
         }
         if (!cursor.isNull(accuracyIndex)) {
-            marker.setAccuracy(Distance.of(cursor.getFloat(accuracyIndex)));
+            horizontalAccuracy = Distance.of(cursor.getFloat(accuracyIndex));
         }
         if (!cursor.isNull(bearingIndex)) {
-            marker.setBearing(cursor.getFloat(bearingIndex));
+            bearing = cursor.getFloat(bearingIndex);
         }
+
+        Position position = new Position(
+                Instant.ofEpochMilli(cursor.getLong(timeIndex)),
+                latitude,
+                longitude,
+                horizontalAccuracy,
+                altitude,
+                null,
+                bearing,
+                null);
+
+        Track.Id trackId = new Track.Id(cursor.getLong(trackIdIndex));
+        Marker marker = new Marker(trackId, position);
 
         if (!cursor.isNull(idIndex)) {
             marker.setId(new Marker.Id(cursor.getLong(idIndex)));
@@ -420,6 +436,8 @@ public class ContentProviderUtils {
         if (!cursor.isNull(photoUrlIndex)) {
             marker.setPhotoUrl(Uri.parse(cursor.getString(photoUrlIndex)));
         }
+
+
         return marker;
     }
 
@@ -532,8 +550,8 @@ public class ContentProviderUtils {
         values.put(MarkerColumns.CATEGORY, marker.getCategory());
         values.put(MarkerColumns.ICON, marker.getIcon());
         values.put(MarkerColumns.TRACKID, marker.getTrackId().id());
-        values.put(MarkerColumns.LONGITUDE, (int) (marker.getLongitude() * 1E6));
-        values.put(MarkerColumns.LATITUDE, (int) (marker.getLatitude() * 1E6));
+        values.put(MarkerColumns.LONGITUDE, (int) (marker.getPosition().longitude() * 1E6));
+        values.put(MarkerColumns.LATITUDE, (int) (marker.getPosition().latitude() * 1E6));
         values.put(MarkerColumns.TIME, marker.getTime().toEpochMilli());
         if (marker.hasAltitude()) {
             values.put(MarkerColumns.ALTITUDE, marker.getAltitude().toM());
@@ -692,15 +710,11 @@ public class ContentProviderUtils {
 
     /**
      * Gets the trackPoint id for a location.
-     *
-     * @param trackId  the track id
-     * @param location the location
-     * @return trackPoint id if the location is in the track. -1L otherwise.
      */
     @Deprecated
-    public TrackPoint.Id getTrackPointId(Track.Id trackId, Location location) {
+    public TrackPoint.Id getTrackPointId(Track.Id trackId, Position position) {
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TIME + "=?)";
-        String[] selectionArgs = new String[]{Long.toString(trackId.id()), Long.toString(location.getTime())};
+        String[] selectionArgs = new String[]{Long.toString(trackId.id()), Long.toString(position.time().toEpochMilli())};
         try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
                 return new TrackPoint.Id(cursor.getLong(cursor.getColumnIndexOrThrow(TrackPointsColumns._ID)));
