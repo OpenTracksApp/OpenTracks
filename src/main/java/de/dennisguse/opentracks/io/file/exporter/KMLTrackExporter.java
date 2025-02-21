@@ -18,10 +18,10 @@ package de.dennisguse.opentracks.io.file.exporter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import java.io.OutputStream;
@@ -40,6 +40,7 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.ui.markers.MarkerUtils;
@@ -272,10 +273,10 @@ public class KMLTrackExporter implements TrackExporter {
     private void writeMarker(Marker marker, ZoneOffset zoneOffset) {
         boolean existsPhoto = MarkerUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoUrl()) != null;
         if (marker.hasPhoto() && exportPhotos && existsPhoto) {
-            float heading = getHeading(marker.getTrackId(), marker.getLocation());
+            float heading = getHeading(marker.getTrackId(), marker.getPosition());
             writePhotoOverlay(marker, heading, zoneOffset);
         } else {
-            writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), marker.getLocation(), marker.getTime(), zoneOffset);
+            writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), marker.getPosition(), marker.getTime(), zoneOffset);
         }
     }
 
@@ -374,7 +375,7 @@ public class KMLTrackExporter implements TrackExporter {
         trackpointTypeList.add(trackPoint.getType());
 
         if (trackPoint.hasLocation()) {
-            printWriter.println("<coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</coord>");
+            printWriter.println("<coord>" + getCoordinates(trackPoint.getPosition(), " ") + "</coord>");
         } else {
             printWriter.println("<coord/>");
         }
@@ -412,8 +413,8 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.println("</SimpleArrayData>");
     }
 
-    private void writePlacemark(String name, String activityType, String description, Location location, Instant time, ZoneOffset zoneOffset) {
-        if (location != null) {
+    private void writePlacemark(String name, String activityType, String description, @Nullable Position position, Instant time, ZoneOffset zoneOffset) {
+        if (position != null) {
             printWriter.println("<Placemark>");
             printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(description) + "</description>");
@@ -421,7 +422,7 @@ public class KMLTrackExporter implements TrackExporter {
             printWriter.println("<styleUrl>#" + KMLTrackExporter.MARKER_STYLE + "</styleUrl>");
             writeTypeLocalized(activityType);
             printWriter.println("<Point>");
-            printWriter.println("<coordinates>" + getCoordinates(location, ",") + "</coordinates>");
+            printWriter.println("<coordinates>" + getCoordinates(position, ",") + "</coordinates>");
             printWriter.println("</Point>");
             printWriter.println("</Placemark>");
         }
@@ -454,7 +455,7 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.print("<topFov>45</topFov>");
         printWriter.println("</ViewVolume>");
         printWriter.println("<Point>");
-        printWriter.println("<coordinates>" + getCoordinates(marker.getLocation(), ",") + "</coordinates>");
+        printWriter.println("<coordinates>" + getCoordinates(marker.getPosition(), ",") + "</coordinates>");
         printWriter.println("</Point>");
         printWriter.println("</PhotoOverlay>");
     }
@@ -469,30 +470,27 @@ public class KMLTrackExporter implements TrackExporter {
     /**
      * TODO: check if this is a useful feature (likely not).
      * Gets the heading to a location.
-     *
-     * @param trackId  the track id containing the location
-     * @param location the location
      */
-    private float getHeading(Track.Id trackId, Location location) {
-        TrackPoint.Id trackPointId = contentProviderUtils.getTrackPointId(trackId, location);
+    private float getHeading(Track.Id trackId, Position position) {
+        TrackPoint.Id trackPointId = contentProviderUtils.getTrackPointId(trackId, position);
         if (trackPointId == null) {
-            return location.getBearing();
+            return position.bearing();
         }
         TrackPoint viewLocation = contentProviderUtils.getLastValidTrackPoint(trackId);
         if (viewLocation != null) {
-            Optional<Float> bearing = viewLocation.bearingTo(location);
+            Optional<Float> bearing = viewLocation.bearingTo(position);
             if (bearing.isPresent()) {
                 return bearing.get();
             }
         }
 
-        return location.getBearing();
+        return position.bearing();
     }
 
-    private static String getCoordinates(Location location, String separator) {
-        String result = location.getLongitude() + separator + location.getLatitude();
-        if (location.hasAltitude()) {
-            result += separator + location.getAltitude();
+    private static String getCoordinates(Position position, String separator) {
+        String result = position.longitude() + separator + position.latitude();
+        if (position.hasAltitude()) {
+            result += separator + position.altitude().toM();
         }
         return result;
     }

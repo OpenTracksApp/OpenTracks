@@ -21,7 +21,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.location.Location;
 import android.net.Uri;
 import android.text.TextUtils;
 
@@ -46,6 +45,7 @@ import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
@@ -692,15 +692,11 @@ public class ContentProviderUtils {
 
     /**
      * Gets the trackPoint id for a location.
-     *
-     * @param trackId  the track id
-     * @param location the location
-     * @return trackPoint id if the location is in the track. -1L otherwise.
      */
     @Deprecated
-    public TrackPoint.Id getTrackPointId(Track.Id trackId, Location location) {
+    public TrackPoint.Id getTrackPointId(Track.Id trackId, Position position) {
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TIME + "=?)";
-        String[] selectionArgs = new String[]{Long.toString(trackId.id()), Long.toString(location.getTime())};
+        String[] selectionArgs = new String[]{Long.toString(trackId.id()), Long.toString(position.time().toEpochMilli())};
         try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
                 return new TrackPoint.Id(cursor.getLong(cursor.getColumnIndexOrThrow(TrackPointsColumns._ID)));

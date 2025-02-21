@@ -540,9 +540,9 @@ public class ExportImportTest {
             assertEquals(marker.getName(), importMarker.getName());
             assertFalse(importMarker.hasPhoto());
 
-            assertEquals(marker.getLocation().getLatitude(), importMarker.getLocation().getLatitude(), 0.001);
-            assertEquals(marker.getLocation().getLongitude(), importMarker.getLocation().getLongitude(), 0.001);
-            assertEquals(marker.getLocation().getAltitude(), importMarker.getLocation().getAltitude(), 0.1);
+            assertEquals(marker.getPosition().latitude(), importMarker.getPosition().latitude(), 0.001);
+            assertEquals(marker.getPosition().longitude(), importMarker.getPosition().longitude(), 0.001);
+            assertEquals(marker.getPosition().altitude().toM(), importMarker.getPosition().altitude().toM(), 0.1);
         }
     }
 

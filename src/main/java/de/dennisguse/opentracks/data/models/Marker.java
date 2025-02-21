@@ -148,7 +148,7 @@ public final class Marker {
         return latitude != null || longitude != null;
     }
 
-    public Location getLocation() {
+    public Position getPosition() {
         Location location = new Location("");
         location.setTime(time.toEpochMilli());
         if (hasLocation()) {
@@ -164,8 +164,7 @@ public final class Marker {
         if (hasAltitude()) {
             location.setAltitude(altitude.toM());
         }
-
-        return location;
+        return Position.of(location);
     }
 
     public double getLatitude() {
