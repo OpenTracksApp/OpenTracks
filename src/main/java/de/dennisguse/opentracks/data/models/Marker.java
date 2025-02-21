@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.data.models;
 
-import android.location.Location;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -25,9 +24,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.time.Instant;
+import java.util.Objects;
 
 /**
- * NOTE: A marker is indirectly (via it's location) assigned to one {@link TrackPoint} with trackPoint.hasLocation() == true.
+ * NOTE: A marker is indirectly (via it's {@link Position}) assigned to one {@link TrackPoint} via position.time.
  *
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
@@ -42,34 +42,27 @@ public final class Marker {
     private String icon = "";
     private Track.Id trackId;
 
-    private final Instant time;
-    private Double latitude;
-    private Double longitude;
-    @Deprecated //Not needed
-    private Distance accuracy;
-    private Altitude altitude;
-    private Float bearing;
+    //Some data might not be used.
+    private final Position position;
 
     private Uri photoUrl = null;
-
-    public Marker(@Nullable Track.Id trackId, Instant time) {
-        this.trackId = trackId;
-        this.time = time;
-    }
 
     public Marker(@Nullable Track.Id trackId, @NonNull TrackPoint trackPoint) {
         this.trackId = trackId;
 
-        this.time = trackPoint.getTime();
-
         if (!trackPoint.hasLocation())
             throw new RuntimeException("Marker requires a trackpoint with a location.");
 
-        setTrackPoint(trackPoint);
+        this.position = trackPoint.getPosition();
     }
 
-    @Deprecated
-    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, @NonNull TrackPoint trackPoint, Uri photoUrl) {
+    public Marker(@Nullable Track.Id trackId, @NonNull Position position) {
+        this.trackId = trackId;
+        Objects.requireNonNull(position);
+        this.position = position;
+    }
+
+    public Marker(@Nullable Track.Id trackId, @NonNull TrackPoint trackPoint, String name, String description, String category, String icon, Uri photoUrl) {
         this(trackId, trackPoint);
         this.name = name;
         this.description = description;
@@ -78,17 +71,8 @@ public final class Marker {
         this.photoUrl = photoUrl;
     }
 
-    //TODO Is somehow part of the initialization process. Can we at least limit visibility?
-    public void setTrackPoint(TrackPoint trackPoint) {
-        this.latitude = trackPoint.getLatitude();
-        this.longitude = trackPoint.getLongitude();
-        if (trackPoint.hasHorizontalAccuracy()) this.accuracy = trackPoint.getHorizontalAccuracy();
-        if (trackPoint.hasAltitude()) this.altitude = trackPoint.getAltitude();
-        if (trackPoint.hasBearing()) this.bearing = trackPoint.getBearing();
-    }
-
     /**
-     * May be null if the it was not loaded from the database.
+     * May be null if the Marker was not loaded from the database.
      */
     @Nullable
     public Id getId() {
@@ -100,7 +84,7 @@ public final class Marker {
     }
 
     public Instant getTime() {
-        return time;
+        return position.time();
     }
 
     public String getName() {
@@ -144,80 +128,40 @@ public final class Marker {
         this.trackId = trackId;
     }
 
-    public boolean hasLocation() {
-        return latitude != null || longitude != null;
-    }
-
-    public Location getLocation() {
-        Location location = new Location("");
-        location.setTime(time.toEpochMilli());
-        if (hasLocation()) {
-            location.setLatitude(latitude);
-            location.setLongitude(longitude);
-        }
-        if (hasBearing()) {
-            location.setBearing(bearing);
-        }
-        if (hasAccuracy()) {
-            location.setAccuracy((float) accuracy.toM());
-        }
-        if (hasAltitude()) {
-            location.setAltitude(altitude.toM());
-        }
-
-        return location;
+    public Position getPosition() {
+        return position;
     }
 
     public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+        return position.latitude();
     }
 
     public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+        return position.longitude();
     }
 
     public boolean hasAccuracy() {
-        return accuracy != null;
+        return position.hasHorizontalAccuracy();
     }
 
     public Distance getAccuracy() {
-        return accuracy;
-    }
-
-    public void setAccuracy(Distance accuracy) {
-        this.accuracy = accuracy;
+        return position.horizontalAccuracy();
     }
 
     public boolean hasAltitude() {
-        return altitude != null;
+        return position.hasAltitude();
     }
 
     public Altitude getAltitude() {
-        return altitude;
-    }
-
-    public void setAltitude(Altitude altitude) {
-        this.altitude = altitude;
+        return position.altitude();
     }
 
     public boolean hasBearing() {
-        return bearing != null;
+        return position.hasBearing();
     }
 
     public Float getBearing() {
-        return bearing;
-    }
-
-    public void setBearing(float bearing) {
-        this.bearing = bearing;
+        return position.bearing();
     }
 
     public Uri getPhotoUrl() {

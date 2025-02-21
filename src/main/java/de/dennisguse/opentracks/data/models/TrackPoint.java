@@ -353,6 +353,13 @@ public class TrackPoint {
         return hasHorizontalAccuracy() && horizontalAccuracy.lessThan(thresholdHorizontalAccuracy);
     }
 
+    public Optional<Float> bearingTo(@NonNull Position dest) {
+        if (!dest.hasLocation() || !hasLocation()) {
+            return Optional.empty();
+        }
+        return bearingTo(dest.toLocation());
+    }
+
     public Optional<Float> bearingTo(@NonNull TrackPoint dest) {
         if (!dest.hasLocation() || !hasLocation()) {
             return Optional.empty();
