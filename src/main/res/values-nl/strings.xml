@@ -217,11 +217,11 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_chart_by_distance">Op afstand</string>
     <string name="settings_chart_by_time">Op tijd</string>
     <!-- Settings Recording -->
-    <string name="settings_recording_show_on_lockscreen_while_recording_title">Toon de statistieken op het slotscherm</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Toon de statistieken op het vergrendelingsscherm</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Toon tijdens de opname de statistieken zonder het apparaat te ontgrendelen.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Houd het scherm aan</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Houd tijdens de opname het scherm aan.</string>
-    <string name="settings_recording_default_activity_title">Activiteittype</string>
+    <string name="settings_recording_default_activity_title">Standaardactiviteit</string>
     <string name="settings_recording_location_frequency_summary">%1$s tussen locatiecontroles</string>
     <string name="settings_recording_max_recording_distance_summary">Er wordt een nieuw segment gemaakt als de afstand tussen twee locaties groter is dan %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Maximale afstand</string>
@@ -422,7 +422,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="track_pace_notification">Tempo: %1$s</string>
     <string name="about_third_party_data">Gegevens van derden</string>
     <string name="menu_voice_rate">Spraak snelheid</string>
-    <string name="track_delete_not_recording">Dit fragment kan niet worden gewist omdat het momenteel is opgenomen.</string>
+    <string name="track_delete_not_recording">Dit fragment kan niet worden gewist omdat het momenteel wordt opgenomen.</string>
     <string name="settings_sensor_cycling_cadence">Cadans</string>
     <string name="settings_sensor_cycling_distance_speed">Afstand en snelheid</string>
     <string name="settings_sensor_running_speed_and_cadence">Afstand, snelheid en cadans</string>
@@ -599,4 +599,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_chart_display_elevation_title">Hoogte weergeven</string>
     <string name="settings_chart_display_pace_or_speed_title">Tempo of snelheid weergeven</string>
     <string name="settings_chart_display_heart_rate_title">Hartslag weergeven</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">Waarschuwing voor uitgeschakelde GPS</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">Geef tijdens de opname een waarschuwing weer als GPS is uitgeschakeld.</string>
 </resources>
