@@ -18,6 +18,7 @@ package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
 import android.location.Location;
+import android.net.Uri;
 import android.util.Log;
 
 import org.xml.sax.Attributes;
@@ -121,7 +122,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private String longitude;
     private String altitude;
     private String markerType;
-    private String photoUrl;
+    private Uri photoUrl;
     private String uuid;
 
     private final TrackImporter trackImporter;
@@ -223,7 +224,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             }
             case TAG_HREF -> {
                 if (content != null) {
-                    photoUrl = content.trim();
+                    photoUrl = Uri.parse(content.trim());
                 }
             }
         }

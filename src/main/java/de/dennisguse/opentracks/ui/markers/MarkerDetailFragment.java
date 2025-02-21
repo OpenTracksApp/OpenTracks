@@ -235,7 +235,7 @@ public class MarkerDetailFragment extends Fragment {
         boolean hasPhoto = marker.hasPhoto();
         if (hasPhoto) {
             handler.removeCallbacks(hideText);
-            viewBinding.markerDetailMarkerPhoto.setImageURI(marker.getPhotoURI());
+            viewBinding.markerDetailMarkerPhoto.setImageURI(marker.getPhotoUrl());
             handler.postDelayed(hideText, HIDE_TEXT_DELAY.toMillis());
         } else {
             viewBinding.markerDetailMarkerPhoto.setImageResource(MarkerUtils.ICON_ID);

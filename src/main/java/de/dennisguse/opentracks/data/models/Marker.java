@@ -24,7 +24,6 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.time.Duration;
 import java.time.Instant;
 
 /**
@@ -51,8 +50,7 @@ public final class Marker {
     private Altitude altitude;
     private Float bearing;
 
-    @Deprecated //TODO Make an URI instead of String
-    private String photoUrl = "";
+    private Uri photoUrl = null;
 
     public Marker(@Nullable Track.Id trackId, Instant time) {
         this.trackId = trackId;
@@ -71,7 +69,7 @@ public final class Marker {
     }
 
     @Deprecated
-    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, @NonNull TrackPoint trackPoint, String photoUrl) {
+    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, @NonNull TrackPoint trackPoint, Uri photoUrl) {
         this(trackId, trackPoint);
         this.name = name;
         this.description = description;
@@ -222,20 +220,16 @@ public final class Marker {
         this.bearing = bearing;
     }
 
-    public String getPhotoUrl() {
+    public Uri getPhotoUrl() {
         return photoUrl;
     }
 
-    public void setPhotoUrl(String photoUrl) {
+    public void setPhotoUrl(Uri photoUrl) {
         this.photoUrl = photoUrl;
     }
 
-    public Uri getPhotoURI() {
-        return Uri.parse(photoUrl);
-    }
-
     public boolean hasPhoto() {
-        return photoUrl != null && !photoUrl.isEmpty();
+        return photoUrl != null;
     }
 
     public record Id(long id) implements Parcelable {

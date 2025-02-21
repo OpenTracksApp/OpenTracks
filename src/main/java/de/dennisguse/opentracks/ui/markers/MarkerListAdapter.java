@@ -190,7 +190,7 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 viewBinding.markerListItemPhoto.setLayoutParams(params);
                 viewBinding.markerListItemTextGradient.setLayoutParams(params);
 
-                asyncLoadPhoto(viewBinding.markerListItemPhoto, marker.getPhotoURI(), marker.getId());
+                asyncLoadPhoto(viewBinding.markerListItemPhoto, marker.getPhotoUrl(), marker.getId());
             }
 
             viewBinding.markerListItemName.setText(marker.getName());

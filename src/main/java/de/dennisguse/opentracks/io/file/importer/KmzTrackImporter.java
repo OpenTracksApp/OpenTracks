@@ -191,7 +191,7 @@ public class KmzTrackImporter {
         List<String> photosName = new ArrayList<>();
         for (Marker marker : markers) {
             if (marker.hasPhoto()) {
-                String photoUrl = Uri.decode(marker.getPhotoUrl());
+                String photoUrl = Uri.decode(marker.getPhotoUrl().toString()); //TODO Why Uri.decode()?
                 photosName.add(photoUrl.substring(photoUrl.lastIndexOf(File.separatorChar) + 1));
             }
         }

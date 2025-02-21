@@ -418,7 +418,7 @@ public class ContentProviderUtils {
             marker.setIcon(cursor.getString(iconIndex));
         }
         if (!cursor.isNull(photoUrlIndex)) {
-            marker.setPhotoUrl(cursor.getString(photoUrlIndex));
+            marker.setPhotoUrl(Uri.parse(cursor.getString(photoUrlIndex)));
         }
         return marker;
     }
@@ -496,7 +496,7 @@ public class ContentProviderUtils {
 
     private void deleteMarkerPhoto(Context context, Marker marker) {
         if (marker != null && marker.hasPhoto()) {
-            Uri uri = marker.getPhotoURI();
+            Uri uri = marker.getPhotoUrl();
             File file = MarkerUtils.buildInternalPhotoFile(context, marker.getTrackId(), uri);
             if (file.exists()) {
                 File parent = file.getParentFile();
@@ -545,7 +545,9 @@ public class ContentProviderUtils {
             values.put(MarkerColumns.BEARING, marker.getBearing());
         }
 
-        values.put(MarkerColumns.PHOTOURL, marker.getPhotoUrl());
+        if (marker.hasPhoto()) {
+            values.put(MarkerColumns.PHOTOURL, marker.getPhotoUrl().toString());
+        }
         return values;
     }
 
