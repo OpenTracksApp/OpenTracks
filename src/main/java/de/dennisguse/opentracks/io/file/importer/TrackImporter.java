@@ -233,12 +233,11 @@ public class TrackImporter {
      *
      * @param externalPhotoUrl the file name
      */
-    private String getInternalPhotoUrl(@NonNull Track.Id trackId, @NonNull String externalPhotoUrl) {
-        String importFileName = KmzTrackImporter.importNameForFilename(externalPhotoUrl);
+    private Uri getInternalPhotoUrl(@NonNull Track.Id trackId, @NonNull Uri externalPhotoUrl) {
+        String importFileName = KmzTrackImporter.importNameForFilename(externalPhotoUrl.toString());
         File file = MarkerUtils.buildInternalPhotoFile(context, trackId, Uri.parse(importFileName));
         if (file != null) {
-            Uri photoUri = FileUtils.getUriForFile(context, file);
-            return "" + photoUri;
+            return FileUtils.getUriForFile(context, file);
         }
 
         return null;

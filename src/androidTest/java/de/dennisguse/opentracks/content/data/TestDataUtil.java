@@ -145,14 +145,13 @@ public class TestDataUtil {
         File dstFile = new File(MarkerUtils.getImageUrl(context, trackId));
         dstFile.createNewFile();
         Uri photoUri = FileUtils.getUriForFile(context, dstFile);
-        String photoUrl = photoUri.toString();
 
         //TODO Use TrackStatisticsUpdater
         TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(Distance.of(0));
         stats.setTotalTime(Duration.ofMillis(0));
 
-        return new Marker("Marker name", "Marker description", "Marker category", "", trackId, trackPoint, photoUrl);
+        return new Marker("Marker name", "Marker description", "Marker category", "", trackId, trackPoint, photoUri);
     }
 
     public static List<TrackPoint> getTrackPoints(ContentProviderUtils contentProviderUtils, Track.Id trackId) {

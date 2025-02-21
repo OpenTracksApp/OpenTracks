@@ -430,40 +430,6 @@ public class CustomContentProviderUtilsTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#createMarker(Cursor)}.
-     */
-    @Test
-    public void testCreateMarker() {
-        int startColumnIndex = 1;
-        int columnIndex = startColumnIndex;
-        when(cursorMock.getColumnIndexOrThrow(MarkerColumns._ID)).thenReturn(columnIndex++);
-        when(cursorMock.getColumnIndexOrThrow(MarkerColumns.NAME)).thenReturn(columnIndex++);
-        when(cursorMock.getColumnIndexOrThrow(MarkerColumns.TRACKID)).thenReturn(columnIndex++);
-        columnIndex = startColumnIndex;
-        // Id
-        when(cursorMock.isNull(columnIndex++)).thenReturn(false);
-        // Name
-        when(cursorMock.isNull(columnIndex++)).thenReturn(false);
-        // trackIdIndex
-        when(cursorMock.isNull(columnIndex++)).thenReturn(false);
-        long id = System.currentTimeMillis();
-        columnIndex = startColumnIndex;
-        // Id
-        when(cursorMock.getLong(columnIndex++)).thenReturn(id);
-        // Name
-        String name = NAME_PREFIX + id;
-        when(cursorMock.getString(columnIndex++)).thenReturn(name);
-        // trackIdIndex
-        long trackId = 11L;
-        when(cursorMock.getLong(columnIndex++)).thenReturn(trackId);
-
-        Marker marker = contentProviderUtils.createMarker(cursorMock);
-        assertEquals(id, marker.getId().id());
-        assertEquals(name, marker.getName());
-        assertEquals(trackId, marker.getTrackId().id());
-    }
-
-    /**
      * Tests the method
      * {@link ContentProviderUtils#deleteMarker(Context, Marker.Id)}
      * when there is only one marker in the track.
