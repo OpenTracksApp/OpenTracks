@@ -85,4 +85,22 @@ public record Position(
 
         return location;
     }
+
+    /**
+     * Checks if a given location is a valid (i.e. physically possible) location on Earth.
+     *
+     * @return true if the location is a valid location.
+     */
+    public boolean hasValidLocation() {
+        return hasLocation()
+                && Math.abs(latitude) <= 90
+                && Math.abs(longitude) <= 180;
+    }
+
+    public boolean fulfillsAccuracy(Distance thresholdHorizontalAccuracy) {
+        return hasHorizontalAccuracy() &&
+                horizontalAccuracy
+                        .lessThan(thresholdHorizontalAccuracy);
+
+    }
 }

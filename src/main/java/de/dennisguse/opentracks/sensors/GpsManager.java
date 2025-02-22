@@ -24,7 +24,6 @@ import de.dennisguse.opentracks.sensors.sensorData.AggregatorGPS;
 import de.dennisguse.opentracks.sensors.sensorData.Raw;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
@@ -128,12 +127,12 @@ public class GpsManager implements SensorConnector, LocationListenerCompat, GpsS
         TrackPoint trackPoint = new TrackPoint(location, trackPointCreator.createNow());
         gpsStatusManager.onNewTrackPoint(trackPoint);
 
-        if (!LocationUtils.isValidLocation(location)) {
+        if (!trackPoint.getPosition().hasValidLocation()) {
             Log.w(TAG, "Ignore newTrackPoint. location is invalid.");
             return;
         }
 
-        if (!LocationUtils.fulfillsAccuracy(location, thresholdHorizontalAccuracy)) {
+        if (!trackPoint.getPosition().fulfillsAccuracy(thresholdHorizontalAccuracy)) {
             Log.d(TAG, "Ignore newTrackPoint. Poor accuracy.");
             return;
         }

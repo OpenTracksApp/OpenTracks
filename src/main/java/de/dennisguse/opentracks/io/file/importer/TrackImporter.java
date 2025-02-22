@@ -28,7 +28,6 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.ui.markers.MarkerUtils;
 import de.dennisguse.opentracks.util.FileUtils;
-import de.dennisguse.opentracks.util.LocationUtils;
 
 /**
  * Handles logic to import:
@@ -186,7 +185,7 @@ public class TrackImporter {
                     //TODO Remove by 31st December 2021.
                     trackPoints.set(i, new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, time));
                     //TODO Delete location
-                } else if (!LocationUtils.isValidLocation(current.getLocation())) {
+                } else if (!current.getPosition().hasValidLocation()) {
                     throw new ImportParserException("Invalid location detected: " + current);
                 }
             }
