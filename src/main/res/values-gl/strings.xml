@@ -599,4 +599,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_chart_display_pace_or_speed_title">Mostrar velocidade ou ritmo</string>
     <string name="settings_chart_display_heart_rate_title">Mostrar ritmo cardíaco</string>
     <string name="settings_charts_title">Gráficos</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">Aviso do GPS desactivado</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">Ao gravar, mostrar aviso se o GPS está desactivado.</string>
 </resources>
