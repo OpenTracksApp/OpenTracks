@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.sensors.sensorData;
 
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
 
 import java.time.Instant;
@@ -10,7 +12,7 @@ public abstract class Aggregator<Input, Output> {
 
     protected Raw<Input> previous;
 
-    protected Output value;
+    protected Output aggregatedValue;
 
     private final String sensorAddress;
     private final String sensorName;
@@ -35,43 +37,62 @@ public abstract class Aggregator<Input, Output> {
 
     protected abstract void computeValue(Raw<Input> current);
 
-    public boolean hasValue() {
-        return value != null;
+    /**
+     * @return did we process data from a sensor.
+     * NOTE: for some sensors this may require more than one measurement.
+     */
+    public boolean hasReceivedData() {
+        return aggregatedValue != null;
     }
 
     @NonNull
     protected abstract Output getNoneValue();
 
-    public Output getValue(Instant now) {
-        if (!hasValue()) {
-            return null; //TODO Check if this is a good idea!
+    @NonNull
+    public Output getAggregatedValue(Instant now) {
+        if (!hasReceivedData()) {
+            return getNoneValue();
         }
-        if (isRecent(now)) {
-            return value;
+        if (isOutdated(now)) {
+            resetImmediate();
         }
-        return getNoneValue();
+
+        return aggregatedValue;
+    }
+
+    @NonNull
+    public Pair<Output, String> getAggregatedValueWithSensorName(Instant now) {
+        return new Pair<>(getAggregatedValue(now), getSensorNameOrAddress());
     }
 
     /**
-     * Reset long term aggregated values (more than derived from previous SensorData). e.g. overall distance.
+     * Reset short-term (i.e., non-aggregated) values that were directly derived from sensor data.
      */
-    public void reset() {}
+    protected abstract void resetImmediate();
+
+    /**
+     * Reset long-term (i.e., aggregated) values (more than derived from previous SensorData) like overall distance.
+     */
+    public abstract void resetAggregated();
 
     /**
      * Is the data recent considering the current time.
      */
-    private boolean isRecent(Instant now) {
+    private boolean isOutdated(Instant now) {
         if (previous == null) {
-            return false;
+            return true;
         }
 
         return now
-                .isBefore(previous.time().plus(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE));
+                .isAfter(
+                        previous.time()
+                                .plus(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE)
+                );
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "sensorAddress=" + sensorAddress + " data=" + value;
+        return "sensorAddress=" + sensorAddress + " data=" + aggregatedValue;
     }
 }

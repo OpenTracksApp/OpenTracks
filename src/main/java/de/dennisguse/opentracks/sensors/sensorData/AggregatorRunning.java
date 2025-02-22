@@ -20,35 +20,37 @@ public final class AggregatorRunning extends Aggregator<BluetoothHandlerRunningS
 
     @Override
     public void computeValue(Raw<BluetoothHandlerRunningSpeedAndCadence.Data> current) {
-        if (previous != null) {
-
-            Distance distance = null;
-            if (previous.value().totalDistance() != null && current.value().totalDistance() != null) {
-                distance = current.value().totalDistance().minus(previous.value().totalDistance());
-                if (value != null) {
-                    distance = distance.plus(value.distance);
-                }
-            }
-
-            value = new Data(current.value().speed(), current.value().cadence(), distance);
+        if (previous == null) {
+            return;
         }
+
+        Distance distance = null;
+        if (previous.value().totalDistance() != null && current.value().totalDistance() != null) {
+            distance = current.value().totalDistance().minus(previous.value().totalDistance());
+            if (aggregatedValue != null) {
+                distance = distance.plus(aggregatedValue.distance);
+            }
+        }
+
+        aggregatedValue = new Data(current.value().speed(), current.value().cadence(), distance);
     }
 
     @Override
-    public void reset() {
-        if (value != null) {
-            value = new Data(value.speed, value.cadence, Distance.of(0));
+    protected void resetImmediate() {
+        aggregatedValue = new Data(Speed.zero(), Cadence.of(0f), aggregatedValue.distance);
+    }
+
+    @Override
+    public void resetAggregated() {
+        if (aggregatedValue != null) {
+            aggregatedValue = new Data(aggregatedValue.speed, aggregatedValue.cadence, Distance.of(0));
         }
     }
 
     @NonNull
     @Override
     protected Data getNoneValue() {
-        if (value != null) {
-            return new Data(Speed.zero(), Cadence.of(0f), value.distance);
-        } else {
-            return new Data(Speed.zero(), Cadence.of(0f), Distance.of(0));
-        }
+        return new Data(Speed.zero(), Cadence.of(0f), Distance.of(0));
     }
 
     public record Data(Speed speed, Cadence cadence, @NonNull Distance distance) {

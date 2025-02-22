@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.services.handlers;
+package de.dennisguse.opentracks.sensors;
 
 import android.content.Context;
 import android.location.LocationManager;
@@ -16,7 +16,7 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
- * This class handle GPS status according to received locations` and some thresholds.
+ * This class handle GPS status according to received locations and some thresholds.
  */
 class GpsStatusManager {
 
