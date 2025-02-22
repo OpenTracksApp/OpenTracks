@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import org.xml.sax.Attributes;
@@ -109,7 +110,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private String cadence;
     private String power;
     private String markerType;
-    private String photoUrl;
+    private Uri photoUrl;
     private String uuid;
     private String gain;
     private String loss;

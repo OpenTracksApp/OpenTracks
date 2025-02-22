@@ -109,6 +109,10 @@ public class FileUtils {
         return getExtension(file.getName());
     }
 
+    public static String getExtension(Uri uri) {
+        return getExtension(uri.toString());
+    }
+
     /**
      * Builds a filename with the given base and the given extension, possibly adding a suffix to ensure the file doesn't exist.
      *

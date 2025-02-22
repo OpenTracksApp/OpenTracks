@@ -93,14 +93,14 @@ public class ShareUtils {
                 Log.e(TAG, "MarkerId " + markerId.id() + " could not be resolved.");
                 continue;
             }
-            if (marker.getPhotoURI() == null) {
+            if (marker.getPhotoUrl() == null) {
                 Log.e(TAG, "MarkerId " + markerId.id() + " has no picture.");
                 continue;
             }
 
-            mime = context.getContentResolver().getType(marker.getPhotoURI());
+            mime = context.getContentResolver().getType(marker.getPhotoUrl());
 
-            uris.add(marker.getPhotoURI());
+            uris.add(marker.getPhotoUrl());
         }
 
         if (uris.isEmpty()) {

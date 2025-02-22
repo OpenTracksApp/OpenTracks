@@ -97,7 +97,7 @@ public class KmzTrackExporter implements TrackExporter {
                         }
                         Marker marker = contentProviderUtils.createMarker(cursor);
                         if (marker.hasPhoto()) {
-                            Uri uriPhoto = marker.getPhotoURI();
+                            Uri uriPhoto = marker.getPhotoUrl();
                             boolean existsPhoto = MarkerUtils.buildInternalPhotoFile(context, track.getId(), uriPhoto) != null;
                             if (existsPhoto) {
                                 addImage(context, zipOutputStream, uriPhoto, marker);
