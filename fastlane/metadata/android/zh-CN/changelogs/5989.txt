@@ -1,0 +1,10 @@
+v4.17.5: OpenTracks
+
+更改：
+- 可复现的构建：我们来看看它是否有效。
+
+错误修复：
+- 可复现的构建使用 PlayStore 图标。
+
+开发者：
+- 添加 RELEASE_BUILD.sh

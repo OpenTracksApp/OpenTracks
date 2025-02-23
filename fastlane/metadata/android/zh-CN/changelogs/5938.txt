@@ -1,0 +1,8 @@
+v4.15.0: OpenTracks
+
+更改：
+- 应用内语言选择器（Android 14 或更高版本）
+- 地图显示功能仅支持 OSM 仪表板（移除 KML/KMZ 或 GPX）
+
+开发者：
+- Github 操作现在使用 Ubuntu

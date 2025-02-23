@@ -1,0 +1,4 @@
+v4.16.0: OpenTracks
+
+错误修复：
+- PublicAPI：开始记录时未记录任何数据

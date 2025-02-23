@@ -1,0 +1,4 @@
+v4.14.2：OpenTracks
+
+错误修复：
+- Android 15：UI 不再溢出（边缘到边缘）

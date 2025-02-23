@@ -1,0 +1,5 @@
+v4.12.1：OpenTracks
+
+错误修复：
+- Android 14：报告缺少权限（而不是强制崩溃及堆栈跟踪）
+- POST_NOTIFICATION 是可选的
