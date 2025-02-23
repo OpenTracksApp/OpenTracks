@@ -223,7 +223,7 @@ limitations under the License.
     <string name="stats_average_speed">平均速度</string>
     <string name="stats_altitude">海拔</string>
     <string name="stats_fastest_pace">最快配速</string>
-    <string name="stats_gain">爬升</string>
+    <string name="stats_gain">增益</string>
     <string name="stats_latitude">纬度</string>
     <string name="stats_longitude">经度</string>
     <string name="stats_max_speed">最高速度</string>
@@ -552,7 +552,7 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_title">自动数据传输</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">记录下的数据不会被自动分享给其他应用。</string>
     <string name="settings_export_section">导出</string>
-    <string name="stats_loss">降低</string>
+    <string name="stats_loss">损失</string>
     <string name="stats_coordinates">纬度/经度</string>
     <string name="track_pace_notification">配速：%1$s</string>
     <string name="settings_announcements_lap_speed_pace">单圈速度/配速</string>
@@ -632,4 +632,5 @@ limitations under the License.
     <string name="power">功率</string>
     <string name="power_x_watt">功率 {x, plural, =1 {1 瓦特} other {# 瓦特} }</string>
     <string name="create_marker_error">无法创建标记，请重试。</string>
+    <string name="stats_gain_loss">增益与损失</string>
 </resources>
