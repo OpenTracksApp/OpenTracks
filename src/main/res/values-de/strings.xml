@@ -651,4 +651,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_chart_display_pace_or_speed_title">Tempo oder Geschwindigkeit anzeigen</string>
     <string name="settings_chart_display_heart_rate_title">Herzfrequenz anzeigen</string>
     <string name="settings_charts_title">Charts</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">Warnung „GPS deaktiviert“</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">Während der Aufzeichnung eine Warnung anzeigen, wenn GPS deaktiviert ist.</string>
 </resources>
