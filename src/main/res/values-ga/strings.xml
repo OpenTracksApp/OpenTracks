@@ -550,4 +550,6 @@
     <string name="settings_chart_display_elevation_title">Ingearchló taispeána</string>
     <string name="settings_chart_display_pace_or_speed_title">Taispeáin ráta nó luas</string>
     <string name="settings_chart_display_heart_rate_title">Taispeáin ráta croí</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">Agus tú ag taifeadadh, taispeáin rabhadh má tá GPS díchumasaithe.</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">Rabhadh GPS díchumasaithe</string>
 </resources>
