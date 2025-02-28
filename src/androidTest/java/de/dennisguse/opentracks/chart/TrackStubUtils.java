@@ -18,7 +18,9 @@ package de.dennisguse.opentracks.chart;
 
 import java.time.Instant;
 
+import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 
@@ -27,6 +29,7 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
  *
  * @author Youtao Liu
  */
+//TODO Move to ChartPointTest
 class TrackStubUtils {
 
     public static final double INITIAL_ALTITUDE = 22;
@@ -52,12 +55,16 @@ class TrackStubUtils {
      * @return a SensorDataSetLocation stub.
      */
     private static TrackPoint createDefaultTrackPoint(double latitude, double longitude, double altitude) {
-        return new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(INITIAL_TIME))
-                .setLatitude(latitude)
-                .setLongitude(longitude)
-                .setAltitude(altitude)
-                .setHorizontalAccuracy(INITIAL_ACCURACY)
-                .setSpeed(INITIAL_SPEED)
-                .setBearing(INITIAL_BEARING);
+        return new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                new Position(
+                        Instant.ofEpochMilli(INITIAL_TIME),
+                        latitude,
+                        longitude,
+                        INITIAL_ACCURACY,
+                        Altitude.WGS84.of(altitude),
+                        INITIAL_ACCURACY,
+                        INITIAL_BEARING,
+                        INITIAL_SPEED
+                ));
     }
 }

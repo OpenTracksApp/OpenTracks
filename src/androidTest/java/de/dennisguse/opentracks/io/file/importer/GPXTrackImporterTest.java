@@ -15,21 +15,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.ActivityType;
+import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -95,28 +94,37 @@ public class GPXTrackImporterTest {
         // first segment
         TrackPointAssert a = new TrackPointAssert();
         a.assertEquals(List.of(
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2021-01-07T21:51:59.179Z"))
-                        .setLatitude(3)
-                        .setLongitude(14)
-                        .setAltitude(10),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-01-07T21:52:00.653Z"))
-                        .setLatitude(3)
-                        .setLongitude(14.001)
-                        .setAltitude(10)
-                        .setSpeed(Speed.of(75.4192)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-01-07T21:52:01.010Z"))
-                        .setLatitude(3)
-                        .setLongitude(14.002)
-                        .setAltitude(10)
-                        .setSpeed(Speed.of(311.3948)),
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
+                        new Position(
+                                Instant.parse("2021-01-07T21:51:59.179Z"),
+                                3d, 14d, null,
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                null)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2021-01-07T21:52:00.653Z"),
+                                3d, 14.001, null,
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                Speed.of(75.4192))),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2021-01-07T21:52:01.010Z"),
+                                3d, 14.002, null,
+                                Altitude.WGS84.of(10), null,
+                                null, Speed.of(311.3948))),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse("2021-01-07T21:52:02.658Z")),
 
                 // created resume trackpoint with time of next valid trackpoint
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2021-01-07T21:52:03.873Z")),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-01-07T21:52:04.103Z"))
-                        .setLatitude(3)
-                        .setLongitude(14.003)
-                        .setAltitude(10)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2021-01-07T21:52:04.103Z"),
+                                3d, 14.003, null,
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                null))
         ), importedTrackPoints);
     }
 
@@ -151,20 +159,27 @@ public class GPXTrackImporterTest {
 
         TrackPointAssert a = new TrackPointAssert();
         a.assertEquals(List.of(
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2021-09-07T22:10:19Z"))
-                        .setLatitude(30.14185982)
-                        .setLongitude(-40.3863038)
-                        .setAltitude(-5),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-09-07T22:11:07Z"))
-                        .setLatitude(30.14184657)
-                        .setLongitude(-40.38670089)
-                        .setAltitude(-5)
-                        .setSpeed(Speed.of(0.7976524233818054)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-09-07T22:12:00Z"))
-                        .setLatitude(30.14185982)
-                        .setLongitude(-40.3863038)
-                        .setAltitude(-5)
-                        .setSpeed(Speed.of(0.7224021553993225))
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
+                        new Position(
+                                Instant.parse("2021-09-07T22:10:19Z"),
+                                30.14185982, -40.3863038, null,
+                                Altitude.WGS84.of(-5), null,
+                                null,
+                                null)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2021-09-07T22:11:07Z"),
+                                30.14184657, -40.38670089, null,
+                                Altitude.WGS84.of(-5), null,
+                                null,
+                                Speed.of(0.7976524233818054))),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2021-09-07T22:12:00Z"),
+                                30.14185982, -40.3863038, null,
+                                Altitude.WGS84.of(-5), null,
+                                null,
+                                Speed.of(0.7224021553993225)))
         ), importedTrackPoints);
     }
 
@@ -199,22 +214,27 @@ public class GPXTrackImporterTest {
 
         TrackPointAssert a = new TrackPointAssert();
         a.assertEquals(List.of(
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2021-09-07T22:10:19Z"))
-                        .setLatitude(30.14185982)
-                        .setLongitude(-40.3863038)
-                        .setAltitude(-5)
-                        .setSpeed(Speed.of(5)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-09-07T22:11:07Z"))
-                        .setLatitude(30.14184657)
-                        .setLongitude(-40.38670089)
-                        .setAltitude(-5)
-                        .setSpeed(Speed.of(0.7976524233818054))
-                        .setSpeed(Speed.of(4)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-09-07T22:12:00Z"))
-                        .setLatitude(30.14185982)
-                        .setLongitude(-40.3863038)
-                        .setAltitude(-5)
-                        .setSpeed(Speed.of(3))
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
+                        new Position(
+                                Instant.parse("2021-09-07T22:10:19Z"),
+                                30.14185982, -40.3863038, null,
+                                Altitude.WGS84.of(-5), null,
+                                null,
+                                Speed.of(5))),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2021-09-07T22:11:07Z"),
+                                30.14184657, -40.38670089, null,
+                                Altitude.WGS84.of(-5), null,
+                                null,
+                                Speed.of(4))),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2021-09-07T22:12:00Z"),
+                                30.14185982, -40.3863038, null,
+                                Altitude.WGS84.of(-5), null,
+                                null,
+                                Speed.of(3)))
         ), importedTrackPoints);
     }
 
@@ -237,11 +257,6 @@ public class GPXTrackImporterTest {
         trackExporter.writeTrack(List.of(importedTrack), outputStream);
 
         // then
-        String expected = new BufferedReader(
-                new InputStreamReader(inputStreamExpected, StandardCharsets.UTF_8))
-                .lines()
-                .collect(Collectors.joining("\n")) + "\n";
-
-        assertEquals(expected, outputStream.toString()); //TODO inputStream.readAllBytes() ?
+        assertEquals(new String(inputStreamExpected.readAllBytes(), StandardCharsets.UTF_8), outputStream.toString());
     }
 }

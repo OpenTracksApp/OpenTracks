@@ -47,6 +47,7 @@ import java.time.Instant;
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.MarkerEditBinding;
@@ -169,7 +170,7 @@ public class MarkerEditActivity extends AbstractActivity {
     }
 
     private LiveData<Marker> createNewMarker() {
-        TrackPoint trackPoint = new TrackPoint(location, Instant.now());
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Position.of(location, Instant.now()));
         return viewModel.createNewMarker(trackId, trackPoint);
     }
 

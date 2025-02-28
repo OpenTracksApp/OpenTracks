@@ -17,6 +17,7 @@ import java.util.List;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -104,8 +105,8 @@ public class TrackStatisticsUpdaterTest {
         TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
 
         TrackPoint tp1 = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochMilli(1000));
-        TrackPoint tp2 = new TrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
-        TrackPoint tp3 = new TrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
+        TrackPoint tp2 = createTrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
+        TrackPoint tp3 = createTrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
         tp3.setSpeed(Speed.of(5f));
 
         // when
@@ -123,11 +124,11 @@ public class TrackStatisticsUpdaterTest {
         TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
 
         TrackPoint tp1 = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochMilli(1000));
-        TrackPoint tp2 = new TrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
+        TrackPoint tp2 = createTrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
         tp2.setSpeed(Speed.of(5f));
-        TrackPoint tp3 = new TrackPoint(0.001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
+        TrackPoint tp3 = createTrackPoint(0.001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
         tp3.setSpeed(Speed.of(5f));
-        TrackPoint tp4 = new TrackPoint(0.001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(4000));
+        TrackPoint tp4 = createTrackPoint(0.001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(4000));
         tp4.setSpeed(Speed.of(5f));
         tp4.setSensorDistance(Distance.of(5f));
         TrackPoint tp5 = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochMilli(5000));
@@ -155,12 +156,12 @@ public class TrackStatisticsUpdaterTest {
         TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
 
         TrackPoint tp1 = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochMilli(1000));
-        TrackPoint tp2 = new TrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
+        TrackPoint tp2 = createTrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
         tp2.setSpeed(Speed.of(5f));
-        TrackPoint tp3 = new TrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
+        TrackPoint tp3 = createTrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
         tp3.setSensorDistance(Distance.of(5f));
         tp3.setSpeed(Speed.of(5f));
-        TrackPoint tp4 = new TrackPoint(0.0005, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(4000));
+        TrackPoint tp4 = createTrackPoint(0.0005, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(4000));
         tp4.setSpeed(Speed.of(5f));
         TrackPoint tp5 = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochMilli(5000));
 
@@ -187,9 +188,9 @@ public class TrackStatisticsUpdaterTest {
 
         subject.addTrackPoints(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0)),
-                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
+                createTrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
                         .setSpeed(Speed.of(2f)),
-                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
+                createTrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
                         .setSpeed(Speed.of(2f)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochSecond(4))
         ));
@@ -198,9 +199,9 @@ public class TrackStatisticsUpdaterTest {
         // when
         subject.addTrackPoints(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(5)),
-                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(6))
+                createTrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(6))
                         .setSpeed(Speed.of(1f)),
-                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(7))
+                createTrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(7))
                         .setSpeed(Speed.of(1f)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochSecond(8))
         ));
@@ -216,9 +217,9 @@ public class TrackStatisticsUpdaterTest {
         // when
         subject.addTrackPoints(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0)),
-                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
+                createTrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
                         .setSpeed(Speed.of(2f)),
-                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
+                createTrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
                         .setSpeed(Speed.of(2f)),
 
                 new TrackPoint(TrackPoint.Type.IDLE, Instant.ofEpochSecond(30)),
@@ -226,8 +227,8 @@ public class TrackStatisticsUpdaterTest {
                         .setHeartRate(50),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(45))
                         .setHeartRate(50),
-                new TrackPoint(0, 1, Altitude.WGS84.of(0), Instant.ofEpochSecond(50)),
-                new TrackPoint(0, 2, Altitude.WGS84.of(0), Instant.ofEpochSecond(55)),
+                createTrackPoint(0, 1, Altitude.WGS84.of(0), Instant.ofEpochSecond(50)),
+                createTrackPoint(0, 2, Altitude.WGS84.of(0), Instant.ofEpochSecond(55)),
 
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochSecond(60))
         ));
@@ -243,9 +244,9 @@ public class TrackStatisticsUpdaterTest {
         // when
         subject.addTrackPoints(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0)),
-                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
+                createTrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
                         .setSensorDistance(Distance.of(10)),
-                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
+                createTrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
                         .setSensorDistance(Distance.of(10)),
 
                 new TrackPoint(TrackPoint.Type.IDLE, Instant.ofEpochSecond(30))
@@ -254,9 +255,9 @@ public class TrackStatisticsUpdaterTest {
                         .setHeartRate(50),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(45))
                         .setHeartRate(50),
-                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(50))
+                createTrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(50))
                         .setSensorDistance(Distance.of(10)),
-                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(55))
+                createTrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(55))
                         .setSensorDistance(Distance.of(10)),
 
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochSecond(60))
@@ -274,7 +275,7 @@ public class TrackStatisticsUpdaterTest {
         // when
         subject.addTrackPoint(new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0)));
         subject.addTrackPoint(
-                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(10))
+                createTrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(10))
                         .setSensorDistance(Distance.of(10)));
 
         subject.addTrackPoint(new TrackPoint(TrackPoint.Type.IDLE, Instant.ofEpochSecond(30)));
@@ -330,11 +331,11 @@ public class TrackStatisticsUpdaterTest {
         TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
 
         TrackPoint tp1 = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochMilli(1000));
-        TrackPoint tp2 = new TrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
+        TrackPoint tp2 = createTrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
         tp2.setSpeed(Speed.of(5f));
-        TrackPoint tp3 = new TrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
+        TrackPoint tp3 = createTrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
         tp3.setSpeed(Speed.of(5f));
-        TrackPoint tp4 = new TrackPoint(0.0005, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(4000));
+        TrackPoint tp4 = createTrackPoint(0.0005, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(4000));
         tp4.setSpeed(Speed.of(5f));
         TrackPoint tp5 = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochMilli(5000));
 
@@ -351,5 +352,19 @@ public class TrackStatisticsUpdaterTest {
         // then
         assertEquals(55.287, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
         assertEquals(55.287, copy.getTrackStatistics().getTotalDistance().toM(), 0.01);
+    }
+
+    public TrackPoint createTrackPoint(double latitude, double longitude, Altitude altitude, Instant time) {
+        return new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                new Position(
+                        time,
+                        latitude,
+                        longitude,
+                        null,
+                        altitude,
+                        null,
+                        null,
+                        null
+                ));
     }
 }

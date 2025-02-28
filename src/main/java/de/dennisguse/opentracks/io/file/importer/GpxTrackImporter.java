@@ -331,7 +331,9 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
             }
         }
 
-        TrackPoint trackPoint = new TrackPoint(new Position(
+        TrackPoint trackPoint = new TrackPoint(
+                TrackPoint.Type.TRACKPOINT,
+                new Position(
                 parsedTime.toInstant(),
                 latitudeParsed,
                 longitudeParsed,
@@ -430,7 +432,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
         TrackPoint trackPoint = createTrackPoint();
 
         if (!trackPoint.hasLocation()) {
-            Log.w(TAG, "Marker with invalid coordinates ignored: " + trackPoint.getLocation());
+            Log.w(TAG, "Marker with invalid coordinates ignored: " + trackPoint.getPosition());
             return;
         }
         Marker marker = new Marker(null, trackPoint);
