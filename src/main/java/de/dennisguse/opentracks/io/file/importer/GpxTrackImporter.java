@@ -34,6 +34,7 @@ import java.util.Locale;
 import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -161,7 +162,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
             case TAG_GPX -> onFileEnd();
             case TAG_MARKER -> onMarkerEnd();
             case TAG_TRACK -> {
-                if (activityTypeLocalized == null ) {
+                if (activityTypeLocalized == null) {
                     // Backward compatibility: up v4.9.1 as <type> contained localized content.
                     activityTypeLocalized = activityType;
                 }
@@ -282,33 +283,65 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
             throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", time)), e);
         }
 
-        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, parsedTime.toInstant());
         if (latitude == null || longitude == null) {
-            return trackPoint;
+            return new TrackPoint(TrackPoint.Type.TRACKPOINT, parsedTime.toInstant());
         }
 
+        double latitudeParsed;
+        double longitudeParsed;
+        Distance accuracyHorizontalParsed = null;
+        Altitude.WGS84 altitudeParsed = null;
+        Distance accuracyVerticalParsed = null;
+        Speed speedParsed = null;
+
         try {
-            trackPoint.setLatitude(Double.parseDouble(latitude));
-            trackPoint.setLongitude(Double.parseDouble(longitude));
+            latitudeParsed = Double.parseDouble(latitude);
+            longitudeParsed = Double.parseDouble(longitude);
         } catch (NumberFormatException e) {
             throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse latitude longitude: %s %s", latitude, longitude)), e);
+        }
+        if (accuracyHorizontal != null) {
+            try {
+                accuracyHorizontalParsed = Distance.of(accuracyHorizontal);
+            } catch (NumberFormatException e) {
+                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse accuracy_horizontal: %s", sensorDistance)), e);
+            }
         }
 
         if (altitude != null) {
             try {
-                trackPoint.setAltitude(Altitude.WGS84.of(Double.parseDouble(altitude)));
+                altitudeParsed = Altitude.WGS84.of(Double.parseDouble(altitude));
             } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude: %s", altitude)), e);
+            }
+        }
+        if (accuracyVertical != null) {
+            try {
+                accuracyVerticalParsed = Distance.of(accuracyVertical);
+            } catch (NumberFormatException e) {
+                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse accuracy_vertical: %s", accuracyVertical)), e);
             }
         }
 
         if (speed != null) {
             try {
-                trackPoint.setSpeed(Speed.of(speed));
+                speedParsed = Speed.of(speed);
             } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse speed: %s", speed)), e);
             }
         }
+
+        TrackPoint trackPoint = new TrackPoint(new Position(
+                parsedTime.toInstant(),
+                latitudeParsed,
+                longitudeParsed,
+                accuracyHorizontalParsed,
+                altitudeParsed,
+                accuracyVerticalParsed,
+                null,
+                speedParsed
+        ));
+
         if (heartrate != null) {
             try {
                 trackPoint.setHeartRate(Float.parseFloat(heartrate));
@@ -352,20 +385,6 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 trackPoint.setSensorDistance(Distance.of(sensorDistance));
             } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse distance: %s", sensorDistance)), e);
-            }
-        }
-        if (accuracyHorizontal != null) {
-            try {
-                trackPoint.setHorizontalAccuracy(Distance.of(accuracyHorizontal));
-            } catch (NumberFormatException e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse accuracy_horizontal: %s", sensorDistance)), e);
-            }
-        }
-        if (accuracyVertical != null) {
-            try {
-                trackPoint.setVerticalAccuracy(Distance.of(accuracyVertical));
-            } catch (NumberFormatException e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse accuracy_vertical: %s", sensorDistance)), e);
             }
         }
 

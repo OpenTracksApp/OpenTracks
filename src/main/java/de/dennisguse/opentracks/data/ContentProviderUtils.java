@@ -622,31 +622,19 @@ public class ContentProviderUtils {
      * @param indexes the cached trackPoints indexes
      */
     static TrackPoint fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes) {
-        Instant time = Instant.ofEpochMilli(cursor.getLong(indexes.timeIndex));
-        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.getById(cursor.getInt(indexes.typeIndex)), time);
-        trackPoint.setId(new TrackPoint.Id(cursor.getInt(indexes.idIndex)));
-
-        if (!cursor.isNull(indexes.longitudeIndex)) {
-            trackPoint.setLongitude(((double) cursor.getInt(indexes.longitudeIndex)) / 1E6);
-        }
-        if (!cursor.isNull(indexes.latitudeIndex)) {
-            trackPoint.setLatitude(((double) cursor.getInt(indexes.latitudeIndex)) / 1E6);
-        }
-        if (!cursor.isNull(indexes.altitudeIndex)) {
-            trackPoint.setAltitude(Altitude.WGS84.of(cursor.getFloat(indexes.altitudeIndex)));
-        }
-        if (!cursor.isNull(indexes.accuracyIndex)) {
-            trackPoint.setHorizontalAccuracy(Distance.of(cursor.getFloat(indexes.accuracyIndex)));
-        }
-        if (!cursor.isNull(indexes.accuracyVerticalIndex)) {
-            trackPoint.setVerticalAccuracy(Distance.of(cursor.getFloat(indexes.accuracyVerticalIndex)));
-        }
-        if (!cursor.isNull(indexes.speedIndex)) {
-            trackPoint.setSpeed(Speed.of(cursor.getFloat(indexes.speedIndex)));
-        }
-        if (!cursor.isNull(indexes.bearingIndex)) {
-            trackPoint.setBearing(cursor.getFloat(indexes.bearingIndex));
-        }
+        TrackPoint trackPoint = new TrackPoint(
+                new TrackPoint.Id(cursor.getInt(indexes.idIndex)),
+                TrackPoint.Type.getById(cursor.getInt(indexes.typeIndex)),
+                new Position(
+                        Instant.ofEpochMilli(cursor.getLong(indexes.timeIndex)),
+                        !cursor.isNull(indexes.latitudeIndex) ? ((double) cursor.getInt(indexes.latitudeIndex)) / 1E6 : null,
+                        !cursor.isNull(indexes.longitudeIndex) ? ((double) cursor.getInt(indexes.longitudeIndex)) / 1E6 : null,
+                        !cursor.isNull(indexes.accuracyIndex) ? Distance.of(cursor.getFloat(indexes.accuracyIndex)) : null,
+                        !cursor.isNull(indexes.altitudeIndex) ? Altitude.WGS84.of(cursor.getFloat(indexes.altitudeIndex)) : null,
+                        !cursor.isNull(indexes.accuracyVerticalIndex) ? Distance.of(cursor.getFloat(indexes.accuracyVerticalIndex)) : null,
+                        !cursor.isNull(indexes.bearingIndex) ? cursor.getFloat(indexes.bearingIndex) : null,
+                        !cursor.isNull(indexes.speedIndex) ? Speed.of(cursor.getFloat(indexes.speedIndex)) : null
+                ));
 
         if (!cursor.isNull(indexes.sensorHeartRateIndex)) {
             trackPoint.setHeartRate(cursor.getFloat(indexes.sensorHeartRateIndex));

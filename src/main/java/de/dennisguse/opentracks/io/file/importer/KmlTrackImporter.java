@@ -313,9 +313,11 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             Instant time = whenList.get(i);
             Location location = locationList.get(i);
 
-            TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, time);
-            if (location != null) {
-                trackPoint.setLocation(location);
+            TrackPoint trackPoint;
+            if (location == null) {
+                trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, time);
+            } else {
+                trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, location, time);
             }
 
             if (i < trackpointTypeList.size() && trackpointTypeList.get(i) != null) {

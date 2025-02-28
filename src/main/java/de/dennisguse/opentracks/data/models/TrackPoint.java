@@ -38,20 +38,12 @@ public class TrackPoint {
 
     private static final Duration MAX_LOCATION_AGE = Duration.ofMinutes(1);
 
+    @Nullable
     private TrackPoint.Id id;
 
+    //Requires: position.time must be non-null
     @NonNull
-    private final Instant time;
-
-    //TODO We may use Position for these items
-    private Double latitude;
-    private Double longitude;
-    private Distance horizontalAccuracy;
-    private Distance verticalAccuracy;
-    private Altitude altitude; //TODO use Altitude.WGS84
-    private Speed speed;
-    private Float bearing;
-    private Distance sensorDistance;
+    private Position position;
 
     public enum Type {
         SEGMENT_START_MANUAL(-2), //Start of a segment due to user interaction (start, resume)
@@ -73,6 +65,7 @@ public class TrackPoint {
             this.type_db = type_db;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return name() + "(" + type_db + ")";
@@ -90,33 +83,55 @@ public class TrackPoint {
     @NonNull
     private Type type;
 
+    private Distance sensorDistance;
     private HeartRate heartRate = null;
     private Cadence cadence = null;
     private Power power = null;
     private Float altitudeGain_m = null;
     private Float altitudeLoss_m = null;
 
-    public TrackPoint(@NonNull Type type, @NonNull Instant time) {
+    public TrackPoint(@Nullable TrackPoint.Id id, @NonNull Type type, @NonNull Position position) {
+        this.id = id;
         this.type = type;
-        this.time = time;
+        this.position = position;
     }
 
+    //TODO Refactor constructors
+    public TrackPoint(@NonNull Type type, @NonNull Instant time) {
+        this.type = type;
+        this.position = Position.of(time);
+    }
+
+    @Deprecated
     public TrackPoint(@NonNull Location location, @NonNull Instant time) {
-        this(Type.TRACKPOINT, location, time);
+        this.type = Type.TRACKPOINT;
+        this.position = Position.of(location, time);
+    }
+
+    public TrackPoint(@NonNull Position position) {
+        this(null, Type.TRACKPOINT, position);
     }
 
     public TrackPoint(@NonNull Type type, @NonNull Location location, @NonNull Instant time) {
-        this(type, time);
-
-        setLocation(location);
+        this.type = type;
+        this.position = Position.of(location, time);
     }
 
+    //TODO Remove; only used for TrackStatisticUpdaterTest
+    @Deprecated
     @VisibleForTesting
     public TrackPoint(double latitude, double longitude, Altitude altitude, Instant time) {
-        this(Type.TRACKPOINT, time);
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
+        this.type = Type.TRACKPOINT;
+        this.position = new Position(
+                time,
+                latitude,
+                longitude,
+                null,
+                altitude,
+                null,
+                null,
+                null
+        );
     }
 
     public static TrackPoint createSegmentStartManualWithTime(Instant time) {
@@ -161,54 +176,46 @@ public class TrackPoint {
         return id;
     }
 
-    public void setId(TrackPoint.Id id) {
-        this.id = id;
-    }
-
     public boolean hasLocation() {
-        return latitude != null && longitude != null;
+        return position.hasLocation();
     }
 
-    public double getLatitude() {
-        return latitude;
+    //TODO Should be double
+    @Deprecated //Use getPosition()
+    public Double getLatitude() {
+        return position.latitude();
     }
 
+    @Deprecated
     public TrackPoint setLatitude(double latitude) {
-        this.latitude = latitude;
+        this.position = position.withCoordinates(latitude, getLongitude());
         return this;
     }
 
-    public double getLongitude() {
-        return longitude;
+    //TODO Should be double
+    @Deprecated //Use getPosition()
+    public Double getLongitude() {
+        return position.longitude();
     }
 
+    @Deprecated
     public TrackPoint setLongitude(double longitude) {
-        this.longitude = longitude;
+        setCoordinates(getLatitude(), longitude);
+        return this;
+    }
+
+    public TrackPoint setCoordinates(double latitude, double longitude) {
+        this.position = this.position.withCoordinates(latitude, longitude);
         return this;
     }
 
     @NonNull
     public Position getPosition() {
-        return new Position(
-                time,
-                latitude,
-                longitude,
-                horizontalAccuracy,
-                altitude,
-                verticalAccuracy,
-                bearing,
-                speed
-        );
+        return position;
     }
 
-    public TrackPoint setPosition(Position location) {
-        this.latitude = location.latitude();
-        this.longitude = location.longitude();
-        this.altitude = location.altitude();
-        this.speed = location.speed();
-        this.horizontalAccuracy = location.horizontalAccuracy();
-        this.verticalAccuracy = location.verticalAccuracy();
-
+    public TrackPoint setPosition(Position position) {
+        this.position = position.with(this.position.time());
         return this;
     }
 
@@ -216,12 +223,6 @@ public class TrackPoint {
     @NonNull
     public Location getLocation() {
         return getPosition().toLocation();
-    }
-
-    @Deprecated
-    public TrackPoint setLocation(@NonNull Location location) {
-        setPosition(Position.of(location));
-        return this;
     }
 
     public boolean hasAltitudeGain() {
@@ -252,83 +253,77 @@ public class TrackPoint {
 
     @NonNull
     public Instant getTime() {
-        return time;
+        return position.time();
     }
-
-    public boolean isRecent() {
-        return Instant.now()
-                .isBefore(time.plus(MAX_LOCATION_AGE));
-    }
-
 
     public boolean hasAltitude() {
-        return altitude != null;
+        return position.hasAltitude();
     }
 
     public Altitude getAltitude() {
-        return altitude;
+        return position.altitude();
     }
 
     @VisibleForTesting
     public TrackPoint setAltitude(double altitude_m) {
-        this.altitude = Altitude.WGS84.of(altitude_m);
+        setAltitude(Altitude.WGS84.of(altitude_m));
         return this;
     }
 
     public TrackPoint setAltitude(Altitude altitude) {
-        this.altitude = altitude;
+        position = position.with(altitude);
         return this;
     }
 
     public boolean hasSpeed() {
-        return speed != null;
+        return position.hasSpeed();
     }
 
     public Speed getSpeed() {
-        return speed;
+        return position.speed();
     }
 
     public TrackPoint setSpeed(Speed speed) {
-        this.speed = speed;
+        this.position = position.with(speed);
         return this;
     }
 
     public boolean hasBearing() {
-        return bearing != null;
+        return position.hasBearing();
     }
 
     public float getBearing() {
-        return bearing;
+        return position.bearing();
     }
 
     public TrackPoint setBearing(Float bearing) {
-        this.bearing = bearing;
+        this.position = this.position.withBearing(bearing);
         return this;
     }
 
     public boolean hasHorizontalAccuracy() {
-        return horizontalAccuracy != null;
+        return position.hasHorizontalAccuracy();
     }
 
     public Distance getHorizontalAccuracy() {
-        return horizontalAccuracy;
+        return position.horizontalAccuracy();
     }
 
     public TrackPoint setHorizontalAccuracy(Distance horizontalAccuracy) {
-        this.horizontalAccuracy = horizontalAccuracy;
+        this.position = this.position.withHorizontalAccuracy(horizontalAccuracy);
         return this;
     }
 
     public boolean hasVerticalAccuracy() {
-        return verticalAccuracy != null;
+        return position.hasVerticalAccuracy();
     }
 
     public Distance getVerticalAccuracy() {
-        return verticalAccuracy;
+        return position.verticalAccuracy();
     }
 
-    public TrackPoint setVerticalAccuracy(Distance horizontalAccuracy) {
-        this.verticalAccuracy = horizontalAccuracy;
+    public TrackPoint setVerticalAccuracy(Distance verticalAccuracy) {
+        this.position = this.position.withVerticalAccuracy(verticalAccuracy);
         return this;
     }
 
@@ -350,7 +345,7 @@ public class TrackPoint {
     }
 
     public boolean fulfillsAccuracy(Distance thresholdHorizontalAccuracy) {
-        return hasHorizontalAccuracy() && horizontalAccuracy.lessThan(thresholdHorizontalAccuracy);
+        return position.fulfillsAccuracy(thresholdHorizontalAccuracy);
     }
 
     public Optional<Float> bearingTo(@NonNull Position dest) {
@@ -459,14 +454,7 @@ public class TrackPoint {
     public String toString() {
         return "TrackPoint{" +
                 "id=" + id +
-                ", time=" + time +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", horizontalAccuracy=" + horizontalAccuracy +
-                ", verticalAccuracy=" + verticalAccuracy +
-                ", altitude=" + altitude +
-                ", speed=" + speed +
-                ", bearing=" + bearing +
+                ", position=" + position +
                 ", sensorDistance=" + sensorDistance +
                 ", type=" + type +
                 ", heartRate=" + heartRate +
