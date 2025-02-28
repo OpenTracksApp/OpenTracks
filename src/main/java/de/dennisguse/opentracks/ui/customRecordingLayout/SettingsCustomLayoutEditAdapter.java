@@ -61,7 +61,7 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
                 Speed.zero()
         );
 
-        demoData = new RecordingData(track, new TrackPoint(position), null);
+        demoData = new RecordingData(track, new TrackPoint(TrackPoint.Type.TRACKPOINT, position), null);
     }
 
     private RecordingLayout recordingLayout;

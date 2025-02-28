@@ -23,7 +23,9 @@ import java.util.List;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.ActivityType;
+import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -81,23 +83,30 @@ public class KMLTrackImporterTest {
 
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
-        TrackPointAssert a = new TrackPointAssert();
-        a.assertEquals(List.of(
+        new TrackPointAssert().assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2021-05-29T18:06:21.767Z")),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-05-29T18:06:22.042Z"))
-                        .setLatitude(3)
-                        .setLongitude(14)
-                        .setAltitude(10),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-05-29T18:06:22.192Z"))
-                        .setLatitude(3)
-                        .setLongitude(14.001)
-                        .setAltitude(10)
-                        .setSpeed(Speed.of(741.1196)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-05-29T18:06:22.318Z"))
-                        .setLatitude(3)
-                        .setLongitude(14.002)
-                        .setAltitude(10)
-                        .setSpeed(Speed.of(882.2853)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2021-05-29T18:06:22.042Z"),
+                                3d, 14d, null,
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                null)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2021-05-29T18:06:22.192Z"),
+                                3d, 14.001, null,
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                Speed.of(741.1196)
+                        )),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2021-05-29T18:06:22.318Z"),
+                                3d, 14.002, null,
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                Speed.of(882.2853))),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse("2021-05-29T18:06:22.512Z"))
         ), importedTrackPoints);
     }
@@ -131,12 +140,13 @@ public class KMLTrackImporterTest {
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
 
-        TrackPointAssert a = new TrackPointAssert();
-        a.assertEquals(List.of(
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-05-29T18:06:21.767Z"))
-                        .setLatitude(3)
-                        .setLongitude(14)
-                        .setAltitude(10),
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(Instant.parse("2021-05-29T18:06:21.767Z"),
+                                3d, 14d, null,
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                null)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2021-05-29T18:06:22.042Z"))
         ), importedTrackPoints);
     }
@@ -171,47 +181,57 @@ public class KMLTrackImporterTest {
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
 
-        TrackPointAssert a = new TrackPointAssert();
-        a.assertEquals(List.of(
+        new TrackPointAssert().assertEquals(List.of(
                 // first 3 trackpoints
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2020-11-28T17:06:22.401Z"))
-                        .setLatitude(12.340097)
-                        .setLongitude(1.234156)
-                        .setAltitude(469.286376953125)
-                        .setAltitudeGain(0f)
-                        .setSpeed(Speed.of(0.539)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-11-28T17:06:25.448Z"))
-                        .setLatitude(12.340036)
-                        .setLongitude(1.23415)
-                        .setAltitude(439.1626281738281)
-                        .setAltitudeGain(0f)
-                        .setSpeed(Speed.of(0.1577)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-11-28T17:06:47.888Z"))
-                        .setLatitude(12.340057)
-                        .setLongitude(1.23405)
-                        .setAltitude(421.8070983886719)
-                        .setAltitudeGain(0f)
-                        .setSpeed(Speed.of(0)),
-
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
+                        new Position(
+                                Instant.parse("2020-11-28T17:06:22.401Z"),
+                                12.340097, 1.234156, null,
+                                Altitude.WGS84.of(469.286376953125), null,
+                                null,
+                                Speed.of(0.539)))
+                        .setAltitudeGain(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2020-11-28T17:06:25.448Z"),
+                                12.340036, 1.23415, null,
+                                Altitude.WGS84.of(439.1626281738281), null,
+                                null,
+                                Speed.of(0.1577)))
+                        .setAltitudeGain(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2020-11-28T17:06:47.888Z"),
+                                12.340057, 1.23405, null,
+                                Altitude.WGS84.of(421.8070983886719), null,
+                                null,
+                                Speed.of(0)))
+                        .setAltitudeGain(0f),
                 // created resume trackpoint with time of next valid trackpoint
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2020-11-28T17:06:55.861Z"))
-                        .setLatitude(12.340057)
-                        .setLongitude(1.23405)
-                        .setAltitude(419.93902587890625)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
+                        new Position(
+                                Instant.parse("2020-11-28T17:06:55.861Z"),
+                                12.340057, 1.23405, null,
+                                Altitude.WGS84.of(419.93902587890625), null,
+                                null,
+                                Speed.of(0)))
+                        .setAltitudeGain(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2020-11-28T17:06:56.905Z"),
+                                12.340057, 1.23405, null,
+                                Altitude.WGS84.of(419.9036560058594), null,
+                                null,
+                                Speed.of(0)))
+                        .setAltitudeGain(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2020-11-28T17:07:20.870Z"),
+                                12.340082, 1.234046, null,
+                                Altitude.WGS84.of(417.99432373046875), null,
+                                null,
+                                Speed.of(0)))
                         .setAltitudeGain(0f)
-                        .setSpeed(Speed.of(0)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-11-28T17:06:56.905Z"))
-                        .setLatitude(12.340057)
-                        .setLongitude(1.23405)
-                        .setAltitude(419.9036560058594)
-                        .setAltitudeGain(0f)
-                        .setSpeed(Speed.of(0)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-11-28T17:07:20.870Z"))
-                        .setLatitude(12.340082)
-                        .setLongitude(1.234046)
-                        .setAltitude(417.99432373046875)
-                        .setAltitudeGain(0f)
-                        .setSpeed(Speed.of(0))
         ), importedTrackPoints);
     }
 

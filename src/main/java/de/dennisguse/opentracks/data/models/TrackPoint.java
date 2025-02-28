@@ -23,7 +23,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;
 
@@ -31,12 +30,10 @@ import java.util.Optional;
  * Sensor and/or location information for a specific point in time.
  * <p>
  * Time is created using the {@link de.dennisguse.opentracks.services.handlers.MonotonicClock}, because system time jump backwards.
- * GPS time is ignored as for non-GPS events, we could not create timestamps.
+ * GPS time is ignored as for non-GPS events, we could not create GPS-based timestamps.
  */
 //TODO Should be a record (with final properties)
 public class TrackPoint {
-
-    private static final Duration MAX_LOCATION_AGE = Duration.ofMinutes(1);
 
     @Nullable
     private TrackPoint.Id id;
@@ -98,40 +95,11 @@ public class TrackPoint {
 
     //TODO Refactor constructors
     public TrackPoint(@NonNull Type type, @NonNull Instant time) {
-        this.type = type;
-        this.position = Position.of(time);
+        this(null, type, Position.of(time));
     }
 
-    @Deprecated
-    public TrackPoint(@NonNull Location location, @NonNull Instant time) {
-        this.type = Type.TRACKPOINT;
-        this.position = Position.of(location, time);
-    }
-
-    public TrackPoint(@NonNull Position position) {
-        this(null, Type.TRACKPOINT, position);
-    }
-
-    public TrackPoint(@NonNull Type type, @NonNull Location location, @NonNull Instant time) {
-        this.type = type;
-        this.position = Position.of(location, time);
-    }
-
-    //TODO Remove; only used for TrackStatisticUpdaterTest
-    @Deprecated
-    @VisibleForTesting
-    public TrackPoint(double latitude, double longitude, Altitude altitude, Instant time) {
-        this.type = Type.TRACKPOINT;
-        this.position = new Position(
-                time,
-                latitude,
-                longitude,
-                null,
-                altitude,
-                null,
-                null,
-                null
-        );
+    public TrackPoint(@NonNull Type type, @NonNull Position position) {
+        this(null, type, position);
     }
 
     public static TrackPoint createSegmentStartManualWithTime(Instant time) {
@@ -147,6 +115,7 @@ public class TrackPoint {
         return type;
     }
 
+    @Deprecated //Should not be needed.
     public TrackPoint setType(@NonNull Type type) {
         this.type = type;
         return this;
@@ -186,27 +155,10 @@ public class TrackPoint {
         return position.latitude();
     }
 
-    @Deprecated
-    public TrackPoint setLatitude(double latitude) {
-        this.position = position.withCoordinates(latitude, getLongitude());
-        return this;
-    }
-
     //TODO Should be double
     @Deprecated //Use getPosition()
     public Double getLongitude() {
         return position.longitude();
-    }
-
-    @Deprecated
-    public TrackPoint setLongitude(double longitude) {
-        setCoordinates(getLatitude(), longitude);
-        return this;
-    }
-
-    public TrackPoint setCoordinates(double latitude, double longitude) {
-        this.position = this.position.withCoordinates(latitude, longitude);
-        return this;
     }
 
     @NonNull
@@ -233,6 +185,7 @@ public class TrackPoint {
         return altitudeGain_m;
     }
 
+    @Deprecated
     public TrackPoint setAltitudeGain(Float altitudeGain_m) {
         this.altitudeGain_m = altitudeGain_m;
         return this;
@@ -246,6 +199,7 @@ public class TrackPoint {
         return altitudeLoss_m;
     }
 
+    @Deprecated
     public TrackPoint setAltitudeLoss(Float altitudeLoss_m) {
         this.altitudeLoss_m = altitudeLoss_m;
         return this;
@@ -264,12 +218,14 @@ public class TrackPoint {
         return position.altitude();
     }
 
+    @Deprecated
     @VisibleForTesting
     public TrackPoint setAltitude(double altitude_m) {
         setAltitude(Altitude.WGS84.of(altitude_m));
         return this;
     }
 
+    @Deprecated
     public TrackPoint setAltitude(Altitude altitude) {
         position = position.with(altitude);
         return this;
@@ -283,6 +239,7 @@ public class TrackPoint {
         return position.speed();
     }
 
+    @Deprecated
     public TrackPoint setSpeed(Speed speed) {
         this.position = position.with(speed);
         return this;
@@ -309,6 +266,7 @@ public class TrackPoint {
         return position.horizontalAccuracy();
     }
 
+    @Deprecated
     public TrackPoint setHorizontalAccuracy(Distance horizontalAccuracy) {
         this.position = this.position.withHorizontalAccuracy(horizontalAccuracy);
         return this;

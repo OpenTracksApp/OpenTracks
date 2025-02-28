@@ -35,6 +35,7 @@ import java.util.Locale;
 
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -94,7 +95,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private ZoneOffset zoneOffset;
 
     private final ArrayList<Instant> whenList = new ArrayList<>();
-    private final ArrayList<Location> locationList = new ArrayList<>();
+    private final ArrayList<Position> positionList = new ArrayList<>();
 
     private String dataType;
 
@@ -255,13 +256,14 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             return;
         }
 
-        Location location = createLocation(longitude, latitude, altitude);
-        if (location == null) {
-            Log.w(TAG, "Marker with invalid coordinates ignored: " + location);
+        Position position = createPosition(latitude, longitude, altitude);
+        if (position == null) {
+            Log.w(TAG, "Marker with invalid coordinates ignored: " + latitude + " " + longitude);
             return;
         }
+        position = position.with(whenList.get(0));
 
-        Marker marker = new Marker(null, new TrackPoint(TrackPoint.Type.TRACKPOINT, location, whenList.get(0))); //TODO Creating marker without need
+        Marker marker = new Marker(null, new TrackPoint(TrackPoint.Type.TRACKPOINT, position)); //TODO Creating marker without need
         marker.setName(name != null ? name : "");
         marker.setDescription(description != null ? description : "");
         marker.setCategory(activityTypeLocalized != null ? activityTypeLocalized : "");
@@ -288,7 +290,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     }
 
     private void onTrackSegmentStart() {
-        locationList.clear();
+        positionList.clear();
         whenList.clear();
 
         trackpointTypeList.clear();
@@ -304,24 +306,23 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     }
 
     private void onTrackSegmentEnd() {
-        if (locationList.size() != whenList.size()) {
+        if (positionList.size() != whenList.size()) {
             throw new ImportParserException("<coords> and <when> should have the same count.");
         }
 
         // Close a track segment by inserting the segment locations
-        for (int i = 0; i < locationList.size(); i++) {
+        for (int i = 0; i < positionList.size(); i++) {
             Instant time = whenList.get(i);
-            Location location = locationList.get(i);
+            Position position = positionList.get(i);
 
             TrackPoint trackPoint;
-            if (location == null) {
-                trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, time);
+            if (position == null) {
+                trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Position.of(time));
             } else {
-                trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, location, time);
+                trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, position.with(time));
             }
 
             if (i < trackpointTypeList.size() && trackpointTypeList.get(i) != null) {
-
                 TrackPoint.Type type = TrackPoint.Type.valueOf(trackpointTypeList.get(i));
                 trackPoint.setType(type);
             }
@@ -363,7 +364,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 } else {
                     type = TrackPoint.Type.SEGMENT_START_AUTOMATIC;
                 }
-            } else if (i == locationList.size() - 1 && !trackPoint.wasCreatedManually()) {
+            } else if (i == positionList.size() - 1 && !trackPoint.wasCreatedManually()) {
                 //last
                 type = TrackPoint.Type.SEGMENT_END_MANUAL;
             }
@@ -381,18 +382,16 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             altitude = parts.length == 3 ? parts[2] : null;
         }
 
-        locationList.add(createLocation(longitude, latitude, altitude));
+        positionList.add(createPosition(latitude, longitude, altitude));
 
         longitude = null;
         latitude = null;
         altitude = null;
     }
 
-    private Location createLocation(String longitude, String latitude, String altitude) {
-        Location location = null;
-        if (longitude != null || latitude != null) {
-            location = new Location("import");
-
+    private Position createPosition(String latitude, String longitude, String altitude) {
+        if (longitude != null && latitude != null) {
+            Location location = new Location("import");
             try {
                 location.setLatitude(Double.parseDouble(latitude));
                 location.setLongitude(Double.parseDouble(longitude));
@@ -407,8 +406,10 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                     throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude: %s", altitude)), e);
                 }
             }
+            return Position.of(location, null);
         }
-        return location;
+
+        return null;
     }
 
     private void onExtendedDataValueEnd() throws SAXException {

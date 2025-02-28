@@ -124,7 +124,7 @@ public class GpsManager implements SensorConnector, LocationListenerCompat, GpsS
     @Override
     public void onLocationChanged(@NonNull Location location) {
         // Send each update to the status; please note that this TrackPoint is not stored.
-        TrackPoint trackPoint = new TrackPoint(location, trackPointCreator.createNow());
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Position.of(location, trackPointCreator.createNow()));
         gpsStatusManager.onNewTrackPoint(trackPoint);
 
         if (!trackPoint.getPosition().hasValidLocation()) {

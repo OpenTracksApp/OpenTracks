@@ -51,9 +51,11 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.TestSensorDataUtil;
+import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -135,12 +137,16 @@ public class CustomContentProviderUtilsTest {
 
         List<TrackPoint> trackPoints = new ArrayList<>(numPoints);
         for (int i = 0; i < numPoints; ++i) {
-            TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(i))
-                    .setLatitude(37.0 + (double) i / 10000.0)
-                    .setLongitude(57.0 - (double) i / 10000.0)
-                    .setHorizontalAccuracy(Distance.of(i / 100.0f))
-                    .setAltitude(i * 2.5);
-            trackPoints.add(trackPoint);
+            trackPoints.add(new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                    new Position(
+                            Instant.ofEpochMilli(i),
+                            37.0 + (double) i / 10000.0,
+                            57.0 - (double) i / 10000.0,
+                            Distance.of(i / 100.0f),
+                            Altitude.WGS84.of(i * 2.5),
+                            null,
+                            null,
+                            null)));
         }
         contentProviderUtils.bulkInsertTrackPoint(trackPoints, id);
 

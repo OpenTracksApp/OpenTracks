@@ -13,8 +13,10 @@ import java.util.List;
 
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackPointIterator;
+import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -109,12 +111,17 @@ public class TestDataUtil {
     }
 
     public static TrackPoint createTrackPoint(int i) {
-        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(i));
-        trackPoint.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
-        trackPoint.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
-        trackPoint.setHorizontalAccuracy(Distance.of(i / 100.0f));
-        trackPoint.setAltitude(i * ALTITUDE_INTERVAL);
-        trackPoint.setSpeed(Speed.of(5f + (i / 10f)));
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                new Position(
+                        Instant.ofEpochSecond(i),
+                        INITIAL_LATITUDE + (double) i / 10000.0,
+                        INITIAL_LONGITUDE - (double) i / 10000.0,
+                        Distance.of(i / 100.0f),
+                        Altitude.WGS84.of(i * ALTITUDE_INTERVAL),
+                        null,
+                        null,
+                        Speed.of(5f + (i / 10f))
+                ));
 
         trackPoint.setHeartRate(100f + i % 80);
         trackPoint.setCadence(300f + i);

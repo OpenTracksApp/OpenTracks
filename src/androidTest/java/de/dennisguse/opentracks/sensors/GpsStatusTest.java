@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 
 @RunWith(AndroidJUnit4.class)
@@ -44,6 +45,7 @@ public class GpsStatusTest {
     private final static Location ok = new Location("gps");
 
     static {
+
         badFix.setAccuracy(50);
 
         ok.setAccuracy(10);
@@ -80,16 +82,16 @@ public class GpsStatusTest {
 
         // when / then
         subject.start();
-        subject.onNewTrackPoint(new TrackPoint(badFix, Instant.now()));
+        subject.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Position.of(badFix, Instant.now())));
         assertEquals(List.of(GPS_ENABLED, GPS_SIGNAL_BAD), statusList);
 
-        subject.onNewTrackPoint(new TrackPoint(ok, Instant.now()));
+        subject.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Position.of(ok, Instant.now())));
         assertEquals(List.of(GPS_ENABLED, GPS_SIGNAL_BAD, GPS_SIGNAL_FIX), statusList);
 
-        subject.onNewTrackPoint(new TrackPoint(ok, Instant.now()));
+        subject.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Position.of(ok, Instant.now())));
         assertEquals(List.of(GPS_ENABLED, GPS_SIGNAL_BAD, GPS_SIGNAL_FIX), statusList);
 
-        subject.onNewTrackPoint(new TrackPoint(badFix, Instant.now()));
+        subject.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Position.of(badFix, Instant.now())));
         assertEquals(List.of(GPS_ENABLED, GPS_SIGNAL_BAD, GPS_SIGNAL_FIX, GPS_SIGNAL_BAD), statusList);
     }
 
@@ -104,13 +106,13 @@ public class GpsStatusTest {
 
         // when / then
         subject.start();
-        subject.onNewTrackPoint(new TrackPoint(ok, Instant.now().minusMillis(1000)));
+        subject.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Position.of(ok, Instant.now().minusMillis(1000))));
         assertEquals(List.of(GPS_ENABLED, GPS_SIGNAL_FIX), statusList);
 
         subject.determineGpsStatusByTime(Instant.now());
         assertEquals(List.of(GPS_ENABLED, GPS_SIGNAL_FIX, GPS_SIGNAL_LOST), statusList);
 
-        subject.onNewTrackPoint(new TrackPoint(ok, Instant.now()));
+        subject.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Position.of(ok, Instant.now())));
         assertEquals(List.of(GPS_ENABLED, GPS_SIGNAL_FIX, GPS_SIGNAL_LOST, GPS_SIGNAL_FIX), statusList);
     }
 
@@ -131,13 +133,13 @@ public class GpsStatusTest {
         Thread.sleep(100);
         assertEquals(List.of(GPS_ENABLED), statusList);
 
-        subject.onNewTrackPoint(new TrackPoint(ok, Instant.now()));
+        subject.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Position.of(ok, Instant.now())));
         assertEquals(List.of(GPS_ENABLED, GPS_SIGNAL_FIX), statusList);
 
         Thread.sleep(100);
         assertEquals(List.of(GPS_ENABLED, GPS_SIGNAL_FIX, GPS_SIGNAL_LOST), statusList);
 
-        subject.onNewTrackPoint(new TrackPoint(badFix, Instant.now()));
+        subject.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Position.of(badFix, Instant.now())));
         assertEquals(List.of(GPS_ENABLED, GPS_SIGNAL_FIX, GPS_SIGNAL_LOST, GPS_SIGNAL_BAD), statusList);
 
         Thread.sleep(100);

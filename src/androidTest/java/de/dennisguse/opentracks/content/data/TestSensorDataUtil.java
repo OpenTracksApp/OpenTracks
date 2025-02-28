@@ -5,7 +5,9 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 
@@ -16,10 +18,20 @@ public class TestSensorDataUtil {
 
     public void add(Instant time, Float hr, Float cadence, Float power, TrackPoint.Type type) {
         sensorDataList.add(new TestSensorDataUtil.SensorData(time, hr, cadence, power, type));
-        TrackPoint tp = new TrackPoint(type, time);
         int i = trackPointList.size() + 1;
-        tp.setLatitude(TestDataUtil.INITIAL_LATITUDE + (double) i / 10000.0);
-        tp.setLongitude(TestDataUtil.INITIAL_LONGITUDE - (double) i / 10000.0);
+
+        TrackPoint tp = new TrackPoint(type,
+                new Position(
+                        time,
+                        TestDataUtil.INITIAL_LATITUDE + (double) i / 10000.0,
+                        TestDataUtil.INITIAL_LONGITUDE - (double) i / 10000.0,
+                        Distance.of(1f),
+                        Altitude.WGS84.of(1f),
+                        null,
+                        null,
+                        Speed.of(5f + (i / 10f))
+                )
+        );
         if (hr != null) {
             tp.setHeartRate(hr);
         }
@@ -29,9 +41,6 @@ public class TestSensorDataUtil {
         if (power != null) {
             tp.setPower(power);
         }
-        tp.setHorizontalAccuracy(Distance.of(1f));
-        tp.setAltitude(1f);
-        tp.setSpeed(Speed.of(5f + (i / 10f)));
         tp.setAltitudeGain(3f);
         tp.setAltitudeLoss(3f);
         trackPointList.add(tp);
