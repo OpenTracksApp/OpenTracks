@@ -2,22 +2,29 @@ package de.dennisguse.opentracks.data.models;
 
 import android.location.Location;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.time.Instant;
 
 //TODO Use everywhere instead of android.location.Location.
 public record Position(
-        Instant time,
-        Double latitude,
-        Double longitude,
-        Distance horizontalAccuracy,
-        Altitude altitude,
-        Distance verticalAccuracy,
-        Float bearing,
-        Speed speed
+        @Nullable Instant time,
+        @Nullable Double latitude,
+        @Nullable Double longitude,
+        @Nullable Distance horizontalAccuracy,
+        @Nullable Altitude altitude,
+        @Nullable Distance verticalAccuracy,
+        @Nullable Float bearing,
+        @Nullable Speed speed
 ) {
     public static Position empty() {
+        return of((Instant) null);
+    }
+
+    public static Position of(@NonNull Instant time) {
         return new Position(
-                null,
+                time,
                 null,
                 null,
                 null,
@@ -28,9 +35,13 @@ public record Position(
         );
     }
 
-    public static Position of(Location location) {
+    public static Position of(@NonNull Location location) {
+        return of(location, Instant.ofEpochMilli(location.getTime()));
+    }
+
+    public static Position of(@NonNull Location location, @NonNull Instant time) {
         return new Position(
-                Instant.ofEpochMilli(location.getTime()),
+                time,
                 location.getLatitude(),
                 location.getLongitude(),
                 location.hasAccuracy() ? Distance.of(location.getAccuracy()) : null,
@@ -53,6 +64,10 @@ public record Position(
         return altitude != null;
     }
 
+    public boolean hasVerticalAccuracy() {
+        return verticalAccuracy != null;
+    }
+
     public boolean hasBearing() {
         return bearing != null;
     }
@@ -67,7 +82,9 @@ public record Position(
         }
 
         Location location = new Location("");
-        location.setTime(time.toEpochMilli());
+        if (time != null) {
+            location.setTime(time.toEpochMilli());
+        }
         location.setLatitude(latitude);
         location.setLongitude(longitude);
         if (hasBearing()) {
@@ -102,5 +119,35 @@ public record Position(
                 horizontalAccuracy
                         .lessThan(thresholdHorizontalAccuracy);
 
+    }
+
+    public Position with(Instant time) {
+        return new Position(time, latitude, longitude, horizontalAccuracy, altitude, verticalAccuracy, bearing, speed);
+    }
+
+    public Position with(Altitude altitude) {
+        return new Position(time, latitude, longitude, horizontalAccuracy, altitude, verticalAccuracy, bearing, speed);
+    }
+
+    public Position with(Speed speed) {
+        return new Position(time, latitude, longitude, horizontalAccuracy, altitude, verticalAccuracy, bearing, speed);
+    }
+
+    //TODO Use double
+    public Position withCoordinates(Double latitude, Double longitude) {
+        return new Position(time, latitude, longitude, horizontalAccuracy, altitude, verticalAccuracy, bearing, speed);
+    }
+
+    //TODO Use float
+    public Position withBearing(Float bearing) {
+        return new Position(time, latitude, longitude, horizontalAccuracy, altitude, verticalAccuracy, bearing, speed);
+    }
+
+    public Position withHorizontalAccuracy(Distance horizontalAccuracy) {
+        return new Position(time, latitude, longitude, horizontalAccuracy, altitude, verticalAccuracy, bearing, speed);
+    }
+
+    public Position withVerticalAccuracy(Distance verticalAccuracy) {
+        return new Position(time, latitude, longitude, horizontalAccuracy, altitude, verticalAccuracy, bearing, speed);
     }
 }

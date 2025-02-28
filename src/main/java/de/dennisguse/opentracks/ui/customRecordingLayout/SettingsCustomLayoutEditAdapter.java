@@ -20,6 +20,7 @@ import java.util.concurrent.Callable;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -49,13 +50,18 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
         Track track = new Track(ZoneOffset.UTC);
         track.setTrackStatistics(trackStatistics);
 
-        TrackPoint lastTrackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(0));
-        lastTrackPoint.setLatitude(0);
-        lastTrackPoint.setLongitude(0);
-        lastTrackPoint.setAltitude(Altitude.EGM2008.of(0));
-        lastTrackPoint.setSpeed(Speed.of(0));
+        Position position = new Position(
+                Instant.ofEpochMilli(0),
+                0.0,
+                0.0,
+                null,
+                Altitude.EGM2008.of(0),
+                null,
+                null,
+                Speed.zero()
+        );
 
-        demoData = new RecordingData(track, lastTrackPoint, null);
+        demoData = new RecordingData(track, new TrackPoint(position), null);
     }
 
     private RecordingLayout recordingLayout;
