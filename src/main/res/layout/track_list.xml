@@ -45,6 +45,7 @@ limitations under the License.
         android:id="@+id/track_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="?attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
