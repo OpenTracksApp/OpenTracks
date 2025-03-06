@@ -27,9 +27,9 @@ limitations under the License.
             android:id="@+id/track_list_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_logo_color_24dp"
             app:layout_behavior="@string/searchbar_scrolling_view_behavior"
-            app:menu="@menu/track_list" />
+            app:menu="@menu/track_list"
+            app:navigationIcon="@drawable/ic_logo_color_24dp" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.search.SearchView
@@ -50,9 +50,10 @@ limitations under the License.
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        app:fabAlignmentMode="end">
+        app:fabAlignmentMode="end"
+        app:fabAnchorMode="cradle">
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Material3.Button.IconButton"
