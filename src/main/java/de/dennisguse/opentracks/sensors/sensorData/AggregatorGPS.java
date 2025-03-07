@@ -29,7 +29,6 @@ public class AggregatorGPS extends Aggregator<Position, Position> {
          * TODO: this behavior can be changed if TrackRecordingManager.insertTrackPoint() would strip GPS data if it was already saved. This would simplify TrackPointCreator.createCurrentTrackPoint()
          */
         aggregatedValue = Position.empty();
-
     }
 
     @NonNull

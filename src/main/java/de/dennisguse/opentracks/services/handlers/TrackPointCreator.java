@@ -107,7 +107,9 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
     public Pair<TrackPoint, SensorDataSet> createCurrentTrackPoint(@Nullable TrackPoint lastTrackPointUISpeed, @Nullable TrackPoint lastTrackPointUIAltitude, @Nullable TrackPoint lastStoredTrackPointWithLocation) {
         TrackPoint currentTrackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, createNow());
 
-        if (lastStoredTrackPointWithLocation != null && lastStoredTrackPointWithLocation.hasLocation()) {
+        SensorDataSet sensorDataSet = addSensorData(currentTrackPoint);
+
+        if (!currentTrackPoint.hasLocation() && lastStoredTrackPointWithLocation != null && lastStoredTrackPointWithLocation.hasLocation()) {
             //We are taking the coordinates from the last stored TrackPoint, so the distance is monotonously increasing.
             currentTrackPoint.setPosition(lastStoredTrackPointWithLocation.getPosition());
         }
@@ -119,8 +121,6 @@ public class TrackPointCreator implements SharedPreferences.OnSharedPreferenceCh
         if (lastTrackPointUIAltitude != null) {
             currentTrackPoint.setAltitude(lastTrackPointUIAltitude.getAltitude());
         }
-
-        SensorDataSet sensorDataSet = addSensorData(currentTrackPoint);
 
         return new Pair<>(currentTrackPoint, sensorDataSet);
     }
