@@ -21,7 +21,6 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -93,7 +92,6 @@ public class TrackPoint {
         this.position = position;
     }
 
-    //TODO Refactor constructors
     public TrackPoint(@NonNull Type type, @NonNull Instant time) {
         this(null, type, Position.of(time));
     }
@@ -216,13 +214,6 @@ public class TrackPoint {
 
     public Altitude getAltitude() {
         return position.altitude();
-    }
-
-    @Deprecated
-    @VisibleForTesting
-    public TrackPoint setAltitude(double altitude_m) {
-        setAltitude(Altitude.WGS84.of(altitude_m));
-        return this;
     }
 
     @Deprecated
