@@ -1,0 +1,11 @@
+v4.18.0: OpenTracks
+
+Změny:
+- Varování o zakázané poloze lze vypnout
+
+Oprava chyby:
+- BottomAppBar překrýval obsah
+
+Vývojář:
+- Použití zaznamenané pozice namísto polohy systému Android
+- Předělány agregátory senzorů
