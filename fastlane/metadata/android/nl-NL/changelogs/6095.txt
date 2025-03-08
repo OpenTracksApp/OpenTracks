@@ -1,0 +1,11 @@
+v4.18.0: OpenTracks
+
+Wijzigingen:
+- GPS uitgeschakeld waarschuwing kan worden uitgeschakeld
+
+Bugfix:
+- BottomAppBar overlapte inhoud
+
+Ontwikkelaar:
+- Gebruik recordpositie in plaats van Android-locatie
+- Gerefactoreerde sensor-aggregators
