@@ -1,0 +1,11 @@
+v4.18.0: OpenTracks
+
+Changes:
+- GPS disabled warning can be disabled
+
+Bugfix:
+- BottomAppBar overlapped content
+
+Developer:
+- Use record Position instead of Android location
+- Refactored sensor aggregators
