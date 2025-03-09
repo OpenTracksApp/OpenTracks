@@ -1,0 +1,11 @@
+v4.18.0: OpenTracks
+
+Athruithe:
+- Is féidir rabhadh faoi mhíchumas GPS a dhíchumasú
+
+Ceartúchán Bug:
+- Ábhar forluiteach BottomAppBar
+
+Forbróir:
+- Úsáid taifead Seasamh in ionad Android suíomh
+- Comhbhailitheoirí braite athfhachtóirithe
