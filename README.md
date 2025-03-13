@@ -153,6 +153,19 @@ slow and does not provide updates while recording.
 
 The developer documentation is in [README_API.md](README_API.md).
 
+## Backup
+
+OpenTracks stores the data in the app-internal space:
+`/data/data/de.dennisguse.opentracks[|.playstore]`
+
+There is a SQLite database `database.db` that contains the tracks as well as the markers.
+Pictures attached to markers are stored as separate files.
+
+For backup and recovery, the best approach is to export as one KMZ file.
+This will contain all the tracks, pictures and the data as similar as possible as stored internally.
+In difference to backing up the database directly, a KMZ allows to be imported into a different (
+e.g., newer) version of OpenTracks.
+
 ## Project history
 
 _OpenTracks_ is based upon Google _My Tracks app_ ([code](https://code.google.com/archive/p/mytracks/)).
