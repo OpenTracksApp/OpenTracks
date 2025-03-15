@@ -434,7 +434,14 @@ public class ContentProviderUtils {
             marker.setIcon(cursor.getString(iconIndex));
         }
         if (!cursor.isNull(photoUrlIndex)) {
-            marker.setPhotoUrl(Uri.parse(cursor.getString(photoUrlIndex)));
+            String photoUrl = cursor.getString(photoUrlIndex);
+            if (photoUrl.isEmpty()) {
+                // Before v4.18.0: a marker without a picture as URL ""
+                // TODO Data should be migrated.
+                marker.setPhotoUrl(null);
+            } else {
+                marker.setPhotoUrl(Uri.parse(cursor.getString(photoUrlIndex)));
+            }
         }
 
 
