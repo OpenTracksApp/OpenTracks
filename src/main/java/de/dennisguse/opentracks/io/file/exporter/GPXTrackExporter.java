@@ -229,7 +229,7 @@ public class GPXTrackExporter implements TrackExporter {
                 + " http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd"
                 + " http://www.garmin.com/xmlschemas/PowerExtension/v1 https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd"
                 + " http://www.garmin.com/xmlschemas/TrackStatsExtension/v1"
-                + " http://www.cluetrust.com/Schemas http://www.cluetrust.com/Schemas/gpxdata10.xsd"
+                + " http://www.cluetrust.com/Schemas https://www.cluetrust.com/Schemas/gpxdata10.xsd"
                 + " http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd\">");
     }
 
