@@ -1,0 +1,7 @@
+v4.19.0: OpenTracks
+
+Changes:
+- GPX export was not compliant (TrackPointExtension order and content)
+
+Bugfix:
+- pre-v4.18.0 markers without pictures could not be deleted
