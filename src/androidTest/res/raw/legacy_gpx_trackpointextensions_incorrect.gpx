@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx
+version="1.1"
+creator="OpenTracks (Debug)"
+xmlns="http://www.topografix.com/GPX/1/1"
+xmlns:topografix="http://www.topografix.com/GPX/Private/TopoGrafix/0/1"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:opentracks="http://opentracksapp.com/xmlschemas/v1"
+xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v2"
+xmlns:gpxtrkx="http://www.garmin.com/xmlschemas/TrackStatsExtension/v1"
+xmlns:cluetrust="http://www.cluetrust.com/Schemas/"
+xmlns:pwr="http://www.garmin.com/xmlschemas/PowerExtension/v1"
+xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackStatsExtension/v1 http://www.cluetrust.com/Schemas https://www.cluetrust.com/Schemas/gpxdata10.xsd http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd">
+<wpt lat="3" lon="14">
+<ele>10</ele>
+<time>2020-02-02T03:02:03+01:00</time>
+<name><![CDATA[Marker 1]]></name>
+<desc><![CDATA[Marker 1 desc]]></desc>
+<type><![CDATA[Marker 1 category]]></type>
+</wpt>
+<wpt lat="3" lon="14.001">
+<ele>10</ele>
+<time>2020-02-02T03:02:17+01:00</time>
+<name><![CDATA[Marker 2]]></name>
+<desc><![CDATA[Marker 2 desc]]></desc>
+<type><![CDATA[Marker 2 category]]></type>
+</wpt>
+<trk>
+<name><![CDATA[2020-02-02T03:02+01]]></name>
+<desc><![CDATA[the description]]></desc>
+<type><![CDATA[mountain biking]]></type>
+<extensions>
+<topografix:color>c0c0c0</topografix:color>
+<opentracks:trackid>75c581d0-eef5-4aa2-91a3-66d2c6de4f6d</opentracks:trackid>
+<opentracks:typeTranslated><![CDATA[the activity type]]></opentracks:typeTranslated>
+<gpxtrkx:TrackStatsExtension>
+<gpxtrkx:Distance>222125.53125</gpxtrkx:Distance>
+<gpxtrkx:TimerTime>56</gpxtrkx:TimerTime>
+<gpxtrkx:MovingTime>26</gpxtrkx:MovingTime>
+<gpxtrkx:StoppedTime>30</gpxtrkx:StoppedTime>
+<gpxtrkx:MaxSpeed>8543.2900390625</gpxtrkx:MaxSpeed>
+<gpxtrkx:Ascent>2.0</gpxtrkx:Ascent>
+<gpxtrkx:Descent>2.0</gpxtrkx:Descent>
+</gpxtrkx:TrackStatsExtension>
+</extensions>
+<trkseg>
+<trkpt lat="3" lon="14">
+<ele>10</ele>
+<time>2020-02-02T03:02:03+01:00</time>
+<extensions><gpxtpx:TrackPointExtension>
+<gpxtpx:speed>15</gpxtpx:speed>
+<opentracks:gain>1</opentracks:gain>
+<opentracks:loss>1</opentracks:loss>
+<opentracks:accuracy_horizontal>10</opentracks:accuracy_horizontal></gpxtpx:TrackPointExtension></extensions>
+</trkpt>
+<trkpt lat="3" lon="14.001">
+<ele>10</ele>
+<time>2020-02-02T03:02:17+01:00</time>
+<extensions><gpxtpx:TrackPointExtension>
+<gpxtpx:speed>5</gpxtpx:speed>
+<gpxtpx:hr>69</gpxtpx:hr>
+<gpxtpx:cad>3</gpxtpx:cad>
+<pwr:PowerInWatts>50</pwr:PowerInWatts>
+<opentracks:gain>1</opentracks:gain>
+<opentracks:loss>1</opentracks:loss>
+<opentracks:accuracy_horizontal>10</opentracks:accuracy_horizontal><opentracks:distance>12</opentracks:distance>
+<cluetrust:distance>12</cluetrust:distance>
+</gpxtpx:TrackPointExtension></extensions>
+</trkpt>
+</trkseg>
+<trkseg>
+<trkpt lat="3" lon="14.002">
+<ele>10</ele>
+<time>2020-02-02T03:03:21+01:00</time>
+<extensions><gpxtpx:TrackPointExtension>
+<gpxtpx:speed>15</gpxtpx:speed>
+<opentracks:gain>0</opentracks:gain>
+<opentracks:loss>0</opentracks:loss>
+<opentracks:accuracy_horizontal>10</opentracks:accuracy_horizontal></gpxtpx:TrackPointExtension></extensions>
+</trkpt>
+</trkseg>
+<trkseg>
+<trkpt lat="3" lon="16">
+<ele>10</ele>
+<time>2020-02-02T03:03:22+01:00</time>
+<extensions><gpxtpx:TrackPointExtension>
+<gpxtpx:speed>15</gpxtpx:speed>
+<opentracks:gain>0</opentracks:gain>
+<opentracks:loss>0</opentracks:loss>
+<opentracks:accuracy_horizontal>10</opentracks:accuracy_horizontal></gpxtpx:TrackPointExtension></extensions>
+</trkpt>
+<trkpt lat="3" lon="16.001">
+<ele>10</ele>
+<time>2020-02-02T03:03:50+01:00</time>
+<extensions><gpxtpx:TrackPointExtension>
+<gpxtpx:speed>15</gpxtpx:speed>
+<opentracks:gain>0</opentracks:gain>
+<opentracks:loss>0</opentracks:loss>
+<opentracks:accuracy_horizontal>10</opentracks:accuracy_horizontal></gpxtpx:TrackPointExtension></extensions>
+</trkpt>
+</trkseg>
+</trk>
+</gpx>

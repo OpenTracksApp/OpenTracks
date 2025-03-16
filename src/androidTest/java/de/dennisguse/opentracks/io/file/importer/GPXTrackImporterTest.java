@@ -238,6 +238,81 @@ public class GPXTrackImporterTest {
         ), importedTrackPoints);
     }
 
+    /**
+     * until v4.18.0: some extensions where incorrectly added to gpxtpx:TrackPointExtension
+     * We only need to check the trackpoints.
+     */
+    @LargeTest
+    @Test
+    public void gpx_legacy_trackpointextension() throws IOException {
+        // given
+        XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.legacy_gpx_trackpointextensions_incorrect);
+
+        // when
+        // 1. import
+        importTrackId = importer.importFile(inputStream).get(0);
+
+        // then: We only need to check the trackpoints.
+
+        List<TrackPoint> actual = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
+
+        TrackPointAssert a = new TrackPointAssert()
+                .setDelta(0.05); // speed is not fully
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
+                        new Position(
+                                Instant.parse("2020-02-02T02:02:03Z"),
+                                3d, 14d, Distance.of(10),
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                Speed.of(15)))
+                        .setAltitudeLoss(1f)
+                        .setAltitudeGain(1f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2020-02-02T02:02:17Z"),
+                                3d, 14.001, Distance.of(10),
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                Speed.of(5)))
+                        .setAltitudeLoss(1f)
+                        .setAltitudeGain(1f)
+                        .setSensorDistance(Distance.of(12))
+                        .setHeartRate(69)
+                        .setPower(50f)
+                        .setCadence(3f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
+                        new Position(
+                                Instant.parse("2020-02-02T02:03:21Z"),
+                                3d, 14.002, Distance.of(10),
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                Speed.of(15)))
+                        .setAltitudeLoss(0f)
+                        .setAltitudeGain(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
+                        new Position(
+                                Instant.parse("2020-02-02T02:03:22Z"),
+                                3d, 16d, Distance.of(10),
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                Speed.of(15)))
+                        .setAltitudeLoss(0f)
+                        .setAltitudeGain(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT,
+                        new Position(
+                                Instant.parse("2020-02-02T02:03:50Z"),
+                                3d, 16.001, Distance.of(10),
+                                Altitude.WGS84.of(10), null,
+                                null,
+                                Speed.of(10)))
+                        .setAltitudeLoss(0f)
+                        .setAltitudeGain(0f)
+                        .setSpeed(Speed.of(15))
+        ), actual);
+    }
+
     @LargeTest
     @Test
     public void importExportTest_timezone() throws IOException {
