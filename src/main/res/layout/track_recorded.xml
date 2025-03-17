@@ -21,7 +21,6 @@ limitations under the License.
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingBottom="90dp"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.tabs.TabLayout
@@ -32,6 +31,7 @@ limitations under the License.
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/track_detail_activity_view_pager"
             android:layout_width="match_parent"
+            android:paddingBottom="?attr/actionBarSize"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
