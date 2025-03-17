@@ -1,0 +1,7 @@
+v4.19.0: OpenTracks
+
+Změny:
+- Export GPX nebyl kompatibilní (pořadí a obsah rozšíření TrackPointExtension)
+
+Oprava chyb:
+- Před verzí 4.18.0 nebylo možné odstranit značky bez obrázků
