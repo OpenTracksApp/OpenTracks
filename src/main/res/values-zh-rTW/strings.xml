@@ -618,8 +618,12 @@ limitations under the License.
     <string name="create_marker_error">無法建立標記。請再次嘗試。</string>
     <string name="settings_theme_switch_restart">主題變更也許需要手動重新啟動。</string>
     <string name="settings_night_mode_option_night_oled">夜（OLED 友善的）</string>
-    <string name="power_x_watt">功率 {x, plural, =1 {1 watt} other {# watts} }</string>
+    <string name="power_x_watt">功率 {x, plural, =1 {1 瓦特} other {# 瓦特} }</string>
     <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
     <string name="settings_charts_title">圖表</string>
     <string name="stats_gain_loss">收益＆損失</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">GPS 禁用警告</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">記錄時，如果 GPS 被禁用則顯示警告。</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
 </resources>
