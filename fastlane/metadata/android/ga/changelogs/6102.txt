@@ -1,0 +1,7 @@
+v4.19.0: OpenTracks
+
+Athruithe:
+- níor chomhlíon easpórtáil GPX (Ordú agus inneachar TrackPointExtension)
+
+Ceartúchán Bug:
+- níorbh fhéidir marcóirí réamh-v4.18.0 gan pictiúir a scriosadh
