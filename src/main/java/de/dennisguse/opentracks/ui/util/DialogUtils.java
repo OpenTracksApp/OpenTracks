@@ -42,12 +42,12 @@ public class DialogUtils {
      * @param message    the message
      * @param okListener the listener when OK is clicked
      */
-    public static Dialog createConfirmationDialog(final Context context, int titleId, String message, DialogInterface.OnClickListener okListener) {
+    public static Dialog createConfirmationDialog(final Context context, int titleId, String message, DialogInterface.OnClickListener okListener, DialogInterface.OnClickListener cancelListener) {
         return new AlertDialog.Builder(context)
                 .setCancelable(true)
                 .setIcon(R.drawable.ic_delete_forever_24dp)
                 .setMessage(message)
-                .setNegativeButton(android.R.string.cancel, null)
+                .setNegativeButton(android.R.string.cancel, cancelListener)
                 .setPositiveButton(android.R.string.ok, okListener)
                 .setTitle(titleId).create();
     }

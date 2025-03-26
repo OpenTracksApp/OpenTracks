@@ -34,7 +34,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -60,6 +62,7 @@ import de.dennisguse.opentracks.ui.aggregatedStatistics.AggregatedStatisticsActi
 import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.ui.markers.MarkerListActivity;
 import de.dennisguse.opentracks.ui.util.ActivityUtils;
+import de.dennisguse.opentracks.ui.util.RecyclerViewSwipeDeleteCallback;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
@@ -168,6 +171,13 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         viewBinding.trackList.setLayoutManager(layoutManager);
         viewBinding.trackList.setAdapter(adapter);
 
+        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(new RecyclerViewSwipeDeleteCallback(this) {
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                TrackListActivity.this.deleteTracks(new Track.Id(viewHolder.getItemId()));
+            }
+        });
+        itemTouchhelper.attachToRecyclerView(viewBinding.trackList);
         viewBinding.trackListFabAction.setOnClickListener((view) -> {
             if (recordingStatus.isRecording()) {
                 Toast.makeText(TrackListActivity.this, getString(R.string.hold_to_stop), Toast.LENGTH_LONG).show();
@@ -304,6 +314,12 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         Cursor tracks = new ContentProviderUtils(this).searchTracks(searchQuery);
 
         adapter.swapData(tracks);
+    }
+
+    @Override
+    public void onConfirmDeleteAbort(Track.Id... trackIds) {
+        // This is not nice, but it will happen rarely (as deletion is not a standard case).
+        adapter.notifyItemRangeChanged(0, adapter.getItemCount());
     }
 
     @Override
