@@ -43,6 +43,7 @@ public abstract class AbstractTrackDeleteActivity extends AbstractActivity imple
         ConfirmDeleteDialogFragment.showDialog(getSupportFragmentManager(), trackIds);
     }
 
+    //TODO A callback is better.
     @Override
     public void onConfirmDeleteDone(Track.Id... trackIds) {
         ArrayList<Track.Id> trackIdList = Arrays.stream(trackIds)

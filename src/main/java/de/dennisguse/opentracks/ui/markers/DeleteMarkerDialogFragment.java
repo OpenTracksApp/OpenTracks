@@ -71,13 +71,18 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
         int titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.marker_delete_one_confirm_title;
         int messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message : R.string.marker_delete_one_confirm_message;
         return DialogUtils.createConfirmationDialog(
-                fragmentActivity, titleId, getString(messageId), (dialog, which) -> new Thread(() -> {
+                fragmentActivity, titleId, getString(messageId),
+                (dialog, which) -> new Thread(() -> {
                     ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
                     for (Marker.Id markerId : markerIds) {
                         contentProviderUtils.deleteMarker(context, markerId);
                     }
                     caller.onMarkerDeleted();
-                }).start());
+                }
+                ).start(),
+                (dialog, which) -> {
+                    // None
+                });
     }
 
     /**

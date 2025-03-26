@@ -55,6 +55,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.recyclerView = recyclerView;
         this.recordingStatus = recordingStatus;
         this.unitSystem = unitSystem;
+        setHasStableIds(true);
     }
 
     public void setActionModeCallback(ActivityUtils.ContextualActionModeCallback actionModeCallback) {
@@ -74,6 +75,12 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         cursor.moveToPosition(position);
         viewHolder.bind(cursor);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        cursor.moveToPosition(position);
+        return cursor.getLong(cursor.getColumnIndexOrThrow(TracksColumns._ID));
     }
 
     @Override
@@ -234,6 +241,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             viewBinding.getRoot().setActivated(isSelected);
         }
 
+        //TODO Check if this still required.
         public long getId() {
             return trackId.id();
         }

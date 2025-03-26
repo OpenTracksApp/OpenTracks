@@ -75,7 +75,8 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
                 getActivity(),
                 titleId,
                 getString(messageId),
-                (dialog, which) -> caller.onConfirmDeleteDone(trackIds)
+                (dialog, which) -> caller.onConfirmDeleteDone(trackIds),
+                (dialog, which) -> caller.onConfirmDeleteAbort(trackIds)
         );
     }
 
@@ -85,6 +86,9 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
      * @author Jimmy Shih
      */
     public interface ConfirmDeleteCaller {
+
+        default void onConfirmDeleteAbort(Track.Id... trackIds) {
+        }
 
         void onConfirmDeleteDone(Track.Id... trackIds);
     }
