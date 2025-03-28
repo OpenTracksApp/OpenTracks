@@ -135,6 +135,7 @@ The Public API is disabled by default to protect the user's privacy, but it can 
 | [FitTrackee](https://github.com/SamR1/FitTrackee)         | yes                                                                            | n/a                                                                  | n/a                                                                  |
 | [SportsTracker](https://github.com/ssaring/sportstracker) | yes, [single tracks only](https://github.com/ssaring/sportstracker/issues/260) | no                                                                   | no                                                                   |
 | [ExifTool](https://exiftool.org)                          | [yes](https://exiftool.org/forum/index.php?topic=15972.0)                      | no                                                                   | no                                                                   |
+| [Wanderer](https://wanderer.to/)                          | yes                      | yes                                                                   | yes                                                                   |
 
 
 ## Dashboard API (incl. map)
