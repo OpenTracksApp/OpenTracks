@@ -44,9 +44,9 @@ import de.dennisguse.opentracks.util.FileUtils;
  *
  * @author Jimmy Shih
  */
-public class KmzTrackImporter {
+public class KMZTrackImporter {
 
-    private static final String TAG = KmzTrackImporter.class.getSimpleName();
+    private static final String TAG = KMZTrackImporter.class.getSimpleName();
 
     private static final String KML_FILE_EXTENSION = ".kml";
 
@@ -55,7 +55,7 @@ public class KmzTrackImporter {
     private final Context context;
     private final TrackImporter trackImporter;
 
-    public KmzTrackImporter(Context context, TrackImporter trackImporter) {
+    public KMZTrackImporter(Context context, TrackImporter trackImporter) {
         this.context = context;
         this.trackImporter = trackImporter;
     }
@@ -211,7 +211,7 @@ public class KmzTrackImporter {
     }
 
     private List<Track.Id> parseKml(ZipInputStream zipInputStream) throws IOException {
-        XMLImporter kmlFileTrackImporter = new XMLImporter(new KmlTrackImporter(context, trackImporter));
+        XMLImporter kmlFileTrackImporter = new XMLImporter(new KMLTrackImporter(context, trackImporter));
 
         InputStream nonClosableInputStream = new FilterInputStream(zipInputStream) {
             @Override

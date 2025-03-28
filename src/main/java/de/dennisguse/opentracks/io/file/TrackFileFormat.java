@@ -15,7 +15,7 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.CSVTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.GPXTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
-import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
+import de.dennisguse.opentracks.io.file.exporter.KMZTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 
 /**
@@ -33,7 +33,7 @@ public enum TrackFileFormat {
 
         @Override
         public String getMimeType() {
-            return MIME_KML;
+            return "application/vnd.google-earth.kml+xml";
         }
 
         public String getExtension() {
@@ -49,12 +49,12 @@ public enum TrackFileFormat {
         @Override
         public TrackExporter createTrackExporter(@NonNull Context context, @NonNull ContentProviderUtils contentProviderUtils) {
             KMLTrackExporter exporter = new KMLTrackExporter(context, contentProviderUtils, exportPhotos);
-            return new KmzTrackExporter(context, contentProviderUtils, exporter, exportPhotos);
+            return new KMZTrackExporter(context, contentProviderUtils, exporter, exportPhotos);
         }
 
         @Override
         public String getMimeType() {
-            return MIME_KMZ;
+            return "application/vnd.google-earth.kmz";
         }
 
         public String getExtension() {
@@ -74,12 +74,12 @@ public enum TrackFileFormat {
         @Override
         public TrackExporter createTrackExporter(@NonNull Context context, @NonNull ContentProviderUtils contentProviderUtils) {
             KMLTrackExporter exporter = new KMLTrackExporter(context, contentProviderUtils, exportPhotos);
-            return new KmzTrackExporter(context, contentProviderUtils, exporter, exportPhotos);
+            return new KMZTrackExporter(context, contentProviderUtils, exporter, exportPhotos);
         }
 
         @Override
         public String getMimeType() {
-            return MIME_KMZ;
+            return KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.getMimeType();
         }
 
         public String getExtension() {
@@ -126,17 +126,13 @@ public enum TrackFileFormat {
         }
     };
 
-    private static final String MIME_KMZ = "application/vnd.google-earth.kmz";
-
-    private static final String MIME_KML = "application/vnd.google-earth.kml+xml";
-
     private final String preferenceId;
 
     TrackFileFormat(String preferenceId) {
         this.preferenceId = preferenceId;
     }
 
-    public static Map<String, String> toPreferenceIdLabelMap(final Resources resources, final TrackFileFormat ... trackFileFormats) {
+    public static Map<String, String> toPreferenceIdLabelMap(final Resources resources, final TrackFileFormat... trackFileFormats) {
         Map<String, String> preferenceIdLabelMap = new LinkedHashMap<>(trackFileFormats.length);
         for (TrackFileFormat trackFileFormat : trackFileFormats) {
             String trackFileFormatUpperCase = trackFileFormat.getExtension().toUpperCase(Locale.US); //ASCII upper case

@@ -47,7 +47,7 @@ public class XMLImporter {
             return parser.getImportTrackIds();
         } catch (SAXException | ParserConfigurationException | ParsingException e) {
             Log.e(TAG, "Unable to import file", e);
-            if (parser.getImportTrackIds().size() > 0) {
+            if (!parser.getImportTrackIds().isEmpty()) {
                 parser.cleanImport();
             }
             throw new ImportParserException(e);

@@ -102,7 +102,6 @@ public class GPXTrackExporter implements TrackExporter {
         try {
             prepare(outputStream);
             writeHeader();
-
             for (Track track : tracks) {
                 writeMarkers(track);
             }
@@ -200,17 +199,17 @@ public class GPXTrackExporter implements TrackExporter {
         }
     }
 
-    public void prepare(OutputStream outputStream) {
+    private void prepare(OutputStream outputStream) {
         this.printWriter = new PrintWriter(outputStream);
     }
 
-    public void close() {
+    private void close() {
         printWriter.flush();
         printWriter = null;
     }
 
 
-    public void writeHeader() {
+    private void writeHeader() {
         printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         printWriter.println("<gpx");
         printWriter.println("version=\"1.1\"");
@@ -233,7 +232,7 @@ public class GPXTrackExporter implements TrackExporter {
                 + " http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd\">");
     }
 
-    public void writeFooter() {
+    private void writeFooter() {
         printWriter.println("</gpx>");
     }
 
@@ -253,7 +252,7 @@ public class GPXTrackExporter implements TrackExporter {
         }
     }
 
-    public void writeMarker(ZoneOffset zoneOffset, Marker marker) {
+    private void writeMarker(ZoneOffset zoneOffset, Marker marker) {
         printWriter.println("<wpt " + formatLocation(marker.getLatitude(), marker.getLongitude()) + ">");
         if (marker.hasAltitude()) {
             printWriter.println("<ele>" + ALTITUDE_FORMAT.format(marker.getAltitude().toM()) + "</ele>");
@@ -265,7 +264,7 @@ public class GPXTrackExporter implements TrackExporter {
         printWriter.println("</wpt>");
     }
 
-    public void writeBeginTrack(Track track) {
+    private void writeBeginTrack(Track track) {
         printWriter.println("<trk>");
         printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
         printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
@@ -297,19 +296,19 @@ public class GPXTrackExporter implements TrackExporter {
         printWriter.println("</extensions>");
     }
 
-    public void writeEndTrack() {
+    private void writeEndTrack() {
         printWriter.println("</trk>");
     }
 
-    public void writeOpenSegment() {
+    private void writeOpenSegment() {
         printWriter.println("<trkseg>");
     }
 
-    public void writeCloseSegment() {
+    private void writeCloseSegment() {
         printWriter.println("</trkseg>");
     }
 
-    public Distance writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint, List<TrackPoint> sensorPoints, Distance trackDistance) {
+    private Distance writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint, List<TrackPoint> sensorPoints, Distance trackDistance) {
         Distance cumulativeDistance;
 
         printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");

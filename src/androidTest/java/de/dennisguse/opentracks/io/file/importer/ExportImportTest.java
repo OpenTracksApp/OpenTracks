@@ -312,7 +312,7 @@ public class ExportImportTest {
         contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
-        KmzTrackImporter importer = new KmzTrackImporter(context, trackImporter);
+        KMZTrackImporter importer = new KMZTrackImporter(context, trackImporter);
         importTrackId = importer.importFile(tmpFileUri).get(0);
 
         // then
@@ -358,7 +358,7 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
+        XMLImporter importer = new XMLImporter(new KMLTrackImporter(context, trackImporter));
         importTrackId = importer.importFile(inputStream).get(0);
 
         // then
@@ -383,7 +383,7 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
+        XMLImporter importer = new XMLImporter(new GPXTrackImporter(context, trackImporter));
         importTrackId = importer.importFile(inputStream).get(0);
 
         // then
@@ -503,7 +503,7 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
+        XMLImporter importer = new XMLImporter(new GPXTrackImporter(context, trackImporter));
         importTrackId = importer.importFile(inputStream).get(0);
 
         // then

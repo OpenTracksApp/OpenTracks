@@ -107,6 +107,7 @@ public class KMLTrackExporter implements TrackExporter {
         this.contentProviderUtils = contentProviderUtils;
     }
 
+    @Override
     public boolean writeTrack(List<Track> tracks, @NonNull OutputStream outputStream) {
         try {
             prepare(outputStream);
@@ -444,7 +445,7 @@ public class KMLTrackExporter implements TrackExporter {
         writeTypeLocalized(marker.getCategory());
 
         if (exportPhotos) {
-            printWriter.println("<Icon><href>" + KmzTrackExporter.buildKmzImageFilePath(marker) + "</href></Icon>");
+            printWriter.println("<Icon><href>" + KMZTrackExporter.buildKmzImageFilePath(marker) + "</href></Icon>");
         }
 
         printWriter.print("<ViewVolume>");
