@@ -433,7 +433,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="export_all_do_it_for_all">le faire pour tous les conflits</string>
     <string name="export_track_errors">Fichiers non exportés</string>
     <string name="import_unable_to_import_file">Impossible d\'importer le fichier : %1$s</string>
-    <string name="import_no_kml_file_found">Pas trouvé de fichier kml dans KMZ</string>
+    <string name="import_no_kml_file_found">Pas de fichier kml trouvé dans KMZ</string>
     <string name="import_error_info">%1$s : %2$s</string>
     <string name="import_error_list_dialog_title">Les fichiers ne sont pas importées</string>
     <string name="settings_night_mode_title">Thème de l\'Interface utilisateur</string>
