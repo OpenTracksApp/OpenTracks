@@ -584,4 +584,6 @@ limitations under the License.
     <string name="settings_chart_display_heart_rate_title">Vis puls</string>
     <string name="settings_chart_display_pace_or_speed_title">Vis tempo eller hastighet</string>
     <string name="settings_recording_min_sampling_interval_title">Samplingtidsintervall</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">Advarsel for avslått GPS</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">Vis en advarsel hvis GPS er avslått under opptak.</string>
 </resources>
