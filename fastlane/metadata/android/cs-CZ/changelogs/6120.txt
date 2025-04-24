@@ -1,0 +1,4 @@
+v4.19.1: OpenTracks
+
+Oprava chyby:
+- Exportovaným souborům GPX chyběla jedna schemaLocation
