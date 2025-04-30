@@ -1,0 +1,4 @@
+v4.19.1: OpenTracks
+
+Ceartú fabht:
+- Chaill comhaid GPX onnmhairithe suíomh scéime amháin
