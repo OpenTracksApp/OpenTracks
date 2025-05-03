@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
-    <string name="empty"/>
+    <string name="empty">empty</string>
     <string name="about_preference_title">About</string>
     <string name="about_description"><i>OpenTracks</i> is a sport tracking application that completely respects your privacy.</string>
     <string name="about_url">Project webpage: <a href="%1$s">%1$s</a></string>
@@ -348,7 +348,6 @@ limitations under the License.
     <string name="settings_chart_display_elevation_title">Display elevation</string>
     <string name="settings_chart_display_pace_or_speed_title">Display pace or speed</string>
     <string name="settings_chart_display_heart_rate_title">Display heart rate</string>
-
     <!-- Settings Recording -->
     <string name="settings_recording_title">Recording</string>
     <string name="settings_theme_switch_restart">Theme changes may require a manual restart.</string>
@@ -379,7 +378,6 @@ limitations under the License.
     <string name="settings_recording_idle_timeout_title">Idle threshold</string>
     <string name="settings_locale_title">Language</string>
     <string name="settings_locale_system_default">System default</string>
-
     <string name="settings_night_mode_title">UI Theme</string>
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Day</string>
