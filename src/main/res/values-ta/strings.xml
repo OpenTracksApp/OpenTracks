@@ -65,7 +65,7 @@
     <string name="settings_recording_location_distance_summary">பதிவுசெய்யப்பட்ட இடங்களுக்கு இடையில் %1$s</string>
     <string name="voice_announce_lap_power_key">VoiceAnnouncelappower</string>
     <string name="settings_announcements_lap_power">மடியில் ஆற்றல்</string>
-    <string name="power_x_watt">ஆற்றல் {x, பன்மை, = 1 {1 watt} பிற {# வாட்ச்}}</string>
+    <string name="power_x_watt">ஆற்றல் {x, plural, = 1 {1 watt} other {# வாட்ச்}}</string>
     <string name="power">விசை</string>
     <string name="help_feature_content">* சி.பி.எச் தடங்களை உருவாக்கவும்\n * இதய துடிப்பு சென்சார் பயன்படுத்தவும் (புளூடூத் லு மட்டும்)\n * குரல் அறிவிப்புகள் (நேரம் அல்லது தூரத்தின் அடிப்படையில்)\n * குறிப்பான்களை உருவாக்கு (படங்கள் உள்ளிட்டவை)\n * முற்றிலும் ஆஃப்லைனில் வேலை செய்கிறது\n * வரைபடத்தில் தடங்களைக் காண்பி (கீழே காண்க)</string>
     <string name="help_track_map_title">வரைபடத்தில் ஒரு பாதையை எவ்வாறு காண்பிப்பது?</string>
@@ -411,13 +411,13 @@
     <string name="value_smallest_recommended">சிறியது (பரிந்துரைக்கப்படுகிறது)</string>
     <string name="value_int_seconds">%1$d கள் (பரிந்துரைக்கப்படுகிறது)</string>
     <string name="voiceIdle">சும்மா ஆக.</string>
-    <string name="voiceHoursPlural">{n, பன்மை, = 1 {1 hour} பிற {{n, எண்} மணிநேரம்}}</string>
-    <string name="voiceMinutesPlural">{n, பன்மை, = 1 {1 minute} பிற {{n, எண்} நிமிடங்கள்}}</string>
-    <string name="voiceSecondsPlural">{n, பன்மை, = 1 {1 second} பிற {{n, எண்} விநாடிகள்}}</string>
-    <string name="voiceSpeedKilometersPerHourPlural">{n, பன்மை, = 1 {1 kilometer per hour} பிற {{n, எண்,#. 0} ஒரு மணி நேரத்திற்கு கிலோமீட்டர்}}</string>
-    <string name="voiceSpeedMKnotsPlural">{n, பன்மை, = 1 {1 knot} பிற {{n, எண்,#. 0} முடிச்சுகள்}}</string>
-    <string name="voiceSpeedMilesPerHourPlural">{n, பன்மை, = 1 {1 mile per hour} பிற {{n, எண்,#. 0} ஒரு மணி நேரத்திற்கு மைல்கள்}}</string>
-    <string name="voiceSpeed">{n, பன்மை, = 1 {1} பிற {{n, எண்,#. 0}}}</string>
+    <string name="voiceHoursPlural">{n, plural, = 1 {1 hour} other {{n,number} மணிநேரம்}}</string>
+    <string name="voiceMinutesPlural">{n, plural, = 1 {1 minute} other {{n,number} நிமிடங்கள்}}</string>
+    <string name="voiceSecondsPlural">{n, plural, = 1 {1 second} other {{n,number} விநாடிகள்}}</string>
+    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, = 1 {1 kilometer per hour} other {{n,number,#. 0} ஒரு மணி நேரத்திற்கு கிலோமீட்டர்}}</string>
+    <string name="voiceSpeedMKnotsPlural">{n, plural, = 1 {1 knot} other {{n,number,#. 0} முடிச்சுகள்}}</string>
+    <string name="voiceSpeedMilesPerHourPlural">{n, plural, = 1 {1 mile per hour} other {{n,number,#. 0} ஒரு மணி நேரத்திற்கு மைல்கள்}}</string>
+    <string name="voiceSpeed">{n, plural, = 1 {1} other {{n,number,#. 0}}}</string>
     <string name="voice_on_device_speaker_title">சாதனத்தின் ச்பீக்கரைப் பயன்படுத்தவும்</string>
     <string name="voice_per_kilometer">ஒரு கிலோமீட்டருக்கு</string>
     <string name="voice_per_nautical_mile">ஒரு கடல் மைலுக்கு</string>
@@ -426,10 +426,10 @@
     <string name="lap_speed">மடியில் விரைவு</string>
     <string name="speed">சராசரி நகரும் விரைவு</string>
     <string name="total_distance">மொத்த தூரம்</string>
-    <string name="voiceDistanceKilometersPlural">{n, பன்மை, = 1 {1 kilometer} பிற {{n, எண்,#. 0} கிலோமீட்டர்}}</string>
-    <string name="voiceDistanceMilesPlural">{n, பன்மை, = 1 {1 mile} பிற {{n, எண்,#. 0} மைல்கள்}}</string>
-    <string name="voiceDistanceNauticalMilesPlural">{n, பன்மை, = 1 {1 nautical mile} பிற {{n, எண்,#. 0} கடல் மைல்கள்}}</string>
-    <string name="voiceDistance">{n, பன்மை, = 1 {1 } பிற {{n, எண்,#. 0}}}</string>
+    <string name="voiceDistanceKilometersPlural">{n, plural, = 1 {1 kilometer} other {{n,number,#. 0} கிலோமீட்டர்}}</string>
+    <string name="voiceDistanceMilesPlural">{n, plural, = 1 {1 mile} other {{n,number,#. 0} மைல்கள்}}</string>
+    <string name="voiceDistanceNauticalMilesPlural">{n, plural, = 1 {1 nautical mile} other {{n,number,#. 0} கடல் மைல்கள்}}</string>
+    <string name="voiceDistance">{n, plural, = 1 {1 } other {{n,number,#. 0}}}</string>
     <string name="average_heart_rate">சராசரி இதய துடிப்பு</string>
     <string name="current_heart_rate">தற்போதைய இதய துடிப்பு</string>
     <string name="lap_heart_rate">மடியில் இதய துடிப்பு</string>

@@ -657,11 +657,11 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="permission_recording_failed">OpenTracks a besoin de la permission d\'accéder à votre localisation ainsi qu\'aux appareils à proximité.</string>
     <string name="create_marker_error">Impossible de créer un marqueur. Veuillez réessayer.</string>
     <string name="power">Puissance</string>
-    <string name="power_x_watt">Puissance {x, plural, =1 {1 watt} autres {# watt} }</string>
+    <string name="power_x_watt">Puissance {x, plural, =1 {1 watt} other {# watt} }</string>
     <string name="settings_announcements_lap_power">Puissance par tour</string>
     <string name="activity_type_kickscooter">trottinette</string>
-    <string name="voiceSpeed">{n, plural, =1 {1} autres {{n,number,#.0}} }</string>
-    <string name="voiceDistance">{n, plural, =1 {1 } autres {{n,number,#.0}} }</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
     <string name="settings_locale_system_default">Paramètres par défaut du système</string>
     <string name="settings_locale_title">Langue</string>
     <string name="stats_gain_loss">Gain et perte</string>

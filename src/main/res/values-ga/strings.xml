@@ -507,11 +507,11 @@
     <string name="settings_announcements_unit">Aonad faid/luas</string>
     <string name="value_internal_sensor">Braiteoir inmheánach</string>
     <string name="voiceIdle">Ag éirí díomhaoin.</string>
-    <string name="voiceSecondsPlural">{n, iolra, =1 {1 soicind} eile {{ n,uimhir} soicind} }</string>
-    <string name="voiceSpeedKilometersPerHourPlural">{n, iolra, =1 {1 chiliméadar in aghaidh na huaire} eile {{ n,uimhir, #.0} ciliméadar san uair} }</string>
-    <string name="voiceSpeedMKnotsPlural">{n, iolra, =1 {1 snaidhm} eile {{ n,uimhir, #.0} snaidhm} }</string>
-    <string name="voiceDistanceNauticalMilesPlural">{n, iolra, =1 {1 mhuirmhíle} eile {{ n,uimhir, #.0} muirmhíle} }</string>
-    <string name="voiceDistance">{n, iolra, =1 {1 } eile {{ n,uimhir, #.0}} }</string>
+    <string name="voiceSecondsPlural">{n, plural, =1 {1 soicind} other {{ n,number} soicind} }</string>
+    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 chiliméadar in aghaidh na huaire} other {{ n,number, #.0} ciliméadar san uair} }</string>
+    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 snaidhm} other {{ n,number, #.0} snaidhm} }</string>
+    <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 mhuirmhíle} other {{ n,number, #.0} muirmhíle} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{ n,number, #.0}} }</string>
     <string name="settings_recording_min_sampling_interval_title">Eatramh ama samplála</string>
     <string name="sensor_state_cadence_unit">rpm</string>
     <string name="sensor_state_heart_rate_unit">bpm</string>
@@ -527,20 +527,20 @@
     <string name="settings_api_summary">Cianrialú agus staitisticí API le haghaidh aipeanna eile</string>
     <string name="create_marker_error">Ní féidir marcóir a chruthú. Déan iarracht arís.</string>
     <string name="sensor_state_power_unit">W</string>
-    <string name="voiceMinutesPlural">{n, iolra, =1 {1 nóiméad} eile {{ n,uimhir} nóiméad} }</string>
-    <string name="voiceDistanceKilometersPlural">{n, iolra, =1 {1 chiliméadar} eile {{ n,uimhir, #.0} ciliméadar} }</string>
+    <string name="voiceMinutesPlural">{n, plural, =1 {1 nóiméad} other {{ n,number} nóiméad} }</string>
+    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 chiliméadar} other {{ n,number, #.0} ciliméadar} }</string>
     <string name="sensor_state_power_max">Cumhacht Max</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
-    <string name="voiceHoursPlural">{n, iolra, =1 {1 uair} eile {{ n,uimhir} uair an chloig} }</string>
-    <string name="voiceDistanceMilesPlural">{n, iolra, =1 {1 mhíle} eile {{ n,uimhir, #.0} míle} }</string>
+    <string name="voiceHoursPlural">{n, plural, =1 {1 uair} other {{ n,number} uair an chloig} }</string>
+    <string name="voiceDistanceMilesPlural">{n, plural, =1 {1 mhíle} other {{ n,number, #.0} míle} }</string>
     <string name="no_compatible_camera_installed">Níl feidhmchlár ceamara comhoiriúnach suiteáilte</string>
-    <string name="voiceSpeedMilesPerHourPlural">{n, iolra, =1 {1 mhíle san uair} eile {{ n,uimhir, #.0} míle san uair} }</string>
-    <string name="voiceSpeed">{n, iolra, =1 {1} eile {{ n,uimhir, #.0}} }</string>
+    <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 mhíle san uair} other {{ n,number, #.0} míle san uair} }</string>
+    <string name="voiceSpeed">{n, plural, =1 {1} other {{ n,number, #.0}} }</string>
     <string name="voice_on_device_speaker_title">Úsáid cainteoir an ghléis</string>
     <string name="no_compatible_gallery_installed">Níl feidhmchlár gailearaí íomhá comhoiriúnach suiteáilte</string>
     <string name="settings_recording_location_distance_summary">%1$s idir suíomhanna taifeadta</string>
     <string name="settings_announcements_lap_power">Cumhacht glúine</string>
-    <string name="power_x_watt">Cumhacht {x, iolra, = 1 {1 vata} eile {# vata} }</string>
+    <string name="power_x_watt">Cumhacht {x, plural, = 1 {1 vata} other {# vata} }</string>
     <string name="empty">" "</string>
     <string name="settings_locale_system_default">Réamhshocrú córais</string>
     <string name="settings_locale_title">Teanga</string>
