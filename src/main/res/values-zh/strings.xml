@@ -633,4 +633,5 @@ limitations under the License.
     <string name="power_x_watt">功率 {x, plural, =1 {1 瓦特} other {# 瓦特} }</string>
     <string name="create_marker_error">无法创建标记，请重试。</string>
     <string name="stats_gain_loss">增益与损失</string>
+    <string name="empty">空白</string>
 </resources>
