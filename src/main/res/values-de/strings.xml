@@ -637,7 +637,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_announcements_unit">Distanz/Geschwindigkeits Einheit</string>
     <string name="power_x_watt">Leistung {x, plural, =1 {1 Watt} other {# Watt} }</string>
     <string name="power">Leistung</string>
-    <string name="voiceDistance">{n, plural, =1 {1 } anderes {{n,number,#.0}} }</string>
+    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
     <string name="settings_recording_min_sampling_interval_title">Abtastzeitintervall</string>
     <string name="voiceIdle">Untätig werden.</string>
     <string name="voice_announce_lap_power_key">StimmeAnkündigungLapPower</string>
