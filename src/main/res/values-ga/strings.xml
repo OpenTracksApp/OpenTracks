@@ -541,7 +541,7 @@
     <string name="settings_recording_location_distance_summary">%1$s idir suíomhanna taifeadta</string>
     <string name="settings_announcements_lap_power">Cumhacht glúine</string>
     <string name="power_x_watt">Cumhacht {x, plural, = 1 {1 vata} other {# vata} }</string>
-    <string name="empty">" "</string>
+    <string name="empty">folamh</string>
     <string name="settings_locale_system_default">Réamhshocrú córais</string>
     <string name="settings_locale_title">Teanga</string>
     <string name="stats_gain_loss">Gnóthachan &amp; Caillteanas</string>
