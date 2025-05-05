@@ -1,0 +1,4 @@
+v4.19.2: OpenTracks
+
+Oprava chyby:
+- Opraven pád z důvodu problémových překladů
