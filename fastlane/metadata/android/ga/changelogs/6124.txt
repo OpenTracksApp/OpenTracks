@@ -1,0 +1,4 @@
+v4.19.2: OpenTracks
+
+Ceartú fabht:
+- Deisíodh tuairteáil mar gheall ar aistriúcháin lochtacha
