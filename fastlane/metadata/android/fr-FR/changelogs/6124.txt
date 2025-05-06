@@ -1,0 +1,4 @@
+v4.19.2 : OpenTracks
+
+Correction de bugs :
+- Correction d'un crash dû à des traductions défectueuses
