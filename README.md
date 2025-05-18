@@ -100,8 +100,8 @@ __Only required permissions:__
 
 ### Public API
 
-OpenTracks includes an API for starting/stopping recording by another installed application (e.g., [Automate](https://llamalab.com/automate/), [Tasker](https://tasker.joaoapps.com), or [Easer](https://github.com/renyuneyun/Easer)).
-The API can be invoked by sending an explicit Intent to start an activity.
+OpenTracks includes an API for starting/stopping recording by another installed application (e.g., [Automate](https://llamalab.com/automate/), [Tasker](https://tasker.joaoapps.com), or [Easer](https://github.com/renyuneyun/Easer)). 
+The API is disabled by default to protect the user's privacy, but it can easily be enabled in the settings. Once enabled, the API can be invoked by sending an explicit Intent to start an activity.
 
 `Package`  (depends on the variant installed):
 * F-Droid: `de.dennisguse.opentracks`
@@ -121,9 +121,17 @@ The API can be invoked by sending an explicit Intent to start an activity.
 * **Stop a recording:**  `de.dennisguse.opentracks.publicapi.StopRecording`
 * **Create a marker:**  `de.dennisguse.opentracks.publicapi.CreateMarker`
 
-For testing via adb: `adb shell am start -e someParameter someValue -n "package/class"`
+For testing the API using adb, the general command syntax is:
 
-The Public API is disabled by default to protect the user's privacy, but it can easily be enabled in the settings.
+```shell
+adb shell am start -e someParameter someValue -n "package/class"
+```
+
+Depending on the package and class, a complete command could look something like this:
+
+```shell
+adb shell am start -n "de.dennisguse.opentracks.playstore/de.dennisguse.opentracks.publicapi.StartRecording"
+```
 
 ## File formats compatibility with open-source software
 |                                                           | [GPX 1.1](https://www.topografix.com/GPX/1/1/)                                 | [KML 2.3](https://docs.opengeospatial.org/is/12-007r2/12-007r2.html) | [KMZ 2.3](https://docs.opengeospatial.org/is/12-007r2/12-007r2.html) |
