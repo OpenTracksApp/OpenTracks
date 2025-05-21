@@ -18,6 +18,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
@@ -45,6 +46,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.TestUtil;
 import de.dennisguse.opentracks.TimezoneRule;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -86,6 +88,9 @@ public class ExportImportTest {
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
+
+    @Rule
+    public GrantPermissionRule mGrantPermissionRule = TestUtil.createGrantPermissionRule();
 
     //For csv_export_only() as we the timezone is hardcoded in the expectation.
     @Rule
@@ -144,7 +149,7 @@ public class ExportImportTest {
 
         Distance sensorDistance = Distance.of(10); // recording distance interval
 
-        sendLocation(trackPointCreator, "2020-02-02T02:02:03Z", 3, 14, 10, 13, 15, 10, 1f);
+        sendLocation(trackPointCreator, "2020-02-02T02:02:03Z", 3.1234567, 14.0014567, 10, 13, 15, 1020.25, 1f);
         contentProviderUtils.insertMarker(new Marker(trackId, service.getLastStoredTrackPointWithLocation(), "Marker 1", "Marker 1 desc", "Marker 1 category", null, null));
 
         // A sensor-only TrackPoint
@@ -155,11 +160,10 @@ public class ExportImportTest {
         mockSensorData(trackPointCreator, 15f, null, 67f, 3f, 50f, null);
         trackPointCreator.setClock("2020-02-02T02:02:15Z");
         mockSensorData(trackPointCreator, null, null, 68f, 3f, 50f, null);
-
         trackPointCreator.setClock("2020-02-02T02:02:16Z");
         mockSensorData(trackPointCreator, 5f, Distance.of(2), 69f, 3f, 50f, null); // Distance will be added to next TrackPoint
 
-        sendLocation(trackPointCreator, "2020-02-02T02:02:17Z", 3, 14.001, 10, 13, 15, 10, 0f);
+        sendLocation(trackPointCreator, "2020-02-02T02:02:17Z", 3.1234567, 14.0014567, 10, 13, 15, 1020.25, 0f);
         contentProviderUtils.insertMarker(new Marker(trackId, service.getLastStoredTrackPointWithLocation(), "Marker 2", "Marker 2 desc", "Marker 2 category", null, null));
 
         trackPointCreator.setClock("2020-02-02T02:02:18Z");
@@ -169,14 +173,14 @@ public class ExportImportTest {
         trackPointCreator.setClock("2020-02-02T02:03:20Z");
         service.resumeTrack(trackId);
 
-        sendLocation(trackPointCreator, "2020-02-02T02:03:21Z", 3, 14.002, 10, 13, 15, 10, 0f);
+        sendLocation(trackPointCreator, "2020-02-02T02:03:21Z", 3.1234567, 14.0024567, 10, 13, 15, 999.123, 0f);
 
-        sendLocation(trackPointCreator, "2020-02-02T02:03:22Z", 3, 16, 10, 13, 15, 10, 0f);
+        sendLocation(trackPointCreator, "2020-02-02T02:03:22Z", 3.1234567, 16, 10, 13, 15, 999.123, 0f);
 
         trackPointCreator.setClock("2020-02-02T02:03:30Z");
         service.getTrackRecordingManager().onIdle();
 
-        sendLocation(trackPointCreator, "2020-02-02T02:03:50Z", 3, 16.001, 10, 27, 15, 10, 0f);
+        sendLocation(trackPointCreator, "2020-02-02T02:03:50Z", 3.1234567, 16.001, 10, 27, 15, 999.123, 0f);
 
         trackPointCreator.getSensorManager().sensorDataSet = new SensorDataSet(trackPointCreator);
         trackPointCreator.setClock("2020-02-02T02:04:00Z");
@@ -209,16 +213,16 @@ public class ExportImportTest {
         assertEquals(Duration.ofSeconds(26), trackStatistics.getMovingTime()); //TODO Likely too low
 
         // Distance
-        assertEquals(222125.53125, trackStatistics.getTotalDistance().toM(), 0.01); //TODO Too low
+        assertEquals(222049.34375, trackStatistics.getTotalDistance().toM(), 0.01); //TODO Too low
 
         // Speed
-        assertEquals(8543.29, trackStatistics.getMaxSpeed().toMPS(), 0.01);
-        assertEquals(3966.52, trackStatistics.getAverageSpeed().toMPS(), 0.01);
-        assertEquals(8543.28, trackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
+        assertEquals(8540.359, trackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(3965.166, trackStatistics.getAverageSpeed().toMPS(), 0.01);
+        assertEquals(8540.359, trackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
 
         // Altitude
-        assertEquals(10, trackStatistics.getMinAltitude(), 0.01);
-        assertEquals(10, trackStatistics.getMaxAltitude(), 0.01);
+        assertEquals(999.122, trackStatistics.getMinAltitude(), 0.01);
+        assertEquals(1020.25, trackStatistics.getMaxAltitude(), 0.01);
 
         assertEquals(2, trackStatistics.getTotalAltitudeGain(), 0.01);
         assertEquals(2, trackStatistics.getTotalAltitudeLoss(), 0.01);
@@ -229,8 +233,8 @@ public class ExportImportTest {
                 new TrackPoint(TrackPoint.Type.TRACKPOINT,
                         new Position(
                                 Instant.parse("2020-02-02T02:02:03Z"),
-                                3d, 14d, Distance.of(10),
-                                Altitude.WGS84.of(10), null,
+                                3.123456, 14.001456, Distance.of(10),
+                                Altitude.WGS84.of(1020.25), null,
                                 null,
                                 Speed.of(15)))
                         .setAltitudeLoss(1f)
@@ -251,8 +255,8 @@ public class ExportImportTest {
                 new TrackPoint(TrackPoint.Type.TRACKPOINT,
                         new Position(
                                 Instant.parse("2020-02-02T02:02:17Z"),
-                                3d, 14.001, Distance.of(10),
-                                Altitude.WGS84.of(10), null,
+                                3.123456, 14.001456, Distance.of(10),
+                                Altitude.WGS84.of(1020.25), null,
                                 null,
                                 Speed.of(5)))
                         .setSensorDistance(Distance.of(2))
@@ -266,16 +270,16 @@ public class ExportImportTest {
                 new TrackPoint(TrackPoint.Type.TRACKPOINT,
                         new Position(
                                 Instant.parse("2020-02-02T02:03:21Z"),
-                                3d, 14.002d, Distance.of(10),
-                                Altitude.WGS84.of(10), null,
+                                3.123456, 14.002456, Distance.of(10),
+                                Altitude.WGS84.of(999.1229858398438), null,
                                 null,
                                 Speed.of(15)))
                         .setAltitudeLoss(0f)
                         .setAltitudeGain(0f),
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
                         new Position(Instant.parse("2020-02-02T02:03:22Z"),
-                                3d, 16d, Distance.of(10),
-                                Altitude.WGS84.of(10), null,
+                                3.123456, 16d, Distance.of(10),
+                                Altitude.WGS84.of(999.1229858398438), null,
                                 null,
                                 Speed.of(15)))
                         .setAltitudeLoss(0f)
@@ -286,8 +290,8 @@ public class ExportImportTest {
                 new TrackPoint(TrackPoint.Type.TRACKPOINT,
                         new Position(
                                 Instant.parse("2020-02-02T02:03:50Z"),
-                                3d, 16.001, Distance.of(10),
-                                Altitude.WGS84.of(10), null,
+                                3.123456, 16.001, Distance.of(10),
+                                Altitude.WGS84.of(999.1229858398438), null,
                                 null, Speed.of(15)))
                         .setAltitudeLoss(0f)
                         .setAltitudeGain(0f),
@@ -334,7 +338,26 @@ public class ExportImportTest {
 
         // Time
         assertEquals(track.getZoneOffset(), importedTrack.getZoneOffset());
-        assertEquals(track.getTrackStatistics(), importedTrackStatistics);
+        assertEquals(Instant.parse("2020-02-02T02:02:02Z"), importedTrackStatistics.getStartTime());
+        assertEquals(Instant.parse("2020-02-02T02:04:00Z"), importedTrackStatistics.getStopTime());
+
+        assertEquals(Duration.ofSeconds(56), importedTrackStatistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(26), importedTrackStatistics.getMovingTime());
+
+        // Distance
+        assertEquals(222049.421, importedTrackStatistics.getTotalDistance().toM(), 0.01);
+
+        // Speed
+        assertEquals(8540.362, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(3965.168, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
+        assertEquals(8540.362, importedTrackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
+
+        // Altitude
+        assertEquals(999.122, importedTrackStatistics.getMinAltitude(), 0.01);
+        assertEquals(1020.25, importedTrackStatistics.getMaxAltitude(), 0.01);
+        assertEquals(2, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
+        assertEquals(2, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
+
 
         // 4. markers
         assertMarkers();
@@ -406,8 +429,8 @@ public class ExportImportTest {
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
                         new Position(
                                 Instant.parse("2020-02-02T02:02:03Z"),
-                                3d, 14d, Distance.of(10),
-                                Altitude.WGS84.of(10), null,
+                                3.123456, 14.001456d, Distance.of(10),
+                                Altitude.WGS84.of(1020.2), null,
                                 null,
                                 Speed.of(15)))
                         .setAltitudeLoss(1f)
@@ -415,8 +438,8 @@ public class ExportImportTest {
                 new TrackPoint(TrackPoint.Type.TRACKPOINT,
                         new Position(
                                 Instant.parse("2020-02-02T02:02:17Z"),
-                                3d, 14.001, Distance.of(10),
-                                Altitude.WGS84.of(10), null,
+                                3.123456, 14.001456, Distance.of(10),
+                                Altitude.WGS84.of(1020.2), null,
                                 null,
                                 Speed.of(5)))
                         .setAltitudeLoss(1f)
@@ -428,8 +451,8 @@ public class ExportImportTest {
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
                         new Position(
                                 Instant.parse("2020-02-02T02:03:21Z"),
-                                3d, 14.002, Distance.of(10),
-                                Altitude.WGS84.of(10), null,
+                                3.123456, 14.002456, Distance.of(10),
+                                Altitude.WGS84.of(999.0999755859375), null,
                                 null,
                                 Speed.of(15)))
                         .setAltitudeLoss(0f)
@@ -437,8 +460,8 @@ public class ExportImportTest {
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC,
                         new Position(
                                 Instant.parse("2020-02-02T02:03:22Z"),
-                                3d, 16d, Distance.of(10),
-                                Altitude.WGS84.of(10), null,
+                                3.123456, 16d, Distance.of(10),
+                                Altitude.WGS84.of(999.0999755859375), null,
                                 null,
                                 Speed.of(15)))
                         .setAltitudeLoss(0f)
@@ -446,8 +469,8 @@ public class ExportImportTest {
                 new TrackPoint(TrackPoint.Type.TRACKPOINT,
                         new Position(
                                 Instant.parse("2020-02-02T02:03:50Z"),
-                                3d, 16.001, Distance.of(10),
-                                Altitude.WGS84.of(10), null,
+                                3.123456, 16.001, Distance.of(10),
+                                Altitude.WGS84.of(999.0999755859375), null,
                                 null,
                                 Speed.of(10)))
                         .setAltitudeLoss(0f)
@@ -467,16 +490,16 @@ public class ExportImportTest {
         assertEquals(Duration.ofSeconds(107), importedTrackStatistics.getMovingTime());
 
         // Distance
-        assertEquals(222347.85, importedTrackStatistics.getTotalDistance().toM(), 0.01);
+        assertEquals(222271.734, importedTrackStatistics.getTotalDistance().toM(), 0.01);
 
         // Speed
-        assertEquals(2078.01, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
-        assertEquals(2078.01, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
-        assertEquals(2078.01, importedTrackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
+        assertEquals(2077.305, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(2077.305, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
+        assertEquals(2077.305, importedTrackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
 
         // Altitude
-        assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);
-        assertEquals(10, importedTrackStatistics.getMaxAltitude(), 0.01);
+        assertEquals(999.099, importedTrackStatistics.getMinAltitude(), 0.01);
+        assertEquals(1020.2, importedTrackStatistics.getMaxAltitude(), 0.01);
         assertEquals(2, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
         assertEquals(2, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
 
@@ -614,7 +637,7 @@ public class ExportImportTest {
         }
     }
 
-    private void sendLocation(TrackPointCreator trackPointCreator, String time, double latitude, double longitude, float accuracy, float verticalAccuracy, float speed, float altitude, Float altitudeGain) {
+    private void sendLocation(TrackPointCreator trackPointCreator, String time, double latitude, double longitude, float accuracy, float verticalAccuracy, float speed, double altitude, Float altitudeGain) {
         Location location = new Location("mock");
         location.setLatitude(latitude);
         location.setLongitude(longitude);
