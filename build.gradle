@@ -158,7 +158,7 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.6.1'
     androidTestImplementation 'androidx.test:runner:1.6.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-    androidTestImplementation 'org.mockito:mockito-android:5.17.0'
+    androidTestImplementation 'org.mockito:mockito-android:5.18.0'
 
     androidTestUtil 'androidx.test:orchestrator:1.5.1'
 }
