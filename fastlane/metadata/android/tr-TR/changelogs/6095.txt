@@ -1,0 +1,11 @@
+v4.18.0: Opentracks
+
+Değişiklikler:
+- GPS devre dışı bırakılmış uyarısı devre dışı bırakılabilir
+
+Bugfix:
+- Üst üste binen BottomAppBar düzeltildi
+
+Gelişim:
+- Android konumu yerine kayıt konumunu kullanır
+- Refactored sensör toplayıcıları

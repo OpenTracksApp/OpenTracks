@@ -1,0 +1,7 @@
+v4.19.0: Opentracks
+
+Değişiklikler:
+- GPX dışa aktarma uyumlu değildi (TrackPointExtension sıra ve içerik)
+
+Bugfix:
+- pre-v4.18.0 öncesi resimsiz işaretçilerin silinmemesi düzeltildi

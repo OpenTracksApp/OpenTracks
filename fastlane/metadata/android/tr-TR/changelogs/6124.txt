@@ -1,0 +1,4 @@
+v4.19.2: Opentracks
+
+Bugfix:
+- Hatalı çeviriler nedeniyle çökme sorunu düzeltildi

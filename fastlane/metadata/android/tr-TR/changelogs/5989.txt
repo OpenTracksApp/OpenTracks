@@ -1,0 +1,10 @@
+v4.17.5: Opentracks
+
+Değişiklikler:
+- Tekrarlanabilir yapının: işe yarayıp yaramadığını görelim.
+
+Bugfix:
+- Tekrarlanabilir yapı PlayStore simgesini kullanır.
+
+Geliştirici:
+- RELEASE_BUILD.sh eklendi
