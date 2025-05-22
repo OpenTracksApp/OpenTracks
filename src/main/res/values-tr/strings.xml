@@ -603,4 +603,7 @@ limitations under the License.
     <string name="stats_gain_loss">Kazanç ve Kayıp</string>
     <string name="activity_type_kickscooter">trotinet</string>
     <string name="create_marker_error">Bir işaretçi oluşturulamıyor. Tekrar deneyin.</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">GPS devre dışı uyarısı</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">Kayıt sırasında GPS devre dışı bırakılırsa bir uyarı gösterir.</string>
+    <string name="empty">boş</string>
 </resources>
