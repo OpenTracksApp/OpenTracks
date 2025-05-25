@@ -1,0 +1,7 @@
+v3.2.1: OpenTracks
+
+Değişiklikler:
+- Ayarlar artık tek bir sayfada
+
+Gelişim:
+- Androidx Compat'a taşınan ayarlar (parçaları kullanır)
