@@ -1,0 +1,4 @@
+v4.19.3: OpenTracks
+
+Oprava chyby:
+- Opraven export CSV pro nadmořskou výšku (byla uříznuta v 1000 m)
