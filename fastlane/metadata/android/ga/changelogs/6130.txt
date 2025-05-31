@@ -1,0 +1,4 @@
+v4.19.3: OpenTracks
+
+Ceartú fabht:
+- Deisíodh easpórtáil CSV le haghaidh airde (gearradh ag 1000m é)
