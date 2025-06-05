@@ -150,7 +150,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'androidx.core:core:1.16.0'
     implementation 'androidx.core:core-splashscreen:1.0.1'
-    implementation 'androidx.mediarouter:mediarouter:1.7.0'
+    implementation 'androidx.mediarouter:mediarouter:1.8.0'
     implementation 'androidx.core:core-location-altitude:1.0.0-alpha03'
 
     androidTestImplementation 'androidx.test:core:1.6.1'
