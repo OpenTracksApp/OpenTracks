@@ -50,8 +50,12 @@ public abstract class AbstractActivity extends AppCompatActivity {
         View rootView = getRootView();
         setContentView(rootView);
 
+        apply_insets(rootView);
+    }
+
+    private void apply_insets(View rootView) {
         View bottom_app_bar = findViewById(R.id.bottom_app_bar);
-        if (bottom_app_bar != null) {
+        if (rootView != null) {
             // Apply navbar insets to the whole content
             ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
                 Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -61,6 +65,8 @@ public abstract class AbstractActivity extends AppCompatActivity {
                 // Return the insets to apply to the next view (BottomAppBar)
                 return windowInsets;
             });
+        }
+        if (bottom_app_bar != null) {
             // Apply status and navbar insets to BottomAppBar
             // WARNING: this is called twice for bottomappbar.xml
             ViewCompat.setOnApplyWindowInsetsListener(bottom_app_bar, (view, windowInsets) -> {
