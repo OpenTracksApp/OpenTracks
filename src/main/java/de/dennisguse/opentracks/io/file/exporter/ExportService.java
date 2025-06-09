@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
@@ -16,6 +17,8 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.ExportUtils;
 
 public class ExportService extends JobIntentService {
+
+    private static final String TAG = ExportService.class.getSimpleName();
 
     private static final int JOB_ID = 1;
 
@@ -55,6 +58,7 @@ public class ExportService extends JobIntentService {
             ExportUtils.exportTrack(this, directoryFile, exportTask);
             resultReceiver.send(ExportServiceResultReceiver.RESULT_CODE_SUCCESS, bundle);
         } catch (Exception e) {
+            Log.e(TAG, "Export failed: " + e);
             bundle.putString(ExportServiceResultReceiver.EXTRA_EXPORT_ERROR_MESSAGE, e.getMessage());
             resultReceiver.send(ExportServiceResultReceiver.RESULT_CODE_ERROR, bundle);
         }
