@@ -1,0 +1,5 @@
+v4.19.4: OpenTracks
+
+Bugfix:
+- Edge-to-edge (SDK35): applied to all version of Android (some progress, but still work in progress)
+- KMZ with pictures could not be exported (heading not computable; feature removed)
