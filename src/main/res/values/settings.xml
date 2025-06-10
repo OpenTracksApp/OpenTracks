@@ -48,9 +48,6 @@
     <string name="export_filename_format_key" translatable="false">instantExportFilename</string>
     <string name="export_filename_format_default" translatable="false">{date}_{time}_{name}</string>
 
-    <string name="settings_import" translatable="false">settingsImport</string>
-    <string name="settings_export" translatable="false">settingsExport</string>
-
     <!-- Stats layout customization default layout -->
     <string name="settings_layout_reset_key" translatable="false">settingsLayoutReset</string>
 

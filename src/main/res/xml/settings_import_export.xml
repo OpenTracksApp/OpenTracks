@@ -6,7 +6,6 @@
 
     <PreferenceCategory android:title="@string/settings_import_section">
         <Preference
-            android:key="@string/settings_import"
             android:title="@string/menu_import_all">
             <intent
                 android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ImportDirectoryChooserActivity"
@@ -20,14 +19,12 @@
 
     <PreferenceCategory android:title="@string/settings_export_section">
         <Preference
-            android:key="@string/settings_export"
             android:title="@string/menu_export_all">
             <intent
                 android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity"
                 android:targetPackage="@string/applicationId" />
         </Preference>
         <Preference
-            android:key="@string/settings_export"
             android:title="@string/menu_export_all_one_file">
             <intent
                 android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserOneFileActivity"
