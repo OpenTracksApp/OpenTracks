@@ -59,6 +59,8 @@ public class ExportService extends JobIntentService {
             resultReceiver.send(ExportServiceResultReceiver.RESULT_CODE_SUCCESS, bundle);
         } catch (Exception e) {
             Log.e(TAG, "Export failed: " + e);
+            e.printStackTrace(); //TODO Remove
+
             bundle.putString(ExportServiceResultReceiver.EXTRA_EXPORT_ERROR_MESSAGE, e.getMessage());
             resultReceiver.send(ExportServiceResultReceiver.RESULT_CODE_ERROR, bundle);
         }
