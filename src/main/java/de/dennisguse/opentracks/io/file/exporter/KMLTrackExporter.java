@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -274,8 +273,7 @@ public class KMLTrackExporter implements TrackExporter {
     private void writeMarker(Marker marker, ZoneOffset zoneOffset) {
         boolean existsPhoto = MarkerUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoUrl()) != null;
         if (marker.hasPhoto() && exportPhotos && existsPhoto) {
-            float heading = getHeading(marker.getTrackId(), marker.getPosition());
-            writePhotoOverlay(marker, heading, zoneOffset);
+            writePhotoOverlay(marker, zoneOffset);
         } else {
             writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), marker.getPosition(), marker.getTime(), zoneOffset);
         }
@@ -429,7 +427,7 @@ public class KMLTrackExporter implements TrackExporter {
         }
     }
 
-    private void writePhotoOverlay(Marker marker, float heading, ZoneOffset zoneOffset) {
+    private void writePhotoOverlay(Marker marker, ZoneOffset zoneOffset) {
         printWriter.println("<PhotoOverlay>");
         printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
         printWriter.println("<description>" + StringUtils.formatCData(marker.getDescription()) + "</description>");
@@ -437,7 +435,6 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.print("<longitude>" + marker.getLongitude() + "</longitude>");
         printWriter.print("<latitude>" + marker.getLatitude() + "</latitude>");
         printWriter.print("<altitude>20</altitude>");
-        printWriter.print("<heading>" + heading + "</heading>");
         printWriter.print("<tilt>90</tilt>");
         printWriter.println("</Camera>");
         printWriter.println("<TimeStamp><when>" + getTime(zoneOffset, marker.getTime()) + "</when></TimeStamp>");
@@ -466,26 +463,6 @@ public class KMLTrackExporter implements TrackExporter {
      */
     private String getTime(ZoneOffset zoneOffset, Instant instant) {
         return StringUtils.formatDateTimeIso8601(instant, zoneOffset);
-    }
-
-    /**
-     * TODO: check if this is a useful feature (likely not).
-     * Gets the heading to a location.
-     */
-    private float getHeading(Track.Id trackId, Position position) {
-        TrackPoint.Id trackPointId = contentProviderUtils.getTrackPointId(trackId, position);
-        if (trackPointId == null) {
-            return position.bearing();
-        }
-        TrackPoint viewLocation = contentProviderUtils.getLastValidTrackPoint(trackId);
-        if (viewLocation != null) {
-            Optional<Float> bearing = viewLocation.bearingTo(position);
-            if (bearing.isPresent()) {
-                return bearing.get();
-            }
-        }
-
-        return position.bearing();
     }
 
     private static String getCoordinates(Position position, String separator) {
