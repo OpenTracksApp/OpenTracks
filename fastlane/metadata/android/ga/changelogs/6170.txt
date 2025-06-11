@@ -1,0 +1,5 @@
+v4.19.4: OpenTracks
+
+Ceartú fabht:
+- Imeall go himeall (SDK35): curtha i bhfeidhm ar gach leagan de Android (roinnt dul chun cinn, ach obair ar siúl fós)
+- Níorbh fhéidir KMZ le pictiúir a easpórtáil (níorbh fhéidir an ceannteideal a ríomh; baineadh an ghné)
