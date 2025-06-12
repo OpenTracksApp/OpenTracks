@@ -34,7 +34,6 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import de.dennisguse.opentracks.chart.ChartFragment;
 import de.dennisguse.opentracks.chart.TrackDataHubInterface;
-import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackDataHub;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackRecordedBinding;
@@ -67,8 +66,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
 
     private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
 
-    // The following are setFrequency in onCreate.
-    private ContentProviderUtils contentProviderUtils;
     private TrackDataHub trackDataHub;
 
     private TrackRecordedBinding viewBinding;
@@ -85,8 +82,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        contentProviderUtils = new ContentProviderUtils(this);
-
         handleIntent(getIntent());
 
         trackDataHub = new TrackDataHub(this);
@@ -101,7 +96,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindCallback);
 
-        Track track = contentProviderUtils.getTrack(trackId);
         viewBinding.bottomAppBarLayout.bottomAppBar.replaceMenu(R.menu.track_detail);
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
 
