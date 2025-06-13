@@ -25,7 +25,9 @@ import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.ViewCompat;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import com.google.android.material.appbar.AppBarLayout;
 import de.dennisguse.opentracks.services.announcement.TTSManager;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
@@ -50,39 +52,60 @@ public abstract class AbstractActivity extends AppCompatActivity {
         View rootView = getRootView();
         setContentView(rootView);
 
-        apply_insets(rootView);
+//        apply_insets((ViewGroup) rootView);
+        apply_insets((ViewGroup) ((ViewGroup) rootView).getChildAt(0));
     }
 
-    private void apply_insets(View rootView) {
-        View bottom_app_bar = findViewById(R.id.bottom_app_bar);
-        if (rootView != null) {
-            // Apply navbar insets to the whole content
+    private void apply_insets(ViewGroup rootView) {
+        if (rootView == null) {
+            return;
+        }
+        // FIXME: function is called twice, even though it is actually only called once (???????)
+        System.out.printf("apply_insets(%s)\n", rootView.getClass());
+
+        // Apply navbar insets to the whole content (for landscape mode)
+        // FIXME: is not called
+        ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            // Apply the insets as a padding to the view.
+            // Don't need to set the top inset for some reason (?)
+            view.setPadding(insets.left, 0, insets.right, 0);
+            // Return the insets to apply to the next view
+            System.out.println("SET INSET FOR ROOT VIEW");
+            return windowInsets;
+        });
+
+        // Apply bottom inset to root's children
+        for (int i = 0; i < rootView.getChildCount(); i++) {
+            View child = rootView.getChildAt(i);
+            // Don't apply bottom inset to Top AppBar
+            // FIXME: Does not go to next iteration even if child is AppBarLayout (???)
+            if (child instanceof AppBarLayout) {
+                continue;
+            }
+
+            // FIXME: does not get called for any other children
             ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
                 Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
                 // Apply the insets as a padding to the view.
-                // Don't need to set the top inset for some reason (?)
-                view.setPadding(insets.left, 0, insets.right, 0);
-                // Return the insets to apply to the next view (BottomAppBar)
-                return windowInsets;
-            });
-        }
-        if (bottom_app_bar != null) {
-            // Apply status and navbar insets to BottomAppBar
-            // WARNING: this is called twice for bottomappbar.xml
-            ViewCompat.setOnApplyWindowInsetsListener(bottom_app_bar, (view, windowInsets) -> {
-                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-                // Apply the insets as a padding to the view.
                 view.setPadding(0, 0, 0, insets.bottom);
-                // Set new height to account for the inset
-                LayoutParams layout = view.getLayoutParams();
-                // Get actionBar height attribute
-                final TypedArray arr = obtainStyledAttributes(new int[] { com.google.android.material.R.attr.actionBarSize });
-                int actionBarHeight = (int) arr.getDimension(0, 0f);
-                arr.recycle();
-                layout.height = insets.bottom + actionBarHeight;
-                view.setLayoutParams(layout);
-                // Return CONSUMED if you don't want the window insets to keep passing down to descendant views.
-                return WindowInsetsCompat.CONSUMED;
+                // Return the insets to apply to the next view
+                System.out.printf("SET INSET FOR CHILD %s\n", view.getClass());
+
+                // Modify BottomAppBar height to compensate for the inset
+                if (view.getId() == R.id.bottom_app_bar) {
+                    System.out.println("View is BottomAppBar");
+                    LayoutParams layout = view.getLayoutParams();
+                    // Get actionBar height attribute
+                    final TypedArray arr = obtainStyledAttributes(new int[]{com.google.android.material.R.attr.actionBarSize});
+                    int actionBarHeight = (int) arr.getDimension(0, 0f);
+                    arr.recycle();
+                    // Apply new height
+                    layout.height = insets.bottom + actionBarHeight;
+                    view.setLayoutParams(layout);
+                }
+
+                return windowInsets;
             });
         }
     }
