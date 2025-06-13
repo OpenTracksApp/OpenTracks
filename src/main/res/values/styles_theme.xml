@@ -27,7 +27,7 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_color_splashscreen</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_color_108dp</item>
         <item name="postSplashScreenTheme">@style/OpenTracksTheme</item>
     </style>
 
