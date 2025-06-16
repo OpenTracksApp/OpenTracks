@@ -33,7 +33,7 @@
     <string name="unit_mile_per_hour">எம்.பி.எச்</string>
     <string name="unit_nautical_mile">என்.எம்</string>
     <string name="unit_knots">kn</string>
-    <string name="unit_minute_per_kilometer">எனது/கி.மீ.</string>
+    <string name="unit_minute_per_kilometer">நிமையம்/கி.மீ</string>
     <string name="unit_minute_per_mile">min/mi</string>
     <string name="value_integer_feet_excellent_gps">%1$d அடி (சிறந்த சி.பி.எச்)</string>
     <string name="value_float_kilometer_hour_recommended">%1 $ .1f கிமீ/மணி (பரிந்துரைக்கப்படுகிறது)</string>
@@ -535,4 +535,11 @@
     <string name="activity_type_ice_sailing">பனி படகோட்டம்</string>
     <string name="activity_type_inline_skating">இன்லைன் ச்கேட்டிங்</string>
     <string name="activity_type_kayaking">கயாக்கிங்</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">சி.பி.எச் முடக்கப்பட்ட முன்னறிவிப்பு</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">பதிவு செய்யும் போது, சி.பி.எச் முடக்கப்பட்டிருந்தால் ஒரு எச்சரிக்கையைக் காட்டுங்கள்.</string>
+    <string name="empty">காலி</string>
+    <string name="settings_charts_title">விளக்கப்படங்கள்</string>
+    <string name="settings_chart_display_elevation_title">றிந்த உயரத்தைக் காண்பி</string>
+    <string name="settings_chart_display_pace_or_speed_title">விரைவு அல்லது வேகத்தைக் காண்பி</string>
+    <string name="settings_chart_display_heart_rate_title">இதய துடிப்பைக் காண்பி</string>
 </resources>
