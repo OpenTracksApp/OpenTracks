@@ -72,8 +72,9 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         }
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = SettingsBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }

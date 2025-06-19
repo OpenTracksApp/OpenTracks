@@ -108,8 +108,9 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
         adapter.reloadLayouts();
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         PreferencesUtils.getCustomLayout();
         viewBinding = ActivitySettingsCustomLayoutListBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();

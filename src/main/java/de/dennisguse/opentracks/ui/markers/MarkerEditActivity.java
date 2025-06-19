@@ -85,8 +85,9 @@ public class MarkerEditActivity extends AbstractActivity {
     // UI elements
     private MarkerEditBinding viewBinding;
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = MarkerEditBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }

@@ -47,7 +47,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
         // Set volume control stream for text to speech
         setVolumeControlStream(TTSManager.AUDIO_STREAM);
 
-        View rootView = getRootView();
+        View rootView = createRootView();
         setContentView(rootView);
 
         apply_insets(rootView);
@@ -93,5 +93,6 @@ public abstract class AbstractActivity extends AppCompatActivity {
         return true;
     }
 
-    protected abstract View getRootView();
+    @NonNull
+    protected abstract View createRootView();
 }

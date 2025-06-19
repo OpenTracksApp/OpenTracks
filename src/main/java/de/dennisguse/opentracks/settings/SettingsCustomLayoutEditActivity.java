@@ -116,8 +116,9 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
         recordingLayoutFieldsVisible = null;
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = ActivitySettingsCustomLayoutBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }

@@ -110,8 +110,9 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = MarkerDetailActivityBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }

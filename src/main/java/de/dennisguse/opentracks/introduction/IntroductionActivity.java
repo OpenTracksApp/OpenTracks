@@ -47,8 +47,9 @@ public class IntroductionActivity extends AbstractActivity {
         viewBinding.introductionViewPager.setUserInputEnabled(false);
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = IntroductionBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }

@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
@@ -242,8 +243,9 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         adapter = null;
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = TrackListBinding.inflate(getLayoutInflater());
 
         viewBinding.trackListSearchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {

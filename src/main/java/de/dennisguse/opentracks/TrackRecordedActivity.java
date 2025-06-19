@@ -136,8 +136,9 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
         outState.putInt(CURRENT_TAB_TAG_KEY, viewBinding.trackDetailActivityViewPager.getCurrentItem());
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = TrackRecordedBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }

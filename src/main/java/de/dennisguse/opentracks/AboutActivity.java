@@ -3,6 +3,7 @@ package de.dennisguse.opentracks;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import de.dennisguse.opentracks.databinding.AboutBinding;
@@ -29,7 +30,8 @@ public class AboutActivity extends AbstractActivity {
         ViewUtils.makeClickableLinks(findViewById(android.R.id.content));
     }
 
-    protected View getRootView() {
+    @NonNull
+    protected View createRootView() {
         viewBinding = AboutBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }
