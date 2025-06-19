@@ -94,19 +94,6 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="track_list_item_time_distance,track_list_item_marker_count_icon,track_list_item_marker_count,track_list_item_time" />
 
-    <!-- Category and description -->
-    <TextView
-        android:id="@+id/track_list_item_category_description"
-        style="?attr/textAppearanceBodySmall"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/track_list_item_name"
-        app:layout_constraintTop_toBottomOf="@id/track_list_item_barrier"
-        tools:text="Description" />
-
     <!-- Bottom Line -->
     <View
         android:id="@+id/marker_list_item_bottom_line"
@@ -114,6 +101,6 @@
         android:layout_marginBottom="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/track_list_item_category_description" />
+        app:layout_constraintTop_toBottomOf="@+id/track_list_item_barrier" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
