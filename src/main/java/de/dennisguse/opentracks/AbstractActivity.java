@@ -16,16 +16,16 @@
 
 package de.dennisguse.opentracks;
 
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.ViewCompat;
-import android.view.ViewGroup.LayoutParams;
+import androidx.core.view.WindowInsetsCompat;
+
 import de.dennisguse.opentracks.services.announcement.TTSManager;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
@@ -40,8 +40,8 @@ public abstract class AbstractActivity extends AppCompatActivity {
             setTheme(R.style.OpenTracksThemeOled);
         }
 
-        // Enable edge-to-edge rendering
         EdgeToEdge.enable(this);
+
         super.onCreate(savedInstanceState);
 
         // Set volume control stream for text to speech
@@ -50,41 +50,15 @@ public abstract class AbstractActivity extends AppCompatActivity {
         View rootView = createRootView();
         setContentView(rootView);
 
-        apply_insets(rootView);
+        edge2edgeApplyInsets(rootView);
     }
 
-    private void apply_insets(View rootView) {
-        View bottom_app_bar = findViewById(R.id.bottom_app_bar);
-        if (rootView != null) {
-            // Apply navbar insets to the whole content
-            ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
-                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-                // Apply the insets as a padding to the view.
-                // Don't need to set the top inset for some reason (?)
-                view.setPadding(insets.left, 0, insets.right, 0);
-                // Return the insets to apply to the next view (BottomAppBar)
-                return windowInsets;
-            });
-        }
-        if (bottom_app_bar != null) {
-            // Apply status and navbar insets to BottomAppBar
-            // WARNING: this is called twice for bottomappbar.xml
-            ViewCompat.setOnApplyWindowInsetsListener(bottom_app_bar, (view, windowInsets) -> {
-                Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-                // Apply the insets as a padding to the view.
-                view.setPadding(0, 0, 0, insets.bottom);
-                // Set new height to account for the inset
-                LayoutParams layout = view.getLayoutParams();
-                // Get actionBar height attribute
-                final TypedArray arr = obtainStyledAttributes(new int[] { com.google.android.material.R.attr.actionBarSize });
-                int actionBarHeight = (int) arr.getDimension(0, 0f);
-                arr.recycle();
-                layout.height = insets.bottom + actionBarHeight;
-                view.setLayoutParams(layout);
-                // Return CONSUMED if you don't want the window insets to keep passing down to descendant views.
-                return WindowInsetsCompat.CONSUMED;
-            });
-        }
+    private void edge2edgeApplyInsets(View rootView) {
+        ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+            view.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+            return WindowInsetsCompat.CONSUMED;
+        });
     }
 
     @Override
