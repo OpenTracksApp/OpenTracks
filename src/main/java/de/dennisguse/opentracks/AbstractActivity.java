@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewGroupCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import de.dennisguse.opentracks.services.announcement.TTSManager;
@@ -59,6 +60,8 @@ public abstract class AbstractActivity extends AppCompatActivity {
             view.setPadding(insets.left, insets.top, insets.right, insets.bottom);
             return WindowInsetsCompat.CONSUMED;
         });
+        // For Android 10 and below.
+        ViewGroupCompat.installCompatInsetsDispatch(rootView);
     }
 
     @Override
