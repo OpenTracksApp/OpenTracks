@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -28,8 +30,9 @@ public class ShowErrorActivity extends AbstractActivity {
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = ActivityShowErrorBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }

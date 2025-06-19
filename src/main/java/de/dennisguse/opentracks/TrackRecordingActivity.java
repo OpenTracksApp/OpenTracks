@@ -250,8 +250,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         trackRecordingServiceConnection = null;
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = TrackRecordingBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }

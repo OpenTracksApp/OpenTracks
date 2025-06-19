@@ -7,6 +7,8 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.NonNull;
+
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
@@ -110,8 +112,9 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
                 contentProviderUtils);
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = TrackStoppedBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }

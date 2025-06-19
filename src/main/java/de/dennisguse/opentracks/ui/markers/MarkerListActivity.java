@@ -145,8 +145,9 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         contentProviderUtils = null;
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = MarkerListBinding.inflate(getLayoutInflater());
 
         viewBinding.markerListSearchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {

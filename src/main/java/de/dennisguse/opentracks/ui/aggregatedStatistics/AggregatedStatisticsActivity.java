@@ -83,8 +83,9 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
         outState.putBoolean(STATE_ARE_FILTERS_APPLIED, areFiltersApplied);
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = AggregatedStatsBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }

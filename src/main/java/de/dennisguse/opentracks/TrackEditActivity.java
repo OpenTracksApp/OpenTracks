@@ -115,8 +115,9 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         outState.putSerializable(ICON_VALUE_KEY, activityType);
     }
 
+    @NonNull
     @Override
-    protected View getRootView() {
+    protected View createRootView() {
         viewBinding = TrackEditBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }
