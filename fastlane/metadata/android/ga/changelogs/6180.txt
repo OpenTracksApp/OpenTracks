@@ -1,0 +1,5 @@
+v4.19.5: OpenTracks
+
+Ceartú fabht:
+- Taispeánadh deilbhín an lainseálaí róbheag uaireanta
+- Deilbhín an rianaithe ar an leathanach sonraí ag baint úsáide as cineál gníomhaíochta logánaithe
