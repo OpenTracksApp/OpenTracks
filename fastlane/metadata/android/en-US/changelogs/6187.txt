@@ -1,0 +1,4 @@
+v4.19.6: OpenTracks
+
+Changes:
+- Edge-2-edge should now be working on all Android versions
