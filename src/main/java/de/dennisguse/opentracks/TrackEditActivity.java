@@ -68,19 +68,19 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
             return;
         }
 
-        viewBinding.fields.trackEditName.setText(track.getName());
+        viewBinding.trackEditName.setText(track.getName());
 
-        viewBinding.fields.trackEditActivityType.setText(track.getActivityTypeLocalized());
+        viewBinding.trackEditActivityType.setText(track.getActivityTypeLocalized());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(this));
-        viewBinding.fields.trackEditActivityType.setAdapter(adapter);
-        viewBinding.fields.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> {
-            String localizedActivityType = (String) viewBinding.fields.trackEditActivityType.getAdapter().getItem(position);
+        viewBinding.trackEditActivityType.setAdapter(adapter);
+        viewBinding.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> {
+            String localizedActivityType = (String) viewBinding.trackEditActivityType.getAdapter().getItem(position);
             setActivityTypeIcon(ActivityType.findByLocalizedString(this, localizedActivityType));
         });
-        viewBinding.fields.trackEditActivityType.setOnFocusChangeListener((v, hasFocus) -> {
+        viewBinding.trackEditActivityType.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                String localizedActivityType = viewBinding.fields.trackEditActivityType.getText().toString();
+                String localizedActivityType = viewBinding.trackEditActivityType.getText().toString();
                 setActivityTypeIcon(ActivityType.findByLocalizedString(this, localizedActivityType));
             }
         });
@@ -94,13 +94,13 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         }
 
         setActivityTypeIcon(activityType);
-        viewBinding.fields.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), this, viewBinding.fields.trackEditActivityType.getText().toString()));
+        viewBinding.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), this, viewBinding.trackEditActivityType.getText().toString()));
 
-        viewBinding.fields.trackEditDescription.setText(track.getDescription());
+        viewBinding.trackEditDescription.setText(track.getDescription());
 
         viewBinding.trackEditSave.setOnClickListener(v -> {
-            TrackUtils.updateTrack(TrackEditActivity.this, track, viewBinding.fields.trackEditName.getText().toString(),
-                    viewBinding.fields.trackEditActivityType.getText().toString(), viewBinding.fields.trackEditDescription.getText().toString(),
+            TrackUtils.updateTrack(TrackEditActivity.this, track, viewBinding.trackEditName.getText().toString(),
+                    viewBinding.trackEditActivityType.getText().toString(), viewBinding.trackEditDescription.getText().toString(),
                     contentProviderUtils);
             finish();
         });
@@ -124,12 +124,12 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
     private void setActivityTypeIcon(ActivityType activityType) {
         this.activityType = activityType;
-        viewBinding.fields.trackEditActivityTypeIcon.setImageResource(activityType.getIconDrawableId());
+        viewBinding.trackEditActivityTypeIcon.setImageResource(activityType.getIconDrawableId());
     }
 
     @Override
     public void onChooseActivityTypeDone(ActivityType activityType) {
         setActivityTypeIcon(activityType);
-        viewBinding.fields.trackEditActivityType.setText(getString(activityType.getLocalizedStringId()));
+        viewBinding.trackEditActivityType.setText(getString(activityType.getLocalizedStringId()));
     }
 }
