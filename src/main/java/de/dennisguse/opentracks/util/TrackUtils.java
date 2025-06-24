@@ -39,27 +39,21 @@ public class TrackUtils {
     }
 
     public static void updateTrack(Context context, Track track, String name, String activityTypeLocalized, ActivityType activityType, String description, ContentProviderUtils contentProviderUtils) {
-        boolean update = false;
         if (name != null) {
             track.setName(name);
-            update = true;
         }
         if (activityTypeLocalized != null) {
             track.setActivityTypeLocalized(activityTypeLocalized);
-            update = true;
         }
         if (activityType != null) {
             track.setActivityType(activityType);
         } else if (activityTypeLocalized != null) {
-            track.setActivityType(ActivityType.findByLocalizedString(context, activityTypeLocalized)
-            );
+            track.setActivityType(ActivityType.findByLocalizedString(context, activityTypeLocalized));
         }
         if (description != null) {
             track.setDescription(description);
-            update = true;
         }
-        if (update) {
-            contentProviderUtils.updateTrack(track);
-        }
+
+        contentProviderUtils.updateTrack(track);
     }
 }
