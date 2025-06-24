@@ -80,6 +80,25 @@ limitations under the License.
                 </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="?attr/textInputOutlinedExposedDropdownMenuStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:imeOptions="actionNext"
+                    android:importantForAutofill="no">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/track_edit_time_offset"
+                        android:layout_width="match_parent"
+                        android:inputType="none"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:hint="@string/track_edit_time_offset"
+                        android:imeOptions="actionNext"
+                        android:selectAllOnFocus="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     style="?attr/textInputOutlinedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

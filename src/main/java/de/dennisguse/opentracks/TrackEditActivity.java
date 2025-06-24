@@ -23,11 +23,14 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
+import java.time.ZoneOffset;
+
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackEditBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
+import de.dennisguse.opentracks.ui.ZoneOffsetAdapter;
 import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
@@ -71,7 +74,6 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         viewBinding.trackEditName.setText(track.getName());
 
         viewBinding.trackEditActivityType.setText(track.getActivityTypeLocalized());
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, ActivityType.getLocalizedStrings(this));
         viewBinding.trackEditActivityType.setAdapter(adapter);
         viewBinding.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> {
@@ -92,11 +94,15 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         if (activityType == null) {
             activityType = track.getActivityType();
         }
-
         setActivityTypeIcon(activityType);
         viewBinding.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), this, viewBinding.trackEditActivityType.getText().toString()));
 
         viewBinding.trackEditDescription.setText(track.getDescription());
+
+        final ArrayAdapter<ZoneOffset> zoneOffsetAdapter = new ZoneOffsetAdapter(this, android.R.layout.simple_dropdown_item_1line);
+        viewBinding.trackEditTimeOffset.setText(track.getZoneOffset().toString());
+        viewBinding.trackEditTimeOffset.setAdapter(zoneOffsetAdapter);
+        viewBinding.trackEditTimeOffset.setOnItemClickListener((parent, view, position, id) -> track.setZoneOffset(zoneOffsetAdapter.getItem(position)));
 
         viewBinding.trackEditSave.setOnClickListener(v -> {
             TrackUtils.updateTrack(TrackEditActivity.this, track, viewBinding.trackEditName.getText().toString(),
