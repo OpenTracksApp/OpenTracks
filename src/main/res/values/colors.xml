@@ -19,6 +19,8 @@ limitations under the License.
     <color name="opentracks">#FF6D00</color>
     <color name="opentracks_transparent">#55FF6D00</color> <!-- TODO REMOVE -->
 
+    <color name="ic_launcher_background">#FFFFFF</color>
+
     <!-- Chart colors -->
     <color name="chart_cadence_border">#FFF128F3</color> <!-- pink -->
     <color name="chart_cadence_fill">#40F128F3</color> <!-- transparent pink -->
