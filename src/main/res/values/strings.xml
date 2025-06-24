@@ -491,6 +491,7 @@ limitations under the License.
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Activity type (e.g. hiking)</string>
     <string name="track_edit_activity_type_hint">Activity type</string>
+    <string name="track_edit_time_offset">Timezone Offset</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Start recording your next adventure here</string>
     <!-- Aggregated Statistics -->

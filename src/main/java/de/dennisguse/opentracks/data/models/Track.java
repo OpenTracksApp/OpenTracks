@@ -48,7 +48,7 @@ public class Track {
 
     private ActivityType activityType;
 
-    private final ZoneOffset zoneOffset;
+    private ZoneOffset zoneOffset;
 
     private TrackStatistics trackStatistics = new TrackStatistics();
 
@@ -58,7 +58,7 @@ public class Track {
     }
 
     public Track(@NonNull ZoneOffset zoneOffset) {
-        this.zoneOffset = zoneOffset;
+        setZoneOffset(zoneOffset);
     }
 
     /**
@@ -115,6 +115,10 @@ public class Track {
 
     public ZoneOffset getZoneOffset() {
         return zoneOffset;
+    }
+
+    public void setZoneOffset(@NonNull ZoneOffset zoneOffset) {
+        this.zoneOffset = zoneOffset;
     }
 
     public OffsetDateTime getStartTime() {
