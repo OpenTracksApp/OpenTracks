@@ -10,7 +10,6 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
-import de.dennisguse.opentracks.util.TrackUtils;
 
 public class StartRecording extends AbstractAPIActivity {
 
@@ -42,12 +41,12 @@ public class StartRecording extends AbstractAPIActivity {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackUtils.updateTrack(this, track,
-                bundle.getString(EXTRA_TRACK_NAME, null),
-                bundle.getString(EXTRA_TRACK_ACTIVITY_TYPE_LOCALIZED, null),
-                ActivityType.findBy(bundle.getString(EXTRA_TRACK_ACTIVITY_TYPE_ID, null)),
-                bundle.getString(EXTRA_TRACK_DESCRIPTION, null),
-                contentProviderUtils);
+        track.setName(bundle.getString(EXTRA_TRACK_NAME, ""));
+        track.setDescription(bundle.getString(EXTRA_TRACK_DESCRIPTION, ""));
+        track.setActivityType(ActivityType.findBy(bundle.getString(EXTRA_TRACK_ACTIVITY_TYPE_ID, null)));
+        track.setActivityTypeLocalized(bundle.getString(EXTRA_TRACK_ACTIVITY_TYPE_LOCALIZED, ""));
+
+        contentProviderUtils.updateTrack(track);
     }
 
     private void startDashboardAPI(@NonNull Track.Id trackId, @NonNull Bundle bundle) {
