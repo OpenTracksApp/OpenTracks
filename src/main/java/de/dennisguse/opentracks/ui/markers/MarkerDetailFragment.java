@@ -238,7 +238,7 @@ public class MarkerDetailFragment extends Fragment {
             viewBinding.markerDetailMarkerPhoto.setImageURI(marker.getPhotoUrl());
             handler.postDelayed(hideText, HIDE_TEXT_DELAY.toMillis());
         } else {
-            viewBinding.markerDetailMarkerPhoto.setImageResource(MarkerUtils.ICON_ID);
+            viewBinding.markerDetailMarkerPhoto.setImageDrawable(MarkerUtils.getDefaultPhoto(getContext()));
         }
 
         ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerName, marker.getName(), hasPhoto);

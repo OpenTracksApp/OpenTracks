@@ -59,7 +59,6 @@ limitations under the License.
                         android:id="@+id/marker_edit_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_marker_orange_pushpin_with_shadow"
                         android:inputType="textCapSentences"
                         android:selectAllOnFocus="true" />
 
@@ -148,7 +147,8 @@ limitations under the License.
             <Button
                 android:id="@+id/marker_edit_done"
                 style="@style/BottomButton"
-                android:layout_gravity="end" />
+                android:layout_gravity="end"
+                android:text="@string/generic_save" />
         </LinearLayout>
     </LinearLayout>
 
