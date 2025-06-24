@@ -26,15 +26,13 @@ public class MarkerUtils {
 
     private static final String TAG = FileUtils.class.getSimpleName();
 
-    static final int ICON_ID = R.drawable.ic_marker_orange_pushpin_with_shadow;
-
     private static final String JPEG_EXTENSION = "jpeg";
 
     private MarkerUtils() {
     }
 
     public static Drawable getDefaultPhoto(@NonNull Context context) {
-        return ContextCompat.getDrawable(context, ICON_ID);
+        return ContextCompat.getDrawable(context, R.drawable.ic_marker_show_24dp);
     }
 
     /**
