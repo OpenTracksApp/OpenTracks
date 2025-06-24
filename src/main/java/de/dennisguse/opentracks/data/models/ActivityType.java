@@ -129,10 +129,12 @@ public enum ActivityType {
                 .orElse(ActivityType.UNKNOWN);
     }
 
+    @NonNull
     public static ActivityType findByLocalizedString(Context context, String localizedActivityType) {
         return findByLocalizedString(context.getResources(), localizedActivityType);
     }
 
+    @NonNull
     public static ActivityType findByLocalizedString(Resources resources, String localizedActivityType) {
         return Arrays.stream(ActivityType.values())
                 .filter(it -> resources.getString(it.getLocalizedStringId()).equals(localizedActivityType))

@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.data.models;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -111,6 +112,11 @@ public class Track {
 
     public void setActivityType(ActivityType activityType) {
         this.activityType = activityType;
+    }
+
+    public void setActivityTypeLocalizedAndUpdateActivityType(Context context, String activityTypeLocalized) {
+        setActivityTypeLocalized(activityTypeLocalized);
+        setActivityType(ActivityType.findByLocalizedString(context, activityTypeLocalized));
     }
 
     public ZoneOffset getZoneOffset() {

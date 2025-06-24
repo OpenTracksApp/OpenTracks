@@ -22,7 +22,6 @@ import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragm
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.TrackUtils;
 
 public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
@@ -105,9 +104,11 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
     }
 
     private void storeTrackMetaData(ContentProviderUtils contentProviderUtils, Track track) {
-        TrackUtils.updateTrack(TrackStoppedActivity.this, track, viewBinding.trackEditName.getText().toString(),
-                viewBinding.trackEditActivityType.getText().toString(), viewBinding.trackEditDescription.getText().toString(),
-                contentProviderUtils);
+        track.setName(viewBinding.trackEditName.getText().toString());
+        track.setDescription(viewBinding.trackEditDescription.getText().toString());
+        track.setActivityTypeLocalizedAndUpdateActivityType(this, viewBinding.trackEditActivityType.getText().toString());
+
+        contentProviderUtils.updateTrack(track);
     }
 
     @NonNull

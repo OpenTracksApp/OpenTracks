@@ -62,7 +62,7 @@ limitations under the License.
                         android:imeOptions="actionNext"
                         android:importantForAutofill="no">
                         <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:id="@+id/track_edit_activity_type"
+                            android:id="@+id/track_edit_activity_type_localized"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
