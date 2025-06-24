@@ -31,6 +31,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -113,7 +114,6 @@ public class MarkerDetailFragment extends Fragment {
         }
         contentProviderUtils = new ContentProviderUtils(getActivity());
         handler = new Handler();
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -129,8 +129,53 @@ public class MarkerDetailFragment extends Fragment {
                 handler.postDelayed(hideText, HIDE_TEXT_DELAY.toMillis());
             }
         });
+
+        requireActivity().addMenuProvider(new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.marker_detail, menu);
+                shareMarkerImageMenuItem = menu.findItem(R.id.marker_detail_share);
+                updateMarker(false);
+                updateMenuItems();
+            }
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem item) {
+                FragmentActivity fragmentActivity = getActivity();
+
+                if (item.getItemId() == R.id.marker_detail_show_on_map) {
+                    IntentUtils.showCoordinateOnMap(getContext(), marker);
+                    return true;
+                }
+
+                if (item.getItemId() == R.id.marker_detail_edit) {
+                    Intent intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
+                            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
+                    startActivity(intent);
+                    return true;
+                }
+
+                if (item.getItemId() == R.id.marker_detail_share) {
+                    if (marker.hasPhoto()) {
+                        Intent intent = ShareUtils.newShareFileIntent(getContext(), marker.getId());
+                        intent = Intent.createChooser(intent, null);
+                        startActivity(intent);
+                    }
+                    return true;
+                }
+
+                if (item.getItemId() == R.id.marker_detail_delete) {
+                    DeleteMarkerDialogFragment.showDialog(getChildFragmentManager(), markerId);
+                    return true;
+                }
+
+                return false;
+            }
+        }, getViewLifecycleOwner());
+
         return viewBinding.getRoot();
     }
+
 
     @Override
     public void onResume() {
@@ -175,50 +220,9 @@ public class MarkerDetailFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.marker_detail, menu);
-        shareMarkerImageMenuItem = menu.findItem(R.id.marker_detail_share);
-        updateMarker(false);
-        updateMenuItems();
-    }
-
     private void updateMenuItems() {
         if (shareMarkerImageMenuItem != null)
             shareMarkerImageMenuItem.setVisible(marker.hasPhoto());
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        FragmentActivity fragmentActivity = getActivity();
-
-        if (item.getItemId() == R.id.marker_detail_show_on_map) {
-            IntentUtils.showCoordinateOnMap(getContext(), marker);
-            return true;
-        }
-
-        if (item.getItemId() == R.id.marker_detail_edit) {
-            Intent intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
-                    .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
-            startActivity(intent);
-            return true;
-        }
-
-        if (item.getItemId() == R.id.marker_detail_share) {
-            if (marker.hasPhoto()) {
-                Intent intent = ShareUtils.newShareFileIntent(getContext(), marker.getId());
-                intent = Intent.createChooser(intent, null);
-                startActivity(intent);
-            }
-            return true;
-        }
-
-        if (item.getItemId() == R.id.marker_detail_delete) {
-            DeleteMarkerDialogFragment.showDialog(getChildFragmentManager(), markerId);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private void updateMarker(boolean refresh) {
