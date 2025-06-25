@@ -205,7 +205,6 @@
     <string name="marker_delete_one_confirm_title">ಮಾರ್ಕರ್ ಅಳಿಸುವುದೇ?</string>
     <string name="marker_delete_multiple_confirm_message">ಆಯ್ಕೆಮಾಡಿದ ಗುರುತುಗಳನ್ನು ಸಾಧನದಿಂದ ಶಾಶ್ವತವಾಗಿ ಅಳಿಸಲಾಗುತ್ತದೆ</string>
     <string name="marker_name_format">ಮಾರ್ಕರ್ %1$d</string>
-    <string name="marker_title">%2$d ರಲ್ಲಿ %1$d</string>
     <string name="marker_edit_marker_type">ಮಾರ್ಕರ್ ಪ್ರಕಾರ (ಉದಾ. ಜಲಪಾತ)</string>
     <string name="marker_list_empty_message">ನೀವು ಯಾವುದೇ ಮಾರ್ಕರ್‌ಗಳನ್ನು ಹೊಂದಿಲ್ಲ</string>
     <string name="menu_aggregated_statistics">ಒಟ್ಟು ಅಂಕಿಅಂಶಗಳು</string>

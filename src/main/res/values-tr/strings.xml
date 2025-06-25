@@ -141,7 +141,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">İşaretçi silinsin mi?</string>
     <string name="marker_delete_multiple_confirm_message">Seçilen işaretçiler cihazdan kalıcı olarak silinecek</string>
     <string name="marker_name_format">İşaretçi %1$d</string>
-    <string name="marker_title">%1$d/%2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">İşaretçi türü (ör. şelale)</string>

@@ -191,7 +191,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">Slet markøren\?</string>
     <string name="marker_delete_multiple_confirm_message">De valgte markører slettes permanent fra enheden</string>
     <string name="marker_name_format">Markør %1$d</string>
-    <string name="marker_title">%1$d af %2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Markørtype (f.eks. vandfald)</string>

@@ -117,7 +117,6 @@
     <string name="marker_delete_one_confirm_title">למחוק את הסמן?</string>
     <string name="marker_delete_multiple_confirm_message">הסמנים שנבחרו יימחקו לצמיתות מהמכשיר</string>
     <string name="marker_name_format">סמן %1$d</string>
-    <string name="marker_title">%1$d מתוך %2$d משימות</string>
     <string name="marker_edit_marker_type">סוג סמן (כגון מפל)</string>
     <string name="marker_list_empty_message">אין לך סמנים</string>
     <string name="menu_aggregated_statistics">סטטיסטיקה מצטברת</string>

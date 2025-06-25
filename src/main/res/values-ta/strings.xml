@@ -3,7 +3,6 @@
     <string name="description_min_altitude">மணித்துளி உயரம்: %1$d மீ ( %2$d அடி)</string>
     <string name="generic_overwrite">மேலெழுதும்</string>
     <string name="import_error_info">%1$s: %2$s</string>
-    <string name="marker_title">%1$d %2$d</string>
     <string name="marker_edit_marker_type">மார்க்கர் வகை (எ.கா. நீர்வீழ்ச்சி)</string>
     <string name="permission_gps_failed">ஓபன்ட்ராக்சுக்கு சி.பி.எச் பயன்படுத்த இசைவு தேவை.</string>
     <string name="settings_chart_by_distance">தூரம் மூலம்</string>

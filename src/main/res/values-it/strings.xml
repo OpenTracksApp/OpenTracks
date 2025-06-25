@@ -179,7 +179,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="marker_delete_one_confirm_title">Eliminare indicatore?</string>
     <string name="marker_delete_multiple_confirm_message">Gli indicatori selezionati verranno eliminati definitivamente dal dispositivo</string>
     <string name="marker_name_format">Indicatore %1$d</string>
-    <string name="marker_title">%1$d di %2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipo di indicatore (ad es. cascata)</string>

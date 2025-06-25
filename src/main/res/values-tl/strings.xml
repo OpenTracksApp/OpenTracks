@@ -141,7 +141,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">Tanggalin ang marker?</string>
     <string name="marker_delete_multiple_confirm_message">Permanenteng tatanggalin ang mga piling marker mula sa device</string>
     <string name="marker_name_format">Marker %1$d</string>
-    <string name="marker_title">%1$d ng %2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Uri ng marker (hal.talon)</string>

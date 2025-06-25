@@ -28,13 +28,11 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.databinding.MarkerDetailActivityBinding;
 import de.dennisguse.opentracks.ui.markers.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 
@@ -53,7 +51,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
 
     private MarkerDetailActivityBinding viewBinding;
 
-    private List<Marker.Id> markerIds;
+    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -69,23 +67,22 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
         Marker marker = contentProviderUtils.getMarker(markerId);
 
-        markerIds = new ArrayList<>();
+        //TODO only load used data: ID + name
+        cursor = contentProviderUtils.getMarkerCursor(marker.getTrackId(), null, -1);
+        if (cursor == null) {
+            finish();
+        }
+
         int markerIndex = -1;
-
-        //TODO Load only markerIds, not the whole marker
-        try (Cursor cursor = contentProviderUtils.getMarkerCursor(marker.getTrackId(), null, -1)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                for (int i = 0; i < cursor.getCount(); i++) {
-                    Marker currentMarker = contentProviderUtils.createMarker(cursor);
-                    markerIds.add(currentMarker.getId());
-                    if (markerId.equals(currentMarker.getId())) {
-                        markerIndex = markerIds.size() - 1;
-                    }
-
-                    cursor.moveToNext();
+        if (cursor != null && cursor.moveToFirst()) {
+            while (markerIndex == -1 && cursor.moveToNext()) {
+                Marker.Id currentId = new Marker.Id(cursor.getLong(cursor.getColumnIndexOrThrow(MarkerColumns._ID)));
+                if (markerId.equals(currentId)) {
+                    markerIndex = cursor.getPosition();
                 }
             }
         }
+
 
         final MarkerDetailPagerAdapter markerAdapter = new MarkerDetailPagerAdapter(this);
         viewBinding.makerDetailActivityViewPager.setAdapter(markerAdapter);
@@ -111,7 +108,9 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
     protected void onDestroy() {
         super.onDestroy();
         viewBinding = null;
-        markerIds = null;
+
+        if (cursor != null) cursor.close();
+        cursor = null;
     }
 
     @Override
@@ -128,17 +127,19 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
         @Override
         @NonNull
         public Fragment createFragment(int position) {
-            return MarkerDetailFragment.newInstance(markerIds.get(position));
+            cursor.moveToPosition(position);
+            return MarkerDetailFragment.newInstance(new Marker.Id(cursor.getLong(cursor.getColumnIndexOrThrow(MarkerColumns._ID))));
         }
 
         @Override
         public int getItemCount() {
-            return markerIds.size();
+            return cursor.getCount();
         }
 
         @Nullable
         public CharSequence getPageTitle(int position) {
-            return getString(R.string.marker_title, position + 1, getItemCount());
+            cursor.moveToPosition(position);
+            return getString(R.string.marker_detail_title, position + 1, getItemCount(), cursor.getString(cursor.getColumnIndexOrThrow(MarkerColumns.NAME)));
         }
     }
 }

@@ -141,7 +141,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">मार्कर हटाएं?</string>
     <string name="marker_delete_multiple_confirm_message">चयनित मार्कर उपकरण से स्थायी रूप से हटा दिए जाएंगे</string>
     <string name="marker_name_format">मार्कर %1$d</string>
-    <string name="marker_title">%2$d में से %1$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">मार्कर प्रकार (उदा., झरना)</string>

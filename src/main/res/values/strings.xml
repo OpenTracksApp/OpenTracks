@@ -267,7 +267,7 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">Delete marker?</string>
     <string name="marker_delete_multiple_confirm_message">The selected markers will be permanently deleted from the device</string>
     <string name="marker_name_format">Marker %1$d</string>
-    <string name="marker_title">%1$d of %2$d</string>
+    <string name="marker_detail_title">%1$d of %2$d: %3$s</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Marker type (e.g. waterfall)</string>

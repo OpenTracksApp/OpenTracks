@@ -117,7 +117,6 @@
     <string name="marker_delete_one_confirm_title">Supprimer le repère ?</string>
     <string name="marker_delete_multiple_confirm_message">Les repères sélectionnés vont être définitivement supprimés de l\'appareil.</string>
     <string name="marker_name_format">Repère %1$d</string>
-    <string name="marker_title">%1$d sur %2$d</string>
     <string name="marker_edit_marker_type">Type de repère (exemple : cascade)</string>
     <string name="marker_list_empty_message">Vous n\'avez aucun repère.</string>
     <string name="menu_aggregated_statistics">Statistiques cumulées</string>

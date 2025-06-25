@@ -191,7 +191,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">¿Eliminar marcador?</string>
     <string name="marker_delete_multiple_confirm_message">Los marcadores seleccionados se eliminarán del dispositivo de forma permanente</string>
     <string name="marker_name_format">Marcador %1$d</string>
-    <string name="marker_title">%1$d de %2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipo de marcador (p. ej., cascada)</string>

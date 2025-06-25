@@ -141,7 +141,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">删除标记？</string>
     <string name="marker_delete_multiple_confirm_message">所选标记将永久地从设备中删除</string>
     <string name="marker_name_format">标记 %1$d</string>
-    <string name="marker_title">第%1$d个（共%2$d个）</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">标记类型（如瀑布）</string>

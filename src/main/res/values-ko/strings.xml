@@ -141,7 +141,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">마커를 삭제하시겠습니까?</string>
     <string name="marker_delete_multiple_confirm_message">선택한 마커가 기기에서 영구적으로 삭제됩니다.</string>
     <string name="marker_name_format">아이콘 %1$d</string>
-    <string name="marker_title">%2$d개 중 %1$d개</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">아이콘 유형(예: 폭포)</string>
