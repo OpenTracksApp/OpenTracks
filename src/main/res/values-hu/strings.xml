@@ -593,4 +593,5 @@ limitations under the License.
     <string name="empty">üres</string>
     <string name="settings_recording_show_gps_disabled_warning_title">GPS letiltott figyelmeztetés</string>
     <string name="settings_recording_show_gps_disabled_warning_summary">Felvétel közben egy figyelmeztetés jelenik meg, ha a GPS ki van kapcsolva.</string>
+    <string name="track_edit_time_offset">Időzóna eltolódás</string>
 </resources>
