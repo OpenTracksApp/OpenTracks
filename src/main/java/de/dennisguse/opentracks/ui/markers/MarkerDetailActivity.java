@@ -108,6 +108,13 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewBinding = null;
+        markerIds = null;
+    }
+
+    @Override
     public void onMarkerDeleted() {
         runOnUiThread(this::finish);
     }
@@ -129,7 +136,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
             return markerIds.size();
         }
 
-        @Nullable //TODO Used?
+        @Nullable
         public CharSequence getPageTitle(int position) {
             return getString(R.string.marker_title, position + 1, getItemCount());
         }
