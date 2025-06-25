@@ -117,7 +117,6 @@
     <string name="marker_delete_one_confirm_title">Delete marker?</string>
     <string name="marker_delete_multiple_confirm_message">The selected markers will be permanently deleted from the device</string>
     <string name="marker_name_format">Marker %1$d</string>
-    <string name="marker_title">%1$d of %2$d</string>
     <string name="marker_edit_marker_type">Marker type (e.g. waterfall)</string>
     <string name="marker_list_empty_message">You don\'t have any markers</string>
     <string name="menu_aggregated_statistics">Aggregated stats</string>

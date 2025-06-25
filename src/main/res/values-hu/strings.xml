@@ -141,7 +141,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">Törli a jelölőt?</string>
     <string name="marker_delete_multiple_confirm_message">A kiválasztott jelölők véglegesen törlődnek az eszközről</string>
     <string name="marker_name_format">%1$d. jelölő</string>
-    <string name="marker_title">%1$d/%2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Jelölő típusa (pl. vízesés)</string>

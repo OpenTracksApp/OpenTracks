@@ -117,7 +117,6 @@
     <string name="marker_delete_one_confirm_title">Hapus penanda?</string>
     <string name="marker_delete_multiple_confirm_message">Penanda yang dipilih akan dihapus secara permanen dari perangkat</string>
     <string name="marker_name_format">Penanda %1$d</string>
-    <string name="marker_title">%1$d dari %2$d</string>
     <string name="marker_edit_marker_type">Jenis penanda (misal: air terjun)</string>
     <string name="marker_list_empty_message">Anda tidak memiliki penanda</string>
     <string name="menu_aggregated_statistics">Statistik agregat</string>

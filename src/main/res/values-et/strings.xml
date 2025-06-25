@@ -191,7 +191,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">Kas kustutada märgis\?</string>
     <string name="marker_delete_multiple_confirm_message">Valitud märgis kustutatakse seadmest jäädavalt</string>
     <string name="marker_name_format">Märgis %1$d</string>
-    <string name="marker_title">%1$d/%2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Märgise tüüp (nt juga)</string>

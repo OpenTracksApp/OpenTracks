@@ -141,7 +141,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">Ta bort markör?</string>
     <string name="marker_delete_multiple_confirm_message">Markerade markörer tas bort permanent från enheten</string>
     <string name="marker_name_format">Markör %1$d</string>
-    <string name="marker_title">%1$d av %2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Markörtyp (t.ex. vattenfall)</string>

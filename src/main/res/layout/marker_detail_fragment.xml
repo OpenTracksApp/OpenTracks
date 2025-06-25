@@ -46,14 +46,6 @@ limitations under the License.
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/marker_detail_marker_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?attr/textAppearanceBody1"
-                android:paddingTop="8dp"
-                tools:text="Marker Name" />
-
-            <TextView
                 android:id="@+id/marker_detail_marker_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

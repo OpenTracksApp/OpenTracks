@@ -141,7 +141,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">Xóa điểm đánh dấu?</string>
     <string name="marker_delete_multiple_confirm_message">Điểm đánh dấu đã chọn sẽ bị xóa vĩnh viễn khỏi thiết bị</string>
     <string name="marker_name_format">Điểm đánh dấu %1$d</string>
-    <string name="marker_title">%1$d / %2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Loại điểm đánh dấu (ví dụ: thác nước)</string>

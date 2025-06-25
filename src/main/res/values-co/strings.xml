@@ -147,7 +147,6 @@
     <string name="marker_delete_one_confirm_title">Squassà a stantella ?</string>
     <string name="marker_delete_multiple_confirm_message">E stantelle selezziunate seranu squassate ab’eternu da l’apparechju</string>
     <string name="marker_name_format">Stantella %1$d</string>
-    <string name="marker_title">%1$d nant’à %2$d</string>
     <string name="marker_list_empty_message">Ùn avete nisuna stantella</string>
     <string name="menu_aggregated_statistics">Statistiche aggregate</string>
     <string name="menu_edit">Mudificà</string>

@@ -117,7 +117,6 @@
     <string name="marker_delete_one_confirm_title">確定要刪除標記？</string>
     <string name="marker_delete_multiple_confirm_message">系統將永久刪除裝置上您所選取的這些標記</string>
     <string name="marker_name_format">標記 %1$d</string>
-    <string name="marker_title">%1$d 個位置 (共 %2$d 個)</string>
     <string name="marker_edit_marker_type">標記類型 (例如瀑布)</string>
     <string name="marker_list_empty_message">您沒有任何標記</string>
     <string name="menu_aggregated_statistics">彙總的統計資料</string>

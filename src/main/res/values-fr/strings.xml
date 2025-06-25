@@ -193,7 +193,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="marker_delete_one_confirm_title">Supprimer le repère ?</string>
     <string name="marker_delete_multiple_confirm_message">Les repères sélectionnés vont être définitivement supprimés de l\'appareil</string>
     <string name="marker_name_format">Repère %1$d</string>
-    <string name="marker_title">%1$d sur %2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Type de repère (exemple : cascade)</string>

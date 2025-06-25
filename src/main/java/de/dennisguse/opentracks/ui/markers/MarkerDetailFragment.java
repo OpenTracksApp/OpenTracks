@@ -34,6 +34,7 @@ import androidx.annotation.NonNull;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Lifecycle;
 
 import java.time.Duration;
 
@@ -135,7 +136,7 @@ public class MarkerDetailFragment extends Fragment {
             public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
                 menuInflater.inflate(R.menu.marker_detail, menu);
                 shareMarkerImageMenuItem = menu.findItem(R.id.marker_detail_share);
-                updateMarker(false);
+                updateMarker();
                 updateMenuItems();
             }
 
@@ -171,7 +172,7 @@ public class MarkerDetailFragment extends Fragment {
 
                 return false;
             }
-        }, getViewLifecycleOwner());
+        }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
         return viewBinding.getRoot();
     }
@@ -182,7 +183,7 @@ public class MarkerDetailFragment extends Fragment {
         super.onResume();
 
         // Need to update the marker in case returning after an edit
-        updateMarker(true);
+        updateMarker();
         updateUi();
         updateMenuItems();
     }
@@ -221,17 +222,16 @@ public class MarkerDetailFragment extends Fragment {
     }
 
     private void updateMenuItems() {
-        if (shareMarkerImageMenuItem != null)
-            shareMarkerImageMenuItem.setVisible(marker.hasPhoto());
+        if (shareMarkerImageMenuItem != null) { // MenuProvider might not yet been initialized.
+//            shareMarkerImageMenuItem.setEnabled(marker.hasPhoto());
+        }
     }
 
-    private void updateMarker(boolean refresh) {
-        if (refresh || marker == null) {
-            marker = contentProviderUtils.getMarker(markerId);
-            if (marker == null) {
-                Log.d(TAG, "marker is null");
-                getParentFragmentManager().popBackStack();
-            }
+    private void updateMarker() {
+        marker = contentProviderUtils.getMarker(markerId);
+        if (marker == null) {
+            Log.d(TAG, "marker is null");
+            getParentFragmentManager().popBackStack();
         }
     }
 
@@ -244,9 +244,6 @@ public class MarkerDetailFragment extends Fragment {
         } else {
             viewBinding.markerDetailMarkerPhoto.setImageDrawable(MarkerUtils.getDefaultPhoto(getContext()));
         }
-
-        ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerName, marker.getName(), hasPhoto);
-
 
         ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerCategory, StringUtils.getCategory(marker.getCategory()), hasPhoto);
 

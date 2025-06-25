@@ -141,7 +141,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_title">Slett markøren\?</string>
     <string name="marker_delete_multiple_confirm_message">De valgte markørene blir slettet fra enheten for godt</string>
     <string name="marker_name_format">Markør %1$d</string>
-    <string name="marker_title">%1$d av %2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Markørtype (f.eks. foss)</string>

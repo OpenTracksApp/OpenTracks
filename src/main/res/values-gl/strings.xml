@@ -181,7 +181,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="marker_delete_one_confirm_title">Eliminar o marcador?</string>
     <string name="marker_delete_multiple_confirm_message">Os marcadores seleccionados eliminaranse permanentemente do dispositivo</string>
     <string name="marker_name_format">Marcador %1$d</string>
-    <string name="marker_title">%1$d de %2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipo de marcador (por exemplo, fervenza)</string>
