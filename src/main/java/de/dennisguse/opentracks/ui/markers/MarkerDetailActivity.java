@@ -24,9 +24,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,21 +87,12 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
             }
         }
 
-        final MarkerDetailPagerAdapter markerAdapter = new MarkerDetailPagerAdapter(getSupportFragmentManager());
+        final MarkerDetailPagerAdapter markerAdapter = new MarkerDetailPagerAdapter(this);
         viewBinding.makerDetailActivityViewPager.setAdapter(markerAdapter);
-        viewBinding.makerDetailActivityViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
+        viewBinding.makerDetailActivityViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 viewBinding.markerDetailToolbar.setTitle(markerAdapter.getPageTitle(position));
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
             }
         });
         viewBinding.makerDetailActivityViewPager.setCurrentItem(markerIndex == -1 ? 0 : markerIndex);
@@ -121,32 +112,26 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
         runOnUiThread(this::finish);
     }
 
-    /**
-     * Marker detail pager adapter.
-     *
-     * @author Jimmy Shih
-     */
-    private class MarkerDetailPagerAdapter extends FragmentStatePagerAdapter {
+    private class MarkerDetailPagerAdapter extends FragmentStateAdapter {
 
-        MarkerDetailPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        MarkerDetailPagerAdapter(@NonNull FragmentActivity fa) {
+            super(fa);
         }
 
         @Override
         @NonNull
-        public Fragment getItem(int position) {
+        public Fragment createFragment(int position) {
             return MarkerDetailFragment.newInstance(markerIds.get(position));
         }
 
-        @Nullable
         @Override
-        public CharSequence getPageTitle(int position) {
-            return getString(R.string.marker_title, position + 1, getCount());
+        public int getItemCount() {
+            return markerIds.size();
         }
 
-        @Override
-        public int getCount() {
-            return markerIds.size();
+        @Nullable //TODO Used?
+        public CharSequence getPageTitle(int position) {
+            return getString(R.string.marker_title, position + 1, getItemCount());
         }
     }
 }
