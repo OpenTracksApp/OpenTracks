@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -94,8 +93,6 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
     private int trackExportOverwrittenCount;
     private int trackExportSkippedCount;
     private int trackExportTotalCount;
-
-    boolean doubleBackToCancel = false;
 
     private ExportActivityBinding viewBinding;
 
@@ -212,19 +209,6 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
         super.onDestroy();
         conflictsQueue.clear();
         exportTasks.clear();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToCancel || getTotalDone() == trackExportTotalCount) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToCancel = true;
-        Toast.makeText(this, getString(R.string.generic_click_twice_cancel), Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(() -> doubleBackToCancel = false, 2000);
     }
 
     private void createExportTasks(boolean allInOneFile) {

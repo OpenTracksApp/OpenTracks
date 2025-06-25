@@ -20,9 +20,7 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -55,8 +53,6 @@ public class ImportActivity extends FragmentActivity {
     private static final String BUNDLE_IS_DIRECTORY = "is_directory";
 
     private ImportActivityBinding viewBinding;
-
-    boolean doubleBackToCancel = false;
 
     private ArrayList<Uri> documentUris = new ArrayList<>();
     private boolean isDirectory;
@@ -120,21 +116,6 @@ public class ImportActivity extends FragmentActivity {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(BUNDLE_DOCUMENT_URIS, documentUris);
         outState.putBoolean(BUNDLE_IS_DIRECTORY, isDirectory);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToCancel || (summary != null && getTotalDone() == summary.getTotalCount())) {
-            super.onBackPressed();
-            viewModel.cancel();
-            getViewModelStore().clear();
-            return;
-        }
-
-        this.doubleBackToCancel = true;
-        Toast.makeText(this, getString(R.string.generic_click_twice_cancel), Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(() -> doubleBackToCancel=false, 2000);
     }
 
     private void initViews() {
