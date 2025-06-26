@@ -1,0 +1,4 @@
+v4.19.6: OpenTracks
+
+Athruithe:
+- Ba chóir go mbeadh Edge-2-edge ag obair anois ar gach leagan de Android
