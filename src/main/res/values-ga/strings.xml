@@ -548,4 +548,5 @@
     <string name="settings_chart_display_heart_rate_title">Taispeáin ráta croí</string>
     <string name="settings_recording_show_gps_disabled_warning_summary">Agus tú ag taifeadadh, taispeáin rabhadh má tá GPS díchumasaithe.</string>
     <string name="settings_recording_show_gps_disabled_warning_title">Rabhadh GPS díchumasaithe</string>
+    <string name="track_edit_time_offset">Fritháireamh Crios Ama</string>
 </resources>
