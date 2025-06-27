@@ -432,8 +432,8 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
         printWriter.println("<description>" + StringUtils.formatCData(marker.getDescription()) + "</description>");
         printWriter.print("<Camera>");
-        printWriter.print("<longitude>" + marker.getLongitude() + "</longitude>");
-        printWriter.print("<latitude>" + marker.getLatitude() + "</latitude>");
+        printWriter.print("<longitude>" + marker.getPosition().longitude() + "</longitude>");
+        printWriter.print("<latitude>" + marker.getPosition().latitude() + "</latitude>");
         printWriter.print("<altitude>20</altitude>");
         printWriter.print("<tilt>90</tilt>");
         printWriter.println("</Camera>");

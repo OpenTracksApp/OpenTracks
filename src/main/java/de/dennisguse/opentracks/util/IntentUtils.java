@@ -50,23 +50,14 @@ public class IntentUtils {
         return new Intent(context, cls).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
-    public static void showCoordinateOnMap(Context context, Marker marker) {
-        showCoordinateOnMap(context, marker.getLatitude(), marker.getLongitude(), marker.getName());
-    }
-
     /**
      * Send intent to show coordinates on a map (needs an another app).
-     *
-     * @param context   the context
-     * @param latitude  the latitude
-     * @param longitude the longitude
-     * @param label     the label
      */
-    private static void showCoordinateOnMap(Context context, double latitude, double longitude, String label) {
+    public static void showCoordinateOnMap(Context context, Marker marker) {
         //SEE https://developer.android.com/guide/components/intents-common.html#Maps
-        String uri = "geo:0,0?q=" + latitude + "," + longitude;
-        if (label != null && label.length() > 0) {
-            uri += "(" + label + ")";
+        String uri = "geo:0,0?q=" + marker.getPosition().latitude() + "," + marker.getPosition().longitude();
+        if (marker.getName() != null && !marker.getName().isEmpty()) {
+            uri += "(" + marker.getName() + ")";
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(uri));

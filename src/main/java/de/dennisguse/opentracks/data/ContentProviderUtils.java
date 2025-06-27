@@ -784,8 +784,8 @@ public class ContentProviderUtils {
         values.put(TrackPointsColumns.TYPE, trackPoint.getType().type_db);
 
         if (trackPoint.hasLocation()) {
-            values.put(TrackPointsColumns.LONGITUDE, (int) (trackPoint.getLongitude() * 1E6));
-            values.put(TrackPointsColumns.LATITUDE, (int) (trackPoint.getLatitude() * 1E6));
+            values.put(TrackPointsColumns.LATITUDE, (int) (trackPoint.getPosition().latitude() * 1E6));
+            values.put(TrackPointsColumns.LONGITUDE, (int) (trackPoint.getPosition().longitude() * 1E6));
         }
         values.put(TrackPointsColumns.TIME, trackPoint.getTime().toEpochMilli());
         if (trackPoint.hasAltitude()) {

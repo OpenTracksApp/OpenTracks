@@ -254,9 +254,9 @@ public class MarkerDetailFragment extends Fragment {
 
     private void setLocation(boolean addShadow) {
         String value = "[" + getString(R.string.stats_latitude) + " "
-                + StringUtils.formatCoordinate(getContext(), marker.getLatitude()) + ", "
+                + StringUtils.formatCoordinate(getContext(), marker.getPosition().latitude()) + ", "
                 + getString(R.string.stats_longitude) + " "
-                + StringUtils.formatCoordinate(getContext(), marker.getLongitude()) + "]";
+                + StringUtils.formatCoordinate(getContext(), marker.getPosition().longitude()) + "]";
 
         ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerLocation, value, addShadow);
     }

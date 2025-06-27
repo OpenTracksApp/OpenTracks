@@ -147,18 +147,6 @@ public class TrackPoint {
         return position.hasLocation();
     }
 
-    //TODO Should be double
-    @Deprecated //Use getPosition()
-    public Double getLatitude() {
-        return position.latitude();
-    }
-
-    //TODO Should be double
-    @Deprecated //Use getPosition()
-    public Double getLongitude() {
-        return position.longitude();
-    }
-
     @NonNull
     public Position getPosition() {
         return position;

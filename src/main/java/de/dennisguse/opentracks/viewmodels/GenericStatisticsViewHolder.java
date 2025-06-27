@@ -265,7 +265,7 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
             TrackPoint latestTrackPoint = data.latestTrackPoint();
             String value;
             if (latestTrackPoint != null && latestTrackPoint.hasLocation()) {
-                value = StringUtils.formatCoordinate(getContext(), latestTrackPoint.getLatitude(), latestTrackPoint.getLongitude());
+                value = StringUtils.formatCoordinate(getContext(), latestTrackPoint.getPosition());
             } else {
                 value = getContext().getString(R.string.value_unknown);
             }
