@@ -163,7 +163,6 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private final TrackListItemBinding viewBinding;
-        private final View view;
 
         private Track.Id trackId;
 
@@ -171,10 +170,9 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             super(itemView);
 
             viewBinding = TrackListItemBinding.bind(itemView);
-            view = itemView;
 
-            view.setOnClickListener(this);
-            view.setOnLongClickListener(this);
+            viewBinding.getRoot().setOnClickListener(this);
+            viewBinding.getRoot().setOnLongClickListener(this);
         }
 
 
@@ -233,7 +231,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public void setSelected(boolean isSelected) {
             selection.put((int) getId(), isSelected);
-            view.setActivated(isSelected);
+            viewBinding.getRoot().setActivated(isSelected);
         }
 
         public long getId() {
@@ -244,7 +242,7 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @Override
         public void onClick(View v) {
             if (selectionMode) {
-                setSelected(!view.isActivated());
+                setSelected(!viewBinding.getRoot().isActivated());
                 actionMode.invalidate();
                 return;
             }
@@ -260,14 +258,14 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(
                         context,
-                        new Pair<>(view.findViewById(R.id.track_list_item_icon), TrackRecordedActivity.VIEW_TRACK_ICON));
+                        new Pair<>(viewBinding.getRoot().findViewById(R.id.track_list_item_icon), TrackRecordedActivity.VIEW_TRACK_ICON));
                 context.startActivity(newIntent, activityOptions.toBundle());
             }
         }
 
         @Override
         public boolean onLongClick(View v) {
-            setSelected(!view.isActivated());
+            setSelected(!viewBinding.getRoot().isActivated());
             if (!selectionMode) {
                 actionMode = context.startSupportActionMode(TrackListAdapter.this);
             } else {

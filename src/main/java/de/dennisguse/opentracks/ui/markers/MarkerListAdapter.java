@@ -164,7 +164,6 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private final MarkerListItemBinding viewBinding;
-        private final View view;
 
         private Marker marker;
 
@@ -172,23 +171,20 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             super(view);
 
             viewBinding = MarkerListItemBinding.bind(view);
-            this.view = view;
 
-            view.setOnClickListener(this);
-            view.setOnLongClickListener(this);
+            viewBinding.getRoot().setOnClickListener(this);
+            viewBinding.getRoot().setOnLongClickListener(this);
         }
 
         public void bind(Marker marker) {
             this.marker = marker;
 
             viewBinding.markerListItemPhoto.setVisibility(marker.hasPhoto() ? View.VISIBLE : View.GONE);
-            viewBinding.markerListItemTextGradient.setVisibility(marker.hasPhoto() ? View.VISIBLE : View.GONE);
             if (marker.hasPhoto()) {
                 int height = ThemeUtils.getPhotoHeight(context);
                 ViewGroup.LayoutParams params = viewBinding.markerListItemPhoto.getLayoutParams();
                 params.height = height;
                 viewBinding.markerListItemPhoto.setLayoutParams(params);
-                viewBinding.markerListItemTextGradient.setLayoutParams(params);
 
                 asyncLoadPhoto(viewBinding.markerListItemPhoto, marker.getPhotoUrl(), marker.getId());
             }
@@ -208,7 +204,7 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public void setSelected(boolean isSelected) {
             selection.put((int) getId(), isSelected);
-            view.setActivated(isSelected);
+            viewBinding.getRoot().setActivated(isSelected);
         }
 
         public long getId() {
