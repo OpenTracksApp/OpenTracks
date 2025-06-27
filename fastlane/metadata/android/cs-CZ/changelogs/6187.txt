@@ -1,0 +1,4 @@
+v4.19.6: OpenTracks
+
+Změny:
+- Podpora edge-to-edge by nyní měla fungovat na všech verzích systému Android
