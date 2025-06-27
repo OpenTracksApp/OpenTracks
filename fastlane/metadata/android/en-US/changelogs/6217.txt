@@ -1,0 +1,8 @@
+v4.20.0: OpenTracks
+
+Changes:
+- Allow to change timezone offset of tracks
+- Simplified Marker UI
+
+Bugfix:
+- Edge-2-edge: react to virtual keyboard
