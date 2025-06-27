@@ -132,14 +132,6 @@ public final class Marker {
         return position;
     }
 
-    public double getLatitude() {
-        return position.latitude();
-    }
-
-    public double getLongitude() {
-        return position.longitude();
-    }
-
     public boolean hasAccuracy() {
         return position.hasHorizontalAccuracy();
     }

@@ -91,8 +91,8 @@ public class CSVTrackExporter implements TrackExporter {
         List<Column> columns = List.of(
                 new Column("time", null),
                 new Column("trackpoint_type", t -> quote(t.getType().name())),
-                new Column("latitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getLatitude()) : ""),
-                new Column("longitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getLongitude()) : ""),
+                new Column("latitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getPosition().latitude()) : ""),
+                new Column("longitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getPosition().longitude()) : ""),
                 new Column("altitude", t -> t.hasAltitude() ? ALTITUDE_FORMAT.format(t.getAltitude().toM()) : ""),
                 new Column("accuracy_horizontal", t -> t.hasHorizontalAccuracy() ? DISTANCE_FORMAT.format(t.getHorizontalAccuracy().toM()) : ""),
                 new Column("accuracy_vertical", t -> t.hasVerticalAccuracy() ? DISTANCE_FORMAT.format(t.getVerticalAccuracy().toM()) : ""),

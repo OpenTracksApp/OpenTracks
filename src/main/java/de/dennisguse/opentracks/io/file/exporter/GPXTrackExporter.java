@@ -36,6 +36,7 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -253,7 +254,7 @@ public class GPXTrackExporter implements TrackExporter {
     }
 
     private void writeMarker(ZoneOffset zoneOffset, Marker marker) {
-        printWriter.println("<wpt " + formatLocation(marker.getLatitude(), marker.getLongitude()) + ">");
+        printWriter.println("<wpt " + formatLocation(marker.getPosition()) + ">");
         if (marker.hasAltitude()) {
             printWriter.println("<ele>" + ALTITUDE_FORMAT.format(marker.getAltitude().toM()) + "</ele>");
         }
@@ -311,7 +312,7 @@ public class GPXTrackExporter implements TrackExporter {
     private Distance writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint, List<TrackPoint> sensorPoints, Distance trackDistance) {
         Distance cumulativeDistance;
 
-        printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");
+        printWriter.println("<trkpt " + formatLocation(trackPoint.getPosition()) + ">");
 
         if (trackPoint.hasAltitude()) {
             printWriter.println("<ele>" + ALTITUDE_FORMAT.format(trackPoint.getAltitude().toM()) + "</ele>");
@@ -395,7 +396,7 @@ public class GPXTrackExporter implements TrackExporter {
                 .orElse(null);
     }
 
-    private String formatLocation(double latitude, double longitude) {
-        return "lat=\"" + COORDINATE_FORMAT.format(latitude) + "\" lon=\"" + COORDINATE_FORMAT.format(longitude) + "\"";
+    private String formatLocation(Position position) {
+        return "lat=\"" + COORDINATE_FORMAT.format(position.latitude()) + "\" lon=\"" + COORDINATE_FORMAT.format(position.longitude()) + "\"";
     }
 }

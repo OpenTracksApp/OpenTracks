@@ -178,10 +178,10 @@ public class TrackImporter {
 
             if (current.hasLocation()) {
                 Instant time = current.getTime();
-                if (current.getLatitude() == 100) {
+                if (current.getPosition().latitude() == 100) {
                     //TODO Remove by 31st December 2021.
                     trackPoints.set(i, new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, time));
-                } else if (current.getLatitude() == 200) {
+                } else if (current.getPosition().latitude() == 200) {
                     //TODO Remove by 31st December 2021.
                     trackPoints.set(i, new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, time));
                     //TODO Delete location

@@ -763,8 +763,8 @@ public class CustomContentProviderUtilsTest {
         TrackPoint trackPoint = contentProviderUtils.createTrackPoint(cursorMock);
 
         // then
-        assertEquals(longitude, trackPoint.getLongitude(), 0.01);
-        assertEquals(latitude, trackPoint.getLatitude(), 0.01);
+        assertEquals(latitude, trackPoint.getPosition().latitude(), 0.01);
+        assertEquals(longitude, trackPoint.getPosition().longitude(), 0.01);
         assertEquals(time, trackPoint.getTime().toEpochMilli());
         assertEquals(speed, trackPoint.getSpeed().toMPS(), 0.01);
         assertEquals(HeartRate.of(75f), trackPoint.getHeartRate());

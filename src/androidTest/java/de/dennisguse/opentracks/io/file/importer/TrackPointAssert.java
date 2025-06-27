@@ -20,8 +20,8 @@ public class TrackPointAssert {
 
         Assert.assertEquals("has location,", expected.hasLocation(), actual.hasLocation());
         if (expected.hasLocation()) {
-            Assert.assertEquals("latitude", expected.getLatitude(), actual.getLatitude(), 0.001);
-            Assert.assertEquals("longitude", expected.getLongitude(), actual.getLongitude(), 0.001);
+            Assert.assertEquals("latitude", expected.getPosition().latitude(), actual.getPosition().latitude(), 0.001);
+            Assert.assertEquals("longitude", expected.getPosition().longitude(), actual.getPosition().longitude(), 0.001);
         }
 
         Assert.assertEquals("has altitude", expected.hasAltitude(), actual.hasAltitude());

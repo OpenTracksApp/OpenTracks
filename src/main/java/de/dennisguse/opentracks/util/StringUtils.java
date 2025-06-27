@@ -45,6 +45,7 @@ import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Position;
 import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.settings.UnitSystem;
 
@@ -154,13 +155,9 @@ public class StringUtils {
 
     /**
      * Formats a complete coordinate (latitude, longitude)
-     *
-     * @param context   the context's object.
-     * @param latitude  the coordinate's latitude.
-     * @param longitude the coordinate's longitude.
      */
-    public static String formatCoordinate(Context context, double latitude, double longitude) {
-        return context.getString(R.string.location_latitude_longitude, Location.convert(latitude, Location.FORMAT_DEGREES), Location.convert(longitude, Location.FORMAT_DEGREES));
+    public static String formatCoordinate(Context context, Position position) {
+        return context.getString(R.string.location_latitude_longitude, Location.convert(position.latitude(), Location.FORMAT_DEGREES), Location.convert(position.longitude(), Location.FORMAT_DEGREES));
     }
 
     public static Pair<String, String> getHeartRateParts(Context context, HeartRate heartrate) {
