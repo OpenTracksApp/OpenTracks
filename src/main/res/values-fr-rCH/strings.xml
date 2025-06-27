@@ -169,8 +169,6 @@
     <string name="stats_altitude">Altitude</string>
     <string name="stats_fastest_pace">Allure la plus rapide</string>
     <string name="stats_gain">Dénivelé positif</string>
-    <string name="stats_latitude">Latitude</string>
-    <string name="stats_longitude">Longitude</string>
     <string name="stats_max_speed">Vitesse max.</string>
     <string name="stats_moving_time">Durée en déplacement</string>
     <string name="stats_pace">Allure</string>

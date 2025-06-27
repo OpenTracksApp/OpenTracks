@@ -205,8 +205,6 @@ limitations under the License.
     <string name="stats_altitude">İrtifa</string>
     <string name="stats_fastest_pace">En hızlı tempo</string>
     <string name="stats_gain">Artış</string>
-    <string name="stats_latitude">Enlem</string>
-    <string name="stats_longitude">Boylam</string>
     <string name="stats_max_speed">En yüksek hız</string>
     <string name="stats_moving_time">Hareketli zaman</string>
     <string name="stats_pace">Tempo</string>

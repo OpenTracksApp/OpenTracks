@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.ui.markers;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,9 +25,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuProvider;
@@ -36,14 +32,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Lifecycle;
 
-import java.time.Duration;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.databinding.MarkerDetailFragmentBinding;
 import de.dennisguse.opentracks.share.ShareUtils;
-import de.dennisguse.opentracks.ui.util.ListItemUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
@@ -57,42 +50,14 @@ public class MarkerDetailFragment extends Fragment {
     private static final String TAG = MarkerDetailFragment.class.getSimpleName();
     private static final String KEY_MARKER_ID = "markerId";
 
-    private static final Duration HIDE_TEXT_DELAY = Duration.ofSeconds(4);
-
     private MenuItem shareMarkerImageMenuItem;
 
     private ContentProviderUtils contentProviderUtils;
-    private Handler handler;
 
     private Marker.Id markerId;
     private Marker marker;
 
     private MarkerDetailFragmentBinding viewBinding;
-
-    private final Runnable hideText = new Runnable() {
-        @Override
-        public void run() {
-            Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.fadeout);
-            animation.setAnimationListener(new AnimationListener() {
-
-                @Override
-                public void onAnimationStart(Animation anim) {
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation anim) {
-                }
-
-                @Override
-                public void onAnimationEnd(Animation anim) {
-                    viewBinding.markerDetailMarkerTextGradient.setVisibility(View.GONE);
-                    viewBinding.markerDetailMarkerInfo.setVisibility(View.GONE);
-                }
-            });
-            viewBinding.markerDetailMarkerTextGradient.startAnimation(animation);
-            viewBinding.markerDetailMarkerInfo.startAnimation(animation);
-        }
-    };
 
     public static MarkerDetailFragment newInstance(Marker.Id markerId) {
         Bundle bundle = new Bundle();
@@ -113,23 +78,12 @@ public class MarkerDetailFragment extends Fragment {
             getParentFragmentManager().popBackStack();
             return;
         }
-        contentProviderUtils = new ContentProviderUtils(getActivity());
-        handler = new Handler();
+        contentProviderUtils = new ContentProviderUtils(getContext());
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewBinding = MarkerDetailFragmentBinding.inflate(inflater, container, false);
-
-        viewBinding.markerDetailMarkerPhoto.setOnClickListener(v -> {
-            handler.removeCallbacks(hideText);
-            int visibility = viewBinding.markerDetailMarkerInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
-            viewBinding.markerDetailMarkerTextGradient.setVisibility(visibility);
-            viewBinding.markerDetailMarkerInfo.setVisibility(visibility);
-            if (visibility == View.VISIBLE) {
-                handler.postDelayed(hideText, HIDE_TEXT_DELAY.toMillis());
-            }
-        });
 
         requireActivity().addMenuProvider(new MenuProvider() {
             @Override
@@ -189,12 +143,6 @@ public class MarkerDetailFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        handler.removeCallbacks(hideText);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         viewBinding = null;
@@ -212,12 +160,8 @@ public class MarkerDetailFragment extends Fragment {
         super.setMenuVisibility(menuVisible);
         // View pager caches the neighboring fragments in the resumed state.
         // If becoming visible from the resumed state, update the UI to display the text above the image.
-        if (isResumed()) {
-            if (menuVisible) {
-                updateUi();
-            } else {
-                handler.removeCallbacks(hideText);
-            }
+        if (isResumed() && menuVisible) {
+            updateUi();
         }
     }
 
@@ -236,28 +180,15 @@ public class MarkerDetailFragment extends Fragment {
     }
 
     private void updateUi() {
-        boolean hasPhoto = marker.hasPhoto();
-        if (hasPhoto) {
-            handler.removeCallbacks(hideText);
+        if (marker.hasPhoto()) {
             viewBinding.markerDetailMarkerPhoto.setImageURI(marker.getPhotoUrl());
-            handler.postDelayed(hideText, HIDE_TEXT_DELAY.toMillis());
         } else {
             viewBinding.markerDetailMarkerPhoto.setImageDrawable(MarkerUtils.getDefaultPhoto(getContext()));
         }
 
-        ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerCategory, StringUtils.getCategory(marker.getCategory()), hasPhoto);
+        viewBinding.markerDetailMarkerCategory.setText(StringUtils.getCategory(marker.getCategory()));
+        viewBinding.markerDetailMarkerDescription.setText(marker.getDescription());
 
-        ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerDescription, marker.getDescription(), hasPhoto);
-
-        setLocation(hasPhoto);
-    }
-
-    private void setLocation(boolean addShadow) {
-        String value = "[" + getString(R.string.stats_latitude) + " "
-                + StringUtils.formatCoordinate(getContext(), marker.getPosition().latitude()) + ", "
-                + getString(R.string.stats_longitude) + " "
-                + StringUtils.formatCoordinate(getContext(), marker.getPosition().longitude()) + "]";
-
-        ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerLocation, value, addShadow);
+        viewBinding.markerDetailMarkerLocation.setText(StringUtils.formatCoordinate(getContext(), marker.getPosition()));
     }
 }

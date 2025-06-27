@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">Altitud</string>
     <string name="stats_fastest_pace">Ritme més ràpid</string>
     <string name="stats_gain">Augment</string>
-    <string name="stats_latitude">Latitud</string>
-    <string name="stats_longitude">Longitud</string>
     <string name="stats_max_speed">Velocitat màxima</string>
     <string name="stats_moving_time">Temps en moviment</string>
     <string name="stats_pace">Ritme</string>

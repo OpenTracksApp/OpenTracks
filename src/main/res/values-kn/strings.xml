@@ -347,9 +347,6 @@
     <string name="stats_fastest_pace">ಅತಿ ವೇಗದ ಗತಿ</string>
     <string name="stats_gain">ಗಳಿಕೆ</string>
     <string name="stats_loss">ನಷ್ಟ</string>
-    <string name="stats_coordinates">ಅಕ್ಷಾಂಶ/ರೇಖಾಂಶ</string>
-    <string name="stats_latitude">ಅಕ್ಷಾಂಶ</string>
-    <string name="stats_longitude">ರೇಖಾಂಶ</string>
     <string name="stats_max_speed">ಗರಿಷ್ಠ ವೇಗ</string>
     <string name="stats_moving_time">ಚಲನೆಯ ಸಮಯ</string>
     <string name="stats_pace">ಗತಿ</string>

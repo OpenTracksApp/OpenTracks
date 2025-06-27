@@ -270,8 +270,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="stats_altitude">Altitudea</string>
     <string name="stats_fastest_pace">Pauso-erritmorik bizkorrena</string>
     <string name="stats_gain">Igoera</string>
-    <string name="stats_latitude">Latitudea</string>
-    <string name="stats_longitude">Longitudea</string>
     <string name="stats_max_speed">Gehienezko abiadura</string>
     <string name="stats_moving_time">Abian emandako denbora</string>
     <string name="stats_pace">Pauso-erritmoa</string>

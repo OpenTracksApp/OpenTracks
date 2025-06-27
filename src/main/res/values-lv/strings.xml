@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">Pacēlums</string>
     <string name="stats_fastest_pace">Ātrākais temps</string>
     <string name="stats_gain">Pieaugums</string>
-    <string name="stats_latitude">Platums</string>
-    <string name="stats_longitude">Garums</string>
     <string name="stats_max_speed">Maks. ātrums</string>
     <string name="stats_moving_time">Pārvietošanās laiks</string>
     <string name="stats_pace">Temps</string>

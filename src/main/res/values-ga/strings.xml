@@ -268,7 +268,6 @@
     <string name="stats_fastest_pace">An luas is tapúla</string>
     <string name="stats_gain">Gnóthachan</string>
     <string name="stats_loss">Caillteanas</string>
-    <string name="stats_latitude">Domhanleithead</string>
     <string name="stats_moving_time">Am ag bogadh</string>
     <string name="stats_pace">Luas</string>
     <string name="stats_speed">Luas</string>
@@ -354,8 +353,6 @@
     <string name="help_support_content">You can: \n a) spread the word about OpenTracks, \n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propose features</a>, \nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">report bugs</a>, \n d) help in software development, \n e) buy in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>, \n f) donate, and \n g) do whatever you think helps OpenTracks.</string>
     <string name="settings_public_api_disabled_toast">Tá OpenTracks Public API díchumasaithe: is féidir é a chumasú sna socruithe.</string>
     <string name="stats_altitude">Airde</string>
-    <string name="stats_coordinates">Domhanleithead/Domhanfhad</string>
-    <string name="stats_longitude">Domhanfhad</string>
     <string name="stats_max_speed">Luas uasta</string>
     <string name="stats_distance">Fad</string>
     <string name="stats_split_interval">Eatramh scoilte</string>

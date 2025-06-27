@@ -205,8 +205,6 @@ limitations under the License.
     <string name="stats_altitude">ระดับความสูง</string>
     <string name="stats_fastest_pace">อ้ตราก้าวที่เร็วที่สุด</string>
     <string name="stats_gain">เพิ่มค่า</string>
-    <string name="stats_latitude">ละติจูด</string>
-    <string name="stats_longitude">ลองจิจูด</string>
     <string name="stats_max_speed">ความเร็วสูงสุด</string>
     <string name="stats_moving_time">เวลาเดินทาง</string>
     <string name="stats_pace">อัตราก้าว</string>

@@ -13,10 +13,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp">
+
+    <TextView
+        android:id="@+id/marker_detail_marker_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Marker Location" />
+
+    <TextView
+        android:id="@+id/marker_detail_marker_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Marker Category" />
+
+    <TextView
+        android:id="@+id/marker_detail_marker_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Marker Description" />
 
     <ImageView
         android:id="@+id/marker_detail_marker_photo"
@@ -24,47 +44,4 @@ limitations under the License.
         android:layout_height="match_parent"
         android:contentDescription="@string/image_photo_marker"
         android:scaleType="fitCenter" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <!-- A gradient on top of the text -->
-        <ImageView
-            android:id="@+id/marker_detail_marker_text_gradient"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha=".6"
-            android:contentDescription="@string/image_photo_marker"
-            android:src="@drawable/text_gradient" />
-
-        <LinearLayout
-            android:id="@+id/marker_detail_marker_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
-            android:orientation="vertical"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/marker_detail_marker_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?attr/textAppearanceBody2"
-                tools:text="Marker Category" />
-
-            <TextView
-                android:id="@+id/marker_detail_marker_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?attr/textAppearanceBody2"
-                tools:text="Marker Description" />
-
-            <TextView
-                android:id="@+id/marker_detail_marker_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?attr/textAppearanceBody2"
-                tools:text="Marker Location" />
-        </LinearLayout>
-    </FrameLayout>
-</FrameLayout>
+</LinearLayout>

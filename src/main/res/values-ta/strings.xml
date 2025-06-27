@@ -352,9 +352,6 @@
     <string name="stats_gain">பெருக்கம்</string>
     <string name="stats_loss">இழப்பு</string>
     <string name="stats_gain_loss">ஆதாயம் &amp; இழப்பு</string>
-    <string name="stats_coordinates">அட்சரேகை/தீர்க்கரேகை</string>
-    <string name="stats_latitude">அகலாங்கு</string>
-    <string name="stats_longitude">நெட்டாங்கு</string>
     <string name="stats_max_speed">அதிகபட்ச விரைவு</string>
     <string name="stats_moving_time">நகரும் நேரம்</string>
     <string name="stats_pace">விரைவு</string>

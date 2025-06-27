@@ -273,8 +273,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="stats_altitude">Höhe</string>
     <string name="stats_fastest_pace">Schnellstes Tempo</string>
     <string name="stats_gain">Anstieg</string>
-    <string name="stats_latitude">Breitengrad</string>
-    <string name="stats_longitude">Längengrad</string>
     <string name="stats_max_speed">Max. Geschwindigkeit</string>
     <string name="stats_moving_time">Bewegungszeit</string>
     <string name="stats_pace">Tempo</string>

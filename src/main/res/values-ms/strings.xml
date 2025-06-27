@@ -206,8 +206,6 @@ limitations under the License.
     <string name="stats_altitude">Ketinggian</string>
     <string name="stats_fastest_pace">Langkah paling cepat</string>
     <string name="stats_gain">Pertambahan</string>
-    <string name="stats_latitude">Latitud</string>
-    <string name="stats_longitude">Longitud</string>
     <string name="stats_max_speed">Kelajuan maks</string>
     <string name="stats_moving_time">Masa bergerak</string>
     <string name="stats_pace">Langkah</string>

@@ -459,7 +459,6 @@
     <string name="settings_import_section">Impurtà</string>
     <string name="settings_export_section">Espurtà</string>
     <string name="settings_public_api_package_title">Nome di u pacchettu per l’API publica</string>
-    <string name="stats_latitude">Latitudine</string>
     <string name="settings_public_api_enabled_summary_off">Solu OpenTracks pò lancià è piantà l’arregistramenti.</string>
     <string name="settings_public_api_enabled_summary_on">D’altre appiecazioni installate ponu lancià o piantà l’arregistramenti.</string>
     <string name="settings_prevent_reimport_tracks_title">Impedisce a reimpurtazione di tracciatu</string>
@@ -471,8 +470,6 @@
     <string name="stats_average_moving_speed">Vitezza mediana in mossa</string>
     <string name="stats_average_pace">Andatura mediana</string>
     <string name="stats_average_speed">Vitezza mediana</string>
-    <string name="stats_coordinates">Latitudine è lungitudine</string>
-    <string name="stats_longitude">Lungitudine</string>
     <string name="stats_max_speed">Vitezza massima</string>
     <string name="stats_pace">Andatura</string>
     <string name="stats_moving_time">Durata in mossa</string>

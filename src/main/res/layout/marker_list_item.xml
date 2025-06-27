@@ -18,23 +18,7 @@
         app:layout_constraintBottom_toTopOf="@id/marker_list_item_bottom_line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
-
-    <!-- A gradient on top of the text -->
-    <ImageView
-        android:id="@+id/marker_list_item_text_gradient"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha=".6"
-        android:contentDescription="@string/image_photo_marker"
-        android:src="@drawable/text_gradient"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/marker_list_item_bottom_line"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Name -->
     <TextView
@@ -84,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="marker_list_item_photo,marker_list_item_text_gradient,marker_list_item_name,marker_list_item_date,marker_list_item_time_distance,marker_list_item_time" />
+        app:constraint_referenced_ids="marker_list_item_photo,marker_list_item_name,marker_list_item_date,marker_list_item_time_distance,marker_list_item_time" />
 
     <!-- Bottom Line -->
     <View

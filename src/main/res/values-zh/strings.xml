@@ -223,8 +223,6 @@ limitations under the License.
     <string name="stats_altitude">海拔</string>
     <string name="stats_fastest_pace">最快配速</string>
     <string name="stats_gain">增益</string>
-    <string name="stats_latitude">纬度</string>
-    <string name="stats_longitude">经度</string>
     <string name="stats_max_speed">最高速度</string>
     <string name="stats_moving_time">移动时间</string>
     <string name="stats_pace">配速</string>

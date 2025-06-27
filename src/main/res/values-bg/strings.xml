@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">Надморска височина</string>
     <string name="stats_fastest_pace">Най-бързо темпо</string>
     <string name="stats_gain">Увеличаване</string>
-    <string name="stats_latitude">Географска ширина</string>
-    <string name="stats_longitude">Географска дължина</string>
     <string name="stats_max_speed">Максимална скорост</string>
     <string name="stats_moving_time">Време на движението</string>
     <string name="stats_pace">Темпо</string>

@@ -245,8 +245,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="stats_altitude">Altitudine</string>
     <string name="stats_fastest_pace">Ritmo più veloce</string>
     <string name="stats_gain">Salita</string>
-    <string name="stats_latitude">Latitudine</string>
-    <string name="stats_longitude">Longitude</string>
     <string name="stats_max_speed">Velocità massima</string>
     <string name="stats_moving_time">Tempo in movimento</string>
     <string name="stats_pace">Ritmo</string>

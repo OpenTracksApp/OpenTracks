@@ -143,19 +143,6 @@ public class StringUtils {
         return df.format(value);
     }
 
-    /**
-     * Formats a coordinate
-     *
-     * @param context    the context's object.
-     * @param coordinate the coordinate
-     */
-    public static String formatCoordinate(Context context, double coordinate) {
-        return context.getString(R.string.location_coordinate, Location.convert(coordinate, Location.FORMAT_DEGREES));
-    }
-
-    /**
-     * Formats a complete coordinate (latitude, longitude)
-     */
     public static String formatCoordinate(Context context, Position position) {
         return context.getString(R.string.location_latitude_longitude, Location.convert(position.latitude(), Location.FORMAT_DEGREES), Location.convert(position.longitude(), Location.FORMAT_DEGREES));
     }

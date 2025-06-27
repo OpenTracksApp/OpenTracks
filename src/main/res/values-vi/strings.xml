@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">Độ cao</string>
     <string name="stats_fastest_pace">Nhịp độ nhanh nhất</string>
     <string name="stats_gain">Tăng</string>
-    <string name="stats_latitude">Vĩ độ</string>
-    <string name="stats_longitude">Kinh độ</string>
     <string name="stats_max_speed">Tốc độ tối đa</string>
     <string name="stats_moving_time">Thời gian di chuyển</string>
     <string name="stats_pace">Nhịp độ</string>

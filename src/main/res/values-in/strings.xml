@@ -169,8 +169,6 @@
     <string name="stats_altitude">Ketinggian</string>
     <string name="stats_fastest_pace">Laju tercepat</string>
     <string name="stats_gain">Perolehan</string>
-    <string name="stats_latitude">Lintang</string>
-    <string name="stats_longitude">Bujur</string>
     <string name="stats_max_speed">Kecepatan maks</string>
     <string name="stats_moving_time">Waktu pergerakan</string>
     <string name="stats_pace">Laju</string>

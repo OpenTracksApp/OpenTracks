@@ -252,8 +252,6 @@ limitations under the License.
     <string name="stats_altitude">Nadmořská výška</string>
     <string name="stats_fastest_pace">Nejvyšší tempo</string>
     <string name="stats_gain">Nárůst</string>
-    <string name="stats_latitude">Zeměpisná šířka</string>
-    <string name="stats_longitude">Zeměpisná délka</string>
     <string name="stats_max_speed">Maximální rychlost</string>
     <string name="stats_moving_time">Doba pohybu</string>
     <string name="stats_pace">Tempo</string>

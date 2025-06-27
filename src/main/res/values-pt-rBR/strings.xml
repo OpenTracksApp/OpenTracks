@@ -169,8 +169,6 @@
     <string name="stats_altitude">Elevação</string>
     <string name="stats_fastest_pace">Ritmo mais rápido</string>
     <string name="stats_gain">Ganho</string>
-    <string name="stats_latitude">Latitude</string>
-    <string name="stats_longitude">Longitude</string>
     <string name="stats_max_speed">Velocidade máxima</string>
     <string name="stats_moving_time">Tempo decorrido</string>
     <string name="stats_pace">Ritmo</string>

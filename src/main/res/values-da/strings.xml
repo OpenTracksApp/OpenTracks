@@ -268,8 +268,6 @@ limitations under the License.
     <string name="stats_altitude">Højde</string>
     <string name="stats_fastest_pace">Hurtigste tempo</string>
     <string name="stats_gain">Stigning</string>
-    <string name="stats_latitude">Breddegrad</string>
-    <string name="stats_longitude">Længdegrad</string>
     <string name="stats_max_speed">Maks. hastighed</string>
     <string name="stats_moving_time">Bevægelsestid</string>
     <string name="stats_pace">Tempo</string>

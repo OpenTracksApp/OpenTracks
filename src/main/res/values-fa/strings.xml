@@ -205,8 +205,6 @@ limitations under the License.
     <string name="stats_altitude">ارتفاع</string>
     <string name="stats_fastest_pace">سریع‌ترین تندی</string>
     <string name="stats_gain">افزایش</string>
-    <string name="stats_latitude">عرض جغرافیایی</string>
-    <string name="stats_longitude">طول جغرافیایی</string>
     <string name="stats_max_speed">حداکثر سرعت</string>
     <string name="stats_moving_time">زمان حرکت</string>
     <string name="stats_pace">تندی</string>

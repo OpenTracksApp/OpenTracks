@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">Высота</string>
     <string name="stats_fastest_pace">Макс. темп</string>
     <string name="stats_gain">Набор высоты</string>
-    <string name="stats_latitude">Широта</string>
-    <string name="stats_longitude">Долгота</string>
     <string name="stats_max_speed">Макс. скорость</string>
     <string name="stats_moving_time">Время в движении</string>
     <string name="stats_pace">Темп</string>

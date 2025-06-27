@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">Stigning</string>
     <string name="stats_fastest_pace">Snabbaste tempo</string>
     <string name="stats_gain">Ökning</string>
-    <string name="stats_latitude">Latitud</string>
-    <string name="stats_longitude">Longitud</string>
     <string name="stats_max_speed">Maximal hastighet</string>
     <string name="stats_moving_time">Rörelsetid</string>
     <string name="stats_pace">Tempo</string>

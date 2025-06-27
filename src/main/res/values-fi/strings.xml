@@ -273,8 +273,6 @@ limitations under the License.
     <string name="stats_altitude">Korkeus</string>
     <string name="stats_fastest_pace">Nopein vauhti</string>
     <string name="stats_gain">Kaltevuus</string>
-    <string name="stats_latitude">Leveysaste</string>
-    <string name="stats_longitude">Pituusaste</string>
     <string name="stats_max_speed">Enimmäisnopeus</string>
     <string name="stats_moving_time">Liikkumisaika</string>
     <string name="stats_pace">Vauhti</string>

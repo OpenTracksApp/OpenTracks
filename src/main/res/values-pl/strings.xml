@@ -235,8 +235,6 @@ limitations under the License.
     <!-- NOTE: gain/loss is in fact elevation gain/loss-->
     <string name="stats_gain">Przewyższenie w góre</string>
     <string name="stats_loss">Przewyższenie w dół</string>
-    <string name="stats_latitude">Szerokość geograficzna</string>
-    <string name="stats_longitude">Długość geograficzna</string>
     <string name="stats_max_speed">Prędkość maksymalna</string>
     <string name="stats_moving_time">Czas w ruchu</string>
     <string name="stats_pace">Tempo</string>

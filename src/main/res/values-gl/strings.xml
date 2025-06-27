@@ -262,8 +262,6 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="stats_altitude">Elevación</string>
     <string name="stats_fastest_pace">Ritmo máis rápido</string>
     <string name="stats_gain">Desnivel</string>
-    <string name="stats_latitude">Latitude</string>
-    <string name="stats_longitude">Lonxitude</string>
     <string name="stats_max_speed">Velocidade máxima</string>
     <string name="stats_moving_time">Tempo en movemento</string>
     <string name="stats_pace">Ritmo</string>
