@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">Nadmorská výška</string>
     <string name="stats_fastest_pace">Najrýchlejšie tempo</string>
     <string name="stats_gain">Zisk</string>
-    <string name="stats_latitude">Zemepisná šírka</string>
-    <string name="stats_longitude">Zemepisná dĺžka</string>
     <string name="stats_max_speed">Max. rýchlosť</string>
     <string name="stats_moving_time">Čas pohybu</string>
     <string name="stats_pace">Tempo</string>

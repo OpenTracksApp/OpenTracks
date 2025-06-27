@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">Pakilimas</string>
     <string name="stats_fastest_pace">Greičiausias tempas</string>
     <string name="stats_gain">Pelnas</string>
-    <string name="stats_latitude">Platuma</string>
-    <string name="stats_longitude">Ilguma</string>
     <string name="stats_max_speed">Maks. greitis</string>
     <string name="stats_moving_time">Judėjimo trukmė</string>
     <string name="stats_pace">Tempas</string>

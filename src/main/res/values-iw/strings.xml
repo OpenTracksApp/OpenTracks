@@ -167,8 +167,6 @@
     <string name="stats_altitude">גובה</string>
     <string name="stats_fastest_pace">הקצב המהיר ביותר</string>
     <string name="stats_gain">תוספת</string>
-    <string name="stats_latitude">קו רוחב</string>
-    <string name="stats_longitude">קו אורך</string>
     <string name="stats_max_speed">מהירות מקסימלית</string>
     <string name="stats_moving_time">זמן תנועה</string>
     <string name="stats_pace">קצב</string>

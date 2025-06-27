@@ -205,8 +205,6 @@ limitations under the License.
     <string name="stats_altitude">ऊंचाई</string>
     <string name="stats_fastest_pace">सबसे तेज चाल</string>
     <string name="stats_gain">वृद्धि</string>
-    <string name="stats_latitude">अक्षांश</string>
-    <string name="stats_longitude">देशांतर</string>
     <string name="stats_max_speed">अधिकतम गति</string>
     <string name="stats_moving_time">चलते रहने का समय</string>
     <string name="stats_pace">चाल</string>

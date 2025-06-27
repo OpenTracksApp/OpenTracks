@@ -205,8 +205,6 @@ limitations under the License.
     <string name="stats_altitude">標高</string>
     <string name="stats_fastest_pace">最速ペース</string>
     <string name="stats_gain">増加</string>
-    <string name="stats_latitude">緯度</string>
-    <string name="stats_longitude">経度</string>
     <string name="stats_max_speed">最大速度</string>
     <string name="stats_moving_time">移動時間</string>
     <string name="stats_pace">ペース</string>

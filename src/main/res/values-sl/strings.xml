@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">Nadmorska višina</string>
     <string name="stats_fastest_pace">Najhitrejši tempo</string>
     <string name="stats_gain">Porast</string>
-    <string name="stats_latitude">Zemljepisna širina</string>
-    <string name="stats_longitude">Zemljepisna dolžina</string>
     <string name="stats_max_speed">Najvišja hitrost</string>
     <string name="stats_moving_time">Čas gibanja</string>
     <string name="stats_pace">Tempo</string>

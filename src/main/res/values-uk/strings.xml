@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">Підйом</string>
     <string name="stats_fastest_pace">Найшвидший темп</string>
     <string name="stats_gain">Приріст</string>
-    <string name="stats_latitude">Широта</string>
-    <string name="stats_longitude">Довгота</string>
     <string name="stats_max_speed">Макс. швидкість</string>
     <string name="stats_moving_time">Час у дорозі</string>
     <string name="stats_pace">Темп</string>

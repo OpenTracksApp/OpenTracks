@@ -205,8 +205,6 @@ limitations under the License.
     <string name="stats_altitude">Υψόμετρο</string>
     <string name="stats_fastest_pace">Ταχύτερος ρυθμός</string>
     <string name="stats_gain">Αύξηση</string>
-    <string name="stats_latitude">Γεωγραφικό πλάτος</string>
-    <string name="stats_longitude">Γεωγραφικό μήκος</string>
     <string name="stats_max_speed">Μέγιστη ταχύτητα</string>
     <string name="stats_moving_time">Διάρκεια κίνησης</string>
     <string name="stats_pace">Ρυθμός</string>

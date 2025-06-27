@@ -17,10 +17,7 @@
 package de.dennisguse.opentracks.ui.util;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.TextView;
-
-import androidx.core.content.ContextCompat;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -87,29 +84,6 @@ public class ListItemUtils {
         }
 
         return timeDistanceText;
-    }
-
-    /**
-     * Sets a text view.
-     *
-     * @param context   the context
-     * @param textView  the text view
-     * @param value     the value for the text view
-     * @param addShadow true to add shadow
-     */
-    public static void setTextView(Context context, TextView textView, String value, boolean addShadow) {
-        if (value == null || value.length() == 0) {
-            textView.setVisibility(View.GONE);
-            return;
-        }
-
-        textView.setVisibility(View.VISIBLE);
-        textView.setText(value);
-        if (addShadow) {
-            textView.setShadowLayer(5, 0, 2, ContextCompat.getColor(context, android.R.color.black));
-        } else {
-            textView.setShadowLayer(0, 0, 0, 0);
-        }
     }
 
     public static void setDateAndTime(Context context, TextView dateView, TextView timeView, Instant time, ZoneOffset timeZone) {

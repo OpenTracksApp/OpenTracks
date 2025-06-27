@@ -268,8 +268,6 @@ limitations under the License.
     <string name="stats_altitude">Kõrgus</string>
     <string name="stats_fastest_pace">Kiireim tempo</string>
     <string name="stats_gain">Saavutatud</string>
-    <string name="stats_latitude">Laiuskraad</string>
-    <string name="stats_longitude">Pikkuskraad</string>
     <string name="stats_max_speed">Max kiirus</string>
     <string name="stats_moving_time">Liikumisaeg</string>
     <string name="stats_pace">Tempo</string>

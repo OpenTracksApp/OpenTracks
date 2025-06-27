@@ -205,8 +205,6 @@ limitations under the License.
     <string name="stats_altitude">고도</string>
     <string name="stats_fastest_pace">최고 속도</string>
     <string name="stats_gain">등락</string>
-    <string name="stats_latitude">위도</string>
-    <string name="stats_longitude">경도</string>
     <string name="stats_max_speed">최고 속도</string>
     <string name="stats_moving_time">이동 시간</string>
     <string name="stats_pace">속도</string>

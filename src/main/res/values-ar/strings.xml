@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">الارتفاع</string>
     <string name="stats_fastest_pace">أسرع إيقاع</string>
     <string name="stats_gain">الاكتساب</string>
-    <string name="stats_latitude">خط العرض</string>
-    <string name="stats_longitude">خط الطول</string>
     <string name="stats_max_speed">أقصى سرعة</string>
     <string name="stats_moving_time">وقت التحرك</string>
     <string name="stats_pace">الوتيرة</string>

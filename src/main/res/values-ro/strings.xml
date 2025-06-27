@@ -207,8 +207,6 @@ limitations under the License.
     <string name="stats_altitude">Altitudinea</string>
     <string name="stats_fastest_pace">Cel mai rapid ritm</string>
     <string name="stats_gain">Creștere</string>
-    <string name="stats_latitude">Latitudinea</string>
-    <string name="stats_longitude">Longitudinea</string>
     <string name="stats_max_speed">Viteza maximă</string>
     <string name="stats_moving_time">Durata deplasării</string>
     <string name="stats_pace">Ritmul</string>

@@ -167,8 +167,6 @@
     <string name="stats_altitude">海拔高度</string>
     <string name="stats_fastest_pace">最快速度</string>
     <string name="stats_gain">增加</string>
-    <string name="stats_latitude">緯度</string>
-    <string name="stats_longitude">經度</string>
     <string name="stats_max_speed">速限</string>
     <string name="stats_moving_time">移動時間</string>
     <string name="stats_pace">速度</string>
