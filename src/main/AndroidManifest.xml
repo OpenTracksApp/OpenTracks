@@ -405,11 +405,6 @@ limitations under the License.
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <service
-            android:name=".services.TrackDeleteService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
-
         <!--Necessary for SDK < 33 to (re-)store per app locale information-->
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
