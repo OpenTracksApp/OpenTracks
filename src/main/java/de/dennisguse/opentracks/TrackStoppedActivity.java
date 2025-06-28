@@ -16,10 +16,10 @@ import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackStoppedBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
+import de.dennisguse.opentracks.io.file.exporter.ExportUtils;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 

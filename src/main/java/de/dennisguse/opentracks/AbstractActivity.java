@@ -30,9 +30,7 @@ import androidx.core.view.WindowInsetsCompat;
 import de.dennisguse.opentracks.services.announcement.TTSManager;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
-/**
- * @author Jimmy Shih
- */
+// TODO Make ViewBinding a generic attribute and set to null in onDestroy()
 public abstract class AbstractActivity extends AppCompatActivity {
 
     @Override
