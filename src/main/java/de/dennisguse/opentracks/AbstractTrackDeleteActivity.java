@@ -16,15 +16,19 @@
 
 package de.dennisguse.opentracks;
 
-import android.os.Handler;
 import android.widget.Toast;
+
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.services.TrackDeleteService;
+import de.dennisguse.opentracks.services.TrackDeletionWorker;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
 
@@ -37,7 +41,7 @@ import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragm
  * @author Jimmy Shih
  */
 //TODO Check if this class is still such a good idea; inheritance might limit maintainability
-public abstract class AbstractTrackDeleteActivity extends AbstractActivity implements ConfirmDeleteCaller, TrackDeleteService.TrackDeleteResultReceiver.Receiver {
+public abstract class AbstractTrackDeleteActivity extends AbstractActivity implements ConfirmDeleteCaller {
 
     protected void deleteTracks(Track.Id... trackIds) {
         ConfirmDeleteDialogFragment.showDialog(getSupportFragmentManager(), trackIds);
@@ -55,10 +59,29 @@ public abstract class AbstractTrackDeleteActivity extends AbstractActivity imple
             Toast.makeText(this, getString(R.string.track_delete_not_recording), Toast.LENGTH_LONG).show();
         }
 
-        TrackDeleteService.enqueue(this, new TrackDeleteService.TrackDeleteResultReceiver(new Handler(), this), trackIdList);
+        WorkManager workManager = WorkManager.getInstance(this);
+        WorkRequest deleteRequest = new OneTimeWorkRequest.Builder(TrackDeletionWorker.class)
+                .setInputData(new Data.Builder()
+                        .putLongArray(TrackDeletionWorker.TRACKIDS_KEY, Arrays.stream(trackIds).mapToLong(Track.Id::id).toArray())
+                        .build())
+                .build();
+
+        workManager
+                .getWorkInfoByIdLiveData(deleteRequest.getId())
+                .observe(this, workInfo -> {
+                    if (workInfo != null) {
+                        if (workInfo.getState().isFinished()) {
+                            onDeleteFinished();
+                        }
+                    }
+                });
+
+        workManager.enqueue(deleteRequest);
     }
 
     protected abstract void onDeleteConfirmed();
+
+    protected abstract void onDeleteFinished();
 
     protected abstract Track.Id getRecordingTrackId();
 }
