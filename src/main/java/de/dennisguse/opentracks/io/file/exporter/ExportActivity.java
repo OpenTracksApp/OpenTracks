@@ -24,15 +24,20 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
+import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
@@ -41,7 +46,6 @@ import de.dennisguse.opentracks.io.file.ErrorListDialog;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 
 /**
@@ -56,7 +60,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  *    So, for this check actually a different file name might be used than in the ExportService.
  * * Saved state as an object instead of individual values.
  */
-public class ExportActivity extends AppCompatActivity implements ExportService.ExportServiceResultReceiver.Receiver {
+public class ExportActivity extends AbstractActivity {
 
     private static final String TAG = ExportActivity.class.getSimpleName();
 
@@ -83,8 +87,6 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
 
     private TrackFileFormat trackFileFormat;
     private Uri directoryUri;
-
-    private ExportService.ExportServiceResultReceiver resultReceiver;
 
     private List<String> directoryFiles;
 
@@ -147,8 +149,6 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewBinding = ExportActivityBinding.inflate(getLayoutInflater());
-        setContentView(viewBinding.getRoot());
 
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
 
@@ -160,8 +160,6 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
 
         DocumentFile documentFile = DocumentFile.fromTreeUri(this, directoryUri);
         String directoryDisplayName = FileUtils.getPath(documentFile);
-
-        resultReceiver = new ExportService.ExportServiceResultReceiver(new Handler(), this);
 
         if (savedInstanceState == null) {
             autoConflict = ConflictResolutionStrategy.CONFLICT_NONE;
@@ -190,6 +188,13 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
         viewBinding.exportActivityToolbar.setTitle(getString(R.string.export_progress_message, directoryDisplayName));
     }
 
+    @NonNull
+    @Override
+    protected View createRootView() {
+        viewBinding = ExportActivityBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
+    }
+
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -207,6 +212,7 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        viewBinding = null;
         conflictsQueue.clear();
         exportTasks.clear();
     }
@@ -231,19 +237,45 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
 
         if (fileExists && conflictResolution == ConflictResolutionStrategy.CONFLICT_NONE) {
             conflict(exportTask);
-        } else if (fileExists && conflictResolution == ConflictResolutionStrategy.CONFLICT_SKIP) {
+            return;
+        }
+        if (fileExists && conflictResolution == ConflictResolutionStrategy.CONFLICT_SKIP) {
             trackExportSkippedCount++;
             nextExport(exportTask);
-        } else {
-            ExportService.enqueue(this, resultReceiver, exportTask, directoryUri);
+            return;
         }
+
+        WorkManager workManager = WorkManager.getInstance(this);
+        WorkRequest exportRequest = new OneTimeWorkRequest.Builder(ExportWorker.class)
+                .setInputData(new Data.Builder()
+                        .putLongArray(ExportWorker.TRACKIDS_KEY, exportTask.getTrackIds().stream().mapToLong(Track.Id::id).toArray())
+                        .putString(ExportWorker.DIRECTORY_URI_KEY, directoryUri.toString())
+                        .putString(ExportWorker.TRACKFILEFORMAT_KEY, exportTask.getTrackFileFormat().toString())
+                        .putString(ExportWorker.FILENAME_KEY, exportTask.getFilename())
+                        .build())
+                .build();
+
+        workManager
+                .getWorkInfoByIdLiveData(exportRequest.getId())
+                .observe(this, workInfo -> {
+                    if (workInfo != null) {
+                        WorkInfo.State state = workInfo.getState();
+                        switch (state) {
+                            case SUCCEEDED -> onExportSuccess(exportTask);
+                            case FAILED ->
+                                    onExportError(exportTask, workInfo.getOutputData().getString(ExportWorker.RESULT_EXPORT_ERROR_MESSAGE_KEY));
+                        }
+                    }
+                });
+
+        workManager.enqueue(exportRequest);
     }
 
     private void export(ExportTask exportTask) {
         export(exportTask, autoConflict);
     }
 
-    @Deprecated //TODO Check should be done in ExportService
+    @Deprecated //TODO Check should be done in ExportWorker
     private boolean exportFileExists(ExportTask exportTask) {
         String filename;
         if (exportTask.isMultiExport()) {
@@ -314,7 +346,6 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
         }
     }
 
-    @Override
     public void onExportSuccess(ExportTask exportTask) {
         if (exportFileExists(exportTask)) {
             trackExportOverwrittenCount++;
@@ -325,7 +356,6 @@ public class ExportActivity extends AppCompatActivity implements ExportService.E
         nextExport(exportTask);
     }
 
-    @Override
     public void onExportError(ExportTask exportTask, String errorMessage) {
         trackExportErrorCount++;
         String name;
