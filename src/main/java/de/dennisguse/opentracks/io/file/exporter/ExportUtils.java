@@ -1,15 +1,21 @@
-package de.dennisguse.opentracks.util;
+package de.dennisguse.opentracks.io.file.exporter;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.documentfile.provider.DocumentFile;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,36 +28,79 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
-import de.dennisguse.opentracks.io.file.exporter.ExportService;
-import de.dennisguse.opentracks.io.file.exporter.ExportService.ExportServiceResultReceiver;
-import de.dennisguse.opentracks.io.file.exporter.ExportTask;
-import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.SettingsActivity;
+import de.dennisguse.opentracks.util.IntentUtils;
 
 public class ExportUtils {
 
     private static final String TAG = ExportUtils.class.getSimpleName();
 
-    public static void postWorkoutExport(Context context, Track.Id trackId) {
+    public static void postWorkoutExport(AppCompatActivity context, Track.Id trackId) {
         if (PreferencesUtils.shouldInstantExportAfterWorkout()) {
             TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat();
             DocumentFile directory = IntentUtils.toDocumentFile(context, PreferencesUtils.getDefaultExportDirectoryUri());
 
-            ExportServiceResultReceiver resultReceiver = new ExportServiceResultReceiver(new Handler(), new ExportServiceResultReceiver.Receiver() {
-                @Override
-                public void onExportError(ExportTask unused, String errorMessage) {
-                    Intent intent = new Intent(context, SettingsActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra(SettingsActivity.EXTRAS_EXPORT_ERROR_MESSAGE, errorMessage);
-                    context.startActivity(intent);
-                }
-            });
+            WorkManager workManager = WorkManager.getInstance(context);
+            WorkRequest exportRequest = new OneTimeWorkRequest.Builder(ExportWorker.class)
+                    .setInputData(new Data.Builder()
+                            .putLongArray(ExportWorker.TRACKIDS_KEY, new long[]{trackId.id()})
+                            .putString(ExportWorker.DIRECTORY_URI_KEY, directory.toString())
+                            .putString(ExportWorker.TRACKFILEFORMAT_KEY, trackFileFormat.toString())
+                            .putString(ExportWorker.FILENAME_KEY, null)
+                            .build())
+                    .build();
 
-            ExportService.enqueue(context, resultReceiver, new ExportTask(null, trackFileFormat, List.of(trackId)), directory.getUri());
+            workManager
+                    .getWorkInfoByIdLiveData(exportRequest.getId())
+                    .observe(context, workInfo -> {
+                        if (workInfo != null) {
+                            if (workInfo.getState() == WorkInfo.State.FAILED) {
+                                Intent intent = new Intent(context, SettingsActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.putExtra(SettingsActivity.EXTRAS_EXPORT_ERROR_MESSAGE, workInfo.getProgress().getString(ExportWorker.RESULT_EXPORT_ERROR_MESSAGE_KEY));
+                                context.startActivity(intent);
+                            }
+                        }
+                    });
+
+            workManager.enqueue(exportRequest);
         }
     }
 
+    public static void exportTrack(Context context, DocumentFile directory, @Nullable String filenameForMultiple, TrackFileFormat trackFileFormat, List<Track.Id> trackIds) {
+
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
+        List<Track> tracks = trackIds.stream().map(contentProviderUtils::getTrack).toList();
+
+        Uri exportDocumentFileUri;
+        if (tracks.size() == 1) {
+            exportDocumentFileUri = getExportDocumentFileUri(context, tracks.get(0), trackFileFormat, directory);
+        } else {
+            String filename = TrackFilenameGenerator.format(filenameForMultiple, trackFileFormat);
+            exportDocumentFileUri = getExportDocumentFileUri(context, filename, trackFileFormat, directory);
+        }
+
+        if (exportDocumentFileUri == null) {
+            throw new RuntimeException("Couldn't create document file for export");
+        }
+
+        TrackExporter trackExporter = trackFileFormat.createTrackExporter(context, contentProviderUtils);
+        try (OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFileUri, "wt")) {
+            if (!trackExporter.writeTrack(tracks, outputStream)) {
+                if (!DocumentFile.fromSingleUri(context, exportDocumentFileUri).delete()) {
+                    throw new RuntimeException("Unable to delete exportDocumentFile");
+                }
+                throw new RuntimeException("Unable to export track");
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Unable to open exportDocumentFile " + exportDocumentFileUri, e);
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to close exportDocumentFile output stream", e);
+        }
+    }
+
+    @Deprecated
     public static void exportTrack(Context context, DocumentFile directory, ExportTask exportTask) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
         List<Track> tracks = exportTask.getTrackIds().stream().map(contentProviderUtils::getTrack).collect(Collectors.toList());

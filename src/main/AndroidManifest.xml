@@ -396,11 +396,6 @@ limitations under the License.
             android:label="@string/recording_service" />
 
         <service
-            android:name=".io.file.exporter.ExportService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <service
             android:name=".io.file.importer.ImportService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />

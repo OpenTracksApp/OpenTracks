@@ -1,9 +1,9 @@
 package de.dennisguse.opentracks.publicapi;
 
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.io.file.exporter.ExportUtils;
 import de.dennisguse.opentracks.services.RecordingData;
 import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.util.ExportUtils;
 
 public class StopRecording extends AbstractAPIActivity {
 
