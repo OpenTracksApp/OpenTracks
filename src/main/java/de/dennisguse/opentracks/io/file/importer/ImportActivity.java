@@ -43,6 +43,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  *
  * @author Rodrigo Damazio
  */
+//TODO Make an AbstractActivity
 public class ImportActivity extends FragmentActivity {
 
     private static final String TAG = ImportActivity.class.getSimpleName();
@@ -57,7 +58,7 @@ public class ImportActivity extends FragmentActivity {
     private ArrayList<Uri> documentUris = new ArrayList<>();
     private boolean isDirectory;
 
-    private ImportViewModel viewModel;
+    private ImportViewModel viewModel; //TODO Replace (is this really helpful?)
     private ImportViewModel.Summary summary;
 
     @Override
