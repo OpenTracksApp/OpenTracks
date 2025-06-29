@@ -249,4 +249,15 @@ public class FileUtils {
 
         return files;
     }
+
+    public static List<DocumentFile> getFiles(List<DocumentFile> documentFiles) {
+        List<ArrayList<DocumentFile>> nestedFileList = documentFiles.stream()
+                .map(FileUtils::getFiles)
+                .toList();
+
+        List<DocumentFile> fileList = new ArrayList<>();
+        nestedFileList.forEach(fileList::addAll);
+
+        return fileList;
+    }
 }
