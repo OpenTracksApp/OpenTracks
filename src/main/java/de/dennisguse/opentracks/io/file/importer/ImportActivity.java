@@ -25,17 +25,24 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.ImportActivityBinding;
 import de.dennisguse.opentracks.io.file.ErrorListDialog;
+import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 
 /**
@@ -43,7 +50,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  *
  * @author Rodrigo Damazio
  */
-public class ImportActivity extends FragmentActivity {
+public class ImportActivity extends AbstractActivity {
 
     private static final String TAG = ImportActivity.class.getSimpleName();
 
@@ -55,19 +62,19 @@ public class ImportActivity extends FragmentActivity {
     private ImportActivityBinding viewBinding;
 
     private ArrayList<Uri> documentUris = new ArrayList<>();
+    private ArrayList<DocumentFile> filesToImport = new ArrayList<>();
     private boolean isDirectory;
 
-    private ImportViewModel viewModel;
-    private ImportViewModel.Summary summary;
+    private Summary summary;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewBinding = ImportActivityBinding.inflate(getLayoutInflater());
-        setContentView(viewBinding.getRoot());
 
         final Intent intent = getIntent();
         final ClipData intentClipData = intent.getClipData();
+
+        summary = new Summary();
 
         if (savedInstanceState == null) {
             if (intent.getData() != null) {
@@ -99,16 +106,19 @@ public class ImportActivity extends FragmentActivity {
             documentFiles = documentUris.stream().map(it -> DocumentFile.fromSingleUri(this, it)).collect(Collectors.toList());
         }
 
-        initViews();
-
-        viewModel = new ViewModelProvider(this).get(ImportViewModel.class);
-        viewModel.getImportData(documentFiles).observe(this, data -> {
-            summary = data;
-            setProgress();
-        });
+        //TODO init UI
+        loadData(documentFiles);
+        importNextFile();
 
         //Works for a directory, but we might have received multiple files via SEND_MULTIPLE.
         viewBinding.importActivityToolbar.setTitle(getString(R.string.import_progress_message, documentFiles.get(0).getName()));
+    }
+
+    @NonNull
+    @Override
+    protected View createRootView() {
+        viewBinding = ImportActivityBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -118,12 +128,60 @@ public class ImportActivity extends FragmentActivity {
         outState.putBoolean(BUNDLE_IS_DIRECTORY, isDirectory);
     }
 
-    private void initViews() {
-        viewBinding.importProgressDone.setText("0");
-        viewBinding.importProgressTotal.setText("0");
-        viewBinding.importProgressSummaryOk.setText("0");
-        viewBinding.importProgressSummaryExists.setText("0");
-        viewBinding.importProgressSummaryErrors.setText("0");
+    private void loadData(List<DocumentFile> documentFiles) {
+        filesToImport.addAll(FileUtils.getFiles(documentFiles));
+        summary.totalCount = filesToImport.size();
+    }
+
+    private void importNextFile() {
+        if (filesToImport.isEmpty()) {
+            onImportEnded();
+            return;
+        }
+
+        final DocumentFile documentFile = filesToImport.get(0);
+
+        WorkManager workManager = WorkManager.getInstance(getApplication());
+        WorkRequest importRequest = new OneTimeWorkRequest.Builder(ImportWorker.class)
+                .setInputData(new Data.Builder()
+                        .putString(ImportWorker.URI_KEY, documentFile.getUri().toString())
+                        .build())
+                .build();
+
+        workManager
+                .getWorkInfoByIdLiveData(importRequest.getId())
+                .observe(this, workInfo -> {
+                    if (workInfo != null) {
+                        WorkInfo.State state = workInfo.getState();
+                        if (state.isFinished()) {
+                            switch (state) {
+                                case SUCCEEDED -> {
+                                    summary.importedTrackIds.addAll(
+                                            Arrays.stream(workInfo.getOutputData().getLongArray(ImportWorker.RESULT_SUCCESS_LIST_TRACKIDS_KEY))
+                                                    .mapToObj(Track.Id::new)
+                                                    .toList());
+
+                                    summary.successCount++;
+                                }
+                                case FAILED -> {
+                                    if (workInfo.getOutputData().getBoolean(ImportWorker.RESULT_FAILURE_IS_DUPLICATE, false)) {
+                                        summary.existsCount++;
+                                    } else {
+                                        // Some error happened
+                                        String errorMessage = workInfo.getOutputData().getString(ImportWorker.RESULT_MESSAGE_KEY);
+                                        summary.fileErrors.add(getApplication().getString(R.string.import_error_info, documentFile.getName(), errorMessage));
+                                    }
+                                }
+                            }
+
+                            setProgress();
+                            importNextFile();
+                        }
+                    }
+                });
+
+        workManager.enqueue(importRequest);
+        filesToImport.remove(0);
     }
 
     private int getTotalDone() {
@@ -191,6 +249,38 @@ public class ImportActivity extends FragmentActivity {
             });
         } else {
             viewBinding.importProgressLeftButton.setVisibility(View.GONE);
+        }
+    }
+
+    static class Summary {
+        private int totalCount;
+        private int successCount;
+        private int existsCount;
+        private final ArrayList<Track.Id> importedTrackIds = new ArrayList<>();
+        private final ArrayList<String> fileErrors = new ArrayList<>();
+
+        public int getTotalCount() {
+            return totalCount;
+        }
+
+        public int getSuccessCount() {
+            return successCount;
+        }
+
+        public int getExistsCount() {
+            return existsCount;
+        }
+
+        public int getErrorCount() {
+            return fileErrors.size();
+        }
+
+        public ArrayList<Track.Id> getImportedTrackIds() {
+            return importedTrackIds;
+        }
+
+        public ArrayList<String> getFileErrors() {
+            return fileErrors;
         }
     }
 }
