@@ -60,6 +60,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  *    So, for this check actually a different file name might be used than in the ExportService.
  * * Saved state as an object instead of individual values.
  */
+//TODO Make an AbstractActivity
 public class ExportActivity extends AbstractActivity {
 
     private static final String TAG = ExportActivity.class.getSimpleName();

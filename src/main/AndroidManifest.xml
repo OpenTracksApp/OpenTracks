@@ -395,11 +395,6 @@ limitations under the License.
             android:icon="@drawable/ic_logo_color_24dp"
             android:label="@string/recording_service" />
 
-        <service
-            android:name=".io.file.importer.ImportService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
         <!--Necessary for SDK < 33 to (re-)store per app locale information-->
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
