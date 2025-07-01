@@ -79,8 +79,7 @@ limitations under the License.
         android:hasFragileUserData="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/OpenTracksTheme">
+        android:supportsRtl="true">
 
         <activity
             android:name=".publicapi.StartRecording"

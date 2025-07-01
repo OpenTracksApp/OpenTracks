@@ -270,8 +270,7 @@
 
     <!-- User Interface Settings -->
 
-    <string name="settings_ui_dynamic_colors_key" translatable="false">uiDynamicColors</string>
-    <bool name="settings_ui_dynamic_colors_default" translatable="false">false</bool>
+    <string name="deleted20250703" translatable="false">uiDynamicColors</string> <!-- DELETED -->
 
     <!-- Recording Settings -->
     <string name="stats_show_on_lockscreen_while_recording_key" translatable="false">trackdetail_show_on_lockscreen_while_recording</string>
@@ -301,23 +300,36 @@
     <string name="locale_key" translatable="false">localeKey</string>
 
     <!-- androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode() -->
-    <string name="night_mode_key" translatable="false">nightMode</string>
-    <string name="night_mode_default" translatable="false">@string/night_mode_system_value</string>
-    <string name="night_mode_no_value" translatable="false">1</string>
-    <string name="night_mode_yes_value" translatable="false">2</string>
-    <string name="night_mode_night_oled_value" translatable="false">3</string>
-    <string name="night_mode_system_value" translatable="false">-1</string>
+    <string name="theme_key" translatable="false">nightMode</string>
+    <string name="theme_default" translatable="false">@string/theme_daynight_value</string>
+    <string name="theme_daynight_value" translatable="false">0</string>
+    <string name="theme_daynight_dynamic_value" translatable="false">1</string>
+    <string name="theme_day_value" translatable="false">2</string>
+    <string name="theme_day_dynamic_value" translatable="false">3</string>
+    <string name="theme_night_value" translatable="false">4</string>
+    <string name="theme_night_dynamic_value" translatable="false">5</string>
+    <string name="theme_oled_value" translatable="false">6</string>
+    <string name="theme_oled_dynamic_value" translatable="false">7</string>
     <string-array name="night_mode_values">
-        <item>@string/night_mode_system_value</item>
-        <item>@string/night_mode_no_value</item>
-        <item>@string/night_mode_yes_value</item>
-        <item>@string/night_mode_night_oled_value</item>
+        <item>@string/theme_daynight_value</item>
+        <item>@string/theme_daynight_dynamic_value</item>
+        <item>@string/theme_day_value</item>
+        <item>@string/theme_day_dynamic_value</item>
+        <item>@string/theme_night_value</item>
+        <item>@string/theme_night_dynamic_value</item>
+        <item>@string/theme_oled_value</item>
+        <item>@string/theme_oled_dynamic_value</item>
     </string-array>
     <string-array name="night_mode_options">
+        <!-- TODO: rename night_mode to theme and night_oled to oled -->
         <item>@string/settings_night_mode_option_system</item>
+        <item>@string/settings_night_mode_option_system_dynamic</item>
         <item>@string/settings_night_mode_option_day</item>
+        <item>@string/settings_night_mode_option_day_dynamic</item>
         <item>@string/settings_night_mode_option_night</item>
+        <item>@string/settings_night_mode_option_night_dynamic</item>
         <item>@string/settings_night_mode_option_night_oled</item>
+        <item>@string/settings_night_mode_option_night_oled_dynamic</item>
     </string-array>
 
     <!-- Stats layout customization -->

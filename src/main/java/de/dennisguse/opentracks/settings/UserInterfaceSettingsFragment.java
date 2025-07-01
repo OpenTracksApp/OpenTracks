@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.settings;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -15,7 +14,7 @@ import de.dennisguse.opentracks.R;
 public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
-        if (PreferencesUtils.isKey(R.string.night_mode_key, key)) {
+        if (PreferencesUtils.isKey(R.string.theme_key, key)) {
             getActivity().runOnUiThread(() -> {
                 PreferencesUtils.applyNightMode();
                 Toast.makeText(getContext(), R.string.settings_theme_switch_restart, Toast.LENGTH_LONG).show();
@@ -33,9 +32,6 @@ public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
             startActivity(intent);
             return true;
         });
-
-        Preference dynamicColors = findPreference(getString(R.string.settings_ui_dynamic_colors_key));
-        dynamicColors.setEnabled(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU);
     }
 
     @Override

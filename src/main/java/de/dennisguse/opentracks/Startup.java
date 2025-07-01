@@ -6,8 +6,6 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
-import com.google.android.material.color.DynamicColors;
-
 import java.lang.reflect.Method;
 
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -34,11 +32,7 @@ public class Startup extends Application {
         // Set default values of preferences on first start.
         PreferencesUtils.resetPreferences(this, false);
         PreferencesUtils.applyDefaultUnit();
-        PreferencesUtils.applyNightMode();
-
-        if (PreferencesUtils.shouldUseDynamicColors()) {
-            DynamicColors.applyToActivitiesIfAvailable(this);
-        }
+        PreferencesUtils.applyNightModeAndDynamicColors(this);
     }
 
     @Override

@@ -37,9 +37,7 @@ public abstract class AbstractActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (PreferencesUtils.shouldApplyOledTheme()) {
-            setTheme(R.style.OpenTracksThemeOled);
-        }
+        PreferencesUtils.applyTheme(this);
 
         EdgeToEdge.enable(this);
 
