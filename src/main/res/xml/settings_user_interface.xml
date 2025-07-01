@@ -11,18 +11,12 @@
         app:useSimpleSummaryProvider="true" />
 
     <ListPreference
-        android:defaultValue="@string/night_mode_default"
+        android:defaultValue="@string/theme_default"
         android:entries="@array/night_mode_options"
         android:entryValues="@array/night_mode_values"
-        android:key="@string/night_mode_key"
+        android:key="@string/theme_key"
         android:title="@string/settings_night_mode_title"
         app:useSimpleSummaryProvider="true" />
-
-    <SwitchPreferenceCompat
-        android:defaultValue="@bool/settings_ui_dynamic_colors_default"
-        android:key="@string/settings_ui_dynamic_colors_key"
-        android:summary="@string/settings_ui_dynamic_colors_summary"
-        android:title="@string/settings_ui_dynamic_colors_title" />
 
     <PreferenceCategory app:title="@string/settings_recording_title">
 

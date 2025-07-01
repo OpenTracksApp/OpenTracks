@@ -380,9 +380,13 @@ limitations under the License.
     <string name="settings_locale_system_default">System default</string>
     <string name="settings_night_mode_title">UI Theme</string>
     <string name="settings_night_mode_option_system">System</string>
+    <string name="settings_night_mode_option_system_dynamic">System (DynamicColor)</string>
     <string name="settings_night_mode_option_day">Day</string>
+    <string name="settings_night_mode_option_day_dynamic">Day (DynamicColor)</string>
     <string name="settings_night_mode_option_night">Night</string>
-    <string name="settings_night_mode_option_night_oled">Night (OLED friendly)</string>
+    <string name="settings_night_mode_option_night_dynamic">Night (DynamicColor)</string>
+    <string name="settings_night_mode_option_night_oled">OLED friendly</string>
+    <string name="settings_night_mode_option_night_oled_dynamic">OLED friendly (DynamicColor)</string>
     <string name="settings_announcements_totaltime_frequency">Time interval</string>
     <string name="settings_announcements_distance_frequency">Lap length</string>
     <string name="settings_announcements_average_heart_rate">Average heart rate</string>

@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.settings;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -29,6 +30,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
+
+import com.google.android.material.color.DynamicColors;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -336,11 +339,6 @@ public class PreferencesUtils {
     public static boolean shouldShowHeartRate() {
         final boolean DEFAULT = resources.getBoolean(R.bool.chart_display_heart_rate_default);
         return getBoolean(R.string.chart_display_heart_rate_key, DEFAULT);
-    }
-
-    public static boolean shouldUseDynamicColors() {
-        final boolean DEFAULT = resources.getBoolean(R.bool.settings_ui_dynamic_colors_default);
-        return getBoolean(R.string.settings_ui_dynamic_colors_key, DEFAULT);
     }
 
     public static boolean shouldVoiceAnnouncementOnDeviceSpeaker() {
@@ -705,7 +703,7 @@ public class PreferencesUtils {
     public static TrackFileFormat getExportTrackFileFormat() {
         final String TRACKFILEFORMAT_NAME_DEFAULT = getString(R.string.export_trackfileformat_default, null);
         String trackFileFormatName = getString(R.string.export_trackfileformat_key, TRACKFILEFORMAT_NAME_DEFAULT);
-    return Arrays.stream(TrackFileFormat.values())
+        return Arrays.stream(TrackFileFormat.values())
                 .filter(format -> format.getPreferenceId().equals(trackFileFormatName))
                 .findFirst().orElse(TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES);
     }
@@ -715,30 +713,62 @@ public class PreferencesUtils {
         return getBoolean(R.string.import_prevent_reimport_key, defaultValue);
     }
 
-    /**
-     * @return * {@link androidx.appcompat.app.AppCompatDelegate}.MODE_*
-     * * 3: Night OLED friendly
-     */
-    private static String getUiMode() {
-        final String defaultValue = getKey(R.string.night_mode_default);
-        final String value = getString(R.string.night_mode_key, defaultValue);
-
-        return value;
+    record ThemeConfig(int themeResourceId, int dayNight, boolean dynamicColor) {
     }
 
-    public static boolean shouldApplyOledTheme() {
-        return resources.getString(R.string.night_mode_night_oled_value)
-                .equals(getUiMode());
+    private static ThemeConfig getThemeMode() {
+        final String defaultValue = getKey(R.string.theme_default);
+        final String value = getString(R.string.theme_key, defaultValue);
+
+        switch (value) {
+            case "0" -> {
+                return new ThemeConfig(R.style.DayNightColorTheme, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM, false);
+            }
+            case "1" -> {
+                return new ThemeConfig(R.style.DayNightDynamicTheme, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM, true);
+            }
+            case "2" -> {
+                return new ThemeConfig(R.style.DayNightColorTheme, AppCompatDelegate.MODE_NIGHT_NO, false);
+            }
+            case "3" -> {
+                return new ThemeConfig(R.style.DayNightDynamicTheme, AppCompatDelegate.MODE_NIGHT_NO, true);
+            }
+            case "4" -> {
+                return new ThemeConfig(R.style.DayNightColorTheme, AppCompatDelegate.MODE_NIGHT_YES, false);
+            }
+            case "5" -> {
+                return new ThemeConfig(R.style.DayNightDynamicTheme, AppCompatDelegate.MODE_NIGHT_YES, true);
+            }
+            case "6" -> {
+                return new ThemeConfig(R.style.NightOledColorTheme, AppCompatDelegate.MODE_NIGHT_YES, false);
+            }
+            case "7" -> {
+                return new ThemeConfig(R.style.NightOledDynamicTheme, AppCompatDelegate.MODE_NIGHT_YES, true);
+            }
+
+            default -> {
+                return new ThemeConfig(R.style.DayNightColorTheme, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM, false);
+            }
+        }
+    }
+
+    public static void applyTheme(Context context) {
+        context.setTheme(getThemeMode().themeResourceId());
     }
 
     public static void applyNightMode() {
-        String uiMode = getUiMode();
-        if (resources.getString(R.string.night_mode_night_oled_value)
-                .equals(uiMode)) {
-            return;
-        }
+        ThemeConfig themeConfig = getThemeMode();
 
-        AppCompatDelegate.setDefaultNightMode(Integer.parseInt(uiMode));
+        AppCompatDelegate.setDefaultNightMode(themeConfig.dayNight);
+    }
+
+    public static void applyNightModeAndDynamicColors(Application application) {
+        ThemeConfig themeConfig = getThemeMode();
+
+        applyNightMode();
+
+        if (application != null && themeConfig.dynamicColor)
+            DynamicColors.applyToActivitiesIfAvailable(application);
     }
 
     public static void resetPreferences(Context context, boolean readAgain) {
