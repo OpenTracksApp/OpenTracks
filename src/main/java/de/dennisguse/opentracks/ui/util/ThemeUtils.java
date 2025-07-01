@@ -7,6 +7,8 @@ import android.util.TypedValue;
 
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.R;
+
 public class ThemeUtils {
 
     private ThemeUtils() {
@@ -18,7 +20,7 @@ public class ThemeUtils {
     public static int getBackgroundColor(Context context) {
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(android.R.attr.colorBackground, typedValue, true);
+        theme.resolveAttribute(R.attr.colorSurface, typedValue, true);
 
         return ContextCompat.getColor(context, typedValue.resourceId);
     }
@@ -26,7 +28,7 @@ public class ThemeUtils {
     public static int getTextColorPrimary(Context context) {
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true);
+        theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true);
 
         return ContextCompat.getColor(context, typedValue.resourceId);
     }
@@ -34,20 +36,20 @@ public class ThemeUtils {
     public static int getTextColorSecondary(Context context) {
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = context.getTheme();
-        theme.resolveAttribute(android.R.attr.textColorSecondary, typedValue, true);
+        theme.resolveAttribute(R.attr.colorSecondary, typedValue, true);
 
         return ContextCompat.getColor(context, typedValue.resourceId);
     }
 
     public static int getFontSizeSmallInPx(Context context) {
-        TypedArray typedArray = context.obtainStyledAttributes(com.google.android.material.R.style.TextAppearance_MaterialComponents_Body2, new int[]{android.R.attr.textSize});
+        TypedArray typedArray = context.obtainStyledAttributes(R.style.TextAppearance_MaterialComponents_Body2, new int[]{android.R.attr.textSize});
         int fontSize = typedArray.getDimensionPixelSize(0, 12);
         typedArray.recycle();
         return fontSize;
     }
 
     public static int getFontSizeMediumInPx(Context context) {
-        TypedArray typedArray = context.obtainStyledAttributes(com.google.android.material.R.style.TextAppearance_MaterialComponents_Body1, new int[]{android.R.attr.textSize});
+        TypedArray typedArray = context.obtainStyledAttributes(R.style.TextAppearance_MaterialComponents_Body1, new int[]{android.R.attr.textSize});
         int fontSize = typedArray.getDimensionPixelSize(0, 15);
         typedArray.recycle();
         return fontSize;
