@@ -14,45 +14,113 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
+    <string name="empty">boş</string>
+    <string name="about_preference_title">Hakkında</string>
+    <string name="about_description"><i>OpenTracks</i>, gizliliğinize tamamen saygı duyan bir spor takip uygulamasıdır.</string>
+    <string name="about_url">Proje web sayfası: <a href="%1$s">%1$s</a></string>
+    <string name="about_version_name">Sürüm adı: %1$s</string>
+    <string name="about_version_code">Sürüm kodu: %1$d</string>
+    <string name="about_history">OpenTracks, <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a> uygulamasının (2016\'da durduruldu) bir fork\'udur.</string>
+    <string name="about_third_party_data">Üçüncü taraf verileri</string>
+    <string name="about_libraries">Kütüphaneler</string>
+    <!-- Help -->
+    <string name="help_feature_title">OpenTracks aşağıdaki özelliklere sahiptir:</string>
+    <string name="help_feature_content">* GPS parkurları oluşturma
+\n* kalp atış hızı sensörü kullanma (sadece Bluetooth LE)
+\n* sesli anonslar (zamana veya mesafeye göre)
+\n* işaretleyiciler oluşturma (resimler dahil)
+\n* tamamen çevrimdışı çalışma
+\n* parkurları haritada gösterme (aşağıya bakın)</string>
+    <string name="help_track_map_title">Bir parkur haritada nasıl gösterilir?</string>
+    <string name="help_track_map_content">
+        Küçük harita simgesini kullanın.\n
+        a)
+        (canlı güncellemeler) <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>\'u yükleyin.
+        Bu uygulama, <a href="https://www.openstreetmap.org">OpenStreetMap</a> üzerinden çevrimiçi veya çevrimdışı haritalar sunar.\n
+        Aslında, OSMDashboard sadece gösterilecek parkur(lar)ın verilerine (geçici olarak) erişebilen ayrı bir uygulamadır.
+
+        \n
+        b)
+        "Normal" bir harita uygulaması aracılığıyla (ör. <a href="http://osmand.net/">OsmAnd</a> ve <a href="https://maps.me/">MAPS.ME</a>).
+        Bu uygulamaların KMZ dosya formatını (sadece konumlar ve zaman damgaları) desteklemesi gerekir.
+        Aslında, bir uygulamanın <i>application/vnd.google-earth.kmz</i> MIME türü ile <i>ACTION_VIEW</i>\'ı desteklemesi gerekir.
+    </string>
+    <string name="help_storage_pictures_title">OpenTracks, işaretleyici olarak çekilen resimleri nasıl saklar?</string>
+    <string name="help_storage_pictures_content">Bunlar uygulamanın dahili depolama alanında saklanır (yani sadece OpenTracks içinden erişilebilir).</string>
+    <string name="help_track_export_title">Kaydedilen parkurları nasıl dışa aktarabilir/paylaşabilirim?</string>
+    <string name="help_track_export_content">Parkurlar, Ayarlar\'dan KMZ, KML veya GPX olarak dışa aktarılabilir. KMZ/KML tüm verileri içerir; GPX sadece konumları içerir. <i>Paylaş simgesi</i> aracılığıyla paylaşılan parkurlar KMZ olarak paylaşılır.</string>
+    <string name="help_data_google_play_services_title">OpenTracks, Google Play Hizmetleri gerektirir/kullanır mı?</string>
+    <string name="help_data_google_play_services_content">Hayır</string>
+    <string name="help_recording_title">OpenTracks verileri nasıl kaydeder?</string>
+    <string name="help_recording_content">
+        OpenTracks, konumu sürekli olarak kaydetmek için cihazın GPS sensörünü kullanır.
+        GPS cihazı hatalı veriler (ör. konum, hız, yükseklik) bildirirse, OpenTracks bu konuda bir şey yapamaz.
+    </string>
+    <string name="help_data_storage_title">OpenTracks sensör verilerini nasıl saklar?</string>
+    <string name="help_data_storage_content">Sensör verileri, kaydedilen her konum için saklanır. Bir kalp atış hızı sensörü söz konusu olduğunda, bu, konum başına yalnızca <i>bir</i> kalp atış hızı ölçümünün saklandığı anlamına gelir. Hareketsiz duruyorsanız veya kapalı bir alandaysanız, sensör verisi kaydedilmez (ancak gösterilir).</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks konumları kaydetmiyor mu?</string>
+    <string name="help_gps_troubleshooting_content">
+        Yapabilecekleriniz:\n
+        a) GPS\'in etkin olup olmadığını kontrol edin,\n
+        b) GPS sinyalini iyileştirin (ör. dışarı çıkın),\n
+        c) <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> uygulaması ile kontrol edin ve\n
+        d) güç tasarrufunu devre dışı bırakın.\n
+        \n
+        Hiçbir şey yardımcı olmazsa lütfen bir hata bildirin.
+    </string>
+    <string name="help_support_title">OpenTracks\'i nasıl destekleyebilirim?</string>
+    <string name="help_support_content">
+        Şunları yapabilirsiniz:\n
+        a) OpenTracks\'i başkalarına anlatın,\n
+        b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">özellik önerin</a>,\n
+        c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">hata bildirin</a>,\n
+        d) yazılım geliştirmeye yardım edin,\n
+        e) <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>\'dan satın alın,\n
+        f) bağış yapın ve\n
+        g) OpenTracks\'e yardımcı olacağını düşündüğünüz her şeyi yapın.
+    </string>
+    <string name="open_track_as_trackfileformat">%1$s olarak aç</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">uçak</string>
     <string name="activity_type_atv">ATV</string>
-    <string name="activity_type_biking">motosiklet</string>
-    <string name="activity_type_blimp">keşif balonu</string>
+    <string name="activity_type_biking">bisiklete binme</string>
+    <string name="activity_type_blimp">zeplin</string>
     <string name="activity_type_boat">tekne</string>
-    <string name="activity_type_climbing">tırmanma</string>
-    <string name="activity_type_commercial_airplane">yolcu uçağı</string>
-    <string name="activity_type_cross_country_skiing">kros kayağı</string>
-    <string name="activity_type_cycling">bisiklet</string>
+    <string name="activity_type_climbing">tırmanış</string>
+    <string name="activity_type_commercial_airplane">ticari uçak</string>
+    <string name="activity_type_cross_country_skiing">kır kayağı</string>
+    <string name="activity_type_cycling">bisiklet sürme</string>
     <string name="activity_type_dirt_bike">arazi motosikleti</string>
-    <string name="activity_type_donkey_back_riding">eşek binme</string>
-    <string name="activity_type_driving">araba yolculuğu</string>
+    <string name="activity_type_donkey_back_riding">eşek sırtında gezinti</string>
+    <string name="activity_type_driving">sürüş</string>
     <string name="activity_type_driving_bus">otobüs sürme</string>
     <string name="activity_type_driving_car">araba sürme</string>
+    <string name="activity_type_escooter">e-skuter</string>
+    <string name="activity_type_kickscooter">skuter</string>
     <string name="activity_type_ferry">feribot</string>
     <string name="activity_type_frisbee">frizbi</string>
-    <string name="activity_type_gliding">planör uçuşu</string>
-    <string name="activity_type_hang_gliding">asılı planör uçuşu</string>
+    <string name="activity_type_gliding">planörle uçuş</string>
+    <string name="activity_type_hang_gliding">yelken kanat</string>
     <string name="activity_type_helicopter">helikopter</string>
-    <string name="activity_type_hiking">yürüyüş</string>
-    <string name="activity_type_horse_back_riding">ata binme</string>
+    <string name="activity_type_hiking">doğa yürüyüşü</string>
+    <string name="activity_type_horse_back_riding">at binme</string>
     <string name="activity_type_hot_air_balloon">sıcak hava balonu</string>
-    <string name="activity_type_ice_sailing">buz üzerinde yelken</string>
+    <string name="activity_type_ice_sailing">buz yelkenciliği</string>
     <string name="activity_type_inline_skating">tekerlekli paten</string>
-    <string name="activity_type_kayaking">kano kayak</string>
-    <string name="activity_type_kite_surfing">uçurtma kayağı</string>
-    <string name="activity_type_land_sailing">kara yelkeni</string>
-    <string name="activity_type_mixed_type">karışık türde</string>
-    <string name="activity_type_motor_bike">motorlu bisiklet</string>
+    <string name="activity_type_kayaking">kano</string>
+    <string name="activity_type_kite_surfing">uçurtma sörfü</string>
+    <string name="activity_type_land_sailing">kara yelkenciliği</string>
+    <string name="activity_type_mixed_type">karma tür</string>
+    <string name="activity_type_motor_bike">motosiklet</string>
     <string name="activity_type_motor_boating">motorlu tekne</string>
     <string name="activity_type_mountain_biking">dağ bisikleti</string>
     <string name="activity_type_off_trail_hiking">patika dışı yürüyüş</string>
     <string name="activity_type_other">diğer</string>
     <string name="activity_type_paddling">kürek çekme</string>
     <string name="activity_type_para_gliding">yamaç paraşütü</string>
-    <string name="activity_type_rc_airplane">Uzaktan kumandalı uçak</string>
-    <string name="activity_type_rc_boat">Uzaktan kumandalı tekne</string>
-    <string name="activity_type_rc_helicopter">Uzaktan kumandalı helikopter</string>
+    <string name="activity_type_rc_airplane">RC uçak</string>
+    <string name="activity_type_rc_boat">RC tekne</string>
+    <string name="activity_type_rc_helicopter">RC helikopter</string>
     <string name="activity_type_riding">binicilik</string>
     <string name="activity_type_road_biking">yol bisikleti</string>
     <string name="activity_type_roller_skiing">tekerlekli kayak</string>
@@ -63,199 +131,492 @@ limitations under the License.
     <string name="activity_type_skate_boarding">kaykay</string>
     <string name="activity_type_skating">paten</string>
     <string name="activity_type_skiing">kayak</string>
-    <string name="activity_type_sky_jumping">gökyüzünden atlama</string>
+    <string name="activity_type_sky_jumping">gökyüzü atlayışı</string>
     <string name="activity_type_sled">kızak</string>
-    <string name="activity_type_snow_boarding">snowboarding</string>
-    <string name="activity_type_snow_shoeing">kar yürüyüşü</string>
-    <string name="activity_type_speed_walking">tempolu yürüyüş</string>
-    <string name="activity_type_street_running">serbest koşu</string>
+    <string name="activity_type_snow_boarding">snowboard</string>
+    <string name="activity_type_snow_shoeing">kar ayakkabısıyla yürüme</string>
+    <string name="activity_type_speed_walking">hızlı yürüme</string>
+    <string name="activity_type_street_running">sokak koşusu</string>
     <string name="activity_type_surfing">sörf</string>
-    <string name="activity_type_track_cycling">parkurlu bisiklet</string>
+    <string name="activity_type_track_cycling">pist bisikleti</string>
     <string name="activity_type_track_running">pist koşusu</string>
     <string name="activity_type_trail_hiking">patika yürüyüşü</string>
     <string name="activity_type_trail_running">patika koşusu</string>
     <string name="activity_type_train">tren</string>
-    <string name="activity_type_ultimate_frisbee">frizbi (ultimate)</string>
-    <string name="activity_type_unknown">bilinmiyor</string>
-    <string name="activity_type_wakeboarding">wakeboard ile kayma</string>
-    <string name="activity_type_walking">yürüyüş</string>
+    <string name="activity_type_ultimate_frisbee">ultimate frizbi</string>
+    <string name="activity_type_unknown">bilinmeyen</string>
+    <string name="activity_type_wakeboarding">su kayağı</string>
+    <string name="activity_type_walking">yürüme</string>
     <string name="activity_type_water_skiing">su kayağı</string>
-    <string name="activity_type_wind_surfing">rüzgâr sörfü</string>
+    <string name="activity_type_wind_surfing">rüzgar sörfü</string>
+    <string name="activity_type_swimming">yüzme</string>
+    <string name="activity_type_swimming_open">açık suda yüzme</string>
+    <string name="activity_type_workout">antrenman</string>
     <!-- Description -->
-    <string name="description_activity_type">Etkinlik türü: %1$s</string>
-    <string name="description_average_moving_pace_in_minute">Ortalama tempo (hareket halinde): %1$s dk/km (%2$s dk/mil)</string>
-    <string name="description_average_moving_speed">Ortalama hareket hızı: %1$.2f km/sa (%2$.1f mil/sa)</string>
-    <string name="description_average_pace_in_minute">Ortalama tempo: %1$s dk/km (%2$s dk/mil)</string>
-    <string name="description_average_speed">Ortalama hız: %1$.2f km/sa (%2$.1f mil/sa)</string>
-    <string name="description_altitude_gain">İrtifa kazancı: %1$d m (%2$d fit)</string>
-    <string name="description_altitude_imperial">İrtifa (ft)</string>
-    <string name="description_altitude_metric">İrtifa (m)</string>
-    <string name="description_fastest_pace_in_minute">En yüksek tempo: %1$s dk/km (%2$s dk/mil)</string>
-    <string name="description_max_altitude">En yüksek irtifa: %1$d m (%2$d fit)</string>
-    <string name="description_max_speed">En yüksek hız: %1$.2f km/sa (%2$.1f mil/sa)</string>
-    <string name="description_min_altitude">Min. irtifa: %1$d m (%2$d fit)</string>
+    <string name="description_activity_type">Aktivite türü: %1$s</string>
+    <string name="description_average_moving_pace_in_minute">Ortalama hareket temposu: %1$s dk/km (%2$s dk/mi)</string>
+    <string name="description_average_moving_speed">Ortalama hareket hızı: %1$.2f km/s (%2$.1f mil/s)</string>
+    <string name="description_average_pace_in_minute">Ortalama tempo: %1$s dk/km (%2$s dk/mi)</string>
+    <string name="description_average_speed">Ortalama hız: %1$.2f km/s (%2$.1f mil/s)</string>
+    <string name="description_altitude_gain">Yükseklik kazanımı: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Yükseklik kaybı: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_imperial">Yükseklik (ft)</string>
+    <string name="description_altitude_metric">Yükseklik (m)</string>
+    <string name="description_fastest_pace_in_minute">En hızlı tempo: %1$s dk/km (%2$s dk/mi)</string>
+    <string name="description_max_altitude">Maks. yükseklik: %1$d m (%2$d ft)</string>
+    <string name="description_max_speed">Maks. hız: %1$.2f km/s (%2$.1f mil/s)</string>
+    <string name="description_min_altitude">Min. yükseklik: %1$d m (%2$d ft)</string>
     <string name="description_moving_time">Hareket süresi: %1$s</string>
-    <string name="description_pace_imperial">Tempo (dk/mil)</string>
+    <string name="description_pace_imperial">Tempo (dk/mi)</string>
+    <string name="description_pace_nautical">Tempo (dk/NM)</string>
     <string name="description_pace_metric">Tempo (dk/km)</string>
-    <string name="description_recorded_time">Kayıt zamanı: %1$s</string>
-    <string name="description_speed_ms">Hız (m/sn)</string>
+    <string name="description_recorded_time">Kaydedilme: %1$s</string>
+    <string name="description_speed_ms">Hız (m/s)</string>
     <string name="description_sensor_cadence">Kadans (rpm)</string>
-    <string name="description_sensor_heart_rate">Kalp atış hızı (bmp)</string>
+    <string name="description_sensor_heart_rate">Kalp atış hızı (bpm)</string>
     <string name="description_sensor_power">Güç (W)</string>
-    <string name="description_speed_imperial">Hız (mil/sa.)</string>
-    <string name="description_speed_metric">Hız (km/sa.)</string>
-    <string name="description_time">Zaman</string>
-    <string name="description_total_distance">Toplam mesafe: %1$.2f km (%2$.1f mil)</string>
+    <string name="description_default_speed_or_pace">Aktivite türüne göre</string>
+    <string name="description_speed_imperial">Hız (mil/s)</string>
+    <string name="description_speed_nautical">Hız (knot)</string>
+    <string name="description_speed_metric">Hız (km/s)</string>
+    <string name="description_time">Süre</string>
+    <string name="description_total_distance">Toplam mesafe: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Toplam süre: %1$s</string>
+    <string name="description_speed_source_gps">GPS</string>
     <!-- Export -->
-    <string name="export_progress_message">%1$s dizinine aktarılıyor…</string>
+    <string name="export_with_photos">fotoğraflarla</string>
+    <string name="export_without_photos">fotoğraflar olmadan</string>
+    <string name="export_error_post_workout">Antrenman sonrası dışa aktarma başarısız oldu, lütfen dışa aktarma dizinini kontrol edin.</string>
+    <string name="export_cannot_write_to_dir">Dışa aktarma dizinine yazılamıyor.</string>
+    <string name="export_dir_not_writable">" (yazılabilir değil!)"</string>
+    <string name="export_progress_message">%1$s konumuna dışa aktarılıyor…</string>
+    <string name="export_track_already_exists_msg">%1$s dosyası hedef dizinde zaten mevcut.</string>
+    <string name="export_all_do_it_for_all">tüm çakışmalar için bunu yap</string>
+    <string name="export_track_errors">Dışa aktarılamayan dosyalar</string>
+    <string name="export_progress_summary_new_msg">Yeni dosyalar dışa aktarıldı</string>
+    <string name="export_progress_summary_overwrite_msg">Dosyaların üzerine yazıldı</string>
+    <string name="export_progress_summary_skip_msg">Atlanan dosyalar</string>
+    <string name="export_progress_summary_errors_msg">Hatalar</string>
     <!-- External Storage -->
     <!-- Generic -->
     <string name="generic_add">Ekle</string>
     <string name="generic_delete_selected_confirm_title">Seçilenler silinsin mi?</string>
     <string name="generic_description">Açıklama</string>
     <string name="generic_description_line">Açıklama: %1$s</string>
-    <string name="generic_name">Adı</string>
-    <string name="generic_name_line">Adı: %1$s</string>
+    <string name="generic_name">Ad</string>
+    <string name="generic_name_line">Ad: %1$s</string>
+    <string name="generic_open_track">Parkuru Aç</string>
     <string name="generic_recording">Kaydediliyor…</string>
     <string name="generic_save">Kaydet</string>
     <string name="generic_tracks">Parkurlar</string>
+    <string name="generic_overwrite">Üzerine Yaz</string>
+    <string name="generic_skip">Atla</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_show_errors">Hataları Göster</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Bir hatayla tamamlandı</item>
+        <item quantity="other">%1$d hatayla tamamlandı</item>
+    </plurals>
+    <string name="generic_completed">Tamamlandı</string>
+    <string name="generic_click_twice_cancel">İptal etmek için tekrar geri tuşuna basın</string>
+    <string name="generic_choose_an_option">Bir seçenek belirleyin</string>
+    <string name="generic_undo">Geri Al</string>
+    <string name="generic_filter">Filtrele</string>
+    <string name="generic_from">Başlangıç</string>
+    <string name="generic_to">Bitiş</string>
+    <string name="generic_today">Bugün</string>
+    <string name="generic_yesterday">Dün</string>
+    <string name="generic_dismiss">Kapat</string>
     <!-- Gps -->
     <string name="gps_starting">GPS başlatılıyor</string>
     <string name="gps_wait_for_better_signal">Daha iyi bir GPS sinyali bekleniyor</string>
     <string name="gps_wait_for_signal">GPS sinyali bekleniyor</string>
+    <string name="gps_disabled_msg">GPS devre dışı</string>
+    <string name="gps_fixed_and_ready">GPS sinyali bulundu ve hazır</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="gps_recording_without_signal">OpenTracks, GPS verisi olmadan kayıt yapıyor.</string>
     <!-- Image -->
     <string name="image_arrow">Ok</string>
-    <string name="image_marker_count">İşaretçi sayısı</string>
-    <string name="image_photo_marker">Fotoğraf işaretçisi</string>
+    <string name="image_marker_count">İşaretleyici sayısı</string>
+    <string name="image_photo_marker">Fotoğraf işaretleyici</string>
     <string name="image_record">Kaydet</string>
     <string name="image_stop">Durdur</string>
+    <string name="image_discard">Vazgeç</string>
     <string name="image_track">Parkur</string>
     <!-- Import -->
-    <string name="import_progress_message">%1$s dizininden içe aktarılıyor…</string>
+    <string name="import_thread_interrupted">İşlem kesintiye uğradı</string>
+    <string name="import_unsupported_format">Desteklenmeyen dosya biçimi</string>
+    <string name="import_parser_error">Ayrıştırıcı hatası: %1$s</string>
+    <string name="import_unable_to_import_file">Dosya içe aktarılamıyor: %1$s</string>
+    <string name="import_no_kml_file_found">KMZ içinde kml dosyası bulunamadı</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="import_error_list_dialog_title">İçe aktarılamayan dosyalar</string>
+    <string name="import_file_imported">%1$s dosyası içe aktarıldı</string>
+    <string name="import_prevent_reimport">Parkurun yeniden içe aktarılmasını engelle olarak ayarladınız</string>
+    <string name="import_progress_message">%1$s dosyasından içe aktarılıyor…</string>
+    <string name="import_progress_summary_ok_msg">İçe aktarılan dosyalar</string>
+    <string name="import_progress_summary_exists_msg">Zaten mevcut</string>
+    <string name="import_progress_summary_errors_msg">Hatalar</string>
     <!-- Marker -->
-    <string name="marker_add_error">İşaretçi eklenemiyor. GPS sinyali yok. Tekrar deneyin.</string>
-    <string name="marker_add_success">Bir işaretçi eklendi</string>
-    <string name="marker_add_canceled">İptal edildi, işaretçi eklenmedi</string>
-    <string name="marker_delete_one_confirm_message">İşaretçi cihazdan kalıcı olarak silinecek</string>
-    <string name="marker_delete_one_confirm_title">İşaretçi silinsin mi?</string>
-    <string name="marker_delete_multiple_confirm_message">Seçilen işaretçiler cihazdan kalıcı olarak silinecek</string>
-    <string name="marker_name_format">İşaretçi %1$d</string>
+    <string name="create_marker_error">Bir işaretleyici oluşturulamıyor. Tekrar deneyin.</string>
+    <string name="marker_add_error">Bir işaretleyici eklenemiyor. GPS sinyali yok. Tekrar deneyin.</string>
+    <string name="marker_add_success">Bir işaretleyici eklendi</string>
+    <string name="marker_add_canceled">İptal edildi, işaretleyici eklenmedi</string>
+    <string name="marker_add_photo_canceled">İptal edildi, fotoğraf işaretleyici eklenmedi</string>
+    <string name="marker_delete_one_confirm_message">İşaretleyici cihazdan kalıcı olarak silinecek</string>
+    <string name="marker_delete_one_confirm_title">İşaretleyici silinsin mi?</string>
+    <string name="marker_delete_multiple_confirm_message">Seçilen işaretleyiciler cihazdan kalıcı olarak silinecek</string>
+    <string name="marker_name_format">İşaretleyici %1$d</string>
+    <string name="marker_detail_title">%2$d / %1$d: %3$s</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
-    <string name="marker_edit_marker_type">İşaretçi türü (ör. şelale)</string>
+    <string name="marker_edit_marker_type">İşaretleyici türü (ör. şelale)</string>
     <!-- Marker List -->
-    <string name="marker_list_empty_message">Hiç işaretçiniz yok</string>
+    <string name="marker_list_empty_message">Hiç işaretleyiciniz yok</string>
     <!-- Menu -->
     <string name="menu_aggregated_statistics">Toplu istatistikler</string>
     <string name="menu_delete">Sil</string>
     <string name="menu_edit">Düzenle</string>
-    <string name="menu_export_all">Tümünü dışa aktar (her parça başına bir dosya)</string>
+    <string name="menu_export_all">Tümünü dışa aktar (her parkur için bir dosya)</string>
+    <string name="menu_export_all_one_file">Tümünü dışa aktar (tüm parkurlar için tek dosya)</string>
     <string name="menu_help">Yardım</string>
     <string name="menu_import_all">Tümünü içe aktar</string>
-    <string name="menu_insert_marker">İşaretçi ekle</string>
+    <string name="menu_insert_marker">İşaretleyici ekle</string>
     <string name="menu_insert_photo">Fotoğraf ekle</string>
-    <string name="menu_markers">İşaretçiler</string>
+    <string name="menu_insert_gallery_img">Galeriden resim ekle</string>
+    <string name="menu_markers">İşaretleyiciler</string>
     <string name="menu_search">Ara</string>
     <string name="menu_select_all">Tümünü seç</string>
     <string name="menu_settings">Ayarlar</string>
     <string name="menu_share">Paylaş</string>
+    <string name="menu_select_layout">Düzen Seç</string>
     <string name="menu_show_on_map">Haritada göster</string>
+    <string name="menu_voice_rate">Ses hızı</string>
+    <string name="menu_resume_track">Parkura devam et</string>
+    <string name="menu_add_custom_layout">Yeni Düzen</string>
+    <string name="menu_filter">Filtrele</string>
     <!-- OpenTracks -->
     <string name="recording_service">Kayıt hizmeti</string>
+    <!-- Permission -->
+    <string name="permission_gps_failed">OpenTracks, GPS kullanmak için izin gerektirir.</string>
+    <string name="permission_recording_failed">OpenTracks, konumunuza ve yakındaki cihazlara erişmek için izin gerektirir.</string>
+    <string name="permission_bluetooth_failed">OpenTracks, Bluetooth kullanmak için izin gerektirir.</string>
+    <string name="permission_bluetooth_failed_rejected">Sistem ayarlarından OpenTracks\'e Yakındaki Cihazlar erişim iznini manuel olarak vermeniz gerekir.</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_heart_rate">Kalp hızı</string>
+    <string name="sensor_state_cadence_avg">Ort. Kadans</string>
+    <string name="sensor_state_cadence_max">Maks. Kadans</string>
+    <string name="sensor_state_cadence_unit">rpm</string>
+    <string name="sensor_state_heart_rate">Kalp atış hızı</string>
+    <string name="sensor_state_heart_rate_avg">Ort. Kalp atış hızı</string>
+    <string name="sensor_state_heart_rate_max">Maks. Kalp atış hızı</string>
+    <string name="sensor_state_heart_rate_unit">bpm</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Güç</string>
+    <string name="sensor_state_pressure">Barometre</string>
+    <string name="sensor_state_power_avg">Ort. Güç</string>
+    <string name="sensor_state_power_max">Maks. Güç</string>
+    <string name="sensor_state_power_unit">W</string>
+    <string name="sensor_could_not_scan">Bluetooth cihazları taranamadı (hata %1$i).</string>
+    <string name="bluetooth_disabled">Lütfen Bluetooth\'u etkinleştirin.</string>
+    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
+    <string name="settings_defaults_title">Varsayılan Birimler ve Aktivite</string>
+    <string name="settings_defaults_summary">Tercih Edilen Birimler, Varsayılan Aktivite, Varsayılan Parkur Adı</string>
+    <string name="settings_ui_title">Kullanıcı Arayüzü</string>
+    <string name="settings_ui_summary">Görünüm, Kayıt Düzeni, Tema</string>
+    <string name="settings_gps_sensor">GPS</string>
+    <string name="settings_gps_summary">Zaman aralığı, Mesafe aralığı, Maksimum Mesafe, Doğruluk</string>
+    <string name="settings_sensors_title">Sensörler</string>
+    <string name="settings_sensors_summary">Bisiklet Sensörleri, Tekerlek Çevresi, Koşu Sensörleri</string>
+    <string name="settings_announcements_idle_category_title">Boşta Kalma Anonsları</string>
+    <string name="settings_announcements_idle_title">Boşta kalma</string>
+    <string name="settings_announcements_statistics_title">İstatistik Anonsları</string>
+    <string name="settings_announcements_summary">Süre, Mesafe, Ses Hızı</string>
+    <string name="settings_import_export_title">İçe ve Dışa Aktarma</string>
+    <string name="settings_import_export_summary">İçe Aktar, Dışa Aktar, Otomatik Dışa Aktar</string>
+    <string name="settings_units_category">Birimler</string>
+    <string name="settings_activity_defaults_category">Aktivite Varsayılanları</string>
+    <string name="settings_reset_summary">Ayarları Varsayılan Değerlere Sıfırla</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Gelişmiş</string>
+    <string name="settings_default_trackfileformat">Dışa aktarma/paylaşma dosya biçimi</string>
+    <string name="settings_export_filename_title">Dosya adı biçimi</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Mesafeye göre</string>
     <string name="settings_chart_by_time">Zamana göre</string>
-    <string name="settings_recording_default_activity_title">Varsayılan etkinlik türü</string>
-    <string name="settings_recording_location_frequency_summary">Kaydedilen konumlar arası %1$s</string>
-    <string name="settings_recording_max_recording_distance_summary">İki konum arasındaki mesafe şundan fazlaysa yeni segment oluşturulur: %1$s</string>
-    <string name="settings_recording_max_recording_distance_title">En fazla mesafe</string>
+    <string name="settings_charts_title">Grafikler</string>
+    <string name="settings_chart_display_elevation_title">Yüksekliği göster</string>
+    <string name="settings_chart_display_pace_or_speed_title">Tempoyu veya hızı göster</string>
+    <string name="settings_chart_display_heart_rate_title">Kalp atış hızını göster</string>
+    <!-- Settings Recording -->
+    <string name="settings_recording_title">Kayıt</string>
+    <string name="settings_theme_switch_restart">Tema değişiklikleri manuel bir yeniden başlatma gerektirebilir.</string>
+    <string name="settings_ui_dynamic_colors_title">Dinamik Renkler</string>
+    <string name="settings_ui_dynamic_colors_summary">Kullanıcı tanımlı Dinamik Renkleri kullan (sadece Android 12+; manuel yeniden başlatma gerektirir)</string>
+    <string name="settings_recording_customize_layout_title">Kayıt düzeninizi özelleştirin</string>
+    <string name="settings_recording_customize_layout_select_columns">Satır başına veri alanı</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Kilit ekranında istatistikleri göster</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Kayıt sırasında, cihazın kilidini açmadan istatistikleri göster.</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Ekranı açık tut</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Kayıt sırasında ekranı açık tut.</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Tam ekran</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Kayıt sırasında tam ekranda göster.</string>
+    <string name="settings_recording_show_gps_disabled_warning_title">GPS devre dışı uyarısı</string>
+    <string name="settings_recording_show_gps_disabled_warning_summary">Kayıt sırasında, GPS devre dışıysa bir uyarı göster.</string>
+    <string name="settings_recording_default_activity_title">Varsayılan aktivite türü</string>
+    <string name="settings_recording_location_frequency_summary">Konum kontrolleri arasında %1$s</string>
+    <string name="settings_recording_max_recording_distance_summary">İki konum arasındaki mesafe %1$s\'den büyükse yeni bir segment oluşturulur</string>
+    <string name="settings_recording_max_recording_distance_title">Maks. mesafe</string>
     <string name="settings_recording_min_recording_distance_title">Kayıt mesafe aralığı</string>
     <string name="settings_recording_min_recording_interval_title">Kayıt zaman aralığı</string>
+    <string name="settings_recording_min_required_accuracy_summary">Doğruluğu %1$s\'den büyükse konum yok sayılır</string>
     <string name="settings_recording_min_required_accuracy_title">GPS doğruluğu</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Tarih (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Tarih (yerel)</string>
-    <string name="settings_recording_track_name_number_option">Sayı</string>
+    <string name="settings_recording_track_name_number_option">Numara</string>
     <string name="settings_recording_track_name_title">Varsayılan parkur adı</string>
+    <string name="settings_recording_idle_timeout_title">Boşta kalma eşiği</string>
+    <string name="settings_locale_title">Dil</string>
+    <string name="settings_locale_system_default">Sistem varsayılanı</string>
+    <string name="settings_night_mode_title">Arayüz Teması</string>
+    <string name="settings_night_mode_option_system">Sistem</string>
+    <string name="settings_night_mode_option_day">Gündüz</string>
+    <string name="settings_night_mode_option_night">Gece</string>
+    <string name="settings_night_mode_option_night_oled">Gece (OLED dostu)</string>
+    <string name="settings_announcements_totaltime_frequency">Zaman aralığı</string>
+    <string name="settings_announcements_distance_frequency">Tur uzunluğu</string>
+    <string name="settings_announcements_average_heart_rate">Ortalama kalp atış hızı</string>
+    <string name="settings_announcements_lap_heart_rate">Tur kalp atış hızı</string>
+    <string name="settings_announcements_average_speed_pace">Ortalama hız/tempo</string>
+    <string name="settings_announcements_lap_speed_pace">Tur hızı/temposu</string>
+    <string name="settings_announcements_unit">Mesafe/hız birimi</string>
+    <!-- Custom Layout -->
+    <string name="custom_layout_list_title">Düzenler</string>
+    <string name="custom_layout_list_edit_name">Eklemek için düzenin adını yazın</string>
+    <string name="custom_layout_list_edit_already_exists">Düzenin adı zaten var</string>
+    <string name="custom_layout_list_layout_removed">Düzen kaldırıldı</string>
+    <string name="custom_layout_select_layout">Düzen Seç</string>
+    <string name="stats_custom_layout_default_layout">Varsayılan Düzen</string>
+    <!-- Custom Layout Reset -->
+    <string name="settings_layout_reset">Özel Düzeni Sıfırla</string>
+    <string name="settings_layout_reset_confirm_message">Tüm düzen ayarları varsayılan değerlere döndürülecektir. Bu, cihazdaki parkurları silmez.</string>
+    <string name="settings_layout_reset_confirm_title">Düzenleriniz sıfırlansın mı?</string>
+    <string name="settings_layout_reset_done">Tüm düzen ayarları varsayılan değerlere döndürüldü</string>
     <!-- Settings Reset -->
-    <string name="settings_reset_confirm_message">Tüm ayarlar varsayılan değerlerine geri alınacak.</string>
+    <string name="settings_all_reset">Sıfırla</string>
+    <string name="settings_reset_confirm_message">Tüm ayarlar varsayılan değerlere döndürülecektir. Bu, cihazdaki parkurları silmez.</string>
     <string name="settings_reset_confirm_title">Şimdi sıfırlansın mı?</string>
     <string name="settings_reset_done">Tüm ayarlar varsayılan değerlere döndürüldü</string>
     <!-- Settings Sensor -->
+    <string name="settings_generic_sensor">Genel</string>
+    <string name="settings_cycling_sensor">Bisiklet</string>
+    <string name="settings_running_sensor">Koşu</string>
+    <string name="settings_sensor_cycling_distance_speed">Mesafe ve Hız</string>
+    <string name="settings_sensor_cycling_cadence">Kadans</string>
+    <string name="settings_sensor_running_speed_and_cadence">Mesafe, Hız ve Kadans</string>
+    <string name="settings_sensor_wheel_circumference">Tekerlek Çevresi (mm)</string>
+    <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth Cihazlarını Filtrele</string>
+    <string name="settings_sensor_bluetooth_service_filter_on">Sadece gerekli servisleri duyuran Bluetooth cihazlarını göster</string>
+    <string name="settings_sensor_bluetooth_service_filter_off">Tüm bulunabilir Bluetooth cihazlarını göster</string>
+    <string name="settings_sensor_heart_rate_max">Bölgeler: maksimum Kalp atış hızı (bpm)</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Tercih edilen oran</string>
-    <string name="settings_stats_units_imperial">İngiliz (mil, fit)</string>
+    <string name="settings_stats_units_imperial">İmperyal (mi, ft)</string>
+    <string name="settings_stats_units_imperial_meter">İmperyal (mi, m)</string>
     <string name="settings_stats_units_metric">Metrik (km, m)</string>
+    <string name="settings_stats_units_nautical">Deniz (NM, ft)</string>
     <string name="settings_stats_units_title">Tercih edilen birimler</string>
+    <!-- Settings public api -->
+    <string name="settings_api_title">Herkese Açık API</string>
+    <string name="settings_api_summary">Diğer uygulamalar için uzaktan kumanda ve istatistik API\'si</string>
+    <string name="settings_public_api_package_title">Herkese Açık API için paket adı</string>
+    <string name="settings_public_api_enabled_title">Herkese Açık API</string>
+    <string name="settings_public_api_enabled_summary_on">Diğer yüklü uygulamalar kayıtları başlatabilir veya durdurabilir.</string>
+    <string name="settings_public_api_enabled_summary_off">Kayıtları sadece OpenTracks başlatabilir ve durdurabilir.</string>
+    <string name="settings_public_api_disabled_toast">OpenTracks Herkese Açık API devre dışı: ayarlardan etkinleştirilebilir.</string>
+    <string name="settings_public_api_dashboard_enabled_title">Otomatik veri aktarımı</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Bir kaydı başlatan uygulama, kaydedilen verilere de erişebilir.</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Kaydedilen veriler diğer uygulamalarla otomatik olarak paylaşılmayacaktır.</string>
+    <!-- Settings import/export -->
+    <string name="settings_import_section">İçe Aktar</string>
+    <string name="settings_export_section">Dışa Aktar</string>
+    <string name="settings_prevent_reimport_tracks_title">Parkurların yeniden içe aktarılmasını engelle</string>
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Bu parkurun ilgini çekebileceğini düşünüyorum.\n\n%1$s</string>
-    <string name="share_track_subject">Seninle bir parkur paylaşmak istiyorum</string>
+    <string name="share_track_share_file_body">Bu parkurun ilginizi çekebileceğini düşündüm.\n\n%1$s</string>
+    <string name="share_track_subject">Sizinle bir parkur paylaşmak istiyorum</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Ort. hareket temposu</string>
     <string name="stats_average_moving_speed">Ort. hareket hızı</string>
     <string name="stats_average_pace">Ort. tempo</string>
     <string name="stats_average_speed">Ort. hız</string>
-    <string name="stats_altitude">İrtifa</string>
+    <string name="stats_altitude">Yükseklik</string>
     <string name="stats_fastest_pace">En hızlı tempo</string>
-    <string name="stats_gain">Artış</string>
-    <string name="stats_max_speed">En yüksek hız</string>
-    <string name="stats_moving_time">Hareketli zaman</string>
+    <string name="stats_gain">Kazanım</string>
+    <string name="stats_loss">Kayıp</string>
+    <string name="stats_gain_loss">Kazanım ve Kayıp</string>
+    <string name="stats_coordinates">Enlem/Boylam</string>
+    <string name="stats_max_speed">Maks. hız</string>
+    <string name="stats_moving_time">Hareket süresi</string>
     <string name="stats_pace">Tempo</string>
     <string name="stats_speed">Hız</string>
     <string name="stats_distance">Mesafe</string>
     <string name="stats_total_time">Toplam süre</string>
+    <string name="stats_split_interval">Tur aralığı</string>
+    <string name="stats_sensors_heart_rate">Kalp atış hızı</string>
+    <string name="stats_sensors_cadence">Kadans</string>
+    <string name="stats_sensors_power">Güç</string>
+    <string name="stats_clock">Saat</string>
     <!-- Track -->
     <string name="track_name_format">Parkur %1$d</string>
-    <string name="track_markers">%1$s İşaretçileri</string>
+    <string name="track_recording_notification_accuracy">Konum doğruluğu: %1$s</string>
+    <string name="track_distance_notification">Mesafe: %1$s</string>
+    <string name="track_speed_notification">Hız: %1$s</string>
+    <string name="track_pace_notification">Tempo: %1$s</string>
+    <string name="track_markers">%1$s İşaretleyici</string>
     <!-- Track Delete -->
-    <string name="track_delete_one_confirm_message">Parkur ve işaretçileri cihazdan kalıcı olarak silinecek.</string>
+    <string name="track_delete_one_confirm_message">Parkur ve işaretleyicileri cihazdan kalıcı olarak silinecektir.</string>
     <string name="track_delete_one_confirm_title">Parkur silinsin mi?</string>
-    <string name="track_delete_multiple_confirm_message">Seçilen parkurlar ve işaretçileri cihazdan kalıcı olarak silinecek.</string>
+    <string name="track_delete_multiple_confirm_message">Seçilen parkurlar ve işaretleyicileri cihazdan kalıcı olarak silinecektir.</string>
     <string name="track_delete_progress_message">Siliniyor…</string>
+    <string name="track_delete_number_of_tracks">%1$d parkur</string>
+    <string name="track_delete_not_recording">Bu parkur şu anda kaydedildiği için silinemez.</string>
+    <string name="track_discarding">Parkurdan Vazgeçiliyor</string>
     <!-- Track Detail -->
     <string name="track_detail_stats_tab">İstatistikler</string>
+    <string name="track_detail_intervals_tab">Aralıklar</string>
     <!-- Track Edit -->
-    <string name="track_edit_activity_type">Etkinlik türü (örn. yürüyüş)</string>
-    <string name="track_edit_activity_type_hint">Etkinlik türü</string>
+    <string name="track_edit_activity_type">Aktivite türü (ör. doğa yürüyüşü)</string>
+    <string name="track_edit_activity_type_hint">Aktivite türü</string>
+    <string name="track_edit_time_offset">Saat Dilimi Farkı</string>
     <!-- Track List -->
-    <string name="track_list_empty_message">Bir sonraki maceranızı kaydetmeye buradan başlayın</string>
-    <!-- Track Widget -->
-    <!-- Tracks -->
+    <string name="track_list_empty_message">Bir sonraki maceranızı burada kaydetmeye başlayın</string>
+    <!-- Aggregated Statistics -->
+    <string name="aggregated_stats_empty_message">Toplu istatistikleri görmek için ilk parkurunuzu kaydedin</string>
+    <string name="aggregated_stats_filter_no_results">Belirtilen filtre için aktivite bulunamadı</string>
+    <!-- Interval List -->
+    <string name="interval_list_empty_message">Henüz bir aralık yok</string>
     <!-- Unit -->
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>
-    <string name="unit_kilometer_per_hour">km/sa.</string>
+    <string name="unit_kilometer_per_hour">km/s</string>
     <string name="unit_meter">m</string>
-    <string name="unit_mile">mil</string>
-    <string name="unit_mile_per_hour">mil/saat</string>
-    <string name="unit_minute_per_kilometer">dk./km</string>
-    <string name="unit_minute_per_mile">dk./mil</string>
+    <string name="unit_mile">mi</string>
+    <string name="unit_mile_per_hour">mil/s</string>
+    <string name="unit_nautical_mile">NM</string>
+    <string name="unit_knots">kn</string>
+    <string name="unit_minute_per_kilometer">dk/km</string>
+    <string name="unit_minute_per_mile">dk/mi</string>
+    <string name="unit_minute_per_nautical_mile">dk/NM</string>
+    <!-- Location Coordinates -->
+    <string name="location_coordinate">%1$s°</string>
+    <string name="location_latitude_longitude">%1$s, %2$s</string>
     <!-- Value -->
     <string name="value_integer_feet_excellent_gps">%1$d ft (mükemmel GPS)</string>
-    <string name="value_integer_feet_recommended">%1$d ft (önerilir)</string>
-    <string name="value_integer_kilometer_hour">%1$d km/sa</string>
+    <string name="value_integer_feet_recommended">%1$d ft (önerilen)</string>
+    <string name="value_integer_kilometer_hour">%1$d km/s</string>
+    <string name="value_float_kilometer_hour">%1$.1f km/s</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f km/s (önerilen)</string>
     <string name="value_integer_meter_excellent_gps">%1$d m (mükemmel GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (zayıf GPS)</string>
     <string name="value_integer_meter_recommended">%1$d m (önerilen)</string>
-    <string name="value_integer_mile_hour">%1$d mil/sa</string>
+    <string name="value_integer_mile_hour">%1$d mil/s</string>
+    <string name="value_integer_knots">%1$d knot</string>
+    <string name="value_float_mile_hour">%1$.1f mil/s</string>
+    <string name="value_float_knots">%1$.1f knot</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f mil/s (önerilen)</string>
+    <string name="value_float_knots_recommended">%1$.1f knot (önerilen)</string>
     <string name="value_integer_minute">%1$d dk</string>
     <string name="value_integer_second">%1$d sn</string>
-    <string name="value_none">Hiç</string>
+    <string name="value_none">Hiçbiri</string>
     <string name="value_off">Kapalı</string>
-    <string name="value_smallest_recommended">En küçük (önerilir)</string>
+    <string name="value_internal_sensor">Dahili sensör</string>
+    <string name="value_smallest_recommended">En küçük (önerilen)</string>
+    <string name="value_int_seconds">%1$d sn (önerilen)</string>
+    <string name="voiceIdle">Boşta kalınıyor.</string>
+    <string name="voiceHoursPlural">
+        {n, plural,
+        =1 {1 saat}
+        other {{n,number} saat}
+        }
+    </string>
+    <string name="voiceMinutesPlural">
+        {n, plural,
+        =1 {1 dakika}
+        other {{n,number} dakika}
+        }
+    </string>
+    <string name="voiceSecondsPlural">
+        {n, plural,
+        =1 {1 saniye}
+        other {{n,number} saniye}
+        }
+    </string>
+    <string name="voiceSpeedKilometersPerHourPlural">
+        {n, plural,
+        =1 {saatte 1 kilometre}
+        other {saatte {n,number,#.0} kilometre}
+        }
+    </string>
+    <string name="voiceSpeedMilesPerHourPlural">
+        {n, plural,
+        =1 {saatte 1 mil}
+        other {saatte {n,number,#.0} mil}
+        }
+    </string>
+    <string name="voiceSpeedMKnotsPlural">
+        {n, plural,
+        =1 {1 knot}
+        other {{n,number,#.0} knot}
+        }
+    </string>
+    <string name="voiceSpeed">
+        {n, plural,
+        =1 {1}
+        other {{n,number,#.0}}
+        }
+    </string>
+    <string name="voice_on_device_speaker_title">Cihazın hoparlörünü kullan</string>
+    <string name="voice_per_kilometer">kilometre başına</string>
+    <string name="voice_per_mile">mil başına</string>
+    <string name="voice_per_nautical_mile">deniz mili başına</string>
+    <string name="lap_time">Tur süresi</string>
+    <string name="pace">Tempo</string>
+    <string name="lap_speed">Tur hızı</string>
+    <string name="speed">Ortalama hareket hızı</string>
+    <string name="total_distance">Toplam mesafe</string>
+    <string name="voiceDistanceKilometersPlural">
+        {n, plural,
+        =1 {1 kilometre}
+        other {{n,number,#.0} kilometre}
+        }
+    </string>
+    <string name="voiceDistanceMilesPlural">
+        {n, plural,
+        =1 {1 mil}
+        other {{n,number,#.0} mil}
+        }
+    </string>
+    <string name="voiceDistanceNauticalMilesPlural">
+        {n, plural,
+        =1 {1 deniz mili}
+        other {{n,number,#.0} deniz mili}
+        }
+    </string>
+    <string name="voiceDistance">
+        {n, plural,
+        =1 {1}
+        other {{n,number,#.0}}
+        }
+    </string>
+    <string name="average_heart_rate">Ortalama kalp atış hızı</string>
+    <string name="current_heart_rate">Anlık kalp atış hızı</string>
+    <string name="lap_heart_rate">Tur kalp atış hızı</string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">banka</string>
     <string name="waypoint_type_bar">bar</string>
     <string name="waypoint_type_barbecue">mangal</string>
-    <string name="waypoint_type_building">yapı</string>
+    <string name="waypoint_type_building">bina</string>
     <string name="waypoint_type_bus_stop">otobüs durağı</string>
     <string name="waypoint_type_cafe">kafe</string>
     <string name="waypoint_type_campfire">kamp ateşi</string>
@@ -264,11 +625,11 @@ limitations under the License.
     <string name="waypoint_type_coffee_house">kahvehane</string>
     <string name="waypoint_type_convenience_store">market</string>
     <string name="waypoint_type_drinking_water">içme suyu</string>
-    <string name="waypoint_type_falling_rocks">heyelan bölgesi</string>
+    <string name="waypoint_type_falling_rocks">kaya düşmesi</string>
     <string name="waypoint_type_ferry">feribot</string>
     <string name="waypoint_type_fire_place">şömine</string>
-    <string name="waypoint_type_fire_station">itfaiye binası</string>
-    <string name="waypoint_type_fishing">balıkçılık</string>
+    <string name="waypoint_type_fire_station">itfaiye</string>
+    <string name="waypoint_type_fishing">balık tutma</string>
     <string name="waypoint_type_gas_station">benzin istasyonu</string>
     <string name="waypoint_type_golf_course">golf sahası</string>
     <string name="waypoint_type_grocery_store">bakkal</string>
@@ -277,330 +638,56 @@ limitations under the License.
     <string name="waypoint_type_hiking_path">yürüyüş yolu</string>
     <string name="waypoint_type_hotel">otel</string>
     <string name="waypoint_type_house">ev</string>
-    <string name="waypoint_type_information">danışma bürosu</string>
-    <string name="waypoint_type_intersection">Kavşak</string>
+    <string name="waypoint_type_information">bilgi</string>
+    <string name="waypoint_type_intersection">kavşak</string>
     <string name="waypoint_type_mail_box">posta kutusu</string>
-    <string name="waypoint_type_market">pazar yeri</string>
+    <string name="waypoint_type_market">pazar</string>
     <string name="waypoint_type_meeting_point">buluşma noktası</string>
     <string name="waypoint_type_opera">opera</string>
-    <string name="waypoint_type_parking">park yeri</string>
-    <string name="waypoint_type_police_station">emniyet müdürlüğü</string>
+    <string name="waypoint_type_parking">otopark</string>
+    <string name="waypoint_type_police_station">polis karakolu</string>
     <string name="waypoint_type_post_office">postane</string>
     <string name="waypoint_type_pothole">çukur</string>
-    <string name="waypoint_type_railway_crossing">demiryolu geçidi</string>
+    <string name="waypoint_type_railway_crossing">hemzemin geçit</string>
     <string name="waypoint_type_restaurant">restoran</string>
     <string name="waypoint_type_shopping">alışveriş</string>
-    <string name="waypoint_type_sight">görülmeye değer yer</string>
+    <string name="waypoint_type_sight">görülecek yer</string>
     <string name="waypoint_type_store">mağaza</string>
     <string name="waypoint_type_swimming_pool">yüzme havuzu</string>
     <string name="waypoint_type_telephone">telefon</string>
-    <string name="waypoint_type_theater">sinema</string>
+    <string name="waypoint_type_theater">tiyatro</string>
     <string name="waypoint_type_toilet">tuvalet</string>
-    <string name="waypoint_type_tourist_information">turist danışma bürosu</string>
+    <string name="waypoint_type_tourist_information">turist danışma</string>
     <string name="waypoint_type_tree">ağaç</string>
     <string name="waypoint_type_tunnel">tünel</string>
     <string name="waypoint_type_waterfall">şelale</string>
-    <string name="waypoint_type_water_fountain">içme suyu çeşmesi</string>
-    <string name="waypoint_type_waypoint">referans noktası</string>
-    <string name="about_preference_title">Hakkında</string>
-    <string name="help_track_export_content"> Parkurlar ayarlar\'dan KMZ, KML veya GPX olarak dışa aktarılabilir. KMZ/KML tüm veriler; Sadece GPX konumları. <i>Paylaş simgesi</i> aracılığıyla paylaşılan parkurlar KMZ olarak paylaşılır. </string>
-    <string name="about_third_party_data">Üçüncü taraf verileri</string>
-    <string name="help_recording_title">OpenTracks verileri nasıl kaydeder\?</string>
-    <string name="about_libraries">Kütüphaneler</string>
-    <string name="about_version_name">Sürüm adı: %1$s</string>
-    <string name="help_track_map_title">Harita üzerinde bir parça nasıl gösterilir\?</string>
-    <string name="about_description"><i>OpenTracks</i> gizliliğinize tamamen saygı duyan bir spor takip etme uygulamasıdır.</string>
-    <string name="help_data_google_play_services_title">OpenTracks, Google Play Hizmetini gerektirir/kullanır mı\?</string>
-    <string name="help_storage_pictures_content">Bunlar uygulamanın dahili deposunda saklanır (Sadece OpenTracks içinde erişilebilir).</string>
-    <string name="about_history">OpenTracks <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'ın MyTracks</i></a>\'ının bir çatalıdır (2016\'da son verilmiştir).</string>
-    <string name="help_feature_title">OpenTracks\'in sahip olduğu özellikler:</string>
-    <string name="help_feature_content">* GPS parçaları oluşturun
-\n * kalp atış hızı sensörü kullanın (yalnızca Bluetooth LE)
-\n* sesli duyurular (zamana veya mesafeye göre)
-\n * işaretleyiciler oluşturun (resimler dahil)
-\n * tamamen çevrimdışı çalışır
-\n * harita üzerinde parkurları gösterir (aşağıya bakın)</string>
-    <string name="help_track_map_content">Küçük harita simgesini kullanın.\n a) (canlı güncellemeler) <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>\'u yükleyin. <a href="https://www.openstreetmap.org">OpenStreetMap</a> aracılığıyla çevrimiçi veya çevrimdışı haritalar sağlar.\n Aslında, OSMDashboard yalnızca gösterilecek olan parçaların verilerine (geçici olarak) erişebilen ayrı bir uygulamadır.\n b) Normal bir harita uygulaması aracılığıyla (örn.,<a href="http://osmand.net/">OsmAnd</a> ve <a href="https://maps.me/">MAPS.ME</a>). Bu uygulamaların KMZ dosya biçimini (yalnızca konumlar ve zaman damgaları) desteklemesi gerekir. Aslında, bir uygulamanın MIME <i> uygulama/vnd.google-arearth.kmz </i> ile <i>ACTION_VIEW</i> desteklemesi gerekir.</string>
-    <string name="help_storage_pictures_title">OpenTracks, işaretçi olarak çekilmiş resimleri nasıl saklar\?</string>
-    <string name="about_url">Proje ağ sayfası: <a href="%1$s">%1$s</a></string>
-    <string name="help_track_export_title">Kayıtlı parkurları nasıl dışa aktarabilirim/paylaşabilirim\?</string>
-    <string name="about_version_code">Sürüm kodu: %1$d</string>
-    <string name="generic_choose_an_option">Bir seçenek belirleyin</string>
-    <string name="gps_disabled_msg">GPS devre dışı</string>
-    <string name="gps_fixed_and_ready">GPS belirlendi ve hazır</string>
-    <string name="activity_type_swimming">yüzme</string>
-    <string name="activity_type_swimming_open">açık suda yüzmek</string>
-    <string name="activity_type_workout">antrenman</string>
-    <string name="description_default_speed_or_pace">Etkinlik türüne göre</string>
-    <string name="export_without_photos">fotoğrafsız</string>
-    <string name="description_speed_source_gps">GPS</string>
-    <string name="export_error_post_workout">Antrenman sonrası dışa aktarma başarısız oldu, lütfen dışa aktarma dizinini kontrol edin.</string>
-    <string name="export_progress_summary_new_msg">Yeni dosyalar dışa aktarıldı</string>
-    <string name="generic_today">Bugün</string>
-    <string name="generic_click_twice_cancel">İptal etmek için tekrar geri düğmesine tıklayın</string>
-    <string name="generic_yesterday">Dün</string>
-    <string name="generic_filter">Süzgeç</string>
-    <string name="import_parser_error">Ayrıştırıcı hatası: %1$s</string>
-    <string name="import_unable_to_import_file">Dosya içe aktarılamıyor: %1$s</string>
-    <string name="import_unsupported_format">Desteklenmeyen dosya formatı</string>
-    <string name="import_no_kml_file_found">KMZ\'de kml dosyası bulunamadı</string>
-    <string name="import_error_info">%1$s: %2$s</string>
-    <string name="import_error_list_dialog_title">Dosyalar içe aktarılmadı</string>
-    <string name="menu_filter">Süz</string>
-    <string name="sensor_state_cadence_avg">Ort. Kadans</string>
-    <string name="sensor_state_cadence_max">En yüksek Kadans</string>
-    <string name="settings_ui_summary">Görünüm, Kayıt Düzeni, Tema</string>
-    <string name="settings_gps_sensor">GPS</string>
-    <string name="settings_defaults_summary">Tercih Edilen Birimler, Varsayılan Etkinlik, Varsayılan Parça Adı</string>
-    <string name="settings_gps_summary">Zaman aralığı, Mesafe aralığı, En fazla mesafe, Hassasiyet</string>
-    <string name="settings_announcements_statistics_title">İstatistik Duyuruları</string>
-    <string name="settings_announcements_summary">Zaman, Mesafe, Ses Hızı</string>
-    <string name="help_data_storage_content"> Sensör verileri, kaydedilen konum başına saklanır. Kalp atış hızı sensörü açısından bu, konum başına yalnızca <i>bir</i> kalp atış hızı ölçümünün depolandığı anlamına gelir. Hareketsiz duruyorsanız veya içerideyseniz, hiçbir sensör verisi kaydedilmeyecektir (ancak gösterilecektir). </string>
-    <string name="help_support_content"> Yapabileceklerin:
-\n a) OpenTracks hakkında bahsetmek,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">özellikler önermek</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">hataları bildirmek</a>,
-\n d) yazılım geliştirmede yardımcı olmak,
-\n e) <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>\'dan satın alın,
-\n f) bağış yapmak ve
-\n g) OpenTracks\'e yardımcı olduğunu düşündüğünüz her şeyi yapın. </string>
-    <string name="open_track_as_trackfileformat">%1$s olarak aç</string>
-    <string name="export_cannot_write_to_dir">Dışa aktarma dizinine yazılamıyor.</string>
-    <string name="generic_dismiss">Reddet</string>
-    <string name="gps_recording_without_signal">OpenTracks GPS verileri olmadan kayıt yapıyor.</string>
-    <string name="export_all_do_it_for_all">bütün çatışmalar için bunu uygula</string>
-    <string name="generic_undo">Geri al</string>
-    <string name="menu_insert_gallery_img">Galeri resmi ekle</string>
-    <string name="settings_sensors_title">Sensörleri</string>
-    <string name="settings_sensors_summary">Bisiklet Sensörleri, Tekerlek Çevresi, Koşu Sensörleri</string>
-    <plurals name="generic_completed_with_errors">
-        <item quantity="one">Bir hatayla tamamlandı</item>
-        <item quantity="other">%1$d hatayla tamamlandı</item>
-    </plurals>
-    <string name="marker_add_photo_canceled">İptal edildi, fotoğraf işaretçisi eklenmedi</string>
-    <string name="menu_voice_rate">Ses hızı</string>
-    <string name="menu_add_custom_layout">Yeni düzen</string>
-    <string name="menu_select_layout">Dizilim Seç</string>
-    <string name="permission_bluetooth_failed_rejected">Sistem ayarlarında Yakındaki Cihazlara OpenTracks erişimini manuel olarak vermeniz gerekir.</string>
-    <string name="permission_bluetooth_failed">OpenTracks Bluetooth\'u kullanmak için izin gerektirir.</string>
-    <string name="field_remove_from_layout">Kaldır</string>
-    <string name="no_compatible_file_manager_installed">Uyumlu dosya yöneticisi yüklü değil</string>
-    <string name="export_with_photos">fotoğraflarla</string>
-    <string name="menu_resume_track">Parçayı devam ettir</string>
-    <string name="sensor_state_heart_rate_avg">Ort. Kalp atış hızı</string>
-    <string name="sensor_state_power_avg">Ort. Güç</string>
-    <string name="sensor_state_heart_rate_max">En yüksek Kalp atış hızı</string>
-    <string name="sensor_could_not_scan">Bluetooth cihazları taranamadı (%1$i hatası).</string>
-    <string name="bluetooth_disabled">Lütfen Bluetooth\'u etkinleştirin.</string>
-    <string name="help_support_title">OpenTracks\'i nasıl destekleyebilirim\?</string>
-    <string name="export_track_already_exists_msg">%1$s parçası hedef dizinde zaten var.</string>
-    <string name="description_altitude_loss">Yükseklik kaybı: %1$d m (%2$d ft)</string>
-    <string name="help_gps_troubleshooting_title">OpenTracks konumları kaydetmiyor mu\?</string>
-    <string name="help_gps_troubleshooting_content"> Ne yapabilirsin:
-\n a) GPS\'in etkin olup olmadığını kontrol edin,
-\n b) GPS alımını iyileştirmek (örneğin, dışarı çıkmak),
-\n c) <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/"> GPSTest</a> uygulamasıyla kontrol edin ve
-\n d) pil tasarrufunu devre dışı bırakın.
-\n
-\n Her şey yardımcı olmazsa, lütfen bir hata bildirin. </string>
-    <string name="help_recording_content">OpenTracks, konumu devamlı olarak kaydetmek için cihazın GPS sensörünü kullanır. GPS cihazı yanlış veriler bildirirse (ör. konum, hız, yükseklik) OpenTracks bu konuda bir şey yapamaz.</string>
-    <string name="help_data_storage_title">OpenTracks sensör verilerini nasıl depolar\?</string>
-    <string name="export_dir_not_writable">" (yazılabilir değil!)"</string>
-    <string name="export_track_errors">Dosyalar dışa aktarılmadı</string>
-    <string name="export_progress_summary_overwrite_msg">Dosyaların üzerine yazıldı</string>
-    <string name="export_progress_summary_skip_msg">Dosyalar atlandı</string>
-    <string name="export_progress_summary_errors_msg">Hatalar</string>
-    <string name="generic_open_track">Parçayı Aç</string>
-    <string name="generic_overwrite">Üzerine yaz</string>
-    <string name="generic_skip">Atla</string>
-    <string name="generic_separator_done_total">/</string>
-    <string name="generic_show_errors">Hataları Göster</string>
-    <string name="generic_completed">Tamamlandı</string>
-    <string name="gps_recording_status">%1$s: %2$s</string>
-    <string name="import_file_imported">%1$s dosyası içe aktarıldı</string>
-    <string name="import_progress_summary_exists_msg">Zaten var</string>
-    <string name="import_progress_summary_errors_msg">Hatalar</string>
-    <string name="permission_gps_failed">OpenTracks GPS kullanmak için izin gerektirir.</string>
-    <string name="import_progress_summary_ok_msg">Dosyalar içe aktarıldı</string>
-    <string name="settings_defaults_title">Varsayılan Birimler ve Etkinlik</string>
-    <string name="settings_ui_title">Kullanıcı Arayüzü</string>
-    <string name="settings_default_trackfileformat">Dosya biçimini dışa aktarma/paylaşma</string>
-    <string name="settings_export_filename_title">Dosya adının biçimi</string>
-    <string name="settings_import_export_title">İçe ve Dışa Aktar</string>
-    <string name="settings_import_export_summary">İçe, Dışa, Otomatik Dışa Aktar</string>
-    <string name="settings_units_category">Birimler</string>
-    <string name="settings_activity_defaults_category">Etkinlik Varsayılanları</string>
-    <string name="settings_reset_summary">Ayarları varsayılan değerlere sıfırla</string>
-    <string name="settings_recording_customize_layout_title">Kayıt düzeninizi özelleştirin</string>
-    <string name="custom_layout_list_edit_already_exists">Dizilimin adı zaten var</string>
-    <string name="settings_public_api_disabled_toast">OpenTracks Genel API devre dışı: ayarlardan etkinleştirilebilir.</string>
-    <string name="settings_recording_show_on_lockscreen_while_recording_title">Kilit ekranında istatistikleri göster</string>
-    <string name="settings_recording_keep_screen_on_while_recording_summary">Kayıt esnasında ekranı açık tutar.</string>
-    <string name="settings_recording_fullscreen_on_while_recording_summary">Kayıt esnasında tam ekranda sunar.</string>
-    <string name="settings_night_mode_title">Kullanıcı arayüzü teması</string>
-    <string name="settings_night_mode_option_system">Sistem</string>
-    <string name="settings_night_mode_option_night">Gece</string>
-    <string name="custom_layout_select_layout">Dizilim seçin</string>
-    <string name="stats_custom_layout_default_layout">Varsayılan dizilim</string>
-    <string name="settings_layout_reset">Özel dizilimi sıfırla</string>
-    <string name="settings_layout_reset_confirm_title">Dizilimleriniz sıfırlansın mı\?</string>
-    <string name="settings_layout_reset_done">Tüm dizilim ayarları varsayılan değerlere döndürüldü</string>
-    <string name="settings_public_api_enabled_title">Genel API</string>
-    <string name="settings_public_api_enabled_summary_on">Diğer yüklü uygulamalar kayıtları başlatabilir veya durdurabilir.</string>
-    <string name="settings_import_section">İçe Aktarma</string>
-    <string name="settings_export_section">Dışa Aktarma</string>
-    <string name="settings_prevent_reimport_tracks_title">Parçaların yeniden içe aktarılmasını önleme</string>
-    <string name="stats_coordinates">Enlem/Boylam</string>
-    <string name="stats_sensors_power">Güç</string>
-    <string name="aggregated_stats_filter_no_results">Belirtilen süzgeç için etkinlik yok</string>
-    <string name="value_float_kilometer_hour">%1$.1f km/s</string>
-    <string name="custom_layout_list_title">Dizilimler</string>
-    <string name="custom_layout_list_layout_removed">Dizilim kaldırıldı</string>
-    <string name="settings_cycling_sensor">Bisiklet</string>
-    <string name="track_speed_notification">Hız: %1$s</string>
-    <string name="aggregated_stats_empty_message">Toplu istatistikleri görmek için ilk parçanızı kaydedin</string>
-    <string name="instant_export_enabled_title">Antrenman sonrası anında dışa aktarma</string>
-    <string name="settings_public_api_dashboard_enabled_title">Otomatik veri aktarımı</string>
-    <string name="settings_public_api_dashboard_enabled_summary_on">Kaydı başlatan bir uygulama da kaydedilen verilere erişebilir.</string>
-    <string name="track_distance_notification">Mesafe: %1$s</string>
+    <string name="waypoint_type_water_fountain">çeşme</string>
+    <string name="waypoint_type_waypoint">yol noktası</string>
+    <!-- Share image -->
+    <string name="share_image_subject">Sizinle bir resim paylaşmak istiyorum</string>
+    <string name="share_image_body">Bu resmin ilginizi çekebileceğini düşündüm.</string>
     <string name="hold_to_stop">Durdurmak için basılı tutun</string>
-    <string name="settings_default_export_uri_title">Dışa aktarma dizinini takip et</string>
-    <string name="settings_recording_keep_screen_on_while_recording_title">Ekranı açık tut</string>
-    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Kayıt sırasında, cihazın kilidini açmadan istatistikleri gösterir.</string>
-    <string name="track_pace_notification">Tempo: %1$s</string>
-    <string name="location_coordinate">%1$s°</string>
-    <string name="settings_all_reset">Sıfırla</string>
-    <string name="settings_generic_sensor">Genel</string>
-    <string name="custom_layout_list_edit_name">Eklemek için dizilimin adını yazın</string>
-    <string name="settings_layout_reset_confirm_message">Tüm dizilim ayarları varsayılan değerlere döndürülecektir. Bu cihazdaki hiçbir parçayı silmez.</string>
-    <string name="settings_running_sensor">Koşu</string>
-    <string name="track_delete_not_recording">Bu parça şu anda kaydedildiği için silinemez.</string>
-    <string name="settings_public_api_enabled_summary_off">Yalnızca OpenTracks kayıtları başlatabilir ve durdurabilir.</string>
-    <string name="value_float_kilometer_hour_recommended">%1$.1f km/s (önerilen)</string>
-    <string name="lap_time">Tur zamanı</string>
-    <string name="pace">Tempo</string>
-    <string name="lap_speed">Tur hızı</string>
-    <string name="voice_per_kilometer">kilometre başına</string>
-    <string name="voice_per_mile">mil başına</string>
-    <string name="average_heart_rate">Ortalama kalp atış hızı</string>
-    <string name="total_distance">Toplam mesafe</string>
-    <string name="instant_export_enabled_summary">Kayıt tamamlandıktan sonra parçayı depolamaya aktar</string>
-    <string name="value_float_mile_hour">%1$.1f mi/s</string>
-    <string name="settings_announcements_totaltime_frequency">Zaman aralığı</string>
-    <string name="settings_announcements_distance_frequency">Tur uzunluğu</string>
-    <string name="stats_sensors_heart_rate">Kalp atış hızı</string>
-    <string name="stats_clock">Saat</string>
-    <string name="stats_sensors_cadence">Kadans</string>
-    <string name="stats_split_interval">Bölme aralığı</string>
-    <string name="track_detail_intervals_tab">Aralıklar</string>
-    <string name="interval_list_empty_message">Henüz bir aralık yok</string>
-    <string name="location_latitude_longitude">%1$s, %2$s</string>
-    <string name="settings_api_title">Genel API</string>
-    <string name="settings_public_api_dashboard_enabled_summary_off">Kaydedilen veriler diğer uygulamalarla otomatik olarak paylaşılmayacaktır.</string>
-    <string name="value_float_mile_hour_recommended">%1$.1f mi/s (önerilen)</string>
-    <string name="speed">Hız</string>
-    <string name="settings_recording_fullscreen_on_while_recording_title">Tam ekran</string>
-    <string name="current_heart_rate">Şu anki kalp atış hızı</string>
+    <string name="instant_export_enabled_summary">Kayıt bittikten sonra parkuru depolama alanına aktar</string>
+    <string name="instant_export_enabled_title">Antrenman sonrası anında dışa aktarma</string>
+    <string name="settings_default_export_uri_title">Parkur dışa aktarma dizini</string>
+    <!-- Fields -->
     <string name="field_set_primary">Birincil</string>
     <string name="field_set_secondary">İkincil</string>
-    <string name="settings_sensor_bluetooth_service_filter_on">Yalnızca gerekli hizmetleri bildiren Bluetooth cihazlarını göster</string>
-    <string name="stats_loss">Kayıp</string>
-    <string name="share_image_body">Bu görüntü ilginizi çekebilir.</string>
-    <string name="share_image_subject">Sizinle bir resim paylaşmak istiyorum</string>
-    <string name="settings_sensor_cycling_distance_speed">Mesafe ve hız</string>
-    <string name="settings_sensor_cycling_cadence">Kadans</string>
-    <string name="settings_sensor_running_speed_and_cadence">Mesafe, Hız ve Kadans</string>
-    <string name="settings_sensor_wheel_circumference">Tekerlek çevresi (mm)</string>
-    <string name="track_recording_notification_accuracy">Konum doğruluğu: %1$s</string>
-    <string name="import_prevent_reimport">Parçayı yeniden içe aktarmayı engellemeye ayarladınız</string>
-    <string name="settings_night_mode_option_day">Gündüz</string>
-    <string name="settings_recording_customize_layout_select_columns">Satır başına veri alanları</string>
-    <string name="show_on_dashboard">OpenTracks Gösterge Paneli API</string>
-    <string name="always">Daima</string>
-    <string name="share_crash_report">Çökme raporunu paylaşın</string>
-    <string name="report_bug">Hata bildir</string>
+    <string name="field_remove_from_layout">Kaldır</string>
+    <string name="no_compatible_file_manager_installed">Uyumlu bir dosya yöneticisi kurulu değil</string>
+    <string name="no_compatible_camera_installed">Uyumlu bir kamera uygulaması kurulu değil</string>
+    <string name="no_compatible_gallery_installed">Uyumlu bir resim galerisi uygulaması kurulu değil</string>
     <string name="error_crash_title">%1$s çöktü</string>
-    <string name="settings_announcements_average_heart_rate">Ortalama kalp atış hızı</string>
-    <string name="description_pace_nautical">Tempo (dk/NM)</string>
-    <string name="description_speed_nautical">Hız (düğüm)</string>
-    <string name="settings_announcements_average_speed_pace">Ortalama hız/tempo</string>
-    <string name="settings_announcements_lap_speed_pace">Tur hızı/temposu</string>
-    <string name="settings_stats_units_nautical">Deniz (NM, ft)</string>
-    <string name="unit_minute_per_nautical_mile">dk/NM</string>
-    <string name="value_integer_knots">%1$d düğüm</string>
-    <string name="value_float_knots">%1$.1f düğüm</string>
-    <string name="value_float_knots_recommended">%1$.1f düğüm (önerilen)</string>
-    <string name="voice_per_nautical_mile">deniz mili başına</string>
-    <string name="settings_public_api_package_title">Genel API için paket adı</string>
-    <string name="show_on_dashboard_not_installed">OpenTracks Gösterge Paneli API\'sini destekleyen hiçbir uygulama yüklü değil.</string>
-    <string name="settings_sensor_bluetooth_service_filter_title">Bluetooth cihazlarını süz</string>
-    <string name="settings_stats_units_imperial_meter">İngiliz Ölçü Birimi (mi, m)</string>
-    <string name="settings_api_summary">Diğer uygulamalar için uzaktan kontrol ve istatistik Uygulama Programlama Arayüzü (API)</string>
-    <string name="generic_from">\'den beri</string>
-    <string name="image_discard">Çıkar</string>
-    <string name="import_thread_interrupted">İzlek kesintiye uğradı</string>
-    <string name="settings_theme_switch_restart">Tema değişiklikleri elle yeniden başlatmayı gerektirebilir.</string>
-    <string name="settings_ui_dynamic_colors_summary">Kullanıcı tanımlı Dinamik Renkleri kullan (sadece Android 12+; elle yeniden başlatmayı gerektirir)</string>
-    <string name="settings_night_mode_option_night_oled">Gece (OLED dostu)</string>
-    <string name="settings_announcements_lap_heart_rate">Tur kalp atışı</string>
-    <string name="settings_announcements_unit">Mesafe/hız birimi</string>
-    <string name="settings_sensor_heart_rate_max">Alanlar: en yüksek Kalp atış hızı (atım/dk)</string>
-    <string name="track_discarding">Çıkarılan Parçalar</string>
-    <string name="unit_knots">kn</string>
-    <string name="unit_nautical_mile">NM</string>
-    <string name="value_internal_sensor">Dâhilî duyarga (sensör)</string>
-    <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
-    <string name="voiceSpeedKilometersPerHourPlural">{n, plural, =1 {1 kilometre/saat} other {{n,number,#.0} kilometre/saat} }</string>
-    <string name="voiceSpeedMilesPerHourPlural">{n, plural, =1 {1 mil/saat} other {{n,number,#.0} mil/saat} }</string>
-    <string name="voice_on_device_speaker_title">Cihazın hoparlörünü kullan</string>
-    <string name="voiceSpeedMKnotsPlural">{n, plural, =1 {1 not} other {{n,number,#.0} not} }</string>
-    <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometre} other {{n,number,#.0} kilometre} }</string>
-    <string name="voiceDistanceMilesPlural">{n, plural, =1 {1 mil} other {{n,number,#.0} mil} }</string>
-    <string name="voiceDistanceNauticalMilesPlural">{n, plural, =1 {1 deniz mili} other {{n,number,#.0} deniz mili} }</string>
-    <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
-    <string name="introduction_osm_dashboard">OpenTracks uygulaması harita işlevselliği sunmaz. Kayıtlarınızı bir haritada görüntülemek için lütfen OSMDashboard benzeri bir uygulama yükleyiniz.</string>
+    <string name="share_crash_report">Çökme raporunu paylaş</string>
+    <string name="report_bug">Hata bildir</string>
+    <string name="show_on_dashboard">OpenTracks Gösterge Paneli API</string>
+    <string name="show_on_dashboard_not_installed">OpenTracks Gösterge Paneli API\'sini destekleyen bir uygulama yüklü değil.</string>
+    <string name="always">Her zaman</string>
+    <string name="introduction_osm_dashboard">OpenTracks kendi başına bir harita sunmaz. Kayıtlarınızı bir harita üzerinde görüntülemek için lütfen OSMDashboard\'u yükleyin.</string>
     <string name="settings_recording_min_sampling_interval_title">Örnekleme zaman aralığı</string>
-    <string name="settings_recording_location_distance_summary">kayıtlı konumlar arasındaki mesafe: %1$s</string>
-    <string name="no_compatible_camera_installed">Uyumlu kamera uygulaması yüklü değil</string>
-    <string name="settings_sensor_bluetooth_service_filter_off">Tüm keşfedilebilir Bluetooth cihazlarını göster</string>
-    <string name="sensor_state_cadence_unit">devir/dk</string>
-    <string name="sensor_state_heart_rate_unit">atım/dk</string>
-    <string name="voiceHoursPlural">{n, plural, =1 {1 saat} other {{n,number} saat} }</string>
-    <string name="no_compatible_gallery_installed">Uyumlu galeri uygulaması yüklü değil</string>
-    <string name="permission_recording_failed">OpenTracks, konumunuzun yanı sıra yakındaki cihazlara erişmek için de izin gerektirir.</string>
-    <string name="generic_to">\'e</string>
-    <string name="settings_recording_min_required_accuracy_summary">Eğer hassasiyet oranı %1$s\'dan büyükse Konum göz ardı edilir</string>
-    <string name="settings_recording_idle_timeout_title">Boşta Durma Eşiği</string>
-    <string name="value_int_seconds">%1$d s (tavsiye edilen)</string>
-    <string name="sensor_state_power_max">En Yüksek Güç</string>
-    <string name="sensor_state_power_unit">W</string>
-    <string name="settings_announcements_idle_category_title">Boşta Durma Bildirimleri</string>
-    <string name="settings_announcements_idle_title">Boşta durma</string>
-    <string name="settings_recording_title">Kaydediliyor</string>
-    <string name="settings_ui_dynamic_colors_title">Dinamik Renkler</string>
-    <string name="voiceMinutesPlural">{n, plural, =1 {1 dakika} other {{n,number} dakika} }</string>
-    <string name="voiceSecondsPlural">{n, plural, =1 {1 saniye} other {{n,number} saniye} }</string>
-    <string name="voiceIdle">Boşta durma hâline geçiliyor.</string>
-    <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
-    <string name="sensor_state_pressure">Basınçölçer</string>
-    <string name="menu_export_all_one_file">Tümünü dışa aktar (tüm parçaları tek dosyada topla)</string>
-    <string name="track_delete_number_of_tracks">%1$d parçalar</string>
-    <string name="settings_announcements_lap_power">Tur gücü</string>
+    <string name="settings_recording_location_distance_summary">Kaydedilen konumlar arasında %1$s</string>
     <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
-    <string name="power_x_watt">Power {x, plural, =1 {1 vat(watt)} other {# vat(watt)} }</string>
+    <string name="settings_announcements_lap_power">Tur gücü</string>
+    <string name="power_x_watt">Güç {x, plural,  =1 {1 watt} other {# watt} }</string>
     <string name="power">Güç</string>
-    <string name="settings_charts_title">Çizelgeler</string>
-    <string name="settings_chart_display_pace_or_speed_title">Adım ya da hızı göster</string>
-    <string name="settings_chart_display_elevation_title">İrtifayı göster</string>
-    <string name="settings_chart_display_heart_rate_title">Kalp atış hızını göster</string>
-    <string name="settings_locale_system_default">Sistem varsayılanı</string>
-    <string name="help_data_google_play_services_content">Hayır</string>
-    <string name="activity_type_escooter">elektrikli trotinet</string>
-    <string name="settings_locale_title">Dil</string>
-    <string name="stats_gain_loss">Kazanç ve Kayıp</string>
-    <string name="activity_type_kickscooter">trotinet</string>
-    <string name="create_marker_error">Bir işaretçi oluşturulamıyor. Tekrar deneyin.</string>
-    <string name="settings_recording_show_gps_disabled_warning_title">GPS devre dışı uyarısı</string>
-    <string name="settings_recording_show_gps_disabled_warning_summary">Kayıt sırasında GPS devre dışı bırakılırsa bir uyarı gösterir.</string>
-    <string name="empty">boş</string>
 </resources>
