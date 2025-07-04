@@ -14,10 +14,7 @@
 
         <item name="windowActionModeOverlay">true</item>
 
-        <item name="bottomAppBarStyle">@style/Widget.OpenTracks.BottomAppBar</item>
-
         <item name="android:statusBarColor">?attr/colorSurfaceBright</item>
-        <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">?attr/colorSurfaceContainer</item>
         <!-- Material3-related: otherwise the actionbar does not overlay the SearchBar completely (with AppBarLayout) -->
         <item name="actionBarSize">88dp</item>
@@ -64,21 +61,12 @@
     </style>
 
     <style name="Widget.OpenTracks.BottomAppBarOled" parent="Widget.Material3.BottomAppBar">
-        <item name="backgroundTint">@color/oled_friendly</item>
+        <item name="elevation">0dp</item>
     </style>
-
     <style name="SplashTheme" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/splashscreen_background</item>
 
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_color_108dp</item>
         <item name="postSplashScreenTheme">@style/DayNightColorTheme</item>
-    </style>
-
-    <style name="Widget.OpenTracks.BottomAppBar" parent="Widget.Material3.BottomAppBar">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.OpenTracks.BottomAppBar</item>
-    </style>
-
-    <style name="ThemeOverlay.OpenTracks.BottomAppBar" parent="">
-        <item name="colorPrimary">@color/oled_friendly</item>
     </style>
 </resources>
