@@ -671,4 +671,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_recording_show_gps_disabled_warning_title">Alerte GPS désactivée</string>
     <string name="settings_recording_show_gps_disabled_warning_summary">Pendant l\'enregistrement, afficher un avertissement si le GPS est désactivé.</string>
     <string name="empty">vide</string>
+    <string name="marker_detail_title">%1$d de %2$d: %3$s</string>
+    <string name="track_edit_time_offset">Décalage de fuseau horaire</string>
 </resources>

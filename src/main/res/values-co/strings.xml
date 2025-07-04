@@ -546,4 +546,6 @@
     <string name="settings_recording_show_gps_disabled_warning_summary">Durante l’arregistramentu, un avertimentu hè affissatu s’è u GPS hè disattivatu.</string>
     <string name="empty">viotu</string>
     <string name="track_edit_time_offset">Sfarenza di u fusu orariu</string>
+    <string name="marker_detail_title">%1$d nant’à %2$d : %3$s</string>
+    <string name="stats_coordinates">Latitudine/Lungitudine</string>
 </resources>

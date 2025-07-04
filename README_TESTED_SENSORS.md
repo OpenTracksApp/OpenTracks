@@ -13,6 +13,7 @@
 * Amazfit Neo. But first you have to enable "Discoverable" and "Activity heart rate sharing" in the official Zepp app. (after pairing with OpenTracks you can disable them again)
 * Garmin HRM-Dual (Reference: 010-12883-00)
 * CYCPLUS H1
+* Mojawa Haptifit Terra - all you have to do is connect the app to device called "HT"
 
 ## 0x1816: Cycling Cadence and Speed Service
 

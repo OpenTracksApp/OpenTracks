@@ -598,4 +598,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_charts_title">Gráficos</string>
     <string name="settings_recording_show_gps_disabled_warning_title">Aviso do GPS desactivado</string>
     <string name="settings_recording_show_gps_disabled_warning_summary">Ao gravar, mostrar aviso se o GPS está desactivado.</string>
+    <string name="empty">baleiro</string>
+    <string name="marker_detail_title">%1$d de %2$d: %3$s</string>
+    <string name="track_edit_time_offset">Diferenza de Zona horaria</string>
 </resources>
