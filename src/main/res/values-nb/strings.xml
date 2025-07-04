@@ -557,7 +557,7 @@ limitations under the License.
     <string name="settings_recording_title">Opptak</string>
     <string name="settings_ui_dynamic_colors_title">Dynamiske farger</string>
     <string name="settings_ui_dynamic_colors_summary">Bruk brukerdefinerte dynamiske farger (kun Android 12+; krever manuell omstart)</string>
-    <string name="settings_night_mode_option_night_oled">Natt (OLED-vennlig)</string>
+    <string name="settings_night_mode_option_night_oled">OLED-vennlig</string>
     <string name="settings_announcements_unit">Distanse/hastighet-enhet</string>
     <string name="settings_recording_location_distance_summary">%1$s mellom registrerte posisjoner</string>
     <string name="settings_announcements_lap_power">Runde-kraft</string>
