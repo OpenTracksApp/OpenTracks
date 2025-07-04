@@ -595,4 +595,7 @@ limitations under the License.
     <string name="settings_recording_show_gps_disabled_warning_summary">Felvétel közben egy figyelmeztetés jelenik meg, ha a GPS ki van kapcsolva.</string>
     <string name="track_edit_time_offset">Időzóna eltolódás</string>
     <string name="marker_detail_title">%1$d %2$d-ból/ből %3$s</string>
+    <string name="settings_night_mode_option_system_dynamic">Rendszer (Dinamikus szín)</string>
+    <string name="settings_night_mode_option_day_dynamic">Nappal (Dinamikus szín)</string>
+    <string name="settings_night_mode_option_night_dynamic">Éjszaka (Dinamikus szín)</string>
 </resources>
