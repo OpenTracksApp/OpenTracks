@@ -578,7 +578,7 @@ limitations under the License.
     <string name="settings_recording_min_sampling_interval_title">Interval vzorkování</string>
     <string name="settings_recording_location_distance_summary">%1$s mezi zaznamenanými polohami</string>
     <string name="settings_theme_switch_restart">Změna motivu může vyžadovat ruční restart.</string>
-    <string name="settings_night_mode_option_night_oled">Noční (OLED)</string>
+    <string name="settings_night_mode_option_night_oled">OLED</string>
     <string name="settings_announcements_unit">Jednotka vzdálenosti/rychlosti</string>
     <string name="voiceSpeed">{n, plural, =1 {1} few {{n,number}} other {{n,number,#.0}} }</string>
     <string name="voiceDistance">{n, plural, =1 {1 } few {{n,number}} other {{n,number,#.0}} }</string>
@@ -600,7 +600,8 @@ limitations under the License.
     <string name="settings_recording_show_gps_disabled_warning_summary">Během nahrávání zobrazit varování, pokud je vypnutá poloha.</string>
     <string name="track_edit_time_offset">Posunutí časového pásma</string>
     <string name="marker_detail_title">%1$d z %2$d: %3$s</string>
-    <string name="settings_night_mode_option_system_dynamic">Systémový (dynamická barva)</string>
-    <string name="settings_night_mode_option_day_dynamic">Světlý (dynamická barva)</string>
-    <string name="settings_night_mode_option_night_dynamic">Tmavý (dynamická barva)</string>
+    <string name="settings_night_mode_option_system_dynamic">Systémový (dynamický)</string>
+    <string name="settings_night_mode_option_day_dynamic">Světlý (dynamický)</string>
+    <string name="settings_night_mode_option_night_dynamic">Tmavý (dynamický)</string>
+    <string name="settings_night_mode_option_night_oled_dynamic">OLED (dynamický)</string>
 </resources>
