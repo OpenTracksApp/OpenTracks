@@ -573,7 +573,7 @@ limitations under the License.
     <string name="permission_bluetooth_failed_rejected">A rendszerbeállításokban kézileg kell engedélyeznie az OpenTracks hozzáférését a közeli eszközökhöz.</string>
     <string name="help_data_google_play_services_content">Nem</string>
     <string name="settings_theme_switch_restart">A témaváltoztatások kézi újraindítást igényelnek.</string>
-    <string name="settings_night_mode_option_night_oled">Kímélő OLED</string>
+    <string name="settings_night_mode_option_night_oled">OLED-kímélő</string>
     <string name="settings_announcements_unit">Távolság/sebesség egység</string>
     <string name="power">Erő</string>
     <string name="voiceSpeed">{n,number,#.0}</string>
@@ -598,4 +598,5 @@ limitations under the License.
     <string name="settings_night_mode_option_system_dynamic">Rendszer (Dinamikus szín)</string>
     <string name="settings_night_mode_option_day_dynamic">Nappal (Dinamikus szín)</string>
     <string name="settings_night_mode_option_night_dynamic">Éjszaka (Dinamikus szín)</string>
+    <string name="settings_night_mode_option_night_oled_dynamic">OLED-kímélő (Dinamikus szín)</string>
 </resources>
