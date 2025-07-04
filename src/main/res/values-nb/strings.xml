@@ -583,4 +583,6 @@ limitations under the License.
     <string name="settings_recording_min_sampling_interval_title">Samplingtidsintervall</string>
     <string name="settings_recording_show_gps_disabled_warning_title">Advarsel for avslått GPS</string>
     <string name="settings_recording_show_gps_disabled_warning_summary">Vis en advarsel hvis GPS er avslått under opptak.</string>
+    <string name="marker_detail_title">%1$d av %2$d: %3$s</string>
+    <string name="track_edit_time_offset">Tidssoneforskyvning</string>
 </resources>
