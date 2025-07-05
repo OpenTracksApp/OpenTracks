@@ -435,7 +435,7 @@
     <string name="settings_recording_max_recording_distance_title">Distanza massima</string>
     <string name="settings_recording_track_name_number_option">Numeru</string>
     <string name="settings_recording_track_name_title">Nome predefinitu di u tracciatu</string>
-    <string name="settings_night_mode_option_night_oled">Notte (cumpatibile OLED)</string>
+    <string name="settings_night_mode_option_night_oled">Cumpatibile OLED</string>
     <string name="settings_announcements_totaltime_frequency">Intervallu di durata</string>
     <string name="settings_announcements_distance_frequency">Longhezza di u giru</string>
     <string name="settings_announcements_lap_heart_rate">Frequenza cardiaca à u giru</string>
@@ -548,4 +548,8 @@
     <string name="track_edit_time_offset">Sfarenza di u fusu orariu</string>
     <string name="marker_detail_title">%1$d nant’à %2$d : %3$s</string>
     <string name="stats_coordinates">Latitudine/Lungitudine</string>
+    <string name="settings_night_mode_option_system_dynamic">Sistema (DynamicColor)</string>
+    <string name="settings_night_mode_option_day_dynamic">Ghjornu (DynamicColor)</string>
+    <string name="settings_night_mode_option_night_dynamic">Notte (DynamicColor)</string>
+    <string name="settings_night_mode_option_night_oled_dynamic">Cumpatibile OLED (DynamicColor)</string>
 </resources>
