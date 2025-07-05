@@ -631,4 +631,8 @@ limitations under the License.
     <string name="create_marker_error">无法创建标记，请重试。</string>
     <string name="stats_gain_loss">增益与损失</string>
     <string name="empty">空白</string>
+    <string name="marker_detail_title">%1$d / %2$d：%3$s</string>
+    <string name="settings_night_mode_option_system_dynamic">跟随系统（动态配色）</string>
+    <string name="settings_night_mode_option_day_dynamic">白天模式（动态配色）</string>
+    <string name="settings_night_mode_option_night_dynamic">‌夜间模式（动态配色）</string>
 </resources>
