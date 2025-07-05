@@ -549,4 +549,8 @@
     <string name="settings_recording_show_gps_disabled_warning_summary">Agus tú ag taifeadadh, taispeáin rabhadh má tá GPS díchumasaithe.</string>
     <string name="settings_recording_show_gps_disabled_warning_title">Rabhadh GPS díchumasaithe</string>
     <string name="track_edit_time_offset">Fritháireamh Crios Ama</string>
+    <string name="marker_detail_title">%1$d de %2$d: %3$s</string>
+    <string name="settings_night_mode_option_system_dynamic">Córas (Dath Dinimiciúil)</string>
+    <string name="settings_night_mode_option_day_dynamic">Lá (Dath Dinimiciúil)</string>
+    <string name="settings_night_mode_option_night_dynamic">Oíche (Dath Dinimiciúil)</string>
 </resources>
