@@ -611,7 +611,7 @@ limitations under the License.
     <string name="settings_recording_min_sampling_interval_title">采样时间间隔</string>
     <string name="settings_recording_location_distance_summary">每隔%1$s记录地点之间</string>
     <string name="settings_theme_switch_restart">主题更改可能需要手动重启。</string>
-    <string name="settings_night_mode_option_night_oled">夜间模式（OLED 优化）</string>
+    <string name="settings_night_mode_option_night_oled">OLED 优化模式</string>
     <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
     <string name="settings_announcements_lap_power">单圈功率</string>
     <string name="settings_charts_title">图表</string>
@@ -635,4 +635,6 @@ limitations under the License.
     <string name="settings_night_mode_option_system_dynamic">跟随系统（动态配色）</string>
     <string name="settings_night_mode_option_day_dynamic">白天模式（动态配色）</string>
     <string name="settings_night_mode_option_night_dynamic">‌夜间模式（动态配色）</string>
+    <string name="settings_night_mode_option_night_oled_dynamic">OLED 优化模式（动态配色）</string>
+    <string name="track_edit_time_offset">时区偏移</string>
 </resources>
