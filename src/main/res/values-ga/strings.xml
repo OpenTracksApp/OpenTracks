@@ -511,7 +511,7 @@
     <string name="settings_recording_min_sampling_interval_title">Eatramh ama samplála</string>
     <string name="sensor_state_cadence_unit">rpm</string>
     <string name="sensor_state_heart_rate_unit">bpm</string>
-    <string name="settings_night_mode_option_night_oled">Oíche (OLED cairdiúil)</string>
+    <string name="settings_night_mode_option_night_oled">OLED-chairdiúil</string>
     <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
     <string name="power">Cumhacht</string>
     <string name="value_int_seconds">%1$d s (molta)</string>
@@ -553,4 +553,6 @@
     <string name="settings_night_mode_option_system_dynamic">Córas (Dath Dinimiciúil)</string>
     <string name="settings_night_mode_option_day_dynamic">Lá (Dath Dinimiciúil)</string>
     <string name="settings_night_mode_option_night_dynamic">Oíche (Dath Dinimiciúil)</string>
+    <string name="settings_night_mode_option_night_oled_dynamic">OLED-chairdiúil (DynamicColor)</string>
+    <string name="stats_coordinates">Domhanleithead/Domhanfhad</string>
 </resources>
