@@ -1,0 +1,5 @@
+v4.21.0: OpenTracks
+
+Změny:
+- Seznam stop podporuje posunutí pro odstranění
+- Reimplementovány motivy (pro dynamické barvy a OLED)
