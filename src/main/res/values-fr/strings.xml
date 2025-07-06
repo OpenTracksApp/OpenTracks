@@ -641,7 +641,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_theme_switch_restart">Les changements de thème peuvent nécessiter un redémarrage manuel.</string>
     <string name="settings_ui_dynamic_colors_summary">Utiliser des couleurs dynamiques définies par l\'utilisateur (Android 12+ uniquement ; requiert un redémarrage manuel)</string>
     <string name="settings_recording_idle_timeout_title">Délai avant mise en veille</string>
-    <string name="settings_night_mode_option_night_oled">Nuit (compatible OLED)</string>
+    <string name="settings_night_mode_option_night_oled">Compatible OLED</string>
     <string name="settings_announcements_unit">Unité de Distance/Vitesse</string>
     <string name="value_internal_sensor">Capteur interne</string>
     <string name="value_int_seconds">%1$d s (recommandé)</string>
@@ -673,4 +673,8 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="empty">vide</string>
     <string name="marker_detail_title">%1$d de %2$d: %3$s</string>
     <string name="track_edit_time_offset">Décalage de fuseau horaire</string>
+    <string name="settings_night_mode_option_night_oled_dynamic">Compatible OLED (Couleurs dynamiques)</string>
+    <string name="settings_night_mode_option_system_dynamic">Système (couleurs dynamiques)</string>
+    <string name="settings_night_mode_option_day_dynamic">Jour (couleurs dynamiques)</string>
+    <string name="settings_night_mode_option_night_dynamic">Nuit (couleurs dynamiques)</string>
 </resources>
