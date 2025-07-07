@@ -580,7 +580,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="settings_recording_min_sampling_interval_title">Intervalo de tempo entre mostras</string>
     <string name="settings_recording_location_distance_summary">%1$s entre posicións gravadas</string>
     <string name="settings_theme_switch_restart">Os cambios de decorado poderían requerir reinicio.</string>
-    <string name="settings_night_mode_option_night_oled">Noite (para OLED)</string>
+    <string name="settings_night_mode_option_night_oled">para OLED</string>
     <string name="settings_announcements_unit">Unidades de distancia/velocidade</string>
     <string name="voiceSpeed">{n, plural, =1 {1} other {{n,number,#.0}} }</string>
     <string name="voiceDistance">{n, plural, =1 {1 } other {{n,number,#.0}} }</string>
@@ -601,4 +601,9 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="empty">baleiro</string>
     <string name="marker_detail_title">%1$d de %2$d: %3$s</string>
     <string name="track_edit_time_offset">Diferenza de Zona horaria</string>
+    <string name="settings_night_mode_option_system_dynamic">Sistema (DynamicColor)</string>
+    <string name="settings_night_mode_option_day_dynamic">Día (DynamicColor)</string>
+    <string name="settings_night_mode_option_night_dynamic">Noite (DynamicColor)</string>
+    <string name="settings_night_mode_option_night_oled_dynamic">para OLED (DynamicColor)</string>
+    <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
 </resources>
