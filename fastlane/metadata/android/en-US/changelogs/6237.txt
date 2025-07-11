@@ -1,0 +1,4 @@
+v4.21.1: OpenTracks
+
+Bugfix:
+- Fixed crash on export/import UI (introduced in v4.21.0)
