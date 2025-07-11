@@ -79,7 +79,8 @@ limitations under the License.
         android:hasFragileUserData="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/DayNightDynamicTheme"> <!-- Default for AppCompatActivities -->
 
         <activity
             android:name=".publicapi.StartRecording"
