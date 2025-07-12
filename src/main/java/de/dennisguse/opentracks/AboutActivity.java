@@ -10,9 +10,7 @@ import de.dennisguse.opentracks.databinding.AboutBinding;
 import de.dennisguse.opentracks.ui.util.ViewUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 
-public class AboutActivity extends AbstractActivity {
-
-    private AboutBinding viewBinding;
+public class AboutActivity extends AbstractActivity<AboutBinding> {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,14 +29,7 @@ public class AboutActivity extends AbstractActivity {
     }
 
     @NonNull
-    protected View createRootView() {
-        viewBinding = AboutBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        viewBinding = null;
+    protected AboutBinding createRootView() {
+        return AboutBinding.inflate(getLayoutInflater());
     }
 }

@@ -56,7 +56,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackDataHubInterface {
+public class TrackRecordingActivity extends AbstractActivity<TrackRecordingBinding> implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackDataHubInterface {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -66,12 +66,10 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     private Snackbar snackbar;
 
-    // The following are setFrequency in onCreate
+    // The following are set in onCreate
     private ContentProviderUtils contentProviderUtils;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private TrackDataHub trackDataHub;
-
-    private TrackRecordingBinding viewBinding;
 
     private Track.Id trackId;
 
@@ -245,15 +243,13 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        viewBinding = null;
         trackRecordingServiceConnection = null;
     }
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = TrackRecordingBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected TrackRecordingBinding createRootView() {
+        return TrackRecordingBinding.inflate(getLayoutInflater());
     }
 
     @Override
