@@ -14,7 +14,7 @@ import de.dennisguse.opentracks.data.models.ActivityType;
 import de.dennisguse.opentracks.databinding.SettingsBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 
-public class SettingsActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
+public class SettingsActivity extends AbstractActivity<SettingsBinding> implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
     public static final String EXTRAS_EXPORT_ERROR_MESSAGE = "Export error message";
 
@@ -23,8 +23,6 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
     private String exportErrorMessage = null;
 
     private PreferenceFragmentCompat fragment = null;
-
-    private SettingsBinding viewBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +72,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = SettingsBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected SettingsBinding createRootView() {
+        return SettingsBinding.inflate(getLayoutInflater());
     }
 
     private PreferenceFragmentCompat getPreferenceScreen(String key) {

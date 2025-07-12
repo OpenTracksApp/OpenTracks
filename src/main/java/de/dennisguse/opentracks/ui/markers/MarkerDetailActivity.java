@@ -43,13 +43,11 @@ import de.dennisguse.opentracks.ui.markers.DeleteMarkerDialogFragment.DeleteMark
  *
  * @author Leif Hendrik Wilden
  */
-public class MarkerDetailActivity extends AbstractActivity implements DeleteMarkerCaller {
+public class MarkerDetailActivity extends AbstractActivity<MarkerDetailActivityBinding> implements DeleteMarkerCaller {
 
     public static final String EXTRA_MARKER_ID = "marker_id";
 
     private static final String TAG = MarkerDetailActivity.class.getSimpleName();
-
-    private MarkerDetailActivityBinding viewBinding;
 
     private Cursor cursor;
 
@@ -99,15 +97,13 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = MarkerDetailActivityBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected MarkerDetailActivityBinding createRootView() {
+        return MarkerDetailActivityBinding.inflate(getLayoutInflater());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        viewBinding = null;
 
         if (cursor != null) cursor.close();
         cursor = null;
