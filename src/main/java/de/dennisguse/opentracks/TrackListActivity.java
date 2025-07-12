@@ -72,15 +72,13 @@ import de.dennisguse.opentracks.util.PermissionRequester;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
+public class TrackListActivity extends AbstractTrackDeleteActivity<TrackListBinding> implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
 
     // The following are set in onCreate
     private TrackRecordingServiceConnection recordingStatusConnection;
     private TrackListAdapter adapter;
-
-    private TrackListBinding viewBinding;
 
     // Preferences
     private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
@@ -166,6 +164,13 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             }
         });
 
+        viewBinding.trackListSearchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
+            searchQuery = viewBinding.trackListSearchView.getEditText().getText().toString();
+            viewBinding.trackListSearchView.hide();
+            loadData();
+            return true;
+        });
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         adapter = new TrackListAdapter(this, viewBinding.trackList, recordingStatus, unitSystem);
         viewBinding.trackList.setLayoutManager(layoutManager);
@@ -248,24 +253,14 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        viewBinding = null;
         recordingStatusConnection = null;
         adapter = null;
     }
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = TrackListBinding.inflate(getLayoutInflater());
-
-        viewBinding.trackListSearchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
-            searchQuery = viewBinding.trackListSearchView.getEditText().getText().toString();
-            viewBinding.trackListSearchView.hide();
-            loadData();
-            return true;
-        });
-
-        return viewBinding.getRoot();
+    protected TrackListBinding createRootView() {
+        return TrackListBinding.inflate(getLayoutInflater());
     }
 
     @Override

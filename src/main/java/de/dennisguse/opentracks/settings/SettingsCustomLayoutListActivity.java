@@ -24,9 +24,8 @@ import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.SettingsCustomLayoutListAdapter;
 import de.dennisguse.opentracks.ui.util.RecyclerViewSwipeDeleteCallback;
 
-public class SettingsCustomLayoutListActivity extends AbstractActivity implements SettingsCustomLayoutListAdapter.SettingsCustomLayoutProfileClickListener {
+public class SettingsCustomLayoutListActivity extends AbstractActivity<ActivitySettingsCustomLayoutListBinding> implements SettingsCustomLayoutListAdapter.SettingsCustomLayoutProfileClickListener {
 
-    private ActivitySettingsCustomLayoutListBinding viewBinding;
     private SettingsCustomLayoutListAdapter adapter;
 
     @Override
@@ -110,10 +109,8 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
 
     @NonNull
     @Override
-    protected View createRootView() {
-        PreferencesUtils.getCustomLayout();
-        viewBinding = ActivitySettingsCustomLayoutListBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected ActivitySettingsCustomLayoutListBinding createRootView() {
+        return ActivitySettingsCustomLayoutListBinding.inflate(getLayoutInflater());
     }
 
     @Override

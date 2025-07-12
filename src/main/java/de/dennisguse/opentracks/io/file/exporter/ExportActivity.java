@@ -60,8 +60,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  *    So, for this check actually a different file name might be used than in the ExportService.
  * * Saved state as an object instead of individual values.
  */
-//TODO Make an AbstractActivity
-public class ExportActivity extends AbstractActivity {
+public class ExportActivity extends AbstractActivity<ExportActivityBinding> {
 
     private static final String TAG = ExportActivity.class.getSimpleName();
 
@@ -96,8 +95,6 @@ public class ExportActivity extends AbstractActivity {
     private int trackExportOverwrittenCount;
     private int trackExportSkippedCount;
     private int trackExportTotalCount;
-
-    private ExportActivityBinding viewBinding;
 
     private ArrayList<String> trackErrors = new ArrayList<>();
 
@@ -191,9 +188,8 @@ public class ExportActivity extends AbstractActivity {
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = ExportActivityBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected ExportActivityBinding createRootView() {
+        return ExportActivityBinding.inflate(getLayoutInflater());
     }
 
     @Override
@@ -213,7 +209,6 @@ public class ExportActivity extends AbstractActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        viewBinding = null;
         conflictsQueue.clear();
         exportTasks.clear();
     }

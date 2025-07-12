@@ -26,12 +26,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.ViewGroupCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.viewbinding.ViewBinding;
 
 import de.dennisguse.opentracks.services.announcement.TTSManager;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 // TODO Make ViewBinding a generic attribute and set to null in onDestroy()
-public abstract class AbstractActivity extends AppCompatActivity {
+public abstract class AbstractActivity<T extends ViewBinding> extends AppCompatActivity {
+
+    protected T viewBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +47,14 @@ public abstract class AbstractActivity extends AppCompatActivity {
         // Set volume control stream for text to speech
         setVolumeControlStream(TTSManager.AUDIO_STREAM);
 
-        View rootView = createRootView();
-        setContentView(rootView);
+        viewBinding = createRootView();
+        setContentView(viewBinding.getRoot());
 
-        edge2edgeApplyInsets(rootView);
+        edge2edgeApplyInsets();
     }
 
-    private void edge2edgeApplyInsets(View rootView) {
+    private void edge2edgeApplyInsets() {
+        View rootView = viewBinding.getRoot();
         ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
             Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout() | WindowInsetsCompat.Type.ime());
             view.setPadding(insets.left, insets.top, insets.right, insets.bottom);
@@ -67,5 +71,11 @@ public abstract class AbstractActivity extends AppCompatActivity {
     }
 
     @NonNull
-    protected abstract View createRootView();
+    protected abstract T createRootView();
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewBinding = null;
+    }
 }

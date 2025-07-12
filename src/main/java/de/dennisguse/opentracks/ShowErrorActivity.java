@@ -15,11 +15,9 @@ import java.nio.charset.StandardCharsets;
 
 import de.dennisguse.opentracks.databinding.ActivityShowErrorBinding;
 
-public class ShowErrorActivity extends AbstractActivity {
+public class ShowErrorActivity extends AbstractActivity<ActivityShowErrorBinding> {
 
     public static final String EXTRA_ERROR_TEXT = "error";
-
-    private ActivityShowErrorBinding viewBinding;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -32,9 +30,8 @@ public class ShowErrorActivity extends AbstractActivity {
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = ActivityShowErrorBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected ActivityShowErrorBinding createRootView() {
+        return ActivityShowErrorBinding.inflate(getLayoutInflater());
     }
 
     private String createErrorTitle() {

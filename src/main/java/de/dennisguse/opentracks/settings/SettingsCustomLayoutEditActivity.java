@@ -21,10 +21,9 @@ import de.dennisguse.opentracks.ui.customRecordingLayout.RecordingLayout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.SettingsCustomLayoutEditAdapter;
 import de.dennisguse.opentracks.ui.util.ArrayAdapterFilterDisabled;
 
-public class SettingsCustomLayoutEditActivity extends AbstractActivity implements SettingsCustomLayoutEditAdapter.SettingsCustomLayoutItemClickListener {
+public class SettingsCustomLayoutEditActivity extends AbstractActivity<ActivitySettingsCustomLayoutBinding> implements SettingsCustomLayoutEditAdapter.SettingsCustomLayoutItemClickListener {
 
     public static final String EXTRA_LAYOUT = "extraLayout";
-    private ActivitySettingsCustomLayoutBinding viewBinding;
     private GridLayoutManager gridLayoutManager;
     private SettingsCustomLayoutEditAdapter adapterFieldsVisible;
     private SettingsCustomLayoutEditAdapter adapterFieldsHidden;
@@ -118,9 +117,8 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = ActivitySettingsCustomLayoutBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected ActivitySettingsCustomLayoutBinding createRootView() {
+        return ActivitySettingsCustomLayoutBinding.inflate(getLayoutInflater());
     }
 
     @Override

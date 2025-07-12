@@ -20,13 +20,11 @@ import de.dennisguse.opentracks.data.TrackSelection;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.AggregatedStatsBinding;
 
-public class AggregatedStatisticsActivity extends AbstractActivity implements FilterDialogFragment.FilterDialogListener {
+public class AggregatedStatisticsActivity extends AbstractActivity<AggregatedStatsBinding> implements FilterDialogFragment.FilterDialogListener {
 
     public static final String EXTRA_TRACK_IDS = "track_ids";
 
     static final String STATE_ARE_FILTERS_APPLIED = "areFiltersApplied";
-
-    private AggregatedStatsBinding viewBinding;
 
     private AggregatedStatisticsAdapter adapter;
 
@@ -85,9 +83,8 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = AggregatedStatsBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected AggregatedStatsBinding createRootView() {
+        return AggregatedStatsBinding.inflate(getLayoutInflater());
     }
 
     @Override

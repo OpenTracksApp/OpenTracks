@@ -23,13 +23,11 @@ import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragm
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
-public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
+public class TrackStoppedActivity extends AbstractTrackDeleteActivity<TrackStoppedBinding> implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
     private static final String TAG = TrackStoppedActivity.class.getSimpleName();
 
     public static final String EXTRA_TRACK_ID = "track_id";
-
-    private TrackStoppedBinding viewBinding;
 
     private Track.Id trackId;
 
@@ -113,9 +111,8 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = TrackStoppedBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected TrackStoppedBinding createRootView() {
+        return TrackStoppedBinding.inflate(getLayoutInflater());
     }
 
     private void setActivityTypeIcon(ActivityType activityType) {

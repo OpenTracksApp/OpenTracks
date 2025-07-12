@@ -50,7 +50,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  *
  * @author Rodrigo Damazio
  */
-public class ImportActivity extends AbstractActivity {
+public class ImportActivity extends AbstractActivity<ImportActivityBinding> {
 
     private static final String TAG = ImportActivity.class.getSimpleName();
 
@@ -58,8 +58,6 @@ public class ImportActivity extends AbstractActivity {
 
     private static final String BUNDLE_DOCUMENT_URIS = "document_uris";
     private static final String BUNDLE_IS_DIRECTORY = "is_directory";
-
-    private ImportActivityBinding viewBinding;
 
     private ArrayList<Uri> documentUris = new ArrayList<>();
     private ArrayList<DocumentFile> filesToImport = new ArrayList<>();
@@ -116,9 +114,8 @@ public class ImportActivity extends AbstractActivity {
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = ImportActivityBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected ImportActivityBinding createRootView() {
+        return ImportActivityBinding.inflate(getLayoutInflater());
     }
 
     @Override
