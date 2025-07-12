@@ -174,32 +174,23 @@ public class StringUtils {
         return new Pair<>(value, context.getString(R.string.sensor_unit_power));
     }
 
-    /**
-     * Gets a string for category.
-     *
-     * @param category the category
-     */
+    @Deprecated //TODO Move to strings.xml
     public static String getCategory(String category) {
-        if (category == null || category.length() == 0) {
+        if (category == null || category.isEmpty()) {
             return null;
         }
         return "[" + category + "]";
     }
 
-    /**
-     * Gets a string for category and description.
-     *
-     * @param category    the category
-     * @param description the description
-     */
+    @Deprecated //TODO use separate UI elements rather than concatenating strings.
     public static String getCategoryDescription(String category, String description) {
-        if (category == null || category.length() == 0) {
+        if (category == null || category.isEmpty()) {
             return description;
         }
 
         StringBuilder builder = new StringBuilder();
         builder.append(getCategory(category));
-        if (description != null && description.length() != 0) {
+        if (description != null && !description.isEmpty()) {
             builder.append(" ").append(description);
         }
         return builder.toString();
