@@ -35,6 +35,7 @@ import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.ui.util.ActivityUtils;
 import de.dennisguse.opentracks.ui.util.ListItemUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
+import de.dennisguse.opentracks.util.StringUtils;
 
 public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ActionMode.Callback {
 
@@ -232,6 +233,12 @@ public class TrackListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 viewBinding.trackListItemDate.setText(null);
                 viewBinding.trackListItemTime.setText(null);
             }
+
+            //TODO Check if this is needed or a leftover from the MarkerList migration
+            String category = activityType == null ? activityTypeLocalized : null;
+            String categoryDescription = StringUtils.getCategoryDescription(category, description);
+            viewBinding.trackListItemCategoryDescription.setText(categoryDescription);
+            viewBinding.trackListItemCategoryDescription.setVisibility("".equals(categoryDescription) ? View.GONE : View.VISIBLE);
 
             setSelected(selection.get((int) getId()));
         }
