@@ -56,7 +56,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  * @author Rodrigo Damazio
  */
 //TODO Should not use TrackRecordingServiceConnection; only used to determine if there is NO current recording, to enable resume functionality.
-public class TrackRecordedActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackDataHubInterface {
+public class TrackRecordedActivity extends AbstractTrackDeleteActivity<TrackRecordedBinding> implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackDataHubInterface {
 
     private static final String TAG = TrackRecordedActivity.class.getSimpleName();
 
@@ -67,8 +67,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
 
     private TrackDataHub trackDataHub;
-
-    private TrackRecordedBinding viewBinding;
 
     private Track.Id trackId;
     private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
@@ -138,9 +136,8 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = TrackRecordedBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected TrackRecordedBinding createRootView() {
+        return TrackRecordedBinding.inflate(getLayoutInflater());
     }
 
     @Override

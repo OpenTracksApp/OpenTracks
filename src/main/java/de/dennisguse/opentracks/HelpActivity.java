@@ -9,21 +9,18 @@ import androidx.annotation.Nullable;
 import de.dennisguse.opentracks.databinding.HelpBinding;
 import de.dennisguse.opentracks.ui.util.ViewUtils;
 
-public class HelpActivity extends AbstractActivity {
-
-    private HelpBinding helpBinding;
+public class HelpActivity extends AbstractActivity<HelpBinding> {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setSupportActionBar(helpBinding.bottomAppBarLayout.bottomAppBar);
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
         ViewUtils.makeClickableLinks(findViewById(android.R.id.content));
     }
 
     @NonNull
     @Override
-    protected View createRootView() {
-        helpBinding = HelpBinding.inflate(getLayoutInflater());
-        return helpBinding.getRoot();
+    protected HelpBinding createRootView() {
+        return HelpBinding.inflate(getLayoutInflater());
     }
 }

@@ -37,7 +37,7 @@ import de.dennisguse.opentracks.ui.ZoneOffsetAdapter;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackEditActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
+public class TrackEditActivity extends AbstractActivity<TrackEditBinding> implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -48,8 +48,6 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     private ContentProviderUtils contentProviderUtils;
     private Track track;
     private ActivityType activityType;
-
-    private TrackEditBinding viewBinding;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -125,9 +123,8 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = TrackEditBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected TrackEditBinding createRootView() {
+        return TrackEditBinding.inflate(getLayoutInflater());
     }
 
     private void setActivityTypeIcon(ActivityType activityType) {
