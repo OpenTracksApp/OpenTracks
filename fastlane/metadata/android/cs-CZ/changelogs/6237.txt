@@ -1,0 +1,4 @@
+v4.21.1: OpenTracks
+
+Oprava chyby:
+- Opraven pád v rozhraní exportu/importu (vznikl ve v4.21.0)
