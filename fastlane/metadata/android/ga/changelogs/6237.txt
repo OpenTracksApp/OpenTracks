@@ -1,0 +1,4 @@
+v4.21.1: OpenTracks
+
+Ceartú fabht:
+- Tuairteáil socraithe ar chomhéadan úsáideora easpórtála/allmhairithe (tugtha isteach i v4.21.0)
