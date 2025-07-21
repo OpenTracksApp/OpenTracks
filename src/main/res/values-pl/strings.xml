@@ -573,4 +573,5 @@ limitations under the License.
     <string name="settings_sensor_bluetooth_service_filter_off">Pokaż wszystkie urządzenia bluetooth</string>
     <string name="settings_public_api_enabled_title">Publiczne API</string>
     <string name="settings_announcements_idle_category_title">Powiadomienia o przerwach</string>
+    <string name="empty">puste</string>
 </resources>
