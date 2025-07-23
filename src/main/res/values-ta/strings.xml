@@ -35,7 +35,7 @@
     <string name="unit_minute_per_kilometer">நிமையம்/கி.மீ</string>
     <string name="unit_minute_per_mile">min/mi</string>
     <string name="value_integer_feet_excellent_gps">%1$d அடி (சிறந்த சி.பி.எச்)</string>
-    <string name="value_float_kilometer_hour_recommended">%1 $ .1f கிமீ/மணி (பரிந்துரைக்கப்படுகிறது)</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f கிமீ/மணி (பரிந்துரைக்கப்படுகிறது)</string>
     <string name="value_integer_minute">%1$d மணித்துளி</string>
     <string name="waypoint_type_cafe">கஃபே</string>
     <string name="share_crash_report">பங்கு விபத்து அறிக்கை</string>
@@ -300,13 +300,13 @@
     <string name="settings_night_mode_option_system">மண்டலம்</string>
     <string name="settings_night_mode_option_day">நாள்</string>
     <string name="settings_night_mode_option_night">இரவு</string>
-    <string name="settings_night_mode_option_night_oled">இரவு (OLED நட்பு)</string>
+    <string name="settings_night_mode_option_night_oled">OLED நட்பு</string>
     <string name="settings_announcements_totaltime_frequency">நேர இடைவெளி</string>
     <string name="settings_announcements_distance_frequency">மடியில் நீளம்</string>
     <string name="settings_announcements_average_heart_rate">சராசரி இதய துடிப்பு</string>
     <string name="settings_announcements_lap_heart_rate">மடியில் இதய துடிப்பு</string>
-    <string name="settings_announcements_average_speed_pace">சராசரி வேகம்/வேகம்</string>
-    <string name="settings_announcements_lap_speed_pace">மடியில் வேகம்/வேகம்</string>
+    <string name="settings_announcements_average_speed_pace">சராசரி வேகம்/அசைவு</string>
+    <string name="settings_announcements_lap_speed_pace">மடியில் வேகம்/அசைவு</string>
     <string name="settings_announcements_unit">தூரம்/வேக அலகு</string>
     <string name="custom_layout_list_title">தளவமைப்புகள்</string>
     <string name="custom_layout_list_edit_name">சேர்க்க தளவமைப்பின் பெயரைத் தட்டச்சு செய்க</string>
@@ -484,7 +484,7 @@
     <string name="instant_export_enabled_summary">பதிவு முடிந்ததும் சேமிப்பிற்கான ஏற்றுமதி பாதை</string>
     <string name="instant_export_enabled_title">உடனடி பிந்தைய வொர்க்அவுட் ஏற்றுமதி</string>
     <string name="activity_type_motor_boating">மின்னோடி படகு சவாரி</string>
-    <string name="help_track_map_content">சிறிய வரைபட ஐகானைப் பயன்படுத்தவும்.\n a) (நேரடி புதுப்பிப்புகள்) &lt;a href = \"https://github.com/opentracksapp/osmdashboard\"&gt; osmdashboard &lt;/a&gt; ஐ நிறுவவும். இது &lt;a href = \"https://www.openstreetmap.org\"&gt; openstreetmap &lt;/a&gt; வழியாக நிகழ்நிலை அல்லது இணைப்பில்லாத வரைபடங்களை வழங்குகிறது.\n உண்மையில், ஓஎச்எம்டாச்போர்டு என்பது ஒரு தனி பயன்பாடாகும், இது காட்டப்படப் போகும் பாதையின் (தற்காலிகமாக) மட்டுமே அணுக முடியும் (தற்காலிகமாக).\n b) ஒரு சாதாரண வரைபட பயன்பாடு வழியாக (எ.கா., &lt;a href = \"http://osmand.net/\"&gt; osmand &lt;/a&gt; மற்றும் &lt;a href = \"https://maps.me/\"&gt; maps.me &lt; /a&gt;). இந்த பயன்பாடுகள் KMZ கோப்பு வடிவமைப்பை ஆதரிக்க வேண்டும் (இருப்பிடங்கள் மற்றும் நேர முத்திரைகள் மட்டுமே). உண்மையில்.</string>
+    <string name="help_track_map_content">சிறிய வரைபட ஐகானைப் பயன்படுத்தவும்.\na) (நேரடி புதுப்பிப்புகள்) <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a> ஐ நிறுவவும். இது <a href="https://www.openstreetmap.org">OpenStreetMap</a> வழியாக ஆன்லைன் அல்லது ஆஃப்லைன் வரைபடங்களை வழங்குகிறது.\nஉண்மையில், OSMDashboard என்பது காண்பிக்கப்படும் டிராக்(களின்) தரவை மட்டுமே (தற்காலிகமாக) அணுகக்கூடிய ஒரு தனி பயன்பாடாகும்.\nb) ஒரு சாதாரண வரைபட பயன்பாடு வழியாக (எ.கா., <a href="http://osmand.net/">OsmAnd</a> மற்றும் <a href="https://maps.me/">MAPS.ME</a>). இந்தப் பயன்பாடுகள் KMZ கோப்பு வடிவமைப்பை (இடங்கள் மற்றும் நேர முத்திரைகள் மட்டும்) ஆதரிக்க வேண்டும். உண்மையில், ஒரு பயன்பாடு MIME <i>application/vnd.google-earth.kmz</i> உடன் <i>ACTION_VIEW</i> ஐ ஆதரிக்க வேண்டும்.</string>
     <string name="help_storage_pictures_title">குறிப்பான்களாக எடுக்கப்பட்ட படங்களை ஓபன்ட்ராக்ச் எவ்வாறு சேமிக்கிறது?</string>
     <string name="help_storage_pictures_content">இவை பயன்பாட்டு உள் சேமிப்பகத்தில் சேமிக்கப்படுகின்றன (அதாவது, ஓபன்ட்ராக்சுக்குள் மட்டுமே அணுக முடியும்).</string>
     <string name="help_track_export_title">பதிவுசெய்யப்பட்ட தடங்களை நான் எவ்வாறு ஏற்றுமதி செய்யலாம்/பகிர்ந்து கொள்ளலாம்?</string>
@@ -502,7 +502,7 @@
     <string name="activity_type_motor_bike">மின்னோடி பைக்</string>
     <string name="help_gps_troubleshooting_content">நீங்கள் என்ன செய்ய முடியும்:\n a) சி.பி.எச் இயக்கப்பட்டதா என்பதை சரிபார்க்கவும்,\n b) சி.பி.எச் வரவேற்பை மேம்படுத்தவும் (எ.கா., வெளியில் செல்லுங்கள்),\n c) <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/"> gpstest </a> பயன்பாடு, மற்றும்\n ஈ) ஆற்றல் சேமிப்பை முடக்கு.\n\n எல்லாம் உதவாவிட்டால் தயவுசெய்து ஒரு பிழையைப் புகாரளிக்கவும்.</string>
     <string name="help_support_title">ஓபன்ட்ராக்சை நான் எவ்வாறு ஆதரிக்க முடியும்?</string>
-    <string name="help_support_content">உங்களால் முடியும்:\n அ) ஓபன்ட்ராக்சைப் பற்றி பரப்பவும்,\n b) &lt;a href = \"https://github.com/opentracksapp/opentracks/issues\"&gt; அம்சங்களை முன்மொழிகிறது &lt;/a&gt;,,\n c) &lt;a href = \"https://github.com/opentracksapp/opentracks/issues\"&gt; பிழைகள் &lt;/a&gt;,\n d) மென்பொருள் மேம்பாட்டில் உதவி,\n e) &lt;a href = \"https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore\"\n f) நன்கொடை, மற்றும்\n g) நீங்கள் நினைப்பதைச் செய்யுங்கள்.</string>
+    <string name="help_support_content">உங்களால் முடியும்:\n அ) ஓபன்ட்ராக்சைப் பற்றிப் பரப்பவும்,\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">அம்சங்களை முன்மொழிகிறது </a>,,\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> பிழைகள் </a>,\n d) மென்பொருள் மேம்பாட்டில் உதவி,\n e) <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">கூகிள் கடையில்</a> வாங்கு\n f) நன்கொடை, மற்றும்\n g) நீங்கள் நினைப்பதைச் செய்யுங்கள்.</string>
     <string name="open_track_as_trackfileformat">%1$s என திறந்திருக்கும்</string>
     <string name="activity_type_airplane">வானூர்தி</string>
     <string name="activity_type_atv">ஏடிவி</string>
@@ -538,4 +538,11 @@
     <string name="settings_chart_display_elevation_title">றிந்த உயரத்தைக் காண்பி</string>
     <string name="settings_chart_display_pace_or_speed_title">விரைவு அல்லது வேகத்தைக் காண்பி</string>
     <string name="settings_chart_display_heart_rate_title">இதய துடிப்பைக் காண்பி</string>
+    <string name="stats_coordinates">குறுக்கை/நெடுங்கோடு</string>
+    <string name="marker_detail_title">%1$d இன் %2$d: %3$s</string>
+    <string name="settings_night_mode_option_system_dynamic">அமைப்பு (மாறும் நிறம்)</string>
+    <string name="settings_night_mode_option_day_dynamic">பகல் (மாறும் நிறம்)</string>
+    <string name="settings_night_mode_option_night_dynamic">இரவு (மாறும் நிறம்)</string>
+    <string name="settings_night_mode_option_night_oled_dynamic">OLED நட்பு (மாறும் நிறம்)</string>
+    <string name="track_edit_time_offset">நேர மண்டல ஈடுசெய்</string>
 </resources>
