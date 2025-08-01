@@ -379,7 +379,7 @@ limitations under the License.
     <string name="import_error_list_dialog_title">Soubory nebyly importovány</string>
     <string name="import_file_imported">Soubor %1$s importován</string>
     <string name="generic_skip">Přeskočit</string>
-    <string name="activity_type_escooter">elektroskůtr</string>
+    <string name="activity_type_escooter">elektroskútr</string>
     <string name="description_altitude_loss">Převýšení: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Export po ukončení aktivity selhal, zkontrolujte prosím adresář pro export.</string>
     <string name="stats_loss">Ztráta</string>
@@ -563,7 +563,7 @@ limitations under the License.
     <string name="voiceDistanceKilometersPlural">{n, plural, =1 {1 kilometr} few {{n,number,#.0} kilometry} other {{n,number,#.0} kilometrů} }</string>
     <string name="sensor_state_power_max">Maximální výkon</string>
     <string name="settings_announcements_idle_category_title">Oznámení o nečinnosti</string>
-    <string name="activity_type_kickscooter">skútr</string>
+    <string name="activity_type_kickscooter">koloběžka</string>
     <string name="voiceIdle">Vstupujete do režimu nečinnosti.</string>
     <string name="settings_announcements_idle_title">Nečinnost</string>
     <string name="settings_recording_idle_timeout_title">Hranice nečinnosti</string>
