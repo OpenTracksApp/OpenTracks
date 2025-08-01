@@ -18,9 +18,7 @@ import de.dennisguse.opentracks.databinding.IntroductionBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 
-public class IntroductionActivity extends AbstractActivity {
-
-    private IntroductionBinding viewBinding;
+public class IntroductionActivity extends AbstractActivity<IntroductionBinding> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +47,8 @@ public class IntroductionActivity extends AbstractActivity {
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = IntroductionBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        viewBinding = null;
+    protected IntroductionBinding createRootView() {
+        return IntroductionBinding.inflate(getLayoutInflater());
     }
 
     private static class CustomFragmentPagerAdapter extends FragmentStateAdapter {
