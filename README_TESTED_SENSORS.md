@@ -14,6 +14,7 @@
 * Garmin HRM-Dual (Reference: 010-12883-00)
 * CYCPLUS H1
 * Mojawa Haptifit Terra - all you have to do is connect the app to device called "HT"
+* Decathlon HRM Band
 
 ## 0x1816: Cycling Cadence and Speed Service
 
