@@ -612,7 +612,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_sensor_bluetooth_service_filter_off">Alle verfügbaren Bluetooth Geräte anzeigen</string>
     <string name="settings_theme_switch_restart">Themenänderungen können einen manuellen Neustart erfordern.</string>
     <string name="settings_recording_idle_timeout_title">Stillstand Schwelle</string>
-    <string name="settings_night_mode_option_night_oled">Nacht (OLED freundlich)</string>
+    <string name="settings_night_mode_option_night_oled">OLED-freundlich</string>
     <string name="sensor_state_pressure">Barometer</string>
     <string name="bluetooth_sensor_summary">%1$s (%2$s)</string>
     <string name="settings_announcements_idle_category_title">Stillstand Benachrichtigung</string>
@@ -652,4 +652,9 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_recording_show_gps_disabled_warning_summary">Während der Aufzeichnung eine Warnung anzeigen, wenn GPS deaktiviert ist.</string>
     <string name="empty">leer</string>
     <string name="track_edit_time_offset">Zeitzonenverschiebung</string>
+    <string name="marker_detail_title">%1$d von %2$d: %3$s</string>
+    <string name="settings_night_mode_option_system_dynamic">System (DynamicColor)</string>
+    <string name="settings_night_mode_option_day_dynamic">Tag (DynamicColor)</string>
+    <string name="settings_night_mode_option_night_dynamic">Nacht (DynamicColor)</string>
+    <string name="settings_night_mode_option_night_oled_dynamic">OLED-freundlich (DynamicColor)</string>
 </resources>
