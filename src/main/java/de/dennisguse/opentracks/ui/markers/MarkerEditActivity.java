@@ -57,7 +57,7 @@ import de.dennisguse.opentracks.databinding.MarkerEditBinding;
  *
  * @author Jimmy Shih
  */
-public class MarkerEditActivity extends AbstractActivity {
+public class MarkerEditActivity extends AbstractActivity<MarkerEditBinding> {
 
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";
@@ -82,14 +82,10 @@ public class MarkerEditActivity extends AbstractActivity {
 
     private MarkerEditViewModel viewModel;
 
-    // UI elements
-    private MarkerEditBinding viewBinding;
-
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = MarkerEditBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected MarkerEditBinding createRootView() {
+        return MarkerEditBinding.inflate(getLayoutInflater());
     }
 
     @Override
@@ -200,7 +196,6 @@ public class MarkerEditActivity extends AbstractActivity {
         trackId = null;
         location = null;
         markerId = null;
-        viewBinding = null;
         viewModel = null;
         takePictureFromGallery = null;
         takePictureFromCamera = null;

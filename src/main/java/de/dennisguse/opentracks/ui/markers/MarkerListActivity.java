@@ -47,7 +47,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class MarkerListActivity extends AbstractActivity implements DeleteMarkerDialogFragment.DeleteMarkerCaller {
+public class MarkerListActivity extends AbstractActivity<MarkerListBinding> implements DeleteMarkerDialogFragment.DeleteMarkerCaller {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -58,8 +58,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     private Track.Id trackId;
 
     private MarkerListAdapter adapter;
-
-    private MarkerListBinding viewBinding;
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
@@ -115,6 +113,13 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
         setSupportActionBar(viewBinding.markerListToolbar);
         viewBinding.bottomAppBarLayout.bottomAppBar.setNavigationOnClickListener(item -> finish());
+
+        viewBinding.markerListSearchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
+            searchQuery = viewBinding.markerListSearchView.getEditText().getText().toString();
+            viewBinding.markerListSearchView.hide();
+            loadData();
+            return true;
+        });
     }
 
     @Override
@@ -140,24 +145,14 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        viewBinding = null;
         adapter = null;
         contentProviderUtils = null;
     }
 
     @NonNull
     @Override
-    protected View createRootView() {
-        viewBinding = MarkerListBinding.inflate(getLayoutInflater());
-
-        viewBinding.markerListSearchView.getEditText().setOnEditorActionListener((v, actionId, event) -> {
-            searchQuery = viewBinding.markerListSearchView.getEditText().getText().toString();
-            viewBinding.markerListSearchView.hide();
-            loadData();
-            return true;
-        });
-
-        return viewBinding.getRoot();
+    protected MarkerListBinding createRootView() {
+        return MarkerListBinding.inflate(getLayoutInflater());
     }
 
     @Override
