@@ -151,7 +151,7 @@ adb shell am start -n "de.dennisguse.opentracks.playstore/de.dennisguse.opentrac
 As of v3.3.1, OpenTracks supports custom dashboards for displaying previously recorded and live
 tracks.
 
-The reference implementation is [OSMDashboard](https://github.com/OpenTracksApp/OSMDashboard), which
+The reference implementation is [OSMDashboard](https://codeberg.org/OpenTracksApp/OSMDashboard), which
 presents an OpenStreetMap map (showing the current track, incl. updates). The Dashboard API is also
 used by [Gadgetbridge](https://codeberg.org/Freeyourgadget/Gadgetbridge/) for displaying live track
 statistics on supported wearables.

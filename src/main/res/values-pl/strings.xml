@@ -384,13 +384,13 @@ limitations under the License.
     <string name="help_gps_troubleshooting_title">OpenTracks nie zapisuje lokalizacji\?</string>
     <string name="help_data_storage_content"> Dane czujników są przechowywane dla każdej zarejestrowanej lokalizacji. W przypadku czujnika tętna oznacza to, że dla każdej lokalizacji zapisywany jest tylko <i>jeden</i> pomiar tętna. Jeśli stoisz nieruchomo lub znajdujesz się w pomieszczeniu, dane czujnika nie zostaną zarejestrowane (ale będą wyświetlane). </string>
     <string name="help_track_map_content"> Użyj małej ikony mapy.
-\n a) (aktualizacje na żywo) Zainstaluj <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Zapewnia on mapy online lub offline przez <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n a) (aktualizacje na żywo) Zainstaluj <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Zapewnia on mapy online lub offline przez <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Właściwie OSMDashboard jest oddzielną aplikacją, która tylko może uzyskać dostęp (tymczasowo) do danych ścieżki (ścieżek), które mają być wyświetlane.
 \n b) Przez zwykłą aplikację mapową (np. <a href="http://osmand.net/">OsmAnd</a> i <a href="https://maps.me/">MAPS.ME</a>). Aplikacje te muszą obsługiwać format plików KMZ (tylko lokalizacje i znaczniki czasu). W rzeczywistości, aplikacja musi obsługiwać <i>ACTION_VIEW</i> z MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_support_content"> Możesz:
 \n a) rozpowszechniać informacje o OpenTracks,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">proponować funkcje</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">zgłaszać błędy</a>,
+\n b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">proponować funkcje</a>,
+\n c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">zgłaszać błędy</a>,
 \n d) pomagać w rozwoju oprogramowania,
 \n e) kupować w <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) przekazać darowiznę, oraz

@@ -35,7 +35,7 @@ limitations under the License.
     <string name="help_track_map_content">
         Küçük harita simgesini kullanın.\n
         a)
-        (canlı güncellemeler) <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>\'u yükleyin.
+        (canlı güncellemeler) <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>\'u yükleyin.
         Bu uygulama, <a href="https://www.openstreetmap.org">OpenStreetMap</a> üzerinden çevrimiçi veya çevrimdışı haritalar sunar.\n
         Aslında, OSMDashboard sadece gösterilecek parkur(lar)ın verilerine (geçici olarak) erişebilen ayrı bir uygulamadır.
 
@@ -72,8 +72,8 @@ limitations under the License.
     <string name="help_support_content">
         Şunları yapabilirsiniz:\n
         a) OpenTracks\'i başkalarına anlatın,\n
-        b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">özellik önerin</a>,\n
-        c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">hata bildirin</a>,\n
+        b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">özellik önerin</a>,\n
+        c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">hata bildirin</a>,\n
         d) yazılım geliştirmeye yardım edin,\n
         e) <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>\'dan satın alın,\n
         f) bağış yapın ve\n

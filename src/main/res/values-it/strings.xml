@@ -33,7 +33,7 @@ limitations under the License.
     <string name="help_track_map_content">
         Utilizzare la piccola icona della mappa.\n
         a)
-        (aggiornamenti in tempo reale) Installare <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
+        (aggiornamenti in tempo reale) Installare <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
         Fornisce mappe online o offline tramite <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
         In realtà, OSMDashboard è un\'applicazione separata che può accedere (temporaneamente) solo ai dati del tracciamento(i) che verranno mostrati.
 
@@ -359,8 +359,8 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
 \nSe il problema non è stato risolto con questi accorgimenti, si prega di segnalare un bug del programma. </string>
     <string name="help_support_content"> Puoi:
 \na) spargere la voce su OpenTracks
-\nb) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">proporre delle nuove funzioni</a>,
-\nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">Segnalare un bug</a>,
+\nb) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">proporre delle nuove funzioni</a>,
+\nc) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">Segnalare un bug</a>,
 \nd) Aiutare nello sviluppo del software,
 \ne) Comprare OpenTracks su<a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \nf) Fare una donazione, infine

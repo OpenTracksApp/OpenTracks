@@ -31,7 +31,7 @@ limitations under the License.
 \n* näita radu kaardil (vt allapoole)</string>
     <string name="help_track_map_title">Kuidas näidata rada kaardil\?</string>
     <string name="help_track_map_content"> Kasutage väikest kaardisümbolit.
-\n a) (reaalajas uuendused) Installige <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. See pakub online või offline kaarte <a href="https://www.openstreetmap.org">OpenStreetMap</a> kaudu.
+\n a) (reaalajas uuendused) Installige <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. See pakub online või offline kaarte <a href="https://www.openstreetmap.org">OpenStreetMap</a> kaudu.
 \n Tegelikult, OSMDashboard on eraldi rakendus, mis saab juurdepääsu (ajutiselt) ainult näidatavate rada(de) andmetele.
 \n b) Tavalise kaardirakenduse kaudu (nt <a href="http://osmand.net/">OsmAnd</a> ja <a href="https://maps.me/">MAPS.ME</a>). Need rakendused peavad toetama KMZ failivormingut (ainult asukohad ja ajatemplid). Tegelikult peab rakendus toetama <i>ACTION_VIEW</i>-d koos MIME <i>application/vnd.google-earth.kmz</i>-ga. </string>
     <string name="help_storage_pictures_title">Kuidas salvestab OpenTracks asukohapunktitena tehtud pilte\?</string>
@@ -54,8 +54,8 @@ limitations under the License.
     <string name="help_support_title">Kuidas ma saan OpenTracks\'i toetada\?</string>
     <string name="help_support_content"> Te saate:
 \n a) levitada sõna OpenTracks\'i kohta,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">ettepanekuid teha</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">teatada vigadest</a>,
+\n b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">ettepanekuid teha</a>,
+\n c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">teatada vigadest</a>,
 \n d) aidata tarkvara arendamisel,
 \n e) osta rakendus <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play poest</a>,
 \n f) annetada ja

@@ -31,7 +31,7 @@ limitations under the License.
 \n* mostrar pistas en un mapa (ver más abajo)</string>
     <string name="help_track_map_title">¿Cómo mostrar un recorrido en un mapa\?</string>
     <string name="help_track_map_content"> Utilice el pequeño icono de mapa.
-\na) (actualizaciones en vivo) Instale <a href="https://github.com/OpenTracksApp/OSMDashboard"> OSMDashboard </a>. Proporciona mapas en línea o fuera de línea a través de <a href="https://www.openstreetmap.org"> OpenStreetMap </a>.
+\na) (actualizaciones en vivo) Instale <a href="https://codeberg.org/OpenTracksApp/OSMDashboard"> OSMDashboard </a>. Proporciona mapas en línea o fuera de línea a través de <a href="https://www.openstreetmap.org"> OpenStreetMap </a>.
 \nEn realidad, OSMDashboard es una aplicación separada que solo puede acceder (temporalmente) a los datos de los recorridos que se mostrarán.
 \nb) A través de una aplicación de mapas normal (p. ej., <a href="http://osmand.net/"> OsmAnd </a> y <a href="https://maps.me/"> MAPS.ME </a>). Estas aplicaciones deben admitir el formato de archivo KMZ (solo ubicaciones y marcas de tiempo). De hecho, una aplicación debe admitir <i> ACTION_VIEW </i> con MIME <i> application / vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">¿Cómo almacena OpenTracks las imágenes que se tomaron como marcadores\?</string>
@@ -54,8 +54,8 @@ limitations under the License.
     <string name="help_support_title">¿Cómo puedo ayudar a OpenTracks\?</string>
     <string name="help_support_content"> Usted puede:
 \na) haga correr la voz sobre OpenTracks,
-\nb) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> proponer funciones </a>,
-\nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> informar errores </a>,
+\nb) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues"> proponer funciones </a>,
+\nc) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues"> informar errores </a>,
 \nd) ayuda en el desarrollo de software,
 \ne) comprar en <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Google Play Store </a>,
 \nf) donar, y

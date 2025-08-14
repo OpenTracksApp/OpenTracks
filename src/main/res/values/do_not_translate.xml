@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-    <string name="app_web_url" translatable="false">https://github.com/OpenTracksApp/OpenTracks</string>
+    <string name="app_web_url" translatable="false">https://codeberg.org/OpenTracksApp/OpenTracks</string>
     <string name="app_name" translatable="false">OpenTracks</string>
 
     <string name="egm2008" translatable="false">EGM2008</string>
@@ -44,7 +44,7 @@ limitations under the License.
     <string name="sensor_unit_power" translatable="false">w</string>
 
     <string name="value_unknown" translatable="false">-</string>
-    <string name="report_issue_link" translatable="false">https://github.com/OpenTracksApp/OpenTracks/issues/new?labels=bug&amp;template=bug_report.md&amp;body=%1$s</string>
+    <string name="report_issue_link" translatable="false">https://codeberg.org/OpenTracksApp/OpenTracks/issues/new?labels=bug&amp;template=bug_report.md&amp;body=%1$s</string>
 
     <string-array name="marker_types">
         <item>@string/waypoint_type_atm</item>

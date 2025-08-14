@@ -12,7 +12,7 @@
     <string name="about_version_name">ಆವೃತ್ತಿಯ ಹೆಸರು: %1$s</string>
     <string name="help_storage_pictures_content">ಇವುಗಳನ್ನು ಅಪ್ಲಿಕೇಶನ್‌ನ ಆಂತರಿಕ ಸಂಗ್ರಹಣೆಯಲ್ಲಿ ಸಂಗ್ರಹಿಸಲಾಗಿದೆ (ಅಂದರೆ, OpenTracks ನಲ್ಲಿ ಮಾತ್ರ ಪ್ರವೇಶಿಸಬಹುದಾಗಿದೆ).</string>
     <string name="about_preference_title">OpenTracks ಕುರಿತು</string>
-    <string name="help_track_map_content">"  ಸಣ್ಣ ನಕ್ಷೆ ಐಕಾನ್ ಬಳಸಿ.\n\n   a) (ಲೈವ್ ಅಪ್‌ಡೇಟ್‌ಗಳು) &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt;OSMDashboard&lt;/a&gt; ಅನ್ನು ಸ್ಥಾಪಿಸಿ. ಇದು ಆನ್‌ಲೈನ್ ಅಥವಾ ಆಫ್‌ಲೈನ್ ನಕ್ಷೆಗಳನ್ನು &lt;a href=\"https://www.openstreetmap.org\"&gt;OpenStreetMap&lt;/a&gt; ಮೂಲಕ ಒದಗಿಸುತ್ತದೆ.\n\n   ವಾಸ್ತವವಾಗಿ, OSMDashboard ಒಂದು ಪ್ರತ್ಯೇಕ ಅಪ್ಲಿಕೇಶನ್ ಆಗಿದ್ದು ಅದು ತೋರಿಸಲಿರುವ ಟ್ರ್ಯಾಕ್(ಗಳ) ಡೇಟಾವನ್ನು ಮಾತ್ರ ಪ್ರವೇಶಿಸಬಹುದು (ತಾತ್ಕಾಲಿಕವಾಗಿ).\n\n   ಬಿ) ಸಾಮಾನ್ಯ ನಕ್ಷೆ ಅಪ್ಲಿಕೇಶನ್ ಮೂಲಕ (ಉದಾ., &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; ಮತ್ತು &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). ಈ ಅಪ್ಲಿಕೇಶನ್‌ಗಳು KMZ ಫೈಲ್ ಫಾರ್ಮ್ಯಾಟ್ ಅನ್ನು ಬೆಂಬಲಿಸುವ ಅಗತ್ಯವಿದೆ (ಸ್ಥಳಗಳು ಮತ್ತು ಸಮಯಸ್ಟ್ಯಾಂಪ್‌ಗಳು ಮಾತ್ರ). ವಾಸ್ತವವಾಗಿ, ಒಂದು ಅಪ್ಲಿಕೇಶನ್ MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt; ಜೊತೆಗೆ &lt;i&gt;ACTION_VIEW&lt;/i&gt; ಅನ್ನು ಬೆಂಬಲಿಸುವ ಅಗತ್ಯವಿದೆ.  "</string>
+    <string name="help_track_map_content">"  ಸಣ್ಣ ನಕ್ಷೆ ಐಕಾನ್ ಬಳಸಿ.\n\n   a) (ಲೈವ್ ಅಪ್‌ಡೇಟ್‌ಗಳು) &lt;a href=\"https://codeberg.org/OpenTracksApp/OSMDashboard\"&gt;OSMDashboard&lt;/a&gt; ಅನ್ನು ಸ್ಥಾಪಿಸಿ. ಇದು ಆನ್‌ಲೈನ್ ಅಥವಾ ಆಫ್‌ಲೈನ್ ನಕ್ಷೆಗಳನ್ನು &lt;a href=\"https://www.openstreetmap.org\"&gt;OpenStreetMap&lt;/a&gt; ಮೂಲಕ ಒದಗಿಸುತ್ತದೆ.\n\n   ವಾಸ್ತವವಾಗಿ, OSMDashboard ಒಂದು ಪ್ರತ್ಯೇಕ ಅಪ್ಲಿಕೇಶನ್ ಆಗಿದ್ದು ಅದು ತೋರಿಸಲಿರುವ ಟ್ರ್ಯಾಕ್(ಗಳ) ಡೇಟಾವನ್ನು ಮಾತ್ರ ಪ್ರವೇಶಿಸಬಹುದು (ತಾತ್ಕಾಲಿಕವಾಗಿ).\n\n   ಬಿ) ಸಾಮಾನ್ಯ ನಕ್ಷೆ ಅಪ್ಲಿಕೇಶನ್ ಮೂಲಕ (ಉದಾ., &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; ಮತ್ತು &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). ಈ ಅಪ್ಲಿಕೇಶನ್‌ಗಳು KMZ ಫೈಲ್ ಫಾರ್ಮ್ಯಾಟ್ ಅನ್ನು ಬೆಂಬಲಿಸುವ ಅಗತ್ಯವಿದೆ (ಸ್ಥಳಗಳು ಮತ್ತು ಸಮಯಸ್ಟ್ಯಾಂಪ್‌ಗಳು ಮಾತ್ರ). ವಾಸ್ತವವಾಗಿ, ಒಂದು ಅಪ್ಲಿಕೇಶನ್ MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt; ಜೊತೆಗೆ &lt;i&gt;ACTION_VIEW&lt;/i&gt; ಅನ್ನು ಬೆಂಬಲಿಸುವ ಅಗತ್ಯವಿದೆ.  "</string>
     <string name="about_url">ಪ್ರಾಜೆಕ್ಟ್ ವೆಬ್ ಪುಟ: <a href="%1$s">%1$s</a></string>
     <string name="help_track_export_title">ರೆಕಾರ್ಡ್ ಮಾಡಿದ ಟ್ರ್ಯಾಕ್‌ಗಳನ್ನು ನಾನು ಹೇಗೆ ರಫ್ತು ಮಾಡುವುದು/ಹಂಚಿಕೊಳ್ಳಬಹುದು?</string>
     <string name="help_storage_pictures_title">ಮಾರ್ಕರ್‌ಗಳಾಗಿ ತೆಗೆದ ಚಿತ್ರಗಳನ್ನು OpenTracks ಹೇಗೆ ಸಂಗ್ರಹಿಸುತ್ತದೆ?</string>
@@ -502,8 +502,8 @@
     <string name="help_data_storage_content"> \u0020ಸಂವೇದಕ ಡೇಟಾವನ್ನು ಪ್ರತಿ ರೆಕಾರ್ಡ್ ಮಾಡಿದ ಸ್ಥಳದಲ್ಲಿ ಸಂಗ್ರಹಿಸಲಾಗುತ್ತದೆ. ಹೃದಯ ಬಡಿತ ಸಂವೇದಕದ ಪರಿಭಾಷೆಯಲ್ಲಿ, ಇದರರ್ಥ ಕೇವಲ <i>ಒಂದು</i> ಹೃದಯ ಬಡಿತ ಮಾಪನವನ್ನು ಪ್ರತಿ ಸ್ಥಳಕ್ಕೆ ಸಂಗ್ರಹಿಸಲಾಗುತ್ತದೆ. ನೀವು ಇನ್ನೂ ನಿಂತಿದ್ದರೆ ಅಥವಾ ಒಳಾಂಗಣದಲ್ಲಿದ್ದರೆ, ಯಾವುದೇ ಸಂವೇದಕ ಡೇಟಾವನ್ನು ದಾಖಲಿಸಲಾಗುವುದಿಲ್ಲ (ಆದರೆ ಅದನ್ನು ತೋರಿಸಲಾಗುತ್ತದೆ). \u0020</string>
     <string name="help_support_content"> \u0020ನೀವು ಇದನ್ನು ಮಾಡಬಹುದು:
 \n \u0020 a) OpenTracks ಬಗ್ಗೆ ಪ್ರಚಾರ ಮಾಡಿ,
-\n \u0020 b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಪ್ರಸ್ತಾಪಿಸಿ</a>,
-\n \u0020 ಸಿ) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">ಬಗ್‌ಗಳನ್ನು ವರದಿ ಮಾಡಿ</a>,
+\n \u0020 b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">ವೈಶಿಷ್ಟ್ಯಗಳನ್ನು ಪ್ರಸ್ತಾಪಿಸಿ</a>,
+\n \u0020 ಸಿ) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">ಬಗ್‌ಗಳನ್ನು ವರದಿ ಮಾಡಿ</a>,
 \n \u0020 ಡಿ) ಸಾಫ್ಟ್‌ವೇರ್ ಅಭಿವೃದ್ಧಿಯಲ್ಲಿ ಸಹಾಯ,
 \n \u0020 ಇ) <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a> ನಲ್ಲಿ ಖರೀದಿಸಿ,
 \n \u0020 ಎಫ್) ದಾನ, ಮತ್ತು

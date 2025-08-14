@@ -419,13 +419,13 @@ limitations under the License.
     <string name="import_file_imported">Importuotas failas %1$s</string>
     <string name="import_parser_error">Parserio klaida: %1$s</string>
     <string name="help_track_map_content"> Naudokite mažą žemėlapio piktogramą.
-\n a) (tiesioginiai atnaujinimai) Įdiekite <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Joje pateikiami internetiniai arba neprisijungusieji žemėlapiai per <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n a) (tiesioginiai atnaujinimai) Įdiekite <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Joje pateikiami internetiniai arba neprisijungusieji žemėlapiai per <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Iš tikrųjų OSMDashboard yra atskira programa, kuri gali tik pasiekti (laikinai) kelio (-ų), kuris (-ie) bus rodomas (-i), duomenis.
 \n b) Per įprastą žemėlapių programą (pvz., <a href="http://osmand.net/">OsmAnd</a> ir <a href="https://maps.me/">MAPS.ME</a>). Šios programos turi palaikyti KMZ failo formatą (tik vietovių ir laiko žymas). Tiesą sakant, programa turi palaikyti <i>AKCIJŲ_VADOVĄ</i> su MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_support_content"> Galite:
 \n a) skleisti žinią apie \"OpenTracks\",
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">pasiūlyti funkcijas</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">pranešti apie klaidas</a>,
+\n b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">pasiūlyti funkcijas</a>,
+\n c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">pranešti apie klaidas</a>,
 \n d) padėti kurti programinę įrangą,
 \n e) pirkti <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">\"Google Play\" parduotuvėje</a>,
 \n f) aukoti ir

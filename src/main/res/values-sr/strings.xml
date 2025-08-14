@@ -309,7 +309,7 @@ limitations under the License.
     <string name="help_track_map_title">Kako da se pokaže praćenja na mapi\?</string>
     <string name="help_track_map_content"> Koristi ikonicu male mape.
 \nA) (apdejti uživo) Instalirajte
-\n<a href="https://github.com/OpenTracksApp/OSMDashboard">OSMPočetna</a>. Izvodi onlajn mape ili oflajn preko <a href="https://www.openstreetmap.org">OtvorenihMapaZaUlice</a>.
+\n<a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMPočetna</a>. Izvodi onlajn mape ili oflajn preko <a href="https://www.openstreetmap.org">OtvorenihMapaZaUlice</a>.
 \nZapravo, OSMPočtna je pojedina aplikacija koja može pristupiti (privremeno) podacima o praćenjima koji se prikazuju.
 \nB) Sa normalnim aplikacijama za mape (npr. <a href="http://osmand.net/">OSMAnd</a> i <a href="https://maps.me/">MOJE.MAPE</a>). Te aplikacije imaju podršku za KMZ fajl format (lokacije i tajmstampovi). U temi, aplikacija mora da podrži <i>ACTION_VIEW</i> sa MIME-om <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="about_version_code">Kod verzije: %1$d</string>

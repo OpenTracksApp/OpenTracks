@@ -3,7 +3,7 @@
 ## Testing
 
 Just use OpenTracks and tell us what can be improved by opening an
-issue [here](https://github.com/OpenTracksApp/OpenTracks/issues/new/choose).
+issue [here](https://codeberg.org/OpenTracksApp/OpenTracks/issues/new/choose).
 
 If we broke things (happens now and then), please tell us also.
 
@@ -16,7 +16,7 @@ Translations are hosted on [hosted.weblate.org](https://hosted.weblate.org/engag
 You have a cool idea for a feature that is missing in OpenTracks?
 And you would like to help by implementing it?
 If not, you can just take a look at
-the [issue tracker](https://github.com/OpenTracksApp/OpenTracks/issues).
+the [issue tracker](https://codeberg.org/OpenTracksApp/OpenTracks/issues).
 
 Advices:
 

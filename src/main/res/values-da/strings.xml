@@ -31,7 +31,7 @@ limitations under the License.
 \n* vis spor på et kort (se nedenfor)</string>
     <string name="help_track_map_title">Hvordan viser man et spor på et kort?</string>
     <string name="help_track_map_content"> Brug det lille kortikon.
-\na) (liveopdateringer) Installer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Den tilbyder online eller offline kort via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\na) (liveopdateringer) Installer <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Den tilbyder online eller offline kort via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \nFaktisk er OSMDashboard en separat app, der kun (midlertidigt) kan få adgang til dataene for de(t) spor, der vises.
 \nb) Via et normalt kortprogram (f.eks. <a href="http://osmand.net/">OsmAnd</a> og <a href="https://maps.me/">MAPS.ME</a>). Disse programmer skal understøtte KMZ-filformatet (kun lokaliteter og tidsstempler). Faktisk skal en app understøtte <i>ACTION_VIEW</i> med MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">Hvordan gemmer OpenTracks billeder, der blev taget som markører?</string>
@@ -54,8 +54,8 @@ limitations under the License.
     <string name="help_support_title">Hvordan kan jeg støtte OpenTracks?</string>
     <string name="help_support_content"> Du kan:
 \na) fortælle andre om OpenTracks,
-\nb) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> foreslå funktioner </a>,
-\nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> rapportere om fejl </a>,
+\nb) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues"> foreslå funktioner </a>,
+\nc) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues"> rapportere om fejl </a>,
 \nd) hjælpe med udvikling af appen,
 \ne) købe appen i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Google Play Store </a>,
 \nf) donere, og
