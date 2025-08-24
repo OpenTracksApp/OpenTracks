@@ -1,0 +1,4 @@
+v4.22.0: OpenTracks
+
+Changes:
+- Migration to https://codeberg.org/OpenTracksApp/OpenTracks
