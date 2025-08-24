@@ -320,7 +320,7 @@
     <string name="help_track_export_title">Como posso exportar/compartilhar trilhos gravados?</string>
     <string name="help_track_export_content"> Os trilhos podem ser exportados como configurações nos formatos KMZ, KML ou GPX. KMZ/KML exporta todos os dados; GPX exporta apenas localizações. Os trilhos partilhados por meio do <i>ícone de partilha</i> são partilhados como KMZ. </string>
     <string name="help_track_map_content"> Utilize o pequeno ícone do mapa.
-\n a) (actualizações ao vivo) Instalar <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Fornece mapas online ou offline através de <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n a) (actualizações ao vivo) Instalar <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Fornece mapas online ou offline através de <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Na verdade, o OSMDashboard é uma aplicação separada que só pode aceder (temporariamente) aos dados do(s) trilho(s) que vão ser mostrados.
 \n b) Através de uma aplicação de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAnd</a> e <a href="https://maps.me/">MAPS.ME</a>). Estas aplicações precisam de suportar o formato de ficheiro KMZ (apenas locais e timestamps). De facto, uma aplicação precisa de suportar <i>ACTION_VIEW</i> com MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_recording_content">OpenTracks usa o sensor GPS do aparelho para registar continuamente a localização. Se o aparelho GPS apresentar dados imprecisos (por exemplo, localização, velocidade, elevação), o OpenTracks não pode fazer nada a esse respeito.</string>
@@ -336,8 +336,8 @@
 \n Se tudo isto não ajudar, por favor, abra um bug. </string>
     <string name="help_support_content"> Pode:
 \n a) espalhar a palavra sobre OpenTracks,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propose features</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">reportar bugs</a>,
+\n b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">propose features</a>,
+\n c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">reportar bugs</a>,
 \n d) ajuda no desenvolvimento de software,
 \n e) comprar em <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) doar, e

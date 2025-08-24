@@ -389,8 +389,8 @@ limitations under the License.
     <string name="help_data_storage_content"> Дані датчика зиписуються в кожному зареєстрованому місці. Що стосується датчика частоти серцевих скорочень для кожного місцезнаходження зберігається тільки <i>одне</i> вимірювання частоти. Якщо ви зупинилися або перебуваєте в приміщенні, дані датчика не будуть записані (але будуть відображатися). </string>
     <string name="help_support_content"> Ви можете:
 \n а) поширювати інформацію про OpenTracks,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">пропонувати нові функції</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">повідомляти про помилки</a>,
+\n b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">пропонувати нові функції</a>,
+\n c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">повідомляти про помилки</a>,
 \n d) допомогти в розробці програмного забезпечення,
 \n e) купувати в <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) зробити фінансовий внесок, та
@@ -410,7 +410,7 @@ limitations under the License.
     <string name="share_image_subject">Я хотів би поділитися з вами зображенням</string>
     <string name="settings_default_export_uri_title">Каталог експорту треків</string>
     <string name="help_track_map_content"> Використовуйте маленьку піктограму мапи.
-\n a) (оновлення в реальному часі) Встановіть застосунок <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Він дозволяє дивитися карти онлайн чи офлайн завдяки <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n a) (оновлення в реальному часі) Встановіть застосунок <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Він дозволяє дивитися карти онлайн чи офлайн завдяки <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Насправді OSMDashboard є окремим застосунком, який має тимчасовий доступ лише до даних треку(ів) які будуть відображені.
 \n b) Через звичайний картографічний застосунок (на приклад, <a href="http://osmand.net/">OsmAnd</a> та <a href="https://maps.me/">MAPS.ME</a>). Ці застосунки повинні підтримувати формат файлів KMZ (тільки місцеположення та мітки часу). Фактично, застосунок повинен підтримувати функцію <i>ACTION_VIEW</i> з MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="settings_prevent_reimport_tracks_title">Заборонити повторний імпорт треків</string>

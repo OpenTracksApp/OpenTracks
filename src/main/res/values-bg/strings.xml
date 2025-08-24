@@ -339,7 +339,7 @@ limitations under the License.
 \n
 \n Ако всичко не помогне, моля, докладвайте за грешка. </string>
     <string name="help_track_map_content"> Използвайте малката икона на картата.
-\n а) (актуализации на живо) Инсталирайте <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Тя предоставя онлайн или офлайн карти чрез <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n а) (актуализации на живо) Инсталирайте <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Тя предоставя онлайн или офлайн карти чрез <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Всъщност OSMDashboard е отделно приложение, което може да има достъп (временно) само до данните на трасето (трасетата), които ще бъдат показани.
 \n б) Чрез нормално приложение за карти (напр. чрез <a href="http://osmand.net/">OsmAnd</a> и <a href="https://maps.me/">MAPS.ME</a>). Тези приложения трябва да поддържат файловия формат KMZ (само местоположения и времеви марки). Всъщност едно приложение трябва да поддържа <i>ACTION_VIEW</i> с MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_data_storage_title">Как OpenTracks съхранява данните от сензорите\?</string>
@@ -410,8 +410,8 @@ limitations under the License.
     <string name="stats_loss">Загуба</string>
     <string name="help_support_content"> Можете да:
 \n а) да разпространявате информация за OpenTracks,
-\n б) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">предлагате функции</a>,
-\n в) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">да съобщавате за грешки</a>,
+\n б) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">предлагате функции</a>,
+\n в) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">да съобщавате за грешки</a>,
 \n г) да помагате при разработването на софтуера,
 \n д) да купувате в <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n е) да направите дарение, и

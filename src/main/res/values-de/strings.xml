@@ -31,7 +31,7 @@ limitations under the License.
 \n* Tracks auf einer Karte anzeigen (siehe unten)</string>
     <string name="help_track_map_title">Wie wird ein Track auf einer Karte angezeigt?</string>
     <string name="help_track_map_content"> \u0020Verwende das kleine Kartensymbol.
-\na) (Live-Aktualisierungen) Installiere <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. OSMDashboard stellt Online- oder Offline-Karten über <a href="https://www.openstreetmap.org">OpenStreetMap</a> zur Verfügung. Tatsächlich ist OSMDashboard eine separate App, die nur (vorübergehend) auf die Daten der anzuzeigenden Strecke(n) zugreifen kann.
+\na) (Live-Aktualisierungen) Installiere <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. OSMDashboard stellt Online- oder Offline-Karten über <a href="https://www.openstreetmap.org">OpenStreetMap</a> zur Verfügung. Tatsächlich ist OSMDashboard eine separate App, die nur (vorübergehend) auf die Daten der anzuzeigenden Strecke(n) zugreifen kann.
 \nb) Über eine normale Kartenanwendung (z.B. <a href="http://osmand.net/">OsmAnd</a> und <a href="https://maps.me/">MAPS.ME</a>). Diese Anwendungen müssen das KMZ-Dateiformat unterstützen (nur Orte und Zeitstempel). Genauer ausgedrückt muss eine App <i>ACTION_VIEW</i> mit MIME <i>application/vnd.google-earth.kmz</i> unterstützen. \u0020</string>
     <string name="help_storage_pictures_title">Wie speichert OpenTracks Fotos, die als Markierungen aufgenommen wurden?</string>
     <string name="help_storage_pictures_content">Diese werden App-intern gespeichert (d.h. nur innerhalb von OpenTracks zugänglich).</string>
@@ -55,8 +55,8 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="help_support_title">Wie kann ich OpenTracks unterstützen?</string>
     <string name="help_support_content"> \u0020Du kannst:
 \na) auf OpenTracks aufmerksam machen,
-\nb) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">Funktionen vorschlagen</a>,
-\nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">Fehler melden</a>,
+\nb) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">Funktionen vorschlagen</a>,
+\nc) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">Fehler melden</a>,
 \nd) bei der Software-Entwicklung helfen,
 \ne) es im <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a> kaufen,
 \nf) spenden, und

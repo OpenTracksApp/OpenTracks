@@ -35,7 +35,7 @@ limitations under the License.
     <string name="help_track_map_content">
         Use the small map icon.\n
         a)
-        (live updates) Install <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
+        (live updates) Install <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
         It provides online or offline maps via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
         Actually, OSMDashboard is a separate app that only can access (temporarily) the data of track(s) that are going to be shown.
 
@@ -72,8 +72,8 @@ limitations under the License.
     <string name="help_support_content">
         You can:\n
         a) spread the word about OpenTracks,\n
-        b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propose features</a>,\n
-        c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">report bugs</a>,\n
+        b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">propose features</a>,\n
+        c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">report bugs</a>,\n
         d) help in software development,\n
         e) buy in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n
         f) donate, and\n

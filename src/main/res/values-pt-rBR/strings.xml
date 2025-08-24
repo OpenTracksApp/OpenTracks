@@ -289,14 +289,14 @@
 \n* funciona completamente offline
 \n* mostrar trilhas em um mapa (veja abaixo)</string>
     <string name="help_track_map_content"> Use o pequeno ícone do mapa.
-\n a) (atualizações ao vivo) Instale <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Ele fornece mapas online ou offline via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n a) (atualizações ao vivo) Instale <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Ele fornece mapas online ou offline via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Na verdade, OSMDashboard é um aplicativo separado que só pode acessar (temporariamente) os dados da(s) trilha(s) que serão mostradas.
 \n b) Por meio de um aplicativo de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAn </a> e <a href="https://maps.me/">MAPS.ME</a>). Esses aplicativos precisam ser compatíveis com o formato de arquivo KMZ (apenas locais e marcações de data/hora). Na verdade, um aplicativo precisa ser compatível com<i>ACTION_VIEW</i> com MIME<i> application/vnd.google-earth.kmz</i>. </string>
     <string name="help_data_storage_content"> Os dados do sensor são armazenados por local registrado. Em termos de sensor de frequência cardíaca, isso significa que apenas <i>uma</i> medição de frequência cardíaca é armazenada por local. Se você estiver parado ou dentro de casa, nenhum dado do sensor será registrado (mas será mostrado). </string>
     <string name="help_support_content"> Você pode:
 \n a) espalhe a palavra sobre OpenTracks,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propor recursos</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">relatar bugs</a>,
+\n b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">propor recursos</a>,
+\n c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">relatar bugs</a>,
 \n d) ajudar no desenvolvimento de software,
 \n e) comprar na <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) doar, e

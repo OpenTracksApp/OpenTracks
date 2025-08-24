@@ -372,7 +372,7 @@ limitations under the License.
     <string name="help_storage_pictures_content">Disse lagres i programmets internlager (dvs. kun tilgjengelig i OpenTracks).</string>
     <string name="generic_click_twice_cancel">Trykk tilbake-knappen igjen for å avbryte</string>
     <string name="help_track_map_content"> Bruk det lille kartikonet.
-\n a) (sanntidsoppdateringer) Installer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Dette gir nettbaserte eller nettfrakoblede kart via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n a) (sanntidsoppdateringer) Installer <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Dette gir nettbaserte eller nettfrakoblede kart via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Egentlig er OSMDashboard et eget program som bare har tilgang (midlertidig) på dataene til spor som skal vises.
 \n b) Via et vanlig kartprogram (f.eks. <a href="http://osmand.net/">OsmAnd</a> og <a href="https://maps.me/">MAPS.ME</a>). Disse programmene må støtte KMZ-filformatet (bare posisjoner og tidsstempler). Faktisk trenger et program å støtte <i>ACTION_VIEW</i> med MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_track_export_title">Hvordan eksportere/dele spor som er tatt opp\?</string>
@@ -383,7 +383,7 @@ limitations under the License.
     <string name="help_data_storage_content"> Sensordata lagres per posisjon som er tatt opp. Når det gjelder pulssensorer betyr dette at kun <i>én</i> pulsmåling lagres per posisjon. Hvis du står stille eller er innendørs, blir ingen sensordata tatt opp (men de vil bli vist). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks tar ikke opp posisjoner\?</string>
     <string name="help_gps_troubleshooting_content">Hva du kan gjøre:\n a) sjekk om GPS er slått på,\n b) forbedre GPS-mottak (f.eks. gå utendørs),\n c) sjekk med programmet <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, og\n d) slå av strømsparing.\n \n Hvis alt dette ikke hjelper, kan du rapportere en feil.</string>
-    <string name="help_support_content">Du kan:\n a) spre info om OpenTracks,\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">foreslå funksjoner</a>,\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">rapportere feil</a>,\n d) hjelpe til med programvareutvikling,\n e) kjøpe programmet i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n f) donere, og\n g) gjøre noe du tror hjelper OpenTracks.</string>
+    <string name="help_support_content">Du kan:\n a) spre info om OpenTracks,\n b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">foreslå funksjoner</a>,\n c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">rapportere feil</a>,\n d) hjelpe til med programvareutvikling,\n e) kjøpe programmet i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n f) donere, og\n g) gjøre noe du tror hjelper OpenTracks.</string>
     <string name="description_altitude_loss">Total nedstigning: %1$d m (%2$d ft)</string>
     <string name="stats_loss">Total nedstigning</string>
     <string name="import_prevent_reimport">Du har stilt inn forhindring av at spor importeres om igjen</string>

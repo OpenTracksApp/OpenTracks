@@ -305,7 +305,7 @@ limitations under the License.
     <string name="waypoint_type_water_fountain">фонтан</string>
     <string name="waypoint_type_waypoint">путевая точка</string>
     <string name="help_track_map_content"> Используйте маленький значок карты.
-\nа) (обновление в реальном времени) Установите <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. В нем доступны онлайн или оффлайн карты <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\nа) (обновление в реальном времени) Установите <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. В нем доступны онлайн или оффлайн карты <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \nНа самом деле, OSMDashboard — это отдельное приложение, которое может получить (временный) доступ только к данным трека(-ов), которые будут просмотрены.
 \nб) Через обычное картографическое приложение (например, <a href="http://osmand.net/">OsmAnd</a> и <a href="https://maps.me/">MAPS.ME</a>). Такие приложения должны поддерживать формат файлов KMZ (только точки местоположения и метки времени). Фактически, приложение должно поддерживать <i>ACTION_VIEW</i> с MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">Как OpenTracks хранит изображения, используемые в качестве маркеров?</string>
@@ -409,8 +409,8 @@ limitations under the License.
     <string name="share_image_body">Я думаю, вас может заинтересовать это изображение.</string>
     <string name="help_support_content"> Вы можете:
 \n a) распространять информацию об OpenTracks,
-\n б) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">предлагать возможности</a>,
-\n в) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">сообщать об ошибках</a>,
+\n б) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">предлагать возможности</a>,
+\n в) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">сообщать об ошибках</a>,
 \n d) помочь в написании кода приложения,
 \n д) купить приложение в <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) пожертвовать денежные средства, и

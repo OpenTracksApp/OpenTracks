@@ -419,14 +419,14 @@ limitations under the License.
 \n Dacă totul nu ajută, vă rugăm să raportați un bug. </string>
     <string name="help_support_content"> Puteți:
 \n a) să răspândiți vestea despre OpenTracks,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propuneți caracteristici</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">raportați bug-uri</a>,
+\n b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">propuneți caracteristici</a>,
+\n c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">raportați bug-uri</a>,
 \n d) ajutați la dezvoltarea software-ului,
 \n e) cumpărați în <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) donați, și
 \n g) faceți orice credeți că ajută OpenTracks. </string>
     <string name="help_track_map_content"> Utilizați pictograma mică a hărții.
-\n a) (actualizări live) Instalați <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Acesta oferă hărți online sau offline prin intermediul <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n a) (actualizări live) Instalați <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Acesta oferă hărți online sau offline prin intermediul <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n De fapt, OSMDashboard este o aplicație separată care poate accesa (temporar) doar datele track-ului (track-urilor) care urmează să fie afișate.
 \n b) Prin intermediul unei aplicații normale de hărți (de exemplu, <a href="http://osmand.net/">OsmAnd</a> și <a href="https://maps.me/">MAPS.ME</a>). Aceste aplicații trebuie să suporte formatul de fișier KMZ (numai locații și marcaje temporale). De fapt, o aplicație trebuie să suporte <i>ACTION_VIEW</i> cu MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <plurals name="generic_completed_with_errors">

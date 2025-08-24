@@ -354,7 +354,7 @@ limitations under the License.
     <string name="import_error_list_dialog_title">Tệp không được nhập</string>
     <string name="import_thread_interrupted">Thread đã bị gián đoạn</string>
     <string name="help_track_map_content"> Sử dụng biểu tượng bản đồ nhỏ.
-\n a) (cập nhật trực tiếp) Cài đặt <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Nó cung cấp các bản đồ trực tuyến hoặc ngoại tuyến qua <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n a) (cập nhật trực tiếp) Cài đặt <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Nó cung cấp các bản đồ trực tuyến hoặc ngoại tuyến qua <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Thực ra, OSMDashboard là một ứng dụng riêng biệt chỉ có thể truy cập (tạm thời) dữ liệu của (các) tuyến đường sẽ được hiện.
 \n b) Qua một ứng dụng bản đồ bình thường (vd: <a href="http://osmand.net/">OsmAnd</a> và <a href="https://maps.me/">MAPS.ME</a>). Các ứng dụng này cần phải hỗ trợ định dạng tệp KMZ (chỉ có vị trí và dấu thời gian). Thực tế, một ứng dụng cần phải hỗ trợ <i>ACTION_VIEW</i> với MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_track_export_title">Tôi có thể xuất/chia sẻ các tuyến đường đã ghi lại như thế nào\?</string>
@@ -363,8 +363,8 @@ limitations under the License.
     <string name="help_gps_troubleshooting_title">OpenTracks đang không ghi lại vị trí\?</string>
     <string name="help_support_content"> Bạn có thể:
 \n a) cho người khác biết về OpenTracks,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">đề nghị các tính năng</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">báo cáo lỗi</a>,
+\n b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">đề nghị các tính năng</a>,
+\n c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">báo cáo lỗi</a>,
 \n d) giúp đỡ trong việc phát triển phần mềm,
 \n e) mua trong <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">CH Play</a>,
 \n f) ủng hộ, và

@@ -353,7 +353,7 @@ limitations under the License.
     <string name="share_image_subject">Jag skulle vilja dela en bild med dig</string>
     <string name="import_progress_summary_exists_msg">Finns redan</string>
     <string name="help_track_map_content"> Använd den lilla kartikonen.
-\n a) (liveuppdateringar) Installera <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Den ger online- eller offlinekartor via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n a) (liveuppdateringar) Installera <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Den ger online- eller offlinekartor via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Egentligen är OSMDashboard en separat app som endast kan få tillgång (tillfälligt) till data för de spår som ska visas.
 \n b) Via ett vanligt kartprogram (t.ex. <a href="http://osmand.net/">OsmAnd</a> och <a href="https://maps.me/">MAPS.ME</a>). Dessa program måste ha stöd för KMZ-filformatet (endast platser och tidsstämplar). I själva verket måste en app stödja <i>ACTION_VIEW</i> med MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="track_pace_notification">Takt: %1$s</string>
@@ -424,8 +424,8 @@ limitations under the License.
     </plurals>
     <string name="help_support_content"> Det kan du göra:
 \n a) sprida ordet om OpenTracks,
-\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">föreslå funktioner</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">rapportera fel</a>,
+\n b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">föreslå funktioner</a>,
+\n c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">rapportera fel</a>,
 \n d) hjälpa till med programvaruutveckling,
 \n e) köpa i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) donera, och

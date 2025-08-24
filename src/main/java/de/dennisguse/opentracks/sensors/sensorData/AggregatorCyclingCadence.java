@@ -36,7 +36,7 @@ public class AggregatorCyclingCadence extends Aggregator<BluetoothHandlerCycling
             return;
         }
 
-        // TODO We have to treat with overflow according to the documentation: read https://github.com/OpenTracksApp/OpenTracks/pull/953#discussion_r711625268
+        // TODO We have to treat with overflow according to the documentation: read https://codeberg.org/OpenTracksApp/OpenTracks/pulls/953#issuecomment-6466930
         if (current.value().crankRevolutionsCount() < previous.value().crankRevolutionsCount()) {
             Log.e(TAG, "Crank revolutions count difference is invalid: cannot compute cadence.");
             return;

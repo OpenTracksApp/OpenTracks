@@ -550,7 +550,7 @@ limitations under the License.
     <string name="settings_running_sensor">Trčanje</string>
     <string name="import_thread_interrupted">Komponenta procesa prekinuta</string>
     <string name="help_track_map_content"> \u0020Koristi malu ikonu karte. 
-\n \u0020a) (aktualiziranje uživo) Instaliraj <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Omogućuje online ili offline karte putem <a href="https://www.openstreetmap.org">OpenStreetMap</a>. 
+\n \u0020a) (aktualiziranje uživo) Instaliraj <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Omogućuje online ili offline karte putem <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n \u0020Zapravo, OSMDashboard je zasebna aplikacija koja može samo (privremeno) pristupiti podacima ruta koje će se prikazati. 
 \n \u0020b) Putem uobičajene aplikacije za karte (npr. <a href="http://osmand.net/">OsmAnd</a> i <a href="https://maps.me/">MAPS.ME</a>). Ove aplikacije moraju podržavati datotečni format KMZ (samo lokacije i vremenske oznake). Zapravo, aplikacija mora podržavati <i>ACTION_VIEW</i> s MIME <i>application/vnd.google-earth.kmz</i>. \u0020</string>
     <string name="export_dir_not_writable">" (zabranjeno pisanje!)"</string>
@@ -573,8 +573,8 @@ limitations under the License.
     <string name="activity_type_escooter">e-skuter</string>
     <string name="help_support_content"> \u0020Možeš: 
 \n \u0020a) širiti glas o OpenTracksu, 
-\n \u0020b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">predložiti funkcije</a>, 
-\n \u0020c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">prijaviti greške</a>, 
+\n \u0020b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">predložiti funkcije</a>,
+\n \u0020c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">prijaviti greške</a>,
 \n \u0020d) pomoći u razvoju softvera, 
 \n \u0020e) kupiti na stranici <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Trgovina Google Play</a>, 
 \n \u0020f) donirati 

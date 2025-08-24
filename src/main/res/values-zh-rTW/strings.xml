@@ -32,7 +32,7 @@ limitations under the License.
 \n * 在地圖上顯示蹤跡（見下文）</string>
     <string name="help_track_map_title">如何在地圖顯示一個蹤跡？</string>
     <string name="help_track_map_content"> \u0020使用小的地圖圖示。 
-\n \u0020a) （即時更新）安裝 <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>。它透過 <a href="https://www.openstreetmap.org">OpenStreetMap</a> 提供線上或離線地圖。 
+\n \u0020a) （即時更新）安裝 <a href="https://codeberg.org/OpenTracksApp/OSMDashboard">OSMDashboard</a>。它透過 <a href="https://www.openstreetmap.org">OpenStreetMap</a> 提供線上或離線地圖。
 \n \u0020實際上，OSMDashboard 是一個單獨的應用程式，只能（暫時）存取將要顯示的蹤跡資料。 
 \n \u0020b) \u0020透過一個普通的地圖應用程式（例如，<a href="http://osmand.net/">OsmAnd</a> 與 <a href="https://maps.me/">MAPS.ME</a>）。 這些 APP 需要支援 KMZ 檔案格式（只有位置與時間戳記）。 更準確地說，APP 需要支援 <i>ACTION_VIEW</i> 與 MIME <i>application/vnd.google-earth.kmz</i>。 \u0020</string>
     <string name="help_storage_pictures_title">OpenTracks 如何存儲作為標記拍攝的照片？</string>
@@ -60,8 +60,8 @@ limitations under the License.
     <string name="help_support_content">
         您可以：\n
         a) 推廣 OpenTracks，\n
-        b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">提出建議</a>，\n
-        c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">回報 bugs</a>，\n
+        b) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">提出建議</a>，\n
+        c) <a href="https://codeberg.org/OpenTracksApp/OpenTracks/issues">回報 bugs</a>，\n
         d) 幫助軟體開發，\n
         e) 在 <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play 商店</a> 購買它，\n
         f) 贊助，以及\n

@@ -31,4 +31,4 @@ By using explicit Intents for the calls and URIs with specific temporary read pe
 
 All required information can be found in `IntentDashboardUtils.java`. 
 
-A _reference implementation_ is the [OSMDashboard](https://github.com/OpenTracksApp/OSMDashboard).
+A _reference implementation_ is the [OSMDashboard](https://codeberg.org/OpenTracksApp/OSMDashboard).
