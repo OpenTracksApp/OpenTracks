@@ -601,7 +601,7 @@ limitations under the License.
     <string name="value_internal_sensor">Внутренний датчик</string>
     <string name="settings_locale_title">Язык</string>
     <string name="settings_locale_system_default">Как в системе</string>
-    <string name="settings_night_mode_option_night_oled">Ночной (полностью чёрный)</string>
+    <string name="settings_night_mode_option_night_oled">Полностью чёрный</string>
     <string name="settings_announcements_unit">Единицы расстояния/скорости</string>
     <string name="voice_announce_lap_power_key">voiceAnnounceLapPower</string>
     <string name="power_x_watt">Мощность {x, plural, =1 {1 Ватт} few {# Ватта} other {# Ваттов} }</string>
@@ -611,4 +611,10 @@ limitations under the License.
     <string name="settings_theme_switch_restart">При изменении темы может потребоваться ручной перезапуск.</string>
     <string name="power">Мощность</string>
     <string name="voiceDistance">{n, plural, =1 {1 } few {{n,number,#.0}} other {{n,number,#.0}} }</string>
+    <string name="marker_detail_title">%1$d из %2$d: %3$s</string>
+    <string name="settings_night_mode_option_system_dynamic">Как в системе (Динамический цвет)</string>
+    <string name="settings_night_mode_option_day_dynamic">Светлая (Динамический цвет)</string>
+    <string name="settings_night_mode_option_night_dynamic">Тёмная (Динамический цвет)</string>
+    <string name="settings_night_mode_option_night_oled_dynamic">Чёрная (Динамический цвет)</string>
+    <string name="track_edit_time_offset">Сдвиг часового пояса</string>
 </resources>
